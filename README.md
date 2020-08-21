@@ -1,6 +1,6 @@
 # Welcome to the ERP.net Developer Documentation
 
-Here you will find all the necessary resources to start developing applications, which consume the ERP.net services.
+Here you will find all the necessary resources for building applications, targetting the ERP.net services.
 
 This documentation contains developer resources. For business logic and other technical documentation, you might want to check the [Technical Documentation](https://docs.erp.net/tech).
 
