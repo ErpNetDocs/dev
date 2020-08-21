@@ -56,8 +56,8 @@ For example, to take the first 10 products (in undefined order), you can use:
 
 ## The Query Builder
 ERP.net has integrated visual Query Builder.
-The Query Builder allows building queries, specific to the selected database (ERP Instance).
-When you use the Query Builder for an ERP Instance, it allows you to select the user-defined data and calculated attributes.
+The Query Builder allows building queries, specific to the ERP Instance.
+When you use the Query Builder, it allows you to select the user-defined data and calculated attributes in that instance.
 
 The Query Builder allows the developers to create the query visually and then just re-use the query text, replacing the parameters.
 
