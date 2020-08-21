@@ -32,9 +32,9 @@ The common URL for the API site is /api/ inside the ERP instance. For example, t
 
 ## The Domain API
 The Domain API is the primary means for accessing and manipulating data in the ERP Instance. 
-It can currently be consumed in OData 4 format. 
+It can currently be consumed in [OData 4](https://www.odata.org/) format. 
 
-The Domain API is an API proxy for the huge object-oriented Domain Model of ERP.net.
+The Domain API is an API proxy for the object-oriented Domain Model of ERP.net.
 It is targeted towards UI and service apps. These kind of apps usually read and update moderate amounts of data.
 The Domain API is NOT adequate for read-only dumping of very large amounts of data, which is usually done by BI applications.
 BI applications should find other solutions or try to read data by small chunks.
