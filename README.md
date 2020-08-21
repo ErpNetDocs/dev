@@ -9,7 +9,8 @@ The ERP.net service is a hosted ERP service.
 When you sign up at [erp.net](https://erp.net), you can create a new ERP Instance. 
 
 An ERP Instance is, under the hoods, a database.
-It allows managing multiple related legal entities (companies) in one instance, so, generally, it is not one company.
+It is multi-company, e.g. it allows managing multiple related legal entities (companies) in one instance.
+You don't need to create separate instances for each managed company.
 
 Each ERP Instance has a unique name. 
 The instance can be accessed at:
@@ -49,6 +50,7 @@ You can use user:"admin" / pwd:"123" to access the API of DEMODB.
 ## Sample Query
 OData v4 allows the creation of URL-based queries.
 For example, to take the first 10 products (in undefined order), you can use:
+
 [https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10](https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10)
 
 ## The Query Builder
@@ -59,10 +61,12 @@ When you use the Query Builder for an ERP Instance, it allows you to select the 
 The Query Builder allows the developers to create the query visually and then just re-use the query text, replacing the parameters.
 
 To access the Query Builder for DEMODB, go to:
+
 [https://demodb.my.erp.net/api/domain/querybuilder](https://demodb.my.erp.net/api/domain/querybuilder)
 
 The Query Builder changes its URL when the query is built. 
 For example, to preview the same query for the first 10 products in the Query Builder, head to:
+
 [https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10](https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10)
 
 When you press Execute in the Query Builder, you can preview the result both as table and as JSON.
@@ -73,6 +77,5 @@ It's mostly useful for transferring queries for issues, posts, etc.
 It can be used to specify queries, function calls, updates, and generally any rest-based operation.
 
 To access the Query Tool for DEMODB, go to:
-[https://demodb.my.erp.net/api/domain/query](https://demodb.my.erp.net/api/domain/query)
 
-##
+[https://demodb.my.erp.net/api/domain/query](https://demodb.my.erp.net/api/domain/query)
