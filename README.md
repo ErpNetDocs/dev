@@ -46,7 +46,7 @@ The Domain API is located at /domain/odata/ within the API site. For DEMODB, thi
 If you try the above link, it will ask you for user credentials. 
 Most ERP Instances should, by default, be configured to NOT accept basic authentication.
 However, for demonstration purposes, DEMODB is configured to allow it.
-You can use user:"admin" / pwd:"123" to access the API of DEMODB.
+You can use admin/123 to access the API of DEMODB.
 
 ## Sample Query
 OData v4 allows the creation of URL-based queries.
