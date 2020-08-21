@@ -33,9 +33,9 @@ The common URL for the API site is /api/ inside the ERP instance. For example, t
 The Domain API is the primary means for accessing and manipulating data in the ERP Instance. 
 It can currently be consumed in OData 4 format. 
 
-The Domain API is an API proxy for the Domain Model of ERP.net.
-It is targeted toward UI and service apps, which read and update moderate amounts of data (as the UI and service apps usually do).
-The Domain API is NOT adequate for reading (dumping) very large amounts of data, which is usually done by BI applications.
+The Domain API is an API proxy for the huge object-oriented Domain Model of ERP.net.
+It is targeted towards UI and service apps. These kind of apps usually read and update moderate amounts of data.
+The Domain API is NOT adequate for read-only dumping of very large amounts of data, which is usually done by BI applications.
 BI applications should find other solutions or try to read data by small chunks.
 
 The Domain API is located at /domain/odata/ within the API site. For DEMODB, this is at:
@@ -114,3 +114,5 @@ But, at the end of the day, you have to do much more work to create a secure app
 
 ERP.net is based on the [OAuth 2](https://oauth.net/2/) security paradigm with [OpenID Connect](https://openid.net/connect/) support.
 
+## Next Steps
+To learn more about building apps for ERP.net, select a topic of interest in the table of contents.
