@@ -31,3 +31,6 @@ The Domain API is an API proxy for the Domain Model of ERP.net.
 It is targeted toward UI and service apps, which read and update moderate amounts of data (as the UI and service apps usually do).
 The Domain API is NOT adequate for reading (dumping) very large amounts of data, which is usually done by BI applications.
 BI applications should find other solutions or try to read data by small chunks.
+
+The Domain API is located at /domainapi/odata/ within the API site. For DEMODB, this is at:
+https://demodb.my.erp.net/api/domainapi/odata/
