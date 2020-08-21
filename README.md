@@ -64,7 +64,7 @@ To access the Query Builder for DEMODB, go to:
 
 [https://demodb.my.erp.net/api/domain/querybuilder](https://demodb.my.erp.net/api/domain/querybuilder)
 
-The Query Builder changes its URL when the query is built. 
+While the query is built, the Query Builder changes its URL. 
 For example, to preview the same query for the first 10 products in the Query Builder, head to:
 
 [https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10](https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10)
