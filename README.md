@@ -99,4 +99,18 @@ The main difference is that the reference documentation of a specific ERP Instan
 The user-defined attributes can be queried mostly like the system attributes.
 
 The instance reference documentation of DEMODB is at:
+
 [https://demodb.my.erp.net/api/domain/docs](https://demodb.my.erp.net/api/domain/docs)
+
+## Security
+Someone said: "Security is hard, deal with it".
+The hard truth is that security today is much harder that it was 10 years ago.
+Once upon a time, there was a user and a password. 
+Today, we have OAuth with Trusted Apps, Security Tokens, complicated security workflows, and all the other things.
+There are some good things, though.
+Single Sign-On, multi-factor authentication, and other extras come to mind.
+
+But, at the end of the day, you have to do much more work to create a secure app.
+
+ERP.net is based on the [OAuth 2](https://oauth.net/2/) security paradigm with [OpenID Connect](https://openid.net/connect/) support.
+
