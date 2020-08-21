@@ -54,6 +54,8 @@ For example, to take the first 10 products (in undefined order), you can use:
 
 [https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10](https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10)
 
+For a quick overview of OData, see this topic - [Understand OData in 6 steps](https://www.odata.org/getting-started/understand-odata-in-6-steps/).
+
 ## The Query Builder
 ERP.net has integrated visual Query Builder.
 The Query Builder allows building queries, specific to the ERP Instance.
