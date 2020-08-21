@@ -10,7 +10,7 @@ When you sign up at [erp.net](https://erp.net), you can create a new ERP Instanc
 
 Each ERP Instance has a unique name. 
 The instance can be accessed at:
-https://<instance_name>.my.erp.net
+https://<<instance_name>>.my.erp.net
 
 For example, the demonstration database, DEMODB, is located at:
 
