@@ -6,9 +6,10 @@ This documentation contains developer resources. For business logic and other te
 
 ## ERP Instances
 The ERP.net service is a hosted ERP service.
-When you sign up at [erp.net](https://erp.net), you can create a new ERP Instance. 
+Accessing the data is done through ERP Instances.
+When you sign up at [erp.net](https://erp.net), you can create and manage a new ERP Instance. 
 
-An ERP Instance is, under the hoods, a database.
+An ERP Instance is a tenant in the hosting environment.
 It is multi-company, e.g. it allows managing multiple related legal entities (companies) in one instance.
 You don't need to create separate instances for each managed company.
 
