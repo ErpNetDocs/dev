@@ -71,6 +71,10 @@ For example, to preview the same query for the first 10 products in the Query Bu
 
 When you press Execute in the Query Builder, you can preview the result both as table and as JSON.
 
+NOTE:
+
+> Pay attention to the link under the selected entity, which opens the documentation for the entity. 
+
 ## The Query Tool
 The Query Tool is simple Postman-like tool for querying the database.
 It's mostly useful for transferring queries for issues, posts, etc.
