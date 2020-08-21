@@ -48,7 +48,7 @@ You can use user:"admin" / pwd:"123" to access the API of DEMODB.
 
 ## Sample Query
 OData v4 allows the creation of URL-based queries.
-When you query for data, you use queries, similar to this:
+For example, to take the first 10 products (in undefined order), you can use:
 [https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10](https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10)
 
 ## The Query Builder
@@ -60,6 +60,12 @@ The Query Builder allows the developers to create the query visually and then ju
 
 To access the Query Builder for DEMODB, go to:
 [https://demodb.my.erp.net/api/domain/querybuilder](https://demodb.my.erp.net/api/domain/querybuilder)
+
+The Query Builder changes its URL when the query is built. 
+For example, to preview the same query for the first 10 products in the Query Builder, head to:
+[https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10](https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10)
+
+When you press Execute in the Query Builder, you can preview the result both as table and as JSON.
 
 ## The Query Tool
 The Query Tool is simple Postman-like tool for querying the database.
