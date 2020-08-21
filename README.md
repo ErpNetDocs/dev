@@ -28,6 +28,6 @@ The Domain API is the primary means for accessing and manipulating data in the E
 It can currently be consumed in OData 4 format. 
 
 The Domain API is an API proxy for the Domain Model of ERP.net.
-It is mostly useful for UI and service apps, which read and update moderate amounts of data (as the UI and service apps usually do).
+It is targeted toward UI and service apps, which read and update moderate amounts of data (as the UI and service apps usually do).
 The Domain API is NOT adequate for reading (dumping) very large amounts of data, which is usually done by BI applications.
 BI applications should find other solutions or try to read data by small chunks.
