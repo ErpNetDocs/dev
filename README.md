@@ -8,6 +8,9 @@ This documentation contains developer resources. For business logic and other te
 The ERP.net service is a hosted ERP service.
 When you sign up at [erp.net](https://erp.net), you can create a new ERP Instance. 
 
+An ERP Instance is, under the hoods, a database.
+It allows managing multiple related legal entities (companies) in one instance, so, generally, it is not one company.
+
 Each ERP Instance has a unique name. 
 The instance can be accessed at:
 https://<<instance_name>>.my.erp.net
@@ -42,3 +45,28 @@ If you try the above link, it will ask you for user credentials.
 Most ERP Instances should, by default, be configured to NOT accept basic authentication.
 However, for demonstration purposes, DEMODB is configured to allow it.
 You can use user:"admin" / pwd:"123" to access the API of DEMODB.
+
+## Sample Query
+OData v4 allows the creation of URL-based queries.
+When you query for data, you use queries, similar to this:
+[https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10](https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10)
+
+## The Query Builder
+ERP.net has integrated visual Query Builder.
+The Query Builder allows building queries, specific to the selected database (ERP Instance).
+When you use the Query Builder for an ERP Instance, it allows you to select the user-defined data and calculated attributes.
+
+The Query Builder allows the developers to create the query visually and then just re-use the query text, replacing the parameters.
+
+To access the Query Builder for DEMODB, go to:
+[https://demodb.my.erp.net/api/domain/querybuilder](https://demodb.my.erp.net/api/domain/querybuilder)
+
+## The Query Tool
+The Query Tool is simple Postman-like tool for querying the database.
+It's mostly useful for transferring queries for issues, posts, etc.
+It can be used to specify queries, function calls, updates, and generally any rest-based operation.
+
+To access the Query Tool for DEMODB, go to:
+[https://demodb.my.erp.net/api/domain/query](https://demodb.my.erp.net/api/domain/query)
+
+##
