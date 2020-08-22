@@ -21,7 +21,7 @@ However, this is not certain. Each site in ERP.net can have its own address, whi
 [https://erpapi.example.com/](https://erpapi.example.com/)
 
 2. The ERP.net API Resource Path supports only specifying a single entity.
-REST style sub-entities are not supported. However, the ERP.net API allows many other ways to expand into sub-entities.
+REST style sub-entities are not supported. However, the API allows many other ways to expand into sub-entities.
 
 3. Query Options
 Allow the user to specify optional [Query Options](query-options.md).
