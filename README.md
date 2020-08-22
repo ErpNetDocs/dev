@@ -95,7 +95,7 @@ The syntax is a bit clumsy, but it works:
 
 [https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10&$filter=Id%20eq%20edf2bd2a-7e4d-e111-a06c-00155d00050a%20and%20Id%20eq%20cf728601-1fd5-4853-ab23-01deeee7d038](https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10&$filter=Id%20eq%20edf2bd2a-7e4d-e111-a06c-00155d00050a%20and%20Id%20eq%20cf728601-1fd5-4853-ab23-01deeee7d038)
 
-## The API Reference
+## Instance API Reference
 Each ERP Instance has its own API reference documentation.
 The instance-specific API reference documentation is like the universal API reference documentation here, in the Docs. 
 The main difference is that the reference documentation of a specific ERP Instance lists also the user-defined attributes.
