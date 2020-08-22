@@ -1,7 +1,6 @@
 ---
 layout: page
 title: "Welcome to the ERP.net Developer Documentation 2"
-permalink: /dev2/
 ---
 # Welcome to the ERP.net Developer Documentation
 
