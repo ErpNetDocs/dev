@@ -19,7 +19,7 @@ https://<<instance_name>>.my.erp.net
 
 For example, the demonstration database, DEMODB, is located at:
 
-[https://demodb.my.erp.net](https://demodb.my.erp.net)
+https://demodb.my.erp.net
 
 ## The API
 Each ERP Instance CAN have an API site. 
