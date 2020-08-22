@@ -26,6 +26,6 @@ REST style sub-entities are not supported. However, ERP.net API allows many othe
 3. Query Options
 Allow the user to specify optional [Query Options](query-options.md).
 
-For more information, check the OData standard:
+For more information, visit the OData standards page:
 
 [http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part2-url-conventions.html#sec_URLComponents](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part2-url-conventions.html#sec_URLComponents)
