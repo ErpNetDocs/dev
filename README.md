@@ -1,7 +1,3 @@
----
-layout: page
-title: "Welcome to the ERP.net Developer Documentation 2"
----
 # Welcome to the ERP.net Developer Documentation
 
 Here you will find all the necessary resources for building applications, targetting the ERP.net services.
