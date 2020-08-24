@@ -1,0 +1,1 @@
+{"toc.yml":[{"File":"toc.yml","LogLevel":"error","Message":"Referenced TOC file C:\\Users\\ivanarj\\source\\repos\\ErpNetDocs\\dev\\domainapi\\toc.yml does not exist.","Phase":"BuildCommand.BuildCore.Build Document.CompilePhaseHandlerWithIncremental.TocDocumentProcessor.Prebuild.BuildTocDocument","Code":"InvalidTocInclude"}]}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Welcome to the ERP.net Developer Documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Welcome to the ERP.net Developer Documentation ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="welcome-to-the-erpnet-developer-documentation" sourcefile="README.md" sourcestartlinenumber="1">Welcome to the ERP.net Developer Documentation</h1>
+
+<p sourcefile="README.md" sourcestartlinenumber="3">Here you will find all the necessary resources for building applications, targetting the ERP.net services.</p>
+<p sourcefile="README.md" sourcestartlinenumber="5">This documentation contains developer resources. For business logic and other technical documentation, you might want to check the <a href="https://docs.erp.net/tech" sourcefile="README.md" sourcestartlinenumber="5">Technical Documentation</a>.</p>
+<h2 id="erp-instances" sourcefile="README.md" sourcestartlinenumber="7">ERP Instances</h2>
+<p sourcefile="README.md" sourcestartlinenumber="8">The ERP.net service is a hosted ERP service.
+Accessing the data is done through ERP Instances.
+When you sign up at <a href="https://erp.net" sourcefile="README.md" sourcestartlinenumber="10">erp.net</a>, you can create and manage a new ERP Instance.</p>
+<p sourcefile="README.md" sourcestartlinenumber="12">An ERP Instance is a tenant in the hosting environment.
+It is multi-company, e.g. it allows managing multiple related legal entities (companies) in one instance.
+You don't need to create separate instances for each managed company.</p>
+<p sourcefile="README.md" sourcestartlinenumber="16">Each ERP Instance has a unique name.
+The instance can be accessed at:
+https://&lt;&lt;instance_name&gt;&gt;.my.erp.net</p>
+<p sourcefile="README.md" sourcestartlinenumber="20">For example, the demonstration database, DEMODB, is located at:</p>
+<p sourcefile="README.md" sourcestartlinenumber="22"><a href="https://demodb.my.erp.net" sourcefile="README.md" sourcestartlinenumber="22">https://demodb.my.erp.net</a></p>
+<h2 id="the-api" sourcefile="README.md" sourcestartlinenumber="24">The API</h2>
+<p sourcefile="README.md" sourcestartlinenumber="25">Each ERP Instance CAN have an API site.
+It &quot;can&quot; have, because, the API is a site, similar to other site, which the instance can launch.
+In order for the API to function, it needs to be configured and launched for the ERP Instance.</p>
+<p sourcefile="README.md" sourcestartlinenumber="29">The common URL for the API site is /api/ inside the ERP instance. For example, the DEMODB has API site at:</p>
+<p sourcefile="README.md" sourcestartlinenumber="31"><a href="https://demodb.my.erp.net/api/" sourcefile="README.md" sourcestartlinenumber="31">https://demodb.my.erp.net/api/</a></p>
+<h2 id="the-domain-api" sourcefile="README.md" sourcestartlinenumber="33">The Domain API</h2>
+<p sourcefile="README.md" sourcestartlinenumber="34">The Domain API is the primary means for accessing and manipulating data in the ERP Instance.
+It can currently be consumed in <a href="https://www.odata.org/" sourcefile="README.md" sourcestartlinenumber="35">OData 4</a> format.</p>
+<p sourcefile="README.md" sourcestartlinenumber="37">The Domain API is an API proxy for the object-oriented Domain Model of ERP.net.
+It is targeted towards UI and service apps. These kind of apps usually read and update moderate amounts of data.
+The Domain API is NOT adequate for read-only dumping of very large amounts of data, which is usually done by BI applications.
+BI applications should find other solutions or try to read data by small chunks.</p>
+<p sourcefile="README.md" sourcestartlinenumber="42">The Domain API is located at /domain/odata/ within the API site. For DEMODB, this is at:</p>
+<p sourcefile="README.md" sourcestartlinenumber="44"><a href="https://demodb.my.erp.net/api/domain/odata/" sourcefile="README.md" sourcestartlinenumber="44">https://demodb.my.erp.net/api/domain/odata/</a></p>
+<p sourcefile="README.md" sourcestartlinenumber="46">If you try the above link, it will ask you for user credentials.
+Most ERP Instances should, by default, be configured to NOT accept basic authentication.
+However, for demonstration purposes, DEMODB is configured to allow it.
+You can use admin/123 to access the API of DEMODB.</p>
+<h2 id="sample-query" sourcefile="README.md" sourcestartlinenumber="51">Sample Query</h2>
+<p sourcefile="README.md" sourcestartlinenumber="52">OData v4 allows the creation of URL-based queries.
+For example, to take the first 10 products (in undefined order), you can use:</p>
+<p sourcefile="README.md" sourcestartlinenumber="55"><a href="https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10" sourcefile="README.md" sourcestartlinenumber="55">https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10</a></p>
+<p sourcefile="README.md" sourcestartlinenumber="57">For a quick overview of OData, see this topic - <a href="https://www.odata.org/getting-started/understand-odata-in-6-steps/" sourcefile="README.md" sourcestartlinenumber="57">Understand OData in 6 steps</a>.</p>
+<h2 id="the-query-builder" sourcefile="README.md" sourcestartlinenumber="59">The Query Builder</h2>
+<p sourcefile="README.md" sourcestartlinenumber="60">ERP.net has integrated visual Query Builder.
+The Query Builder allows building queries, specific to the ERP Instance.
+When you use the Query Builder, it allows you to select the user-defined data and calculated attributes in that instance.</p>
+<p sourcefile="README.md" sourcestartlinenumber="64">The Query Builder allows the developers to create the query visually and then just re-use the query text, replacing the parameters.</p>
+<p sourcefile="README.md" sourcestartlinenumber="66">To access the Query Builder for DEMODB, go to:</p>
+<p sourcefile="README.md" sourcestartlinenumber="68"><a href="https://demodb.my.erp.net/api/domain/querybuilder" sourcefile="README.md" sourcestartlinenumber="68">https://demodb.my.erp.net/api/domain/querybuilder</a></p>
+<p sourcefile="README.md" sourcestartlinenumber="70">While the query is built, the Query Builder changes its URL.
+For example, to preview the same query for the first 10 products in the Query Builder, head to:</p>
+<p sourcefile="README.md" sourcestartlinenumber="73"><a href="https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10" sourcefile="README.md" sourcestartlinenumber="73">https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10</a></p>
+<p sourcefile="README.md" sourcestartlinenumber="75">When you press Execute in the Query Builder, you can preview the result both as table and as JSON.</p>
+<p sourcefile="README.md" sourcestartlinenumber="77">NOTE:</p>
+<blockquote sourcefile="README.md" sourcestartlinenumber="79">
+<p sourcefile="README.md" sourcestartlinenumber="79">Pay attention to the link under the selected entity, which opens the documentation for the entity.</p>
+</blockquote>
+<h2 id="the-query-tool" sourcefile="README.md" sourcestartlinenumber="81">The Query Tool</h2>
+<p sourcefile="README.md" sourcestartlinenumber="82">The Query Tool is simple Postman-like tool for querying the database.
+It's mostly useful for transferring queries for issues, posts, etc.
+It can be used to specify queries, function calls, updates, and generally any rest-based operation.</p>
+<p sourcefile="README.md" sourcestartlinenumber="86">To access the Query Tool for DEMODB, go to:</p>
+<p sourcefile="README.md" sourcestartlinenumber="88"><a href="https://demodb.my.erp.net/api/domain/query" sourcefile="README.md" sourcestartlinenumber="88">https://demodb.my.erp.net/api/domain/query</a></p>
+<h2 id="query-basics" sourcefile="README.md" sourcestartlinenumber="90">Query Basics</h2>
+<p sourcefile="README.md" sourcestartlinenumber="91">ERP.net allows only a subset of the full OData queries.
+Generally, you cannot do JOINS, and filter with OR.
+However, you can filter by multiple values, like the SQL IN operator.
+The syntax is a bit clumsy, but it works:</p>
+<p sourcefile="README.md" sourcestartlinenumber="96"><a href="https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10&amp;$filter=Id%20eq%20edf2bd2a-7e4d-e111-a06c-00155d00050a%20and%20Id%20eq%20cf728601-1fd5-4853-ab23-01deeee7d038" sourcefile="README.md" sourcestartlinenumber="96">https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10&amp;$filter=Id%20eq%20edf2bd2a-7e4d-e111-a06c-00155d00050a%20and%20Id%20eq%20cf728601-1fd5-4853-ab23-01deeee7d038</a></p>
+<h2 id="instance-api-reference" sourcefile="README.md" sourcestartlinenumber="98">Instance API Reference</h2>
+<p sourcefile="README.md" sourcestartlinenumber="99">Each ERP Instance has its own API reference documentation.
+The instance-specific API reference documentation is like the universal API reference documentation here, in the Docs.
+The main difference is that the reference documentation of a specific ERP Instance lists also the user-defined attributes.
+The user-defined attributes can be queried mostly like the system attributes.</p>
+<p sourcefile="README.md" sourcestartlinenumber="104">The instance reference documentation of DEMODB is at:</p>
+<p sourcefile="README.md" sourcestartlinenumber="106"><a href="https://demodb.my.erp.net/api/domain/docs" sourcefile="README.md" sourcestartlinenumber="106">https://demodb.my.erp.net/api/domain/docs</a></p>
+<h2 id="security" sourcefile="README.md" sourcestartlinenumber="108">Security</h2>
+<p sourcefile="README.md" sourcestartlinenumber="109">Someone said: &quot;Security is hard, deal with it&quot;.
+The hard truth is that security today is much harder that it was 10 years ago.
+Once upon a time, there was a user and a password.
+Today, we have OAuth with Trusted Apps, Security Tokens, complicated security workflows, and all the other things.
+There are some good things, though.
+Single Sign-On, multi-factor authentication, and other extras come to mind.</p>
+<p sourcefile="README.md" sourcestartlinenumber="116">But, at the end of the day, you have to do much more work to create a secure app.</p>
+<p sourcefile="README.md" sourcestartlinenumber="118">ERP.net is based on the <a href="https://oauth.net/2/" sourcefile="README.md" sourcestartlinenumber="118">OAuth 2</a> security paradigm with <a href="https://openid.net/connect/" sourcefile="README.md" sourcestartlinenumber="118">OpenID Connect</a> support.</p>
+<h2 id="next-steps" sourcefile="README.md" sourcestartlinenumber="120">Next Steps</h2>
+<p sourcefile="README.md" sourcestartlinenumber="121">To learn more about building apps for ERP.net, select a topic of interest in the table of contents.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>
