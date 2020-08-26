@@ -1,2 +1,4 @@
 obj/.cache/build/
 .vs/
+.vs/slnx.sqlite
+.vs/dev/v16/.suo
