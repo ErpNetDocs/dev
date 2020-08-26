@@ -17,11 +17,11 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "domainapi/introduction.md",
+      "source_relative_path": "apis/domainapi/introduction.md",
       "output": {
         ".html": {
-          "relative_path": "domainapi/introduction.html",
-          "hash": "GSENxqu+bG4sqzMg2VqsXQ=="
+          "relative_path": "apis/domainapi/introduction.html",
+          "hash": "SwwG36fEMJoMlZzw2t9j8w=="
         }
       },
       "is_incremental": true,
@@ -29,11 +29,11 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "domainapi/query-options.md",
+      "source_relative_path": "apis/domainapi/query-options.md",
       "output": {
         ".html": {
-          "relative_path": "domainapi/query-options.html",
-          "hash": "/1FLpFNTI1/EHf1HBnJHLw=="
+          "relative_path": "apis/domainapi/query-options.html",
+          "hash": "8V80/Phu0dYI895gTcRjeA=="
         }
       },
       "is_incremental": true,
@@ -41,10 +41,10 @@
     },
     {
       "type": "Toc",
-      "source_relative_path": "domainapi/toc.yml",
+      "source_relative_path": "apis/domainapi/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "domainapi/toc.html",
+          "relative_path": "apis/domainapi/toc.html",
           "hash": "Knv2g/vWiukyzP9X/J6W6Q=="
         }
       },
@@ -53,14 +53,53 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "domainapi/url-components.md",
+      "source_relative_path": "apis/domainapi/url-components.md",
       "output": {
         ".html": {
-          "relative_path": "domainapi/url-components.html",
-          "hash": "SmHK6VPUoC9QDIE720vyYA=="
+          "relative_path": "apis/domainapi/url-components.html",
+          "hash": "4Z5BZCgFY0wVhAXzMjDmRw=="
         }
       },
       "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "apis/introduction.md",
+      "output": {
+        ".html": {
+          "relative_path": "apis/introduction.html",
+          "hash": "b4molaVYTRGn94DUSLMkHQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "apis/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "apis/toc.html",
+          "hash": "YlHC92qhcpwasK3OAMAJuA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "guides/introduction.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/introduction.html",
+          "hash": "cpAMZ70TX9Hiqzdoqu+1Ag=="
+        }
+      },
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -81,7 +120,7 @@
       "output": {
         ".html": {
           "relative_path": "toc.html",
-          "hash": "mWyYZKa1TXia8E5Fh1WatA=="
+          "hash": "I2FuBcil+flSV3ZDAuNIPw=="
         }
       },
       "is_incremental": false,
@@ -100,8 +139,8 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 5,
-          "skipped_file_count": 5
+          "total_file_count": 7,
+          "skipped_file_count": 6
         },
         "TocDocumentProcessor": {
           "can_incremental": false,
