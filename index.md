@@ -28,7 +28,7 @@ In order for the API to function, it needs to be configured and launched for the
 
 The common URL for the API site is /api/ inside the ERP instance. For example, the DEMODB has API site at:
 
-[https://demodb.my.erp.net/api/](https://demodb.my.erp.net/api/)
+https://demodb.my.erp.net/api/
 
 ## The Domain API
 The Domain API is the primary means for accessing and manipulating data in the ERP Instance. 
