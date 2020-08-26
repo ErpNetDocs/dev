@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "domainapi/introduction.html",
-          "hash": "Vr+XijxOyUY4FV4MobmKig=="
+          "hash": "GSENxqu+bG4sqzMg2VqsXQ=="
         }
       },
       "is_incremental": false,
@@ -33,7 +33,19 @@
       "output": {
         ".html": {
           "relative_path": "domainapi/query-options.html",
-          "hash": "LS4SkVjaszb6J+TjAXVs8A=="
+          "hash": "/1FLpFNTI1/EHf1HBnJHLw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "domainapi/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "domainapi/toc.html",
+          "hash": "Knv2g/vWiukyzP9X/J6W6Q=="
         }
       },
       "is_incremental": false,
@@ -45,7 +57,7 @@
       "output": {
         ".html": {
           "relative_path": "domainapi/url-components.html",
-          "hash": "1LCCLl0yj0YOLbmxLfjALg=="
+          "hash": "SmHK6VPUoC9QDIE720vyYA=="
         }
       },
       "is_incremental": false,
@@ -69,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "toc.html",
-          "hash": "qL5mMOOWaQqn/5qD8/e5tA=="
+          "hash": "mWyYZKa1TXia8E5Fh1WatA=="
         }
       },
       "is_incremental": false,
@@ -89,7 +101,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 5,
-          "skipped_file_count": 3
+          "skipped_file_count": 5
         },
         "TocDocumentProcessor": {
           "can_incremental": false,
