@@ -24,7 +24,7 @@
           "hash": "Vr+XijxOyUY4FV4MobmKig=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -36,7 +36,7 @@
           "hash": "LS4SkVjaszb6J+TjAXVs8A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -48,7 +48,7 @@
           "hash": "1LCCLl0yj0YOLbmxLfjALg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -64,15 +64,12 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidTocInclude"
-      ],
       "type": "Toc",
       "source_relative_path": "toc.yml",
       "output": {
         ".html": {
           "relative_path": "toc.html",
-          "hash": "P1SHF0iXnJxTF7w6sKYzBg=="
+          "hash": "qL5mMOOWaQqn/5qD8/e5tA=="
         }
       },
       "is_incremental": false,
