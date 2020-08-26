@@ -1,4 +1,4 @@
-# ERP.net How-to Guides
+# ERP.net Developer Guides
 
 Welcome to the How-to guides for ERP.net Developers.
 
