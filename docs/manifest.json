@@ -9,10 +9,10 @@
       "output": {
         ".html": {
           "relative_path": "README.html",
-          "hash": "+ZS3m6WlJuMi831AeAjpbg=="
+          "hash": "wt3DCXCUeqJKcArTiNd0SQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -57,10 +57,10 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "tRMltNs04bVi8lD/1ZfPdQ=="
+          "hash": "uXzbxXnzUT78nNx4lok7tg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -92,7 +92,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 5,
-          "skipped_file_count": 5
+          "skipped_file_count": 3
         },
         "TocDocumentProcessor": {
           "can_incremental": false,
