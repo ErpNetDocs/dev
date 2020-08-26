@@ -1,4 +1,3 @@
-obj/.cache/build/
+obj/
 .vs/
-.vs/slnx.sqlite
-.vs/dev/v16/.suo
+
