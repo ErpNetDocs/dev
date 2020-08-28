@@ -1,0 +1,87 @@
+{
+  "apis/domainapi/complex-values.html": {
+    "href": "apis/domainapi/complex-values.html",
+    "title": "Complex Values | ERP.net Developer Docs",
+    "keywords": "Complex Values Multi-language String Amount Quantity"
+  },
+  "apis/domainapi/introduction.html": {
+    "href": "apis/domainapi/introduction.html",
+    "title": "Domain API Introduction | ERP.net Developer Docs",
+    "keywords": "Domain API Introduction For an overview and introduction of the Domain API, read the home page of the developer docs . Purpose The Domain API is the primary API for accessing and manipulating data in ERP.net. It is most useful for UI and service apps. For BI, you should use the Table API. REST API The Domain API is a HTTP REST API, which allows access to the data exposed by the ERP.net objects. The API allows access to the data in an object-oriented manner, through a well-known HTTP REST interface, based on the OData v4 protocol. OData The OData API is structured along a number of entities that represent the Domain Model of the ERP Instance. Each entity contains data attributes, which can be filtered, sorted, etc. This model also provides information on how to navigate between entities. Data The Domain API allows access to the ERP Instance data. Server Management cannot be performed through the Domain API. All data in a database is accessible through the Domain API, restricted by the access permissions of the login account. The Domain API is adequate for building productive e-Commerce web sites, data transfer packages and similar apps."
+  },
+  "apis/domainapi/query-options.html": {
+    "href": "apis/domainapi/query-options.html",
+    "title": "Query Options | ERP.net Developer Docs",
+    "keywords": "Query Options ERP.net"
+  },
+  "apis/domainapi/referenced-object.html": {
+    "href": "apis/domainapi/referenced-object.html",
+    "title": "OData Representation Of Object Reference | ERP.net Developer Docs",
+    "keywords": "OData Representation Of Object Reference When a value in OData result references an object, it is represented in the following way:"
+  },
+  "apis/domainapi/url-components.html": {
+    "href": "apis/domainapi/url-components.html",
+    "title": "URL Components Of a OData Query | ERP.net Developer Docs",
+    "keywords": "URL Components Of a OData Query https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&$orderby=Name \\_________________________________________/\\_______________________/ \\___________________/ | | | service root URL resource path query options Service Root URL - this is the address of the API + /domain/odata/ Resource Path - The requested entity Query Options - optional query options NOTES: The address of the API is usually and by default: https://<<Instance_Name>>.my.erp.net/api/ However, this is not certain. Each site in ERP.net can have its own address, which is configurable. For example, this is also valid address: https://erpapi.example.com/ The ERP.net API Resource Path supports only specifying a single entity. REST style sub-entities are not supported. However, the API allows many other ways to expand into sub-entities. Query Options Allow the user to specify optional Query Options . For more information, visit the OData standards page: http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part2-url-conventions.html#sec_URLComponents"
+  },
+  "apis/introduction.html": {
+    "href": "apis/introduction.html",
+    "title": "ERP.net APIs | ERP.net Developer Docs",
+    "keywords": "ERP.net APIs ERP.net has several APIs. Each API has a specific role and is usable in different scenarios. The main APIs are: Domain API - The main API for processing data. Used by web sites, services and other business logic apps. Table API - Read-only, fast-forward, table-based API. Adequate for Business Intelligence apps. Simple API - Legacy API, exposing table based methods for retrieving and manipulating data."
+  },
+  "guides/overview.html": {
+    "href": "guides/overview.html",
+    "title": "ERP.net Developer Guides | ERP.net Developer Docs",
+    "keywords": "ERP.net Developer Guides Welcome to the How-to guides for ERP.net Developers. The how-to guides contain guidance for common developer scenarios. E-Commerce Website Building an E-Commerce Website is the most common scenario for ERP.net applications. Important skills: Register UI Trusted App Non-confidential login workflow (required for javascript apps) Retrieve Products Create Sales Order For more information, see [Building E-Commerce Website] build-ecommerce-website). Payment Connector Service Connector services are service applications, which connect ERP.net to other platforms. They frequently have few, if any, UI forms. Payment Connector is a service, which exports Payment Orders to external service. Then, once the orders are paid, it creates Payment Transaction. Important skills: Register Service-type Trusted App Application secret login workflow (required for service app) Retrieve Unpaid Orders Create Payment Orders For more information, see [Building Connector Service] build-payment-connector-service.md). Business Intelligence WinClient Web-integrated App"
+  },
+  "guides/tasks/create-sales-order.html": {
+    "href": "guides/tasks/create-sales-order.html",
+    "title": "| ERP.net Developer Docs",
+    "keywords": ""
+  },
+  "guides/tasks/login-non-confidential.html": {
+    "href": "guides/tasks/login-non-confidential.html",
+    "title": "| ERP.net Developer Docs",
+    "keywords": ""
+  },
+  "guides/tasks/register-trusted-app.html": {
+    "href": "guides/tasks/register-trusted-app.html",
+    "title": "| ERP.net Developer Docs",
+    "keywords": ""
+  },
+  "guides/tasks/retrieve-products.html": {
+    "href": "guides/tasks/retrieve-products.html",
+    "title": "Retrieve Products Task | ERP.net Developer Docs",
+    "keywords": "Retrieve Products Task This task shows ways to retrieve products in order to display them in a e-commerce store. Retrieve Products The following query: Retrieves 10 products, without any order Filters by: Active = true Selects the following attributes: Id - the unique Id of the product. Part Number - the product code. Name - the multi-language product name. ProductGroup - object reference to the Product Group containing the product. StandardPricePerLot - Amount object, containing the standard price. Description - textual description of the product. This description is clear text and does not support any formatting. There is also Description_Html attribute, which can be used to contain description with HTML formatting. MeasurementUnit - object reference to measurement units. This is the default sales measurement unit of the product. https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&$filter=Active%20eq%20true&$select=CatalogDescriptionHtml,Description,Id,MeasurementUnit,Name,PartNumber,ProductGroup,StandardPricePerLot You can edit the query in the Query Builder: https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10&$filter=Active%20eq%20true&$select=CatalogDescriptionHtml,Description,Id,MeasurementUnit,Name,PartNumber,ProductGroup,StandardPricePerLot Retrieve Product Pictures Product Pictures and Variants are structu Retrieve Product Variants Product Variants Retrieve Product Prices Retrieve Product Codes Retrieving product codes might sometimes be useful for getting bar-code or supplier/customer code of a product. In order to understand the return set, the application must know in advance the id of the coding system. For example, one coding system migth be for bar-codes, another - for the codes of the products for a prominent customer, etc."
+  },
+  "guides/tasks/sub1/sub1.1/1-1-a.html": {
+    "href": "guides/tasks/sub1/sub1.1/1-1-a.html",
+    "title": "| ERP.net Developer Docs",
+    "keywords": "1-1-a"
+  },
+  "guides/tasks/sub1/sub1.1/1-1-b.html": {
+    "href": "guides/tasks/sub1/sub1.1/1-1-b.html",
+    "title": "| ERP.net Developer Docs",
+    "keywords": "1-1-b"
+  },
+  "guides/tasks/sub1/sub1.1/proba.html": {
+    "href": "guides/tasks/sub1/sub1.1/proba.html",
+    "title": "| ERP.net Developer Docs",
+    "keywords": "proba"
+  },
+  "guides/tasks/sub1/sub1.html": {
+    "href": "guides/tasks/sub1/sub1.html",
+    "title": "| ERP.net Developer Docs",
+    "keywords": "sub1.md"
+  },
+  "index.html": {
+    "href": "index.html",
+    "title": "Welcome to the ERP.net Developer Documentation | ERP.net Developer Docs",
+    "keywords": "Welcome to the ERP.net Developer Documentation Here you will find all the necessary resources for building applications targetting the ERP.net services. This documentation contains developer resources. For business logic and other technical documentation, you might want to check the Technical Documentation . ERP Instances The ERP.net service is a hosted ERP service. Accessing the data is done through ERP Instances. When you sign up at erp.net , you can create and manage a new ERP Instance. An ERP Instance is a tenant in the hosting environment. It is multi-company, e.g. it allows managing multiple related legal entities (companies) in one instance. You don't need to create separate instances for each managed company. Each ERP Instance has a unique name. The instance can be accessed at: https://<<instance_name>>.my.erp.net For example, the demonstration database, DEMODB, is located at: https://demodb.my.erp.net The API Each ERP Instance CAN have an API site. It \"can\" have, because, the API is a site, similar to other site, which the instance can launch. In order for the API to function, it needs to be configured and launched for the ERP Instance. The common URL for the API site is /api/ inside the ERP instance. For example, the DEMODB has API site at: https://demodb.my.erp.net/api/ The Domain API The Domain API is the primary means for accessing and manipulating data in the ERP Instance. It can currently be consumed in OData 4 format. The Domain API is an API proxy for the object-oriented Domain Model of ERP.net. It is targeted towards UI and service apps. These kind of apps usually read and update moderate amounts of data. The Domain API is NOT adequate for read-only dumping of very large amounts of data, which is usually done by BI applications. BI applications should find other solutions or try to read data by small chunks. The Domain API is located at /domain/odata/ within the API site. For DEMODB, this is at: https://demodb.my.erp.net/api/domain/odata/ If you try the above link, it will ask you for user credentials. Most ERP Instances should, by default, be configured to NOT accept basic authentication. However, for demonstration purposes, DEMODB is configured to allow it. You can use admin/123 to access the API of DEMODB. Sample Query OData v4 allows the creation of URL-based queries. For example, to take the first 10 products (in undefined order), you can use: https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10 For a quick overview of OData, see this topic - Understand OData in 6 steps . The Query Builder ERP.net has integrated visual Query Builder. The Query Builder allows building queries, specific to the ERP Instance. When you use the Query Builder, it allows you to select the user-defined data and calculated attributes in that instance. The Query Builder allows the developers to create the query visually and then just re-use the query text, replacing the parameters. To access the Query Builder for DEMODB, go to: https://demodb.my.erp.net/api/domain/querybuilder While the query is built, the Query Builder changes its URL. For example, to preview the same query for the first 10 products in the Query Builder, head to: https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10 When you press Execute in the Query Builder, you can preview the result both as table and as JSON. NOTE: Pay attention to the link under the selected entity, which opens the documentation for the entity. The Query Tool The Query Tool is simple Postman-like tool for querying the database. It's mostly useful for transferring queries for issues, posts, etc. It can be used to specify queries, function calls, updates, and generally any rest-based operation. To access the Query Tool for DEMODB, go to: https://demodb.my.erp.net/api/domain/query Query Basics ERP.net allows only a subset of the full OData queries. Generally, you cannot do JOINs, and filter with OR. However, you can filter by multiple values, like the SQL IN operator: https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&$filter=Id%20in%20(edf2bd2a-7e4d-e111-a06c-00155d00050a,cf728601-1fd5-4853-ab23-01deeee7d038) Instance API Reference Each ERP Instance has its own API reference documentation. The instance-specific API reference documentation is like the universal API reference documentation here, in the Docs. The main difference is that the reference documentation of a specific ERP Instance lists also the user-defined attributes. The user-defined attributes can be queried mostly like the system attributes. The instance reference documentation of DEMODB is at: https://demodb.my.erp.net/api/domain/docs Security Someone said: \"Security is hard, deal with it\". The hard truth is that security today is much harder that it was 10 years ago. Once upon a time, there was a user and a password. Today, we have OAuth with Trusted Apps, Security Tokens, complicated security workflows, and all the other things. There are some good things, though. Single Sign-On, multi-factor authentication, and other extras come to mind. But, at the end of the day, you have to do much more work to create a secure app. ERP.net is based on the OAuth 2 security paradigm with OpenID Connect support. Next Steps To learn more about building apps for ERP.net, select a topic of interest in the table of contents."
+  },
+  "README.html": {
+    "href": "README.html",
+    "title": "Welcome to the ERP.net Developer Documentation | ERP.net Developer Docs",
+    "keywords": "Welcome to the ERP.net Developer Documentation The documentation uses DocFX to build."
+  }
+}

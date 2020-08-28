@@ -4,15 +4,36 @@
   "xrefmap": "xrefmap.yml",
   "files": [
     {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      },
+      "is_incremental": false
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "README.md",
       "output": {
         ".html": {
           "relative_path": "README.html",
-          "hash": "wt3DCXCUeqJKcArTiNd0SQ=="
+          "hash": "SiWNP9AANKnydckzbwQCdw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "apis/domainapi/complex-values.md",
+      "output": {
+        ".html": {
+          "relative_path": "apis/domainapi/complex-values.html",
+          "hash": "+fctdbnxlq/SbPDayehCwg=="
+        }
+      },
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -21,10 +42,10 @@
       "output": {
         ".html": {
           "relative_path": "apis/domainapi/introduction.html",
-          "hash": "rBlejlxUasVBiTDvzR6zXg=="
+          "hash": "yxl6KBe28gI6r/fJpUNjiQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -33,7 +54,19 @@
       "output": {
         ".html": {
           "relative_path": "apis/domainapi/query-options.html",
-          "hash": "tM+1t5dVcHva43qUrgPcGA=="
+          "hash": "cZH9Cq6Wn65IXwttyu7YBQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "apis/domainapi/referenced-object.md",
+      "output": {
+        ".html": {
+          "relative_path": "apis/domainapi/referenced-object.html",
+          "hash": "AqUEYMIUmNeHjy4vUscsjQ=="
         }
       },
       "is_incremental": false,
@@ -57,7 +90,7 @@
       "output": {
         ".html": {
           "relative_path": "apis/domainapi/url-components.html",
-          "hash": "4Z5BZCgFY0wVhAXzMjDmRw=="
+          "hash": "Mf1rzwAwLhQFPqMiP/kR3w=="
         }
       },
       "is_incremental": false,
@@ -69,7 +102,7 @@
       "output": {
         ".html": {
           "relative_path": "apis/introduction.html",
-          "hash": "b4molaVYTRGn94DUSLMkHQ=="
+          "hash": "Gtv3yMS3uPQuE82MAFty9w=="
         }
       },
       "is_incremental": false,
@@ -88,15 +121,120 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Conceptual",
-      "source_relative_path": "guides/introduction.md",
+      "source_relative_path": "guides/overview.md",
       "output": {
         ".html": {
-          "relative_path": "guides/introduction.html",
-          "hash": "WjJtt0FovbEi6DIozvRL4w=="
+          "relative_path": "guides/overview.html",
+          "hash": "kiBHsJog2mN+WjRsExj6rA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/tasks/create-sales-order.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/tasks/create-sales-order.html",
+          "hash": "Moe/UPasaypEIdD71oRipg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/tasks/login-non-confidential.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/tasks/login-non-confidential.html",
+          "hash": "Ryk++2D3FGCMX1ywfG6l/g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/tasks/register-trusted-app.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/tasks/register-trusted-app.html",
+          "hash": "YuFUgzR0g25vRD67zAGuuQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/tasks/retrieve-products.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/tasks/retrieve-products.html",
+          "hash": "vGcOA5XhzqifI8A4p5ExhA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/tasks/sub1/sub1.1/1-1-a.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/tasks/sub1/sub1.1/1-1-a.html",
+          "hash": "v+8p9bBsPHIrX7AitTZNcg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/tasks/sub1/sub1.1/1-1-b.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/tasks/sub1/sub1.1/1-1-b.html",
+          "hash": "JW1seJzOjT+HsoB63skYIw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/tasks/sub1/sub1.1/proba.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/tasks/sub1/sub1.1/proba.html",
+          "hash": "3ybXwcKQkamCcm0cm+A1/w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/tasks/sub1/sub1.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/tasks/sub1/sub1.html",
+          "hash": "LLreK0Yjr3g1kpaeOF41IA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "guides/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "guides/toc.html",
+          "hash": "L83rFYknwoYOtCxHwx40LQ=="
         }
       },
       "is_incremental": false,
@@ -108,7 +246,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "uXzbxXnzUT78nNx4lok7tg=="
+          "hash": "87aD29C3gF9XyuYLObigug=="
         }
       },
       "is_incremental": false,
@@ -120,7 +258,7 @@
       "output": {
         ".html": {
           "relative_path": "toc.html",
-          "hash": "I2FuBcil+flSV3ZDAuNIPw=="
+          "hash": "D8ftmvO/BCgA3Q0FHeJ2wA=="
         }
       },
       "is_incremental": false,
@@ -139,8 +277,8 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 7,
-          "skipped_file_count": 3
+          "total_file_count": 17,
+          "skipped_file_count": 17
         },
         "TocDocumentProcessor": {
           "can_incremental": false,
@@ -153,8 +291,8 @@
     },
     {
       "status": {
-        "can_incremental": true,
-        "details": "Can support incremental post processing.",
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: should not trace intermediate info.",
         "incrementalPhase": "postProcessing",
         "total_file_count": 0,
         "skipped_file_count": 0

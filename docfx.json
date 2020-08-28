@@ -15,6 +15,10 @@
       }
     ],
     "dest": "docs",
+    "globalMetadata": {
+      "_appTitle": "ERP.net Developer Docs",
+      "_enableSearch": true
+    },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [ "default" ],
