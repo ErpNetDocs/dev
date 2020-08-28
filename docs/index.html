@@ -14,13 +14,13 @@
     <link rel="stylesheet" href="styles/docfx.vendor.css">
     <link rel="stylesheet" href="styles/docfx.css">
     <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <meta property="docfx:navrel" content="toc.html">
     <meta property="docfx:tocrel" content="toc.html">
     
     <meta property="docfx:rel" content="">
     
-  </head>
-  <body data-spy="scroll" data-target="#affix" data-offset="120">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
         
@@ -72,7 +72,7 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="welcome-to-the-erpnet-developer-documentation">Welcome to the ERP.net Developer Documentation</h1>
 
-<p>Here you will find all the necessary resources for building applications targetting the ERP.net services.</p>
+<p>Here you will find all the necessary resources for building applications targeting the ERP.net services.</p>
 <p>This documentation contains developer resources. For business logic and other technical documentation, you might want to check the <a href="https://docs.erp.net/tech">Technical Documentation</a>.</p>
 <h2 id="erp-instances">ERP Instances</h2>
 <p>The ERP.net service is a hosted ERP service.
@@ -108,7 +108,7 @@ You can use admin/123 to access the API of DEMODB.</p>
 <h2 id="sample-query">Sample Query</h2>
 <p>OData v4 allows the creation of URL-based queries.
 For example, to take the first 10 products (in undefined order), you can use:</p>
-<p><a href="https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10">https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10</a></p>
+<p><a href="https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10"><a href="https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10">https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10</a></a></p>
 <p>For a quick overview of OData, see this topic - <a href="https://www.odata.org/getting-started/understand-odata-in-6-steps/">Understand OData in 6 steps</a>.</p>
 <h2 id="the-query-builder">The Query Builder</h2>
 <p>ERP.net has integrated visual Query Builder.
@@ -119,12 +119,13 @@ When you use the Query Builder, it allows you to select the user-defined data an
 <p><a href="https://demodb.my.erp.net/api/domain/querybuilder">https://demodb.my.erp.net/api/domain/querybuilder</a></p>
 <p>While the query is built, the Query Builder changes its URL.
 For example, to preview the same query for the first 10 products in the Query Builder, head to:</p>
-<p><a href="https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10">https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10</a></p>
+<p><a href="https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10"><a href="https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10">https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10</a></a></p>
 <p>When you press Execute in the Query Builder, you can preview the result both as table and as JSON.</p>
 <p>NOTE:</p>
-<blockquote>
+<div class="TIP">
+<h5>Tip</h5>
 <p>Pay attention to the link under the selected entity, which opens the documentation for the entity.</p>
-</blockquote>
+</div>
 <h2 id="the-query-tool">The Query Tool</h2>
 <p>The Query Tool is simple Postman-like tool for querying the database.
 It's mostly useful for transferring queries for issues, posts, etc.
@@ -153,7 +154,10 @@ Single Sign-On, multi-factor authentication, and other extras come to mind.</p>
 <p>But, at the end of the day, you have to do much more work to create a secure app.</p>
 <p>ERP.net is based on the <a href="https://oauth.net/2/">OAuth 2</a> security paradigm with <a href="https://openid.net/connect/">OpenID Connect</a> support.</p>
 <h2 id="next-steps">Next Steps</h2>
-<p>To learn more about building apps for ERP.net, select a topic of interest in the table of contents.</p>
+<p>Check the <a href="guides/overview.html">Developer Guides</a> for common developer scenarios.
+The guides contain solutions to common tasks and full runnable sample apps.</p>
+<p>The <a href="apis/introduction.html">APIs</a> section contains description and examples for the ERP.net APIs.</p>
+<p>The Reference section contains full reference of the ERP.net Domain Model and APIs reference.</p>
 </article>
           </div>
           

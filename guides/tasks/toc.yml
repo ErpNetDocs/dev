@@ -6,5 +6,5 @@
   href: retrieve-products.md
 - name: Create Sales Order
   href: create-sales-order.md
-- name: sub1
-  href: sub1/toc.yml
+- name: Subtasks
+  href: subtasks/toc.yml
