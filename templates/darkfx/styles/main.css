@@ -314,15 +314,6 @@ blockquote {
 
 @media (min-width: 1600px){
     .container {
-        width: 100%;
-    }
-    .sidefilter {
-        width: 20%;
-    }
-    .sidetoc{
-        width: 20%;
-    }
-    .article.grid-right {
-        margin-left: 21%;
+        width: 80%;
     }
 }
