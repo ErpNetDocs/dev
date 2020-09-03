@@ -12,6 +12,7 @@ For more information:
 <https://dotnet.github.io/docfx/spec/docfx_flavored_markdown.html#inline>
 
 3. Ideally, the following syntax should include the text inline:
+
 This is the @@erpnet service!
 
 The above line should render as:
