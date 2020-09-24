@@ -1,8 +1,9 @@
 param(
-    [string]$docfx
+    [string]$docfx,
+    [string]$remote
 )
 
-$git_bin = "C:\Program Files\Git\usr\bin"
+#$git_bin = "C:\Program Files\Git\usr\bin"
 
 Write-Host "user is $env:USERNAME"
 
@@ -17,7 +18,7 @@ Write-Host Setting up git remote ssh...
 
 git config remote.ssh.url
 if ($lastexitcode -eq 1) {
-    git remote add ssh git@github.com:ErpNetDocs/dev.git
+    git remote add ssh $remote
 }
 
 git checkout master
