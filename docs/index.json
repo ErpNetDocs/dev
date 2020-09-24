@@ -79,6 +79,11 @@
     "title": "Subtask 2 | ERP.net Developer Docs",
     "keywords": "Subtask 2 Two."
   },
+  "includes/erpnet.html": {
+    "href": "includes/erpnet.html",
+    "title": "| ERP.net Developer Docs",
+    "keywords": "ERP.net"
+  },
   "index.html": {
     "href": "index.html",
     "title": "Welcome to the ERP.net Developer Documentation | ERP.net Developer Docs",
@@ -88,5 +93,10 @@
     "href": "README.html",
     "title": "Welcome to the ERP.net Developer Documentation | ERP.net Developer Docs",
     "keywords": "Welcome to the ERP.net Developer Documentation The documentation uses DocFX to build."
+  },
+  "testinclude.html": {
+    "href": "testinclude.html",
+    "title": "| ERP.net Developer Docs",
+    "keywords": "The includes/erpnet.md file exists for the sole reason of containing the proper writing of \"ERP.net\". It is intended to be included inline in the text of other topics. Unfortunately, DocFX seems to handle the matter of inline-inclusion with a pretty heavy-weight syntax. Example: I can easily create a link to the erpnet topic. But this is a link. We need just to include the file contents. I can include the file contents, but with a pretty heavy syntax ERP.net. This syntax is not adequeate for everyday writing. Ideally, the following syntax should include the text inline: This is the ERP.net service!"
   }
 }
