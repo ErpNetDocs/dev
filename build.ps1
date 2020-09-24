@@ -25,7 +25,7 @@ Write-Host Undoing local changes...
 git reset --hard HEAD^
 
 Write-Host Building docfx
-"$docfx build"
+Invoke-Expression "$docfx build"
 
 Write-Host Upload Changes to Github
 git add -A
