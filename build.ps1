@@ -27,8 +27,9 @@ if ($lastexitcode -eq 1) {
     git remote add ssh $remote
 }
 
-Write-Host "Making sure we are on master"
+Write-Host "Getting Latest Changes"
 git checkout master
+git pull --rebase
 
 Write-Host "Building docfx"
 Invoke-Expression "$docfx build"
