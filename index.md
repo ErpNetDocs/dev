@@ -25,7 +25,7 @@ For example, the demonstration database, DEMODB, is located at:
 ## The API
 
 Each ERP Instance CAN have an API site.
-It "can" have, because, the API is a site, similar to other site, which the instance can launch.
+It "can" have, because, the API is a site, similar to other sites, which the instance can launch.
 In order for the API to function, it needs to be configured and launched for the ERP Instance.
 
 The common URL for the API site is /api/ inside the ERP instance. For example, the DEMODB has API site at:
