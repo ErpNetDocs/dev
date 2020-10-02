@@ -7,7 +7,7 @@ Example:
 For more information:
 <https://dotnet.github.io/docfx/tutorial/links_and_cross_references.html#shorthand-form>
 
-2. I can include the file contents, but with a pretty heavy syntax [!include[erpnet](~/includes/erpnet.md)]. This syntax is not adequeate for everyday writing.
+2. I can include the file contents, but with a pretty heavy syntax [!include[erpnet](~/includes/erpnet.md)]. This syntax is not adequate for everyday writing.
 For more information:
 <https://dotnet.github.io/docfx/spec/docfx_flavored_markdown.html#inline>
 
