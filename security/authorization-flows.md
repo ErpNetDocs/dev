@@ -36,8 +36,13 @@ Toms app is generally authorized for the ERP Instance (with Trusted Application 
 If Toms app presents a login screen to get Janes credentials and use them to access the ERP Instance, this would expose the credentials to the app author.
 So, instead, the *app* asks the *platform* to verify that it is Jane in front of the computer.
 
+1. Toms app requests the ERP Instance to authenticate the user using the browser.
 Jane is presented with a familiar log-in screen, which is used by ALL apps.
-After successfully validating her credentials,  the system creates a special *id token* and passes it to the app.
+Since Jane trusts the platform, she securely enters her user name and password.
+
+1. The ERP Instance validates Janes credentials and creates a special *id token*.
 The token is actually just a string, which contains Janes details, like name, profile picture and email.
+
+1. The token is passed back to the app, using the apps [Login URL](trusted-applications.md#impersonate-login-url).
 
 Now, Toms app knows that it is Jane which is using his app, but without ever gaining access to her credentials!

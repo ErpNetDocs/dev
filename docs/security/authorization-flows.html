@@ -79,6 +79,7 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="authorization-flows">Authorization Flows</h1>
 
+<p>Authorization Flows are the process flows, which an external app can use to request access permission to the ERP Instance.</p>
 <h2 id="client-credentials">Client Credentials</h2>
 <p>Client Credentials is an authorization flow, with which an app requests service access.</p>
 <p>The service account, which is used to create the session is configured in the Trusted Application record.</p>
@@ -105,9 +106,17 @@ The access token is just a string, containing the granted access permissions, wh
 Toms app is generally authorized for the ERP Instance (with Trusted Application record), but Jane has not yet authorized it to work on her behalf!</p>
 <p>If Toms app presents a login screen to get Janes credentials and use them to access the ERP Instance, this would expose the credentials to the app author.
 So, instead, the <em>app</em> asks the <em>platform</em> to verify that it is Jane in front of the computer.</p>
-<p>Jane is presented with a familiar log-in screen, which is used by ALL apps.
-After successfully validating her credentials,  the system creates a special <em>id token</em> and passes it to the app.
+<ol>
+<li><p>Toms app requests the ERP Instance to authenticate the user using the browser.
+Jane is presented with a familiar log-in screen, which is used by ALL apps.
+Since Jane trusts the platform, she securely enters her user name and password.</p>
+</li>
+<li><p>The ERP Instance validates Janes credentials and creates a special <em>id token</em>.
 The token is actually just a string, which contains Janes details, like name, profile picture and email.</p>
+</li>
+<li><p>The token is passed back to the app, using the apps <a href="trusted-applications.html#impersonate-login-url">Login URL</a>.</p>
+</li>
+</ol>
 <p>Now, Toms app knows that it is Jane which is using his app, but without ever gaining access to her credentials!</p>
 </article>
           </div>
