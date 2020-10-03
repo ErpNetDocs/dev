@@ -1,9 +1,7 @@
-- name: Home
-  href: index.md
+- name: Security
+  href: security/
 - name: Guides
   href: guides/
 - name: APIs
   href: apis/
 - name: Reference
-  
-  

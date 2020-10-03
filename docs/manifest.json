@@ -1,6 +1,6 @@
 {
   "homepages": [],
-  "source_base_path": "C:/TFSAgent15/_work/20/s",
+  "source_base_path": "C:/Users/ivanarj/source/repos/ErpNetDocs/dev",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -18,7 +18,7 @@
       "output": {
         ".html": {
           "relative_path": "README.html",
-          "hash": "qkVZz5mXkqAgJ2Vo0RINRQ=="
+          "hash": "8+BDG30dv/EST3YAbcfrPg=="
         }
       },
       "is_incremental": false,
@@ -30,7 +30,7 @@
       "output": {
         ".html": {
           "relative_path": "apis/domainapi/complex-values.html",
-          "hash": "gWQfv0yacvyqcIqsu9suIA=="
+          "hash": "ULNAwd6N1/+S6orw7DNRgQ=="
         }
       },
       "is_incremental": false,
@@ -42,7 +42,7 @@
       "output": {
         ".html": {
           "relative_path": "apis/domainapi/introduction.html",
-          "hash": "7ONBtWqF3lBwBO4yKA2k9A=="
+          "hash": "/ou6NAZtBPHaN1DhdV6UeA=="
         }
       },
       "is_incremental": false,
@@ -54,7 +54,7 @@
       "output": {
         ".html": {
           "relative_path": "apis/domainapi/query-options.html",
-          "hash": "zrKz/XYuqxBz3lxCElu8tA=="
+          "hash": "AJgBOZwoLNjm/IFWj064Jw=="
         }
       },
       "is_incremental": false,
@@ -66,7 +66,7 @@
       "output": {
         ".html": {
           "relative_path": "apis/domainapi/referenced-object.html",
-          "hash": "Q83igNddvE5jd8fq8s25BA=="
+          "hash": "9D13KzucOrHAotV/51L79w=="
         }
       },
       "is_incremental": false,
@@ -90,7 +90,7 @@
       "output": {
         ".html": {
           "relative_path": "apis/domainapi/url-components.html",
-          "hash": "hXuoU9vZatPgEVgIrIIA9g=="
+          "hash": "oAocUJKMTtb5XK2tQA8r4Q=="
         }
       },
       "is_incremental": false,
@@ -102,7 +102,7 @@
       "output": {
         ".html": {
           "relative_path": "apis/introduction.html",
-          "hash": "YcptV50SL9FLI77Mx2hMkw=="
+          "hash": "602WJkJEl1lqy7Bz/ZagVg=="
         }
       },
       "is_incremental": false,
@@ -129,7 +129,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/overview.html",
-          "hash": "qkiGGLTR0iwW8HS2aWM4Kw=="
+          "hash": "2qI9Lue/hCY9qjNWOdtpPA=="
         }
       },
       "is_incremental": false,
@@ -141,7 +141,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/samples/build-ecommerce-website.html",
-          "hash": "Psw6XazJpUjtAcp02K8uqw=="
+          "hash": "s7oMDF7cT8WnITtYTmtQIg=="
         }
       },
       "is_incremental": false,
@@ -153,7 +153,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/samples/build-payment-connector.html",
-          "hash": "jjhGbqSXmxdP/3fSbwQvmg=="
+          "hash": "3bYGbAMS4Ew38xZCgECLvw=="
         }
       },
       "is_incremental": false,
@@ -165,7 +165,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/tasks/create-sales-order.html",
-          "hash": "X06ZuC6+nSP8txqTHe9F1w=="
+          "hash": "yHEoJGL70xOM07j0rEWHRA=="
         }
       },
       "is_incremental": false,
@@ -177,7 +177,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/tasks/login-non-confidential.html",
-          "hash": "9GmH566+gpAfp7aiz+Tl/A=="
+          "hash": "lCMUoMZfumCpMCyO6JmAig=="
         }
       },
       "is_incremental": false,
@@ -189,7 +189,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/tasks/register-trusted-app.html",
-          "hash": "ebrzZy9ZzIaVCxAJJ7VgOQ=="
+          "hash": "Kvix7miJuDtqdE0SW86mqA=="
         }
       },
       "is_incremental": false,
@@ -201,7 +201,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/tasks/retrieve-products.html",
-          "hash": "cTPGXrMGnaylttn1Hvf4Vw=="
+          "hash": "zUeGzIPwPgNT6378pRikgQ=="
         }
       },
       "is_incremental": false,
@@ -213,7 +213,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/tasks/subtasks/overview.html",
-          "hash": "yBuKHC9GhXk1GGcZbPEEyw=="
+          "hash": "3ddjFhmQAbeSp6WubGGG0w=="
         }
       },
       "is_incremental": false,
@@ -225,7 +225,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/tasks/subtasks/subtask1.html",
-          "hash": "zgel8/fGHOqHK7p2AOZkFA=="
+          "hash": "Hz1tgO0rdK+mfwtACektLg=="
         }
       },
       "is_incremental": false,
@@ -237,7 +237,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/tasks/subtasks/subtask2.html",
-          "hash": "PGEjbO3pJs4xzLQSfJM18Q=="
+          "hash": "E23P/AFBX2kQp4kbLygInA=="
         }
       },
       "is_incremental": false,
@@ -261,7 +261,7 @@
       "output": {
         ".html": {
           "relative_path": "includes/erpnet.html",
-          "hash": "8i/3BLsbuS5h4lqt993s+Q=="
+          "hash": "8yZezYu1U49+xFEWbp7k1A=="
         }
       },
       "is_incremental": false,
@@ -273,7 +273,79 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "zMgunRbFz9rrlfIWwhBOWA=="
+          "hash": "Lw8wQu37CCHbHJ7dRX9weA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "security/authorization-flows.md",
+      "output": {
+        ".html": {
+          "relative_path": "security/authorization-flows.html",
+          "hash": "UxCx3ukKNNgnJa/1wFtUsg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "security/client-type.md",
+      "output": {
+        ".html": {
+          "relative_path": "security/client-type.html",
+          "hash": "m4FlX4Wdg5sqK+RS9IHe2g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "security/erp-instances.md",
+      "output": {
+        ".html": {
+          "relative_path": "security/erp-instances.html",
+          "hash": "Wv6gT68J51rnP0s1gJ3DEg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "security/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "security/overview.html",
+          "hash": "CvjK1aH7AZfKGjaPn7Os9w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "security/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "security/toc.html",
+          "hash": "DA0skgdxoP9o5zmkM1PvIQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "security/trusted-applications.md",
+      "output": {
+        ".html": {
+          "relative_path": "security/trusted-applications.html",
+          "hash": "QNCJhRBxe38BDcrNGIBMMg=="
         }
       },
       "is_incremental": false,
@@ -285,7 +357,7 @@
       "output": {
         ".html": {
           "relative_path": "testinclude.html",
-          "hash": "3t+Dd6fqLxghYXAAg86lcg=="
+          "hash": "8buaPPwBf5iOOznt47Dmqg=="
         }
       },
       "is_incremental": false,
@@ -297,7 +369,7 @@
       "output": {
         ".html": {
           "relative_path": "toc.html",
-          "hash": "D8ftmvO/BCgA3Q0FHeJ2wA=="
+          "hash": "ksoXsW/D4hJZt1i3b5MQKg=="
         }
       },
       "is_incremental": false,
@@ -307,19 +379,17 @@
   "incremental_info": [
     {
       "status": {
-        "can_incremental": false,
-        "details": "Cannot build incrementally because last build info is missing.",
+        "can_incremental": true,
         "incrementalPhase": "build",
         "total_file_count": 0,
-        "skipped_file_count": 0,
-        "full_build_reason_code": "NoAvailableBuildCache"
+        "skipped_file_count": 0
       },
       "processors": {
         "ConceptualDocumentProcessor": {
-          "can_incremental": false,
+          "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 20,
-          "skipped_file_count": 0
+          "total_file_count": 25,
+          "skipped_file_count": 23
         },
         "TocDocumentProcessor": {
           "can_incremental": false,

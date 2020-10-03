@@ -1,6 +1,12 @@
 ### YamlMime:XRefMap
 sorted: true
 references:
+- uid: client-type
+  name: Client Type
+  href: security/client-type.html
+- uid: erp-instance
+  name: ERP Instance
+  href: security/erp-instances.html
 - uid: erpnet
   name: erpnet
   href: includes/erpnet.html
