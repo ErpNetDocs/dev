@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Client Type | ERP.net Developer Docs </title>
+    <title>Authorization Flows | ERP.net Developer Docs </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Client Type | ERP.net Developer Docs ">
+    <meta name="title" content="Authorization Flows | ERP.net Developer Docs ">
     <meta name="generator" content="docfx 2.56.2.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
@@ -76,22 +76,48 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="client-type">
-<h1 id="client-type">Client Type</h1>
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="authorization-flows">Authorization Flows</h1>
 
-<p>In OAuth, the Client Type specifies the confidentiality abilities of the client application.</p>
-<p>Client types are:</p>
-<ul>
-<li><strong>Confidential</strong></li>
-<li><strong>Public</strong></li>
-</ul>
-<p>Confidential client applications are able to keep secrets. Public apps are generally unable to hide a secret from an advanced intruder.</p>
-<h2 id="examples">Examples</h2>
-<p><strong>JavaScript</strong> apps, executed in the user browser, are public apps.
-Generally they cannot hide a secret from an advanced user.
-If a JavaScript app has a secret in its code, it can easily be revealed (and probably abused).</p>
-<p>Server apps are usually confidential.
-They are executed in a trusted environment and, if properly secured, can keep a secret.</p>
+<p>Authorization Flows are the process flows, which an external app can use to request access permission to the ERP Instance.</p>
+<h2 id="authorization-code">Authorization Code</h2>
+<p>This authorization flow is used by interactive user applications, which access the ERP Instance on behalf of the logged user.</p>
+<p>If we relate to Tom and Jane scenario, this would be the case when we want Toms app to create the Sales Orders using Jane account and access permissions.</p>
+<p>Jane wants to start using Toms app to create her Sales Orders.
+Toms app is generally authorized for the ERP Instance (with Trusted Application record), but Jane has not yet authorized it to work on her behalf!</p>
+<p>If Toms app presents a login screen to get Janes credentials and use them to access the ERP Instance, this would expose the credentials to the app author.
+So, instead, the <em>app</em> asks the <em>platform</em> to verify that it is Jane in front of the computer.</p>
+<ol>
+<li><p>Toms app requests the ERP Instance to authenticate the user using the browser.
+Jane is presented with a familiar log-in screen, which is used by ALL apps.
+Since Jane trusts the platform, she securely enters her user name and password.</p>
+</li>
+<li><p>The ERP Instance validates Janes credentials and creates a special <em>id token</em>.
+The token is actually just a string, which contains Janes details, like name, profile picture and email.</p>
+</li>
+<li><p>The token is passed back to the app, using the apps <a href="trusted-applications.html#impersonate-login-url">Login URL</a>.</p>
+</li>
+</ol>
+<p>Now, Toms app knows that it is Jane which is using his app, but without ever gaining access to her credentials!</p>
+<h2 id="client-credentials">Client Credentials</h2>
+<p>Client Credentials is an authorization flow, with which an app requests service access.</p>
+<p>The service account, which is used to create the session is configured in the Trusted Application record.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The service session is not related to any specific interactive user. It can be created on service startup and renewed whenever necessary.</p>
+</div>
+<p>Lets relate this to the Tom and Jane scenario from the <a href="overview.html">Overview</a>.
+With service access, Toms app will create all Sales Orders with the same service account.
+It would not use Janes or any other user account to access the ERP Instance.</p>
+<p>The basic flow is the following:</p>
+<ol>
+<li>Toms app provides its application URI and application secret to the ERP Instance.
+The URI and secret are much like user name and password, but for application.</li>
+<li>The ERP Instance looks up the Trusted Application record for Toms app.
+Based on the Service Account specified in the record, the ERP Instance creates a special <em>access token</em> and passes it to Toms app.
+The access token is just a string, containing the granted access permissions, which is digitally signed.</li>
+<li>Toms app uses the <em>access token</em> to call the ERP APIs and create the Sales Orders.</li>
+</ol>
 </article>
           </div>
           
@@ -100,7 +126,7 @@ They are executed in a trusted environment and, if properly secured, can keep a 
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ErpNetDocs/dev/blob/master/security/client-type.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/identity/authorization-flows.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>
