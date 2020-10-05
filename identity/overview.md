@@ -1,4 +1,4 @@
-# Introduction to security in ERP.net
+# Introduction to identity in ERP.net
 
 ERP.net APIs use [OAuth 2](https://oauth.net/2/) for authentication and authorization.
 In OAuth 2, the authentication and authorization is performed by an Identity provider.

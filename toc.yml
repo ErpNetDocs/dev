@@ -1,5 +1,5 @@
-- name: Security
-  href: security/
+- name: Identity
+  href: identity/
 - name: Guides
   href: guides/
 - name: APIs
