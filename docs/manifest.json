@@ -285,7 +285,7 @@
       "output": {
         ".html": {
           "relative_path": "identity/overview.html",
-          "hash": "PIV4d6v+O9D292ioK6qYIg=="
+          "hash": "fHKI8YSo4PLyTrh7JPPgNg=="
         }
       },
       "is_incremental": false,
@@ -328,15 +328,12 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Conceptual",
       "source_relative_path": "index.md",
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "zDWiTKXyYf0305Mv6JALZg=="
+          "hash": "g9O95SCJogXNL02M/hIpGQ=="
         }
       },
       "is_incremental": false,
@@ -380,7 +377,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 24,
-          "skipped_file_count": 21
+          "skipped_file_count": 23
         },
         "TocDocumentProcessor": {
           "can_incremental": false,

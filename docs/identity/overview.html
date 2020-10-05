@@ -80,7 +80,7 @@
 <h1 id="introduction-to-identity-in-erpnet">Introduction to identity in ERP.net</h1>
 
 <p>ERP.net APIs use <a href="https://oauth.net/2/">OAuth 2</a> for authentication and authorization.
-In OAuth 2, the authentication and authorization is performed by an Identity provider.
+In OAuth 2, the authentication and authorization is performed by an identity provider.
 ERP.net has built-in identity provider, which conforms to the <a href="https://openid.net/connect/">OpenID Connect</a> specification.</p>
 <h2 id="why-do-we-need-oauth-2">Why do we need OAuth 2?</h2>
 <p>In the good old days of lesser security, there was just a user and a password.
@@ -115,8 +115,8 @@ We just have to tell the system, that we trust this app.</p>
 <h3 id="manually-trust-an-application">Manually trust an application</h3>
 <p>To manually trust an application, you create a Trusted Application record, which informs the ERP Instance, that you trust this application.</p>
 <p>For more information, see <a href="trusted-applications.html">Trusted Applications</a>.</p>
-<h3 id="install-from-marketplace">Install from marketplace</h3>
-<p>Another way to trust an application is to select it from a marketplace.
+<h3 id="install-from-a-marketplace">Install from a marketplace</h3>
+<p>Another way to trust an application is to activate it from a marketplace.
 In this case, the marketplace redirects the browser to a &quot;Register Trusted Application&quot; endpoint in your ERP Instance.
 The registration process verifies that you are an administrator of the ERP Instance and then simply asks you if you want to trust this application.</p>
 <div class="NOTE">
