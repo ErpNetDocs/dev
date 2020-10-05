@@ -2,28 +2,6 @@
 
 Authorization Flows are the process flows, which an external app can use to request access permission to the ERP Instance.
 
-## Client Credentials
-
-Client Credentials is an authorization flow, with which an app requests service access.
-
-The service account, which is used to create the session is configured in the Trusted Application record.
-
-> [!note]
-> The service session is not related to any specific interactive user. It can be created on service startup and renewed whenever necessary.
-
-Lets relate this to the Tom and Jane scenario from the [Overview](overview.md).
-With service access, Toms app will create all Sales Orders with the same service account.
-It would not use Janes or any other user account to access the ERP Instance.
-
-The basic flow is the following:
-
-1. Toms app provides its application URI and application secret to the ERP Instance.
-The URI and secret are much like user name and password, but for application.
-1. The ERP Instance looks up the Trusted Application record for Toms app.
-Based on the Service Account specified in the record, the ERP Instance creates a special *access token* and passes it to Toms app.
-The access token is just a string, containing the granted access permissions, which is digitally signed.
-1. Toms app uses the *access token* to call the ERP APIs and create the Sales Orders.
-
 ## Authorization Code
 
 This authorization flow is used by interactive user applications, which access the ERP Instance on behalf of the logged user.
@@ -46,3 +24,25 @@ The token is actually just a string, which contains Janes details, like name, pr
 1. The token is passed back to the app, using the apps [Login URL](trusted-applications.md#impersonate-login-url).
 
 Now, Toms app knows that it is Jane which is using his app, but without ever gaining access to her credentials!
+
+## Client Credentials
+
+Client Credentials is an authorization flow, with which an app requests service access.
+
+The service account, which is used to create the session is configured in the Trusted Application record.
+
+> [!note]
+> The service session is not related to any specific interactive user. It can be created on service startup and renewed whenever necessary.
+
+Lets relate this to the Tom and Jane scenario from the [Overview](overview.md).
+With service access, Toms app will create all Sales Orders with the same service account.
+It would not use Janes or any other user account to access the ERP Instance.
+
+The basic flow is the following:
+
+1. Toms app provides its application URI and application secret to the ERP Instance.
+The URI and secret are much like user name and password, but for application.
+1. The ERP Instance looks up the Trusted Application record for Toms app.
+Based on the Service Account specified in the record, the ERP Instance creates a special *access token* and passes it to Toms app.
+The access token is just a string, containing the granted access permissions, which is digitally signed.
+1. Toms app uses the *access token* to call the ERP APIs and create the Sales Orders.

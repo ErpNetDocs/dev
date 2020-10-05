@@ -23,8 +23,8 @@ Not important for the functioning of the application.
 This is the application identifier.
 It is passed as parameter by the applications, when they claim who they are in front of the ERP Instance.
 
-Should be unique for the @erp-instance.
-Preferably, this should be globally unique, so that the application can be listed in a marketplace.
+The Application URI should be unique for the @erp-instance.
+Preferably, it should be globally unique, so that the application can be listed in a marketplace.
 Use short, concise identifier.
 This will appear in logs and other files.
 Avoid non-latin and special characters.
@@ -72,11 +72,11 @@ Once we have at least (actually also at most) one application with Basic Authent
 > [!note]
 >When someone uses Basic Authentication, it would be considered as access from this app.
 
-### Impersonate As Community/Internal User Allowed
+### Impersonate As Community / Internal User Allowed
 
 Allows the app to request login from a community (external) or internal user.
 
-If both options are OFF, the app would not be allowed to request a user to be authenticated.
+When both options are OFF, the app would not be allowed to request a user to be authenticated.
 This is a common scenario for service applications with no UI.
 
 If any or both options are ON, the app is allowed to impersonate, e.g. request login.
@@ -89,10 +89,10 @@ Common scenarios:
 - **Public web app** - both Community and Internal users allowed.
 
 > [!note]
-Avoid allowing only Community and disallowing Internal users.
+> Avoid allowing only Community and disallowing Internal users.
 
 Usually, community accounts can be freely created by anybody.
-So, this could create confusion for the internal users and force them to create a separate, external (community) account.
+So, allowing only community accounts could create confusion for the internal users and force them to create a separate, external (community) account.
 
 > [!note]
 > It is strongly not recommended for a user to have duplicate accounts, just for the purpose of having both community and internal accounts.
@@ -149,7 +149,7 @@ Scopes, reserved for future use:
 
 ### System User
 
-This is the user, which will be used to initiate sessions, when the application requests token with [Client Credentials](authorization-flows.md#Client-Credentials).
+This is the service user, which will be used to initiate sessions, when the application requests token with [Client Credentials](authorization-flows.md#Client-Credentials).
 
 ### System User Allowed
 

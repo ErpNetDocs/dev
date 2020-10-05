@@ -79,10 +79,13 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="introduction-to-security-in-erpnet">Introduction to security in ERP.net</h1>
 
+<p>ERP.net APIs use <a href="https://oauth.net/2/">OAuth 2</a> for authentication and authorization.
+In OAuth 2, the authentication and authorization is performed by an Identity provider.
+ERP.net has built-in identity provider, which conforms to the <a href="https://openid.net/connect/">OpenID Connect</a> specification.</p>
+<h2 id="why-do-we-need-oauth-2">Why do we need OAuth 2?</h2>
 <p>In the good old days of lesser security, there was just a user and a password.
 If we need to access an app, we enter the user name and the password and voila - we get access!</p>
 <p>So, what is the problem to continue like this?</p>
-<h2 id="world-of-platforms-and-apps">World of platforms and apps</h2>
 <p>Suppose Tom has created a good little app, which automates the Sales Order creation.
 You just select from one of three predefined templates and your sales order is created.</p>
 <p>The problem is: How should Toms app access your ERP Instance?</p>
@@ -90,21 +93,25 @@ You just select from one of three predefined templates and your sales order is c
 OK, but then your user name and password are no longer so secure, aren't they?
 Even if you don't give them directly to Tom, but &quot;just&quot; enter them in a web form, Tom still receives your precious security secret!</p>
 <p>Option 2 would be ... Can't we can just give Toms app access to the ERP Instance, but without sharing our credentials?</p>
-<p>This is where OAuth 2 comes. A group of very clever people have come up with a standard, which allows users to <em>authorize</em> apps to do things on their behalf.</p>
+<p>This is where OAuth 2 comes in. A group of very clever people have come up with a standard, which allows users to <em>authorize</em> apps to do things on their behalf.</p>
 <p>Enter the age of <em>platforms</em> and <em>apps</em>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>To be more precise, it should be called age of Identity providers and apps.
+But in the current case, the platform is also the Identity provider.</p>
+</div>
+<h2 id="trust-an-application">Trust an application</h2>
 <p>When you install an app on your phone, you authorize this app to do certain things with your data.
 The Android or iOS <em>platform</em> allows the <em>app</em> to access only the data you have authorized it to access.
 You fully trust the platform, but you don't fully trust any app out there.
 The platform should stop malicious attempts to steal and manipulate your data.</p>
-<h2 id="oauth-in-the-erp-world">OAuth in the ERP world</h2>
 <p>Similar, but still a bit more complicated paradigm can be applied to ERP Instances.
 The administrator of the ERP Instance plays the role of the phone owner.
-The ERP Instance is the <em>platform</em> and the <em>app</em> ... is the app.</p>
-<h3 id="install-the-application">Install the application</h3>
-<p>Before using an app, we need to install it.
-With ERP Instances, we don't actually install the app, because the app is already hosted somewhere on the web.
-So, this step is skipped.</p>
-<p>We just have to tell the system, that we trust this app.</p>
+The ERP Instance is the <em>platform</em> and the <em>app</em> is, well, the app.</p>
+<p>In our phones, before using an app, we need to install it.
+With ERP Instances, we don't actually install the app, because the app is already hosted somewhere.
+So, this step is skipped.
+We just have to tell the system, that we trust this app.</p>
 <h3 id="manually-trust-an-application">Manually trust an application</h3>
 <p>To manually trust an application, you create a Trusted Application record, which informs the ERP Instance, that you trust this application.</p>
 <p>For more information, see <a href="trusted-applications.html">Trusted Applications</a>.</p>
@@ -116,13 +123,18 @@ The registration process verifies that you are an administrator of the ERP Insta
 <h5>Note</h5>
 <p>This is very similar to the way your phone asks you if you trust a new application.</p>
 </div>
-<h2 id="interactive-and-service-applications">Interactive and service applications</h2>
-<p>Once an application is trusted, it can use two ways to access ERP data - through service and through user accounts.</p>
-<h3 id="service-applications">Service applications</h3>
-<p>Service applications have no UI and use only service accounts. They can use only the <em>Client Credentials</em> flow to request service access.</p>
+<h2 id="access-data-in-the-erp-instance">Access data in the ERP Instance</h2>
+<p>Once an application is trusted, it can use two ways to access ERP data - through user account or through service access.</p>
 <h3 id="interactive-applications">Interactive applications</h3>
-<p>Interactive applications have UI and can impersonate as both service accounts and user accounts. They use <em>Client Credentials</em> flow to request service access and <em>Authorization Code</em> flow to request user access.</p>
-<p>For more information about Client Credentials and Authorization Code flows, read <a href="authorization-flows.html">Authorization Flows</a>.</p>
+<p>Interactive applications have UI and use <em>Authorization Code</em> flow to request user access.</p>
+<h3 id="service-applications">Service applications</h3>
+<p>Service applications have no UI and use only service accounts.
+They use the <em>Client Credentials</em> flow to request service access.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>A single application can use both interactive user login and service access to perform different functions.</p>
+</div>
+<p>For more information about the different Authorization flows, read <a href="authorization-flows.html">Authorization Flows</a>.</p>
 </article>
           </div>
           
