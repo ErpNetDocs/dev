@@ -29,6 +29,11 @@
     "title": "ERP.net APIs | ERP.net Developer Docs",
     "keywords": "ERP.net APIs ERP.net has several APIs. Each API has a specific role and is usable in different scenarios. The main APIs are: Domain API - The main API for processing data. Used by web sites, services and other business logic apps. Table API - Read-only, fast-forward, table-based API. Adequate for Business Intelligence apps. Simple API - Legacy API, exposing table based methods for retrieving and manipulating data."
   },
+  "apis/tableapi/index.html": {
+    "href": "apis/tableapi/index.html",
+    "title": "Table API | ERP.net Developer Docs",
+    "keywords": "Table API The primary purpose of the Table API is to allow external BI (Business Intelligence) tools to quickly pull raw data for further analysis. To learn more about Table API, select a topic from the menu."
+  },
   "erp-instances.html": {
     "href": "erp-instances.html",
     "title": "ERP Instance | ERP.net Developer Docs",

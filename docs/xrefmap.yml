@@ -7,3 +7,6 @@ references:
 - uid: erpnet
   name: erpnet
   href: includes/erpnet.html
+- uid: table-api
+  name: Table API
+  href: apis/tableapi/index.html
