@@ -1,5 +1,4 @@
 - name: Domain API
-  href: domainapi/
+  href: domainapi/toc.yml
 - name: Table API
-- name: Simple API
-- name: API Security
+  href: tableapi/toc.yml
