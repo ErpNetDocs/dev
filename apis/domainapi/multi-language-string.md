@@ -1,1 +1,1 @@
-# Multilanguage string complex attribute
+# Multilanguage string complex value
