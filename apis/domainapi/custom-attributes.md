@@ -14,10 +14,11 @@ In Domain API custom properties are properties of type General_CustomPropertyVal
 
 Each database contains different custom properties and that is why each database have different EDM model ($metadata).
 
-If a user creates new custom property in the database this custom property is not automatically shown in Domain API. That is because Domain API caches all repositories and their attributes. To refresh the cached attributes you must call the ~/domain/reset endpoint.  
-
-Example:
-https://demodb.my.erp.net/api/domain/reset
+>Note!  
+>If a user creates new custom property in the database this custom property is not automatically shown in Domain API. That is because Domain API caches all repositories and >their attributes. To refresh the cached attributes you must call the ~/domain/reset endpoint.  
+>
+>Example:
+>https://demodb.my.erp.net/api/domain/reset
 
 
 Properties of CustomPropertyValue complex type.
