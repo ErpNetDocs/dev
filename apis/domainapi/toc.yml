@@ -6,5 +6,7 @@
   href: query-options.md
 - name: Transactions
   href: transactions.md
+- name: Working with documents
+  href: documents.md
 - name: Custom Attributes
   href: custom-attributes.md
