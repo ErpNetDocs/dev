@@ -6,8 +6,8 @@
   href: query-options.md
 - name: Referenced Objects
   href: referenced-objects.md
-- name: Complex Attributes
-  topicHref: complex-attributes.md
+- name: Complex values
+  topicHref: complex-values.md
   items:
   - name: Custom Attributes
     href: custom-attributes.md
