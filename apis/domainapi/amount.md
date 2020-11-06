@@ -1,1 +1,1 @@
-# Amount complex attribute
+# Amount complex value
