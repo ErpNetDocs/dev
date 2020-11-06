@@ -10,3 +10,5 @@
   href: working-with-documents.md
 - name: Custom Attributes
   href: custom-attributes.md
+- name: Batch requests
+  href: batch-requests.md
