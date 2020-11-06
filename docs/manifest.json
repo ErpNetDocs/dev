@@ -26,11 +26,71 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "apis/domainapi/amount.md",
+      "output": {
+        ".html": {
+          "relative_path": "apis/domainapi/amount.html",
+          "hash": "bHNmqiqNVPRQlm3UliZ50Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "apis/domainapi/batch-requests.md",
+      "output": {
+        ".html": {
+          "relative_path": "apis/domainapi/batch-requests.html",
+          "hash": "hUxHby1CZPxjS7dCIoEJ5Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "apis/domainapi/complex-values.md",
       "output": {
         ".html": {
           "relative_path": "apis/domainapi/complex-values.html",
           "hash": "MoE9KBl61M4gp7j5NZdf/w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "apis/domainapi/custom-attributes.md",
+      "output": {
+        ".html": {
+          "relative_path": "apis/domainapi/custom-attributes.html",
+          "hash": "hOE83Md3yIPm85taWGolAw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "apis/domainapi/demo-web-shop.md",
+      "output": {
+        ".html": {
+          "relative_path": "apis/domainapi/demo-web-shop.html",
+          "hash": "vPGXIjbL9bTHAPoxnZt4Xw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "apis/domainapi/example-queries.md",
+      "output": {
+        ".html": {
+          "relative_path": "apis/domainapi/example-queries.html",
+          "hash": "L30Asy7uAdeFg/FM50fXzA=="
         }
       },
       "is_incremental": false,
@@ -50,6 +110,30 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "apis/domainapi/multi-language-string.md",
+      "output": {
+        ".html": {
+          "relative_path": "apis/domainapi/multi-language-string.html",
+          "hash": "I2jON21B2GTAmBqcDAGo4Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "apis/domainapi/quantity.md",
+      "output": {
+        ".html": {
+          "relative_path": "apis/domainapi/quantity.html",
+          "hash": "xrXvb6I0grwhDDRXFCJ3uw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "apis/domainapi/query-options.md",
       "output": {
         ".html": {
@@ -62,11 +146,23 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "apis/domainapi/referenced-object.md",
+      "source_relative_path": "apis/domainapi/referenced-objects.md",
       "output": {
         ".html": {
-          "relative_path": "apis/domainapi/referenced-object.html",
-          "hash": "F4Eb9iO3dxNuGcIQlhj5lg=="
+          "relative_path": "apis/domainapi/referenced-objects.html",
+          "hash": "B/rr96Yx4iZG+sK6yTZJ2A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "apis/domainapi/transactions.md",
+      "output": {
+        ".html": {
+          "relative_path": "apis/domainapi/transactions.html",
+          "hash": "mriKnPDsMhdn92aF8jAB/g=="
         }
       },
       "is_incremental": false,
@@ -79,6 +175,18 @@
         ".html": {
           "relative_path": "apis/domainapi/url-components.html",
           "hash": "vCBvXxz9srdx6dfDFUzxSw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "apis/domainapi/working-with-documents.md",
+      "output": {
+        ".html": {
+          "relative_path": "apis/domainapi/working-with-documents.html",
+          "hash": "n3IKRS4ihssXFcOuG6jJbw=="
         }
       },
       "is_incremental": false,
@@ -114,7 +222,7 @@
       "output": {
         ".html": {
           "relative_path": "apis/toc.html",
-          "hash": "/1vfWRqoqJtDbQWRlmP4WA=="
+          "hash": "vlT18+qODwzUXvh+Gr9OvA=="
         }
       },
       "is_incremental": false,
@@ -208,12 +316,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "guides/tasks/retrieve-products.md",
       "output": {
         ".html": {
           "relative_path": "guides/tasks/retrieve-products.html",
-          "hash": "cTPGXrMGnaylttn1Hvf4Vw=="
+          "hash": "eWYtxDG7JfT4mKbgV1CsZQ=="
         }
       },
       "is_incremental": false,

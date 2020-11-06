@@ -1,28 +1,73 @@
 {
+  "apis/domainapi/amount.html": {
+    "href": "apis/domainapi/amount.html",
+    "title": "Amount complex attribute | ERP.net Developer Docs",
+    "keywords": "Amount complex attribute"
+  },
+  "apis/domainapi/batch-requests.html": {
+    "href": "apis/domainapi/batch-requests.html",
+    "title": "Making batch requests ($batch) | ERP.net Developer Docs",
+    "keywords": "Making batch requests ($batch)"
+  },
   "apis/domainapi/complex-values.html": {
     "href": "apis/domainapi/complex-values.html",
     "title": "Complex Values | ERP.net Developer Docs",
     "keywords": "Complex Values Multi-language String Amount Quantity"
+  },
+  "apis/domainapi/custom-attributes.html": {
+    "href": "apis/domainapi/custom-attributes.html",
+    "title": "Custom Attributes | ERP.net Developer Docs",
+    "keywords": "Custom Attributes"
+  },
+  "apis/domainapi/demo-web-shop.html": {
+    "href": "apis/domainapi/demo-web-shop.html",
+    "title": "Demo Web shop app | ERP.net Developer Docs",
+    "keywords": "Demo Web shop app"
+  },
+  "apis/domainapi/example-queries.html": {
+    "href": "apis/domainapi/example-queries.html",
+    "title": "Runnable example queries | ERP.net Developer Docs",
+    "keywords": "Runnable example queries This section contains example queries for different frequently met use-cases. Some of the queries are directly runnable. Run theses queries directly by clicking their link. Note The password for the demodb is admin/123. Select examples Example 1... Update examples Action exmaples"
   },
   "apis/domainapi/introduction.html": {
     "href": "apis/domainapi/introduction.html",
     "title": "Domain API Introduction | ERP.net Developer Docs",
     "keywords": "Domain API Introduction For an overview and introduction of the Domain API, read the home page of the developer docs . Purpose The Domain API is the primary API for accessing and manipulating data in ERP.net. It is most useful for UI and service apps. For BI, you should use the Table API. REST API The Domain API is a HTTP REST API, which allows access to the data exposed by the ERP.net objects. The API allows access to the data in an object-oriented manner, through a well-known HTTP REST interface, based on the OData v4 protocol. OData The OData API is structured along a number of entities that represent the Domain Model of the ERP Instance. Each entity contains data attributes, which can be filtered, sorted, etc. This model also provides information on how to navigate between entities. Data The Domain API allows access to the ERP Instance data. Server Management cannot be performed through the Domain API. All data in a database is accessible through the Domain API, restricted by the access permissions of the login account. The Domain API is adequate for building productive e-Commerce web sites, data transfer packages and similar apps."
   },
+  "apis/domainapi/multi-language-string.html": {
+    "href": "apis/domainapi/multi-language-string.html",
+    "title": "Multilanguage string complex attribute | ERP.net Developer Docs",
+    "keywords": "Multilanguage string complex attribute"
+  },
+  "apis/domainapi/quantity.html": {
+    "href": "apis/domainapi/quantity.html",
+    "title": "Quantity complex attribute | ERP.net Developer Docs",
+    "keywords": "Quantity complex attribute"
+  },
   "apis/domainapi/query-options.html": {
     "href": "apis/domainapi/query-options.html",
     "title": "Query Options | ERP.net Developer Docs",
     "keywords": "Query Options ERP.net"
   },
-  "apis/domainapi/referenced-object.html": {
-    "href": "apis/domainapi/referenced-object.html",
+  "apis/domainapi/referenced-objects.html": {
+    "href": "apis/domainapi/referenced-objects.html",
     "title": "OData Representation Of Object Reference | ERP.net Developer Docs",
     "keywords": "OData Representation Of Object Reference When a value in OData result references an object, it is represented in the following way:"
+  },
+  "apis/domainapi/transactions.html": {
+    "href": "apis/domainapi/transactions.html",
+    "title": "Domain API Transactions | ERP.net Developer Docs",
+    "keywords": "Domain API Transactions"
   },
   "apis/domainapi/url-components.html": {
     "href": "apis/domainapi/url-components.html",
     "title": "URL Components Of a OData Query | ERP.net Developer Docs",
     "keywords": "URL Components Of a OData Query https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&$orderby=Name \\_________________________________________/\\_______________________/ \\___________________/ | | | service root URL resource path query options Service Root URL - this is the address of the API + /domain/odata/ Resource Path - The requested entity Query Options - optional query options NOTES: The address of the API is usually and by default: https://<<Instance_Name>>.my.erp.net/api/ However, this is not certain. Each site in ERP.net can have its own address, which is configurable. For example, this is also valid address: https://erpapi.example.com/ The ERP.net API Resource Path supports only specifying a single entity. REST style sub-entities are not supported. However, the API allows many other ways to expand into sub-entities. Query Options Allow the user to specify optional Query Options . For more information, visit the OData standards page: http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part2-url-conventions.html#sec_URLComponents"
+  },
+  "apis/domainapi/working-with-documents.html": {
+    "href": "apis/domainapi/working-with-documents.html",
+    "title": "Working with documents | ERP.net Developer Docs",
+    "keywords": "Working with documents"
   },
   "apis/introduction.html": {
     "href": "apis/introduction.html",
