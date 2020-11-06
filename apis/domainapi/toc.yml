@@ -7,6 +7,6 @@
 - name: Transactions
   href: transactions.md
 - name: Working with documents
-  href: documents.md
+  href: working-with-documents.md
 - name: Custom Attributes
   href: custom-attributes.md
