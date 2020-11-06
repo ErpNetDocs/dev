@@ -4,11 +4,26 @@
   href: url-components.md
 - name: Query Options
   href: query-options.md
+- name: Referenced Objects
+  href: referenced-objects.md
+- name: Complex Attributes
+  topicHref: complex-attributes.md
+  items:
+  - name: Custom Attributes
+    href: custom-attributes.md
+  - name: Quantity
+    href: quantity.md
+  - name: Amount
+    href: amount.md
+  - name: Multi-language string
+    href: multi-language-string.md
 - name: Transactions
   href: transactions.md
 - name: Working with documents
   href: working-with-documents.md
-- name: Custom Attributes
-  href: custom-attributes.md
 - name: Batch requests
   href: batch-requests.md
+- name: Example queries
+  href: example-queries.md
+- name: Demo Web Shop app
+  href: demo-web-shop.md
