@@ -1,8 +1,8 @@
 {
   "apis/domainapi/amount.html": {
     "href": "apis/domainapi/amount.html",
-    "title": "Amount complex attribute | ERP.net Developer Docs",
-    "keywords": "Amount complex attribute"
+    "title": "Amount (Complex value) | ERP.net Developer Docs",
+    "keywords": "Amount (Complex value)"
   },
   "apis/domainapi/batch-requests.html": {
     "href": "apis/domainapi/batch-requests.html",
@@ -16,8 +16,8 @@
   },
   "apis/domainapi/custom-attributes.html": {
     "href": "apis/domainapi/custom-attributes.html",
-    "title": "Custom Attributes | ERP.net Developer Docs",
-    "keywords": "Custom Attributes"
+    "title": "Custom Attributes (Complex value) | ERP.net Developer Docs",
+    "keywords": "Custom Attributes (Complex value)"
   },
   "apis/domainapi/demo-web-shop.html": {
     "href": "apis/domainapi/demo-web-shop.html",
@@ -36,13 +36,13 @@
   },
   "apis/domainapi/multi-language-string.html": {
     "href": "apis/domainapi/multi-language-string.html",
-    "title": "Multilanguage string complex attribute | ERP.net Developer Docs",
-    "keywords": "Multilanguage string complex attribute"
+    "title": "Multilanguage string (Complex value) | ERP.net Developer Docs",
+    "keywords": "Multilanguage string (Complex value)"
   },
   "apis/domainapi/quantity.html": {
     "href": "apis/domainapi/quantity.html",
-    "title": "Quantity complex attribute | ERP.net Developer Docs",
-    "keywords": "Quantity complex attribute"
+    "title": "Quantity (Complex value) | ERP.net Developer Docs",
+    "keywords": "Quantity (Complex value)"
   },
   "apis/domainapi/query-options.html": {
     "href": "apis/domainapi/query-options.html",
