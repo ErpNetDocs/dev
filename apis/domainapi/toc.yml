@@ -4,5 +4,7 @@
   href: url-components.md
 - name: Query Options
   href: query-options.md
+- name: Transactions
+  href: transactions.md
 - name: Custom Attributes
   href: custom-attributes.md
