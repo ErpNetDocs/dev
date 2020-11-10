@@ -86,9 +86,12 @@
 <p>AllowedValuesEntityName specifies that the allowed values are retrieved from the specified entity. If null the allowed values are retrieved from General_CustomPropertyAllowedValues.</p>
 <p>In Domain API custom properties are properties of type General_CustomPropertyValue. The API name of the custom property starts with 'CustomProperty_' followed by the user defined property code.</p>
 <p>Each database contains different custom properties and that is why each database have different EDM model ($metadata).</p>
-<p>If a user creates new custom property in the database this custom property is not automatically shown in Domain API. That is because Domain API caches all repositories and their attributes. To refresh the cached attributes you must call the ~/domain/reset endpoint.</p>
+<blockquote>
+<p>Note!<br>
+If a user creates new custom property in the database this custom property is not automatically shown in Domain API. That is because Domain API caches all repositories and &gt;their attributes. To refresh the cached attributes you must call the ~/domain/reset endpoint.</p>
 <p>Example:
 <a href="https://demodb.my.erp.net/api/domain/reset">https://demodb.my.erp.net/api/domain/reset</a></p>
+</blockquote>
 <p>Properties of CustomPropertyValue complex type.</p>
 <table>
 <thead>
