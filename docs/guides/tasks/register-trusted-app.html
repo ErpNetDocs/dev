@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title> | ERP.net Developer Docs </title>
+    <title>Register Trusted Application | ERP.net Developer Docs </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content=" | ERP.net Developer Docs ">
+    <meta name="title" content="Register Trusted Application | ERP.net Developer Docs ">
     <meta name="generator" content="docfx 1.0.0.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
@@ -77,7 +77,89 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+<h1 id="register-trusted-application">Register Trusted Application</h1>
 
+<p>In this topic, you register an app in ERP.net database instance so the ERP.net identity server can provide authentication and authorization services for your application and its users.</p>
+<p>Each application that uses ERP.net APIs needs to be registered. Whether it's a client application like a web or mobile app, or it's a web API that backs a client app, registering it establishes a trust relationship between your application and the identity provider, the ERP.net Identity Server for the specific database.</p>
+<h2 id="register-an-application">Register an application</h2>
+<p>Registering your application establishes a trust relationship between your app and the ERP.net database instance. That means that your database trusts the application.</p>
+<p>We'll show how to register an application manually, using the Domain API Query Tool.</p>
+<p>Follow these steps to create the app registration:</p>
+<ol>
+<li>Sign in to your ERP instance and open the Domain API Query Tool.<br>
+In this example we'll use the DEMODB ERP.net instance: <a href="https://demodb.my.erp.net/api/domain/query">https://demodb.my.erp.net/api/domain/query</a></li>
+</ol>
+<blockquote>
+<p>You need to be a database administrator in order to be able to register a new trusted application.</p>
+</blockquote>
+<ol start="2">
+<li>If the application is <a href="/dev/identity/trusted-applications.html#client-type">confidential</a>, we need to prepare an application secret. Use this endpoint to get the application secret hash (Replace <em>mysecred</em> with your secret):<br>
+<a href="https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret">https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret</a></li>
+<li>In the query tool we'll create a new record for <a href="/model/entities/Systems.Security.TrustedApplications.html">System.Security.TrustedApplications</a> entity.</li>
+</ol>
+<h3 id="examples">Examples</h3>
+<ol>
+<li>Register an interactive confidential application.<br>
+<em>Query</em>: Systems_Security_TrustedApplications<br>
+<em>Type</em>: POST<br>
+<em>Body</em>:</li>
+</ol>
+<pre><code>{
+  &quot;ApplicationUri&quot;: &quot;MYDEMOCLIENT&quot;,
+  &quot;Name&quot;: &quot;MY DEMO CLIENT&quot;,
+  &quot;ClientType&quot;: &quot;Confidential&quot;,
+  &quot;ApplicationSecretHash&quot;: &quot;T/AGymuI51LwjLeIFxRQXOs9IHnupDKs/ajhWODR2C4=&quot;,
+  &quot;ImpersonateAsCommunityUserAllowed&quot;: true,
+  &quot;ImpersonateAsInternalUserAllowed&quot;: true,
+  &quot;ImpersonateLoginUrl&quot;: &quot;http://localhost:5080/myapp/signin-oidc&quot;,
+  &quot;ImpersonateLogoutUrl&quot;: &quot;http://localhost:5080/myapp/&quot;,
+  &quot;SystemUserAllowed&quot;: false
+}
+</code></pre>
+<ul>
+<li><em>ImpersonateAsCommunityUserAllowed</em> must be true if your application will work with community users. Community users are users that do not have access to system resources. They are usually customers of the company that owns the ERP.net database instance.</li>
+<li><em>ImpersonateAsInternalUserAllowed</em> must be true if internal users will use the application.</li>
+<li><em>ImpersonateLoginUrl</em> is the url that receives the authorization code. When the user loads the application in the browser, if sign in is required, the browser is redirected to ERP.net Identity Server login page. After successful login the browser is redirected to <em>ImpersonateLoginUrl</em> providing the <em>authorization_code</em> through <em>code</em> url parameter. This <em>code</em> is used by the application to request an <em>access_code</em> that is used to gain access to ERP.net server resources.</li>
+<li><em>ImpersonateLogoutUrl</em> is the url that is loaded after the user is logged out from the identity server and &quot;Return to app&quot; button is clicked.</li>
+</ul>
+<ol start="2">
+<li>Register an interactive public application.<br>
+<em>Query</em>: Systems_Security_TrustedApplications<br>
+<em>Type</em>: POST<br>
+<em>Body</em>:</li>
+</ol>
+<pre><code>{
+  &quot;ApplicationUri&quot;: &quot;MYDEMOCLIENT&quot;,
+  &quot;Name&quot;: &quot;MY DEMO CLIENT&quot;,
+  &quot;ClientType&quot;: &quot;Public&quot;,
+  &quot;ImpersonateAsCommunityUserAllowed&quot;: true,
+  &quot;ImpersonateAsInternalUserAllowed&quot;: true,
+  &quot;ImpersonateLoginUrl&quot;: &quot;http://localhost:5080/myapp/signin-oidc&quot;,
+  &quot;ImpersonateLogoutUrl&quot;: &quot;http://localhost:5080/myapp/&quot;,
+  &quot;SystemUserAllowed&quot;: false
+}
+</code></pre>
+<ol start="3">
+<li>Register service application.<br>
+<em>Query</em>: Systems_Security_TrustedApplications<br>
+<em>Type</em>: POST<br>
+<em>Body</em>:</li>
+</ol>
+<pre><code>{
+  &quot;ApplicationUri&quot;: &quot;MYDEMOCLIENT&quot;,
+  &quot;Name&quot;: &quot;Service Demo Client&quot;,
+  &quot;ApplicationSecretHash&quot;: &quot;T/AGymuI51LwjLeIFxRQXOs9IHnupDKs/ajhWODR2C4=&quot;,
+  &quot;ApplicationUri&quot;: &quot;ServiceDemoClient&quot;,
+  &quot;ClientType&quot;: &quot;Confidential&quot;,
+  &quot;SystemUserAllowed&quot;: true,
+  &quot;SystemUser&quot;: {
+  &quot;@odata.id&quot;: &quot;Systems_Security_Users(cc314327-3d04-477f-ac53-cde19d8350e9)&quot;
+  }
+}
+</code></pre>
+<ul>
+<li>SystemUser is the user for the service application.</li>
+</ul>
 </article>
           </div>
           
