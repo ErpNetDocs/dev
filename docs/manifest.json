@@ -321,7 +321,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/samples/php-interactive-client.html",
-          "hash": "2epIMUtfoDk4sVBmLSYMmw=="
+          "hash": "cT1C9anBstVdozFsHj/UnQ=="
         }
       },
       "is_incremental": false,
@@ -333,7 +333,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/samples/php-service-client.html",
-          "hash": "GITvAmFzd4e4DONBe1Hd/A=="
+          "hash": "K/nEUg0jCYE3AisBpGNNHw=="
         }
       },
       "is_incremental": false,
