@@ -41,10 +41,15 @@ Follow these steps to create the app registration:
 }
 ```
 
-* _ImpersonateAsCommunityUserAllowed_ must be true if your application will work with community users. Community users are users that do not have access to system resources. They are usually customers of the company that owns the ERP.net database instance.  
-* _ImpersonateAsInternalUserAllowed_ must be true if internal users will use the application.  
-* _ImpersonateLoginUrl_ is the url that receives the authorization code. When the user loads the application in the browser, if sign in is required, the browser is redirected to ERP.net Identity Server login page. After successful login the browser is redirected to _ImpersonateLoginUrl_ providing the _authorization_code_ through _code_ url parameter. This _code_ is used by the application to request an _access_code_ that is used to gain access to ERP.net server resources.
-* _ImpersonateLogoutUrl_ is the url that is loaded after the user is logged out from the identity server and "Return to app" button is clicked.
+- _ApplicationUri_ is the unique name that identifies the application. This is the _client_id_ in the OAuth terminology.  
+- _Name_ is the display name of the application.  
+- _ClientType_ - Confidential or Public.  
+- _ApplicationSecretHash_ a hash of the application secred - previously created using   https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret  tool.  
+- _ImpersonateAsCommunityUserAllowed_ must be true if your application will work with community users. Community users are users that do not have access to system resources. They are usually customers of the company that owns the ERP.net database instance.  
+- _ImpersonateAsInternalUserAllowed_ must be true if internal users will use the application.  
+- _ImpersonateLoginUrl_ is the url that receives the authorization code. When the user loads the application in the browser, if sign in is required, the browser is redirected to ERP.net Identity Server login page. After successful login the browser is redirected to _ImpersonateLoginUrl_ providing the _authorization_code_ through _code_ url parameter. This _code_ is used by the application to request an _access_code_ that is used to gain access to ERP.net server resources.
+- _ImpersonateLogoutUrl_ is the url that is loaded after the user is logged out from the identity server and "Return to app" button is clicked.  
+- _SystemUserAllowed_ specifies if the application can act as a service application that is impersonated as specific user.
 
 2. Register an interactive public application.  
    _Query_: Systems_Security_TrustedApplications  
