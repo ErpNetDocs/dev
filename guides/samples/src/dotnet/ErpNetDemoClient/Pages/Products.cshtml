@@ -1,0 +1,16 @@
+﻿@page
+
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+
+@model ProductsModel
+@{
+    ViewData["Title"] = "Products";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use Domain API to load products.</p>
+
+<p>Products result JSON</p>
+<pre>
+@Model.ProductsJson
+</pre>
