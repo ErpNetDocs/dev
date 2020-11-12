@@ -102,7 +102,7 @@
   "guides/samples/javascript-client.html": {
     "href": "guides/samples/javascript-client.html",
     "title": "Javascript Interactive Client | ERP.net Developer Docs",
-    "keywords": "Javascript Interactive Client Register Public Trusted Application See source in GitHub"
+    "keywords": "Javascript Interactive Client Register Public Trusted Application See source in GitHub For more detailed tutorial see https://identityserver4.readthedocs.io/en/latest/quickstarts/4_javascript_client.html"
   },
   "guides/samples/php-interactive-client.html": {
     "href": "guides/samples/php-interactive-client.html",
