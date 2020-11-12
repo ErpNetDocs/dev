@@ -99,6 +99,21 @@
     "title": "Build Payment Connector | ERP.net Developer Docs",
     "keywords": "Build Payment Connector The Payment Connector sample demonstrates connecting ERP.net with Stripe. The app demonstrates simplified workflow: Internal user logins interactively. The most recent 10 payment orders, accessible by the user, are displayed. The user chooses a payment order. The selected payment order is exported to a demo Stripe account. After a demo payment is made, the app creates a Payment Transaction with the payment details. The app includes the following basic tasks: Register UI app. Login interactive. List Payment Orders. Create Payment Transaction. The app is written entirely in JavaScript and hosted in GitHub Pages. You can access the app source project here. To run the application, click here. You can use admin/123 for internal user logon."
   },
+  "guides/samples/javascript-client.html": {
+    "href": "guides/samples/javascript-client.html",
+    "title": "Javascript Interactive Client | ERP.net Developer Docs",
+    "keywords": "Javascript Interactive Client"
+  },
+  "guides/samples/php-interactive-client.html": {
+    "href": "guides/samples/php-interactive-client.html",
+    "title": "| ERP.net Developer Docs",
+    "keywords": ""
+  },
+  "guides/samples/php-service-client.html": {
+    "href": "guides/samples/php-service-client.html",
+    "title": "| ERP.net Developer Docs",
+    "keywords": ""
+  },
   "guides/tasks/create-sales-order.html": {
     "href": "guides/tasks/create-sales-order.html",
     "title": "| ERP.net Developer Docs",

@@ -281,6 +281,42 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "guides/samples/javascript-client.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/samples/javascript-client.html",
+          "hash": "nFcP28SaKgDI+Usc3g/K/A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/samples/php-interactive-client.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/samples/php-interactive-client.html",
+          "hash": "TeNxk9Z248aQx6HxrIEraQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/samples/php-service-client.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/samples/php-service-client.html",
+          "hash": "4vHHiTHR/MSC5qWMyRy7RA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "guides/tasks/create-sales-order.md",
       "output": {
         ".html": {
@@ -372,7 +408,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/toc.html",
-          "hash": "Jz9+HscVpqlX8LTgEljygA=="
+          "hash": "EUL9h+KCoi7EjuNdQ+dMig=="
         }
       },
       "is_incremental": false,
