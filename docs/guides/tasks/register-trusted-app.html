@@ -117,10 +117,15 @@ In this example we'll use the DEMODB ERP.net instance: <a href="https://demodb.m
 }
 </code></pre>
 <ul>
+<li><em>ApplicationUri</em> is the unique name that identifies the application. This is the <em>client_id</em> in the OAuth terminology.</li>
+<li><em>Name</em> is the display name of the application.</li>
+<li><em>ClientType</em> - Confidential or Public.</li>
+<li><em>ApplicationSecretHash</em> a hash of the application secred - previously created using   <a href="https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret">https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret</a>  tool.</li>
 <li><em>ImpersonateAsCommunityUserAllowed</em> must be true if your application will work with community users. Community users are users that do not have access to system resources. They are usually customers of the company that owns the ERP.net database instance.</li>
 <li><em>ImpersonateAsInternalUserAllowed</em> must be true if internal users will use the application.</li>
 <li><em>ImpersonateLoginUrl</em> is the url that receives the authorization code. When the user loads the application in the browser, if sign in is required, the browser is redirected to ERP.net Identity Server login page. After successful login the browser is redirected to <em>ImpersonateLoginUrl</em> providing the <em>authorization_code</em> through <em>code</em> url parameter. This <em>code</em> is used by the application to request an <em>access_code</em> that is used to gain access to ERP.net server resources.</li>
 <li><em>ImpersonateLogoutUrl</em> is the url that is loaded after the user is logged out from the identity server and &quot;Return to app&quot; button is clicked.</li>
+<li><em>SystemUserAllowed</em> specifies if the application can act as a service application that is impersonated as specific user.</li>
 </ul>
 <ol start="2">
 <li>Register an interactive public application.<br>
@@ -146,10 +151,9 @@ In this example we'll use the DEMODB ERP.net instance: <a href="https://demodb.m
 <em>Body</em>:</li>
 </ol>
 <pre><code>{
-  &quot;ApplicationUri&quot;: &quot;MYDEMOCLIENT&quot;,
+  &quot;ApplicationUri&quot;: &quot;MYSERVICEDEMOCLIENT&quot;,
   &quot;Name&quot;: &quot;Service Demo Client&quot;,
-  &quot;ApplicationSecretHash&quot;: &quot;T/AGymuI51LwjLeIFxRQXOs9IHnupDKs/ajhWODR2C4=&quot;,
-  &quot;ApplicationUri&quot;: &quot;ServiceDemoClient&quot;,
+  &quot;ApplicationSecretHash&quot;: &quot;T/AGymuI51LwjLeIFxRQXOs9IHnupDKs/ajhWODR2C4=&quot;,  
   &quot;ClientType&quot;: &quot;Confidential&quot;,
   &quot;SystemUserAllowed&quot;: true,
   &quot;SystemUser&quot;: {
