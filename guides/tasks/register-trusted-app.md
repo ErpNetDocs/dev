@@ -21,9 +21,9 @@ Follow these steps to create the app registration:
    https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret  
 3. In the query tool we'll create a new record for [System.Security.TrustedApplications](/model/entities/Systems.Security.TrustedApplications.html) entity.  
 
-### Examples
 
-1. Register an interactive confidential application.  
+
+### Register an interactive confidential application.  
    _Query_: Systems_Security_TrustedApplications  
    _Type_: POST  
    _Body_:  
@@ -51,7 +51,7 @@ Follow these steps to create the app registration:
 - _ImpersonateLogoutUrl_ is the url that is loaded after the user is logged out from the identity server and "Return to app" button is clicked.  
 - _SystemUserAllowed_ specifies if the application can act as a service application that is impersonated as specific user.
 
-2. Register an interactive public application.  
+### Register an interactive public application.  
    _Query_: Systems_Security_TrustedApplications  
    _Type_: POST  
    _Body_:  
@@ -68,7 +68,7 @@ Follow these steps to create the app registration:
 }
 ```
 
-3. Register service application.  
+### Register service application.  
    _Query_: Systems_Security_TrustedApplications  
    _Type_: POST  
    _Body_:  
