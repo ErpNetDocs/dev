@@ -99,6 +99,16 @@
     "title": "Build Payment Connector | ERP.net Developer Docs",
     "keywords": "Build Payment Connector The Payment Connector sample demonstrates connecting ERP.net with Stripe. The app demonstrates simplified workflow: Internal user logins interactively. The most recent 10 payment orders, accessible by the user, are displayed. The user chooses a payment order. The selected payment order is exported to a demo Stripe account. After a demo payment is made, the app creates a Payment Transaction with the payment details. The app includes the following basic tasks: Register UI app. Login interactive. List Payment Orders. Create Payment Transaction. The app is written entirely in JavaScript and hosted in GitHub Pages. You can access the app source project here. To run the application, click here. You can use admin/123 for internal user logon."
   },
+  "guides/samples/dotnet-service-app.html": {
+    "href": "guides/samples/dotnet-service-app.html",
+    "title": "Dot Net Service Application | ERP.net Developer Docs",
+    "keywords": "Dot Net Service Application Register Trusted Application See source in GitHub"
+  },
+  "guides/samples/dotnet-web-app.html": {
+    "href": "guides/samples/dotnet-web-app.html",
+    "title": "Dot Net Web Application | ERP.net Developer Docs",
+    "keywords": "Dot Net Web Application Register Trusted Application See source in GitHub"
+  },
   "guides/samples/javascript-client.html": {
     "href": "guides/samples/javascript-client.html",
     "title": "Javascript Interactive Client | ERP.net Developer Docs",
@@ -113,6 +123,11 @@
     "href": "guides/samples/php-service-client.html",
     "title": "PHP Service Application | ERP.net Developer Docs",
     "keywords": "PHP Service Application Register Service Trusted Application See source in GitHub"
+  },
+  "guides/samples/src/dotnet/ErpNetDemoClient/wwwroot/lib/jquery-validation/LICENSE.html": {
+    "href": "guides/samples/src/dotnet/ErpNetDemoClient/wwwroot/lib/jquery-validation/LICENSE.html",
+    "title": "The MIT License (MIT) | ERP.net Developer Docs",
+    "keywords": "The MIT License (MIT) Copyright Jörn Zaefferer Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
   },
   "guides/tasks/create-sales-order.html": {
     "href": "guides/tasks/create-sales-order.html",

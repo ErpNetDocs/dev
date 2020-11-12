@@ -281,6 +281,30 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "guides/samples/dotnet-service-app.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/samples/dotnet-service-app.html",
+          "hash": "2WhlecPY1vCtinPT+BG+wQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/samples/dotnet-web-app.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/samples/dotnet-web-app.html",
+          "hash": "2zZOKYW7tSMomwqQzFaEzw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "guides/samples/javascript-client.md",
       "output": {
         ".html": {
@@ -310,6 +334,18 @@
         ".html": {
           "relative_path": "guides/samples/php-service-client.html",
           "hash": "GITvAmFzd4e4DONBe1Hd/A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guides/samples/src/dotnet/ErpNetDemoClient/wwwroot/lib/jquery-validation/LICENSE.md",
+      "output": {
+        ".html": {
+          "relative_path": "guides/samples/src/dotnet/ErpNetDemoClient/wwwroot/lib/jquery-validation/LICENSE.html",
+          "hash": "U+YUTuyIUNp7SgnyeetKaw=="
         }
       },
       "is_incremental": false,
@@ -408,7 +444,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/toc.html",
-          "hash": "CedNMDXqvuHl6OnyxN3H3w=="
+          "hash": "ilCSEsKJ4FFZ9YmeD1bV5Q=="
         }
       },
       "is_incremental": false,
