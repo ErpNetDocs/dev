@@ -69,10 +69,9 @@ Follow these steps to create the app registration:
    _Body_:  
 ```
 {
-  "ApplicationUri": "MYDEMOCLIENT",
+  "ApplicationUri": "MYSERVICEDEMOCLIENT",
   "Name": "Service Demo Client",
-  "ApplicationSecretHash": "T/AGymuI51LwjLeIFxRQXOs9IHnupDKs/ajhWODR2C4=",
-  "ApplicationUri": "ServiceDemoClient",
+  "ApplicationSecretHash": "T/AGymuI51LwjLeIFxRQXOs9IHnupDKs/ajhWODR2C4=",  
   "ClientType": "Confidential",
   "SystemUserAllowed": true,
   "SystemUser": {
