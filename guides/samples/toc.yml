@@ -4,6 +4,10 @@
   href: php-interactive-client.md
 - name: PHP Service Client
   href: php-service-client.md
+- name: Dot Net Web Application
+  href: dotnet-web-app.md
+- name: Dot Net Service Application
+  href: dotnet-service-app.md
 - name: Build E-Commerce Website
   href: build-ecommerce-website.md
 - name: Build Payment Connector
