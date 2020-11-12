@@ -97,13 +97,10 @@ In this example we'll use the DEMODB ERP.net instance: <a href="https://demodb.m
 <a href="https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret">https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret</a></li>
 <li>In the query tool we'll create a new record for <a href="/model/entities/Systems.Security.TrustedApplications.html">System.Security.TrustedApplications</a> entity.</li>
 </ol>
-<h3 id="examples">Examples</h3>
-<ol>
-<li>Register an interactive confidential application.<br>
-<em>Query</em>: Systems_Security_TrustedApplications<br>
+<h3 id="register-an-interactive-confidential-application">Register an interactive confidential application.</h3>
+<p><em>Query</em>: Systems_Security_TrustedApplications<br>
 <em>Type</em>: POST<br>
-<em>Body</em>:</li>
-</ol>
+<em>Body</em>:</p>
 <pre><code>{
   &quot;ApplicationUri&quot;: &quot;MYDEMOCLIENT&quot;,
   &quot;Name&quot;: &quot;MY DEMO CLIENT&quot;,
@@ -127,12 +124,10 @@ In this example we'll use the DEMODB ERP.net instance: <a href="https://demodb.m
 <li><em>ImpersonateLogoutUrl</em> is the url that is loaded after the user is logged out from the identity server and &quot;Return to app&quot; button is clicked.</li>
 <li><em>SystemUserAllowed</em> specifies if the application can act as a service application that is impersonated as specific user.</li>
 </ul>
-<ol start="2">
-<li>Register an interactive public application.<br>
-<em>Query</em>: Systems_Security_TrustedApplications<br>
+<h3 id="register-an-interactive-public-application">Register an interactive public application.</h3>
+<p><em>Query</em>: Systems_Security_TrustedApplications<br>
 <em>Type</em>: POST<br>
-<em>Body</em>:</li>
-</ol>
+<em>Body</em>:</p>
 <pre><code>{
   &quot;ApplicationUri&quot;: &quot;MYDEMOCLIENT&quot;,
   &quot;Name&quot;: &quot;MY DEMO CLIENT&quot;,
@@ -144,12 +139,10 @@ In this example we'll use the DEMODB ERP.net instance: <a href="https://demodb.m
   &quot;SystemUserAllowed&quot;: false
 }
 </code></pre>
-<ol start="3">
-<li>Register service application.<br>
-<em>Query</em>: Systems_Security_TrustedApplications<br>
+<h3 id="register-service-application">Register service application.</h3>
+<p><em>Query</em>: Systems_Security_TrustedApplications<br>
 <em>Type</em>: POST<br>
-<em>Body</em>:</li>
-</ol>
+<em>Body</em>:</p>
 <pre><code>{
   &quot;ApplicationUri&quot;: &quot;MYSERVICEDEMOCLIENT&quot;,
   &quot;Name&quot;: &quot;Service Demo Client&quot;,

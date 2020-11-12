@@ -285,7 +285,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/samples/javascript-client.html",
-          "hash": "2+0wt7lnxCUAlFKcjVG7Jg=="
+          "hash": "1EX2kj4p+7FLNWwwBOUUYw=="
         }
       },
       "is_incremental": false,
@@ -297,7 +297,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/samples/php-interactive-client.html",
-          "hash": "TeNxk9Z248aQx6HxrIEraQ=="
+          "hash": "2epIMUtfoDk4sVBmLSYMmw=="
         }
       },
       "is_incremental": false,
@@ -309,7 +309,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/samples/php-service-client.html",
-          "hash": "4vHHiTHR/MSC5qWMyRy7RA=="
+          "hash": "GITvAmFzd4e4DONBe1Hd/A=="
         }
       },
       "is_incremental": false,
@@ -345,7 +345,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/tasks/register-trusted-app.html",
-          "hash": "biNBTl3mH2aQaePqH0+5aA=="
+          "hash": "aqds4YHSA044Si6J4fYY0g=="
         }
       },
       "is_incremental": false,
