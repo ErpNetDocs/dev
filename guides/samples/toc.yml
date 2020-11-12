@@ -1,3 +1,9 @@
+- name: Javascript Client
+  href: javascript-client.md
+- name: PHP Interactive Client
+  href: php-interactive-client.md
+- name: PHP Service Client
+  href: php-service-client.md
 - name: Build E-Commerce Website
   href: build-ecommerce-website.md
 - name: Build Payment Connector

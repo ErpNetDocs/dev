@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule signin-oidc signin-oidc.php [L]
