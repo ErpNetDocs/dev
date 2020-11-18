@@ -23,6 +23,6 @@ Domain API Example:
 ```
 
 > [!note]  
-> Because _Amount_ is odata complex object it can not participate in $filter clause in uri. To filter by Amount or Quantity properties you can use the following:
+> Because _Quantity_ is odata complex object it can not participate in uri $filter query parameter. To filter by Amount or Quantity properties you can use the following:
 >
 > `~/Logistics_Inventory_StoreTransactionLines?$filter=QuantityValue ge 5.555 ~/Crm_Sales_SalesOrderLines?$filter=LineAmountValue ge 5.555`
