@@ -11,8 +11,8 @@
   },
   "apis/domainapi/complex-values.html": {
     "href": "apis/domainapi/complex-values.html",
-    "title": "Complex Values | ERP.net Developer Docs",
-    "keywords": "Complex Values Multi-language String Amount Quantity"
+    "title": "| ERP.net Developer Docs",
+    "keywords": "ComplexTypes are used in OData to encapsulate richer data types for use as Entity properties. ComplexTypes are composed of properties the same way that Entities are. ERP.net Complex Types: Amount Quantity CustomPropertyValue MultilanguageString"
   },
   "apis/domainapi/custom-attributes.html": {
     "href": "apis/domainapi/custom-attributes.html",
