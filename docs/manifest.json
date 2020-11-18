@@ -30,7 +30,7 @@
       "output": {
         ".html": {
           "relative_path": "apis/domainapi/amount.html",
-          "hash": "QEWHZuDAIonkNbwjslw97g=="
+          "hash": "o7y3kAOA4U4gGM4vZhLmSg=="
         }
       },
       "is_incremental": false,
@@ -114,7 +114,7 @@
       "output": {
         ".html": {
           "relative_path": "apis/domainapi/multi-language-string.html",
-          "hash": "W+dmrytMb/fvx07qq/gDIw=="
+          "hash": "IvKngK8LXWLGOggaGypazQ=="
         }
       },
       "is_incremental": false,
@@ -126,7 +126,7 @@
       "output": {
         ".html": {
           "relative_path": "apis/domainapi/quantity.html",
-          "hash": "Lbt1JlqNwy3kvJ6OauHv/A=="
+          "hash": "7Ad/TwfIFt3r6B97k4GaCA=="
         }
       },
       "is_incremental": false,

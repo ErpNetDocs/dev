@@ -79,6 +79,34 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="multilanguage-string-complex-value">Multilanguage string (Complex value)</h1>
 
+<p>Some text properties support value in more than one language.
+This properties are of multi-language string type.</p>
+<p>The multi-language string can store many language strings, indexing them by language key.
+The language key is a CultureInfo two letter ISO language name, like &quot;en&quot;, &quot;de&quot;, etc.</p>
+<p>For example, the name of a product is a data attribute, which can simultaneously contain translation of the product name in many languages.</p>
+<p>When you retrieve the value of this attribute with the Domain API, you get values similar to:</p>
+<pre><code class="lang-json">{
+  &quot;en&quot;: &quot;Apple&quot;,
+  &quot;de&quot;: &quot;Apfel&quot;
+}
+</code></pre>
+<h3 id="all-translations-are-a-single-value">All translations are a single value</h3>
+<p>All translations in a multi-language string are treated as a single value.
+You cannot change only one language pair - all pairs are updated simultaneously.
+The client applications are responsible for managing all language pairs.</p>
+<h3 id="filtering">Filtering</h3>
+<p>The equality comparison for multi-language string is ambiguous.
+The APIs generally do not support direct equality comparisons.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Domain API supports only the filter function <strong>contains</strong>.</p>
+</div>
+<p>For example, in Domain API, the following is supported:</p>
+<pre><code>~/General_Products_Products?$filter=contains(Name,'ppl')  
+</code></pre>
+<p>However, this is not valid:</p>
+<pre><code>~/General_Products_Products?$filter=Name eq 'Apple' 
+</code></pre>
 </article>
           </div>
           

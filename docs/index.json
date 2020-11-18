@@ -2,7 +2,7 @@
   "apis/domainapi/amount.html": {
     "href": "apis/domainapi/amount.html",
     "title": "Amount (Complex value) | ERP.net Developer Docs",
-    "keywords": "Amount (Complex value)"
+    "keywords": "Amount (Complex value) The ERP domain model declares a special type for amount (currency) properties. The amount is represented by value and currency. Properties Name Type Description Currency String The currency of the amount represented by it's sign. Value Decimal The value of the amount. Domain API Example: { \"LineAmount\": { \"Value\": \"3.55\", \"Currency\": \"USD\" } } Note Because Amount is odata complex object it can not participate in uri $filter query parameter. To filter by Amount or Quantity properties you can use the following: ~/Logistics_Inventory_StoreTransactionLines?$filter=QuantityValue ge 5.555 ~/Crm_Sales_SalesOrderLines?$filter=LineAmountValue ge 5.555"
   },
   "apis/domainapi/batch-requests.html": {
     "href": "apis/domainapi/batch-requests.html",
@@ -37,12 +37,12 @@
   "apis/domainapi/multi-language-string.html": {
     "href": "apis/domainapi/multi-language-string.html",
     "title": "Multilanguage string (Complex value) | ERP.net Developer Docs",
-    "keywords": "Multilanguage string (Complex value)"
+    "keywords": "Multilanguage string (Complex value) Some text properties support value in more than one language. This properties are of multi-language string type. The multi-language string can store many language strings, indexing them by language key. The language key is a CultureInfo two letter ISO language name, like \"en\", \"de\", etc. For example, the name of a product is a data attribute, which can simultaneously contain translation of the product name in many languages. When you retrieve the value of this attribute with the Domain API, you get values similar to: { \"en\": \"Apple\", \"de\": \"Apfel\" } All translations are a single value All translations in a multi-language string are treated as a single value. You cannot change only one language pair - all pairs are updated simultaneously. The client applications are responsible for managing all language pairs. Filtering The equality comparison for multi-language string is ambiguous. The APIs generally do not support direct equality comparisons. Note Domain API supports only the filter function contains . For example, in Domain API, the following is supported: ~/General_Products_Products?$filter=contains(Name,'ppl') However, this is not valid: ~/General_Products_Products?$filter=Name eq 'Apple'"
   },
   "apis/domainapi/quantity.html": {
     "href": "apis/domainapi/quantity.html",
     "title": "Quantity (Complex value) | ERP.net Developer Docs",
-    "keywords": "Quantity (Complex value)"
+    "keywords": "Quantity (Complex value) The ERP domain model declares a special type for quantity properties. The quantity is represented by value and measurement unit. Properties Name Type Description Unit String TThe measurement unit of the quantity represented by it's code. Value Decimal The value of the quantity. Domain API Example: { \"LineAmount\": { \"Value\": \"5.555\", \"Unit\": \"PCS\" } } Note Because Quantity is odata complex object it can not participate in uri $filter query parameter. To filter by Amount or Quantity properties you can use the following: ~/Logistics_Inventory_StoreTransactionLines?$filter=QuantityValue ge 5.555 ~/Crm_Sales_SalesOrderLines?$filter=LineAmountValue ge 5.555"
   },
   "apis/domainapi/query-options.html": {
     "href": "apis/domainapi/query-options.html",

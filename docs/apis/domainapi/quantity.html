@@ -79,6 +79,43 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="quantity-complex-value">Quantity (Complex value)</h1>
 
+<p>The ERP domain model declares a special type for quantity properties.</p>
+<p>The quantity is represented by value and measurement unit.</p>
+<h2 id="properties">Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit</td>
+<td>String</td>
+<td>TThe measurement unit of the quantity represented by it's code.</td>
+</tr>
+<tr>
+<td>Value</td>
+<td>Decimal</td>
+<td>The value of the quantity.</td>
+</tr>
+</tbody>
+</table>
+<p>Domain API Example:</p>
+<pre><code class="lang-json">{
+  &quot;LineAmount&quot;: {
+    &quot;Value&quot;: &quot;5.555&quot;,
+    &quot;Unit&quot;: &quot;PCS&quot;
+  }
+}
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Because <em>Quantity</em> is odata complex object it can not participate in uri $filter query parameter. To filter by Amount or Quantity properties you can use the following:</p>
+<p><code>~/Logistics_Inventory_StoreTransactionLines?$filter=QuantityValue ge 5.555 ~/Crm_Sales_SalesOrderLines?$filter=LineAmountValue ge 5.555</code></p>
+</div>
 </article>
           </div>
           
