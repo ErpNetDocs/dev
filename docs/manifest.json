@@ -25,6 +25,39 @@
       "version": ""
     },
     {
+      "type": "Resource",
+      "source_relative_path": "docs/fonts/glyphicons-halflings-regular.svg",
+      "output": {
+        "resource": {
+          "relative_path": "docs/fonts/glyphicons-halflings-regular.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/logo.svg",
+      "output": {
+        "resource": {
+          "relative_path": "docs/logo.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/query-builder.png",
+      "output": {
+        "resource": {
+          "relative_path": "docs/query-builder.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "erp-instances.md",
       "output": {
@@ -376,7 +409,7 @@
       "output": {
         ".html": {
           "relative_path": "topics/domain-api/index.html",
-          "hash": "b67MGMJeHZlU3UjgVrXQ4w=="
+          "hash": "HiZD6pEJ4wvb46qHzrFn9g=="
         }
       },
       "is_incremental": false,
@@ -509,17 +542,6 @@
         ".html": {
           "relative_path": "topics/index.html",
           "hash": "NGBfEJjxn7Dq6IB9PSnaHw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "query-builder.png",
-      "output": {
-        "resource": {
-          "relative_path": "query-builder.png"
         }
       },
       "is_incremental": false,

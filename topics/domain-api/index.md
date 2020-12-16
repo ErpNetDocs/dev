@@ -1,6 +1,6 @@
 # Domain API Introduction
 
-For an overview and introduction of the Domain API, read the [home page of the developer docs](/index.md#the-domain-api).
+For an overview and introduction of the Domain API, read the [home page of the developer docs](~/index.md#the-domain-api).
 
 ## Purpose
 
