@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Retrieve Products Task | ERP.net Developer Docs </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Retrieve Products Task | ERP.net Developer Docs ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="retrieve-products-task">Retrieve Products Task</h1>
+
+<p>This task shows ways to retrieve products in order to display them in a e-commerce store.</p>
+<h2 id="retrieve-products">Retrieve Products</h2>
+<p>The following query:</p>
+<ol>
+<li>Retrieves 10 products, without any order</li>
+<li>Filters by:
+<ul>
+<li><strong>Active</strong> = true</li>
+</ul>
+</li>
+<li>Selects the following attributes:
+<ul>
+<li><strong>Id</strong> - the unique Id of the product.</li>
+<li><strong>Part Number</strong> - the product code.</li>
+<li><strong>Name</strong> - the <a href="../../topics/domain-api/multi-language-string.html">multi-language</a> product name.</li>
+<li><strong>ProductGroup</strong> - <a href="../../topics/domain-api/referenced-objects.html">object reference</a> to the Product Group containing the product.</li>
+<li><strong>StandardPricePerLot</strong> - <a href="../../topics/domain-api/amount.html">Amount</a> object, containing the standard price.</li>
+<li><strong>Description</strong> - textual description of the product. This description is clear text and does not support any formatting. There is also Description_Html attribute, which can be used to contain description with HTML formatting.</li>
+<li><strong>MeasurementUnit</strong> - <a href="../../topics/domain-api/referenced-objects.html">object reference</a> to measurement units. This is the default sales measurement unit of the product.</li>
+</ul>
+</li>
+</ol>
+<p><a href="https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$filter=Active%20eq%20true&amp;$select=CatalogDescriptionHtml,Description,Id,MeasurementUnit,Name,PartNumber,ProductGroup,StandardPricePerLot">https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$filter=Active%20eq%20true&amp;$select=CatalogDescriptionHtml,Description,Id,MeasurementUnit,Name,PartNumber,ProductGroup,StandardPricePerLot</a></p>
+<p>You can edit the query in the Query Builder:</p>
+<p><a href="https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10&amp;$filter=Active%20eq%20true&amp;$select=CatalogDescriptionHtml,Description,Id,MeasurementUnit,Name,PartNumber,ProductGroup,StandardPricePerLot">https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10&amp;$filter=Active%20eq%20true&amp;$select=CatalogDescriptionHtml,Description,Id,MeasurementUnit,Name,PartNumber,ProductGroup,StandardPricePerLot</a></p>
+<h2 id="retrieve-product-pictures">Retrieve Product Pictures</h2>
+<h2 id="retrieve-product-variants">Retrieve Product Variants</h2>
+<h2 id="retrieve-product-prices">Retrieve Product Prices</h2>
+<h2 id="retrieve-product-codes">Retrieve Product Codes</h2>
+<p>Retrieving product codes might sometimes be useful for getting bar-code or supplier/customer code of a product.
+In order to understand the return set, the application must know in advance the id of the coding system.
+For example, one coding system might be for bar-codes, another - for the codes of the products for a prominent customer, etc.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/guides/step-by-step/retrieve-products.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

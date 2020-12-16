@@ -1,6 +1,6 @@
 - name: Overview
-  href: overview.md
-- name: Tasks
-  href: tasks/toc.yml
-- name: Samples
+  href: index.md
+- name: Step-by-step guides
+  href: step-by-step/toc.yml
+- name: Sample apps
   href: samples/toc.yml

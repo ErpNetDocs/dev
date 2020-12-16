@@ -1,6 +1,6 @@
 {
   "homepages": [],
-  "source_base_path": "C:/TFSAgent15/_work/20/s",
+  "source_base_path": "C:/Users/ivanarj/source/repos/ErpNetDocs/dev",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -18,233 +18,7 @@
       "output": {
         ".html": {
           "relative_path": "README.html",
-          "hash": "r+Fh7XZlKsotqLrngo5Hkg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/domainapi/amount.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/domainapi/amount.html",
-          "hash": "lwpsmOxrU5YsQhojnsv4Ug=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/domainapi/batch-requests.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/domainapi/batch-requests.html",
-          "hash": "eH9CcY+pmGLoWDKaMxnW8A=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/domainapi/complex-values.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/domainapi/complex-values.html",
-          "hash": "mVDK/zcBOQnK2UgBJjPi+Q=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/domainapi/custom-attributes.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/domainapi/custom-attributes.html",
-          "hash": "vGonc8YeO+WYuURf8uq1Ew=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/domainapi/demo-web-shop.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/domainapi/demo-web-shop.html",
-          "hash": "zymgF2wsKuwc1RLGyDIbZw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/domainapi/example-queries.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/domainapi/example-queries.html",
-          "hash": "vhzgs13pcoaVh2xOvCkcnQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/domainapi/introduction.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/domainapi/introduction.html",
-          "hash": "dIqZ3gMyRJ+WhdIruUQqFw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/domainapi/multi-language-string.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/domainapi/multi-language-string.html",
-          "hash": "3/ZWqFqvSSPJ6LlQUGyyvQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/domainapi/quantity.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/domainapi/quantity.html",
-          "hash": "Z0EKdxCmWs9W/R/ApV0C0w=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/domainapi/query-options.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/domainapi/query-options.html",
-          "hash": "TfVyVPkXArk9L1IUFPTSUw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/domainapi/referenced-objects.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/domainapi/referenced-objects.html",
-          "hash": "QkOIFVeTkclg79HNWh9aMw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/domainapi/transactions.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/domainapi/transactions.html",
-          "hash": "HIuiLrgjknx1mZnFcDMoFw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/domainapi/url-components.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/domainapi/url-components.html",
-          "hash": "8dyzxJ3yIioxaUz8xPtN1g=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/domainapi/working-with-documents.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/domainapi/working-with-documents.html",
-          "hash": "SXt7oEtiHH9T+5srd3EhKQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/introduction.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/introduction.html",
-          "hash": "MaaQHPcQHZOzQTM/cHiWIw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "apis/tableapi/index.md",
-      "output": {
-        ".html": {
-          "relative_path": "apis/tableapi/index.html",
-          "hash": "14SnzYY7TcYUZlYZbIcwyg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Toc",
-      "source_relative_path": "apis/toc.yml",
-      "output": {
-        ".html": {
-          "relative_path": "apis/toc.html",
-          "hash": "wN7isy7KZBf+/wYwx9qDSQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/fonts/glyphicons-halflings-regular.svg",
-      "output": {
-        "resource": {
-          "relative_path": "docs/fonts/glyphicons-halflings-regular.svg"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "docs/logo.svg",
-      "output": {
-        "resource": {
-          "relative_path": "docs/logo.svg"
+          "hash": "SiWNP9AANKnydckzbwQCdw=="
         }
       },
       "is_incremental": false,
@@ -256,22 +30,19 @@
       "output": {
         ".html": {
           "relative_path": "erp-instances.html",
-          "hash": "HGjdHfAE8L3zMqojrKfP+g=="
+          "hash": "F9bgS/2UHO1QWVqticWGnw=="
         }
       },
       "is_incremental": false,
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Conceptual",
-      "source_relative_path": "guides/overview.md",
+      "source_relative_path": "guides/index.md",
       "output": {
         ".html": {
-          "relative_path": "guides/overview.html",
-          "hash": "hWT23WdT2cYVxf2noyAlIw=="
+          "relative_path": "guides/index.html",
+          "hash": "jv0qQ+IvFPT36SL8X4Thow=="
         }
       },
       "is_incremental": false,
@@ -283,7 +54,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/samples/build-ecommerce-website.html",
-          "hash": "X4C/q5GXeAdg1BJFSp3gbw=="
+          "hash": "ajtq7uYT+K82iPTWWmgnzw=="
         }
       },
       "is_incremental": false,
@@ -295,7 +66,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/samples/build-payment-connector.html",
-          "hash": "gzBmJBslH6UUe5xRhQPy6w=="
+          "hash": "iuPwp1pdQwc8ktOzfkHNoA=="
         }
       },
       "is_incremental": false,
@@ -307,7 +78,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/samples/dotnet-service-app.html",
-          "hash": "tljVYbSEQbHeAESb8RvrOw=="
+          "hash": "2nF4M8D1JSliIv7G7GYArw=="
         }
       },
       "is_incremental": false,
@@ -319,7 +90,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/samples/dotnet-web-app.html",
-          "hash": "RY6N8xvwiEPitlckCVV8UQ=="
+          "hash": "Cm1vqT2CeXKNMdFmKbLq6Q=="
         }
       },
       "is_incremental": false,
@@ -331,7 +102,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/samples/javascript-client.html",
-          "hash": "7T09ghqHl6cV748lbcgA6w=="
+          "hash": "C+GLcYESG+aqQ2dbe373rw=="
         }
       },
       "is_incremental": false,
@@ -343,7 +114,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/samples/php-interactive-client.html",
-          "hash": "gsbzpkX7pMvahD1/N6e0Cw=="
+          "hash": "7Sfmus6AS5tjt4TGlLVBgA=="
         }
       },
       "is_incremental": false,
@@ -355,7 +126,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/samples/php-service-client.html",
-          "hash": "VBkJpgGuVThi6oMmUq+5vg=="
+          "hash": "3zYsErPYyQYfI0lHkCKi/g=="
         }
       },
       "is_incremental": false,
@@ -367,7 +138,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/samples/src/dotnet/ErpNetDemoClient/wwwroot/lib/jquery-validation/LICENSE.html",
-          "hash": "LIPyIGiNsS5v2x3A/Q5ctA=="
+          "hash": "enJ43fkcKm5dJ4D0PUQy9g=="
         }
       },
       "is_incremental": false,
@@ -375,11 +146,11 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "guides/tasks/create-sales-order.md",
+      "source_relative_path": "guides/step-by-step/create-sales-order.md",
       "output": {
         ".html": {
-          "relative_path": "guides/tasks/create-sales-order.html",
-          "hash": "y/ZwtYW09BEPq2hfs9sKsQ=="
+          "relative_path": "guides/step-by-step/create-sales-order.html",
+          "hash": "yr22r3MQxe5EqfHpBGwiAA=="
         }
       },
       "is_incremental": false,
@@ -387,11 +158,11 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "guides/tasks/login-non-confidential.md",
+      "source_relative_path": "guides/step-by-step/login-confidential.md",
       "output": {
         ".html": {
-          "relative_path": "guides/tasks/login-non-confidential.html",
-          "hash": "NrxMy+6b+rYXM2KDL7jbTg=="
+          "relative_path": "guides/step-by-step/login-confidential.html",
+          "hash": "e9PDNHV/i+3ko0KYdvKNJw=="
         }
       },
       "is_incremental": false,
@@ -399,26 +170,11 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "guides/tasks/register-trusted-app.md",
+      "source_relative_path": "guides/step-by-step/login-non-confidential.md",
       "output": {
         ".html": {
-          "relative_path": "guides/tasks/register-trusted-app.html",
-          "hash": "cEnLecUYDKgR45srPa0XhA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
-      "type": "Conceptual",
-      "source_relative_path": "guides/tasks/retrieve-products.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/tasks/retrieve-products.html",
-          "hash": "S3zjpEImtpuEgz4u9K9txg=="
+          "relative_path": "guides/step-by-step/login-non-confidential.html",
+          "hash": "nTnP7WfQFoZzob6ZFVFaxw=="
         }
       },
       "is_incremental": false,
@@ -426,11 +182,11 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "guides/tasks/subtasks/overview.md",
+      "source_relative_path": "guides/step-by-step/register-trusted-app.md",
       "output": {
         ".html": {
-          "relative_path": "guides/tasks/subtasks/overview.html",
-          "hash": "TPlYjSXA+ROOaluO3rPsLA=="
+          "relative_path": "guides/step-by-step/register-trusted-app.html",
+          "hash": "s4AEi7g9qDS7sWXAdFAy+g=="
         }
       },
       "is_incremental": false,
@@ -438,23 +194,11 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "guides/tasks/subtasks/subtask1.md",
+      "source_relative_path": "guides/step-by-step/retrieve-products.md",
       "output": {
         ".html": {
-          "relative_path": "guides/tasks/subtasks/subtask1.html",
-          "hash": "f8X47wMpmEEd3rvsAHEJMg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "guides/tasks/subtasks/subtask2.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/tasks/subtasks/subtask2.html",
-          "hash": "ZFOW61iWB6svOXP67ysLpQ=="
+          "relative_path": "guides/step-by-step/retrieve-products.html",
+          "hash": "2lGFm413Dm8qwb3c9RNk6g=="
         }
       },
       "is_incremental": false,
@@ -466,55 +210,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/toc.html",
-          "hash": "ilCSEsKJ4FFZ9YmeD1bV5Q=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "identity/authorization-flows.md",
-      "output": {
-        ".html": {
-          "relative_path": "identity/authorization-flows.html",
-          "hash": "54dAQlV2g23x4Hmibg7a+g=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "identity/overview.md",
-      "output": {
-        ".html": {
-          "relative_path": "identity/overview.html",
-          "hash": "wiojb9Aa3ToWZn/rNv5r1Q=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Toc",
-      "source_relative_path": "identity/toc.yml",
-      "output": {
-        ".html": {
-          "relative_path": "identity/toc.html",
-          "hash": "ns2e5iQ0jd8ar2+/sLZwgg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "identity/trusted-applications.md",
-      "output": {
-        ".html": {
-          "relative_path": "identity/trusted-applications.html",
-          "hash": "BA2qiHbSlphlukr7C2ZxXA=="
+          "hash": "M+enU8lmPXUxKFbgTggoCw=="
         }
       },
       "is_incremental": false,
@@ -526,7 +222,19 @@
       "output": {
         ".html": {
           "relative_path": "includes/erpnet.html",
-          "hash": "M09LQsFDrYdxAse11KBeWg=="
+          "hash": "a8LIcZeckUZYMK58zJzkNA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "includes/name.md",
+      "output": {
+        ".html": {
+          "relative_path": "includes/name.html",
+          "hash": "uXOZMEyc9g7EgNLwX3aVpw=="
         }
       },
       "is_incremental": false,
@@ -538,7 +246,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "hbH2bnd/R6/yTVOsjlTADw=="
+          "hash": "0JWr+J4SxQqje+3ZPSNHvg=="
         }
       },
       "is_incremental": false,
@@ -556,12 +264,23 @@
       "version": ""
     },
     {
+      "type": "Resource",
+      "source_relative_path": "query-builder.png",
+      "output": {
+        "resource": {
+          "relative_path": "query-builder.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "testinclude.md",
       "output": {
         ".html": {
           "relative_path": "testinclude.html",
-          "hash": "pI2hwDATEOhu5t+c8txLIw=="
+          "hash": "8VwLpeTuPtIHoqii1+lFBQ=="
         }
       },
       "is_incremental": false,
@@ -573,7 +292,247 @@
       "output": {
         ".html": {
           "relative_path": "toc.html",
-          "hash": "6X+SUJ7/Wx1Wb6eilgG8HA=="
+          "hash": "mjL75wkEOZPnPAVgxHaPBw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/amount.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/amount.html",
+          "hash": "zJgAy6drnyGMPFEiMbmgpg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/batch-requests.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/batch-requests.html",
+          "hash": "6jaKmLzmqmP+1DjAkKjGfw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/complex-values.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/complex-values.html",
+          "hash": "zQjPuXx1Kchf/rFwDOo9/Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/custom-attributes.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/custom-attributes.html",
+          "hash": "kw2drbg7dSjYB+0gkpTOXQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/demo-web-shop.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/demo-web-shop.html",
+          "hash": "l/PTqOv8YtKjm1qnVTuUUA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/example-queries.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/example-queries.html",
+          "hash": "VvCtthqd3bufRE1tEPqJnw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/index.html",
+          "hash": "b67MGMJeHZlU3UjgVrXQ4w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/multi-language-string.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/multi-language-string.html",
+          "hash": "tpDkc96vHgBbxwTxF4oV2Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/quantity.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/quantity.html",
+          "hash": "vW3vp83RmDsN1raYsm7Cmg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/query-options.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/query-options.html",
+          "hash": "5AXNfEFXqVLtWSa4L2Vvow=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/referenced-objects.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/referenced-objects.html",
+          "hash": "1qDsINP5vhi7vXlj68mOlQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/transactions.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/transactions.html",
+          "hash": "LiNY8m/hXTVIHantbZhPNQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/url-components.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/url-components.html",
+          "hash": "NvOCCk5GrCxKe9cAXiGLaQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/working-with-documents.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/working-with-documents.html",
+          "hash": "WtSk13xzTo/GA3deiJoikg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/identity/authentication-flows.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/identity/authentication-flows.html",
+          "hash": "MpDDzv05J6y8FU/COVLddw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/identity/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/identity/index.html",
+          "hash": "nDoPu9Vpplm8A1cCokbDUw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/identity/trusted-applications.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/identity/trusted-applications.html",
+          "hash": "3pZcqHYL/juNKaDAsua7Xw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/index.html",
+          "hash": "NGBfEJjxn7Dq6IB9PSnaHw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/table-api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/table-api/index.html",
+          "hash": "fZ3qCP4B2kFCmZ09CRxR6w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "topics/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "topics/toc.html",
+          "hash": "9kGAwFPsl2kGbTLvt2dsqA=="
         }
       },
       "is_incremental": false,
@@ -583,12 +542,10 @@
   "incremental_info": [
     {
       "status": {
-        "can_incremental": false,
-        "details": "Cannot build incrementally because last build info is missing.",
+        "can_incremental": true,
         "incrementalPhase": "build",
         "total_file_count": 0,
-        "skipped_file_count": 0,
-        "full_build_reason_code": "NoAvailableBuildCache"
+        "skipped_file_count": 0
       },
       "processors": {
         "ConceptualDocumentProcessor": {

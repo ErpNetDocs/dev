@@ -1,0 +1,11 @@
+- name: Overview
+  href: index.md
+- name: Authentication
+  href: identity/toc.yml
+  topicHref: identity/index.md
+- name: Domain API
+  href: domain-api/toc.yml
+  topicHref: domain-api/index.md
+- name: Table API
+  href: table-api/toc.yml
+  topicHref: table-api/index.md

@@ -139,13 +139,13 @@ But, at the end of the day, you have to do much more work to create a secure app
 
 ERP.net is based on the [OAuth 2](https://oauth.net/2/) security paradigm with [OpenID Connect](https://openid.net/connect/) support.
 
-For more information about security, read [Introduction to identity in ERP.net](identity/overview.md).
+For more information about security, read [Introduction to identity in ERP.net](topics/identity/index.md).
 
 ## Next Steps
 
-Check the [Developer Guides](guides/overview.md) for common developer scenarios.
+Check the [Developer Guides](guides/index.md) for common developer scenarios.
 The guides contain solutions to common tasks and full runnable sample apps.
 
-The [APIs](apis/introduction.md) section contains description and examples for the ERP.net APIs.
+Read the full [Developer Documentation](topics/index.md).
 
-The Reference section contains full reference of the ERP.net Domain Model and APIs reference.
+Check the [Domain Model](https://docs.erp.net/model) for reference information about objects, API methods, integrated business rules and more.

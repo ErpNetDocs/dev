@@ -7,6 +7,9 @@ references:
 - uid: erpnet
   name: erpnet
   href: includes/erpnet.html
+- uid: name
+  name: name
+  href: includes/name.html
 - uid: table-api
   name: Table API
-  href: apis/tableapi/index.html
+  href: topics/table-api/index.html

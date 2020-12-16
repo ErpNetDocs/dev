@@ -1,10 +1,8 @@
-- name: Identity
-  href: identity/
+- name: Documentation
+  href: topics/
+- name: Domain Model
+  href: https://docs.erp.net/model/entities/
 - name: Guides
   href: guides/
-- name: APIs
-  href: apis/
-- name: Reference
-  href: https://docs.erp.net/model
-- name: DOCS ⏶
+- name: Return to DOCS ⏶
   href: https://docs.erp.net/

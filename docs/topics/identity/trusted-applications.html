@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Trusted Applications | ERP.net Developer Docs </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Trusted Applications | ERP.net Developer Docs ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="trusted-applications">Trusted Applications</h1>
+
+<p>A trusted application record tells the system that a specific application is allowed to access the ERP Instance.</p>
+<h2 id="general-information">General information</h2>
+<p>Trusted Application record can be created manually or through a marketplace activation.
+Anyway, it is good to understand the information stored in such a record.</p>
+<h2 id="anatomy-of-a-trusted-application-record">Anatomy of a Trusted Application record</h2>
+<p>A Trusted Application record contains many fields.
+To better understand them, read below.</p>
+<h3 id="name">Name</h3>
+<p>This is the multi-language name of the application.
+Used mostly for interactive display in UI clients.
+Not important for the functioning of the application.</p>
+<h3 id="application-uri">Application URI</h3>
+<p>This is the application identifier.
+It is passed as parameter by the applications, when they claim who they are in front of the ERP Instance.</p>
+<p>The Application URI should be unique for the <a class="xref" href="../../erp-instances.html">ERP Instance</a>.
+Preferably, it should be globally unique, so that the application can be listed in a marketplace.
+Use short, concise identifier.
+This will appear in logs and other files.
+Avoid non-latin and special characters.</p>
+<p>It is advised, that you incorporate this identifier as constant in your application and use the same URI for all &quot;trusts&quot; for your app.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is best to base your app URIs on your web site and some extension.
+For example, mywebsite.com/myapp1 is a good URI.</p>
+</div>
+<h3 id="client-type">Client Type</h3>
+<p>Client Type specifies the confidentiality abilities of the your application.</p>
+<p>Client types are:</p>
+<ul>
+<li><strong>Confidential</strong></li>
+<li><strong>Public</strong></li>
+</ul>
+<p>Confidential client applications are able to keep secrets. Public apps are generally unable to hide a secret from an advanced intruder.</p>
+<p>For example:</p>
+<ul>
+<li><p><strong>JavaScript</strong> apps, executed in the user browser, are public apps.
+Generally they cannot hide a secret from an advanced user.
+If a JavaScript app has a secret in its code, it can easily be revealed (and probably abused).</p>
+</li>
+<li><p><strong>Server executed</strong> apps are usually confidential.
+They are executed in a trusted environment and, if properly secured, can keep a secret.</p>
+</li>
+</ul>
+<h3 id="application-secret-hash">Application Secret Hash</h3>
+<p>This is a bit of a challenge.
+You have to use a tool to get the hash.
+Type this in the browser (replace &quot;mysecret&quot; with your secret):</p>
+<p><a href="https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret">https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret</a></p>
+<h3 id="basic-authentication-allowed">Basic Authentication Allowed</h3>
+<p>At first, this is a bit confusing.
+It has effect on the whole ERP Instance.
+Once we have at least (actually also at most) one application with Basic Authentication = ON, we have allowed Basic Authentication for the whole ERP Instance.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>When someone uses Basic Authentication, it would be considered as access from this app.</p>
+</div>
+<h3 id="impersonate-as-community--internal-user-allowed">Impersonate As Community / Internal User Allowed</h3>
+<p>Allows the app to request login from a community (external) or internal user.</p>
+<p>When both options are OFF, the app would not be allowed to request a user to be authenticated.
+This is a common scenario for service applications with no UI.</p>
+<p>If any or both options are ON, the app is allowed to impersonate, e.g. request login.
+The login would be successful only if the authenticated user is of one of the allowed types.</p>
+<p>Common scenarios:</p>
+<ul>
+<li><strong>Service app</strong> - both options OFF.</li>
+<li><strong>Internal interactive app</strong> - only Internal users allowed.</li>
+<li><strong>Public web app</strong> - both Community and Internal users allowed.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Avoid allowing only Community and disallowing Internal users.</p>
+</div>
+<p>Usually, community accounts can be freely created by anybody.
+So, allowing only community accounts could create confusion for the internal users and force them to create a separate, external (community) account.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is strongly not recommended for a user to have duplicate accounts, just for the purpose of having both community and internal accounts.</p>
+</div>
+<h3 id="impersonate-login-url">Impersonate Login URL</h3>
+<p>This is used only for applications, which use the Authorization Code Flow.
+It is called after a successful login and receives the generated tokens.</p>
+<p>Usually, this URL is a dedicated endpoint in the app environment.</p>
+<p>The endpoint should conform to:</p>
+<p><a href="https://openid.net/specs/openid-connect-core-1_0.html#AuthResponse">https://openid.net/specs/openid-connect-core-1_0.html#AuthResponse</a></p>
+<h3 id="impersonate-logout-url">Impersonate Logout URL</h3>
+<p>Reserved for future extensions.</p>
+<h3 id="is-enabled">Is Enabled</h3>
+<p>Disables the access of the application.</p>
+<h3 id="scope">Scope</h3>
+<p>The scope (according to <a href="https://tools.ietf.org/html/rfc6749#section-3.3">RFC 6749</a>) for which the application was trusted.
+The scope is an unordered list of space-delimited case-sensitive strings.
+Each string denotes a permission.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Currently, this option is ignored.</p>
+</div>
+<p>The following token scopes are PLANNED for near future developments:</p>
+<ul>
+<li><strong>update</strong></li>
+</ul>
+<p>Allows the user application to update data in the ERP Instance.
+Without this scope, the application can only read data.</p>
+<ul>
+<li><strong>sec</strong></li>
+</ul>
+<p>Allows the application to access the security infrastructure of the ERP Instance.
+Generally, this scope should <strong>NEVER</strong> be trusted to user apps.</p>
+<p>Scopes, reserved for future use:</p>
+<ul>
+<li><strong>profile</strong></li>
+<li><strong>general</strong></li>
+<li><strong>crm</strong></li>
+<li><strong>logistics</strong></li>
+<li><strong>production</strong></li>
+<li><strong>finance</strong></li>
+<li><strong>personaldata</strong></li>
+</ul>
+<h3 id="system-user">System User</h3>
+<p>This is the service user, which will be used to initiate sessions, when the application requests token with <a href="authentication-flows.html#client-credentials">Client Credentials</a>.</p>
+<h3 id="system-user-allowed">System User Allowed</h3>
+<p>Specifies whether the application is allowed to request service access.</p>
+<h3 id="system-user-login-url">System User Login URL</h3>
+<p>Reserved.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/topics/identity/trusted-applications.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>
