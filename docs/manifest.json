@@ -515,6 +515,17 @@
       "version": ""
     },
     {
+      "type": "Resource",
+      "source_relative_path": "query-builder.png",
+      "output": {
+        "resource": {
+          "relative_path": "query-builder.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "topics/table-api/index.md",
       "output": {
