@@ -534,11 +534,23 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "includes/name.md",
+      "output": {
+        ".html": {
+          "relative_path": "includes/name.html",
+          "hash": "XnWIeE+Pyx3GQqWUnzJUKA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "index.md",
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "hbH2bnd/R6/yTVOsjlTADw=="
+          "hash": "3qmEPizqu84VWpRSi3/s5g=="
         }
       },
       "is_incremental": false,
@@ -550,6 +562,17 @@
       "output": {
         "resource": {
           "relative_path": "logo.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "query-builder.png",
+      "output": {
+        "resource": {
+          "relative_path": "query-builder.png"
         }
       },
       "is_incremental": false,
