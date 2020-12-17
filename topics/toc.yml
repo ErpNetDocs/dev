@@ -1,5 +1,7 @@
 - name: Overview
   href: index.md
+- name: Application Types
+  href: application-types.md
 - name: Authentication
   href: identity/toc.yml
   topicHref: identity/index.md

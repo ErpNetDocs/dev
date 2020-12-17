@@ -1,4 +1,4 @@
-# Introduction to the @@name developer documentation
+# Introduction
 
 Explore the @@name documentation to quickly build great integrations with the platform.
 
@@ -14,4 +14,8 @@ The next step is to choose the correct API:
 
 * **[Domain API](domain-api/index.md)** - Object oriented API, based on the [Domain Model](https://docs.erp.net/model/entities/). The main API for processing data by web sites, services and other business logic apps.
 * **[Table API](table-api/index.md)** - Limited purpose read-only, fast-forward API based on the raw table data model. Intended for Business Intelligence and backup apps, requiring fast dumping of big quantities of raw data.
-* **Data Access API** - Legacy API, exposing table-based methods for retrieving and manipulating data. Not recommended for new developments.
+* **Data Access API** - Legacy API, exposing table-based methods for retrieving and manipulating data. Not documented and not recommended for new developments.
+
+## Choosing users, authentication and API
+
+To correctly choose user types, authentication type and API, we have compiled a list of common [application types](application-types.md).
