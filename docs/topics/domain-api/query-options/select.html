@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>$select query option | ERP.net Developer Docs </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="$select query option | ERP.net Developer Docs ">
+    <meta name="generator" content="docfx 2.56.3.0">
+    
+    <link rel="shortcut icon" href="../../../favicon.ico">
+    <link rel="stylesheet" href="../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../toc.html">
+    <meta property="docfx:tocrel" content="../../toc.html">
+    
+    <meta property="docfx:rel" content="../../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../index.html">
+                <img id="logo" class="svg" src="../../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="select-query-option">$select query option</h1>
+
+<h2 id="description">Description</h2>
+<p>$select is an OData system query option.</p>
+<p>The $select system query option allows clients to request a specific set of properties for each entity or complex type.</p>
+<p>For a great introduction to $select, read the <a href="https://www.odata.org/getting-started/basic-tutorial/#select">OData $filter tutorial</a>.</p>
+<h2 id="expand">$expand</h2>
+<p>The $select query option is often used in conjunction with the $expand system query option, to define the extent of the resource graph to return ($expand) and then specify a subset of properties for each resource in the graph ($select).
+Expanded navigation properties MUST be returned, even if they are not specified as a selectItem.</p>
+<h2 id="default-attributes">Default attributes</h2>
+<p>When there is no $select clause or '$select=*', only the default attributes are returned.</p>
+<p>The attributes, which are returned by default are:</p>
+<ul>
+<li>System attributes like <strong>Name</strong>, <strong>Description</strong>, <strong>PartNumber</strong>, etc.</li>
+<li>References like <strong>ProductType</strong>, <strong>ProductGroup</strong>, etc (in OData terminology - Navigation properties)</li>
+</ul>
+<p>The following attributes are not returned by default:</p>
+<ul>
+<li>The 'Id' attribute</li>
+<li>Custom (user-defined) attributes</li>
+<li>Child lists (OData terminology: Collection navigation properties)</li>
+<li>Calculated attributes</li>
+</ul>
+<p>Example:</p>
+<pre><code class="lang-odata">GET ~/General_Products_ProductTypes?$top=2
+</code></pre>
+<p>The result is:</p>
+<pre><code class="lang-json">{
+    &quot;@odata.context&quot;: &quot;https://example-server.com/example-db/api/domain/odata/$metadata#General_Products_ProductTypes&quot;,
+    &quot;value&quot;: [
+        {
+            &quot;@odata.id&quot;: &quot;General_Products_ProductTypes(c696c660-9aa4-4fe5-a396-126af4101792)&quot;,
+            &quot;IsDefault&quot;: false,
+            &quot;IsFixedAsset&quot;: false,
+            &quot;IsServiceActivityService&quot;: false,
+            &quot;IsServiced&quot;: true,
+            &quot;IsShipped&quot;: true,
+            &quot;IsStocked&quot;: true,
+            &quot;LotAutoCreation&quot;: true,
+            &quot;Code&quot;: &quot;001&quot;,
+            &quot;Name&quot;: {
+                &quot;BG&quot;: &quot;sdds&quot;
+            }
+        },
+        {
+            &quot;@odata.id&quot;: &quot;General_Products_ProductTypes(880b0c31-a9ef-4a3c-a0e7-13d39aa57464)&quot;,
+            &quot;IsDefault&quot;: false,
+            &quot;IsFixedAsset&quot;: false,
+            &quot;IsServiceActivityService&quot;: false,
+            &quot;IsServiced&quot;: false,
+            &quot;IsShipped&quot;: false,
+            &quot;IsStocked&quot;: false,
+            &quot;LotAutoCreation&quot;: false,
+            &quot;Code&quot;: &quot;test sch&quot;,
+            &quot;Name&quot;: {
+                &quot;BG&quot;: &quot;test sch&quot;
+            }
+        }
+    ]
+}
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Non default properties must be explicitly specified in the $select clause.</p>
+</div>
+<p>Example:</p>
+<pre><code class="lang-odata">GET ~/General_Products_Products?$top=2&amp;$select=CustomProperty_WebName,CalculatedAttribute_ExampleAttr
+</code></pre>
+<p>The result will only contain the selected properties.</p>
+<h2 id="the-default-select-keyword">The <strong>default</strong> $select keyword</h2>
+<p>You can explicitly use the keyword <strong>default</strong> in the $select clause to include all default properties.</p>
+<pre><code class="lang-odata">GET ~/General_Products_Products?$top=2&amp;$select=default,CustomProperty_WebName,CalculatedAttribute_ExampleAttr
+</code></pre>
+<p>The result will contain all default properties plus the selected CustomProperty_WebName and CalculatedAttribute_ExampleAttr.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/topics/domain-api/query-options/select.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../styles/main.js"></script>
+  </body>
+</html>
