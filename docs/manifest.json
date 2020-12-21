@@ -231,7 +231,7 @@
       "output": {
         ".html": {
           "relative_path": "guides/step-by-step/retrieve-products.html",
-          "hash": "WpL4wEVoCYJuwiLZQLQgrA=="
+          "hash": "enwGRiF8WlkywzB3EO7a7Q=="
         }
       },
       "is_incremental": false,
@@ -405,23 +405,11 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "topics/domain-api/example-queries.md",
-      "output": {
-        ".html": {
-          "relative_path": "topics/domain-api/example-queries.html",
-          "hash": "uEg00q3Dky78Nb9lD+G+Iw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "topics/domain-api/index.md",
       "output": {
         ".html": {
           "relative_path": "topics/domain-api/index.html",
-          "hash": "dGTEz2sZr39gCrufocpIiA=="
+          "hash": "ms49d41UIoSsq2X7hPVUOA=="
         }
       },
       "is_incremental": false,
@@ -433,7 +421,19 @@
       "output": {
         ".html": {
           "relative_path": "topics/domain-api/multi-language-string.html",
-          "hash": "OM9VSRB7UHH8v6ZorT1I2A=="
+          "hash": "VFBa++bwnfYk6IXqa2L+0g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/odata-limitations.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/odata-limitations.html",
+          "hash": "KBPE+7dUcRliMhoCSplr5g=="
         }
       },
       "is_incremental": false,
@@ -453,11 +453,11 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "topics/domain-api/query-options.md",
+      "source_relative_path": "topics/domain-api/query-options/filter.md",
       "output": {
         ".html": {
-          "relative_path": "topics/domain-api/query-options.html",
-          "hash": "kaIBEsiLi27EQl+xiGfnug=="
+          "relative_path": "topics/domain-api/query-options/filter.html",
+          "hash": "d4jIjstpIRWzKDlVsVTpgQ=="
         }
       },
       "is_incremental": false,
@@ -465,11 +465,35 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "topics/domain-api/referenced-objects.md",
+      "source_relative_path": "topics/domain-api/query-options/index.md",
       "output": {
         ".html": {
-          "relative_path": "topics/domain-api/referenced-objects.html",
-          "hash": "alzBE3P3mkheuZnfOUMtHQ=="
+          "relative_path": "topics/domain-api/query-options/index.html",
+          "hash": "iAa1Owvc8RlW2XlROqg5Ww=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/query-options/options.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/query-options/options.html",
+          "hash": "zImRO1YElB5SJ3V3Cyimcg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/query-options/select.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/query-options/select.html",
+          "hash": "YfEma9LyqO9ipMzL95u3Ow=="
         }
       },
       "is_incremental": false,
@@ -493,7 +517,7 @@
       "output": {
         ".html": {
           "relative_path": "topics/domain-api/url-components.html",
-          "hash": "hbmOQ+dO+7KYNSgzCk3v7w=="
+          "hash": "LGXRkCR1GmcrHVal5qaQog=="
         }
       },
       "is_incremental": false,
@@ -577,7 +601,7 @@
       "output": {
         ".html": {
           "relative_path": "topics/toc.html",
-          "hash": "fgtYJ+ceFT5TdKADK79bew=="
+          "hash": "IYGDh4BQnXfbjUqTT+D85Q=="
         }
       },
       "is_incremental": false,
