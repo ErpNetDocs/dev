@@ -28,7 +28,7 @@ Each ERP Instance CAN have an API site.
 It "can" have, because, the API is a site, similar to other sites, which the instance can launch.
 In order for the API to function, it needs to be configured and launched for the ERP Instance.
 
-The common URL for the API site is /api/ inside the ERP instance. For example, the DEMODB has API site at:
+The common URL for the API site is /api/ inside the ERP instance. For example, the DEMODB has an API site at:
 
 > <https://demodb.my.erp.net/api/>
 
@@ -38,9 +38,9 @@ The Domain API is the primary means for accessing and manipulating data in the E
 It can currently be consumed in [OData 4](https://www.odata.org/) format.
 
 The Domain API is an API proxy for the object-oriented Domain Model of ERP.net.
-It is targeted towards UI and service apps. These kind of apps usually read and update moderate amounts of data.
+It is targeted towards UI and service apps. These kinds of apps usually read and update moderate amounts of data.
 The Domain API is NOT adequate for read-only dumping of very large amounts of data, which is usually done by BI applications.
-BI applications should find other solutions or try to read data by small chunks.
+BI applications should find other solutions or try to read data in small chunks.
 
 The Domain API is located at /domain/odata/ within the API site. For DEMODB, this is at:
 
@@ -62,7 +62,7 @@ For example, to take the first 10 products (in undefined order), you can use:
 
 > [<https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10>](https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10)
 
-NOTE: The above will return unformatted JSON result, intended to be consumed by client app.
+> [!NOTE:] The above will return unformatted JSON result, intended to be consumed by client app.
 
 For a quick overview of OData, see this topic - [Understand OData in 6 steps](https://www.odata.org/getting-started/understand-odata-in-6-steps/).
 
@@ -86,13 +86,14 @@ For example, to preview the same query for the first 10 products in the Query Bu
 
 > [<https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10>](https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10)
 
-When you press Execute in the Query Builder, you can preview the result both as table and as JSON.
+When you press Execute in the Query Builder, you can preview the result both as a table and as JSON.
 
-NOTE: Pay attention to the link under the selected entity, which opens the documentation for the entity.
+> [!NOTE] 
+> Pay attention to the link under the selected entity, which opens the documentation for the entity.
 
 ## The Query Tool
 
-The Query Tool is simple Postman-like tool for querying the database.
+The Query Tool is a simple Postman-like tool for querying the database.
 It does not have the visual building abilities of the Query Builder.
 However, it can represent all possible REST requests and is very simple to use.
 
@@ -106,7 +107,7 @@ To access the Query Tool for DEMODB, go to:
 ## Query Basics
 
 ERP.net allows only a subset of the full OData queries.
-Generally, you cannot do JOINs, and filter with OR.
+Generally, you cannot do JOINs and filter with OR.
 However, you can filter by multiple values, like the SQL IN operator:
 
 > <https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&$filter=Id%20in%20(edf2bd2a-7e4d-e111-a06c-00155d00050a,cf728601-1fd5-4853-ab23-01deeee7d038)>
@@ -129,7 +130,7 @@ The instance reference documentation of DEMODB is at:
 ## Security
 
 Someone said: "Security is hard, deal with it".
-The hard truth is that security today is much harder that it was 10 years ago.
+The hard truth is that security today is much harder than it was 10 years ago.
 Once upon a time, there was a user and a password.
 Today, we have OAuth with Trusted Apps, Security Tokens, complicated security workflows, and all the other things.
 There are some good things, though.
@@ -148,4 +149,4 @@ The guides contain solutions to common tasks and full runnable sample apps.
 
 Read the full [Developer Documentation](topics/index.md).
 
-Check the [Domain Model](https://docs.erp.net/model) for reference information about objects, API methods, integrated business rules and more.
+Check the [Domain Model](https://docs.erp.net/model) for reference information about objects, API methods, integrated business rules, and more.
