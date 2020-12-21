@@ -33,10 +33,12 @@ The APIs generally do not support direct equality comparisons.
 
 For example, in Domain API, the following is supported:
 
-    ~/General_Products_Products?$filter=contains(Name,'ppl')  
-    
+```odata
+~/General_Products_Products?$filter=contains(Name,'ppl')  
+```
+
 However, this is not valid:
 
-    ~/General_Products_Products?$filter=Name eq 'Apple' 
-    
-    
+```odata
+~/General_Products_Products?$filter=Name eq 'Apple' 
+```

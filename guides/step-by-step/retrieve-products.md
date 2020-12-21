@@ -12,10 +12,10 @@ The following query:
    - **Id** - the unique Id of the product.
    - **Part Number** - the product code.
    - **Name** - the [multi-language](~/topics/domain-api/multi-language-string.md) product name.
-   - **ProductGroup** - [object reference](~/topics/domain-api/referenced-objects.md) to the Product Group containing the product.
+   - **ProductGroup** - reference to the Product Group containing the product.
    - **StandardPricePerLot** - [Amount](~/topics/domain-api/amount.md) object, containing the standard price.
    - **Description** - textual description of the product. This description is clear text and does not support any formatting. There is also Description_Html attribute, which can be used to contain description with HTML formatting.
-   - **MeasurementUnit** - [object reference](~/topics/domain-api/referenced-objects.md) to measurement units. This is the default sales measurement unit of the product.
+   - **MeasurementUnit** - reference to measurement units. This is the default sales measurement unit of the product.
 
 <https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&$filter=Active%20eq%20true&$select=CatalogDescriptionHtml,Description,Id,MeasurementUnit,Name,PartNumber,ProductGroup,StandardPricePerLot>
 

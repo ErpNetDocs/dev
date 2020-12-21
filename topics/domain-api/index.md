@@ -1,26 +1,30 @@
 # Domain API Introduction
 
-For an overview and introduction of the Domain API, read the [home page of the developer docs](~/index.md#the-domain-api).
+For an overview and introduction of the Domain API, read the thorough presentation at the [home page of the developer docs](~/index.md#the-domain-api).
 
-## Purpose
+## Description
 
-The Domain API is the primary API for accessing and manipulating data in ERP.net. 
+The Domain API is the primary API for accessing and manipulating data in @@name.
 It is most useful for UI and service apps.
 For BI, you should use the Table API.
 
-## REST API
-The Domain API is a HTTP REST API, which allows access to the data exposed by the ERP.net objects. 
-The API allows access to the data in an object-oriented manner, through a well-known HTTP REST interface, based on the [OData v4](https://www.odata.org/) protocol.
-
 ## OData
-The OData API is structured along a number of entities that represent the Domain Model of the ERP Instance. 
-Each entity contains data attributes, which can be filtered, sorted, etc.
-This model also provides information on how to navigate between entities.
 
-## Data
-The Domain API allows access to the ERP Instance data. 
-Server Management cannot be performed through the Domain API.
+The Domain API is based on the [OData protocol](https://www.odata.org/).
+It allows object-oriented access to the data exposed by the @@name domain objects.
 
-All data in a database is accessible through the Domain API, restricted by the access permissions of the login account.
+The OData API is structured along a number of entity types (called "repositories" in @@name), that represent the Domain Model of the ERP Instance.
+Each entity type contains data attributes, which can be filtered, sorted, etc.
+The model also provides information on how to navigate between the repositories.
 
-The Domain API is adequate for building productive e-Commerce web sites, data transfer packages and similar apps.
+For a nice introduction to OData, click [here](https://www.odata.org/getting-started/basic-tutorial/).
+
+## Step by step
+
+1. [URL components](url-components.md) - OData is heavy on the URL. Read this topic to understand the structure of the URL.
+1. [Query options](query-options/index.md) - read more about the supported OData query constructs like $filter, $top and similar.
+1. [Complex values](complex-values.md) - @@name utilizes several OData complex values, including quantity, amount and multi-language string.
+1. [Transactions](transactions.md) - @@name supports server-side front-end transactions.
+1. [Working with documents](working-with-documents.md) - working with documents is a common scenario when using the API.
+1. [Batch requests](batch-requests.md) - @@name supports batch requests, saving round-trips to the server.
+1. [Limitations](odata-limitations.md) - @@name Domain API supports only a subset of the OData functionality.

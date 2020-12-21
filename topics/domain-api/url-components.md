@@ -24,7 +24,7 @@ However, this is not certain. Each site in ERP.net can have its own address, whi
 REST style sub-entities are not supported. However, the API allows many other ways to expand into sub-entities.
 
 3. Query Options
-Allow the user to specify optional [Query Options](query-options.md).
+Allow the user to specify optional [Query Options](query-options/index.md).
 
 For more information, visit the OData standards page:
 
