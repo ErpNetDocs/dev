@@ -5,6 +5,8 @@
 - name: Query Options
   href: query-options/toc.yml
   topicHref: query-options/index.md
+- name: Query Builder
+  href: query-builder.md
 - name: Complex values
   topicHref: complex-values.md
   items:

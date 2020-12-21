@@ -23,8 +23,8 @@ For a nice introduction to OData, click [here](https://www.odata.org/getting-sta
 
 1. [URL components](url-components.md) - OData is heavy on the URL. Read this topic to understand the structure of the URL.
 1. [Query options](query-options/index.md) - read more about the supported OData query constructs like $filter, $top and similar.
+1. [Query Builder](query-builder.md) - the visual query designer can help you easily build complex $select/$expand queries.
 1. [Complex values](complex-values.md) - @@name utilizes several OData complex values, including quantity, amount and multi-language string.
 1. [Transactions](transactions.md) - @@name supports server-side front-end transactions.
 1. [Working with documents](working-with-documents.md) - working with documents is a common scenario when using the API.
 1. [Batch requests](batch-requests.md) - @@name supports batch requests, saving round-trips to the server.
-1. [Limitations](odata-limitations.md) - @@name Domain API supports only a subset of the OData functionality.
