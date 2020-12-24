@@ -22,5 +22,4 @@
   href: transactions.md
 - name: Working with documents
   href: working-with-documents.md
-- name: Batch requests
-  href: batch-requests.md
+
