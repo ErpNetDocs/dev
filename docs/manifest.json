@@ -357,18 +357,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "topics/domain-api/batch-requests.md",
-      "output": {
-        ".html": {
-          "relative_path": "topics/domain-api/batch-requests.html",
-          "hash": "LSsBuiz80rzXGYd9ojdbKg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "topics/domain-api/complex-values.md",
       "output": {
         ".html": {
@@ -409,7 +397,7 @@
       "output": {
         ".html": {
           "relative_path": "topics/domain-api/index.html",
-          "hash": "GIgMHptYPcn17mG1vJTx3Q=="
+          "hash": "Fl4Iizi3+ojTqQA7e5zL8A=="
         }
       },
       "is_incremental": false,
@@ -601,7 +589,7 @@
       "output": {
         ".html": {
           "relative_path": "topics/toc.html",
-          "hash": "45VIh/HTNmHS9C6mAus4zA=="
+          "hash": "yIDUzpU3kgprm89o2X6rew=="
         }
       },
       "is_incremental": false,
