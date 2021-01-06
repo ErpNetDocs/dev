@@ -84,7 +84,7 @@
 <p>For example, the <a class="xref" href="https://erpnetdocs.github.io/model/entities/Crm.Sales.SalesOrders.html">Sales Orders</a> entity type is master to the <a class="xref" href="https://erpnetdocs.github.io/model/entities/Crm.Sales.SalesOrderLines.html">Sales Order Lines</a> entity type.</p>
 <p>Following the relationship between their respective entity types, some attributes (or references) might be in master/detail relationship.
 For example, the <a class="xref" href="https://erpnetdocs.github.io/model/entities/Crm.Sales.SalesOrders.html#store">SalesOrder.Store</a> and <a class="xref" href="https://erpnetdocs.github.io/model/entities/Crm.Sales.SalesOrderLines.html#linestore">SalesOrderLine.LineStore</a> are in master/detail relationship.</p>
-<p>For in-depth information about master/detail attribute relationship, refer to the technical documentation.</p>
+<p>For in-depth information about master/detail attribute relationship, refer to the <a href="xref:master-detail">technical documentation</a>.</p>
 <p>Very simplified version of the story from dev perspective:</p>
 <ul>
 <li>The <strong>detail attribute</strong> is the important one.
@@ -92,6 +92,22 @@ It is considered by the business logic.
 The master attribute is used mainly for at-a-glance user information.</li>
 <li>The <strong>master attribute</strong> contains value only when the value (of the detail attribute) for all lines is the same. Otherwise, it is NULL.</li>
 <li>The detail attribute generally should be a required (not-NULL) attribute. However, there are exceptions, so check the model docs to be sure.</li>
+</ul>
+<h2 id="best-practices">Best practices</h2>
+<h3 id="when-creating-data">When creating data</h3>
+<ul>
+<li>Set the value of the detail attribute for each line, according to your business requirements.</li>
+<li>For the master attribute:
+<ul>
+<li>If ALL detail lines have the same value for the detail attribute, set that value.</li>
+<li>Otherwise (if there are different values) - set NULL.</li>
+</ul>
+</li>
+</ul>
+<h3 id="when-consuming-data">When consuming data</h3>
+<ul>
+<li>Use the detail attribute value to properly implement your business logic.</li>
+<li>If you are referring to the value of the master attribute, be sure to properly handle the possible NULL values.</li>
 </ul>
 <h2 id="examples">Examples</h2>
 <h3 id="all-lines-have-the-same-value">All lines have the same value</h3>
@@ -160,22 +176,6 @@ The master attribute is used mainly for at-a-glance user information.</li>
 </tr>
 </tbody>
 </table>
-<h2 id="best-practices">Best practices</h2>
-<h3 id="when-creating-data">When creating data</h3>
-<ul>
-<li>Set the value of the detail attribute for each line, according to your business requirements.</li>
-<li>For the master attribute:
-<ul>
-<li>If ALL detail lines have the same value for the detail attribute, set that value.</li>
-<li>Otherwise (if there are different values) - set NULL.</li>
-</ul>
-</li>
-</ul>
-<h3 id="when-consuming-data">When consuming data</h3>
-<ul>
-<li>Use the detail attribute value to properly implement your business logic.</li>
-<li>If you are referring to the value of the master attribute, be sure to properly handle the possible NULL values.</li>
-</ul>
 </article>
           </div>
           
