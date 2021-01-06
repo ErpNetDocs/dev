@@ -589,7 +589,31 @@
       "output": {
         ".html": {
           "relative_path": "topics/toc.html",
-          "hash": "yIDUzpU3kgprm89o2X6rew=="
+          "hash": "KrXUKzWuiR8OUgPyeLTqFA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/working-with-data/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/working-with-data/index.html",
+          "hash": "CQuMrTL0zkfCasrr5HZbTQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/working-with-data/master-detail-attributes.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/working-with-data/master-detail-attributes.html",
+          "hash": "6UlUfZB+PrrYMnT1jRiLYg=="
         }
       },
       "is_incremental": false,
