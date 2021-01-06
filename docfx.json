@@ -15,7 +15,8 @@
       }
     ],
     "xref": [
-      "https://erpnetdocs.github.io/model/xrefmap.yml"
+      "https://erpnetdocs.github.io/model/xrefmap.yml",
+      "https://erpnetdocs.github.io/tech/xrefmap.yml"
     ],    
     "dest": "docs",
     "globalMetadata": {
