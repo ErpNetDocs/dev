@@ -59,3 +59,104 @@ POST ~/Crm_Sales_SalesOrders
 
 ## Change Document State
 
+HTTP C#
+
+```json
+POST ~/Crm_Sales_SalesOrders(59098bcf-f331-478f-91c2-f5520590f534)/ChangeState
+{
+"newState" : "FirmPlanned",
+"userStatus": {"@odata.id": "General_DocumentTypeUserStatuses(1ee1249e-4ef5-46b4-8409-26b2130d09c7)"}
+}
+```
+
+## Make Document Void
+
+HTTP C#
+
+```json
+POST ~/Crm_Sales_SalesOrders(11217345-3659-43be-a85d-005eaaa3aaac)/MakeVoid
+{
+"reason" : "test api method",
+"voidType": "VoidDocument"
+}
+```
+
+## Recalculate Document
+
+This method is used to recalculate some document details such as Document Amounts (like VAT), Bonus Programs etc. It make sense only in the context of Front-End transaction because the recalculated changes remain only in memory. They must be commited to the database with a separate call to EndTransaction{commit=true}.
+
+HTTP C#
+
+```json
+POST ~/Crm_Sales_SalesOrders(11217345-3659-43be-a85d-005eaaa3aaac)/Recalculate
+```
+
+## Create Adjustment Documents
+
+Released documents can be modified only with adjustment documents. The API provides a convenient method to create adjustment documents: CreateAdjustmentDocuments. The method requires TransactionId in the request header.
+
+The method creates adjustment documents for modified released documents.  The adjustment documents are created in separate transaction and their state is changed to 'Adjustment'. The method does not commit or rollback the current front-end transaction. 
+
+HTTP C#
+
+```json
+// Begin a front-end transaction
+
+POST ~/BeginTransaction
+
+{
+
+"model": "frontend"
+
+}
+
+// The returned transaction id must be set in the request header for each subsequent query. The header name is TransactionId.
+
+// Update some sales order lines.
+
+PATH ~/Crm_Sales_SalesOrderLines(34217345-3659-43be-a85d-005eaaa3aaac)
+
+TransactionId: xxxx
+
+{
+
+"Quantity": {"Value": 5.0, "Unit": "PCE"}
+
+}
+
+// Update another line.
+
+PATH ~/Crm_Sales_SalesOrderLines(65217345-3659-43be-a85d-005eaaa3aaac)
+
+TransactionId: xxxx
+
+{
+
+"Quantity": {"Value": 15.0, "Unit": "PCE"}
+
+}
+
+
+
+// Call CreateAdjustmentDocuments to create the adjustment documents and apply the changes to the original document.
+
+// Adjustment documents will be created for all modified released documents in the current transaction.
+
+POST ~/CreateAdjustmentDocuments
+
+TransactionId: xxxx
+
+
+
+// End the transaction without committing because updating released document directly is not allowed.
+
+POST ~/EndTransaction
+
+TransactionId: xxxx
+
+{
+
+"commit": false
+
+}
+```
