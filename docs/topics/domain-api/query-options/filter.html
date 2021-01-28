@@ -140,6 +140,31 @@ Not every operation and function provided by the OData standard are implemented.
 </ul>
 <pre><code class="lang-odata">Crm_Sales_SalesOrders?$top=10&amp;$filter=ToParty in ('General_Contacts_Persons(adb66f3f-e173-4a37-878c-000920f44ff0)', 'General_Contacts_Companies(39148781-d316-4d4d-a392-0002f73710f2)')
 </code></pre>
+<h2 id="filter-by-date-and-date-time-attributes">Filter by date and date-time attributes</h2>
+<p>Example:</p>
+<pre><code class="lang-odata">Crm_Sales_SalesOrders?$top=10&amp;$filter=DocumentDate ge 2020-01-01Z
+</code></pre>
+<blockquote>
+<p>Note!
+Filter by date-time is not supported! A date-time value in the filter is truncated to date only. For example <code>$filter=TransactionTimestamp le 2020-01-05T23:59:59.999Z</code> is converted to <code>$filter=TransactionTimestamp le 2020-01-05T00:00:00Z</code>.
+If we want to find all store transaction lines for date 2020-01-05 we should make filter <code>$filter=TransactionTimestamp ge 2020-01-05T00:00:00Z and TransactionTimestamp ge 2020-01-06T00:00:00Z</code> and then in the result we must check for lines on 2020-01-06.</p>
+</blockquote>
+<h2 id="filter-by-complex-attributes">Filter by complex attributes</h2>
+<p>In ODATA complex objects can not participate in the $filter clause.
+The quantities and amounts in DomainApi are represented as complex objects that contain the value and the measurement unit (or currency).</p>
+<p>To filter by <strong>Amount</strong> or <strong>Quantity</strong> attribute you can use the name of the attribute followed by 'Value':</p>
+<pre><code>~/Logistics_Inventory_StoreTransactionLines?$filter=QuantityValue ge 5.555  
+~/Crm_Sales_SalesOrderLines?$filter=LineAmountValue ge 5.555 
+</code></pre>
+<p><strong>CustomPropertyValue</strong> is another complex type.
+To filter by Custom Property you must use only the short value (only eq is supported):</p>
+<pre><code>General_Products_Products?$top=10&amp;$select=CustomProperty_color&amp;$filter=CustomProperty_color eq 'blue'
+</code></pre>
+<p><strong>MultilanguageString</strong> is another complex type.
+Multi-language properties support only filter function contains:<br>
+<code>~/General_Products_Products?$filter=contains(Name,'ppl')</code><br>
+This is an invalid filter:<br>
+<code>~/General_Products_Products?$filter=Name eq 'Apple'</code></p>
 <h2 id="supported-standard-functions">Supported standard functions</h2>
 <ul>
 <li>Edm.Boolean contains(Edm.String, Edm.String)</li>
