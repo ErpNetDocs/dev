@@ -64,6 +64,30 @@ Crm_Sales_SalesOrders?$top=10&$filter=DocumentDate ge 2020-01-01Z
 >Filter by date-time is not supported! A date-time value in the filter is truncated to date only. For example `$filter=TransactionTimestamp le 2020-01-05T23:59:59.999Z` is converted to `$filter=TransactionTimestamp le 2020-01-05T00:00:00Z`. 
 > If we want to find all store transaction lines for date 2020-01-05 we should make filter `$filter=TransactionTimestamp ge 2020-01-05T00:00:00Z and TransactionTimestamp ge 2020-01-06T00:00:00Z` and then in the result we must check for lines on 2020-01-06.
 
+## Filter by complex attributes
+
+In ODATA complex objects can not participate in the $filter clause.
+The quantities and amounts in DomainApi are represented as complex objects that contain the value and the measurement unit (or currency).
+
+To filter by **Amount** or **Quantity** attribute you can use the name of the attribute followed by 'Value':  
+```
+~/Logistics_Inventory_StoreTransactionLines?$filter=QuantityValue ge 5.555  
+~/Crm_Sales_SalesOrderLines?$filter=LineAmountValue ge 5.555 
+```  
+
+**CustomPropertyValue** is another complex type.
+To filter by Custom Property you must use only the short value (only eq is supported):
+```
+General_Products_Products?$top=10&$select=CustomProperty_color&$filter=CustomProperty_color eq 'blue'
+```
+
+**MultilanguageString** is another complex type. 
+Multi-language properties support only filter function contains:  
+`~/General_Products_Products?$filter=contains(Name,'ppl')`  
+This is an invalid filter:  
+`~/General_Products_Products?$filter=Name eq 'Apple'`  
+
+
 ## Supported standard functions
 
 * Edm.Boolean contains(Edm.String, Edm.String)
