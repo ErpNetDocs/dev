@@ -36,7 +36,7 @@ Parameters:
 
 To commit the changes made in the memory transaction to the database you should provide the parameter commit = true.
 
-> [!Info]
+> [!Note]
 > The object transaction is called Front-End because any change of an entity object will trigger front-end business rules. For example if Quantiy of a SalesOrderLine is changed the corresponding QuantityBase will be automatically recalculated. This is front-end behavior - if front-end transaction is not used the QuantityBase will not be automatically recalculated and it's value must be explicitly set.<br>
 Through Front-End Transaction, GetChanges or WaitForChanges we can synchronize our UI passing only the user actions to the server - such as update of an attribute, creating new object or deleting existing object.
 
