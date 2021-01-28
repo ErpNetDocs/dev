@@ -53,6 +53,17 @@ Crm_Sales_SalesOrders?$top=10&$select=DocumentType&$filter=DocumentType in ('Gen
 Crm_Sales_SalesOrders?$top=10&$filter=ToParty in ('General_Contacts_Persons(adb66f3f-e173-4a37-878c-000920f44ff0)', 'General_Contacts_Companies(39148781-d316-4d4d-a392-0002f73710f2)')
 ```
 
+## Filter by date and date-time attributes
+
+Example:
+```odata
+Crm_Sales_SalesOrders?$top=10&$filter=DocumentDate ge 2020-01-01Z
+```
+
+>Note!
+>Filter by date-time is not supported! A date-time value in the filter is truncated to date only. For example `$filter=TransactionTimestamp le 2020-01-05T23:59:59.999Z` is converted to `$filter=TransactionTimestamp le 2020-01-05T00:00:00Z`. 
+> If we want to find all store transaction lines for date 2020-01-05 we should make filter `$filter=TransactionTimestamp ge 2020-01-05T00:00:00Z and TransactionTimestamp ge 2020-01-06T00:00:00Z` and then in the result we must check for lines on 2020-01-06.
+
 ## Supported standard functions
 
 * Edm.Boolean contains(Edm.String, Edm.String)
