@@ -56,3 +56,6 @@ POST ~/Crm_Sales_SalesOrders
 ]
 }
 ```
+
+## Change Document State
+
