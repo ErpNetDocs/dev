@@ -19,7 +19,6 @@ If any subsequent request includes the *TransactionId* token in the HTTP header 
 
 The response format of GetChanges and WaitForChanges follows this JSON schema:
 
-
 ```json
 "insert" | "update" | "delete" : {
     "<entity-name>" : {   // example: "General_Products_Products"
@@ -69,8 +68,6 @@ TransactionId: xcasfawed
 
 }
 
-
-
 Commit transaction
 
 POST /api/domain/odata/EndTransaction HTTP/1.1
@@ -82,7 +79,6 @@ TransactionId: xcasfawed
 "commit": true
 
 }
-
 
 ```
 
