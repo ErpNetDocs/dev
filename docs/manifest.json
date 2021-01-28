@@ -493,7 +493,7 @@
       "output": {
         ".html": {
           "relative_path": "topics/domain-api/transactions.html",
-          "hash": "ovHhln6ff4ME5v3bxVtnvg=="
+          "hash": "FeEHAUGly8b50t7RMYT14A=="
         }
       },
       "is_incremental": false,
@@ -512,15 +512,12 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "UidNotFound"
-      ],
       "type": "Conceptual",
       "source_relative_path": "topics/domain-api/working-with-documents.md",
       "output": {
         ".html": {
           "relative_path": "topics/domain-api/working-with-documents.html",
-          "hash": "6ZpiXaJyfTvBDAlSXa6Uzg=="
+          "hash": "ZjoesYpXO70Tq46ACsxNQQ=="
         }
       },
       "is_incremental": false,
