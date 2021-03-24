@@ -304,7 +304,7 @@ class ErpNetClient
             'client_id' => $this->applicationName,
             'nonce' => $nonce,
             'state' => $state,
-            'scope' => 'openid profile DomainApi offline_access',
+            'scope' => 'openid profile offline_access',
             'response_mode' => 'form_post'
         );
 
@@ -455,8 +455,8 @@ class ErpNetClient
         $post_data = array(
             'grant_type'    => 'client_credentials',
             'client_id'     => $this->applicationName,
-            'client_secret' => $this->applicationSecret,
-            'scope'         => 'DomainApi'
+            'client_secret' => $this->applicationSecret
+            //'scope'         => 'DomainApi'
         );
 
         // Convert token params to string format
