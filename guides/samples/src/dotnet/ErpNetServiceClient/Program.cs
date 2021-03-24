@@ -67,8 +67,7 @@ namespace ErpNetServiceClient
             {
                 Address = disco.TokenEndpoint,
                 ClientId = "ServiceDemoClient",
-                ClientSecret = "DEMO",
-                Scope = "DomainApi"
+                ClientSecret = "DEMO"
             });
 
             if (response.IsError) 
