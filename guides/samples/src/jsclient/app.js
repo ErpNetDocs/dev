@@ -24,7 +24,7 @@ var config = {
     client_id: "PublicDemoClient",
     redirect_uri: "http://localhost:5080/erpnet/jsclient/callback.html",
     response_type: "code",
-    scope:"openid profile DomainApi",
+    scope:"openid profile",
     post_logout_redirect_uri : "http://localhost:5080/erpnet/jsclient/index.html",
 };
 var mgr = new Oidc.UserManager(config);
