@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Working with documents | ERP.net Developer Docs </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Working with documents | ERP.net Developer Docs ">
+    <meta name="generator" content="docfx 2.56.8.0">
+    
+    <link rel="shortcut icon" href="../../../favicon.ico">
+    <link rel="stylesheet" href="../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../toc.html">
+    <meta property="docfx:tocrel" content="../../toc.html">
+    
+    <meta property="docfx:rel" content="../../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../index.html">
+                <img id="logo" class="svg" src="../../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="working-with-documents">Working with documents</h1>
+
+<p>See <a class="xref" href="https://erpnetdocs.github.io/tech/concepts/documents.html">Documents</a> on technical documentation.</p>
+<p>Retrieving and updating documents is the same as any other entity in the domain.</p>
+<p>However there are some specific rules that apply only to documents. For example documents on state Released or above can not be modified directly. They must be modified with <a class="xref" href="https://erpnetdocs.github.io/tech/advanced/documents/adjustment-documents.html">adjustment documents</a>.</p>
+<p>Another important attribute of the documents that can not be modified with simple PATCH request is <a class="xref" href="https://erpnetdocs.github.io/tech/advanced/documents/document-states.html">State</a>.</p>
+<p>The examples below show some tasks related to documents.</p>
+<h2 id="create-document">Create Document</h2>
+<p>Document can be created only by specifying the required properties. Other properties will be filled by it's constant default value or it's LateDefault expression.</p>
+<p>If Front-End model is used in <a href="transactions.md">API Transaction</a> dependent property values are recalculated upon property change.  For example in SalesOrderLine line.ProductDescription is set to line.Product.Name when line.Product changes.</p>
+<p>In the example bellow a new SalesOrder is created with one SalesOrderLine.</p>
+<p>Note that measurement units and currencies are specified before passing <a href="quantity.md">Quantity</a> or <a href="amount.md">Amount</a> values. This is required because the quantity or amount contains the code of the measurement unit or currency.</p>
+<p>POST ~/Crm_Sales_SalesOrders</p>
+<pre><code class="lang-json">{
+&quot;DocumentType&quot;: {
+&quot;@odata.id&quot;: &quot;General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)&quot;
+},
+&quot;EnterpriseCompany&quot;: {
+&quot;@odata.id&quot;: &quot;General_EnterpriseCompanies(b0e80577-fbbe-4c9b-811e-20b6c6dd465f)&quot;
+},
+&quot;Customer&quot;: {
+&quot;@odata.id&quot;: &quot;Crm_Customers(15f2640f-f374-4017-ae2d-d2a41535f054)&quot;
+},
+&quot;DocumentCurrency&quot;: {
+&quot;@odata.id&quot;: &quot;General_Currencies(3187833a-d3c1-4804-bfc0-e17e6aee3069)&quot;
+},
+&quot;Lines&quot;: [
+{
+&quot;Product&quot;: {
+&quot;@odata.id&quot;: &quot;General_Products_Products(81d38b50-fd06-e611-8292-b31071e2ee7f)&quot;
+},
+&quot;QuantityUnit&quot;: {
+&quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+},
+&quot;Quantity&quot;: {
+&quot;Value&quot;: 1,
+&quot;Unit&quot;: &quot;pcs&quot;
+},
+&quot;UnitPrice&quot;: {
+&quot;Value&quot;: 20,
+&quot;Currency&quot;: &quot;BGN&quot;
+}
+}
+]
+}
+</code></pre>
+<h2 id="change-document-state">Change Document State</h2>
+<p>HTTP C#</p>
+<pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders(59098bcf-f331-478f-91c2-f5520590f534)/ChangeState
+{
+&quot;newState&quot; : &quot;FirmPlanned&quot;,
+&quot;userStatus&quot;: {&quot;@odata.id&quot;: &quot;General_DocumentTypeUserStatuses(1ee1249e-4ef5-46b4-8409-26b2130d09c7)&quot;}
+}
+</code></pre>
+<h2 id="make-document-void">Make Document Void</h2>
+<p>HTTP C#</p>
+<pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders(11217345-3659-43be-a85d-005eaaa3aaac)/MakeVoid
+{
+&quot;reason&quot; : &quot;test api method&quot;,
+&quot;voidType&quot;: &quot;VoidDocument&quot;
+}
+</code></pre>
+<h2 id="recalculate-document">Recalculate Document</h2>
+<p>This method is used to recalculate some document details such as Document Amounts (like VAT), Bonus Programs etc. It make sense only in the context of Front-End transaction because the recalculated changes remain only in memory. They must be commited to the database with a separate call to EndTransaction{commit=true}.</p>
+<p>HTTP C#</p>
+<pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders(11217345-3659-43be-a85d-005eaaa3aaac)/Recalculate
+</code></pre>
+<h2 id="create-adjustment-documents">Create Adjustment Documents</h2>
+<p>Released documents can be modified only with adjustment documents. The API provides a convenient method to create adjustment documents: CreateAdjustmentDocuments. The method requires TransactionId in the request header.</p>
+<p>The method creates adjustment documents for modified released documents.  The adjustment documents are created in separate transaction and their state is changed to 'Adjustment'. The method does not commit or rollback the current front-end transaction.</p>
+<p>HTTP C#</p>
+<pre><code class="lang-json">// Begin a front-end transaction
+
+POST ~/BeginTransaction
+
+{
+
+&quot;model&quot;: &quot;frontend&quot;
+
+}
+
+// The returned transaction id must be set in the request header for each subsequent query. The header name is TransactionId.
+
+// Update some sales order lines.
+
+PATH ~/Crm_Sales_SalesOrderLines(34217345-3659-43be-a85d-005eaaa3aaac)
+
+TransactionId: xxxx
+
+{
+
+&quot;Quantity&quot;: {&quot;Value&quot;: 5.0, &quot;Unit&quot;: &quot;PCE&quot;}
+
+}
+
+// Update another line.
+
+PATH ~/Crm_Sales_SalesOrderLines(65217345-3659-43be-a85d-005eaaa3aaac)
+
+TransactionId: xxxx
+
+{
+
+&quot;Quantity&quot;: {&quot;Value&quot;: 15.0, &quot;Unit&quot;: &quot;PCE&quot;}
+
+}
+
+
+
+// Call CreateAdjustmentDocuments to create the adjustment documents and apply the changes to the original document.
+
+// Adjustment documents will be created for all modified released documents in the current transaction.
+
+POST ~/CreateAdjustmentDocuments
+
+TransactionId: xxxx
+
+
+
+// End the transaction without committing because updating released document directly is not allowed.
+
+POST ~/EndTransaction
+
+TransactionId: xxxx
+
+{
+
+&quot;commit&quot;: false
+
+}
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/topics/domain-api/common-tasks/working-with-documents.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../styles/main.js"></script>
+  </body>
+</html>
