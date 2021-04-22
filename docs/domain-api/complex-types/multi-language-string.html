@@ -5,19 +5,19 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Introduction | ERP.net Developer Docs </title>
+    <title>Multilanguage string (Complex value) | ERP.net Developer Docs </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Introduction | ERP.net Developer Docs ">
+    <meta name="title" content="Multilanguage string (Complex value) | ERP.net Developer Docs ">
     <meta name="generator" content="docfx 2.56.8.0">
     
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="stylesheet" href="../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../styles/docfx.css">
-    <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
-    <meta property="docfx:tocrel" content="toc.html">
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../../toc.html">
     
-    <meta property="docfx:rel" content="../">
+    <meta property="docfx:rel" content="../../">
     
   </head>
   <body data-spy="scroll" data-target="#affix" data-offset="120">
@@ -34,8 +34,8 @@
                 <span class="icon-bar"></span>
               </button>
               
-              <a class="navbar-brand" href="../index.html">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
               </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar">
@@ -67,36 +67,39 @@
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
-        
-        <div class="sidenav hide-when-search">
-          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
-          <div class="sidetoggle collapse" id="sidetoggle">
-            <div id="sidetoc"></div>
-          </div>
-        </div>
-        <div class="article row grid-right">
+        <div class="article row grid">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="introduction">Introduction</h1>
+<h1 id="multilanguage-string-complex-value">Multilanguage string (Complex value)</h1>
 
-<p>Explore the ERP.net developer documentation to quickly learn how to build great integrations with the platform.</p>
-<h2 id="erp-instances">ERP Instances</h2>
-<p>Each ERP database is an instance.
-To learn more, see <a href="erp-instances.html">ERP Instances</a>.</p>
-<h2 id="choose-application-type">Choose application type</h2>
-<p>When designing a new app, the first step is to choose which authentication type and API should be used.
-To simplify this, we have compiled a list of common <a href="application-types.html">application types</a>.</p>
-<h2 id="authentication">Authentication</h2>
-<p>All APIs in ERP.net use the same authentication mechanism, based on OAuth2.</p>
-<p>To understand authentication, see <a href="authentication/index.html">Authentication</a>.</p>
-<h2 id="select-api">Select API</h2>
-<p>Choose the correct API:</p>
-<ul>
-<li><strong><a href="../domain-api/index.html">Domain API</a></strong> - Object oriented API, based on the <a href="https://docs.erp.net/model/entities/">Domain Model</a>. The main API for processing data by web sites, services and other business logic apps.</li>
-<li><strong><a href="table-api/index.html">Table API</a></strong> - Limited purpose read-only, fast-forward API based on the raw table data model. Intended for Business Intelligence and backup apps, requiring fast dumping of big quantities of raw data.</li>
-<li><strong>Data Access API</strong> - Legacy API, exposing table-based methods for retrieving and manipulating data.
-Not documented and not recommended for new developments.</li>
-</ul>
+<p>Some text properties support value in more than one language.
+This properties are of multi-language string type.</p>
+<p>The multi-language string can store many language strings, indexing them by language key.
+The language key is a CultureInfo two letter ISO language name, like &quot;en&quot;, &quot;de&quot;, etc.</p>
+<p>For example, the name of a product is a data attribute, which can simultaneously contain translation of the product name in many languages.</p>
+<p>When you retrieve the value of this attribute with the Domain API, you get values similar to:</p>
+<pre><code class="lang-json">{
+  &quot;en&quot;: &quot;Apple&quot;,
+  &quot;de&quot;: &quot;Apfel&quot;
+}
+</code></pre>
+<h3 id="all-translations-are-a-single-value">All translations are a single value</h3>
+<p>All translations in a multi-language string are treated as a single value.
+You cannot change only one language pair - all pairs are updated simultaneously.
+The client applications are responsible for managing all language pairs.</p>
+<h3 id="filtering">Filtering</h3>
+<p>The equality comparison for multi-language string is ambiguous.
+The APIs generally do not support direct equality comparisons.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Domain API supports only the filter function <strong>contains</strong>.</p>
+</div>
+<p>For example, in Domain API, the following is supported:</p>
+<pre><code class="lang-odata">~/General_Products_Products?$filter=contains(Name,'ppl')  
+</code></pre>
+<p>However, this is not valid:</p>
+<pre><code class="lang-odata">~/General_Products_Products?$filter=Name eq 'Apple' 
+</code></pre>
 </article>
           </div>
           
@@ -105,7 +108,7 @@ Not documented and not recommended for new developments.</li>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ErpNetDocs/dev/blob/master/topics/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/complex-types/multi-language-string.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>
@@ -131,8 +134,8 @@ Not documented and not recommended for new developments.</li>
       </footer>
     </div>
     
-    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
-    <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
   </body>
 </html>

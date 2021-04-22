@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Custom Property Value | ERP.net Developer Docs </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Custom Property Value | ERP.net Developer Docs ">
+    <meta name="generator" content="docfx 2.56.8.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../../toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="custom-property-value">Custom Property Value</h1>
+
+<p>Custom Properties (also called Custom Attributes in the domain terminology) are user-defined attributes, which can supplement the predefined system attributes.</p>
+<h2 id="definition-of-а-custom-property">Definition of а Custom Property</h2>
+<p>For reference information about the definition of the custom properties, see <a class="xref" href="https://erpnetdocs.github.io/model/entities/General.CustomProperties.html">General.CustomProperties Entity</a>.</p>
+<p>Here are some highlights for the definition record:</p>
+<ul>
+<li><p><em>EntityName</em> contains the name of the entity, for which the property is defined.
+You can find the entity name for each entity in the model documentation.
+For example, the entity name for <a class="xref" href="https://erpnetdocs.github.io/model/entities/Crm.Customers.html">Crm.Customers Entity</a> is &quot;Crm_Customers&quot; (check it out in the link - see the tag line under the entity name).</p>
+</li>
+<li><p><em>LimitToAllowedValues</em> - this defines whether the property is free text or is limited to a list of allowed values.</p>
+</li>
+<li><p><em>AllowedValuesEntityName</em> -  specifies that the allowed values are retrieved from the specified entity.
+When this is NULL, the allowed values are retrieved from <a class="xref" href="https://erpnetdocs.github.io/model/entities/General.CustomPropertyAllowedValues.html">General.CustomPropertyAllowedValues Entity</a> .</p>
+</li>
+</ul>
+<h2 id="data-type-and-values">Data type and values</h2>
+<p>In the Domain API, the custom properties are properties of type General_CustomPropertyValue.
+The API name of the custom property starts with 'CustomProperty_' followed by the user defined property code.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Properties with Code, which does not conform to the specification for identifier name, might not be accessible through the API.
+See <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/identifier-names">Identifier Name Specification</a>.</p>
+</div>
+<p>Each database contains different custom properties and that is why each database have different EDM model ($metadata).</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>If a user creates new custom property in the database this custom property is not automatically shown in Domain API.
+This is because the Domain API caches all repositories and their attributes.
+To refresh the cached attributes you must call the ~/domain/reset endpoint.</p>
+<p>Example:
+<a href="https://demodb.my.erp.net/api/domain/reset">https://demodb.my.erp.net/api/domain/reset</a></p>
+</div>
+<h2 id="composition-of-the-custompropertyvalue-type">Composition of the CustomPropertyValue type</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value</td>
+<td>String</td>
+<td>The short value. This is the actual value of the custom property.</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>MultilanguageString</td>
+<td>This is long, descriptive, multi-language value of the custom property. Can be null.</td>
+</tr>
+<tr>
+<td>ValueId</td>
+<td>Guid</td>
+<td>The Id of the entry represented by the property value. It's the id of the allowed value. Can be null.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="example">Example</h2>
+<pre><code>&quot;CustomProperty_color&quot;: {
+    &quot;Value&quot;: &quot;Apple&quot;,
+    &quot;ValueId&quot;: &quot;5263a2d3-88b0-41db-adae-31c76135719e&quot;,
+    &quot;Description&quot;: {
+        &quot;EN&quot;: &quot;The Apple.&quot;,
+        &quot;DE&quot;: &quot;Die Apfel.&quot;
+    }
+}
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>To filter by Custom Property you must use only the short value (only eq is supported):<br>
+General_Products_Products?$top=10&amp;$select=CustomProperty_color&amp;$filter=CustomProperty_color eq 'син'</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/complex-types/custom-property-value.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

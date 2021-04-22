@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Introduction | ERP.net Developer Docs </title>
+    <title>ERP Instance | ERP.net Developer Docs </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Introduction | ERP.net Developer Docs ">
+    <meta name="title" content="ERP Instance | ERP.net Developer Docs ">
     <meta name="generator" content="docfx 2.56.8.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
@@ -76,27 +76,40 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="">
-<h1 id="introduction">Introduction</h1>
+            <article class="content wrap" id="_content" data-uid="erp-instance">
+<h1 id="erp-instance">ERP Instance</h1>
 
-<p>Explore the ERP.net developer documentation to quickly learn how to build great integrations with the platform.</p>
-<h2 id="erp-instances">ERP Instances</h2>
-<p>Each ERP database is an instance.
-To learn more, see <a href="erp-instances.html">ERP Instances</a>.</p>
-<h2 id="choose-application-type">Choose application type</h2>
-<p>When designing a new app, the first step is to choose which authentication type and API should be used.
-To simplify this, we have compiled a list of common <a href="application-types.html">application types</a>.</p>
-<h2 id="authentication">Authentication</h2>
-<p>All APIs in ERP.net use the same authentication mechanism, based on OAuth2.</p>
-<p>To understand authentication, see <a href="authentication/index.html">Authentication</a>.</p>
-<h2 id="select-api">Select API</h2>
-<p>Choose the correct API:</p>
-<ul>
-<li><strong><a href="../domain-api/index.html">Domain API</a></strong> - Object oriented API, based on the <a href="https://docs.erp.net/model/entities/">Domain Model</a>. The main API for processing data by web sites, services and other business logic apps.</li>
-<li><strong><a href="table-api/index.html">Table API</a></strong> - Limited purpose read-only, fast-forward API based on the raw table data model. Intended for Business Intelligence and backup apps, requiring fast dumping of big quantities of raw data.</li>
-<li><strong>Data Access API</strong> - Legacy API, exposing table-based methods for retrieving and manipulating data.
-Not documented and not recommended for new developments.</li>
-</ul>
+<p>Each tenant in the ERP.net infrastructure is called an ERP Instance.</p>
+<h2 id="general-info">General info</h2>
+<p>When a client creates a subscription with the ERP.net service, they get an ERP Instance.
+A single account can create and manage more than one ERP Instance.
+This might be required for testing, validation or other purposes.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>A single ERP Instance can manage multiple legal entities (companies).</p>
+</div>
+<p>Under the hood, each ERP Instance is managed as a single database.
+For this reason, the terms ERP Instance and database are sometimes used interchangeably.
+The proper term is ERP Instance, since this is more abstract and not related to any underlying technology.
+The ERP Instances are provided as a service from the ERP.net infrastructure and the actual storage is undistinguishable to the end user.</p>
+<h2 id="uin">UIN</h2>
+<p>Each ERP Instance has a Unique Instance Name (UIN) or simply name.
+For example, the demonstration database is named &quot;demodb&quot;.</p>
+<h2 id="root-url">Root URL</h2>
+<p>The ERP Instances are accessible through their root URL address.
+The root URL address is</p>
+<p>https://&lt;&lt;UIN&gt;&gt;.my.erp.net</p>
+<p>For example, the root URL of demodb is:</p>
+<p><a href="https://demodb.my.erp.net">https://demodb.my.erp.net</a></p>
+<p>You can go ahead and click that address.
+It opens the home page of the ERP Instance.
+For security reasons, it does not give access to much else than some general info and public downloads.</p>
+<p>The root URL is usually also used as base address for the instance-related web sites. For example, demodb has several web sites active. One of the sites is the Domain API site, available at:</p>
+<p><a href="https://demodb.my.erp.net/api">https://demodb.my.erp.net/api</a></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The web sites can be hosted at custom URL addresses. Using the Root URL is just a default.</p>
+</div>
 </article>
           </div>
           
@@ -105,7 +118,7 @@ Not documented and not recommended for new developments.</li>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ErpNetDocs/dev/blob/master/topics/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/topics/erp-instances.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>

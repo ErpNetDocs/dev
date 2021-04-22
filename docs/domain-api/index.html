@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Introduction | ERP.net Developer Docs </title>
+    <title>Domain API | ERP.net Developer Docs </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Introduction | ERP.net Developer Docs ">
+    <meta name="title" content="Domain API | ERP.net Developer Docs ">
     <meta name="generator" content="docfx 2.56.8.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../styles/docfx.css">
     <link rel="stylesheet" href="../styles/main.css">
     <meta property="docfx:navrel" content="../toc.html">
-    <meta property="docfx:tocrel" content="toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
     
     <meta property="docfx:rel" content="../">
     
@@ -67,36 +67,35 @@
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
-        
-        <div class="sidenav hide-when-search">
-          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
-          <div class="sidetoggle collapse" id="sidetoggle">
-            <div id="sidetoc"></div>
-          </div>
-        </div>
-        <div class="article row grid-right">
+        <div class="article row grid">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="introduction">Introduction</h1>
+<h1 id="domain-api">Domain API</h1>
 
-<p>Explore the ERP.net developer documentation to quickly learn how to build great integrations with the platform.</p>
-<h2 id="erp-instances">ERP Instances</h2>
-<p>Each ERP database is an instance.
-To learn more, see <a href="erp-instances.html">ERP Instances</a>.</p>
-<h2 id="choose-application-type">Choose application type</h2>
-<p>When designing a new app, the first step is to choose which authentication type and API should be used.
-To simplify this, we have compiled a list of common <a href="application-types.html">application types</a>.</p>
-<h2 id="authentication">Authentication</h2>
-<p>All APIs in ERP.net use the same authentication mechanism, based on OAuth2.</p>
-<p>To understand authentication, see <a href="authentication/index.html">Authentication</a>.</p>
-<h2 id="select-api">Select API</h2>
-<p>Choose the correct API:</p>
-<ul>
-<li><strong><a href="../domain-api/index.html">Domain API</a></strong> - Object oriented API, based on the <a href="https://docs.erp.net/model/entities/">Domain Model</a>. The main API for processing data by web sites, services and other business logic apps.</li>
-<li><strong><a href="table-api/index.html">Table API</a></strong> - Limited purpose read-only, fast-forward API based on the raw table data model. Intended for Business Intelligence and backup apps, requiring fast dumping of big quantities of raw data.</li>
-<li><strong>Data Access API</strong> - Legacy API, exposing table-based methods for retrieving and manipulating data.
-Not documented and not recommended for new developments.</li>
-</ul>
+<h2 id="introduction">Introduction</h2>
+<p>The Domain API is the primary API for accessing and manipulating data in ERP.net.
+It is most useful for UI and service apps.
+For BI, you should use the <a href="../table-api/index.md">Table API</a>.</p>
+<p>For an overview and introduction of the Domain API, read the thorough presentation at the <a href="../index.html#the-domain-api">home page of the developer docs</a>.</p>
+<h2 id="based-on-odata">Based on OData</h2>
+<p>The Domain API is based on the <a href="https://www.odata.org/">OData protocol</a>.
+It allows object-oriented access to the data exposed by the ERP.net domain objects.</p>
+<p>The OData API is structured along a number of entity types (called &quot;repositories&quot; in ERP.net), that represent the Domain Model of the ERP Instance.
+Each entity type contains data attributes, which can be filtered, sorted, etc.
+The model also provides information on how to navigate between the repositories.</p>
+<p>For a quick introduction to OData, check the beginners tutorial at the OData site:</p>
+<p><a href="https://www.odata.org/getting-started/understand-odata-in-6-steps/">https://www.odata.org/getting-started/understand-odata-in-6-steps/</a></p>
+<h2 id="step-by-step">Step by step</h2>
+<p>To learn more about the ERP.net Domain API, read below:</p>
+<ol>
+<li><a href="url-components.html">URL components</a> - OData is heavy on the URL. Read this topic to understand the structure of the URL.</li>
+<li><a href="query-options/index.html">Query options</a> - read more about the supported OData query constructs like $filter, $top and similar.</li>
+<li><a href="query-builder.html">Query Builder</a> - the visual query designer can help you easily build complex $select/$expand queries.</li>
+<li><a href="complex-values.md">Complex values</a> - ERP.net utilizes several OData complex values, including quantity, amount and multi-language string.</li>
+<li><a href="transactions.html">Transactions</a> - ERP.net supports server-side front-end transactions.</li>
+<li><a href="working-with-documents.md">Working with documents</a> - working with documents is a common scenario when using the API.</li>
+<li><a href="https://www.odata.org/getting-started/advanced-tutorial/#batch">Batch requests</a> (OData site) - ERP.net fully supports batch requests, saving round-trips to the server.</li>
+</ol>
 </article>
           </div>
           
@@ -105,7 +104,7 @@ Not documented and not recommended for new developments.</li>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ErpNetDocs/dev/blob/master/topics/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/index.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>

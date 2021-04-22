@@ -3,7 +3,7 @@ sorted: true
 references:
 - uid: erp-instance
   name: ERP Instance
-  href: erp-instances.html
+  href: topics/erp-instances.html
 - uid: erpnet
   name: erpnet
   href: includes/erpnet.html

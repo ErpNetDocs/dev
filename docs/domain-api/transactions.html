@@ -1,0 +1,342 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Domain API Transactions | ERP.net Developer Docs </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Domain API Transactions | ERP.net Developer Docs ">
+    <meta name="generator" content="docfx 2.56.8.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="domain-api-transactions">Domain API Transactions</h1>
+
+<p>Тhe ErpNet Domain API introduces a server-side transaction that holds any change of an entity object made between calls of BeginTransaction and EndTransaction.</p>
+<p><strong>BeginTransaction</strong> is unbound (not bound to any entity) action (actions are called with HTTP POST method) that initializes an object transaction on the server and  returns a <em>TransactionId</em> token as a plain text (not json - for example XXXXX). This object transaction is something like memory data-set that holds copies of database records.</p>
+<p>The transaction lives in the server memory for 20 minutes sliding expiration.</p>
+<p>If any subsequent request includes the <em>TransactionId</em> token in the HTTP header (like this: TransactionId:XXXXX) the requested operation will not be executed against the database but against the memory transaction. This means that any POST, PATCH and DELETE requests will be executed only in memory.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>model:</strong> allowed values are &quot;common&quot; or &quot;frontend&quot;. This parameter indicates the data model used for the transaction. Front-end data model uses front-end business rules. For example front-end logic is when Quantity of a SalesOrderLine is changed the corresponding QuantityBase is calculated by a dedicated front-end business rule. Common model defines minimal business logic applicable in all cases - front-end or back-end. The default is &quot;common&quot;.</li>
+<li><strong>trackChanges:</strong> true or false. This parameter enables the usage of GetChanges and WaitForChanges functions. This means that if parameter trackChanges is not true any call to GetChanges and WaitForChanges will return error.</li>
+</ul>
+<p><strong>GetChanges</strong> is unbound function - functions are invoked through GET HTTP method. This function requires the HTTP header <em>TransactionId</em> to be passed. It also requires the front-end transaction to be initialized with  <em>trackChanges</em>: true. Front-end transactions support front-end business rules. These are rules that are usually triggered on attribute change. For example if we change the DocumentDate attribute of a SalesOrder (using regular PATCH request including the <em>TransactionId</em> in the request header), this change will trigger updates of several other attributes. If the front-end transaction is initialized with <em>trackChanges</em>: true, the changes will be collected in the server side (inside the front-end transaction). GetChanges returns all changes made after the last call of GetChanges or WaitForChanges. The changes are grouped by operation type (insert, update, delete), entity name, entity id. The call of GetChanges (or WaitForChanges) clears the collected changes in the transaction. If no change is made after the last call of GetChanges it will return empty result (empty JSON object).</p>
+<p><strong>WaitForChanges</strong> is unbound function that returns the same result as GetChanges but if there is not any change the function blocks until a change occurs or until it times out. The wait timeout is 2 minutes. This function requires the HTTP header <em>TransactionId</em> to be passed. It also requires the front-end transaction to be initialized with <em>trackChanges</em>: true.</p>
+<p>The response format of GetChanges and WaitForChanges follows this JSON schema:</p>
+<pre><code class="lang-json">&quot;insert&quot; | &quot;update&quot; | &quot;delete&quot; : {
+    &quot;&lt;entity-name&gt;&quot; : {   // example: &quot;General_Products_Products&quot;
+        &quot;&lt;id&gt;&quot;: { // example: 59098bcf-f331-478f-91c2-f5520590f534 (Guid)
+            &quot;&lt;attribute&gt;&quot;: &lt;value&gt; // example: &quot;ABCClass&quot;: &quot;A&quot;
+        }
+    }
+}
+</code></pre>
+<p><strong>EndTransaction</strong> is unbound action that disposes the memory transaction created with BeginTransaction. After EndTransaction the transaction id becomes invalid.</p>
+<p>Parameters:</p>
+<ul>
+<li><strong>commit:</strong> true or false. Specifies whether to commit the transaction (save the changes) or not. Default is true.</li>
+</ul>
+<p>To commit the changes made in the memory transaction to the database you should provide the parameter commit = true.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The object transaction is called Front-End because any change of an entity object will trigger front-end business rules. For example if Quantiy of a SalesOrderLine is changed the corresponding QuantityBase will be automatically recalculated. This is front-end behavior - if front-end transaction is not used the QuantityBase will not be automatically recalculated and it's value must be explicitly set.<br>
+Through Front-End Transaction, GetChanges or WaitForChanges we can synchronize our UI passing only the user actions to the server - such as update of an attribute, creating new object or deleting existing object.</p>
+</div>
+<h4 id="example1">Example1:</h4>
+<pre><code class="lang-json">Simple usage of front end transaction.
+
+POST /api/domain/odata/BeginTransaction HTTP/1.1
+Host: https://example.com
+Content-Type: application/json
+
+
+Result: xcasfawed
+
+Make subsequent updates of products
+
+PATCH /api/domain/odata/General_Products_Products(59098bcf-f331-478f-91c2-f5520590f534) HTTP/1.1
+Host: https://example.com
+Content-Type: application/json
+TransactionId: xcasfawed
+{
+
+&quot;ABCClass&quot;:&quot;A&quot;,
+
+&quot;StandardLotSizeBase&quot;:{&quot;Value&quot;:3.45,&quot;Unit&quot;:&quot;PCS&quot;},
+
+&quot;MeasurementUnit@odata.bind&quot;:&quot;https://example.com/api/domain/odata/General_MeasurementUnits(5c5e77ce-60bb-4338-abd0-3a2acb27ff93)&quot;
+
+}
+
+Commit transaction
+
+POST /api/domain/odata/EndTransaction HTTP/1.1
+Host: https://example.com
+Content-Type: application/json
+TransactionId: xcasfawed
+{
+
+&quot;commit&quot;: true
+
+}
+
+</code></pre>
+<h4 id="example1-1">Example1:</h4>
+<pre><code class="lang-json">Updating SalesOrder.DocumentDate and calling GetChanges.
+
+POST /api/domain/odata/BeginTransaction HTTP/1.1
+Host: https://example.com
+Content-Type: application/json
+{
+
+&quot;model&quot;: &quot;frontend&quot;,
+
+&quot;trackChanges&quot;: true
+
+}
+
+Result: uf3d1yc4rqg
+
+Updating DocumentDate. This update triggers many front-end business rules that update many other attributes in the sales order and it's lines.
+
+PATCH /api/domain/odata/Crm_Sales_SalesOrders(33cd6cb9-0f43-df11-a1e1-0018f3790817)
+
+Host: https://example.com
+Content-Type: application/json
+TransactionId: uf3d1yc4rqg
+{
+&quot;DocumentDate&quot;: &quot;2020-05-08T00:00:00Z&quot;
+}
+
+Result: nocontent
+
+Call GetChanges. The result is a JSON object with all changes made after the last call to GetChanges (or BeginTransaction if GetChanges is not called yet).
+
+GET /api/domain/odata/GetChanges HTTP/1.1
+
+Host: https://example.com
+Content-Type: application/json
+TransactionId: uf3d1yc4rqg
+
+Result:
+
+{
+  &quot;@odata.context&quot;: &quot;https://clients.inco.bg/api/domain/odata/$metadata#Erp.OpenObject&quot;,
+  &quot;update&quot;: {
+    &quot;Crm_Sales_SalesOrders&quot;: {
+      &quot;33cd6cb9-0f43-df11-a1e1-0018f3790817&quot;: {
+        &quot;PaymentDueDate&quot;: &quot;2020-05-08T00:00:00Z&quot;,
+        &quot;PaymentDueStartDate&quot;: &quot;2020-05-08T00:00:00Z&quot;,
+        &quot;RequiredDeliveryDate&quot;: &quot;2020-05-08T00:00:00Z&quot;,
+        &quot;DocumentDate&quot;: &quot;2020-05-08T00:00:00Z&quot;
+      }
+    },
+    &quot;Crm_Sales_SalesOrderLines&quot;: {
+      &quot;c253add9-0f43-df11-a1e1-0018f3790817&quot;: {
+        &quot;HistoricalUnitCost&quot;: null,
+        &quot;RequestedQuantity&quot;: null,
+        &quot;StandardUnitPrice&quot;: null,
+        &quot;RequiredDeliveryDate&quot;: &quot;2020-05-08T00:00:00Z&quot;,
+        &quot;LineAmount&quot;: {
+          &quot;Value&quot;: 1.62,
+          &quot;Currency&quot;: &quot;BGN&quot;
+        },
+        &quot;Quantity&quot;: {
+          &quot;Value&quot;: 2,
+          &quot;Unit&quot;: &quot;бр&quot;
+        },
+        &quot;QuantityBase&quot;: {
+          &quot;Value&quot;: 2,
+          &quot;Unit&quot;: &quot;бр&quot;
+        },
+        &quot;StandardQuantityBase&quot;: {
+          &quot;Value&quot;: 2,
+          &quot;Unit&quot;: &quot;бр&quot;
+        },
+        &quot;UnitPrice&quot;: {
+          &quot;Value&quot;: 0.9,
+          &quot;Currency&quot;: &quot;BGN&quot;
+        }
+      },
+      &quot;c653add9-0f43-df11-a1e1-0018f3790817&quot;: {
+        &quot;HistoricalUnitCost&quot;: null,
+        &quot;RequestedQuantity&quot;: null,
+        &quot;StandardUnitPrice&quot;: null,
+        &quot;RequiredDeliveryDate&quot;: &quot;2020-05-08T00:00:00Z&quot;,
+        &quot;LineAmount&quot;: {
+          &quot;Value&quot;: 5.53,
+          &quot;Currency&quot;: &quot;BGN&quot;
+        },
+        &quot;Quantity&quot;: {
+          &quot;Value&quot;: 3,
+          &quot;Unit&quot;: &quot;бр&quot;
+        },
+        &quot;QuantityBase&quot;: {
+          &quot;Value&quot;: 3,
+          &quot;Unit&quot;: &quot;бр&quot;
+        },
+        &quot;StandardQuantityBase&quot;: {
+          &quot;Value&quot;: 3,
+          &quot;Unit&quot;: &quot;бр&quot;
+        },
+        &quot;UnitPrice&quot;: {
+          &quot;Value&quot;: 2,
+          &quot;Currency&quot;: &quot;BGN&quot;
+        }
+      },
+      &quot;c753add9-0f43-df11-a1e1-0018f3790817&quot;: {
+        &quot;HistoricalUnitCost&quot;: null,
+        &quot;RequestedQuantity&quot;: null,
+        &quot;StandardUnitPrice&quot;: null,
+        &quot;RequiredDeliveryDate&quot;: &quot;2020-05-08T00:00:00Z&quot;,
+        &quot;LineAmount&quot;: {
+          &quot;Value&quot;: 4.38,
+          &quot;Currency&quot;: &quot;BGN&quot;
+        },
+        &quot;Quantity&quot;: {
+          &quot;Value&quot;: 6,
+          &quot;Unit&quot;: &quot;kg&quot;
+        },
+        &quot;QuantityBase&quot;: {
+          &quot;Value&quot;: 6,
+          &quot;Unit&quot;: &quot;kg&quot;
+        },
+        &quot;StandardQuantityBase&quot;: {
+          &quot;Value&quot;: 6,
+          &quot;Unit&quot;: &quot;kg&quot;
+        },
+        &quot;UnitPrice&quot;: {
+          &quot;Value&quot;: 0.8,
+          &quot;Currency&quot;: &quot;BGN&quot;
+        }
+      },
+      &quot;c153add9-0f43-df11-a1e1-0018f3790817&quot;: {
+        &quot;HistoricalUnitCost&quot;: null,
+        &quot;RequestedQuantity&quot;: null,
+        &quot;StandardUnitPrice&quot;: null,
+        &quot;RequiredDeliveryDate&quot;: &quot;2020-05-08T00:00:00Z&quot;,
+        &quot;LineAmount&quot;: {
+          &quot;Value&quot;: 10.56,
+          &quot;Currency&quot;: &quot;BGN&quot;
+        },
+        &quot;Quantity&quot;: {
+          &quot;Value&quot;: 10,
+          &quot;Unit&quot;: &quot;l&quot;
+        },
+        &quot;QuantityBase&quot;: {
+          &quot;Value&quot;: 20,
+          &quot;Unit&quot;: &quot;бр&quot;
+        },
+        &quot;StandardQuantityBase&quot;: {
+          &quot;Value&quot;: 20,
+          &quot;Unit&quot;: &quot;бр&quot;
+        },
+        &quot;UnitPrice&quot;: {
+          &quot;Value&quot;: 1.17348,
+          &quot;Currency&quot;: &quot;BGN&quot;
+        }
+      }
+    }
+  }
+}
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/transactions.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
