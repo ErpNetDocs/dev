@@ -59,18 +59,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "domain-api/common-tasks/example-queries.md",
-      "output": {
-        ".html": {
-          "relative_path": "domain-api/common-tasks/example-queries.html",
-          "hash": "odpH1YvehePA5DXabvBcag=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "domain-api/common-tasks/index.md",
       "output": {
         ".html": {
@@ -88,6 +76,33 @@
         ".html": {
           "relative_path": "domain-api/common-tasks/master-detail-attributes.html",
           "hash": "pbzp6ES6XPAfpig2e9i4oQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/common-tasks/register-trusted-app.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/common-tasks/register-trusted-app.html",
+          "hash": "MpuiWD6l7aZwPFiZaXhYgw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/common-tasks/retrieve-products.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/common-tasks/retrieve-products.html",
+          "hash": "7a6t+FV0oOwiFVBKZjTYfg=="
         }
       },
       "is_incremental": false,
@@ -123,7 +138,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/complex-types/custom-property-value.html",
-          "hash": "Ooel2TCQu0zTS9bpfZIEog=="
+          "hash": "vDqo2VYA0HbYwxW+FvBvDQ=="
         }
       },
       "is_incremental": false,
@@ -195,7 +210,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/query-options/filter.html",
-          "hash": "9bWF9kUQkQN977ubbVmt2w=="
+          "hash": "qHyETKSVOIXcTQrqY2su5A=="
         }
       },
       "is_incremental": false,
@@ -219,7 +234,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/query-options/options.html",
-          "hash": "AX4+w3UT99NZSQUA5ODlnQ=="
+          "hash": "hRptpYDt92g+SN/SqGJwiQ=="
         }
       },
       "is_incremental": false,
@@ -231,7 +246,115 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/query-options/select.html",
-          "hash": "M2KYrwQWxbYgym+WDqZDkg=="
+          "hash": "Sf0fEfvO3BNxnJYTxVDZiw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/build-ecommerce-website.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/build-ecommerce-website.html",
+          "hash": "M96EfZHyp11tah4uFiYZ5A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/build-payment-connector.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/build-payment-connector.html",
+          "hash": "sjiI878cSwuaGyoTph1X3A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/dotnet-service-app.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/dotnet-service-app.html",
+          "hash": "CVvDGe4Ppakqj35WGYrCCQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/dotnet-web-app.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/dotnet-web-app.html",
+          "hash": "ZAQo0E6nn0QW55kpIYt1Kg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/javascript-client.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/javascript-client.html",
+          "hash": "OVv7msqTquaEkJLHnuBuaQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/php-interactive-client.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/php-interactive-client.html",
+          "hash": "q2EYLjgSQmp8B4+0cUW0ig=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/php-service-client.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/php-service-client.html",
+          "hash": "pCEQQT85NQoE2zfxuFbtNQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/src/dotnet/ErpNetDemoClient/wwwroot/lib/jquery-validation/LICENSE.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/src/dotnet/ErpNetDemoClient/wwwroot/lib/jquery-validation/LICENSE.html",
+          "hash": "HICUt78ysXoqgiU0OTsZFA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "domain-api/samples/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/toc.html",
+          "hash": "QTti0w00oH2Ile72l8xKAw=="
         }
       },
       "is_incremental": false,
@@ -243,7 +366,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/toc.html",
-          "hash": "+8AhZB7FVnkHaMkv3oVfMQ=="
+          "hash": "76lfK0ch8FzfJc6cOBo16w=="
         }
       },
       "is_incremental": false,
@@ -274,108 +397,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "guides/index.md",
       "output": {
         ".html": {
           "relative_path": "guides/index.html",
-          "hash": "bF5qxq5PUMxGdwipkGAseg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "guides/samples/build-ecommerce-website.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/samples/build-ecommerce-website.html",
-          "hash": "0pNuVatXIDHZRmCyD/QFcA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "guides/samples/build-payment-connector.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/samples/build-payment-connector.html",
-          "hash": "ZEu7HVKL6kJb8Wnu6pFFNg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "guides/samples/dotnet-service-app.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/samples/dotnet-service-app.html",
-          "hash": "Tin/5Bc7nKooktRzyCTgiQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "guides/samples/dotnet-web-app.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/samples/dotnet-web-app.html",
-          "hash": "bYyHK8waGFgf+85hcCrHJw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "guides/samples/javascript-client.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/samples/javascript-client.html",
-          "hash": "YKI7a/SdalSLkegHNgup9g=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "guides/samples/php-interactive-client.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/samples/php-interactive-client.html",
-          "hash": "wVJeT+YUguRk6+tv6/tRkg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "guides/samples/php-service-client.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/samples/php-service-client.html",
-          "hash": "82FdYEEV17IMxLETKQX6sg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "guides/samples/src/dotnet/ErpNetDemoClient/wwwroot/lib/jquery-validation/LICENSE.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/samples/src/dotnet/ErpNetDemoClient/wwwroot/lib/jquery-validation/LICENSE.html",
-          "hash": "m+dhaPoAdZSw8wBR2vYVxw=="
+          "hash": "bnc6RSH1IsyeYKljvDRxYg=="
         }
       },
       "is_incremental": false,
@@ -418,39 +448,15 @@
       "version": ""
     },
     {
-      "type": "Conceptual",
-      "source_relative_path": "guides/step-by-step/register-trusted-app.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/step-by-step/register-trusted-app.html",
-          "hash": "rFbZLpum1rplkiQAxd8oXw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
       "log_codes": [
-        "InvalidFileLink"
+        "InvalidTocInclude"
       ],
-      "type": "Conceptual",
-      "source_relative_path": "guides/step-by-step/retrieve-products.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/step-by-step/retrieve-products.html",
-          "hash": "I7XlzOniNLBWOggoRAUeIw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
       "type": "Toc",
       "source_relative_path": "guides/toc.yml",
       "output": {
         ".html": {
           "relative_path": "guides/toc.html",
-          "hash": "M+enU8lmPXUxKFbgTggoCw=="
+          "hash": "xC83FVAJeESgprwHKyCdNQ=="
         }
       },
       "is_incremental": false,
