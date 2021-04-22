@@ -226,12 +226,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "guides/step-by-step/retrieve-products.md",
       "output": {
         ".html": {
           "relative_path": "guides/step-by-step/retrieve-products.html",
-          "hash": "T6HqCSUFBenYuQht6HwtIw=="
+          "hash": "I7XlzOniNLBWOggoRAUeIw=="
         }
       },
       "is_incremental": false,
@@ -333,11 +336,11 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "topics/application-types.md",
+      "source_relative_path": "topics/domain-api/common-tasks/example-queries.md",
       "output": {
         ".html": {
-          "relative_path": "topics/application-types.html",
-          "hash": "qtDYW06tsl4hqlpW5U5I3g=="
+          "relative_path": "topics/domain-api/common-tasks/example-queries.html",
+          "hash": "MMD2xcnH9tyo6BBOaD++xA=="
         }
       },
       "is_incremental": false,
@@ -345,11 +348,11 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "topics/domain-api/amount.md",
+      "source_relative_path": "topics/domain-api/common-tasks/index.md",
       "output": {
         ".html": {
-          "relative_path": "topics/domain-api/amount.html",
-          "hash": "P3AJRPoUdRSTiY4yJjEvzg=="
+          "relative_path": "topics/domain-api/common-tasks/index.html",
+          "hash": "Y8R2EWEYcuGhF7kOBsUL0A=="
         }
       },
       "is_incremental": false,
@@ -357,11 +360,26 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "topics/domain-api/complex-values.md",
+      "source_relative_path": "topics/domain-api/common-tasks/master-detail-attributes.md",
       "output": {
         ".html": {
-          "relative_path": "topics/domain-api/complex-values.html",
-          "hash": "lJPqgCHdY2DVTRlDrNDiqw=="
+          "relative_path": "topics/domain-api/common-tasks/master-detail-attributes.html",
+          "hash": "YmYVa7YsrNWNj2XqmbP05A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/common-tasks/working-with-documents.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/common-tasks/working-with-documents.html",
+          "hash": "ME0cxmLVxYURuAFmvaueHQ=="
         }
       },
       "is_incremental": false,
@@ -369,11 +387,26 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "topics/domain-api/custom-attributes.md",
+      "source_relative_path": "topics/domain-api/complex-types/amount.md",
       "output": {
         ".html": {
-          "relative_path": "topics/domain-api/custom-attributes.html",
-          "hash": "KlFBFb8pM0SdTXk+YR8V9A=="
+          "relative_path": "topics/domain-api/complex-types/amount.html",
+          "hash": "3D3FUvUWz0JCTG09KfUpLQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "include-not-found"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/complex-types/custom-property-value.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/complex-types/custom-property-value.html",
+          "hash": "ou0OXlh9/FWwThq++z6OAQ=="
         }
       },
       "is_incremental": false,
@@ -381,47 +414,50 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "topics/domain-api/demo-web-shop.md",
+      "source_relative_path": "topics/domain-api/complex-types/index.md",
       "output": {
         ".html": {
-          "relative_path": "topics/domain-api/demo-web-shop.html",
-          "hash": "v0DLKC4VYUMsffRipaA6jg=="
+          "relative_path": "topics/domain-api/complex-types/index.html",
+          "hash": "2XE9i/AEY1zGAoQ+1+a8dQ=="
         }
       },
       "is_incremental": false,
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/complex-types/multi-language-string.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/complex-types/multi-language-string.html",
+          "hash": "W5RgbogWOiCZg84sWRBEtg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/domain-api/complex-types/quantity.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/domain-api/complex-types/quantity.html",
+          "hash": "RxV1FVgr6EQzOh+geaJ0LA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "topics/domain-api/index.md",
       "output": {
         ".html": {
           "relative_path": "topics/domain-api/index.html",
-          "hash": "oqH9ZyQGpXxR2BtbsSCkxA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "topics/domain-api/multi-language-string.md",
-      "output": {
-        ".html": {
-          "relative_path": "topics/domain-api/multi-language-string.html",
-          "hash": "sducVEIUTXul3yHQQ/cnfA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "topics/domain-api/quantity.md",
-      "output": {
-        ".html": {
-          "relative_path": "topics/domain-api/quantity.html",
-          "hash": "EE+PSPPpovNZIZUvhLelEQ=="
+          "hash": "7YWaUc52rk8UY0XipF0yhQ=="
         }
       },
       "is_incremental": false,
@@ -512,12 +548,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
-      "source_relative_path": "topics/domain-api/working-with-documents.md",
+      "source_relative_path": "topics/identity/application-types.md",
       "output": {
         ".html": {
-          "relative_path": "topics/domain-api/working-with-documents.html",
-          "hash": "gHTWgHlxThYOuFMBGa0Lhw=="
+          "relative_path": "topics/identity/application-types.html",
+          "hash": "DkvYfc3HhGo8n+xFK3jpKQ=="
         }
       },
       "is_incremental": false,
@@ -560,12 +599,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "topics/index.md",
       "output": {
         ".html": {
           "relative_path": "topics/index.html",
-          "hash": "3mazY5pxOpWPT2MIud+uQw=="
+          "hash": "ZB1CFrU5WQQzYFUBQLErRg=="
         }
       },
       "is_incremental": false,
@@ -589,31 +631,7 @@
       "output": {
         ".html": {
           "relative_path": "topics/toc.html",
-          "hash": "KrXUKzWuiR8OUgPyeLTqFA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "topics/working-with-data/index.md",
-      "output": {
-        ".html": {
-          "relative_path": "topics/working-with-data/index.html",
-          "hash": "8OdadkbHkGtQbqtQp9v6Yw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "topics/working-with-data/master-detail-attributes.md",
-      "output": {
-        ".html": {
-          "relative_path": "topics/working-with-data/master-detail-attributes.html",
-          "hash": "wy0TXspu4FI9aw3lfr0WDg=="
+          "hash": "K+U4B2nmq2iM5IeLNHTI4w=="
         }
       },
       "is_incremental": false,

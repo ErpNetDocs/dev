@@ -5,19 +5,19 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Domain API | ERP.net Developer Docs </title>
+    <title>Amount (Complex value) | ERP.net Developer Docs </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Domain API | ERP.net Developer Docs ">
+    <meta name="title" content="Amount (Complex value) | ERP.net Developer Docs ">
     <meta name="generator" content="docfx 2.56.8.0">
     
-    <link rel="shortcut icon" href="../../favicon.ico">
-    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../../styles/docfx.css">
-    <link rel="stylesheet" href="../../styles/main.css">
-    <meta property="docfx:navrel" content="../../toc.html">
-    <meta property="docfx:tocrel" content="../toc.html">
+    <link rel="shortcut icon" href="../../../favicon.ico">
+    <link rel="stylesheet" href="../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../toc.html">
+    <meta property="docfx:tocrel" content="../../toc.html">
     
-    <meta property="docfx:rel" content="../../">
+    <meta property="docfx:rel" content="../../../">
     
   </head>
   <body data-spy="scroll" data-target="#affix" data-offset="120">
@@ -34,8 +34,8 @@
                 <span class="icon-bar"></span>
               </button>
               
-              <a class="navbar-brand" href="../../index.html">
-                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              <a class="navbar-brand" href="../../../index.html">
+                <img id="logo" class="svg" src="../../../logo.svg" alt="">
               </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar">
@@ -77,32 +77,45 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="domain-api">Domain API</h1>
+<h1 id="amount-complex-value">Amount (Complex value)</h1>
 
-<h2 id="introduction">Introduction</h2>
-<p>The Domain API is the primary API for accessing and manipulating data in ERP.net.
-It is most useful for UI and service apps.
-For BI, you should use the <a href="../table-api/index.html">Table API</a>.</p>
-<p>For an overview and introduction of the Domain API, read the thorough presentation at the <a href="../../index.html#the-domain-api">home page of the developer docs</a>.</p>
-<h2 id="based-on-odata">Based on OData</h2>
-<p>The Domain API is based on the <a href="https://www.odata.org/">OData protocol</a>.
-It allows object-oriented access to the data exposed by the ERP.net domain objects.</p>
-<p>The OData API is structured along a number of entity types (called &quot;repositories&quot; in ERP.net), that represent the Domain Model of the ERP Instance.
-Each entity type contains data attributes, which can be filtered, sorted, etc.
-The model also provides information on how to navigate between the repositories.</p>
-<p>For a quick introduction to OData, check the beginners tutorial at the OData site:</p>
-<p><a href="https://www.odata.org/getting-started/understand-odata-in-6-steps/">https://www.odata.org/getting-started/understand-odata-in-6-steps/</a></p>
-<h2 id="step-by-step">Step by step</h2>
-<p>To learn more about the ERP.net Domain API, read below:</p>
-<ol>
-<li><a href="url-components.html">URL components</a> - OData is heavy on the URL. Read this topic to understand the structure of the URL.</li>
-<li><a href="query-options/index.html">Query options</a> - read more about the supported OData query constructs like $filter, $top and similar.</li>
-<li><a href="query-builder.html">Query Builder</a> - the visual query designer can help you easily build complex $select/$expand queries.</li>
-<li><a href="complex-values.md">Complex values</a> - ERP.net utilizes several OData complex values, including quantity, amount and multi-language string.</li>
-<li><a href="transactions.html">Transactions</a> - ERP.net supports server-side front-end transactions.</li>
-<li><a href="working-with-documents.md">Working with documents</a> - working with documents is a common scenario when using the API.</li>
-<li><a href="https://www.odata.org/getting-started/advanced-tutorial/#batch">Batch requests</a> (OData site) - ERP.net fully supports batch requests, saving round-trips to the server.</li>
-</ol>
+<p>The ERP domain model declares a special type for amount (currency) properties.</p>
+<p>The amount is represented by value and currency.</p>
+<h2 id="properties">Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Currency</td>
+<td>String</td>
+<td>The currency of the amount represented by it's sign.</td>
+</tr>
+<tr>
+<td>Value</td>
+<td>Decimal</td>
+<td>The value of the amount.</td>
+</tr>
+</tbody>
+</table>
+<p>Domain API Example:</p>
+<pre><code class="lang-json">{
+  &quot;LineAmount&quot;: {
+    &quot;Value&quot;: &quot;3.55&quot;,
+    &quot;Currency&quot;: &quot;USD&quot;
+  }
+}
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Because <em>Amount</em> is odata complex object it can not participate in uri $filter query parameter. To filter by Amount or Quantity properties you can use the following:</p>
+<p><code>~/Logistics_Inventory_StoreTransactionLines?$filter=QuantityValue ge 5.555 ~/Crm_Sales_SalesOrderLines?$filter=LineAmountValue ge 5.555</code></p>
+</div>
 </article>
           </div>
           
@@ -111,7 +124,7 @@ The model also provides information on how to navigate between the repositories.
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ErpNetDocs/dev/blob/master/topics/domain-api/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/topics/domain-api/complex-types/amount.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>
@@ -137,8 +150,8 @@ The model also provides information on how to navigate between the repositories.
       </footer>
     </div>
     
-    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
-    <script type="text/javascript" src="../../styles/docfx.js"></script>
-    <script type="text/javascript" src="../../styles/main.js"></script>
+    <script type="text/javascript" src="../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../styles/main.js"></script>
   </body>
 </html>
