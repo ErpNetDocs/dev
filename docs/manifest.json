@@ -385,72 +385,6 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
-      "type": "Conceptual",
-      "source_relative_path": "guides/index.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/index.html",
-          "hash": "bnc6RSH1IsyeYKljvDRxYg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "guides/step-by-step/create-sales-order.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/step-by-step/create-sales-order.html",
-          "hash": "IRCtyIAzMAUh0leL5zyI4w=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "guides/step-by-step/login-confidential.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/step-by-step/login-confidential.html",
-          "hash": "pKhY5/Zbv3fIXSE6R0PoeQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "guides/step-by-step/login-non-confidential.md",
-      "output": {
-        ".html": {
-          "relative_path": "guides/step-by-step/login-non-confidential.html",
-          "hash": "3tY6bEAN5x0vDZdf3hkFZA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "log_codes": [
-        "InvalidTocInclude"
-      ],
-      "type": "Toc",
-      "source_relative_path": "guides/toc.yml",
-      "output": {
-        ".html": {
-          "relative_path": "guides/toc.html",
-          "hash": "xC83FVAJeESgprwHKyCdNQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
       "type": "Conceptual",
       "source_relative_path": "includes/erpnet.md",
       "output": {
@@ -480,7 +414,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "0R39rrx2abqen0i43RtG1Q=="
+          "hash": "ndpp2T21p8CxS8vN2E0UvQ=="
         }
       },
       "is_incremental": false,
