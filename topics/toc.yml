@@ -1,7 +1,5 @@
 - name: Overview
   href: index.md
-- name: Application Types
-  href: application-types.md
 - name: Authentication
   href: identity/toc.yml
   topicHref: identity/index.md
@@ -11,6 +9,3 @@
 - name: Table API
   href: table-api/toc.yml
   topicHref: table-api/index.md
-- name: Working with the data
-  href: working-with-data/toc.yml
-  topicHref: working-with-data/index.md

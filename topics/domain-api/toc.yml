@@ -7,19 +7,12 @@
   topicHref: query-options/index.md
 - name: Query Builder
   href: query-builder.md
-- name: Complex values
-  topicHref: complex-values.md
-  items:
-  - name: Custom Attributes
-    href: custom-attributes.md
-  - name: Quantity
-    href: quantity.md
-  - name: Amount
-    href: amount.md
-  - name: Multi-language string
-    href: multi-language-string.md
+- name: Complex types
+  href: complex-types/toc.yml
+  topicHref: complex-types/index.md
 - name: Transactions
   href: transactions.md
-- name: Working with documents
-  href: working-with-documents.md
+- name: Common Tasks
+  href: common-tasks/toc.yml
+  topicHref: common-tasks/index.md
 
