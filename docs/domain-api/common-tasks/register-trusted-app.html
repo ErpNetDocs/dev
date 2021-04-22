@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Register Trusted Application | ERP.net Developer Docs </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Register Trusted Application | ERP.net Developer Docs ">
+    <meta name="generator" content="docfx 2.56.8.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="register-trusted-application">Register Trusted Application</h1>
+
+<p>In this topic, you register an app in an ERP instance so the ERP.net identity server can provide authentication and authorization services for your application and its users.</p>
+<p>Each application that uses ERP.net APIs needs to be registered.
+Whether it's a client application like a web or mobile app, or it's a web API that backs a client app, registering it establishes a trust relationship between your application and the ERP instance.</p>
+<h2 id="register-an-application">Register an application</h2>
+<p>Registering your application establishes a trust relationship between your app and the ERP.net database instance. That means that your database trusts the application.</p>
+<p>We'll show how to register an application manually, using the Domain API Query Tool.</p>
+<p>Follow these steps to create the app registration:</p>
+<ol>
+<li><p>Sign in to your ERP instance and open the Domain API Query Tool.</p>
+<p>In this example we'll use the DEMODB ERP.net instance: <a href="https://demodb.my.erp.net/api/domain/query">https://demodb.my.erp.net/api/domain/query</a></p>
+</li>
+</ol>
+<blockquote>
+<p>You need to be a database administrator in order to be able to register a new trusted application.</p>
+</blockquote>
+<ol>
+<li>If the application is <a href="/topics/identity/trusted-applications.html#client-type">confidential</a>, we need to prepare an application secret. Use this endpoint to get the application secret hash (Replace <em>mysecret</em> with your secret):</li>
+</ol>
+<p><a href="https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret">https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret</a></p>
+<ol>
+<li>In the query tool we'll create a new record for <a class="xref" href="https://erpnetdocs.github.io/model/entities/Systems.Security.TrustedApplications.html">System.Security.TrustedApplications</a> entity.</li>
+</ol>
+<h2 id="register-interactive-confidential-application">Register interactive confidential application</h2>
+<p><em>Query</em>: Systems_Security_TrustedApplications<br>
+<em>Type</em>: POST<br>
+<em>Body</em>:</p>
+<pre><code class="lang-json">{
+  &quot;ApplicationUri&quot;: &quot;MYDEMOCLIENT&quot;,
+  &quot;Name&quot;: &quot;MY DEMO CLIENT&quot;,
+  &quot;ClientType&quot;: &quot;Confidential&quot;,
+  &quot;ApplicationSecretHash&quot;: &quot;T/AGymuI51LwjLeIFxRQXOs9IHnupDKs/ajhWODR2C4=&quot;,
+  &quot;ImpersonateAsCommunityUserAllowed&quot;: true,
+  &quot;ImpersonateAsInternalUserAllowed&quot;: true,
+  &quot;ImpersonateLoginUrl&quot;: &quot;http://localhost:5080/myapp/signin-oidc&quot;,
+  &quot;ImpersonateLogoutUrl&quot;: &quot;http://localhost:5080/myapp/&quot;,
+  &quot;SystemUserAllowed&quot;: false
+}
+</code></pre>
+<ul>
+<li><em>ApplicationUri</em> is the unique name that identifies the application. This is the <em>client_id</em> in the OAuth terminology.</li>
+<li><em>Name</em> is the display name of the application.</li>
+<li><em>ClientType</em> - Confidential or Public.</li>
+<li><em>ApplicationSecretHash</em> a hash of the application secret - previously created using   <a href="https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret">https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret</a>  tool.</li>
+<li><em>ImpersonateAsCommunityUserAllowed</em> must be true if your application will work with community users. Community users are users that do not have access to system resources. They are usually customers of the company that owns the ERP.net database instance.</li>
+<li><em>ImpersonateAsInternalUserAllowed</em> must be true if internal users will use the application.</li>
+<li><em>ImpersonateLoginUrl</em> is the url that receives the authorization code. When the user loads the application in the browser, if sign in is required, the browser is redirected to ERP.net Identity Server login page. After successful login the browser is redirected to <em>ImpersonateLoginUrl</em> providing the <em>authorization_code</em> through <em>code</em> url parameter. This <em>code</em> is used by the application to request an <em>access_code</em> that is used to gain access to ERP.net server resources.</li>
+<li><em>ImpersonateLogoutUrl</em> is the url that is loaded after the user is logged out from the identity server and &quot;Return to app&quot; button is clicked.</li>
+<li><em>SystemUserAllowed</em> specifies if the application can act as a service application that is impersonated as specific user.</li>
+</ul>
+<h2 id="register-interactive-public-application">Register interactive public application</h2>
+<p><em>Query</em>: Systems_Security_TrustedApplications<br>
+<em>Type</em>: POST<br>
+<em>Body</em>:</p>
+<pre><code class="lang-json">{
+  &quot;ApplicationUri&quot;: &quot;MYDEMOCLIENT&quot;,
+  &quot;Name&quot;: &quot;MY DEMO CLIENT&quot;,
+  &quot;ClientType&quot;: &quot;Public&quot;,
+  &quot;ImpersonateAsCommunityUserAllowed&quot;: true,
+  &quot;ImpersonateAsInternalUserAllowed&quot;: true,
+  &quot;ImpersonateLoginUrl&quot;: &quot;http://localhost:5080/myapp/signin-oidc&quot;,
+  &quot;ImpersonateLogoutUrl&quot;: &quot;http://localhost:5080/myapp/&quot;,
+  &quot;SystemUserAllowed&quot;: false
+}
+</code></pre>
+<h2 id="register-service-application">Register service application</h2>
+<p><em>Query</em>: Systems_Security_TrustedApplications<br>
+<em>Type</em>: POST<br>
+<em>Body</em>:</p>
+<pre><code class="lang-json">{
+  &quot;ApplicationUri&quot;: &quot;MYSERVICEDEMOCLIENT&quot;,
+  &quot;Name&quot;: &quot;Service Demo Client&quot;,
+  &quot;ApplicationSecretHash&quot;: &quot;T/AGymuI51LwjLeIFxRQXOs9IHnupDKs/ajhWODR2C4=&quot;,  
+  &quot;ClientType&quot;: &quot;Confidential&quot;,
+  &quot;SystemUserAllowed&quot;: true,
+  &quot;SystemUser&quot;: {
+  &quot;@odata.id&quot;: &quot;Systems_Security_Users(cc314327-3d04-477f-ac53-cde19d8350e9)&quot;
+  }
+}
+</code></pre>
+<ul>
+<li>SystemUser is the user for the service application.</li>
+</ul>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/register-trusted-app.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>
