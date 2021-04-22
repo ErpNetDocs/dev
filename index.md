@@ -22,10 +22,6 @@ For example, the demonstration database, DEMODB, is located at:
 
 > <https://demodb.my.erp.net>
 
-## Choosing application type
-
-
-
 ## The API
 
 Each ERP Instance CAN have an API site.
@@ -143,7 +139,7 @@ But, at the end of the day, you have to do much more work to create a secure app
 
 ERP.net is based on the [OAuth 2](https://oauth.net/2/) security paradigm with [OpenID Connect](https://openid.net/connect/) support.
 
-For more information about security, read [Introduction to identity in ERP.net](topics/identity/index.md).
+For more information about security, read [Introduction to authentication in ERP.net](topics/authentication/index.md).
 
 ## Next Steps
 
