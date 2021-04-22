@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Application types | ERP.net Developer Docs </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Application types | ERP.net Developer Docs ">
+    <meta name="generator" content="docfx 2.56.8.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="application-types">Application types</h1>
+
+<p>The aid in correctly choosing the authentication and API types, we have compiled a list of common application types.</p>
+<h2 id="summary-of-application-types">Summary of application types</h2>
+<p>Below, you can find a summarization of the application types and the respective user, authentication and API types.</p>
+<table>
+<thead>
+<tr>
+<th>Application Type</th>
+<th>User Type</th>
+<th>Authentication</th>
+<th>API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Internal Web app</td>
+<td>Internal</td>
+<td>Authorization Code</td>
+<td>Domain API</td>
+</tr>
+<tr>
+<td>External Web app</td>
+<td>External</td>
+<td>Client Credentials</td>
+<td>Domain API</td>
+</tr>
+<tr>
+<td>Service application</td>
+<td>Application</td>
+<td>Client Credentials</td>
+<td>Domain API</td>
+</tr>
+<tr>
+<td>Business Intelligence</td>
+<td>Application</td>
+<td>Basic Authentication</td>
+<td>Table API</td>
+</tr>
+<tr>
+<td>Backup</td>
+<td>Application</td>
+<td>Basic Authentication</td>
+<td>Table API</td>
+</tr>
+</tbody>
+</table>
+<h2 id="application-type-details">Application type details</h2>
+<h3 id="internal-web-app">Internal Web App</h3>
+<p>These are internal enterprise applications, used by the <a href="https://info.erp.net/information/licensing/user-types.html#internal-users">internal users</a>.</p>
+<ul>
+<li><strong>User type:</strong> <a href="https://info.erp.net/information/licensing/user-types.html#internal-users">Internal users</a></li>
+<li><strong>Authentication:</strong> <a href="identity/authentication-flows.md#authorization-code">Authorization Code</a></li>
+<li><strong>API:</strong> <a href="domain-api/index.md">Domain API</a></li>
+</ul>
+<h3 id="external-web-app">External Web App</h3>
+<p>External web apps are geared towards <a href="https://info.erp.net/information/licensing/user-types.html#external-users">external users</a> and allow them limited and specialized access.
+External web apps use <a href="https://info.erp.net/information/licensing/user-types.html#application-accounts">Application Accounts</a> to access the ERP resources on behalf of the external users.</p>
+<ul>
+<li><strong>User type:</strong> <a href="https://info.erp.net/information/licensing/user-types.html#external-users">External users</a></li>
+<li><strong>Authentication:</strong> <a href="identity/authentication-flows.md#client-credentials">Client Credentials</a></li>
+<li><strong>API:</strong> <a href="domain-api/index.md">Domain API</a></li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Some applications might allow both external and internal users.
+In this case, the app should use the same authentication like internal web app.</p>
+</div>
+<h3 id="service-application">Service application</h3>
+<p>Service applications are applications, which run usually in background and do not require user login.</p>
+<ul>
+<li><strong>User type:</strong> <a href="https://info.erp.net/information/licensing/user-types.html#application-accounts">Application Account</a></li>
+<li><strong>Authentication:</strong> <a href="identity/authentication-flows.md#client-credentials">Client Credentials</a></li>
+<li><strong>API:</strong> <a href="domain-api/index.md">Domain API</a></li>
+</ul>
+<h3 id="bi-application">BI application</h3>
+<p>Business Intelligence (BI) apps use platforms like Power BI to visualize user data in various dashboards, charts, etc.</p>
+<ul>
+<li><strong>User type:</strong> <a href="https://info.erp.net/information/licensing/user-types.html#application-accounts">Application Account</a></li>
+<li><strong>Authentication:</strong> Basic Authentication</li>
+<li><strong>API:</strong> <a href="table-api/index.md">Table API</a></li>
+</ul>
+<h3 id="backup">Backup</h3>
+<p>Backup applications transfer data to external sources.</p>
+<ul>
+<li><strong>User type:</strong> <a href="https://info.erp.net/information/licensing/user-types.html#application-accounts">Application Account</a></li>
+<li><strong>Authentication:</strong> Basic Authentication</li>
+<li><strong>API:</strong> <a href="table-api/index.md">Table API</a></li>
+</ul>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/topics/authentication/application-types.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

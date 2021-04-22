@@ -277,12 +277,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "index.md",
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "s7wzx6djradrFxT1vNuPfg=="
+          "hash": "z5fttepPmLrIq8mM1yXSBQ=="
         }
       },
       "is_incremental": false,
@@ -335,6 +338,57 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "topics/authentication/application-types.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/authentication/application-types.html",
+          "hash": "pwVV/7KfBw6L3cesAtN2oA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/authentication/authentication-flows.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/authentication/authentication-flows.html",
+          "hash": "D+hnRhN76xCFArxbFjV8MQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/authentication/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/authentication/index.html",
+          "hash": "UG8KzBOKMo1qVhxU9tFeaA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/authentication/trusted-applications.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/authentication/trusted-applications.html",
+          "hash": "8JGXmH7eaUUE1XpGWqvKtA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "topics/domain-api/common-tasks/example-queries.md",
       "output": {
@@ -352,7 +406,7 @@
       "output": {
         ".html": {
           "relative_path": "topics/domain-api/common-tasks/index.html",
-          "hash": "Y8R2EWEYcuGhF7kOBsUL0A=="
+          "hash": "rc/tHbCfn0hxxR2LcacUsA=="
         }
       },
       "is_incremental": false,
@@ -398,15 +452,12 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "include-not-found"
-      ],
       "type": "Conceptual",
       "source_relative_path": "topics/domain-api/complex-types/custom-property-value.md",
       "output": {
         ".html": {
           "relative_path": "topics/domain-api/complex-types/custom-property-value.html",
-          "hash": "ou0OXlh9/FWwThq++z6OAQ=="
+          "hash": "VwhXKMDx0XynRCXkcntYYQ=="
         }
       },
       "is_incremental": false,
@@ -552,62 +603,11 @@
         "InvalidFileLink"
       ],
       "type": "Conceptual",
-      "source_relative_path": "topics/identity/application-types.md",
-      "output": {
-        ".html": {
-          "relative_path": "topics/identity/application-types.html",
-          "hash": "DkvYfc3HhGo8n+xFK3jpKQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "topics/identity/authentication-flows.md",
-      "output": {
-        ".html": {
-          "relative_path": "topics/identity/authentication-flows.html",
-          "hash": "B4utJ0sgnk/KZFDeVoDlyQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "topics/identity/index.md",
-      "output": {
-        ".html": {
-          "relative_path": "topics/identity/index.html",
-          "hash": "wLO0GCaZtvEBtt9ejDdVig=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "topics/identity/trusted-applications.md",
-      "output": {
-        ".html": {
-          "relative_path": "topics/identity/trusted-applications.html",
-          "hash": "HFCugFmk81j/SoGxeS/49g=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
-      "type": "Conceptual",
       "source_relative_path": "topics/index.md",
       "output": {
         ".html": {
           "relative_path": "topics/index.html",
-          "hash": "ZB1CFrU5WQQzYFUBQLErRg=="
+          "hash": "eKAlMklfj2cwVWPPISKXnQ=="
         }
       },
       "is_incremental": false,
@@ -619,7 +619,7 @@
       "output": {
         ".html": {
           "relative_path": "topics/table-api/index.html",
-          "hash": "ivLizE8Fm+OLE/casbalKQ=="
+          "hash": "XU3fXPZct0l7s5n1ouAZYA=="
         }
       },
       "is_incremental": false,
@@ -631,7 +631,7 @@
       "output": {
         ".html": {
           "relative_path": "topics/toc.html",
-          "hash": "K+U4B2nmq2iM5IeLNHTI4w=="
+          "hash": "AZ6E9CGa1Lc2IscNBCzm3A=="
         }
       },
       "is_incremental": false,
