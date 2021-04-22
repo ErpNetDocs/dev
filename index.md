@@ -143,9 +143,8 @@ For more information about security, read [Introduction to authentication in ERP
 
 ## Next Steps
 
-Check the [Developer Guides](guides/index.md) for common developer scenarios.
-The guides contain solutions to common tasks and full runnable sample apps.
+See the general topics in [General](topics/index.md).
 
-Read the full [Developer Documentation](topics/index.md).
+Check the [Domain API documentation](domain-api/index.md).
 
 Check the [Domain Model](https://docs.erp.net/model) for reference information about objects, API methods, integrated business rules and more.

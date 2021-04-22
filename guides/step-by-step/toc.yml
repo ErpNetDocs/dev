@@ -1,8 +1,0 @@
-- name: Non-confidential Login
-  href: login-non-confidential.md
-- name: Confidential Login
-  href: login-confidential.md
-
-- name: Create Sales Order
-  href: create-sales-order.md
-

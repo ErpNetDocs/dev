@@ -1,6 +1,0 @@
-- name: Overview
-  href: index.md
-- name: Step-by-step guides
-  href: step-by-step/toc.yml
-- name: Sample apps
-  href: samples/toc.yml
