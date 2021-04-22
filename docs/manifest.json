@@ -63,7 +63,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/common-tasks/example-queries.html",
-          "hash": "pQBED4lJntz+TB6xjGayuw=="
+          "hash": "odpH1YvehePA5DXabvBcag=="
         }
       },
       "is_incremental": false,
@@ -75,7 +75,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/common-tasks/index.html",
-          "hash": "/1Qmb2mh9Nq4HxMxnShEnw=="
+          "hash": "kHNywmgCJGnS86e+wuubKg=="
         }
       },
       "is_incremental": false,
@@ -87,22 +87,19 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/common-tasks/master-detail-attributes.html",
-          "hash": "e4o3i/rlfqUjiQIYaciTCg=="
+          "hash": "pbzp6ES6XPAfpig2e9i4oQ=="
         }
       },
       "is_incremental": false,
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Conceptual",
       "source_relative_path": "domain-api/common-tasks/working-with-documents.md",
       "output": {
         ".html": {
           "relative_path": "domain-api/common-tasks/working-with-documents.html",
-          "hash": "hjGZlOVRG6yGOv+w0HqzjQ=="
+          "hash": "+W1gSI2KlnaGDTgVd9P0oA=="
         }
       },
       "is_incremental": false,
@@ -114,7 +111,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/complex-types/amount.html",
-          "hash": "9NCsJS0dQoLILVmHsvgFvQ=="
+          "hash": "FEa/arsd3ZvDHv3KnPLsdQ=="
         }
       },
       "is_incremental": false,
@@ -126,7 +123,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/complex-types/custom-property-value.html",
-          "hash": "aWsy8ntsKlHmppKlLvWAzg=="
+          "hash": "Ooel2TCQu0zTS9bpfZIEog=="
         }
       },
       "is_incremental": false,
@@ -138,7 +135,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/complex-types/index.html",
-          "hash": "YNpXVL9HEi1nSVd8MjxRIg=="
+          "hash": "MASQhf4Y1CvTlv/DgSr3NQ=="
         }
       },
       "is_incremental": false,
@@ -150,7 +147,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/complex-types/multi-language-string.html",
-          "hash": "xwh7Tuf+syntp608JZFNxg=="
+          "hash": "XNw7aHhTEFqTSIaqn3x6fQ=="
         }
       },
       "is_incremental": false,
@@ -162,22 +159,19 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/complex-types/quantity.html",
-          "hash": "aT6FJYO6+v1X5ro+AwNTkA=="
+          "hash": "8u78/h7MvjOT+1eV8HQnbA=="
         }
       },
       "is_incremental": false,
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Conceptual",
       "source_relative_path": "domain-api/index.md",
       "output": {
         ".html": {
           "relative_path": "domain-api/index.html",
-          "hash": "V8b2l/vaYYxDyfsV7Y9CTg=="
+          "hash": "URoolxPUiO8v6ugzr6gNaw=="
         }
       },
       "is_incremental": false,
@@ -189,7 +183,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/query-builder.html",
-          "hash": "kCPm7OmziMj2cOAX+Ww85A=="
+          "hash": "J/t5CS44ebek+WjvaYb5yA=="
         }
       },
       "is_incremental": false,
@@ -201,7 +195,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/query-options/filter.html",
-          "hash": "ETj4K3KKdBZYto78yVX2oQ=="
+          "hash": "9bWF9kUQkQN977ubbVmt2w=="
         }
       },
       "is_incremental": false,
@@ -213,7 +207,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/query-options/index.html",
-          "hash": "fBL/XcY7R42mlW4BI6qtMg=="
+          "hash": "jwbb/9PyE0YUMWPTXeUV9g=="
         }
       },
       "is_incremental": false,
@@ -225,7 +219,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/query-options/options.html",
-          "hash": "3iMPKsejJ7d6wMgUfvPz2g=="
+          "hash": "AX4+w3UT99NZSQUA5ODlnQ=="
         }
       },
       "is_incremental": false,
@@ -237,7 +231,19 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/query-options/select.html",
-          "hash": "a/aoiibjnZzCzmKmeRpqcw=="
+          "hash": "M2KYrwQWxbYgym+WDqZDkg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "domain-api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/toc.html",
+          "hash": "+8AhZB7FVnkHaMkv3oVfMQ=="
         }
       },
       "is_incremental": false,
@@ -249,7 +255,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/transactions.html",
-          "hash": "IcQRF7bekmnGLlCanHJdvg=="
+          "hash": "yq+iqTI4rTEffvpWakpuLQ=="
         }
       },
       "is_incremental": false,
@@ -261,7 +267,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/url-components.html",
-          "hash": "TjI+QeLluVlTxPqctRobPQ=="
+          "hash": "0RaVJSA4vJ9Xcni42FAD+w=="
         }
       },
       "is_incremental": false,
@@ -475,15 +481,12 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Conceptual",
       "source_relative_path": "index.md",
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "TZVp3phuiQGBAy24qZHADQ=="
+          "hash": "0R39rrx2abqen0i43RtG1Q=="
         }
       },
       "is_incremental": false,
@@ -529,22 +532,19 @@
       "output": {
         ".html": {
           "relative_path": "toc.html",
-          "hash": "Hb5uMhjH2JFAHZJgK2mJMQ=="
+          "hash": "JQ6MXtJWNXL+1qhgxQxrOw=="
         }
       },
       "is_incremental": false,
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Conceptual",
       "source_relative_path": "topics/application-types.md",
       "output": {
         ".html": {
           "relative_path": "topics/application-types.html",
-          "hash": "4/Sboxo6yGK8i7vE09rrWA=="
+          "hash": "dMBjoGKC7fWzqCJKawn6PQ=="
         }
       },
       "is_incremental": false,
