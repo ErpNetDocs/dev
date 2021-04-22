@@ -258,7 +258,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/build-ecommerce-website.html",
-          "hash": "M96EfZHyp11tah4uFiYZ5A=="
+          "hash": "tbiOPeu6BSi8EeUViQID4A=="
         }
       },
       "is_incremental": false,
@@ -270,7 +270,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/build-payment-connector.html",
-          "hash": "sjiI878cSwuaGyoTph1X3A=="
+          "hash": "JlQM6MnrL+TVUhVdKR3BLQ=="
         }
       },
       "is_incremental": false,
@@ -282,7 +282,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/dotnet-service-app.html",
-          "hash": "CVvDGe4Ppakqj35WGYrCCQ=="
+          "hash": "AJydHjkguJPojOWpJT9PgA=="
         }
       },
       "is_incremental": false,
@@ -294,7 +294,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/dotnet-web-app.html",
-          "hash": "ZAQo0E6nn0QW55kpIYt1Kg=="
+          "hash": "XerBIfDjCQmMzBfV/v397g=="
         }
       },
       "is_incremental": false,
@@ -306,7 +306,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/javascript-client.html",
-          "hash": "OVv7msqTquaEkJLHnuBuaQ=="
+          "hash": "7SosQo2mlMRfjeY4tAYMuA=="
         }
       },
       "is_incremental": false,
@@ -318,7 +318,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/php-interactive-client.html",
-          "hash": "q2EYLjgSQmp8B4+0cUW0ig=="
+          "hash": "EBbDDrmMQd1g1g+v6WFw/Q=="
         }
       },
       "is_incremental": false,
@@ -330,7 +330,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/php-service-client.html",
-          "hash": "pCEQQT85NQoE2zfxuFbtNQ=="
+          "hash": "era3JHR6b+S405GxVknbZQ=="
         }
       },
       "is_incremental": false,
@@ -342,19 +342,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/src/dotnet/ErpNetDemoClient/wwwroot/lib/jquery-validation/LICENSE.html",
-          "hash": "HICUt78ysXoqgiU0OTsZFA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Toc",
-      "source_relative_path": "domain-api/samples/toc.yml",
-      "output": {
-        ".html": {
-          "relative_path": "domain-api/samples/toc.html",
-          "hash": "QTti0w00oH2Ile72l8xKAw=="
+          "hash": "+PxoeJjPwrRgtEDydgBi8A=="
         }
       },
       "is_incremental": false,
@@ -366,7 +354,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/toc.html",
-          "hash": "76lfK0ch8FzfJc6cOBo16w=="
+          "hash": "UIcdcYLRsBJ47VcRLqTGsw=="
         }
       },
       "is_incremental": false,
