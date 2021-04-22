@@ -48,7 +48,7 @@ Each database contains different custom properties and that is why each database
 
 ```
 "CustomProperty_color": {
-    "Value": "Apple",
+    "Value": "аpple",
     "ValueId": "5263a2d3-88b0-41db-adae-31c76135719e",
     "Description": {
         "EN": "The Apple.",
@@ -58,4 +58,4 @@ Each database contains different custom properties and that is why each database
 ```
 > [!note]  
 > To filter by Custom Property you must use only the short value (only eq is supported):  
-> General_Products_Products?$top=10&$select=CustomProperty_color&$filter=CustomProperty_color eq 'син'
+> General_Products_Products?$top=10&$select=CustomProperty_color&$filter=CustomProperty_color eq 'apple'

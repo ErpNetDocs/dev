@@ -1,4 +1,4 @@
-# $filter query option
+# **$filter** query option
 
 $filter is a standard OData query option, implemented with some limitations in @@name.
 Not every operation and function provided by the OData standard are implemented.

@@ -1,8 +1,8 @@
-## **options** extension query option
+## **options** query option
 
 > [!note]
 > **options** is Domain API specific option and is not part of the OData standard.
-> Extension query options DO NOT use $ in front of their name, as it is reserved for standard OData query options.
+> Therefore, this option DOES NOT have "$" in front of its name.
 
 **options** contains option flags, which are provided as url arguments.
 

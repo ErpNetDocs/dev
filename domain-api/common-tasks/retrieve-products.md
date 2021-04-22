@@ -1,8 +1,4 @@
-# Retrieve Products Task
-
-This task shows ways to retrieve products in order to display them in a e-commerce store.
-
-## Retrieve Products
+# Retrieve Products
 
 The following query:
 1. Retrieves 10 products, without any order
@@ -23,14 +19,3 @@ You can edit the query in the Query Builder:
 
 <https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10&$filter=Active%20eq%20true&$select=CatalogDescriptionHtml,Description,Id,MeasurementUnit,Name,PartNumber,ProductGroup,StandardPricePerLot>
 
-## Retrieve Product Pictures
-
-## Retrieve Product Variants
-
-## Retrieve Product Prices
-
-## Retrieve Product Codes
-
-Retrieving product codes might sometimes be useful for getting bar-code or supplier/customer code of a product.
-In order to understand the return set, the application must know in advance the id of the coding system.
-For example, one coding system might be for bar-codes, another - for the codes of the products for a prominent customer, etc.

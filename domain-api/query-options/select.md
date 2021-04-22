@@ -1,4 +1,4 @@
-# $select query option
+# **$select** query option
 
 ## Description
 
