@@ -5,4 +5,11 @@ uid: table-api
 
 The primary purpose of the Table API is to allow external BI (Business Intelligence) tools to quickly pull raw data for further analysis.
 
-To learn more about Table API, select a topic from the menu.
+## Authentication
+
+It is common for Table API consumers to use the Basic Authentication.
+For more information, see [Authentication](../authentication/index.md).
+
+## Tables
+
+For information about the tables, which can be queried, see the [Table Model](https://docs.erp.net/model/tables/).

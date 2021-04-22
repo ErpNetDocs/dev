@@ -1,8 +1,8 @@
 - name: Overview
   href: index.md
 - name: Authentication
-  href: identity/toc.yml
-  topicHref: identity/index.md
+  href: authentication/toc.yml
+  topicHref: authentication/index.md
 - name: Domain API
   href: domain-api/toc.yml
   topicHref: domain-api/index.md

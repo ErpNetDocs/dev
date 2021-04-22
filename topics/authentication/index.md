@@ -1,4 +1,4 @@
-# Introduction to Identity in @@name
+# Introduction to authentication in @@name
 
 @@name APIs use [OAuth 2](https://oauth.net/2/) for authentication and authorization.
 In OAuth 2, the authentication and authorization is performed by an identity provider.

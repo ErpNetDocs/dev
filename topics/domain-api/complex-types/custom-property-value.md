@@ -2,15 +2,15 @@
 
 Custom Properties (also called Custom Attributes in the domain terminology) are user-defined attributes, which can supplement the predefined system attributes.
 
-## Definition of Custom Property (Custom Attribute in domain terminology)
+## Definition of а Custom Property 
 
-For reference information about the definition of the custom properties, see @@General.CustomProperties.
+For reference information about the definition of the custom properties, see @General.CustomProperties.
 
 Here are some highlights for the definition record:
 
 - *EntityName* contains the name of the entity, for which the property is defined.
 You can find the entity name for each entity in the model documentation.
-For example, the entity name for @Crm.Customers is "Crm_Customers".
+For example, the entity name for @Crm.Customers is "Crm_Customers" (check it out in the link - see the tag line under the entity name).
 
 - *LimitToAllowedValues* - this defines whether the property is free text or is limited to a list of allowed values.
 
@@ -24,7 +24,7 @@ The API name of the custom property starts with 'CustomProperty_' followed by th
 
 > [!note]
 > Properties with Code, which does not conform to the specification for identifier name, might not be accessible through the API.
-> [Identifier Name Specification](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/identifier-names).
+> See [Identifier Name Specification](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/identifier-names).
 
 Each database contains different custom properties and that is why each database have different EDM model ($metadata).
 
@@ -40,18 +40,19 @@ Each database contains different custom properties and that is why each database
 
 | Name | Type | Description |
 | ---- | ---- | --- |
-| Value	| String | The short value.| 
-| Description	| MultilanguageString	| The description of the property value.Can be null. | 
+| Value	| String | The short value. This is the actual value of the custom property. | 
+| Description	| MultilanguageString	| This is long, descriptive, multi-language value of the custom property. Can be null. | 
 | ValueId	| Guid	| The Id of the entry represented by the property value. It's the id of the allowed value. Can be null. | 
 
 ## Example
 
 ```
 "CustomProperty_color": {
-    "Value": "Син",
+    "Value": "Apple",
     "ValueId": "5263a2d3-88b0-41db-adae-31c76135719e",
     "Description": {
-        "BG": "Морско"
+        "EN": "The Apple.",
+        "DE": "Die Apfel."
     }
 }
 ```
