@@ -1,6 +1,6 @@
 # Application types
 
-The aid in correctly choosing the authentication and API types, we have compiled a list of common application types.
+To aid in correctly choosing the authentication and API types, we have compiled a list of common application types.
 
 ## Summary of application types
 

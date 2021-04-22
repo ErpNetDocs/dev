@@ -1,7 +1,8 @@
-- name: Documentation
+- name: General
   href: topics/
-- name: Guides
-  href: guides/
+- name: Domain API
+  href: domain-api/toc.yml
+  topicHref: domain-api/index.md
 - name: API Reference
   href: https://docs.erp.net/model/entities/
 - name: Return to DOCS ⏶

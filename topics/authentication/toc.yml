@@ -1,7 +1,5 @@
 - name: Introduction
   href: index.md
-- name: Application Types
-  href: application-types.md
 - name: Trusted Applications
   href: trusted-applications.md
 - name: Authentication Flows

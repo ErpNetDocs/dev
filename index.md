@@ -22,6 +22,10 @@ For example, the demonstration database, DEMODB, is located at:
 
 > <https://demodb.my.erp.net>
 
+## Choosing application type
+
+
+
 ## The API
 
 Each ERP Instance CAN have an API site.
