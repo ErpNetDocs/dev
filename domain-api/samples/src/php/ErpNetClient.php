@@ -1,5 +1,7 @@
 <?php
 
+/* Based on https://github.com/jumbojett/OpenID-Connect-PHP */
+
 class ErpNetClientException extends \Exception
 {}
 
