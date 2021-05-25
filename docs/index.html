@@ -92,7 +92,7 @@ https://&lt;&lt;instance_name&gt;&gt;.my.erp.net</p>
 <p>Each ERP Instance CAN have an API site.
 It &quot;can&quot; have, because, the API is a site, similar to other sites, which the instance can launch.
 In order for the API to function, it needs to be configured and launched for the ERP Instance.</p>
-<p>The common URL for the API site is /api/ inside the ERP instance. For example, the DEMODB has API site at:</p>
+<p>The common URL for the API site is /api/ inside the ERP instance. For example, the DEMODB has an API site at:</p>
 <blockquote>
 <p><a href="https://demodb.my.erp.net/api/">https://demodb.my.erp.net/api/</a></p>
 </blockquote>
@@ -100,9 +100,9 @@ In order for the API to function, it needs to be configured and launched for the
 <p>The Domain API is the primary means for accessing and manipulating data in the ERP Instance.
 It can currently be consumed in <a href="https://www.odata.org/">OData 4</a> format.</p>
 <p>The Domain API is an API proxy for the object-oriented Domain Model of ERP.net.
-It is targeted towards UI and service apps. These kind of apps usually read and update moderate amounts of data.
+It is targeted towards UI and service apps. These kinds of apps usually read and update moderate amounts of data.
 The Domain API is NOT adequate for read-only dumping of very large amounts of data, which is usually done by BI applications.
-BI applications should find other solutions or try to read data by small chunks.</p>
+BI applications should find other solutions or try to read data in small chunks.</p>
 <p>The Domain API is located at /domain/odata/ within the API site. For DEMODB, this is at:</p>
 <blockquote>
 <p><a href="https://demodb.my.erp.net/api/domain/odata/">https://demodb.my.erp.net/api/domain/odata/</a></p>
@@ -121,7 +121,9 @@ For example, to take the first 10 products (in undefined order), you can use:</p
 <blockquote>
 <p><a href="https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10"><a href="https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10">https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10</a></a></p>
 </blockquote>
-<p>NOTE: The above will return unformatted JSON result, intended to be consumed by client app.</p>
+<blockquote>
+<p>[!NOTE:] The above will return unformatted JSON result, intended to be consumed by client app.</p>
+</blockquote>
 <p>For a quick overview of OData, see this topic - <a href="https://www.odata.org/getting-started/understand-odata-in-6-steps/">Understand OData in 6 steps</a>.</p>
 <h2 id="the-query-builder">The Query Builder</h2>
 <p>ERP.net has integrated visual Query Builder.</p>
@@ -138,10 +140,13 @@ For example, to preview the same query for the first 10 products in the Query Bu
 <blockquote>
 <p><a href="https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10"><a href="https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10">https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10</a></a></p>
 </blockquote>
-<p>When you press Execute in the Query Builder, you can preview the result both as table and as JSON.</p>
-<p>NOTE: Pay attention to the link under the selected entity, which opens the documentation for the entity.</p>
+<p>When you press Execute in the Query Builder, you can preview the result both as a table and as JSON.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pay attention to the link under the selected entity, which opens the documentation for the entity.</p>
+</div>
 <h2 id="the-query-tool">The Query Tool</h2>
-<p>The Query Tool is simple Postman-like tool for querying the database.
+<p>The Query Tool is a simple Postman-like tool for querying the database.
 It does not have the visual building abilities of the Query Builder.
 However, it can represent all possible REST requests and is very simple to use.</p>
 <div class="NOTE">
@@ -154,7 +159,7 @@ However, it can represent all possible REST requests and is very simple to use.<
 </blockquote>
 <h2 id="query-basics">Query Basics</h2>
 <p>ERP.net allows only a subset of the full OData queries.
-Generally, you cannot do JOINs, and filter with OR.
+Generally, you cannot do JOINs and filter with OR.
 However, you can filter by multiple values, like the SQL IN operator:</p>
 <blockquote>
 <p><a href="https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$filter=Id%20in%20(edf2bd2a-7e4d-e111-a06c-00155d00050a,cf728601-1fd5-4853-ab23-01deeee7d038)">https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$filter=Id%20in%20(edf2bd2a-7e4d-e111-a06c-00155d00050a,cf728601-1fd5-4853-ab23-01deeee7d038)</a></p>
@@ -175,7 +180,7 @@ For general-purpose information, check the <a href="https://docs.erp.net/model">
 </div>
 <h2 id="security">Security</h2>
 <p>Someone said: &quot;Security is hard, deal with it&quot;.
-The hard truth is that security today is much harder that it was 10 years ago.
+The hard truth is that security today is much harder than it was 10 years ago.
 Once upon a time, there was a user and a password.
 Today, we have OAuth with Trusted Apps, Security Tokens, complicated security workflows, and all the other things.
 There are some good things, though.
@@ -186,7 +191,7 @@ Single Sign-On, multi-factor authentication, and other extras come to mind.</p>
 <h2 id="next-steps">Next Steps</h2>
 <p>See the general topics in <a href="topics/index.html">General</a>.</p>
 <p>Check the <a href="domain-api/index.html">Domain API documentation</a>.</p>
-<p>Check the <a href="https://docs.erp.net/model">Domain Model</a> for reference information about objects, API methods, integrated business rules and more.</p>
+<p>Check the <a href="https://docs.erp.net/model">Domain Model</a> for reference information about objects, API methods, integrated business rules, and more.</p>
 </article>
           </div>
           

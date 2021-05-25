@@ -87,14 +87,16 @@ Whether it's a client application like a web or mobile app, or it's a web API th
 <p>We'll show how to register an application manually, using the Domain API Query Tool.</p>
 <p>Follow these steps to create the app registration:</p>
 <ol>
-<li><p>Sign in to your ERP instance and open the Domain API Query Tool.</p>
-<p>In this example we'll use the DEMODB ERP.net instance: <a href="https://demodb.my.erp.net/api/domain/query">https://demodb.my.erp.net/api/domain/query</a></p>
+<li><p>Sign in to your ERP instance and open the Domain API Query Tool.<br>
+Every ERP.net database has it's own query tool on the Domain API site.<br>
+The Domain Api site is usually hosted on address  https://{COMPANY}.my.erp.net/api and the query tool is on https://{COMPANY}.my.erp.net/api/domain/query</p>
+<p>In this example we'll use the DEMODB ERP.net instance query tool: <a href="https://demodb.my.erp.net/api/domain/query">https://demodb.my.erp.net/api/domain/query</a></p>
 </li>
 </ol>
 <blockquote>
-<p>You need to be a database administrator in order to be able to register a new trusted application.</p>
+<p>⚠️ You need to be a database administrator in order to be able to register a new trusted application.</p>
 </blockquote>
-<ol>
+<ol start="2">
 <li>If the application is <a href="/topics/identity/trusted-applications.html#client-type">confidential</a>, we need to prepare an application secret. Use this endpoint to get the application secret hash (Replace <em>mysecret</em> with your secret):</li>
 </ol>
 <p><a href="https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret">https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret</a></p>
