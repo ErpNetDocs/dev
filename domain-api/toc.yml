@@ -15,5 +15,7 @@
 - name: Common Tasks
   href: common-tasks/toc.yml
   topicHref: common-tasks/index.md
+- name: Libraries
+  href: libraries.md
 - name: Example Apps
   href: samples/toc.yml
