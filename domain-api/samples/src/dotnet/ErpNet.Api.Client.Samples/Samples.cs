@@ -218,6 +218,35 @@ namespace ConsoleApp1
 
         }
 
+        [Description("Use anonymous types for $select and $expand")]
+        static async Task SelectAndExpand(DomainApiService service)
+        {
+            var cmd = service.Command<Product>()
+             .Top(5)
+             .Filter(p => p.PartNumber.Contains("001"))
+             .Select(p => new
+             {
+                 p.Id,
+                 p.PartNumber,
+                 p.Name,
+                 ProductGroup = new
+                 {
+                     p.ProductGroup.Id,
+                     p.ProductGroup.Code,
+                     p.ProductGroup.Name
+                 }
+             });
+            Console.WriteLine(cmd);
+
+            var result = await cmd.LoadAsync();
+
+            foreach (var p in result)
+            {
+                Console.WriteLine($"{p.Id}, {p.PartNumber}: {p.Name.AnyString}, ProductGroup: {p.ProductGroup.Code}: {p.ProductGroup.Name.AnyString}");
+            }
+
+        }
+
         [Description("Expand sales order reference properties")]
         static async Task ExpandAsync(DomainApiService service)
         {
