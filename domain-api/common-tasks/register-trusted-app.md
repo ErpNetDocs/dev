@@ -14,11 +14,14 @@ We'll show how to register an application manually, using the Domain API Query T
 Follow these steps to create the app registration:
 
 1. Sign in to your ERP instance and open the Domain API Query Tool.  
+   Every ERP.net database has it's own query tool on the Domain API site.  
+   The Domain Api site is usually hosted on address  https://{COMPANY}.my.erp.net/api and the query tool is on https://{COMPANY}.my.erp.net/api/domain/query 
+   
+   In this example we'll use the DEMODB ERP.net instance query tool: https://demodb.my.erp.net/api/domain/query  
+   
+> :warning: You need to be a database administrator in order to be able to register a new trusted application.  
 
-   In this example we'll use the DEMODB ERP.net instance: https://demodb.my.erp.net/api/domain/query  
->  You need to be a database administrator in order to be able to register a new trusted application.  
-
-1. If the application is [confidential](/topics/identity/trusted-applications.html#client-type), we need to prepare an application secret. Use this endpoint to get the application secret hash (Replace _mysecret_ with your secret):
+2. If the application is [confidential](/topics/identity/trusted-applications.html#client-type), we need to prepare an application secret. Use this endpoint to get the application secret hash (Replace _mysecret_ with your secret):
 
 https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret
 
