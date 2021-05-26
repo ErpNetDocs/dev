@@ -318,7 +318,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/javascript-client.html",
-          "hash": "CO1p29U/WTy7BbzfE+x6uA=="
+          "hash": "W5TtPa3SulWN2VO33GyPCQ=="
         }
       },
       "is_incremental": false,
@@ -342,7 +342,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/php-service-client.html",
-          "hash": "HT7Ngi9vhjlOntaisu5TyQ=="
+          "hash": "a+5FOvnd68vfAvO4oUm2nw=="
         }
       },
       "is_incremental": false,
