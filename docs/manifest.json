@@ -306,7 +306,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/dotnet-web-app.html",
-          "hash": "T/Badho7UZcs280r8XifSQ=="
+          "hash": "+SBpF2W9kLYCe4BMGhBBHA=="
         }
       },
       "is_incremental": false,
@@ -330,7 +330,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/php-interactive-client.html",
-          "hash": "u6m/wUFqaXoF6IFxHx+TFA=="
+          "hash": "h+1zXG6EdkwHtPYRMLvtOQ=="
         }
       },
       "is_incremental": false,
