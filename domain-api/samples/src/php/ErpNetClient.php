@@ -457,8 +457,8 @@ class ErpNetClient
         $post_data = array(
             'grant_type'    => 'client_credentials',
             'client_id'     => $this->applicationName,
-            'client_secret' => $this->applicationSecret
-            //'scope'         => 'DomainApi'
+            'client_secret' => $this->applicationSecret,
+            'scope'         => 'DomainApi'
         );
 
         // Convert token params to string format
