@@ -1,4 +1,4 @@
-# Filterable References
+# Filterable references
 
 ## Overview
 
