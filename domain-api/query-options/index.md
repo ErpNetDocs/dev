@@ -1,4 +1,4 @@
-# Query Options
+# Query options
 
 Query options allow you to control the amount and order of the data that a data service returns for the resource identified by the URI.
 
