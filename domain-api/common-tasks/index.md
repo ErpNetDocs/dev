@@ -1,4 +1,4 @@
-# Common Tasks
+# Common tasks
 
 This section includes examples of common tasks performed with the Domain API.
 
