@@ -1,4 +1,4 @@
-# URL Components Of a OData Query
+# URL components of an OData query
 
 ```
 https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&$orderby=Name
@@ -12,6 +12,7 @@ https://demodb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&$or
 * Query Options - optional query options
 
 NOTES:
+
 1. The address of the API is usually and by default:
 
 https://<<Instance_Name>>.my.erp.net/api/
