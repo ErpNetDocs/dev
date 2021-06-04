@@ -1,23 +1,23 @@
 - name: Introduction
   href: index.md
-- name: URL Components
+- name: URL components
   href: url-components.md
-- name: Query Options
+- name: Query options
   href: query-options/toc.yml
   topicHref: query-options/index.md
-- name: Query Builder
+- name: Query builder
   href: query-builder.md
 - name: Complex types
   href: complex-types/toc.yml
   topicHref: complex-types/index.md
-- name: Filterable References
+- name: Filterable references
   href: filterable-references.md
 - name: Transactions
   href: transactions.md
-- name: Common Tasks
+- name: Common tasks
   href: common-tasks/toc.yml
   topicHref: common-tasks/index.md
 - name: Libraries
   href: libraries.md
-- name: Example Apps
+- name: Example apps
   href: samples/toc.yml
