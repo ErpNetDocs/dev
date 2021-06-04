@@ -10,6 +10,8 @@
 - name: Complex types
   href: complex-types/toc.yml
   topicHref: complex-types/index.md
+- name: Filterable References
+  href: filterable-references.md
 - name: Transactions
   href: transactions.md
 - name: Common Tasks
