@@ -27,7 +27,7 @@ For example, see how StoreOrderLine reference is filterable:
 
 <https://docs.erp.net/model/entities/Crm.Customers.html#party>
 
-## Example
+## Examples
 
 To filter the customers by the attributes of the related party, you can use the following query:
 
