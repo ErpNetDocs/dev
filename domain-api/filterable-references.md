@@ -27,13 +27,13 @@ For example, see how StoreOrderLine reference is filterable:
 
 <https://docs.erp.net/model/entities/Crm.Customers.html#party>
 
-## Examples
+## Try in Query Builder 
 
-To filter the customers by the attributes of the related party, you can use the following query:
+To filter the customers by the attributes of the related party, you can use the following query:  
+https://testdb.my.erp.net/api/domain/querybuilder?Crm_Customers?$filter=contains(Party/PartyName,'com')&$expand=Party($select=PartyName)&$select=Party
 
-https://demodb-model.my.erp.net/api/domain/query#GET+Crm_Customers?$filter=contains(Party/PartyName,'com')&$expand=Party($select=PartyName)&$select=Party
+To filter the sales order lines by the attributes of the owner sales order, you can use the following query:  
+https://testdb.my.erp.net/api/domain/querybuilder?Crm_Sales_SalesOrderLines?$top=10&$filter=SalesOrder/State%20eq%20'Released'%20and%20SalesOrder/Void%20eq%20false
 
-To filter the sales order lines by the attributes of the owner sales order, you can use the following query:
-
-https://demodb-model.my.erp.net/api/domain/query#GET+Crm_Sales_SalesOrderLines?$top=10&$filter=SalesOrder/State+eq+'Released'+and+SalesOrder/Void+eq+false
-
+To filter the unfulfilled store order lines view by the state of the store order use the following query:  
+https://testdb.my.erp.net/api/domain/querybuilder?Logistics_Inventory_StoreOrderLinesUnfulfilledView?$top=10&$filter=StoreOrderLine/StoreOrder/State%20eq%20%27Released%27
