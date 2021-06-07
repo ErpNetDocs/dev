@@ -100,11 +100,13 @@ For example, starting from <a class="xref" href="https://erpnetdocs.github.io/mo
 <p>To find out if an attribute supports filtering, look for the <strong>FilterableReference</strong> tag in the attribute details.
 For example, see how StoreOrderLine reference is filterable:</p>
 <p><a href="https://docs.erp.net/model/entities/Crm.Customers.html#party">https://docs.erp.net/model/entities/Crm.Customers.html#party</a></p>
-<h2 id="examples">Examples</h2>
-<p>To filter the customers by the attributes of the related party, you can use the following query:</p>
-<p><a href="https://demodb-model.my.erp.net/api/domain/query#GET+Crm_Customers?$filter=contains(Party/PartyName,%27com%27)&amp;$expand=Party($select=PartyName)&amp;$select=Party">https://demodb-model.my.erp.net/api/domain/query#GET+Crm_Customers?$filter=contains(Party/PartyName,'com')&amp;$expand=Party($select=PartyName)&amp;$select=Party</a></p>
-<p>To filter the sales order lines by the attributes of the owner sales order, you can use the following query:</p>
-<p><a href="https://demodb-model.my.erp.net/api/domain/query#GET+Crm_Sales_SalesOrderLines?$top=10&amp;$filter=SalesOrder/State+eq+%27Released%27+and+SalesOrder/Void+eq+false">https://demodb-model.my.erp.net/api/domain/query#GET+Crm_Sales_SalesOrderLines?$top=10&amp;$filter=SalesOrder/State+eq+'Released'+and+SalesOrder/Void+eq+false</a></p>
+<h2 id="try-in-query-builder">Try in Query Builder</h2>
+<p>To filter the customers by the attributes of the related party, you can use the following query:<br>
+<a href="https://testdb.my.erp.net/api/domain/querybuilder?Crm_Customers?$filter=contains(Party/PartyName,%27com%27)&amp;$expand=Party($select=PartyName)&amp;$select=Party">https://testdb.my.erp.net/api/domain/querybuilder?Crm_Customers?$filter=contains(Party/PartyName,'com')&amp;$expand=Party($select=PartyName)&amp;$select=Party</a></p>
+<p>To filter the sales order lines by the attributes of the owner sales order, you can use the following query:<br>
+<a href="https://testdb.my.erp.net/api/domain/querybuilder?Crm_Sales_SalesOrderLines?$top=10&amp;$filter=SalesOrder/State%20eq%20%27Released%27%20and%20SalesOrder/Void%20eq%20false">https://testdb.my.erp.net/api/domain/querybuilder?Crm_Sales_SalesOrderLines?$top=10&amp;$filter=SalesOrder/State%20eq%20'Released'%20and%20SalesOrder/Void%20eq%20false</a></p>
+<p>To filter the unfulfilled store order lines view by the state of the store order use the following query:<br>
+<a href="https://testdb.my.erp.net/api/domain/querybuilder?Logistics_Inventory_StoreOrderLinesUnfulfilledView?$top=10&amp;$filter=StoreOrderLine/StoreOrder/State%20eq%20%27Released%27">https://testdb.my.erp.net/api/domain/querybuilder?Logistics_Inventory_StoreOrderLinesUnfulfilledView?$top=10&amp;$filter=StoreOrderLine/StoreOrder/State%20eq%20%27Released%27</a></p>
 </article>
           </div>
           
