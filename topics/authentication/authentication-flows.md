@@ -46,3 +46,49 @@ The URI and secret are much like user name and password, but for application.
 Based on the Service Account specified in the record, the ERP Instance creates a special *access token* and passes it to Toms app.
 The access token is just a string, containing the granted access permissions, which is digitally signed.
 1. Toms app uses the *access token* to call the ERP APIs and create the Sales Orders.
+
+## Basic Authentication
+
+In basic HTTP authentication, a request contains a header field in the form of Authorization: Basic <credentials>, where credentials is the Base64 encoding of user name and password joined by a single colon :.
+  
+> [!note]
+> Basic Authentication is not recommended because it is less secure than OAuth!
+  
+In ERP.net basic authentication can be used by applications, which access the ERP Instance on behalf of the logged user.
+  
+Some legacy external applications use the obsolete SDK API to access the ERP Instance. To authenticate they must provide username, password and application name. If the provided application name is not found among the trusted applications in the ERP Instance the authentication will fail.
+  
+Domain API and Table API allow basic authentication but require a trusted application with [ApplicationUri](trusted-applications.md#application-uri) = 'DomainApiBasicAuthentication' to be registered and configured to [allow basic authentication](trusted-applications.md#basic-authentication-allowed).
+  
+**Possible errors:**
+  
+> Authentication faled for user 'test'.
+> 
+> Current request uses basic authentication but the provided application 'DomainApiBasicAuthentication' is not found among the trusted applications.
+> 
+> Contact your system administrator to create trusted application 'DomainApiBasicAuthentication' and configure it to allow basic authentication.
+
+--
+
+> Authentication failed for user 'test'.
+> 
+> Current request uses basic authentication but the trusted application 'DomainApiBasicAuthentication' is not enabled.
+> 
+> Contact your system administrator to enable the trusted application 'DomainApiBasicAuthentication' and configure it to allow basic authentication.
+
+--
+
+> Authentication failed for user 'test'.
+> 
+> Current request uses basic authentication but the provided application 'DomainApiBasicAuthentication' is not configured to allow basic authentication.
+> 
+> Contact your system administrator to configure the trusted application 'DomainApiBasicAuthentication' to allow basic authentication.
+
+--
+
+> Authentication failed for user 'test'.
+> 
+> Current request uses basic authentication but the corresponding trusted application 'DomainApiBasicAuthentication' is configured for system user that is different from the provided user 'test'.
+> 
+> Use the correct application user to log in or contact your system administrator to configure the trusted application 'DomainApiBasicAuthentication' for different user.  
+  
