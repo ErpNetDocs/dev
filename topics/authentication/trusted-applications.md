@@ -126,17 +126,17 @@ The following token scopes are used :
 
 - **update**
 
-Allows the user application to update data in the ERP Instance.
-Without this scope, the application can only read data.  
-Introduced: 21
+  Allows the user application to update data in the ERP Instance.
+  Without this scope, the application can only read data.  
+  Introduced: 21
 
 
 The following token scopes are PLANNED for near future developments:
 
 - **sec**
 
-Allows the application to access the security infrastructure of the ERP Instance.
-Generally, this scope should **NEVER** be trusted to user apps.
+  Allows the application to access the security infrastructure of the ERP Instance.
+  Generally, this scope should **NEVER** be trusted to user apps.
 
 Scopes, reserved for future use:
 
