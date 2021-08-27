@@ -171,21 +171,21 @@ It is called after a successful login and receives the generated tokens.</p>
 <p>The scope (according to <a href="https://tools.ietf.org/html/rfc6749#section-3.3">RFC 6749</a>) for which the application was trusted.
 The scope is an unordered list of space-delimited case-sensitive strings.
 Each string denotes a permission.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Currently, this option is ignored.</p>
-</div>
+<p>The following token scopes are used :</p>
+<ul>
+<li><p><strong>update</strong></p>
+<p>Allows the user application to update data in the ERP Instance.
+Without this scope, the application can only read data.<br>
+Introduced: 21</p>
+</li>
+</ul>
 <p>The following token scopes are PLANNED for near future developments:</p>
 <ul>
-<li><strong>update</strong></li>
-</ul>
-<p>Allows the user application to update data in the ERP Instance.
-Without this scope, the application can only read data.</p>
-<ul>
-<li><strong>sec</strong></li>
-</ul>
+<li><p><strong>sec</strong></p>
 <p>Allows the application to access the security infrastructure of the ERP Instance.
 Generally, this scope should <strong>NEVER</strong> be trusted to user apps.</p>
+</li>
+</ul>
 <p>Scopes, reserved for future use:</p>
 <ul>
 <li><strong>profile</strong></li>

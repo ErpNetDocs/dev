@@ -128,29 +128,21 @@ The access token is just a string, containing the granted access permissions, wh
 <p>Some legacy external applications use the obsolete SDK API to access the ERP Instance. To authenticate they must provide username, password and application name. If the provided application name is not found among the trusted applications in the ERP Instance the authentication will fail.</p>
 <p>Domain API and Table API allow basic authentication but require a trusted application with <a href="trusted-applications.html#application-uri">ApplicationUri</a> = 'DomainApiBasicAuthentication' to be registered and configured to <a href="trusted-applications.html#basic-authentication-allowed">allow basic authentication</a>.</p>
 <p><strong>Possible errors:</strong></p>
-<blockquote>
 <p>Authentication faled for user 'test'.</p>
 <p>Current request uses basic authentication but the provided application 'DomainApiBasicAuthentication' is not found among the trusted applications.</p>
 <p>Contact your system administrator to create trusted application 'DomainApiBasicAuthentication' and configure it to allow basic authentication.</p>
-</blockquote>
-<p>--</p>
-<blockquote>
+<hr>
 <p>Authentication failed for user 'test'.</p>
 <p>Current request uses basic authentication but the trusted application 'DomainApiBasicAuthentication' is not enabled.</p>
 <p>Contact your system administrator to enable the trusted application 'DomainApiBasicAuthentication' and configure it to allow basic authentication.</p>
-</blockquote>
-<p>--</p>
-<blockquote>
+<hr>
 <p>Authentication failed for user 'test'.</p>
 <p>Current request uses basic authentication but the provided application 'DomainApiBasicAuthentication' is not configured to allow basic authentication.</p>
 <p>Contact your system administrator to configure the trusted application 'DomainApiBasicAuthentication' to allow basic authentication.</p>
-</blockquote>
-<p>--</p>
-<blockquote>
+<hr>
 <p>Authentication failed for user 'test'.</p>
 <p>Current request uses basic authentication but the corresponding trusted application 'DomainApiBasicAuthentication' is configured for system user that is different from the provided user 'test'.</p>
 <p>Use the correct application user to log in or contact your system administrator to configure the trusted application 'DomainApiBasicAuthentication' for different user.</p>
-</blockquote>
 </credentials></article>
           </div>
           
