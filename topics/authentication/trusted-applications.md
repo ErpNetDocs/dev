@@ -122,15 +122,16 @@ The scope (according to [RFC 6749](https://tools.ietf.org/html/rfc6749#section-3
 The scope is an unordered list of space-delimited case-sensitive strings.
 Each string denotes a permission.
 
-> [!note]
-> Currently, this option is ignored.
-
-The following token scopes are PLANNED for near future developments:
+The following token scopes are used :
 
 - **update**
 
 Allows the user application to update data in the ERP Instance.
-Without this scope, the application can only read data.
+Without this scope, the application can only read data.  
+Introduced: 21
+
+
+The following token scopes are PLANNED for near future developments:
 
 - **sec**
 
