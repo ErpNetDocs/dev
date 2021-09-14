@@ -197,6 +197,6 @@
   "topics/table-api/index.html": {
     "href": "topics/table-api/index.html",
     "title": "Table API | ERP.net Developer Docs",
-    "keywords": "Table API The primary purpose of the Table API is to allow external BI (Business Intelligence) tools to quickly pull raw data for further analysis. Authentication It is common for Table API consumers to use the Basic Authentication. For more information, see Authentication . Tables For information about the tables, which can be queried, see the Table Model ."
+    "keywords": "Table API The primary purpose of the Table API is to allow external BI (Business Intelligence) tools to quickly pull raw data for further analysis. Authentication The Table API supports the following types of authentication: OAuth 2.0 Basic Authentication Caution Although Basic Authentication is supported, its use is strongly NOT recommended, because of its significantly lower level of security. For more information, see Authentication . Tables For information about the tables, which can be queried, see the Table Model ."
   }
 }
