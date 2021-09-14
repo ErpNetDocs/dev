@@ -7,7 +7,13 @@ The primary purpose of the Table API is to allow external BI (Business Intellige
 
 ## Authentication
 
-It is common for Table API consumers to use the Basic Authentication.
+The Table API supports the following types of authentication:
+* OAuth 2.0
+* Basic Authentication
+
+> [!CAUTION]
+> Although Basic Authentication is supported, its use is strongly **NOT** recommended, because of its significantly lower level of security.
+
 For more information, see [Authentication](../authentication/index.md).
 
 ## Tables
