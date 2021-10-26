@@ -103,14 +103,12 @@ The API name of the custom property starts with 'CustomProperty_' followed by th
 See <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/identifier-names">Identifier Name Specification</a>.</p>
 </div>
 <p>Each database contains different custom properties and that is why each database have different EDM model ($metadata).</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>If a user creates new custom property in the database this custom property is not automatically shown in Domain API.
-This is because the Domain API caches all repositories and their attributes.
+<h2 id="reset">Reset</h2>
+<p>If a user creates new custom property in the database, this custom property is not exposed in the Domain API in real time.
+This is because the Domain API caches all repositories and their attributes until next restart.
 To refresh the cached attributes you must call the ~/domain/reset endpoint.</p>
 <p>Example:
 <a href="https://demodb.my.erp.net/api/domain/reset">https://demodb.my.erp.net/api/domain/reset</a></p>
-</div>
 <h2 id="composition-of-the-custompropertyvalue-type">Composition of the CustomPropertyValue type</h2>
 <table>
 <thead>
