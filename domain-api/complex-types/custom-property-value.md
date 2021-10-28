@@ -37,6 +37,9 @@ To refresh the cached attributes you must call the ~/domain/reset endpoint.
 Example:
 <https://demodb.my.erp.net/api/domain/reset>
 
+> [!note]
+> Executing /reset requires authenticated user connection.
+
 ## Composition of the CustomPropertyValue type
 
 | Name | Type | Description |
