@@ -87,7 +87,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/common-tasks/register-trusted-app.html",
-          "hash": "LKqUGBk2fZp2rCCqIpIXeA=="
+          "hash": "iD+j5UD5nuy0XY6W9+z9Tw=="
         }
       },
       "is_incremental": false,
@@ -535,7 +535,7 @@
       "output": {
         ".html": {
           "relative_path": "topics/authentication/trusted-applications.html",
-          "hash": "pp/DUw/kTvCCVGPFLmvpJg=="
+          "hash": "6d72sKpmJYaTei5cxYRJ5Q=="
         }
       },
       "is_incremental": false,
