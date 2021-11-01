@@ -65,12 +65,7 @@ Type this in the browser (replace "mysecret" with your secret):
 
 ### Basic Authentication Allowed
 
-At first, this is a bit confusing.
-It has effect on the whole ERP Instance.
-Once we have at least (actually also at most) one application with Basic Authentication = ON, we have allowed Basic Authentication for the whole ERP Instance.
-
-> [!note]
->When someone uses Basic Authentication, it would be considered as access from this app.
+If true, this application allows login with user name and password. When a client application uses basic authentication it must provide the application uri along with user name and password. Use with caution, because basic authentication is less secure than oauth! If a user is specified in System User, the basic authentication is allowed only for this user.
 
 ### Impersonate As Community / Internal User Allowed
 
@@ -100,7 +95,7 @@ So, allowing only community accounts could create confusion for the internal use
 ### Impersonate Login URL
 
 This is used only for applications, which use the Authorization Code Flow.
-It is called after a successful login and receives the generated tokens.
+It is called after a successful login and receives the generated code used to retrieve identity and access tokens.
 
 Usually, this URL is a dedicated endpoint in the app environment.
 
@@ -108,9 +103,12 @@ The endpoint should conform to:
 
 <https://openid.net/specs/openid-connect-core-1_0.html#AuthResponse>
 
+> [!note]
+> You can specify multiple valid URLs by comma-separating them (typically, to handle different environments like QA or testing).
+
 ### Impersonate Logout URL
 
-Reserved for future extensions.
+Specifies a comma separated list of allowed URIs to redirect to after logout.
 
 ### Is Enabled
 
