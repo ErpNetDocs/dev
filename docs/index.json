@@ -57,7 +57,7 @@
   "domain-api/data-sync/index.html": {
     "href": "domain-api/data-sync/index.html",
     "title": "Data synchronization | ERP.net Developer Docs",
-    "keywords": "Data synchronization Data sync occurs in many scenarios, where an external app synchronizes data betweed it and ERP.net. Data sync tasks of an external app include: Receive real time notifications for changes in ERP.net Check whether an object is updated in ERP.net since last check Implement UI with Optimistic locking for data, stored in ERP.net The data sync framework implemented in ERP.net Domain API allows efficient implementation of such scenarios. For more information, select from the topics below: Event push Object version Optimistic locking"
+    "keywords": "Data synchronization Data sync occurs in many scenarios, where an external app synchronizes data betweed it and ERP.net. Data sync tasks of an external app include: Receive real time notifications for changes in ERP.net Check whether an object is updated in ERP.net since last check Implement UI with Optimistic locking for data, stored in ERP.net The data sync framework implemented in ERP.net Domain API allows efficient implementation of such scenarios. For more information, select from the topics below: Event push Object version Optimistic locking Note The data sync support is first available in ERP.net v.2022.1."
   },
   "domain-api/data-sync/object-version.html": {
     "href": "domain-api/data-sync/object-version.html",
