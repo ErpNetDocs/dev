@@ -13,3 +13,6 @@ For more information, select from the topics below:
 * [Event push](event-push.md)
 * [Object version](object-version.md)
 * [Optimistic locking](optimistic-locking.md)
+
+>> [!note]
+>> The data sync support is first available in @@name v.2022.1.
