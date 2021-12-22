@@ -17,6 +17,9 @@
 - name: Common tasks
   href: common-tasks/toc.yml
   topicHref: common-tasks/index.md
+- name: Data sync
+  href: data-sync/toc.yml
+  topicHref: data-sync/index.md
 - name: Libraries
   href: libraries.md
 - name: Example apps
