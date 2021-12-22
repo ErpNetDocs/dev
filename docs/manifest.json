@@ -185,6 +185,54 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "domain-api/data-sync/event-push.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-sync/event-push.html",
+          "hash": "f+8JksV2nPlOhvAy83MEtw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/data-sync/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-sync/index.html",
+          "hash": "QgdG7aVgufZyhXPJO18Inw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/data-sync/object-version.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-sync/object-version.html",
+          "hash": "TQColgwoy+NpeHq33CU3pg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/data-sync/optimistic-locking.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-sync/optimistic-locking.html",
+          "hash": "tosHFYWnFSY4mpnqP81wHQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "domain-api/filterable-references.md",
       "output": {
         ".html": {
