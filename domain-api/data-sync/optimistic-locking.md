@@ -14,7 +14,7 @@ External app allows its users to modify an entity, stored in an @@name instance.
 1. The external app reads the entity, including the Object version.
 1. The external app presents a UI to the end user and allows them to edit the entity.
 1. When the user saves the data, the app call the update API, providing the data + the previously read Object version.
-1. The system check whether the Object version in the @@name instance is still the same and proceeds with the update ONLY if it is the same.
+1. The system checks whether the Object version in the @@name instance is still the same and proceeds with the update ONLY if it is the same; otherwise, it returns error.
 
 >> [!note]
 >> For replication scenarios, the steps are the same, with the exception of step 2, which might not be a UI, but a time frame between two synchronizations.
