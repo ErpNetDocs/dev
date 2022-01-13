@@ -23,4 +23,4 @@ By implementing the above scenario, the app guarantees that it would not overwri
 
 >> [!note]
 >> It is the decision of the app to provide Object version when updating the entity.
->> If Object version is not provided, the system would not perform the optimistic locking checking.
+>> If Object version is not provided, the system would not perform the optimistic locking check.
