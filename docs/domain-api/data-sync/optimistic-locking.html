@@ -91,7 +91,7 @@
 <li>The external app reads the entity, including the Object version.</li>
 <li>The external app presents a UI to the end user and allows them to edit the entity.</li>
 <li>When the user saves the data, the app call the update API, providing the data + the previously read Object version.</li>
-<li>The system check whether the Object version in the ERP.net instance is still the same and proceeds with the update ONLY if it is the same.</li>
+<li>The system checks whether the Object version in the ERP.net instance is still the same and proceeds with the update ONLY if it is the same; otherwise, it returns error.</li>
 </ol>
 <blockquote>
 <div class="NOTE">
@@ -104,7 +104,7 @@
 <div class="NOTE">
 <h5>Note</h5>
 <p>It is the decision of the app to provide Object version when updating the entity.
-If Object version is not provided, the system would not perform the optimistic locking checking.</p>
+If Object version is not provided, the system would not perform the optimistic locking check.</p>
 </div>
 </blockquote>
 </article>
