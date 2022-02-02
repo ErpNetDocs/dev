@@ -89,8 +89,8 @@
 <p>If Front-End model is used in <a href="../transactions.html">API Transaction</a> dependent property values are recalculated upon property change.  For example in SalesOrderLine line.ProductDescription is set to line.Product.Name when line.Product changes.</p>
 <p>In the example bellow a new SalesOrder is created with one SalesOrderLine.</p>
 <p>Note that measurement units and currencies are specified before passing <a href="../complex-types/quantity.html">Quantity</a> or <a href="../complex-types/amount.html">Amount</a> values. This is required because the quantity or amount contains the code of the measurement unit or currency.</p>
-<p>POST ~/Crm_Sales_SalesOrders</p>
-<pre><code class="lang-json">{
+<pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders
+{
   &quot;DocumentType&quot;: {
     &quot;@odata.id&quot;: &quot;General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)&quot;
   },
@@ -210,9 +210,8 @@ TransactionId: xxxx
 </code></pre>
 <h2 id="create-multiple-lines-to-an-existing-document">Create multiple lines to an existing document</h2>
 <p>A possible scenario is when you have a document created, but later you want to add its lines.</p>
-<p>POST ~/Crm_Sales_SalesOrders</p>
-<pre><code class="lang-json">{
-  &quot;@odata.id&quot;: &quot;Crm_Sales_SalesOrders(283e4c71-2d77-4083-81b6-4c7f17668d7e)&quot;,
+<pre><code class="lang-json">PATCH ~/Crm_Sales_SalesOrders(283e4c71-2d77-4083-81b6-4c7f17668d7e)
+{
   &quot;Lines&quot;: [
     {
       &quot;LineNo&quot;: 10,
