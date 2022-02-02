@@ -84,46 +84,46 @@
 <p>However there are some specific rules that apply only to documents. For example documents on state Released or above can not be modified directly. They must be modified with <a href="xref:Adjustment-Documents">adjustment documents</a>.</p>
 <p>Another important attribute of the documents that can not be modified with simple PATCH request is <a href="xref:Document-States">State</a>.</p>
 <p>The examples below show some tasks related to documents.</p>
-<h2 id="create-document">Create Document</h2>
+<h2 id="create-document">Create document</h2>
 <p>Document can be created only by specifying the required properties. Other properties will be filled by it's constant default value or it's LateDefault expression.</p>
 <p>If Front-End model is used in <a href="../transactions.html">API Transaction</a> dependent property values are recalculated upon property change.  For example in SalesOrderLine line.ProductDescription is set to line.Product.Name when line.Product changes.</p>
 <p>In the example bellow a new SalesOrder is created with one SalesOrderLine.</p>
 <p>Note that measurement units and currencies are specified before passing <a href="../complex-types/quantity.html">Quantity</a> or <a href="../complex-types/amount.html">Amount</a> values. This is required because the quantity or amount contains the code of the measurement unit or currency.</p>
 <p>POST ~/Crm_Sales_SalesOrders</p>
 <pre><code class="lang-json">{
-&quot;DocumentType&quot;: {
-&quot;@odata.id&quot;: &quot;General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)&quot;
-},
-&quot;EnterpriseCompany&quot;: {
-&quot;@odata.id&quot;: &quot;General_EnterpriseCompanies(b0e80577-fbbe-4c9b-811e-20b6c6dd465f)&quot;
-},
-&quot;Customer&quot;: {
-&quot;@odata.id&quot;: &quot;Crm_Customers(15f2640f-f374-4017-ae2d-d2a41535f054)&quot;
-},
-&quot;DocumentCurrency&quot;: {
-&quot;@odata.id&quot;: &quot;General_Currencies(3187833a-d3c1-4804-bfc0-e17e6aee3069)&quot;
-},
-&quot;Lines&quot;: [
-{
-&quot;Product&quot;: {
-&quot;@odata.id&quot;: &quot;General_Products_Products(81d38b50-fd06-e611-8292-b31071e2ee7f)&quot;
-},
-&quot;QuantityUnit&quot;: {
-&quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
-},
-&quot;Quantity&quot;: {
-&quot;Value&quot;: 1,
-&quot;Unit&quot;: &quot;pcs&quot;
-},
-&quot;UnitPrice&quot;: {
-&quot;Value&quot;: 20,
-&quot;Currency&quot;: &quot;BGN&quot;
-}
-}
-]
+  &quot;DocumentType&quot;: {
+    &quot;@odata.id&quot;: &quot;General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)&quot;
+  },
+  &quot;EnterpriseCompany&quot;: {
+    &quot;@odata.id&quot;: &quot;General_EnterpriseCompanies(b0e80577-fbbe-4c9b-811e-20b6c6dd465f)&quot;
+  },
+  &quot;Customer&quot;: {
+    &quot;@odata.id&quot;: &quot;Crm_Customers(15f2640f-f374-4017-ae2d-d2a41535f054)&quot;
+  },
+  &quot;DocumentCurrency&quot;: {
+    &quot;@odata.id&quot;: &quot;General_Currencies(3187833a-d3c1-4804-bfc0-e17e6aee3069)&quot;
+  },
+  &quot;Lines&quot;: [
+    {
+      &quot;Product&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Products_Products(81d38b50-fd06-e611-8292-b31071e2ee7f)&quot;
+      },
+      &quot;QuantityUnit&quot;: {
+        &quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+      },
+      &quot;Quantity&quot;: {
+        &quot;Value&quot;: 1,
+        &quot;Unit&quot;: &quot;pcs&quot;
+      },
+      &quot;UnitPrice&quot;: {
+        &quot;Value&quot;: 20,
+        &quot;Currency&quot;: &quot;BGN&quot;
+      }
+    }
+  ]
 }
 </code></pre>
-<h2 id="change-document-state">Change Document State</h2>
+<h2 id="change-document-state">Change document state</h2>
 <p>HTTP C#</p>
 <pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders(59098bcf-f331-478f-91c2-f5520590f534)/ChangeState
 {
@@ -131,7 +131,7 @@
 &quot;userStatus&quot;: {&quot;@odata.id&quot;: &quot;General_DocumentTypeUserStatuses(1ee1249e-4ef5-46b4-8409-26b2130d09c7)&quot;}
 }
 </code></pre>
-<h2 id="make-document-void">Make Document Void</h2>
+<h2 id="make-document-void">Make document void</h2>
 <p>HTTP C#</p>
 <pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders(11217345-3659-43be-a85d-005eaaa3aaac)/MakeVoid
 {
@@ -139,14 +139,14 @@
 &quot;voidType&quot;: &quot;VoidDocument&quot;
 }
 </code></pre>
-<h2 id="recalculate-document">Recalculate Document</h2>
+<h2 id="recalculate-document">Recalculate document</h2>
 <p>This method is used to recalculate some document details such as Document Amounts (like VAT), Bonus Programs etc. It make sense only in the context of Front-End transaction because the recalculated changes remain only in memory. They must be commited to the database with a separate call to EndTransaction{commit=true}.</p>
 <p>HTTP C#</p>
 <pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders(11217345-3659-43be-a85d-005eaaa3aaac)/Recalculate
 </code></pre>
-<h2 id="create-adjustment-documents">Create Adjustment Documents</h2>
+<h2 id="create-adjustment-documents">Create adjustment documents</h2>
 <p>Released documents can be modified only with adjustment documents. The API provides a convenient method to create adjustment documents: CreateAdjustmentDocuments. The method requires TransactionId in the request header.</p>
-<p>The method creates adjustment documents for modified released documents.  The adjustment documents are created in separate transaction and their state is changed to 'Adjustment'. The method does not commit or rollback the current front-end transaction.</p>
+<p>The method creates adjustment documents for modified released documents. The adjustment documents are created in separate transaction and their state is changed to 'Adjustment'. The method does not commit or rollback the current front-end transaction.</p>
 <p>HTTP C#</p>
 <pre><code class="lang-json">// Begin a front-end transaction
 
@@ -206,6 +206,66 @@ TransactionId: xxxx
 
 &quot;commit&quot;: false
 
+}
+</code></pre>
+<h2 id="create-multiple-lines-to-an-existing-document">Create multiple lines to an existing document</h2>
+<p>A possible scenario is when you have a document created, but later you want to add its lines.</p>
+<p>POST ~/Crm_Sales_SalesOrders</p>
+<pre><code class="lang-json">{
+  &quot;@odata.id&quot;: &quot;Crm_Sales_SalesOrders(283e4c71-2d77-4083-81b6-4c7f17668d7e)&quot;,
+  &quot;Lines&quot;: [
+    {
+      &quot;LineNo&quot;: 10,
+      &quot;Product&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Products_Products(81d38b50-fd06-e611-8292-b31071e2ee7f)&quot;
+      },
+      &quot;QuantityUnit&quot;: {
+        &quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+      },
+      &quot;Quantity&quot;: {
+        &quot;Value&quot;: 1,
+        &quot;Unit&quot;: &quot;pcs&quot;
+      },
+      &quot;UnitPrice&quot;: {
+        &quot;Value&quot;: 20,
+        &quot;Currency&quot;: &quot;BGN&quot;
+      }
+    },
+    {
+      &quot;LineNo&quot;: 20,
+      &quot;Product&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Products_Products(08fc0b95-01d8-4876-9074-67898c0bd98b)&quot;
+      },
+      &quot;QuantityUnit&quot;: {
+        &quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+      },
+      &quot;Quantity&quot;: {
+        &quot;Value&quot;: 5,
+        &quot;Unit&quot;: &quot;pcs&quot;
+      },
+      &quot;UnitPrice&quot;: {
+        &quot;Value&quot;: 10,
+        &quot;Currency&quot;: &quot;BGN&quot;
+      }
+    },
+    {
+      &quot;LineNo&quot;: 30,
+      &quot;Product&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Products_Products(396f958d-1952-4c6f-ac66-9211962720d4)&quot;
+      },
+      &quot;QuantityUnit&quot;: {
+        &quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+      },
+      &quot;Quantity&quot;: {
+        &quot;Value&quot;: 67,
+        &quot;Unit&quot;: &quot;pcs&quot;
+      },
+      &quot;UnitPrice&quot;: {
+        &quot;Value&quot;: 1.23,
+        &quot;Currency&quot;: &quot;BGN&quot;
+      }
+    }    
+  ]
 }
 </code></pre>
 </article>
