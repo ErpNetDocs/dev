@@ -20,9 +20,8 @@ In the example bellow a new SalesOrder is created with one SalesOrderLine.
 
 Note that measurement units and currencies are specified before passing [Quantity](../complex-types/quantity.md) or [Amount](../complex-types/amount.md) values. This is required because the quantity or amount contains the code of the measurement unit or currency.
 
-POST ~/Crm_Sales_SalesOrders
-
 ```json
+POST ~/Crm_Sales_SalesOrders
 {
   "DocumentType": {
     "@odata.id": "General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)"
@@ -165,11 +164,9 @@ TransactionId: xxxx
 
  A possible scenario is when you have a document created, but later you want to add its lines.
 
- POST ~/Crm_Sales_SalesOrders
-
 ```json
+PATCH ~/Crm_Sales_SalesOrders(283e4c71-2d77-4083-81b6-4c7f17668d7e)
 {
-  "@odata.id": "Crm_Sales_SalesOrders(283e4c71-2d77-4083-81b6-4c7f17668d7e)",
   "Lines": [
     {
       "LineNo": 10,
