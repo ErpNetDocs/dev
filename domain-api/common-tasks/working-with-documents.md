@@ -113,7 +113,7 @@ POST ~/BeginTransaction
 
 // Update some sales order lines.
 
-PATH ~/Crm_Sales_SalesOrderLines(34217345-3659-43be-a85d-005eaaa3aaac)
+PATCH ~/Crm_Sales_SalesOrderLines(34217345-3659-43be-a85d-005eaaa3aaac)
 
 TransactionId: xxxx
 
@@ -125,7 +125,7 @@ TransactionId: xxxx
 
 // Update another line.
 
-PATH ~/Crm_Sales_SalesOrderLines(65217345-3659-43be-a85d-005eaaa3aaac)
+PATCH ~/Crm_Sales_SalesOrderLines(65217345-3659-43be-a85d-005eaaa3aaac)
 
 TransactionId: xxxx
 
