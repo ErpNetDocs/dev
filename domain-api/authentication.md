@@ -42,7 +42,7 @@ For more information of trusted applications visit the [Trusted Applications Top
 
 ## Endpoints
 
-**ERP.net Discovery Endpoint**
+### ERP.net Discovery Endpoint
 
 The adress of Identity Server as all ERP.net sites can be configured. To find out where any ERP.net site is located we must call the **/sys/auto-discovery** endpoint.
 For example 
@@ -83,7 +83,7 @@ he site types at the moment are:
 * Other site types that provide different functionalities.
 
 
-**Identity Server Discovery Endpoint** 
+### Identity Server Discovery Endpoint  
 
 The discovery endpoint can be used to retrieve metadata about your IdentityServer - it returns information like the issuer name, key material, supported scopes etc. See the [spec](https://openid.net/specs/openid-connect-discovery-1_0.html) for more details.
 
@@ -112,7 +112,7 @@ GET https://demodb.my.erp.net/id/connect/authorize?
    
 After successfull login the browser will be redirected to the provided redirect_uri (https://myapp/callback in the example above) with the authorization code as url parameter. This autnorization code then must be used to request an access_token from the **token** endpoint.
 
-**Identity Server Token Endpoint**
+### Identity Server Token Endpoint  
 
 The token endpoint can be used to programmatically request tokens.  [Full list of available parameters](https://docs.identityserver.io/en/latest/endpoints/token.html)
 The most used scenarios are:
