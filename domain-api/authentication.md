@@ -91,7 +91,7 @@ The discovery endpoint is available via /.well-known/openid-configuration relati
 
 https://demodb.my.erp.net/id/.well-known/openid-configuration
 
-**Identity Server Authorize Endpoint**
+### Identity Server Authorize Endpoint  
 
 The authorize endpoint can be used to request tokens or authorization codes via the browser. This process typically involves authentication of the end-user and optionally consent. 
 For full list of available parameters visit this [link](https://docs.identityserver.io/en/latest/endpoints/authorize.html).
