@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Authentication | ERP.net Developer Docs </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Authentication | ERP.net Developer Docs ">
+    <meta name="generator" content="docfx 2.56.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="authentication">Authentication</h1>
+
+<p>Authentication is needed when an application needs to know the identity of the current user. Typically these applications manage data on behalf of that user and need to make sure that this user can only access the data for which he is allowed. The most common example for that is (classic) web applications – but native and JS-based applications also have a need for authentication.</p>
+<p>ERP.net uses OpenID Connect authentication protocol which is an extension of OAuth2.</p>
+<h2 id="api-access">API Access</h2>
+<p>Applications have two fundamental ways with which they communicate with APIs – using the application identity, or delegating the user’s identity. Sometimes both methods need to be combined.</p>
+<p>OAuth2 is a protocol that allows applications to request access tokens from a security token service and use them to communicate with APIs. This delegation reduces complexity in both the client applications as well as the APIs since authentication and authorization can be centralized.</p>
+<h2 id="identity-server">Identity Server</h2>
+<p>Each <a href="https://docs.erp.net/dev/topics/erp-instances.html">ERP.net instance</a> has it's own authentication provider site which is <strong>usually</strong> located on https://{ERP-INSTANCE-ROOT-URL}/id. For example the identity server for <em>demodb</em> ERP instance is located at <a href="https://demodb.my.erp.net/id">https://demodb.my.erp.net/id</a>.</p>
+<p>ERP.net Identity Server is build ot top of <a href="https://docs.identityserver.io/">IdentityServer4</a> which documentation can be used to understand better the authentication process.</p>
+<h2 id="terminology">Terminology</h2>
+<ul>
+<li><strong>IdentityServer</strong> - IdentityServer is an OpenID Connect provider - it implements the OpenID Connect and OAuth 2.0 protocols.</li>
+<li><strong>User</strong> - A user is a human that is using a registered client to access resources.</li>
+<li><strong>Client</strong> - A client is a piece of software that requests tokens from IdentityServer - either for authenticating a user (requesting an identity token) or for accessing a resource (requesting an access token). A client must be first registered with IdentityServer before it can request tokens. In ERP.net registered clients are adressed as trusted applications.</li>
+<li><strong>Resources</strong> - Resources are something you want to protect with IdentityServer - either identity data of your users, or APIs. In our case this is the Domain API.</li>
+<li><strong>Identity Token</strong> - An identity token represents the outcome of an authentication process. It contains at a bare minimum an identifier for the user (called the sub aka subject claim) and information about how and when the user authenticated. It can contain additional identity data.</li>
+<li><strong>Access Token</strong> - An access token allows access to an API resource. Clients request access tokens and forward them to the API. Access tokens contain information about the client and the user (if present). APIs use that information to authorize access to their data.</li>
+</ul>
+<p>Source: <a href="https://docs.identityserver.io/en/latest/intro/terminology.html">https://docs.identityserver.io/en/latest/intro/terminology.html</a></p>
+<h2 id="application-types">Application Types</h2>
+<p>ERP.net supports two client application types</p>
+<ul>
+<li><p><strong>Interactive applications</strong><br>
+This type of applications are used by end users to access the ERP.net resources and database. This applications must use a web browser to show the ERP.net login screen to the end user. After successfull login the application can request identity_token or/and access_token. These applications must use the <a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow">Authorization Code Flow</a></p>
+</li>
+<li><p><strong>Service applications</strong><br>
+These are machine to machine applications that do not require user login. They use the<a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow"> Client Credentials Flow</a></p>
+</li>
+</ul>
+<h2 id="trusted-applications">Trusted Applications</h2>
+<p>The registered clients in one ERP.net instance are called trusted applications. They are stored in the database and have all required properties that Identity Server needs in order to manage the client application authorization.</p>
+<p>For more information of trusted applications visit the <a href="https://docs.erp.net/dev/topics/authentication/trusted-applications.html">Trusted Applications Topic</a></p>
+<h2 id="internal-and-external-users">Internal and External Users</h2>
+<p>Client Applications can use the Identity Server to authenticate two type of users:</p>
+<ul>
+<li><strong>Internal Users</strong>
+These are the users that have access to the ERP.net instance database. Only internal users can obtain a valid access_token.</li>
+<li><strong>External Users</strong>
+These are users that can be authenticated by Identity Server but can not obtain a valid access_token for Domain API or Table API. They are usually customers of the company-owner of the ERP.net instance. When an external user logs in, using the Identity Server login page, only an id_token is issued by the identity server. This id_token prooves that the user is properly authenticated. For example the users of a web store are external users.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is possible a client application to act as interactive application and service application in the same. That means the application can use two different access tokens to communicate with Domain API or only use the client_credentials token. In order to achieve this the application must append the <em>-service</em> suffix to the client_id parameter of the Identity Server token endpoint where the application uses the client_credentials grant type to obtain an access_token. For example a web store site can use a system user to load the products and to relate the logged in external user to a customer entry in the database.</p>
+</div>
+<h2 id="endpoints">Endpoints</h2>
+<h3 id="erpnet-discovery-endpoint">ERP.net Discovery Endpoint</h3>
+<p>The adress of Identity Server as all ERP.net sites can be configured. To find out where any ERP.net site is located we must call the <strong>/sys/auto-discovery</strong> endpoint.
+For example</p>
+<p><a href="https://demodb.my.erp.net/sys/auto-discovery">https://demodb.my.erp.net/sys/auto-discovery</a></p>
+<p>The result of this request will be:</p>
+<pre><code>{
+  &quot;WebSites&quot;: [
+    {
+      &quot;Type&quot;: &quot;ID&quot;,
+      &quot;Status&quot;: &quot;Working&quot;,
+      &quot;Url&quot;: &quot;https://demodb.my.erp.net/id&quot;,
+      &quot;AdditionalProperties&quot;: null
+    },
+    {
+      &quot;Type&quot;: &quot;API&quot;,
+      &quot;Status&quot;: &quot;Working&quot;,
+      &quot;Url&quot;: &quot;https://demodb.my.erp.net/api&quot;,
+      &quot;AdditionalProperties&quot;: {
+        &quot;ODataServiceRoot&quot;: &quot;https://demodb.my.erp.net/api/domain/odata/&quot;
+      }
+    }
+  ]
+}
+</code></pre>
+<p>The contains all configured web sites for this ERP.net instance.</p>
+<p>By the result of this request you can understand where the Identity Server is located as well where the ODATA service root of the Domain API is located.
+The site types at the moment are:</p>
+<ul>
+<li>ID - Identity Server Site - the authorization provider for the ERP.net instance.</li>
+<li>API - Domain API Site</li>
+<li>TableAPI - Table API Site</li>
+<li>Other site types that provide different functionalities.</li>
+</ul>
+<h3 id="identity-server-discovery-endpoint">Identity Server Discovery Endpoint</h3>
+<p>The discovery endpoint can be used to retrieve metadata about your IdentityServer - it returns information like the issuer name, key material, supported scopes etc. See the <a href="https://openid.net/specs/openid-connect-discovery-1_0.html">spec</a> for more details.</p>
+<p>The discovery endpoint is available via /.well-known/openid-configuration relative to the base address, e.g.:</p>
+<p><a href="https://demodb.my.erp.net/id/.well-known/openid-configuration">https://demodb.my.erp.net/id/.well-known/openid-configuration</a></p>
+<h3 id="identity-server-authorize-endpoint">Identity Server Authorize Endpoint</h3>
+<p>The authorize endpoint can be used to request tokens or authorization codes via the browser. This process typically involves authentication of the end-user and optionally consent.
+For full list of available parameters visit this <a href="https://docs.identityserver.io/en/latest/endpoints/authorize.html">link</a>.</p>
+<p>For Authorization Code Flow the application first need to call the <strong>authorize</strong> endpoint.</p>
+<pre><code>Exapmle  
+
+GET https://demodb.my.erp.net/id/connect/authorize?     
+    client_id={my_client_id}&amp;  
+    redirect_uri={https://myapp/callback}&amp;  
+    response_type=code%20id_token&amp;  
+    scope=openid%20profile%20offline_access&amp;  
+    nonce=abc&amp;  
+    state=xyz&amp;  
+</code></pre>
+<p>After successfull login the browser will be redirected to the provided redirect_uri (https://myapp/callback in the example above) with the authorization code as url parameter. This autnorization code then must be used to request an access_token from the <strong>token</strong> endpoint.</p>
+<h3 id="identity-server-token-endpoint">Identity Server Token Endpoint</h3>
+<p>The token endpoint can be used to programmatically request tokens.  <a href="https://docs.identityserver.io/en/latest/endpoints/token.html">Full list of available parameters</a>
+The most used scenarios are:</p>
+<ul>
+<li>Request access_token with authorization code</li>
+</ul>
+<pre><code>POST /connect/token
+CONTENT-TYPE application/x-www-form-urlencoded
+
+    client_id=client1&amp;
+    client_secret=secret&amp;
+    grant_type=authorization_code&amp;
+    code=hdh922&amp;
+    redirect_uri=https://myapp.com/callback
+</code></pre>
+<ul>
+<li>Request access_token with client credentials.
+This is the case when a service application can use the Domain API without an interactive user. The trusted application must be configured with system/service user that will be used to create the ERP session.
+<pre><code></code></pre>
+</li>
+</ul>
+<p>POST /connect/token
+CONTENT-TYPE application/x-www-form-urlencoded</p>
+<pre><code>client_id=client1&amp;
+client_secret=secret&amp;
+grant_type=client_credentials
+</code></pre>
+<pre><code></code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/authentication.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
