@@ -1,5 +1,7 @@
 - name: Introduction
   href: index.md
+- name: Authentication
+  href: authentication.md
 - name: URL components
   href: url-components.md
 - name: Query options
