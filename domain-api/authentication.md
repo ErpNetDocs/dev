@@ -140,7 +140,8 @@ CONTENT-TYPE application/x-www-form-urlencoded
 ```    
 * Request access_token with client credentials. 
   This is the case when a service application can use the Domain API without an interactive user. The trusted application must be configured with system/service user that will be used to create the ERP session.  
-  ```   
+  
+```   
 POST /connect/token
 CONTENT-TYPE application/x-www-form-urlencoded
 
