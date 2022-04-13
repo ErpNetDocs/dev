@@ -42,14 +42,57 @@ For more information of trusted applications visit the [Trusted Applications Top
 
 ## Endpoints
 
-**Discovery Endpoint**
+**ERP.net Discovery Endpoint**
+
+The adress of Identity Server as all ERP.net sites can be configured. To find out where any ERP.net site is located we must call the **/sys/auto-discovery** endpoint.
+For example 
+
+https://demodb.my.erp.net/sys/auto-discovery
+
+The result of this request will be:
+```
+{
+  "WebSites": [
+    {
+      "Type": "ID",
+      "Status": "Working",
+      "Url": "https://demodb.my.erp.net/id",
+      "AdditionalProperties": null
+    },
+    {
+      "Type": "API",
+      "Status": "Working",
+      "Url": "https://demodb.my.erp.net/api",
+      "AdditionalProperties": {
+        "ODataServiceRoot": "https://demodb.my.erp.net/api/domain/odata/"
+      }
+    }
+  ]
+}
+```
+
+The contains all configured web sites for this ERP.net instance. 
+
+By the result of this request you can understand where the Identity Server is located as well where the ODATA service root of the Domain API is located.
+T
+he site types at the moment are:
+
+* ID - Identity Server Site - the authorization provider for the ERP.net instance.
+* API - Domain API Site 
+* TableAPI - Table API Site
+* Other site types that provide different functionalities.
+
+
+**Identity Server Discovery Endpoint** 
+
 The discovery endpoint can be used to retrieve metadata about your IdentityServer - it returns information like the issuer name, key material, supported scopes etc. See the [spec](https://openid.net/specs/openid-connect-discovery-1_0.html) for more details.
 
 The discovery endpoint is available via /.well-known/openid-configuration relative to the base address, e.g.:
 
 https://demodb.my.erp.net/id/.well-known/openid-configuration
 
-**Authorize Endpoint**
+**Identity Server Authorize Endpoint**
+
 The authorize endpoint can be used to request tokens or authorization codes via the browser. This process typically involves authentication of the end-user and optionally consent. 
 For full list of available parameters visit this [link](https://docs.identityserver.io/en/latest/endpoints/authorize.html).
 
@@ -69,7 +112,7 @@ GET https://demodb.my.erp.net/id/connect/authorize?
    
 After successfull login the browser will be redirected to the provided redirect_uri (https://myapp/callback in the example above) with the authorization code as url parameter. This autnorization code then must be used to request an access_token from the **token** endpoint.
 
-**Token Endpoint**
+**Identity Server Token Endpoint**
 
 The token endpoint can be used to programmatically request tokens.  [Full list of available parameters](https://docs.identityserver.io/en/latest/endpoints/token.html)
 The most used scenarios are:
@@ -85,3 +128,13 @@ CONTENT-TYPE application/x-www-form-urlencoded
     code=hdh922&
     redirect_uri=https://myapp.com/callback
 ```    
+* Request access_token with client credentials. 
+  This is the case when a service application can use the Domain API without an interactive user. The trusted application must be configured with system/service user that will be used to create the ERP session.  
+  ```   
+POST /connect/token
+CONTENT-TYPE application/x-www-form-urlencoded
+
+    client_id=client1&
+    client_secret=secret&
+    grant_type=client_credentials
+```   
