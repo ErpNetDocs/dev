@@ -48,9 +48,6 @@ Client Applications can use the Identity Server to authenticate two type of user
 * **External Users**
   These are users that can be authenticated by Identity Server but can not obtain a valid access_token for Domain API or Table API. They are usually customers of the company-owner of the ERP.net instance. When an external user logs in, using the Identity Server login page, only an id_token is issued by the identity server. This id_token prooves that the user is properly authenticated. For example the users of a web store are external users. 
 
-> [!NOTE] 
-> It is possible a client application to act as interactive application and service application in the same. That means the application can use two different access tokens to communicate with Domain API or only use the client_credentials token. In order to achieve this the application must append the _-service_ suffix to the client_id parameter of the Identity Server token endpoint where the application uses the client_credentials grant type to obtain an access_token. For example a web store site can use a system user to load the products and to relate the logged in external user to a customer entry in the database.
-
 ## Endpoints
 
 ### ERP.net Discovery Endpoint
@@ -149,3 +146,12 @@ CONTENT-TYPE application/x-www-form-urlencoded
     client_secret=secret&
     grant_type=client_credentials
 ```   
+
+> [!NOTE] 
+> It is possible a client application to act as interactive application and service application at the same time. That means the application can use two different access tokens to communicate with Domain API or only use the client_credentials token. In order to achieve this the application must append the **-service** suffix to the client_id parameter of the Identity Server token endpoint when the application uses the client_credentials grant_type to obtain an access_token. For example a web store site can use a system user to load the products and to relate the logged in external user to a customer entry in the database.
+> For example if the client application is registered as trusted application with ApplicationUri='ClientApp' and SystemUserAllowed=true and ImpersonateLoginUrl,ImpersonateLogoutUrl not empty, access_token can be requested with athorization_code grant_type and client_credentials grant_type, but when the client_credentials grant_type is used the provided client_id must be 'ClientApp-service':
+>   
+> POST /connect/token
+> CONTENT-TYPE application/x-www-form-urlencoded
+> 
+>   client_id=ClientApp-service&client_secret=secret&grant_type=client_credentials
