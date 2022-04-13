@@ -38,6 +38,50 @@ ERP.net supports two client application types
 
 The registered clients in one ERP.net instance are called trusted applications. They are stored in the database and have all required properties that Identity Server needs in order to manage the client application authorization. 
 
+For more information of trusted applications visit the [Trusted Applications Topic](https://docs.erp.net/dev/topics/authentication/trusted-applications.html)
+
 ## Endpoints
 
-For Authorization Code Flow the application first need to call the **authorize** endpoint:
+**Discovery Endpoint**
+The discovery endpoint can be used to retrieve metadata about your IdentityServer - it returns information like the issuer name, key material, supported scopes etc. See the [spec](https://openid.net/specs/openid-connect-discovery-1_0.html) for more details.
+
+The discovery endpoint is available via /.well-known/openid-configuration relative to the base address, e.g.:
+
+https://demodb.my.erp.net/id/.well-known/openid-configuration
+
+**Authorize Endpoint**
+The authorize endpoint can be used to request tokens or authorization codes via the browser. This process typically involves authentication of the end-user and optionally consent. 
+For full list of available parameters visit this [link](https://docs.identityserver.io/en/latest/endpoints/authorize.html).
+
+For Authorization Code Flow the application first need to call the **authorize** endpoint.  
+
+```
+Exapmle  
+
+GET https://demodb.my.erp.net/id/connect/authorize?     
+    client_id={my_client_id}&  
+    redirect_uri={https://myapp/callback}&  
+    response_type=code%20id_token&  
+    scope=openid%20profile%20offline_access&  
+    nonce=abc&  
+    state=xyz&  
+```
+   
+After successfull login the browser will be redirected to the provided redirect_uri (https://myapp/callback in the example above) with the authorization code as url parameter. This autnorization code then must be used to request an access_token from the **token** endpoint.
+
+**Token Endpoint**
+
+The token endpoint can be used to programmatically request tokens.  [Full list of available parameters](https://docs.identityserver.io/en/latest/endpoints/token.html)
+The most used scenarios are:
+
+* Request access_token with authorization code  
+```   
+POST /connect/token
+CONTENT-TYPE application/x-www-form-urlencoded
+
+    client_id=client1&
+    client_secret=secret&
+    grant_type=authorization_code&
+    code=hdh922&
+    redirect_uri=https://myapp.com/callback
+```    
