@@ -46,7 +46,7 @@ Client Applications can use the Identity Server to authenticate two type of user
 * **Internal Users** 
   These are the users that have access to the ERP.net instance database. Only internal users can obtain a valid access_token.
 * **External Users**
-  These are users that can be authenticated by Identity Server but can not obtain a valid access_token for Domain API or Table API. They are usually customers of the company-owner of the ERP.net instance. When an external user logs in, using the Identity Server login page, only an id_token is issued by the identity server. This id_token prooves that the user is properly authenticated. This kind of users are the users in a web store. 
+  These are users that can be authenticated by Identity Server but can not obtain a valid access_token for Domain API or Table API. They are usually customers of the company-owner of the ERP.net instance. When an external user logs in, using the Identity Server login page, only an id_token is issued by the identity server. This id_token prooves that the user is properly authenticated. For example the users of a web store are external users. 
 
 > [!NOTE] 
 > It is possible a client application to act as interactive application and service application in the same. That means the application can use two different access tokens to communicate with Domain API or only use the client_credentials token. In order to achieve this the application must append the _-service_ suffix to the client_id parameter of the Identity Server token endpoint where the application uses the client_credentials grant type to obtain an access_token. For example a web store site can use a system user to load the products and to relate the logged in external user to a customer entry in the database.
