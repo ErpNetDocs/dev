@@ -10,7 +10,7 @@ Applications have two fundamental ways with which they communicate with APIs –
 OAuth2 is a protocol that allows applications to request access tokens from a security token service and use them to communicate with APIs. This delegation reduces complexity in both the client applications as well as the APIs since authentication and authorization can be centralized.
 
 ## Identity Server
-Each ERP.net instance (#erp-instance) has it's own authentication provider site which is **usually** located on https://{ERP-INSTANCE-ROOT-URL}/id. For example the identity server for _demodb_ ERP instance is located at https://demodb.my.erp.net/id.
+Each [ERP.net instance](https://docs.erp.net/dev/topics/erp-instances.html) has it's own authentication provider site which is **usually** located on https://{ERP-INSTANCE-ROOT-URL}/id. For example the identity server for _demodb_ ERP instance is located at https://demodb.my.erp.net/id.
 
 ERP.net Identity Server is build ot top of [IdentityServer4](https://docs.identityserver.io/) which documentation can be used to understand better the authentication process.
 
@@ -39,6 +39,17 @@ ERP.net supports two client application types
 The registered clients in one ERP.net instance are called trusted applications. They are stored in the database and have all required properties that Identity Server needs in order to manage the client application authorization. 
 
 For more information of trusted applications visit the [Trusted Applications Topic](https://docs.erp.net/dev/topics/authentication/trusted-applications.html)
+
+## Internal and External Users
+
+Client Applications can use the Identity Server to authenticate two type of users:
+* **Internal Users** 
+  These are the users that have access to the ERP.net instance database. Only internal users can obtain a valid access_token.
+* **External Users**
+  These are users that can be authenticated by Identity Server but can not obtain a valid access_token for Domain API or Table API. They are usually customers of the company-owner of the ERP.net instance. When an external user logs in, using the Identity Server login page, only an id_token is issued by the identity server. This id_token prooves that the user is properly authenticated. This kind of users are the users in a web store. 
+
+> [!NOTE] 
+> It is possible a client application to act as interactive application and service application in the same. That means the application can use two different access tokens to communicate with Domain API or only use the client_credentials token. In order to achieve this the application must append the _-service_ suffix to the client_id parameter of the Identity Server token endpoint where the application uses the client_credentials grant type to obtain an access_token. For example a web store site can use a system user to load the products and to relate the logged in external user to a customer entry in the database.
 
 ## Endpoints
 
@@ -74,8 +85,7 @@ The result of this request will be:
 The contains all configured web sites for this ERP.net instance. 
 
 By the result of this request you can understand where the Identity Server is located as well where the ODATA service root of the Domain API is located.
-T
-he site types at the moment are:
+The site types at the moment are:
 
 * ID - Identity Server Site - the authorization provider for the ERP.net instance.
 * API - Domain API Site 
