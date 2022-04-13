@@ -16,25 +16,28 @@ ERP.net Identity Server is build ot top of [IdentityServer4](https://docs.identi
 
 ## Terminology
 
-* IdentityServer is an OpenID Connect provider - it implements the OpenID Connect and OAuth 2.0 protocols.
-* 
+* **IdentityServer** - IdentityServer is an OpenID Connect provider - it implements the OpenID Connect and OAuth 2.0 protocols.
+* **User** - A user is a human that is using a registered client to access resources.
+* **Client** - A client is a piece of software that requests tokens from IdentityServer - either for authenticating a user (requesting an identity token) or for accessing a resource (requesting an access token). A client must be first registered with IdentityServer before it can request tokens. In ERP.net registered clients are adressed as trusted applications.
+* **Resources** - Resources are something you want to protect with IdentityServer - either identity data of your users, or APIs. In our case this is the Domain API.
+* **Identity Token** - An identity token represents the outcome of an authentication process. It contains at a bare minimum an identifier for the user (called the sub aka subject claim) and information about how and when the user authenticated. It can contain additional identity data.
+* **Access Token** - An access token allows access to an API resource. Clients request access tokens and forward them to the API. Access tokens contain information about the client and the user (if present). APIs use that information to authorize access to their data.
+
 Source: https://docs.identityserver.io/en/latest/intro/terminology.html
 
 ## Application Types
 
-The most common interactions are:
+ERP.net supports two client application types
+* **Interactive applications**  
+  This type of applications are used by end users to access the ERP.net resources and database. This applications must use a web browser to show the ERP.net login screen to the end user. After successfull login the application can request identity_token or/and access_token. These applications must use the [Authorization Code Flow](https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow) 
 
- * Browsers communicate with web applications
- * Web applications communicate with web APIs (sometimes on their own, sometimes on behalf of a user)
- * Browser-based applications communicate with web APIs
- * Native applications communicate with web APIs
- * Server-based applications communicate with web APIs
- * Web APIs communicate with web APIs (sometimes on their own, sometimes on behalf of a user)
+* **Service applications**  
+  These are machine to machine applications that do not require user login. They use the[ Client Credentials Flow](https://auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow) 
 
 ## Trusted Applications
 
-
+The registered clients in one ERP.net instance are called trusted applications. They are stored in the database and have all required properties that Identity Server needs in order to manage the client application authorization. 
 
 ## Endpoints
 
-The OAuth authentication is 
+For Authorization Code Flow the application first need to call the **authorize** endpoint:
