@@ -110,6 +110,7 @@ These are machine to machine applications that do not require user login. They u
 <h2 id="trusted-applications">Trusted Applications</h2>
 <p>The registered clients in one ERP.net instance are called trusted applications. They are stored in the database and have all required properties that Identity Server needs in order to manage the client application authorization.</p>
 <p>For more information of trusted applications visit the <a href="https://docs.erp.net/dev/topics/authentication/trusted-applications.html">Trusted Applications Topic</a></p>
+<p>For detailed instructions how to register trusted application visit this <a href="common-tasks/register-trusted-app.html">topic</a></p>
 <h2 id="internal-and-external-users">Internal and External Users</h2>
 <p>Client Applications can use the Identity Server to authenticate two type of users:</p>
 <ul>
@@ -120,8 +121,8 @@ These are users that can be authenticated by Identity Server but can not obtain 
 </ul>
 <h2 id="endpoints">Endpoints</h2>
 <h3 id="erpnet-discovery-endpoint">ERP.net Discovery Endpoint</h3>
-<p>The adress of Identity Server as all ERP.net sites can be configured. To find out where any ERP.net site is located we must call the <strong>/sys/auto-discovery</strong> endpoint.
-For example</p>
+<p>The adress of Identity Server as all ERP.net sites can be configured. To find out where any ERP.net site is located we must call the <strong>/sys/auto-discovery</strong> endpoint.</p>
+<p>For example</p>
 <p><a href="https://demodb.my.erp.net/sys/auto-discovery">https://demodb.my.erp.net/sys/auto-discovery</a></p>
 <p>The result of this request will be:</p>
 <pre><code>{
@@ -143,7 +144,7 @@ For example</p>
   ]
 }
 </code></pre>
-<p>The contains all configured web sites for this ERP.net instance.</p>
+<p>The result contains all configured web sites for this ERP.net instance.</p>
 <p>By the result of this request you can understand where the Identity Server is located as well where the ODATA service root of the Domain API is located.
 The site types at the moment are:</p>
 <ul>
@@ -172,8 +173,8 @@ GET https://demodb.my.erp.net/id/connect/authorize?
 </code></pre>
 <p>After successfull login the browser will be redirected to the provided redirect_uri (https://myapp/callback in the example above) with the authorization code as url parameter. This autnorization code then must be used to request an access_token from the <strong>token</strong> endpoint.</p>
 <h3 id="identity-server-token-endpoint">Identity Server Token Endpoint</h3>
-<p>The token endpoint can be used to programmatically request tokens.  <a href="https://docs.identityserver.io/en/latest/endpoints/token.html">Full list of available parameters</a>
-The most used scenarios are:</p>
+<p>The token endpoint can be used to programmatically request tokens.  <a href="https://docs.identityserver.io/en/latest/endpoints/token.html">Full list of available parameters</a></p>
+<p>The most used scenarios are:</p>
 <ul>
 <li>Request access_token with authorization code</li>
 </ul>
@@ -201,7 +202,7 @@ CONTENT-TYPE application/x-www-form-urlencoded
 <h5>Note</h5>
 <p>It is possible a client application to act as interactive application and service application at the same time. That means the application can use two different access tokens to communicate with Domain API or only use the client_credentials token. In order to achieve this the application must append the <strong>-service</strong> suffix to the client_id parameter of the Identity Server token endpoint when the application uses the client_credentials grant_type to obtain an access_token. For example a web store site can use a system user to load the products and to relate the logged in external user to a customer entry in the database.
 For example if the client application is registered as trusted application with ApplicationUri='ClientApp' and SystemUserAllowed=true and ImpersonateLoginUrl,ImpersonateLogoutUrl not empty, access_token can be requested with athorization_code grant_type and client_credentials grant_type, but when the client_credentials grant_type is used the provided client_id must be 'ClientApp-service':</p>
-<p>POST /connect/token
+<p>POST /connect/token<br>
 CONTENT-TYPE application/x-www-form-urlencoded</p>
 <p>client_id=ClientApp-service&amp;client_secret=secret&amp;grant_type=client_credentials</p>
 </div>
