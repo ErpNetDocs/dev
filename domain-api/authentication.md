@@ -38,7 +38,12 @@ ERP.net supports two client application types
 
 The registered clients in one ERP.net instance are called trusted applications. They are stored in the database and have all required properties that Identity Server needs in order to manage the client application authorization. 
 
+
 For more information of trusted applications visit the [Trusted Applications Topic](https://docs.erp.net/dev/topics/authentication/trusted-applications.html)
+
+
+For detailed instructions how to register trusted application visit this [topic](common-tasks/register-trusted-app.md)
+
 
 ## Internal and External Users
 
