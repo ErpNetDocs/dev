@@ -105,7 +105,7 @@ The discovery endpoint is available via /.well-known/openid-configuration relati
 
 https://demodb.my.erp.net/id/.well-known/openid-configuration
 
-### Identity Server Authorize Endpoint  
+### Authorize Endpoint  
 
 The authorize endpoint can be used to request tokens or authorization codes via the browser. This process typically involves authentication of the end-user and optionally consent. 
 For full list of available parameters visit this [link](https://docs.identityserver.io/en/latest/endpoints/authorize.html).
@@ -126,7 +126,7 @@ GET https://demodb.my.erp.net/id/connect/authorize?
    
 After successfull login the browser will be redirected to the provided redirect_uri (https://myapp/callback in the example above) with the authorization code as url parameter. This autnorization code then must be used to request an access_token from the **token** endpoint.
 
-### Identity Server Token Endpoint  
+### Token Endpoint  
 
 The token endpoint can be used to programmatically request tokens.  [Full list of available parameters](https://docs.identityserver.io/en/latest/endpoints/token.html)
 
@@ -163,3 +163,19 @@ CONTENT-TYPE application/x-www-form-urlencoded
 > CONTENT-TYPE application/x-www-form-urlencoded  
 >   
 >   client_id=ClientApp-service&client_secret=secret&grant_type=client_credentials  
+
+
+### End Session Endpoint
+
+The end session endpoint can be used to trigger single sign-out (see [spec](https://openid.net/specs/openid-connect-rpinitiated-1_0.html)).
+
+To use the end session endpoint a client application will redirect the user’s browser to the end session URL. All applications that the user has logged into via the browser during the user’s session can participate in the sign-out.
+
+ [Full list of available parameters](https://docs.identityserver.io/en/latest/endpoints/endsession.html)
+ 
+ Example
+ 
+ ```
+ GET /connect/endsession?id_token_hint=eyJhbGciOiJSUzI1NiIsImtpZCI6IjdlOGFkZmMzMjU1OTEyNzI0ZDY4NWZmYmIwOThjNDEyIiwidHlwIjoiSldUIn0.eyJuYmYiOjE0OTE3NjUzMjEsImV4cCI6MTQ5MTc2NTYyMSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwIiwiYXVkIjoianNfb2lkYyIsIm5vbmNlIjoiYTQwNGFjN2NjYWEwNGFmNzkzNmJjYTkyNTJkYTRhODUiLCJpYXQiOjE0OTE3NjUzMjEsInNpZCI6IjI2YTYzNWVmOTQ2ZjRiZGU3ZWUzMzQ2ZjFmMWY1NTZjIiwic3ViIjoiODg0MjExMTMiLCJhdXRoX3RpbWUiOjE0OTE3NjUzMTksImlkcCI6ImxvY2FsIiwiYW1yIjpbInB3ZCJdfQ.STzOWoeVYMtZdRAeRT95cMYEmClixWkmGwVH2Yyiks9BETotbSZiSfgE5kRh72kghN78N3-RgCTUmM2edB3bZx4H5ut3wWsBnZtQ2JLfhTwJAjaLE9Ykt68ovNJySbm8hjZhHzPWKh55jzshivQvTX0GdtlbcDoEA1oNONxHkpDIcr3pRoGi6YveEAFsGOeSQwzT76aId-rAALhFPkyKnVc-uB8IHtGNSyRWLFhwVqAdS3fRNO7iIs5hYRxeFSU7a5ZuUqZ6RRi-bcDhI-djKO5uAwiyhfpbpYcaY_TxXWoCmq8N8uAw9zqFsQUwcXymfOAi2UF3eFZt02hBu-shKA&post_logout_redirect_uri=http%3A%2F%2Flocalhost%3A7017%2Findex.html
+ ```
+ 
