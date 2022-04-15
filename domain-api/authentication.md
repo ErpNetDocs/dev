@@ -53,11 +53,13 @@ Client Applications can use the Identity Server to authenticate two type of user
 ### ERP.net Discovery Endpoint
 
 The adress of Identity Server as all ERP.net sites can be configured. To find out where any ERP.net site is located we must call the **/sys/auto-discovery** endpoint.
+
 For example 
 
 https://demodb.my.erp.net/sys/auto-discovery
 
 The result of this request will be:
+
 ```
 {
   "WebSites": [
@@ -79,7 +81,7 @@ The result of this request will be:
 }
 ```
 
-The contains all configured web sites for this ERP.net instance. 
+The result contains all configured web sites for this ERP.net instance. 
 
 By the result of this request you can understand where the Identity Server is located as well where the ODATA service root of the Domain API is located.
 The site types at the moment are:
@@ -122,6 +124,7 @@ After successfull login the browser will be redirected to the provided redirect_
 ### Identity Server Token Endpoint  
 
 The token endpoint can be used to programmatically request tokens.  [Full list of available parameters](https://docs.identityserver.io/en/latest/endpoints/token.html)
+
 The most used scenarios are:
 
 * Request access_token with authorization code  
@@ -149,9 +152,9 @@ CONTENT-TYPE application/x-www-form-urlencoded
 
 > [!NOTE] 
 > It is possible a client application to act as interactive application and service application at the same time. That means the application can use two different access tokens to communicate with Domain API or only use the client_credentials token. In order to achieve this the application must append the **-service** suffix to the client_id parameter of the Identity Server token endpoint when the application uses the client_credentials grant_type to obtain an access_token. For example a web store site can use a system user to load the products and to relate the logged in external user to a customer entry in the database.
-> For example if the client application is registered as trusted application with ApplicationUri='ClientApp' and SystemUserAllowed=true and ImpersonateLoginUrl,ImpersonateLogoutUrl not empty, access_token can be requested with athorization_code grant_type and client_credentials grant_type, but when the client_credentials grant_type is used the provided client_id must be 'ClientApp-service':
+> For example if the client application is registered as trusted application with ApplicationUri='ClientApp' and SystemUserAllowed=true and ImpersonateLoginUrl,ImpersonateLogoutUrl not empty, access_token can be requested with athorization_code grant_type and client_credentials grant_type, but when the client_credentials grant_type is used the provided client_id must be 'ClientApp-service':  
 >   
-> POST /connect/token
-> CONTENT-TYPE application/x-www-form-urlencoded
-> 
->   client_id=ClientApp-service&client_secret=secret&grant_type=client_credentials
+> POST /connect/token  
+> CONTENT-TYPE application/x-www-form-urlencoded  
+>   
+>   client_id=ClientApp-service&client_secret=secret&grant_type=client_credentials  
