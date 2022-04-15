@@ -5,6 +5,13 @@ In this topic, you register an app in an ERP instance so the @@name identity ser
 Each application that uses @@name APIs needs to be registered.
 Whether it's a client application like a web or mobile app, or it's a web API that backs a client app, registering it establishes a trust relationship between your application and the ERP instance.
 
+
+> [!NOTE] 
+> In future versions of ERP.net platform this way to register a trusted application will no longer be available, because of the _sec_ scope (Only identity server itself will be granted with the _sec_ scope)
+> The ERP.net instance will provide a browser accessible endpoint where the application will provide its client_id, client_secret_hash, scopes and other required parameters to register the application. This endpoint will redirect the user to the login screen and if the user is a database administrator he or she will be able to approve the application registration.
+
+
+
 ## Register an application
 
 Registering your application establishes a trust relationship between your app and the ERP.net database instance. That means that your database trusts the application.
