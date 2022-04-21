@@ -18,10 +18,11 @@ ERP.net Identity Server is build ot top of [IdentityServer4](https://docs.identi
 
 * **IdentityServer** - IdentityServer is an OpenID Connect provider - it implements the OpenID Connect and OAuth 2.0 protocols.
 * **User** - A user is a human that is using a registered client to access resources.
-* **Client** - A client is a piece of software that requests tokens from IdentityServer - either for authenticating a user (requesting an identity token) or for accessing a resource (requesting an access token). A client must be first registered with IdentityServer before it can request tokens. In ERP.net registered clients are adressed as trusted applications.
+* **Client** - A client is a piece of software that requests tokens from IdentityServer - either for authenticating a user (requesting an identity token) or for accessing a resource (requesting an access token). A client must be first registered with IdentityServer before it can request tokens. In ERP.net registered clients are addressed as trusted applications.
 * **Resources** - Resources are something you want to protect with IdentityServer - either identity data of your users, or APIs. In our case this is the Domain API.
 * **Identity Token** - An identity token represents the outcome of an authentication process. It contains at a bare minimum an identifier for the user (called the sub aka subject claim) and information about how and when the user authenticated. It can contain additional identity data.
-* **Access Token** - An access token allows access to an API resource. Clients request access tokens and forward them to the API. Access tokens contain information about the client and the user (if present). APIs use that information to authorize access to their data.
+* **Access Token** - An access token allows access to an API resource. Clients request access tokens and forward them to the API. Access tokens contain information about the client and the user (if present). APIs use that information to authorize access to their data.  
+* **Refresh Token** - Since access tokens have finite lifetimes, refresh tokens allow requesting new access tokens without user interaction. In ERP.net Refresh tokens are supported only for interactive confidential applications that use the authorization code flow. 
 
 Source: https://docs.identityserver.io/en/latest/intro/terminology.html
 
@@ -57,7 +58,7 @@ Client Applications can use the Identity Server to authenticate two type of user
 
 ### ERP.net Discovery Endpoint
 
-The adress of Identity Server as all ERP.net sites can be configured. To find out where any ERP.net site is located we must call the **/sys/auto-discovery** endpoint.
+The address of Identity Server as all ERP.net sites can be configured. To find out where any ERP.net site is located we must call the **/sys/auto-discovery** endpoint.
 
 For example 
 
@@ -143,6 +144,10 @@ CONTENT-TYPE application/x-www-form-urlencoded
     code=hdh922&
     redirect_uri=https://myapp.com/callback
 ```    
+
+The result of this request is a JSON containing access_token, id_token and refresh_token. The refresh_token can be used to obtain a new access_token (along with new refresh_token).
+
+
 * Request access_token with client credentials. 
   This is the case when a service application can use the Domain API without an interactive user. The trusted application must be configured with system/service user that will be used to create the ERP session.  
   
@@ -164,6 +169,18 @@ CONTENT-TYPE application/x-www-form-urlencoded
 >   
 >   client_id=ClientApp-service&client_secret=secret&grant_type=client_credentials  
 
+
+* Request access_token with refresh_token  
+```   
+POST /connect/token
+CONTENT-TYPE application/x-www-form-urlencoded
+
+    client_id=client1&
+    client_secret=secret&
+    grant_type=refresh_token&
+    refresh_token=xxxxxxxxxxxxxxxxxxxxxxxx
+```  
+The result contains new access_token and new refresh_token.
 
 ### End Session Endpoint
 
