@@ -9,6 +9,11 @@ This means, that, if for example, an external app updates a single Sales Order L
 
 Object version reflects this change by increasing its counter with 1.
 
+In short,
+
+* Object version is owned by the aggregate root and it's a subject for the whole aggregate tree.
+* The version will increment after each change in the aggregate tree- this means attributes, custom properties, references, etc.
+
 >> [!note]
 >> Applications should not depend on strict monotonically increasing values of Object version.
 >> In some scenarios, it might skip values.
