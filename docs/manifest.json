@@ -63,7 +63,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/authentication.html",
-          "hash": "5rvAlHE8Uaf6x0Cnu/XAgg=="
+          "hash": "RKe9bwJxd37QSZStOgw0mw=="
         }
       },
       "is_incremental": false,
@@ -225,7 +225,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/data-sync/object-version.html",
-          "hash": "TQColgwoy+NpeHq33CU3pg=="
+          "hash": "6fRYUja2JCiji0x/LGuzsQ=="
         }
       },
       "is_incremental": false,

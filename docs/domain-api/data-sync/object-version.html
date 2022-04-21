@@ -84,6 +84,11 @@
 <p>The changes are aggregated in the <a class="xref" href="https://erpnetdocs.github.io/tech/advanced/concepts/aggregates.html">Entity aggregates</a>.
 This means, that, if for example, an external app updates a single Sales Order Line, the update creates a new version for the whole <a class="xref" href="https://erpnetdocs.github.io/model/entities/Crm.Sales.SalesOrders.html">Sales Order</a> aggregate.</p>
 <p>Object version reflects this change by increasing its counter with 1.</p>
+<p>In short,</p>
+<ul>
+<li>Object version is owned by the aggregate root and it's a subject for the whole aggregate tree.</li>
+<li>The version will increment after each change in the aggregate tree- this means attributes, custom properties, references, etc.</li>
+</ul>
 <blockquote>
 <div class="NOTE">
 <h5>Note</h5>
