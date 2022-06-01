@@ -436,12 +436,36 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/step-by-step/basic-acquire-access-token.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/step-by-step/basic-acquire-access-token.html",
+          "hash": "1R38nN9LkQ9CunINrBqPwg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/step-by-step/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/step-by-step/index.html",
+          "hash": "TcSKCSfSMjIUylJLivbWbA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Toc",
       "source_relative_path": "domain-api/toc.yml",
       "output": {
         ".html": {
           "relative_path": "domain-api/toc.html",
-          "hash": "cDw4HRThpJovuGkVUL1Jrg=="
+          "hash": "H+Cm1HZ/8ZuDPEZ5JfLplg=="
         }
       },
       "is_incremental": false,

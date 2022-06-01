@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Basic example of acquiring an access token | ERP.net Developer Docs </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Basic example of acquiring an access token | ERP.net Developer Docs ">
+    <meta name="generator" content="docfx 2.56.9.0">
+    
+    <link rel="shortcut icon" href="../../../favicon.ico">
+    <link rel="stylesheet" href="../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../toc.html">
+    <meta property="docfx:tocrel" content="../../toc.html">
+    
+    <meta property="docfx:rel" content="../../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../index.html">
+                <img id="logo" class="svg" src="../../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="basic-example-of-acquiring-an-access-token">Basic example of acquiring an access token</h1>
+
+<h2 id="objective">Objective</h2>
+<p>Your external application just wants to acquire an access token so can access the Domain API. As short as possible.</p>
+<p>Or,</p>
+<ul>
+<li>Your external app is a service application.</li>
+<li>It will be authenticated and authorized via an internal user.</li>
+<li>Your external app won't provide UI and/or interaction with external users, so it's also a condfidential application.</li>
+<li>There will be no interaction, so your external app will use <a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow">client credentials authorization flow</a>.</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>You have a trusted application, defined as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>My first trusted app</td>
+<td>Frankly, this value doesn't matter much. It's used for user-friendly identification.</td>
+</tr>
+<tr>
+<td>ApplicationUri</td>
+<td>my.trusted.app/first</td>
+<td>This is your trusted app's unique identifier. It's used in the authentication process.</td>
+</tr>
+<tr>
+<td>IsEnabled</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td>SystemUserAllowed</td>
+<td>true</td>
+<td>You need this, because your external app will be logged as a service.</td>
+</tr>
+<tr>
+<td>SystemUser</td>
+<td><code>&lt;an-internal-erp-user&gt;</code></td>
+<td>The user, which will be used when the application logins as a service.</td>
+</tr>
+<tr>
+<td>ImpersonateAsInternalUserAllowed</td>
+<td>true</td>
+<td>The trusted application will allow authentication from internal users.</td>
+</tr>
+<tr>
+<td>ClientType</td>
+<td>Confidential</td>
+<td>Your external app is a service. I.e., it can keep a secret securely.</td>
+</tr>
+<tr>
+<td>ApplicationSecretHash</td>
+<td><code>&lt;base64(sha256(your-secret))&gt;</code></td>
+<td>The external app's secret. It's used in the process of authentication.</td>
+</tr>
+</tbody>
+</table>
+<p>All other attributes can have their default values. They are not covered by this example.</p>
+<h2 id="steps">Steps</h2>
+<p>You just need to call a pretty simple HTTP request.</p>
+<pre><code class="lang-http">POST /id/connect/token HTTP/1.1
+Host: demodb.my.erp.net
+Content-Type: application/x-www-form-urlencoded
+
+client_id=my.trusted.app/first&amp;
+client_secret=&lt;my_plain_app_secret&gt;&amp;
+grant_type=client_credentials&amp;
+scope=DomainApi
+</code></pre>
+<p>Yes, it's that simple. Here are some clarifications:</p>
+<ul>
+<li>The POST request is sent to the identity server's token endpoint directly.</li>
+<li>The body of the request:
+<ul>
+<li>client_id - your trusted app's application uri.</li>
+<li>client_secret - the plain secret phrase of the trusted app.</li>
+<li>grant_type - the way your app will get an access token.</li>
+<li>scope - what's needed to access.</li>
+</ul>
+</li>
+</ul>
+<p>If everything is correct, you'll receive a similar response:</p>
+<pre><code class="lang-json">{
+  &quot;access_token&quot;: &quot;eyJhbGciOiJSUzI1NiIsImtpZCI6IkJEbGhqYjhzOEUySm1tcWg2UDlxZEEiLCJ0eXAiOiJhdCtqd3QifQ.eyJuYmYiOjE2NTQwNzU1MjksImV4cCI6MTY1NDA3OTEyOSwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJEb21haW5BcGkiLCJjbGllbnRfaWQiOiJwayIsImNsaWVudF9zeXN0ZW1fdXNlciI6InAua29zdG92QGVycC5iZyIsImNsaWVudF9kYiI6IkUxX0RFViIsImp0aSI6IlNob3JjNVJ2MTM2ak5POHRCMF9yRHciLCJzY29wZSI6WyJEb21haW5BcGkiLCJzZWMiLCJ1cGRhdGUiXX0.RPzYKl9xPvFcLa0O8yqzJCJtmZUS88iDeWBFa9pyvYdzfQ18E4W8w6CLJPf9whFFiJWhgAsOASVuz98-MIgj9VwTjNtXMdMAPvZC0HYPnMusYUxxYRNejjqtPG7n4V0LVzyWYHu99-YUipFBmzXxCywR8TtaBv374CKfLdS4M1vaMMYShzD22L_R3kKc3uZhQ5Ygpci1tuNC8gC6CoXIv0a9gjthwgshCzmbEmiNhjvJ7WDZ98gnzkvl5_wLANRrDYUcLPvq04OfVRn2uS-dF-NLIeO5dr7Mn905YodY4Mngr4S5WbBvrWAt0hRLO6Oy_X2KCcQdmh0Nq73ELruoBw&quot;,
+  &quot;expires_in&quot;: 3600,
+  &quot;token_type&quot;: &quot;Bearer&quot;,
+  &quot;scope&quot;: &quot;DomainApi&quot;
+}
+</code></pre>
+<p>As you can see, you now have an access token (<code>access_token</code>), expiring in an hour (<code>expires_in</code>).</p>
+<p>Now this token could be used for your Domain API requests. E.g,</p>
+<pre><code class="lang-http">GET /api/domain/odata/Crm_Customers?$top=10 HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkJEbGhqYjhzOEUySm1tcWg2UDlxZEEiLCJ0eXAiOiJhdCtqd3QifQ.eyJuYmYiOjE2NTQwNzU1MjksImV4cCI6MTY1NDA3OTEyOSwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJEb21haW5BcGkiLCJjbGllbnRfaWQiOiJwayIsImNsaWVudF9zeXN0ZW1fdXNlciI6InAua29zdG92QGVycC5iZyIsImNsaWVudF9kYiI6IkUxX0RFViIsImp0aSI6IlNob3JjNVJ2MTM2ak5POHRCMF9yRHciLCJzY29wZSI6WyJEb21haW5BcGkiLCJzZWMiLCJ1cGRhdGUiXX0.RPzYKl9xPvFcLa0O8yqzJCJtmZUS88iDeWBFa9pyvYdzfQ18E4W8w6CLJPf9whFFiJWhgAsOASVuz98-MIgj9VwTjNtXMdMAPvZC0HYPnMusYUxxYRNejjqtPG7n4V0LVzyWYHu99-YUipFBmzXxCywR8TtaBv374CKfLdS4M1vaMMYShzD22L_R3kKc3uZhQ5Ygpci1tuNC8gC6CoXIv0a9gjthwgshCzmbEmiNhjvJ7WDZ98gnzkvl5_wLANRrDYUcLPvq04OfVRn2uS-dF-NLIeO5dr7Mn905YodY4Mngr4S5WbBvrWAt0hRLO6Oy_X2KCcQdmh0Nq73ELruoBw
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/samples/step-by-step/basic-acquire-access-token.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../styles/main.js"></script>
+  </body>
+</html>
