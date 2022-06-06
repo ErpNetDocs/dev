@@ -71,11 +71,23 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "domain-api/common-tasks/change-language.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/common-tasks/change-language.html",
+          "hash": "6js9aIiTHiBCffjneAW1LQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "domain-api/common-tasks/index.md",
       "output": {
         ".html": {
           "relative_path": "domain-api/common-tasks/index.html",
-          "hash": "MjOUmT30E/eCVc+/1RyNnw=="
+          "hash": "f9vval81cSz4G2g/1NcQmQ=="
         }
       },
       "is_incremental": false,
@@ -465,7 +477,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/toc.html",
-          "hash": "H+Cm1HZ/8ZuDPEZ5JfLplg=="
+          "hash": "P5JenCskeV0Lc6BTV1x8pw=="
         }
       },
       "is_incremental": false,
@@ -619,7 +631,7 @@
       "output": {
         ".html": {
           "relative_path": "topics/authentication/trusted-applications.html",
-          "hash": "6d72sKpmJYaTei5cxYRJ5Q=="
+          "hash": "P/x2+kCbO4TGOykTYRlPtg=="
         }
       },
       "is_incremental": false,
