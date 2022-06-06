@@ -126,7 +126,7 @@ The following token scopes are used :
 
   Allows the user application to update data in the ERP Instance.
   Without this scope, the application can only read data.  
-  Introduced: 21
+  Introduced: 22
 
 
 The following token scopes are PLANNED for near future developments:
