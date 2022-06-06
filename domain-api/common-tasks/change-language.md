@@ -1,4 +1,4 @@
-# Change a response language
+# Change the response language
 
 ## Overview 
 
