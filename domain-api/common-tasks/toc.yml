@@ -8,3 +8,5 @@
   href: working-with-documents.md
 - name: Master/Detail attributes
   href: master-detail-attributes.md
+- name: Change a response language
+  href: change-language.md
