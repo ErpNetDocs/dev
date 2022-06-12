@@ -34,7 +34,7 @@ You have a trusted application, defined as follows:
 | ApplicationUri | my.trusted.app | This is your trusted app's unique identifier. It's used in the authentication process. |
 | IsEnabled | true | |
 | ImpersonateAsInternalUserAllowed | true | The trusted application will allow authentication from internal users. |
-| ImpersonateLoginUrl | https://my.trusted.app/app.php | The url where your external app will receive the authorization code when the user logs in successful (see [step 3 in the section above](./web-app-access-token-auth-code.md#the-whole-process-in-a-nutshell)). |
+| ImpersonateLoginUrl | https://my.trusted.app/app.php | The url where your external app will receive the authorization code when the user logs in successfully (see [step 3 in the section above](./web-app-access-token-auth-code.md#the-whole-process-in-a-nutshell)). |
 | ClientType | Confidential | Your external app "will work" with internal users only, so there'll be no "public" acccess. We can assume that it can keep a secret securely (in fact, it's a must). |
 | ApplicationSecretHash | `<base64(sha256(your-secret))>` | The external app's secret. |
 
@@ -155,7 +155,7 @@ function acquireAccessToken($authCode) {
 
 ### Authorized Domain API call
 
-Now we're authorized and we can make a legitimate call to the @@erpnet Domain Api. E.g.
+Now we're authorized and we can make a legitimate call to the @@erpnet Domain Api. E.g.,
 
 ```php
 function domainApiCall($accessToken) {
@@ -258,9 +258,15 @@ function domainApiCall($accessToken) {
 ## Resources
 
 The sample project in this example can be found here:
+
 https://github.com/ErpNetDocs/dev/blob/master/domain-api/samples/src/step-by-step/AccessTokenCodeWeb
 
+--
+
 https://docs.erp.net/dev/topics/authentication/authentication-flows.html
+
 https://docs.erp.net/dev/topics/authentication/trusted-applications.html
+
 https://docs.erp.net/dev/domain-api/authentication.html
+
 https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow

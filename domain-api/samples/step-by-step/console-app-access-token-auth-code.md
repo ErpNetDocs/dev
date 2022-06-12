@@ -47,7 +47,7 @@ You have a trusted application, defined as follows:
 | ApplicationUri | my.trusted.app/first | This is your trusted app's unique identifier. It's used in the authentication process. |
 | IsEnabled | true | |
 | ImpersonateAsInternalUserAllowed | true | The trusted application will allow authentication from internal users. |
-| ImpersonateLoginUrl | http://localhost/signin-callback/ | The url where your external app is listening. Redirection to this uri will be performed after the user logs in successful (see [step 3 in the section above](./console-app-access-token-auth-code.md#the-whole-process-in-a-nutshell)). |
+| ImpersonateLoginUrl | http://localhost/signin-callback/ | The url where your external app is listening. Redirection to this uri will be performed after the user logs in successfully (see [step 3 in the section above](./console-app-access-token-auth-code.md#the-whole-process-in-a-nutshell)). |
 | ClientType | Confidential | Your external app "will work" with internal users only, so there'll be no "public" acccess. We can assume that it can keep a secret securely (in fact, it's a must). |
 | ApplicationSecretHash | `<base64(sha256(your-secret))>` | The external app's secret. |
 
@@ -225,16 +225,16 @@ void HandleSignInCallback(Task<HttpListenerContext> httpListenerContextTask)
 
 Only the essential part of the function's body is shown (the full code is available [below](./console-app-access-token-auth-code.md#everything-together))
 
-In short, we process a simple POST request, in which we're interested in only two parameters, part of its body.
+In short, you process a simple POST request, in which you're interested in only two parameters, part of its body.
 
 1. The `state` - it must be equal to our `authState`, passed to the authorize endpoint.
 2. The `code` - this is our authorization code.
 
 ### Token endpoint
 
-Now that we have an authorization code, we can easily acquire an access token. For this to happen, we need to make a POST request to the token endpoint (i.e. `TokenUri`).
+Now when you have an authorization code, you can easily acquire an access token. For this to happen, you need to make a POST request to the token endpoint (i.e. `TokenUri`).
 
-But first we need to prepare the body of the POST request. Here's how:
+But first you need to prepare the body of the POST request. Here's how:
 
 ```cs
 var tokenUriBody =
@@ -268,7 +268,7 @@ httpResponse = httpClient.Send(httpRequest);
 httpResponse.EnsureSuccessStatusCode();
 ```
 
-Finally, we have our access token. It's in the response:
+Finally, you have our access token. It's in the response:
 
 ```cs
 // Deserialize the JSON response as a ClientAuthData struct.
@@ -280,7 +280,7 @@ Console.WriteLine($"Refresh token: {clientData.RefreshToken}");
 
 ### Authorized Domain API call
 
-Now we're authorized and we can make a legitimate call to the @@erpnet Domain Api. E.g.
+Now you're authorized and you can make a legitimate call to the @@erpnet Domain Api. E.g.
 
 ```cs
 httpRequest = new HttpRequestMessage()
@@ -478,9 +478,15 @@ public struct ClientAuthData
 ## Resources
 
 The sample project in this example can be found here:
+
 https://github.com/ErpNetDocs/dev/tree/master/domain-api/samples/src/step-by-step/AccessTokenCodeConsole
 
+--
+
 https://docs.erp.net/dev/topics/authentication/authentication-flows.html
+
 https://docs.erp.net/dev/topics/authentication/trusted-applications.html
+
 https://docs.erp.net/dev/domain-api/authentication.html
+
 https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow
