@@ -2,3 +2,7 @@
   href: index.md
 - name: Basic example of acquiring an access token
   href: basic-acquire-access-token.md
+- name: Access token via authorization code flow in a web app
+  href: web-app-access-token-auth-code.md  
+- name: Access token via authorization code flow in a console app
+  href: console-app-access-token-auth-code.md
