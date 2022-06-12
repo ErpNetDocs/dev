@@ -461,6 +461,30 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/step-by-step/basic-exchange-auth-code-access-token.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/step-by-step/basic-exchange-auth-code-access-token.html",
+          "hash": "/LUHiianyBb4vqccGP3avQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/step-by-step/console-app-access-token-auth-code.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/step-by-step/console-app-access-token-auth-code.html",
+          "hash": "ryc19DnTy/mvyF/bA8Rtiw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "domain-api/samples/step-by-step/index.md",
       "output": {
         ".html": {
@@ -472,12 +496,24 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/step-by-step/web-app-access-token-auth-code.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/step-by-step/web-app-access-token-auth-code.html",
+          "hash": "PVg0FoD/1e/6sWB68eB8gQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Toc",
       "source_relative_path": "domain-api/toc.yml",
       "output": {
         ".html": {
           "relative_path": "domain-api/toc.html",
-          "hash": "P5JenCskeV0Lc6BTV1x8pw=="
+          "hash": "rPovuP/Ml/w+3b7Tb7p5jA=="
         }
       },
       "is_incremental": false,

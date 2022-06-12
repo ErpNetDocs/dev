@@ -1,0 +1,265 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Basic example- exchange an auth code for an access token | ERP.net Developer Docs </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Basic example- exchange an auth code for an access token | ERP.net Developer Docs ">
+    <meta name="generator" content="docfx 2.56.9.0">
+    
+    <link rel="shortcut icon" href="../../../favicon.ico">
+    <link rel="stylesheet" href="../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../toc.html">
+    <meta property="docfx:tocrel" content="../../toc.html">
+    
+    <meta property="docfx:rel" content="../../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../index.html">
+                <img id="logo" class="svg" src="../../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="basic-example--exchange-an-auth-code-for-an-access-token">Basic example- exchange an auth code for an access token</h1>
+
+<h2 id="objective">Objective</h2>
+<p>You have an external application that requires user login. You want to acquire an access token on behalf on the logged user. As short as possible.</p>
+<p>Or,</p>
+<ul>
+<li>Your external app is an interactive application (at least for the user to log in).</li>
+<li>It will be authenticated and authorized via the ERP.net login form (on behalf of an ERP.net internal user).</li>
+<li>Your external application will access the ERP.net instance on behalf of the logged user.</li>
+<li>Will work with ERP.net internal users and it's able to keep a secret, so it's also a condfidential application.</li>
+<li>There'll be user interaction (because of the login), so your external app will use <a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow">authorization code flow</a>.</li>
+</ul>
+<h2 id="remarks">Remarks</h2>
+<p>This example doesn't show a specific implementiation, but the required steps you need to perform. You can find more information about specific implementations in the <a href="basic-exchange-auth-code-access-token.html#resources">Resources</a> section.</p>
+<p>The main difference with the <a href="basic-acquire-access-token.html">Basic example of acquiring an access token</a> is that there's an additional step, which is a subject of a specific technical implementation. I.e.,</p>
+<ol>
+<li>Your external app performs an HTTP GET request to the authorize endpoint.</li>
+<li>Wait for the Identity Server to:
+<ol>
+<li>Redirect to the ERP.net login page.</li>
+<li>&quot;Make&quot; an HTTP request to your external app, after the user logs in successfully.</li>
+</ol>
+</li>
+<li>Now your external app can make an HTTP POST request to the token endpoint.</li>
+<li>The Identity Server creates an access token and and returns it to you.</li>
+</ol>
+<p>As you can see, the extra steps, compared to the other example, are (1) and (2). I.e.,</p>
+<ol>
+<li>You have to provide a way to visualize the ERP.net login page (the usual way is via a web browser).</li>
+<li>Also a mechanism to handle a HTTP request.</li>
+</ol>
+<p>Actually, this is the essential difference between <code>client_credentials flow</code> and the <code>authorization code flow</code>. The first is bound to a specific, so-called service user while the other- to the user who will log in via the login form of the Identity Provider (i.e., the ERP.net Identity Server).</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It's important to clarify the following quote above, <em>(2.2) &quot;Make&quot; an HTTP request to your external app, after the user logs in successfully.</em>, referring the ERP.net Identity Server.</p>
+<p>The HTTP request to your external app (i.e. the redirect) is made locally, as a result from your request to the authorize endpoint. In general, this means that your external app doesn't need to be accessible outside of the network where it's avaialble. So said, if your app is a &quot;pure&quot; local one, external callbacks such as <code>localhost/signin-callback</code>, <code>192.168.10.55/signin-callback</code> are completely fine.</p>
+</div>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>You have a trusted application, defined as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>My first trusted app</td>
+<td>This value doesn't matter much. It's used for user-friendly identification.</td>
+</tr>
+<tr>
+<td>ApplicationUri</td>
+<td>my.trusted.app/first</td>
+<td>This is your trusted app's unique identifier. It's used in the authentication process.</td>
+</tr>
+<tr>
+<td>IsEnabled</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td>ImpersonateAsInternalUserAllowed</td>
+<td>true</td>
+<td>The trusted application will allow authentication from internal users.</td>
+</tr>
+<tr>
+<td>ImpersonateLoginUrl</td>
+<td>http://localhost/signin-callback</td>
+<td>The url where your external app is listening. Redirection to this uri will be performed after the user logs in successfully.</td>
+</tr>
+<tr>
+<td>ClientType</td>
+<td>Confidential</td>
+<td>Your external app &quot;will work&quot; with internal users only, so there'll be no &quot;public&quot; acccess. We can assume that it can keep a secret securely (in fact, it's a must).</td>
+</tr>
+<tr>
+<td>ApplicationSecretHash</td>
+<td><code>&lt;base64(sha256(your-secret))&gt;</code></td>
+<td>The external app's secret.</td>
+</tr>
+</tbody>
+</table>
+<p>All other attributes can have their default values. They are not covered by this example.</p>
+<h2 id="steps">Steps</h2>
+<h3 id="authorize-endpoint">Authorize endpoint</h3>
+<p>You just need to call a simple GET request.</p>
+<pre><code class="lang-http">GET /id/connect/authorize?
+    client_id=my.trusted.app/first&amp;  
+    redirect_uri=http://localhost/signin-callback&amp;  
+    response_type=code id_token&amp;  
+    scope=openid profile offline_access DomainApi&amp;
+    nonce=abc&amp;  
+    state=xyz HTTP/1.1
+Host: demodb.my.erp.net
+</code></pre>
+<p>If everything is OK, the following will happen:</p>
+<ol>
+<li>A redirect to the ERP.net login page will be made.</li>
+<li>After the user logs in successfully, a redirect back to your external app will be performed.</li>
+</ol>
+<h3 id="sign-in-callback">Sign in callback</h3>
+<p>The previous step leads here. You'll receive a GET request such as:</p>
+<pre><code class="lang-http">GET /signin-callback?
+    code=g0ZGZmNjVmOWI&amp;
+    state=dkZmYxMzE2 HTTP/1.1
+Host: localhost
+</code></pre>
+<p>Where the <code>code</code> in the uri query is your authorization code.</p>
+<p>Now you're ready to exchange this authorization code for an access token.</p>
+<h3 id="token-endpoint">Token endpoint</h3>
+<p>Once you have the authorization code, obtaining the access token is pretty easy. Just make the following POST request.</p>
+<pre><code class="lang-http">POST /id/connect/token HTTP/1.1
+Host: demodb.my.erp.net
+Content-Type: application/x-www-form-urlencoded
+
+client_id=my.trusted.app/first&amp;
+client_secret=&lt;my_plain_app_secret&gt;&amp;
+grant_type=authorization_code&amp;
+code=g0ZGZmNjVmOWI&amp;
+redirect_uri=http://localhost/signin-callback
+</code></pre>
+<p>That's all. You'll receive something like this:</p>
+<pre><code class="lang-json">{
+  &quot;id_token&quot;: &quot;eyJhbGciOiJSUzI1NiIsImtpZCI6IkJEbGhqYjhzOEUySm1tcWg2UDlxZEEiLCJ0eXAiOiJKV1QifQ.eyJuYmYiOjE2NTUwNTc3MjQsImV4cCI6MTY1NTA1ODAyNCwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJwayIsIm5vbmNlIjoiYWJjIiwiaWF0IjoxNjU1MDU3NzI0LCJhdF9oYXNoIjoibUhfSUZEUVppRHdZb2h5a0FZR2NJZyIsInNfaGFzaCI6IlRjMWtiNVB1U2lheEN2NXVJZHZ6ZlEiLCJzaWQiOiJ1Q3FiZkI4OHpYMXUzOW40NERwVjFRIiwic3ViIjoiYWRtaW4iLCJhdXRoX3RpbWUiOjE2NTUwMjc3MTksImlkcCI6ImxvY2FsIiwiYW1yIjpbInB3ZCJdfQ.CzTk7SXiqcgpjVXCvdgDKJ92bt2a93R76l5WmCIZ6hMG6VDYHXlkBlqmG15l8Zsc1SpLn949f-OQn4nK1LaLkOA1rrMfT6lhMdrdBkQED7mYrjTyRqUJHnkriYpLsbL4Ze5gOP1M0HlDi6ZWjhZyzJgEyqi_T44lmlyZc0ujQ0Zba-_afXV7VpmgL9dIPwSmhuP14x2UJIGziBE8m23DL4GqTMQYgX0HNGLa2Tgiztp4h9ABBWWhj_iEKJ3ZoZ3CfMVMn53fqDaf9fuIrgYrOOTKqE7UrxH2bhdLUlaqka7KeGIsRd7f6wV2XqFDfY3vtW85CzQnjuGhj-qAJoZjCw&quot;,
+  &quot;access_token&quot;: &quot;eycccGciOiJSUzI1NiIsImtpZCI6IkJEbGhqYjhzOEUySm1tcWg2UDlxZEEiLCJ0eXAiOiJhdCtqd3QifQ.eyJuYmYiOjE2NTUwNTc3MjQsImV4cCI6MTY1NTA2MTMyNCwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJEb21haW5BcGkiLCJjbGllbnRfaWQiOiJwayIsInN1YiI6ImFkbWluIiwiYXV0aF90aW1lIjoxNjU1MDI3NzE5LCJpZHAiOiJsb2NhbCIsImlkIjoiOWRhNjQ4MzktYThkMC00OTFkLWFlYmItNGQxOGZhNDJiMDE0IiwibmFtZSI6IlNQUyIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJ1c2VyX3R5cGUiOiJJbnRlcm5hbFVzZXIiLCJpc19hZG1pbi1ee6InRydWUiLCJlbWFpbF92ZXJpZmllZCI6ImZhb2NlIiwiZGIiOiJFMV9ERVYiLCJsb2NhbGUiOiJieyIsImp0aSI6Il9sdEJMS3djSlNLbUFhM25mbFpwNFEiLCJzaWQiOiJ1Q3FiZds2898pYMXUzOW40NqRwVjFRIiwic2NvcGUiOlsib3BlbmlkIiwicHJvZmlsZSIsIww1kRvbWFpbkFwaSIsIm9mZmxpbmVfYWNjZXNzIl0sImFtciI6WyJwd2QiXX0.AzHxj_iBM3bfcOtdaSNHNbPUHGCf0JAo7fV1fo9JT-rqCHjc0t8VEa1qO5R2jemvs7vDBf6GARxgul3pAy7YQpmqzzruswoLDkDdUMX1LXzHLgp0ppYoNa1A_M_O4UTXCe7xGBRHSyRRQLGsTTGMkv1pK0E3Xn3rAfOPvo4wfrQ8QabVcdA7mupY4qF01tIHPv_7NGS2SyPfCVdAYcxUy8HpQ-RdoXMaVWVz_JhXgMNZ9_nFTxedPGakZJMDjnvYss_GKjucbeYdZM9jSrqEmXDw6s8A3o1jKOyurzIBzug55Dxee8UBWepcO5S08GPguBFotamUvStMdDY0KkmZYvw&quot;,
+  &quot;expires_in&quot;: 3600,
+  &quot;refresh_token&quot;: &quot;6-Cv7vQ5ouhYzs0AWg6tsG-YK7O5xP_kb5Qb8wEJMnw&quot;,
+  &quot;scope&quot;: &quot;openid profile DomainApi offline_access&quot;
+}
+</code></pre>
+<h3 id="authorized-domain-api-call">Authorized Domain API call</h3>
+<p>Now you're authorized and we can make a legitimate call to the ERP.net Domain Api. E.g.,</p>
+<pre><code class="lang-http">GET /api/domain/odata/Crm_Customers?$top=10 HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer eycccGciOiJSUzI1NiIsImtpZCI6IkJEbGhqYjhzOEUySm1tcWg2UDlxZEEiLCJ0eXAiOiJhdCtqd3QifQ.eyJuYmYiOjE2NTUwNTc3MjQsImV4cCI6MTY1NTA2MTMyNCwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJEb21haW5BcGkiLCJjbGllbnRfaWQiOiJwayIsInN1YiI6ImFkbWluIiwiYXV0aF90aW1lIjoxNjU1MDI3NzE5LCJpZHAiOiJsb2NhbCIsImlkIjoiOWRhNjQ4MzktYThkMC00OTFkLWFlYmItNGQxOGZhNDJiMDE0IiwibmFtZSI6IlNQUyIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJ1c2VyX3R5cGUiOiJJbnRlcm5hbFVzZXIiLCJpc19hZG1pbi1ee6InRydWUiLCJlbWFpbF92ZXJpZmllZCI6ImZhb2NlIiwiZGIiOiJFMV9ERVYiLCJsb2NhbGUiOiJieyIsImp0aSI6Il9sdEJMS3djSlNLbUFhM25mbFpwNFEiLCJzaWQiOiJ1Q3FiZds2898pYMXUzOW40NqRwVjFRIiwic2NvcGUiOlsib3BlbmlkIiwicHJvZmlsZSIsIww1kRvbWFpbkFwaSIsIm9mZmxpbmVfYWNjZXNzIl0sImFtciI6WyJwd2QiXX0.AzHxj_iBM3bfcOtdaSNHNbPUHGCf0JAo7fV1fo9JT-rqCHjc0t8VEa1qO5R2jemvs7vDBf6GARxgul3pAy7YQpmqzzruswoLDkDdUMX1LXzHLgp0ppYoNa1A_M_O4UTXCe7xGBRHSyRRQLGsTTGMkv1pK0E3Xn3rAfOPvo4wfrQ8QabVcdA7mupY4qF01tIHPv_7NGS2SyPfCVdAYcxUy8HpQ-RdoXMaVWVz_JhXgMNZ9_nFTxedPGakZJMDjnvYss_GKjucbeYdZM9jSrqEmXDw6s8A3o1jKOyurzIBzug55Dxee8UBWepcO5S08GPguBFotamUvStMdDY0KkmZYvw
+</code></pre>
+<h2 id="resources">Resources</h2>
+<p><a href="web-app-access-token-auth-code.html">Authorization code flow with a web based external application</a></p>
+<p><a href="console-app-access-token-auth-code.html">Authorization code flow with a console based external application</a></p>
+<p>--</p>
+<p><a href="https://docs.erp.net/dev/topics/authentication/authentication-flows.html">https://docs.erp.net/dev/topics/authentication/authentication-flows.html</a></p>
+<p><a href="https://docs.erp.net/dev/topics/authentication/trusted-applications.html">https://docs.erp.net/dev/topics/authentication/trusted-applications.html</a></p>
+<p><a href="https://docs.erp.net/dev/domain-api/authentication.html">https://docs.erp.net/dev/domain-api/authentication.html</a></p>
+<p><a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow">https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow</a></p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/samples/step-by-step/basic-exchange-auth-code-access-token.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../styles/main.js"></script>
+  </body>
+</html>
