@@ -84,7 +84,7 @@ sendAuthorizationRequest();
 
 This is the main "algorithm" of our example external app. What does it do? Easy,
 - If a POST request is made and its array contains `code`:
-  - Assume that this `code` is the authorization code, send back from the Identity Server.
+  - Assume that this `code` is the authorization code, sent back from the Identity Server.
   - Pass this code to `acquireAccessToken`, so an access code will be acquired.
   - Make a call to the DomainApi via `domainApiCall`, passing the access token.
 - Else send a new authorization request.
