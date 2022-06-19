@@ -473,6 +473,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/step-by-step/basic-renew-access-token.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/step-by-step/basic-renew-access-token.html",
+          "hash": "119oER76zjayBCZW4vgV5w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "domain-api/samples/step-by-step/console-app-access-token-auth-code.md",
       "output": {
         ".html": {
@@ -501,7 +513,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/step-by-step/web-app-access-token-auth-code.html",
-          "hash": "3YqCPUjMM9otNP700BLXug=="
+          "hash": "IM24RExTC2aSUOKJeDxngg=="
         }
       },
       "is_incremental": false,
