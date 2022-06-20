@@ -1,3 +1,8 @@
+---
+erp.type: sample
+erp.topic: security
+---
+
 # Basic example of acquiring an access token
 
 ## Objective

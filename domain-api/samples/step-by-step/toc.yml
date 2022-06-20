@@ -1,4 +1,4 @@
-- name: Introduction
+- name: Overview
   href: index.md
 - name: Basic example of acquiring an access token
   href: basic-acquire-access-token.md

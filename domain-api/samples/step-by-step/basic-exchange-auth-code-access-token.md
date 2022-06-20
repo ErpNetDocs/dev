@@ -1,3 +1,8 @@
+---
+erp.type: sample
+erp.topic: security
+---
+
 # Basic example- exchange an auth code for an access token
 
 ## Objective

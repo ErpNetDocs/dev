@@ -1,3 +1,8 @@
+---
+erp.type: sample
+erp.topic: security
+---
+
 # Access token via authorization code flow in a console app
 
 ## Objective

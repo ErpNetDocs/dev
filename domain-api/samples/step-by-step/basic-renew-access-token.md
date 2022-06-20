@@ -1,3 +1,8 @@
+---
+erp.type: sample
+erp.topic: security
+---
+
 # Basic example- renew an access token via a refresh token
 
 ## Objective
