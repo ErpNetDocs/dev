@@ -465,7 +465,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/step-by-step/basic-exchange-auth-code-access-token.html",
-          "hash": "FjCJotuKFIO1WZ2px+QGmA=="
+          "hash": "DS0XgicDNFo8xl2JVR3sOg=="
         }
       },
       "is_incremental": false,
@@ -477,7 +477,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/step-by-step/basic-renew-access-token.html",
-          "hash": "I5E0XZrRtiLOGrPw897yKg=="
+          "hash": "iXQtoz0xtcGDgbahOYw3ug=="
         }
       },
       "is_incremental": false,
