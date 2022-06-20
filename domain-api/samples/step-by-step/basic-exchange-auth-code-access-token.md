@@ -7,7 +7,7 @@ erp.topic: security
 
 ## Objective
 
-You have an external application that requires user login. You want to acquire an access token on behalf on the logged user. As short as possible.
+You have an external application that requires user login. You want to acquire an access token on behalf of the logged user. As short as possible.
 
 Or, 
 * Your external app is an interactive application (at least for the user to log in).
