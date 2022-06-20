@@ -7,7 +7,7 @@ erp.topic: security
 
 ## Objective
 
-You have an external application that requires user login. You want to acquire an access token on behalf on the logged user. 
+You have an external application that requires user login. You want to acquire an access token on behalf of the logged user. 
 
 Because the access token has a validity of 1 hour, you want to renew it, instead of forcing the user to log in again.
 
