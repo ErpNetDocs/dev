@@ -267,6 +267,58 @@ TransactionId: xxxx
   ]
 }
 </code></pre>
+<h2 id="create-a-sales-order-with-automatic-calculation-of-line-prices-and-amounts">Create a sales order with automatic calculation of line prices and amounts</h2>
+<p>The term &quot;automatic&quot; actually means the execution of the front-end business rules, related to the sales order and its sales order lines.</p>
+<p>Therefore, this is only possible in a front-end transaction.</p>
+<pre><code class="lang-json">POST ~/BeginTransaction
+
+{
+  &quot;model&quot;: &quot;frontend&quot;
+}
+</code></pre>
+<p>After, just create the sales order and its lines at once:</p>
+<pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders
+TransactionId: xxxx
+
+{
+  &quot;DocumentNo&quot;: &quot;12345&quot;,
+  &quot;DocumentType&quot;: {
+    &quot;@odata.id&quot;: &quot;General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)&quot;
+  },
+  &quot;EnterpriseCompany&quot;: {
+    &quot;@odata.id&quot;: &quot;General_EnterpriseCompanies(b11b2f31-71b5-4443-a4b7-b5e9cd664a64)&quot;
+  },
+  &quot;Customer&quot;: {
+    &quot;@odata.id&quot;: &quot;Crm_Customers(eebf02a5-052e-4a8d-9a24-270546d73942)&quot;
+  },
+  &quot;DocumentCurrency&quot;: {
+    &quot;@odata.id&quot;: &quot;General_Currencies(3187833a-d3c1-4804-bfc0-e17e6aee3069)&quot;
+  },
+  &quot;Lines&quot;: [
+    {
+      &quot;LineNo&quot;: 10,
+      &quot;QuantityUnit&quot;: {
+        &quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+      },
+      &quot;Quantity&quot;: {
+        &quot;Value&quot;: 2,
+        &quot;Unit&quot;: &quot;PCS&quot;
+      },
+      &quot;Product&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Products_Products(bc5a90ed-eca3-4e70-9987-395da25f6487)&quot;
+      }
+    }
+  ]
+}
+</code></pre>
+<p>Finally, commit the transaction:</p>
+<pre><code class="lang-json">POST ~/EndTransaction
+TransactionId: xxxx
+
+{
+  &quot;commit&quot;: true
+}
+</code></pre>
 </article>
           </div>
           
