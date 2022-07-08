@@ -162,7 +162,7 @@ TransactionId: xxxx
 
 ## Create multiple lines to an existing document
 
- A possible scenario is when you have a document created, but later you want to add its lines.
+A possible scenario is when you have a document created, but later you want to add its lines.
 
 ```json
 PATCH ~/Crm_Sales_SalesOrders(283e4c71-2d77-4083-81b6-4c7f17668d7e)
@@ -220,5 +220,66 @@ PATCH ~/Crm_Sales_SalesOrders(283e4c71-2d77-4083-81b6-4c7f17668d7e)
       }
     }    
   ]
+}
+```
+
+## Create a sales order with automatic calculation of line prices and amounts
+
+The term "automatic" actually means the execution of the front-end business rules, related to the sales order and its sales order lines.
+
+Therefore, this is only possible in a front-end transaction.
+
+```json
+POST ~/BeginTransaction
+
+{
+  "model": "frontend"
+}
+```
+
+After, just create the sales order and its lines at once:
+```json
+POST ~/Crm_Sales_SalesOrders
+TransactionId: xxxx
+
+{
+  "DocumentNo": "12345",
+  "DocumentType": {
+    "@odata.id": "General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)"
+  },
+  "EnterpriseCompany": {
+    "@odata.id": "General_EnterpriseCompanies(b11b2f31-71b5-4443-a4b7-b5e9cd664a64)"
+  },
+  "Customer": {
+    "@odata.id": "Crm_Customers(eebf02a5-052e-4a8d-9a24-270546d73942)"
+  },
+  "DocumentCurrency": {
+    "@odata.id": "General_Currencies(3187833a-d3c1-4804-bfc0-e17e6aee3069)"
+  },
+  "Lines": [
+    {
+      "LineNo": 10,
+      "QuantityUnit": {
+        "@odata.id": "General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)"
+      },
+      "Quantity": {
+        "Value": 2,
+        "Unit": "PCS"
+      },
+      "Product": {
+        "@odata.id": "General_Products_Products(bc5a90ed-eca3-4e70-9987-395da25f6487)"
+      }
+    }
+  ]
+}
+```
+
+Finally, commit the transaction:
+```json
+POST ~/EndTransaction
+TransactionId: xxxx
+
+{
+  "commit": true
 }
 ```
