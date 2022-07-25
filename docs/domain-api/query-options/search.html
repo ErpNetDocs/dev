@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>$search query option | ERP.net Developer Docs </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="$search query option | ERP.net Developer Docs ">
+    <meta name="generator" content="docfx 2.56.9.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="search-query-option"><strong>$search</strong> query option</h1>
+
+<h2 id="description">Description</h2>
+<p><code>$search</code> is a system query option, a standard one in the OData protocol.</p>
+<p>The <code>$search</code> system query option restricts the result to include only those entities, matching the specified search expression. The search expression is a freeform string.</p>
+<p>For more detailed info, strictly defined according to the OData protocol, check this resource <a href="https://www.odata.org/getting-started/basic-tutorial/#search">here</a>.</p>
+<h2 id="how-the-search-works">How the search works</h2>
+<p>When an entity is searched, it's checked for a match between the searched string and the value of one or more attributes. Exactly which attributes of the entity will be checked for a match, depends on which are specified in the entity's default search members and display text format.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The attributes for an entity to search for a match are those, defined in the <strong>Default search members</strong> and the <strong>Display text format</strong>. For each different entity.</p>
+</div>
+<h3 id="default-search-members">Default search members</h3>
+<p>They're defined at the system level and may differ for different entities. The exact search members for each entity can be found in the documentation, but there's a rule that's generally true in most cases,</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The default search members (i.e. attributes) for an entity are these, supporting Code and Name.</p>
+</div>
+<p>E.g. the Customers entity has its default search members: <code>Number; Party.PartyName</code></p>
+<p><a href="https://docs.erp.net/model/entities/Crm.Customers.html">https://docs.erp.net/model/entities/Crm.Customers.html</a></p>
+<h3 id="display-text">Display text</h3>
+<p>The search is also performed on the attributes, part of the display text attribute. It's available for all entities.</p>
+<p><a href="https://docs.erp.net/model/entities/Systems.Core.EntitySettings.html#displaytextformat">https://docs.erp.net/model/entities/Systems.Core.EntitySettings.html#displaytextformat</a>
+<a href="https://docs.erp.net/tech/advanced/data-objects/display-format.html">https://docs.erp.net/tech/advanced/data-objects/display-format.html</a></p>
+<h2 id="usage">Usage</h2>
+<p>Just see the query below,</p>
+<pre><code class="lang-http">GET 
+~/Crm_Customers?$select=Number&amp;$search=&quot;015&quot;
+</code></pre>
+<p>This will return all customers, matching the searched string <code>015</code>. E.g.,</p>
+<pre><code class="lang-json">{
+    &quot;@odata.context&quot;: &quot;~/$metadata#Crm_Customers&quot;,
+    &quot;value&quot;: [
+        {
+            &quot;@odata.id&quot;:&quot;Crm_Customers(79480957-f0b6-49c4-9874-2cd150de982a)&quot;,
+            &quot;Number&quot;: &quot;aa00015&quot;
+        },
+        {
+            &quot;@odata.id&quot;:&quot;Crm_Customers(806637f2-abd1-4e7b-8ac0-71222a0b1afd)&quot;,
+            &quot;Number&quot;: &quot;ab30151&quot;
+        },
+        {
+            &quot;@odata.id&quot;:&quot;Crm_Customers(f812a533-0e56-4e57-8d1f-52d05b98c8b6)&quot;,
+            &quot;Number&quot;: &quot;ab30156&quot;
+        }
+    ]
+}
+</code></pre>
+<p>The result contains all customers that contain <code>015</code> in their number. OK, let's make an another try:</p>
+<pre><code class="lang-http">GET 
+~/Crm_Customers?$select=Party&amp;$expand=Party($select=PartyName)&amp;$search=&quot;UNI&quot;
+</code></pre>
+<p>Here's the result:</p>
+<pre><code class="lang-json">{
+    &quot;@odata.context&quot;: &quot;~/$metadata#Crm_Customers&quot;,
+    &quot;value&quot;: [
+        {
+            &quot;@odata.id&quot;:&quot;Crm_Customers(eebf02a5-052e-4a8d-9a24-270546d73942)&quot;,
+            &quot;Party&quot;: {
+                &quot;@odata.id&quot;:&quot;General_Contacts_Parties(b8aa4272-3e55-435b-b1ab-170afee896d4)&quot;,
+                &quot;PartyName&quot;: {
+                    &quot;EN&quot;: &quot;UNI Sofia Ltd&quot;,
+                    &quot;BG&quot;: &quot;УНИ София Лтд&quot;
+                }
+            }
+        }
+    ]
+}
+</code></pre>
+<p>Obviously, the result contains all customers, having a &quot;UNI&quot; in their name.</p>
+<p>The examples above were when we have a match on the default search members- i.e. the <a href="https://docs.erp.net/model/entities/Crm.Customers.html#number">Number</a> and <a href="https://docs.erp.net/model/entities/Crm.Customers.html#party">Party.PartyName</a> in the <a href="https://docs.erp.net/model/entities/Crm.Customers.html">Customers</a> entity.</p>
+<p>Let's see an example where the search will be performed on the members, defined in the entity's display text attribute.</p>
+<p>To do this, we'll first change the display text format for the customers entity (because the default one is <code>{Party.PartyName:T}</code>) to the following one:</p>
+<pre><code class="lang-cs">{Party.PartyName:T} / {GracePeriodDays}
+</code></pre>
+<p>Now if we make a request such as:</p>
+<pre><code class="lang-http">GET 
+~/Crm_Customers?$select=Number,GracePeriodDays,Party&amp;$expand=Party($select=PartyName)&amp;$search=&quot;50&quot;
+</code></pre>
+<p>The result will be the following:</p>
+<pre><code class="lang-json">{
+    &quot;@odata.context&quot;: &quot;~/$metadata#Crm_Customers&quot;,
+    &quot;value&quot;: [
+        {
+            &quot;@odata.id&quot;:&quot;Crm_Customers(eca3ca4d-c4fa-44df-9983-d69388a8893a)&quot;,
+            &quot;GracePeriodDays&quot;: 50,
+            &quot;DisplayText&quot;: &quot;Test Company 1 Ltd / 50&quot;,
+            &quot;Number&quot;: &quot;number001&quot;,
+            &quot;Party&quot;: {
+                &quot;@odata.id&quot;:&quot;General_Contacts_Parties(841e89e4-44c2-4c8f-b4d9-6402c3e5fb28)&quot;,
+                &quot;PartyName&quot;: {
+                    &quot;EN&quot;: &quot;Test Company 1 Ltd&quot;
+                }
+            }
+        },
+        {
+            &quot;@odata.id&quot;:&quot;Crm_Customers(bc446b31-7326-4c35-bca6-55c918e33215)&quot;,
+            &quot;GracePeriodDays&quot;: 7,
+            &quot;DisplayText&quot;: &quot;Test Company 2 Ltd / 7&quot;,
+            &quot;Number&quot;: &quot;number050&quot;,
+            &quot;Party&quot;: {
+                &quot;@odata.id&quot;:&quot;General_Contacts_Parties(395fa6b1-8fd4-418a-87f6-d8bece1fc7ad)&quot;,
+                &quot;PartyName&quot;: {
+                    &quot;EN&quot;: &quot;Test Company 2 Ltd&quot;
+                }
+            }
+        }
+    ]
+}
+</code></pre>
+<p>Two customers- the first has a match on the attribute <code>GracePeriodDays</code> (50) and the second has a match on the <code>Number</code> (number050) attribute.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/query-options/search.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>
