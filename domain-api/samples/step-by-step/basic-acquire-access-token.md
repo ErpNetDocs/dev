@@ -55,6 +55,9 @@ Yes, it's that simple. Here are some clarifications:
   - grant_type - the way your app will get an access token.
   - scope - what's needed to access.
 
+> [!NOTE]
+> With the client_credentials flow (i.e., @@erpnet service application), the scope argument can be omitted. Then your access token will contain all scopes, defined in the trusted application.
+
 If everything is correct, you'll receive a similar response:
 
 ```json
