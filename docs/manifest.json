@@ -321,7 +321,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/query-options/index.html",
-          "hash": "oSN4MeTX4g6TmW/6vAC/rA=="
+          "hash": "QkbK8WSG3qiPl7zi5qmnIA=="
         }
       },
       "is_incremental": false,
@@ -334,6 +334,18 @@
         ".html": {
           "relative_path": "domain-api/query-options/options.html",
           "hash": "633JvdBmdYmgmN/v/WO+fw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/query-options/search.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/query-options/search.html",
+          "hash": "PDG9bA9m3pzJZdaVy+S5+Q=="
         }
       },
       "is_incremental": false,
@@ -525,7 +537,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/toc.html",
-          "hash": "fLTVEBN3qyEhr1bEPFHePA=="
+          "hash": "ms0YPFpYIwy9mOcYhTszFQ=="
         }
       },
       "is_incremental": false,
