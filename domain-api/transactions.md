@@ -2,6 +2,15 @@
 
 Тhe ErpNet Domain API introduces a server-side transaction that holds any change of an entity object made between calls of BeginTransaction and EndTransaction.
 
+An api transaction is a data set that contains the data for the objects used in the transaction. When we create a domain object in a transaction, a data set containing the data for this object is created in the memory of the api process. If we create another object in the same transaction, the second object is also saved in the same data set. The data is not yet present in the database until we commit the transaction.
+
+If we update the same field with different API requests in the same transaction, the value of the field remains the one submitted last.
+
+If we use a front-end transaction, each submission of a value for a given field will trigger front-end events that may update other fields.
+
+When the transaction is committed, the entire dataset is submitted to the database. At this point, we don't guarantee the order in which records from the same table are inserted into database. That's why several objects that have reference to the same entity type must be created in different transactions (for example parent-child related documents).
+
+
 **BeginTransaction** is unbound (not bound to any entity) action (actions are called with HTTP POST method) that initializes an object transaction on the server and  returns a *TransactionId* token as a plain text (not json - for example XXXXX). This object transaction is something like memory data-set that holds copies of database records. 
 
 The transaction lives in the server memory for 20 minutes sliding expiration. 
