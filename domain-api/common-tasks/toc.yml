@@ -10,3 +10,5 @@
   href: master-detail-attributes.md
 - name: Change the response language
   href: change-language.md
+- name: Create notification
+  href: create-notification.md
