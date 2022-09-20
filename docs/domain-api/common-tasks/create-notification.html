@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Create notification | ERP.net Developer Docs </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Create notification | ERP.net Developer Docs ">
+    <meta name="generator" content="docfx 2.56.9.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="create-notification">Create notification</h1>
+
+<h2 id="overview">Overview</h2>
+<p>As already known, notifications in ERP.net are an entity, part of the domain model.</p>
+<p><a href="https://docs.erp.net/model/entities/Communities.Notifications.html">Communities.Notifications Entity</a>.</p>
+<p>Roughly, each notification is a message intended for a specific user. Additionally, the notification MAY reference a data object- e.g. the notification subject.</p>
+<p>This is expressed through the following entity attributes:</p>
+<ul>
+<li><a href="https://docs.erp.net/model/entities/Communities.Notifications.html#user">User</a></li>
+<li><a href="https://docs.erp.net/model/entities/Communities.Notifications.html#dataobject">DataObject</a></li>
+</ul>
+<p>ERP.net creates and manages various notifications according to certain business rules, triggered by specific events. E.g. when someone replies to your comment- you'll get a notification. This flow is managed by a specific business rule (<a href="https://docs.erp.net/model/business-rules/R33428.html">R33428 SocialComment - Notify User Comment Replied</a>)</p>
+<p>More information about all notification types (i.e. notification classes) and when they're created can be found in the separate topic <strong><a href="https://docs.erp.net/tech/modules/community/social-interactions/notifications/index.html">Notifications</a></strong>.</p>
+<h2 id="create-a-notification-programmatically">Create a notification programmatically</h2>
+<p>It's possible to create a notification yourself via the Domain API. You simple need to:</p>
+<ol>
+<li>Specify the entity that will be the subject of the notification.</li>
+<li>Invoke its method <code>CreateNotificaiton</code>.</li>
+<li>Populate the required notification's attributes such as the target user, the notification class, the notification subject.</li>
+</ol>
+<pre><code class="lang-HTTP">POST /api/domain/odata/Crm_Customers(79f3f74e-098a-4d91-9714-c4f845c2dc62)/CreateNotification HTTP/1.1
+Host: demodb.my.erp.net
+Content-Type: application/json
+
+{
+    &quot;user&quot;: {
+        &quot;@odata.id&quot;: &quot;Systems_Security_Users(9da64839-a8d0-491d-aebb-4d18fa42b014)&quot;
+    },
+    &quot;notificationClass&quot;: &quot;NT_SOC_NEW_POST&quot;,
+    &quot;subject&quot;: &quot;Hello from Domain API!&quot;
+}
+
+</code></pre>
+<p>That's it.</p>
+<p>A notification will be created. Addressed to the specified user; originating from the specified customer.</p>
+<h2 id="createnotification-in-detail">CreateNotification() in detail</h2>
+<p><code>CreateNotification</code> is an API method, defined in the <code>EntityObject</code> type. This means that it can be invoked from any entity.</p>
+<p>It's available for every entity in our Domain Model documententation. Here's a link to the method, used in the example from above,</p>
+<p><a href="https://docs.erp.net/model/entities/Crm.Customers.html#createnotification">https://docs.erp.net/model/entities/Crm.Customers.html#createnotification</a></p>
+<p>Additionally, once the notification is created (as persistent data, in the database), it will be wrapped in a real-time event, which will be sent to the target user (as a real-time event). In this way, you can not only create notifications programmatically, but also notify users in real time.</p>
+<p>More information about real-time events can be found in the separate topic in the documentation. <a href="https://docs.erp.net/tech/advanced/concepts/real-time-events.html">Real-time events</a></p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/create-notification.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

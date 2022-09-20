@@ -83,11 +83,23 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "domain-api/common-tasks/create-notification.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/common-tasks/create-notification.html",
+          "hash": "wITbcxM4QS1bYiYpkzdUjw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "domain-api/common-tasks/index.md",
       "output": {
         ".html": {
           "relative_path": "domain-api/common-tasks/index.html",
-          "hash": "9pnJYoWhYHIif8lGS2Kjdw=="
+          "hash": "Z1X783ccG1rbJj8pkXW3QA=="
         }
       },
       "is_incremental": false,
@@ -537,7 +549,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/toc.html",
-          "hash": "ms0YPFpYIwy9mOcYhTszFQ=="
+          "hash": "8q+SIOC7eQN/XTR6ukHu6g=="
         }
       },
       "is_incremental": false,
