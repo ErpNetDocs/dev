@@ -177,6 +177,11 @@ This is an invalid filter:<br>
 <p>Example:</p>
 <pre><code class="lang-odata">~/Crm_Customers?$filter=contains(Party/PartyName,'Peter')
 </code></pre>
+<h3 id="edmboolean-containsnavigationproperty-edmstring">Edm.Boolean contains(NavigationProperty, Edm.String)</h3>
+<p>Returns true if the string is contained in the entity, refereced by the navigation property.</p>
+<p>Example:</p>
+<pre><code class="lang-odata">~/Crm_Customers?$filter=contains(SalesPerson,'Peter')
+</code></pre>
 <h3 id="edmboolean-equalnullany-typeany-type">Edm.Boolean equalnull(any-type,any-type)</h3>
 <p>Returns true if the first argument is equal to the second argument or the first argument is null.</p>
 <p>Example:</p>
