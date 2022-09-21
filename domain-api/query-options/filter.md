@@ -105,6 +105,15 @@ Example:
 ~/Crm_Customers?$filter=contains(Party/PartyName,'Peter')
 ```
 
+### Edm.Boolean contains(NavigationProperty, Edm.String) 
+
+Returns true if the string is contained in the entity, refereced by the navigation property.
+
+Example: 
+```odata
+~/Crm_Customers?$filter=contains(SalesPerson,'Peter')
+```
+
 ### Edm.Boolean equalnull(any-type,any-type) 
 
 Returns true if the first argument is equal to the second argument or the first argument is null.
