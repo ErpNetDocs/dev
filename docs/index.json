@@ -192,7 +192,7 @@
   "domain-api/samples/step-by-step/index.html": {
     "href": "domain-api/samples/step-by-step/index.html",
     "title": "Step by step guides | ERP.net Developer Docs",
-    "keywords": "Step by step guides Below you can find step by step examples, grouped by topic. Security Access token via authorization code flow in a console app Access token via authorization code flow in a web app Basic example- exchange an auth code for an access token Basic example of acquiring an access token"
+    "keywords": "Step by step guides Below you can find step by step examples, grouped by topic. Security Access token via authorization code flow in a console app Access token via authorization code flow in a web app Basic example- exchange an auth code for an access token Basic example of acquiring an access token Basic example- renew an access token via a refresh token"
   },
   "domain-api/samples/step-by-step/web-app-access-token-auth-code.html": {
     "href": "domain-api/samples/step-by-step/web-app-access-token-auth-code.html",
