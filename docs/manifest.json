@@ -145,15 +145,12 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "UidNotFound"
-      ],
       "type": "Conceptual",
       "source_relative_path": "domain-api/common-tasks/working-with-documents.md",
       "output": {
         ".html": {
           "relative_path": "domain-api/common-tasks/working-with-documents.html",
-          "hash": "hpKVZVrNZGJyBnl2UtMR/g=="
+          "hash": "kGzNKCuL3doLu3MMaj0WhQ=="
         }
       },
       "is_incremental": false,
