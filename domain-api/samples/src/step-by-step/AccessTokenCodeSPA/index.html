@@ -1,0 +1,86 @@
+<html>
+<title>ERP.net - Pure JS access token acquisition</title>
+
+<script>
+  var config = {
+    client_id: "my.trusted.app",
+    redirect_uri: "https://my.trusted.app/app.html",
+    authorization_endpoint: "https:///demodb.my.erp.net/id/connect/authorize",
+    token_endpoint: "https:///demodb.my.erp.net/id/connect/token",
+    requested_scopes: "offline_access DomainApi update"
+  };
+</script>
+
+<a href="#" id="start">Click to Sign In</a>
+<div id="token" class="hidden">
+    <h2>Access Token</h2>
+    <div id="access_token" class="code">:(</div>
+</div>
+<div id="token" class="hidden">
+    <h2>Refresh Token</h2>
+    <div id="refresh_token" class="code">:(</div>
+</div>
+
+<script>
+  document.getElementById("start").addEventListener("click", async function(e) {
+      
+      e.preventDefault();
+
+      // Create and store a random "state" value
+      var state = generateRandomString();
+
+      var url = config.authorization_endpoint 
+          + "?response_type=code"
+          + "&client_id=" + config.client_id
+          + "&state=" + state
+          + "&scope=" + config.requested_scopes
+          + "&redirect_uri=" + config.redirect_uri;
+
+      window.location = url;
+  });
+
+  var args = window.location.search.substring(1);
+  if (args != "") {
+
+      // OAUTH REDIRECT HANDLING
+      var idServerResponse = JSON.parse('{"' + args.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) })
+      console.log(idServerResponse);
+
+      if (idServerResponse.code) {
+          
+          // Exchange the authorization code for an access token
+          sendPostRequest(config.token_endpoint, {
+              grant_type: "authorization_code",
+              code: idServerResponse.code,
+              client_id: config.client_id,
+              redirect_uri: config.redirect_uri,
+              code_verifier: localStorage.getItem("pkce_code_verifier")
+          }, function(request, body) {
+              console.log(body);
+              // Here you have your access token.
+              document.getElementById("access_token").innerText = body.access_token;
+          });
+      };
+  }
+
+  function sendPostRequest(url, params, success, error) {
+      var request = new XMLHttpRequest();
+      request.open('POST', url, true);
+      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+      request.onload = function() {
+
+          var body = JSON.parse(request.response);
+
+          if(request.status == 200) {
+              success(request, body);
+          } else {
+              error(request, body);
+          }
+      }
+
+      var body = Object.keys(params).map(key => key + '=' + params[key]).join('&');
+      request.send(body);
+  }
+</script>
+
+</html>
