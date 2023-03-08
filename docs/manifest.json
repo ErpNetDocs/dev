@@ -522,7 +522,19 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/samples/step-by-step/index.html",
-          "hash": "gXWnHY7elXw4Wj8qTp8qSA=="
+          "hash": "un5xhkcJCcN8tghzkAKDRQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/step-by-step/spa-access-token-auth-code.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/step-by-step/spa-access-token-auth-code.html",
+          "hash": "9B4Ihg5gCWhHTi7z4vRcjQ=="
         }
       },
       "is_incremental": false,
@@ -546,7 +558,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/toc.html",
-          "hash": "8q+SIOC7eQN/XTR6ukHu6g=="
+          "hash": "fKyqAMOq/du5OOokpZacOQ=="
         }
       },
       "is_incremental": false,
