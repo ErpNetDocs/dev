@@ -755,12 +755,24 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "topics/table-api/usage-guide.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/table-api/usage-guide.html",
+          "hash": "UmqopqxDaetKXEtpc4JuOg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Toc",
       "source_relative_path": "topics/toc.yml",
       "output": {
         ".html": {
           "relative_path": "topics/toc.html",
-          "hash": "Cuu94XRJU0MUzsCPXzXrrw=="
+          "hash": "9w9c2Yhk9B2sqct/9MdZPg=="
         }
       },
       "is_incremental": false,
