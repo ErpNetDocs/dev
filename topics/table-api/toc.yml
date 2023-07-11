@@ -1,2 +1,4 @@
 - name: Overview
   href: index.md
+- name: PowerBI usage guidelines
+  href: usage-guide.md
