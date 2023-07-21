@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Overview | ERP.net Developer Docs </title>
+    <title>Recommendations for using TableAPI as a data source for BI | ERP.net Developer Docs </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Overview | ERP.net Developer Docs ">
+    <meta name="title" content="Recommendations for using TableAPI as a data source for BI | ERP.net Developer Docs ">
     <meta name="generator" content="docfx 2.56.9.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
@@ -77,8 +77,31 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="overview">Overview</h1>
+<h1 id="recommendations-for-using-tableapi-as-a-data-source-for-bi">Recommendations for using TableAPI as a data source for BI</h1>
 
+<p>Respecting the technical capabilities of the TableAPI, such as its filtering and data presentation capabilities, is necessary to ensure fast, efficient, and trouble-free operation.
+To achieve this, the following recommendations should be followed:</p>
+<ol>
+<li><p><strong>Select only the necessary tables from which you will load data.</strong></p>
+</li>
+<li><p><strong>Filter the table as early as possible by using solid constraints that the data must meet.
+Negative constructions, OR statements, and unsupported types of filtering should not be used.
+This should be aligned with the documentation for each field being filtered.</strong></p>
+<p>For example, do not use &quot;&lt;&gt;&quot;, &quot;&lt;&quot;, &quot;&gt;&quot;, &quot;OR&quot;, &quot;NOT&quot; as they are not supported.<br>
+The supported constructions are <em><strong>&quot;AND&quot;</strong></em> ,<em><strong>&quot;=&quot;</strong></em> (including <em><strong>&quot;= null&quot;</strong></em>), <em><strong>&quot;&lt;=&quot;</strong></em>, <em><strong>&quot;&gt;=&quot;</strong></em>.</p>
+</li>
+<li><p><strong>Remove unnecessary fields as early as possible. Here it matters whether you choose &quot;Remove other columns&quot; or &quot;Remove columns&quot; (different functions, where one keeps the listed columns and the other removes them). Use the former (&quot;Remove other columns&quot;), which will ensure that if there is a modification in the table structure, the result will remain the same.</strong></p>
+</li>
+<li><p><strong>Supplement the data (add rows) from other sources if more complex data filtering containing OR clauses is required.
+All OR-separated filters should be divided into several sub-filters, where each sub-filter requires a separate query to the same table with the respective sub-filter.
+Finally, all these sub-queries should be combined into one table by appending queries.</strong></p>
+</li>
+<li><p><strong>When filtering data based on related tables (filter is not on a field from the current table), use table merging (Merge queries), where the main table to which you are making a connection should already be filtered, and use the &quot;Inner join - only matching rows&quot; type of join.</strong></p>
+<p>For example, if you need to filter only certain documents from <strong>Crm_Sales_Orders</strong>, you should first filter <strong>Gen_Documents</strong> for the desired documents (based on <em>Entity_Name</em>, <em>Void</em>, <em>State</em>, <em>Document_Date</em>, etc.), and then merge <strong>Crm_Sales_Orders</strong> with <strong>Gen_Documents</strong> using an <strong><em>Inner join</em></strong> and specifying the corresponding fields <em>Document_Id</em> (<strong>Crm_Sales_Orders</strong>) <strong>-&gt;</strong> <em>Id</em> (<strong>Gen_Documents</strong>).</p>
+</li>
+<li><p><strong>If the tables have a relatively small volume (number of records), you may not need to follow the above filtering recommendations, as in that case, the entire table will likely be loaded into BI, and the filtering will be applied afterwards by BI.</strong></p>
+</li>
+</ol>
 </article>
           </div>
           
