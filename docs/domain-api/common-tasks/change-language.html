@@ -102,6 +102,10 @@
 <li>Accept-Language HTTP header: <code>Accept-Language: de</code></li>
 </ol>
 <p>All you have to do is to specify the language in one of the ways listed above.</p>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p>The methods mentioned above are applicable only when using OAuth for authorization. You can find additional information <a href="#specify-response-language-when-using-basic-auth">here</a>.</p>
+</div>
 <div class="WARNING">
 <h5>Warning</h5>
 <p>If there's more than one way to change the language at the same time, prioritization takes place. The priority is the same as listed above: (1) url parameter, (2) cookie, (3) accept-language header. I.e. if you send a request, containing a url parameter <code>culture=de</code> and also specify an HTTP header <code>Accept-Language: en</code>, the chosen language will be German.</p>
@@ -142,6 +146,21 @@ Accept-Language: de
 <li>All non-multilanguage strings will be returned as they are.</li>
 </ul>
 </div>
+<h3 id="specify-response-language-when-using-basic-auth">Specify response language when using Basic Auth</h3>
+<p>Unlike the recommended OAuth authorization method, changing the response language while using Basic Auth can only be accomplished by specifying the <code>lang</code> parameter in the request URL.</p>
+<p>E.g.,</p>
+<pre><code class="lang-HTTP">POST /api/domain/odata/Crm_Invoicing_Invoices(51a63a99-c96d-4876-b205-fced610143ae)/GetPrintout?lang=bg HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Basic xxxxx
+</code></pre>
+<p><code>lang=bg</code> - that's the addition, and as a result, the prinout will be returned, but in Bulgarian.</p>
+<p>Anyway, the use of Basic Auth is strongly discouraged and should be approached with special caution, only as a last resort.</p>
+<p>Here, you can find information on how to migrate your Basic Auth workflow to OAuth:</p>
+<ul>
+<li><a href="../authentication.html">Authentication in ERP.net</a></li>
+<li><a href="register-trusted-app.html">Register trusted app</a></li>
+<li><a href="../samples/step-by-step/basic-acquire-access-token.html">Step-by-step / acquire an access token</a></li>
+</ul>
 <h2 id="other-cases-where-language-change-has-an-effect">Other cases, where language change has an effect</h2>
 <h3 id="error-responses--messages">Error responses / messages</h3>
 <p>For example, we'll update a customer, but in such a way that we get an error back. We'll trigger the <a href="https://docs.erp.net/model/business-rules/R27159.html">R27159</a> validation business rule.</p>
