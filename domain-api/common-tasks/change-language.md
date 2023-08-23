@@ -32,6 +32,9 @@ If you want it to be generated in German, you must specify it explicitly.
 
 All you have to do is to specify the language in one of the ways listed above.
 
+> [!CAUTION]
+> The methods mentioned above are applicable only when using OAuth for authorization. You can find additional information [here](#specify-response-language-when-using-basic-auth).
+
 > [!WARNING]
 > If there's more than one way to change the language at the same time, prioritization takes place. The priority is the same as listed above: (1) url parameter, (2) cookie, (3) accept-language header. I.e. if you send a request, containing a url parameter `culture=de` and also specify an HTTP header `Accept-Language: en`, the chosen language will be German.
 
@@ -75,6 +78,28 @@ The result will be the same printout, but in German.
 > Changing the language simply instructs @@erpnet to "choose" it from what is saved in the multilanguage string attributes.
 > - If the "chosen" language isn't present in a multulanguage string attribute, it will be returned [transliterated](https://docs.erp.net/tech/concepts/multi-language.html#transliteration).
 > - All non-multilanguage strings will be returned as they are.
+
+### Specify response language when using Basic Auth
+
+Unlike the recommended OAuth authorization method, changing the response language while using Basic Auth can only be accomplished by specifying the `lang` parameter in the request URL.
+
+E.g.,
+
+```HTTP
+POST /api/domain/odata/Crm_Invoicing_Invoices(51a63a99-c96d-4876-b205-fced610143ae)/GetPrintout?lang=bg HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Basic xxxxx
+```
+
+`lang=bg` - that's the addition, and as a result, the prinout will be returned, but in Bulgarian.
+
+Anyway, the use of Basic Auth is strongly discouraged and should be approached with special caution, only as a last resort.
+
+Here, you can find information on how to migrate your Basic Auth workflow to OAuth:
+
+- [Authentication in ERP.net](../authentication.md)
+- [Register trusted app](register-trusted-app.md)
+- [Step-by-step / acquire an access token](../samples/step-by-step/basic-acquire-access-token.md)
 
 ## Other cases, where language change has an effect
 
