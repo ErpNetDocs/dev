@@ -241,15 +241,12 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "UidNotFound"
-      ],
       "type": "Conceptual",
       "source_relative_path": "domain-api/data-sync/object-version.md",
       "output": {
         ".html": {
           "relative_path": "domain-api/data-sync/object-version.html",
-          "hash": "0J8hxunnh29FfsmcSS9RlA=="
+          "hash": "6fRYUja2JCiji0x/LGuzsQ=="
         }
       },
       "is_incremental": false,
