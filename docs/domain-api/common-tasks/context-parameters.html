@@ -85,24 +85,30 @@ For example some business rules require current enterprise company to determine 
 <p>The language may be provided by one of the standard ways defined by <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/localization?view=aspnetcore-8.0">ASP.NET Core</a> - <strong>culture</strong> URL parameter, <strong>.AspNetCore.Culture</strong> cookie or <strong>Accept-Language</strong> HTTP header.</p>
 <h2 id="providing-current-enterprise-company-enterprise-company-location-and-role-for-the-api-request">Providing current enterprise company, enterprise company location and role for the API request.</h2>
 <h3 id="1-url-parameters">1. URL Parameters</h3>
-<p>CurrentEnterpriseCompanyId=GUID1&amp;CurrentEnterpriseCompanyLocationId=GUID2&amp;CurrentRoleId=GUID3</p>
+<pre><code>CurrentEnterpriseCompanyId=GUID1&amp;CurrentEnterpriseCompanyLocationId=GUID2&amp;CurrentRoleId=GUID3
+</code></pre>
 <p>OR</p>
-<p>ErpContextParameters=GUID1,GUID2,GUID3</p>
+<pre><code>ErpContextParameters=GUID1,GUID2,GUID3
+</code></pre>
 <p>The ErpContextParameters URL parameter requires three guids - the first one is enterprise company Id, the second one is enterprise company location Id and the third one is the role Id.</p>
-<h3 id="2-http-hreader-prefer">2. HTTP hreader Prefer</h3>
+<h3 id="2-http-header-prefer">2. HTTP header Prefer</h3>
 <p>The Prefer HTTP Header can be used by a client to request particular server behaviors. In this case we can append multiple Prefer headers:</p>
-<p>Prefer: CurrentEnterpriseCompanyId=GUID1</p>
-<p>Prefer: CurrentEnterpriseCompanyLocationId=GUID2</p>
-<p>Prefer: CurrentRoleId=GUID3</p>
+<pre><code>Prefer: CurrentEnterpriseCompanyId=GUID1
+Prefer: CurrentEnterpriseCompanyLocationId=GUID2
+Prefer: CurrentRoleId=GUID3
+</code></pre>
 <p>OR</p>
-<p>Prefer: ErpContextParameters=GUID1,GUID2,GUID3</p>
+<pre><code>Prefer: ErpContextParameters=GUID1,GUID2,GUID3
+</code></pre>
 <h3 id="3-cookie">3. Cookie</h3>
-<p>We can provide cookie with name ErpContextParameters and value 'GUID1,GUID2,GUID3'</p>
+<p>We can provide cookie with name <code>ErpContextParameters</code> and value 'GUID1,GUID2,GUID3'</p>
 <h2 id="validation">Validation</h2>
-<p>If the provided value can't be parsed to a valid guid it is ignored.<br>
-If the current user has no acces to the provided enterprise company by security reasons, the provided CurrentEnterpriseCompanyId is ignored.<br>
-If the provided company location Id is not amongs the company locations of the current enterprise company the value is ignored.<br>
-If the provided role Id is not accessible by the current user the value is ignored.</p>
+<ul>
+<li>If the provided value can't be parsed to a valid guid it is ignored.</li>
+<li>If the current user has no acces to the provided enterprise company by security reasons, the provided CurrentEnterpriseCompanyId is ignored.</li>
+<li>If the provided company location Id is not amongs the company locations of the current enterprise company the value is ignored.</li>
+<li>If the provided role Id is not accessible by the current user the value is ignored.</li>
+</ul>
 </article>
           </div>
           
