@@ -10,6 +10,6 @@ references:
 - uid: name
   name: name
   href: includes/name.html
-- uid: table-api
+- uid: the-table-api
   name: Table API
   href: topics/table-api/index.html
