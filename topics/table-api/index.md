@@ -1,5 +1,5 @@
 ---
-uid: table-api
+uid: the-table-api
 ---
 # Table API
 
