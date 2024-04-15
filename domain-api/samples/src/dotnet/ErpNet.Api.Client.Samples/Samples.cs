@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
 using ErpNet.Api.Client;
-using ErpNet.ServerModel;
 using ErpNet.Api.Client.DomainApi;
 using ErpNet.Api.Client.DomainApi.General.Products;
 using ErpNet.Api.Client.DomainApi.Crm.Sales;
 using ErpNet.Api.Client.DomainApi.General;
-using System.Text;
 using ErpNet.Api.Client.DomainApi.Crm;
 using ErpNet.Api.Client.DomainApi.General.Contacts;
 using ErpNet.Api.Client.OData;
@@ -444,7 +440,6 @@ namespace ConsoleApp1
             }
         }
 
-
         [Description("Changes a document state")]
         static async Task ChangeDocumentStateAsync(DomainApiService service)
         {
@@ -459,6 +454,21 @@ namespace ConsoleApp1
             var userStatus = order.DocumentType?.UserStatuses?.FirstOrDefault(us => us.State == DocumentState.Released);
 
             await order.ChangeStateAsync(service, DocumentState.Released, userStatus);
+        }
+
+        [Description("Get calculated attribute value")]
+        static async Task GetCalculatedAttributeValue(DomainApiService service)
+        {
+            var command = service.Command<SalesOrder>();
+            command.SelectClause = "DEFAULT, CalculatedAttribute_MyAttribute1";
+
+            var order = await command.FirstOrDefaultAsync()
+                    ?? throw new Exception("No sales order found.");
+
+            var calculatedAttributeValue = order.GetPropertyValue("CalculatedAttribute_ForTest");
+
+            Debug.WriteLine(@$"{nameof(SalesOrder)}({order.Id}):
+CalculatedAttribute_ForTest = {calculatedAttributeValue}");
         }
     }
 }

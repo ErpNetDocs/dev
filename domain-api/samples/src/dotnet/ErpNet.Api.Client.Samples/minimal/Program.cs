@@ -1,3 +1,4 @@
+using System;
 using ErpNet.Api.Client;
 using ErpNet.Api.Client.DomainApi;
 using ErpNet.Api.Client.DomainApi.Crm;

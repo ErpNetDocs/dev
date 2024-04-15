@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.IO;
-using System.Threading.Tasks;
-using System.Linq;
-using ErpNet.Api.Client;
-using ErpNet.ServerModel;
-using ErpNet.Api.Client.DomainApi;
 using System.Text;
 
 namespace ConsoleApp1
