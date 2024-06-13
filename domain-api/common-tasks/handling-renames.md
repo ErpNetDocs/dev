@@ -1,3 +1,5 @@
+# Handling entity type renames
+
 Sometimes, we have to rename entity types. In one version, they are called X, and in the next version, they are called Y. Of course, we avoid doing this as much as we can. But sometimes it is unavoidable and has to be done.
 
 For example, we have renamed "General.DocumentPrintImages" ("General_DocumentPrintImages" in the API) to "Systems.Internal.DocumentPrintImages".
