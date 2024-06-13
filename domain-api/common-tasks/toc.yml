@@ -14,3 +14,5 @@
   href: create-notification.md
 - name: Providing context parameters
   href: context-parameters.md
+- name: Handling renames
+  href: handling-renames.md
