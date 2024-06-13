@@ -36,6 +36,8 @@ Example:
 
 https://testdb.my.erp.net/api/domain/odata/GetVersion
 
+Example response:
+
 ```
 {
   "@odata.context": "https://testdb.my.erp.net/api/domain/odata/$metadata#Erp.OpenObject",
@@ -55,6 +57,8 @@ Example:
 
 https://testdb.my.erp.net/api/domain/odata/GetRenamedEntityTypes
 
+Example response:
+
 ```
 
   "@odata.context": "https://testdb.my.erp.net/api/domain/odata/$metadata#Collection(Erp.OpenObject)",
@@ -71,7 +75,28 @@ https://testdb.my.erp.net/api/domain/odata/GetRenamedEntityTypes
     },
     ...
 ```
- 
+
+### Finding the Actual Entity Type Name
+You can use the result of this function to determine the actual entity type name. Here is an example of how this can be achieved:
+
+```
+// The variable $renames contains the array of all entity type renames returned by the ~/GetRenamedEntityTypes function.
+// The variable $entitySet is the provided entity set name, which may have been renamed.
+
+// The $renames collection may contain entries where an entity type name has been renamed multiple times.
+// To find the valid name, we need to iterate through all renames and update the $entitySet accordingly.
+
+foreach (var rename in $renames)
+{
+    if (rename.OldName == $entitySet) 
+    {
+        $entitySet = rename.NewName;
+    }
+}
+
+// After the loop, $entitySet will contain the actual entity type name.
+
+```
 
 ## 4. List of renames
 
