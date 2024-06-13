@@ -118,11 +118,23 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "domain-api/common-tasks/handling-renames.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/common-tasks/handling-renames.html",
+          "hash": "fMo+33f43+gkPM8dIfcHUw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "domain-api/common-tasks/index.md",
       "output": {
         ".html": {
           "relative_path": "domain-api/common-tasks/index.html",
-          "hash": "R6V7xtXjXHfocK9b9O8lXw=="
+          "hash": "5u+E0Qr45jLACTcv2m2wug=="
         }
       },
       "is_incremental": false,
@@ -581,7 +593,7 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/toc.html",
-          "hash": "TJs34ogVoF1tB6grtDv8nA=="
+          "hash": "Vc3hZXDT26SSyMEkZT8OXA=="
         }
       },
       "is_incremental": false,

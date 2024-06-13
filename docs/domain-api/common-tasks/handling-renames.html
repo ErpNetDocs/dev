@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>1. Error message containing the new name | ERP.net Developer Docs </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="1. Error message containing the new name | ERP.net Developer Docs ">
+    <meta name="generator" content="docfx 2.56.9.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+
+<p>Sometimes, we have to rename entity types. In one version, they are called X, and in the next version, they are called Y. Of course, we avoid doing this as much as we can. But sometimes it is unavoidable and has to be done.</p>
+<p>For example, we have renamed &quot;General.DocumentPrintImages&quot; (&quot;General_DocumentPrintImages&quot; in the API) to &quot;Systems.Internal.DocumentPrintImages&quot;.</p>
+<p>This, naturally, is a problem for applications, which access these entities through the API.</p>
+<p>To alleviate the problem, we have taken numerous measures:</p>
+<h2 id="1-error-message-containing-the-new-name">1. Error message containing the new name</h2>
+<p>When you access an entity, which has been renamed, ERP.net Domain API returns an informative error message, which contains the new name of the entity type</p>
+<p>For example:</p>
+<pre><code>The provided entity set name 'General_DocumentPrintImages' is no more supported.
+The new name of this entity is 'Systems_Internal_DocumentPrintImages'.
+List of all entity renames can be found at https://testdb.my.erp.net/api/domain/odata/GetRenamedEntityTypes.
+</code></pre>
+<p>You have to change your application to use the new name.</p>
+<h2 id="2-support-both-old-and-new-versions">2. Support both old and new versions</h2>
+<p>If you want your app to support both the old and the new version of ERP.net Domain API, you can check the version with the following function:</p>
+<p>/GetVersion</p>
+<p>The function returns a JSON object with &quot;version&quot; property.</p>
+<p>Example:</p>
+<p><a href="https://testdb.my.erp.net/api/domain/odata/GetVersion">https://testdb.my.erp.net/api/domain/odata/GetVersion</a></p>
+<p>Example response:</p>
+<pre><code>{
+  &quot;@odata.context&quot;: &quot;https://testdb.my.erp.net/api/domain/odata/$metadata#Erp.OpenObject&quot;,
+  &quot;version&quot;: &quot;24.1.5.41&quot;
+}
+</code></pre>
+<h2 id="3-automate-entity-type-renames">3. Automate entity type renames</h2>
+<p>If you want to implement some form of automation for these pesky renames, we support end-point, which returns all renames, along with some related data:</p>
+<p>/GetRenamedEntityTypes</p>
+<p>The function returns a JSON array with entity type rename containig OldName, NewName and Version (the version when the new name replaces the old name).</p>
+<p>Example:</p>
+<p><a href="https://testdb.my.erp.net/api/domain/odata/GetRenamedEntityTypes">https://testdb.my.erp.net/api/domain/odata/GetRenamedEntityTypes</a></p>
+<p>Example response:</p>
+<pre><code>
+  &quot;@odata.context&quot;: &quot;https://testdb.my.erp.net/api/domain/odata/$metadata#Collection(Erp.OpenObject)&quot;,
+  &quot;value&quot;: [
+    {
+      &quot;OldName&quot;: &quot;Systems_Core_DataEntryDefaultValues&quot;,
+      &quot;NewName&quot;: &quot;Systems_Internal_DataEntryDefaultValues&quot;,
+      &quot;Version&quot;: &quot;24.1.5.35&quot;
+    },
+    {
+      &quot;OldName&quot;: &quot;Systems_Core_ExtensibleDataObjects&quot;,
+      &quot;NewName&quot;: &quot;Systems_Internal_ExtensibleDataObjects&quot;,
+      &quot;Version&quot;: &quot;24.1.5.35&quot;
+    },
+    ...
+</code></pre>
+<h3 id="finding-the-actual-entity-type-name">Finding the Actual Entity Type Name</h3>
+<p>You can use the result of this function to determine the actual entity type name. Here is an example of how this can be achieved:</p>
+<pre><code>// The variable $renames contains the array of all entity type renames returned by the ~/GetRenamedEntityTypes function.
+// The variable $entitySet is the provided entity set name, which may have been renamed.
+
+// The $renames collection may contain entries where an entity type name has been renamed multiple times.
+// To find the valid name, we need to iterate through all renames and update the $entitySet accordingly.
+
+foreach (var rename in $renames)
+{
+    if (rename.OldName == $entitySet) 
+    {
+        $entitySet = rename.NewName;
+    }
+}
+
+// After the loop, $entitySet will contain the actual entity type name.
+
+</code></pre>
+<h2 id="4-list-of-renames">4. List of renames</h2>
+<p>To view the list of renamed entity types, go to the following address:</p>
+<p><a href="https://docs.erp.net/model/entities/renames.html">Renamed entity types</a></p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/handling-renames.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>
