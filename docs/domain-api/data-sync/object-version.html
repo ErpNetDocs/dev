@@ -89,7 +89,7 @@
 
 <p>Object version is a system and API supported way for applications to track changes in ERP.net entities.</p>
 <h2 id="change-tracking">Change tracking</h2>
-<p>The changes are aggregated in the <a href="xref:aggregates">Entity aggregates</a>.
+<p>The changes are aggregated in the <a class="xref" href="https://erpnetdocs.github.io/tech/advanced/concepts/aggregates.html">Entity aggregates</a>.
 This means, that, if for example, an external app updates a single Sales Order Line, the update creates a new version for the whole <a class="xref" href="https://erpnetdocs.github.io/model/entities/Crm.Sales.SalesOrders.html">Sales Order</a> aggregate.</p>
 <p>Object version reflects this change by increasing its counter with 1.</p>
 <p>In short,</p>
@@ -106,7 +106,7 @@ However, it is guaranteed, that upon update, the value is changed.</p>
 </div>
 </blockquote>
 <h2 id="setup">Setup</h2>
-<p>In order for the Object version system to start working, the aggregate (e.g, its root entity) must be setup to <a href="xref:track-changes">Track Changes</a> with at least level 1.</p>
+<p>In order for the Object version system to start working, the aggregate (e.g, its root entity) must be setup to <a class="xref" href="https://erpnetdocs.github.io/tech/advanced/data-objects/track-changes.html">Track Changes</a> with at least level 1.</p>
 <h2 id="usage">Usage</h2>
 <p>Object version is available through the Domain API for each entity type.</p>
 <p>In order for the API to return the object version, it must be explicitly selected in the API call.</p>
@@ -124,7 +124,7 @@ Perform it only when strictly necessary and only for the entities, for which it 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-sync/object-version.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-sync/object-version.md/#L1" class="edit-link">Suggest improvement to this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>
