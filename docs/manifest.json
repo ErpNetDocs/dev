@@ -1,5 +1,4 @@
 {
-  "homepages": [],
   "source_base_path": "C:/TFSAgent15/_work/20/s",
   "xrefmap": "xrefmap.yml",
   "files": [
@@ -9,19 +8,16 @@
         "resource": {
           "relative_path": "index.json"
         }
-      },
-      "is_incremental": false
+      }
     },
     {
       "type": "Conceptual",
       "source_relative_path": "README.md",
       "output": {
         ".html": {
-          "relative_path": "README.html",
-          "hash": "UZ8lG2jnsZZeLkIyOYe69g=="
+          "relative_path": "README.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -32,7 +28,6 @@
           "relative_path": "docs/fonts/glyphicons-halflings-regular.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -43,7 +38,6 @@
           "relative_path": "docs/logo.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -54,7 +48,6 @@
           "relative_path": "docs/logo_old.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -65,7 +58,6 @@
           "relative_path": "docs/query-builder.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -73,11 +65,9 @@
       "source_relative_path": "domain-api/authentication.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/authentication.html",
-          "hash": "RKe9bwJxd37QSZStOgw0mw=="
+          "relative_path": "domain-api/authentication.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -85,11 +75,9 @@
       "source_relative_path": "domain-api/common-tasks/change-language.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/common-tasks/change-language.html",
-          "hash": "BcfdvJVSoggvQDYEhsDCrg=="
+          "relative_path": "domain-api/common-tasks/change-language.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -97,11 +85,9 @@
       "source_relative_path": "domain-api/common-tasks/context-parameters.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/common-tasks/context-parameters.html",
-          "hash": "V7wFdINAmDMXOHQeqKpbOw=="
+          "relative_path": "domain-api/common-tasks/context-parameters.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -109,11 +95,9 @@
       "source_relative_path": "domain-api/common-tasks/create-notification.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/common-tasks/create-notification.html",
-          "hash": "wITbcxM4QS1bYiYpkzdUjw=="
+          "relative_path": "domain-api/common-tasks/create-notification.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -121,11 +105,9 @@
       "source_relative_path": "domain-api/common-tasks/handling-renames.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/common-tasks/handling-renames.html",
-          "hash": "SdZRElA8YM61iINVG4/vYg=="
+          "relative_path": "domain-api/common-tasks/handling-renames.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -133,11 +115,9 @@
       "source_relative_path": "domain-api/common-tasks/index.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/common-tasks/index.html",
-          "hash": "qAGNSqx5HzIf9uFHShenTw=="
+          "relative_path": "domain-api/common-tasks/index.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -145,11 +125,9 @@
       "source_relative_path": "domain-api/common-tasks/master-detail-attributes.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/common-tasks/master-detail-attributes.html",
-          "hash": "w9EUYwSuUrPcVvtVcJmxbw=="
+          "relative_path": "domain-api/common-tasks/master-detail-attributes.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -157,26 +135,32 @@
       "source_relative_path": "domain-api/common-tasks/register-trusted-app.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/common-tasks/register-trusted-app.html",
-          "hash": "ve+d/9RBEBpY20+AwFwJSQ=="
+          "relative_path": "domain-api/common-tasks/register-trusted-app.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Conceptual",
       "source_relative_path": "domain-api/common-tasks/retrieve-products.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/common-tasks/retrieve-products.html",
-          "hash": "u+i4yLXq8Ww2AYVSRTIUWQ=="
+          "relative_path": "domain-api/common-tasks/retrieve-products.html"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "domain-api/common-tasks/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/common-tasks/toc.html"
+        },
+        ".json": {
+          "relative_path": "domain-api/common-tasks/toc.json"
+        }
+      },
       "version": ""
     },
     {
@@ -184,11 +168,9 @@
       "source_relative_path": "domain-api/common-tasks/working-with-documents.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/common-tasks/working-with-documents.html",
-          "hash": "kGzNKCuL3doLu3MMaj0WhQ=="
+          "relative_path": "domain-api/common-tasks/working-with-documents.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -196,11 +178,9 @@
       "source_relative_path": "domain-api/complex-types/amount.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/complex-types/amount.html",
-          "hash": "kSWo/3VPKJIMEkN/vYA9Pw=="
+          "relative_path": "domain-api/complex-types/amount.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -208,11 +188,9 @@
       "source_relative_path": "domain-api/complex-types/custom-property-value.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/complex-types/custom-property-value.html",
-          "hash": "eh2cXGfq/rd2t1PK0adz+w=="
+          "relative_path": "domain-api/complex-types/custom-property-value.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -220,11 +198,9 @@
       "source_relative_path": "domain-api/complex-types/index.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/complex-types/index.html",
-          "hash": "BNtxtH8aLiFzhS9RVNdtEA=="
+          "relative_path": "domain-api/complex-types/index.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -232,11 +208,9 @@
       "source_relative_path": "domain-api/complex-types/multi-language-string.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/complex-types/multi-language-string.html",
-          "hash": "N68yt9zb07vJPi9w7sSfpA=="
+          "relative_path": "domain-api/complex-types/multi-language-string.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -244,11 +218,22 @@
       "source_relative_path": "domain-api/complex-types/quantity.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/complex-types/quantity.html",
-          "hash": "mNHvyWLjCcRFc+OqGQNEMg=="
+          "relative_path": "domain-api/complex-types/quantity.html"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "domain-api/complex-types/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/complex-types/toc.html"
+        },
+        ".json": {
+          "relative_path": "domain-api/complex-types/toc.json"
+        }
+      },
       "version": ""
     },
     {
@@ -256,11 +241,9 @@
       "source_relative_path": "domain-api/data-sync/event-push.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/data-sync/event-push.html",
-          "hash": "f+8JksV2nPlOhvAy83MEtw=="
+          "relative_path": "domain-api/data-sync/event-push.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -268,11 +251,9 @@
       "source_relative_path": "domain-api/data-sync/index.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/data-sync/index.html",
-          "hash": "uJSPGN8ISNwgSyMP/4QD7Q=="
+          "relative_path": "domain-api/data-sync/index.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -280,11 +261,9 @@
       "source_relative_path": "domain-api/data-sync/object-version.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/data-sync/object-version.html",
-          "hash": "6fRYUja2JCiji0x/LGuzsQ=="
+          "relative_path": "domain-api/data-sync/object-version.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -292,11 +271,22 @@
       "source_relative_path": "domain-api/data-sync/optimistic-locking.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/data-sync/optimistic-locking.html",
-          "hash": "UzZ8fHxaQkpNzqCpX0e03w=="
+          "relative_path": "domain-api/data-sync/optimistic-locking.html"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "domain-api/data-sync/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-sync/toc.html"
+        },
+        ".json": {
+          "relative_path": "domain-api/data-sync/toc.json"
+        }
+      },
       "version": ""
     },
     {
@@ -304,11 +294,9 @@
       "source_relative_path": "domain-api/filterable-references.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/filterable-references.html",
-          "hash": "8EmSmrj7u8K+4uH19lA/DA=="
+          "relative_path": "domain-api/filterable-references.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -316,11 +304,9 @@
       "source_relative_path": "domain-api/index.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/index.html",
-          "hash": "aFw8q/fdamEFp4oKrySBZg=="
+          "relative_path": "domain-api/index.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -328,11 +314,9 @@
       "source_relative_path": "domain-api/libraries.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/libraries.html",
-          "hash": "JHuy6zr5uzDaC8TsfIt4Zw=="
+          "relative_path": "domain-api/libraries.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -340,11 +324,9 @@
       "source_relative_path": "domain-api/query-builder.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/query-builder.html",
-          "hash": "9DK6ZPbaiOFY6Pu9bIjuYA=="
+          "relative_path": "domain-api/query-builder.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -352,11 +334,9 @@
       "source_relative_path": "domain-api/query-options/filter.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/query-options/filter.html",
-          "hash": "zByYq8XF5o66VEan1SWe/Q=="
+          "relative_path": "domain-api/query-options/filter.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -364,11 +344,9 @@
       "source_relative_path": "domain-api/query-options/index.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/query-options/index.html",
-          "hash": "QkbK8WSG3qiPl7zi5qmnIA=="
+          "relative_path": "domain-api/query-options/index.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -376,11 +354,9 @@
       "source_relative_path": "domain-api/query-options/options.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/query-options/options.html",
-          "hash": "633JvdBmdYmgmN/v/WO+fw=="
+          "relative_path": "domain-api/query-options/options.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -388,11 +364,9 @@
       "source_relative_path": "domain-api/query-options/search.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/query-options/search.html",
-          "hash": "PDG9bA9m3pzJZdaVy+S5+Q=="
+          "relative_path": "domain-api/query-options/search.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -400,11 +374,22 @@
       "source_relative_path": "domain-api/query-options/select.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/query-options/select.html",
-          "hash": "3GJUfeDqmxc/wiJEy8qScQ=="
+          "relative_path": "domain-api/query-options/select.html"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "domain-api/query-options/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/query-options/toc.html"
+        },
+        ".json": {
+          "relative_path": "domain-api/query-options/toc.json"
+        }
+      },
       "version": ""
     },
     {
@@ -412,11 +397,9 @@
       "source_relative_path": "domain-api/samples/build-ecommerce-website.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/samples/build-ecommerce-website.html",
-          "hash": "88FEPEeAVkCmNKeWCOK5sA=="
+          "relative_path": "domain-api/samples/build-ecommerce-website.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -424,11 +407,9 @@
       "source_relative_path": "domain-api/samples/build-payment-connector.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/samples/build-payment-connector.html",
-          "hash": "jmkmArcpQTcftAbAbtJNOg=="
+          "relative_path": "domain-api/samples/build-payment-connector.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -436,11 +417,9 @@
       "source_relative_path": "domain-api/samples/dotnet-service-app.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/samples/dotnet-service-app.html",
-          "hash": "D4M12yfb/uuk3KG+HerIUw=="
+          "relative_path": "domain-api/samples/dotnet-service-app.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -448,11 +427,9 @@
       "source_relative_path": "domain-api/samples/dotnet-web-app.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/samples/dotnet-web-app.html",
-          "hash": "+SBpF2W9kLYCe4BMGhBBHA=="
+          "relative_path": "domain-api/samples/dotnet-web-app.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -460,11 +437,9 @@
       "source_relative_path": "domain-api/samples/javascript-client.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/samples/javascript-client.html",
-          "hash": "W5TtPa3SulWN2VO33GyPCQ=="
+          "relative_path": "domain-api/samples/javascript-client.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -472,11 +447,9 @@
       "source_relative_path": "domain-api/samples/php-interactive-client.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/samples/php-interactive-client.html",
-          "hash": "h+1zXG6EdkwHtPYRMLvtOQ=="
+          "relative_path": "domain-api/samples/php-interactive-client.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -484,11 +457,9 @@
       "source_relative_path": "domain-api/samples/php-service-client.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/samples/php-service-client.html",
-          "hash": "a+5FOvnd68vfAvO4oUm2nw=="
+          "relative_path": "domain-api/samples/php-service-client.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -496,11 +467,9 @@
       "source_relative_path": "domain-api/samples/src/dotnet/ErpNetDemoClient/wwwroot/lib/jquery-validation/LICENSE.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/samples/src/dotnet/ErpNetDemoClient/wwwroot/lib/jquery-validation/LICENSE.html",
-          "hash": "b8LibKAQJDI6+pz1sxjfrA=="
+          "relative_path": "domain-api/samples/src/dotnet/ErpNetDemoClient/wwwroot/lib/jquery-validation/LICENSE.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -508,11 +477,9 @@
       "source_relative_path": "domain-api/samples/step-by-step/basic-acquire-access-token.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/samples/step-by-step/basic-acquire-access-token.html",
-          "hash": "XIJbYX4KzHYXtFDu2iY03g=="
+          "relative_path": "domain-api/samples/step-by-step/basic-acquire-access-token.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -520,11 +487,9 @@
       "source_relative_path": "domain-api/samples/step-by-step/basic-exchange-auth-code-access-token.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/samples/step-by-step/basic-exchange-auth-code-access-token.html",
-          "hash": "DS0XgicDNFo8xl2JVR3sOg=="
+          "relative_path": "domain-api/samples/step-by-step/basic-exchange-auth-code-access-token.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -532,11 +497,9 @@
       "source_relative_path": "domain-api/samples/step-by-step/basic-renew-access-token.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/samples/step-by-step/basic-renew-access-token.html",
-          "hash": "iXQtoz0xtcGDgbahOYw3ug=="
+          "relative_path": "domain-api/samples/step-by-step/basic-renew-access-token.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -544,11 +507,9 @@
       "source_relative_path": "domain-api/samples/step-by-step/console-app-access-token-auth-code.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/samples/step-by-step/console-app-access-token-auth-code.html",
-          "hash": "q0WVchcmdeseOrn9XscpDg=="
+          "relative_path": "domain-api/samples/step-by-step/console-app-access-token-auth-code.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -556,11 +517,9 @@
       "source_relative_path": "domain-api/samples/step-by-step/index.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/samples/step-by-step/index.html",
-          "hash": "un5xhkcJCcN8tghzkAKDRQ=="
+          "relative_path": "domain-api/samples/step-by-step/index.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -568,11 +527,22 @@
       "source_relative_path": "domain-api/samples/step-by-step/spa-access-token-auth-code.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/samples/step-by-step/spa-access-token-auth-code.html",
-          "hash": "9B4Ihg5gCWhHTi7z4vRcjQ=="
+          "relative_path": "domain-api/samples/step-by-step/spa-access-token-auth-code.html"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "domain-api/samples/step-by-step/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/step-by-step/toc.html"
+        },
+        ".json": {
+          "relative_path": "domain-api/samples/step-by-step/toc.json"
+        }
+      },
       "version": ""
     },
     {
@@ -580,11 +550,22 @@
       "source_relative_path": "domain-api/samples/step-by-step/web-app-access-token-auth-code.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/samples/step-by-step/web-app-access-token-auth-code.html",
-          "hash": "OEV1Il5jNhjSkJAkLXkloQ=="
+          "relative_path": "domain-api/samples/step-by-step/web-app-access-token-auth-code.html"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "domain-api/samples/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/toc.html"
+        },
+        ".json": {
+          "relative_path": "domain-api/samples/toc.json"
+        }
+      },
       "version": ""
     },
     {
@@ -592,11 +573,12 @@
       "source_relative_path": "domain-api/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "domain-api/toc.html",
-          "hash": "Vc3hZXDT26SSyMEkZT8OXA=="
+          "relative_path": "domain-api/toc.html"
+        },
+        ".json": {
+          "relative_path": "domain-api/toc.json"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -604,11 +586,9 @@
       "source_relative_path": "domain-api/transactions.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/transactions.html",
-          "hash": "LSQZUohD28UQ4Duz4Y5TSA=="
+          "relative_path": "domain-api/transactions.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -616,11 +596,9 @@
       "source_relative_path": "domain-api/url-components.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/url-components.html",
-          "hash": "nbhW2zvLGZFqAKngmjU1xw=="
+          "relative_path": "domain-api/url-components.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -628,11 +606,9 @@
       "source_relative_path": "includes/erpnet.md",
       "output": {
         ".html": {
-          "relative_path": "includes/erpnet.html",
-          "hash": "E41ZJomgJ79I0VqzZjS/Mw=="
+          "relative_path": "includes/erpnet.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -640,11 +616,9 @@
       "source_relative_path": "includes/name.md",
       "output": {
         ".html": {
-          "relative_path": "includes/name.html",
-          "hash": "+QXdc7tlzeLOcLxTWjcnpg=="
+          "relative_path": "includes/name.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -652,11 +626,9 @@
       "source_relative_path": "index.md",
       "output": {
         ".html": {
-          "relative_path": "index.html",
-          "hash": "wBAoxVfY5dX/8fVhY66akw=="
+          "relative_path": "index.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -667,7 +639,6 @@
           "relative_path": "logo.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -678,7 +649,6 @@
           "relative_path": "logo_old.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -689,7 +659,6 @@
           "relative_path": "query-builder.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -697,11 +666,9 @@
       "source_relative_path": "testinclude.md",
       "output": {
         ".html": {
-          "relative_path": "testinclude.html",
-          "hash": "dgGuD2u309oRf6/LiGG4HQ=="
+          "relative_path": "testinclude.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -709,11 +676,12 @@
       "source_relative_path": "toc.yml",
       "output": {
         ".html": {
-          "relative_path": "toc.html",
-          "hash": "JQ6MXtJWNXL+1qhgxQxrOw=="
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -721,11 +689,9 @@
       "source_relative_path": "topics/application-types.md",
       "output": {
         ".html": {
-          "relative_path": "topics/application-types.html",
-          "hash": "H5MxthYFHBZxg6xsguluAA=="
+          "relative_path": "topics/application-types.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -733,11 +699,9 @@
       "source_relative_path": "topics/authentication/authentication-flows.md",
       "output": {
         ".html": {
-          "relative_path": "topics/authentication/authentication-flows.html",
-          "hash": "5N9g/FiISCuMND/D+LhG0g=="
+          "relative_path": "topics/authentication/authentication-flows.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -745,11 +709,22 @@
       "source_relative_path": "topics/authentication/index.md",
       "output": {
         ".html": {
-          "relative_path": "topics/authentication/index.html",
-          "hash": "7QyOGbIa0ssb88p0pVT2XQ=="
+          "relative_path": "topics/authentication/index.html"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "topics/authentication/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "topics/authentication/toc.html"
+        },
+        ".json": {
+          "relative_path": "topics/authentication/toc.json"
+        }
+      },
       "version": ""
     },
     {
@@ -757,11 +732,9 @@
       "source_relative_path": "topics/authentication/trusted-applications.md",
       "output": {
         ".html": {
-          "relative_path": "topics/authentication/trusted-applications.html",
-          "hash": "P/x2+kCbO4TGOykTYRlPtg=="
+          "relative_path": "topics/authentication/trusted-applications.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -769,11 +742,9 @@
       "source_relative_path": "topics/erp-instances.md",
       "output": {
         ".html": {
-          "relative_path": "topics/erp-instances.html",
-          "hash": "EyByvIXQYKfaBMO6+o3JsA=="
+          "relative_path": "topics/erp-instances.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -781,11 +752,9 @@
       "source_relative_path": "topics/index.md",
       "output": {
         ".html": {
-          "relative_path": "topics/index.html",
-          "hash": "ey8OV3AyFoVgMLduQIVI1A=="
+          "relative_path": "topics/index.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -793,11 +762,22 @@
       "source_relative_path": "topics/table-api/index.md",
       "output": {
         ".html": {
-          "relative_path": "topics/table-api/index.html",
-          "hash": "nz2l7NwhcuhO0ppUDOb3jQ=="
+          "relative_path": "topics/table-api/index.html"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "topics/table-api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "topics/table-api/toc.html"
+        },
+        ".json": {
+          "relative_path": "topics/table-api/toc.json"
+        }
+      },
       "version": ""
     },
     {
@@ -805,11 +785,9 @@
       "source_relative_path": "topics/table-api/usage-guide.md",
       "output": {
         ".html": {
-          "relative_path": "topics/table-api/usage-guide.html",
-          "hash": "KSH4cWM8BGCxaBy6SPAKpA=="
+          "relative_path": "topics/table-api/usage-guide.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -817,60 +795,15 @@
       "source_relative_path": "topics/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "topics/toc.html",
-          "hash": "9w9c2Yhk9B2sqct/9MdZPg=="
+          "relative_path": "topics/toc.html"
+        },
+        ".json": {
+          "relative_path": "topics/toc.json"
         }
       },
-      "is_incremental": false,
       "version": ""
     }
   ],
-  "incremental_info": [
-    {
-      "status": {
-        "can_incremental": false,
-        "details": "Cannot build incrementally because last build info is missing.",
-        "incrementalPhase": "build",
-        "total_file_count": 0,
-        "skipped_file_count": 0,
-        "full_build_reason_code": "NoAvailableBuildCache"
-      },
-      "processors": {
-        "ConceptualDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor ConceptualDocumentProcessor cannot support incremental build because the following steps don't implement ISupportIncrementalBuildStep interface: ProcessLists.",
-          "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
-        },
-        "ResourceDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
-        },
-        "TocDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
-        }
-      }
-    },
-    {
-      "status": {
-        "can_incremental": false,
-        "details": "Cannot support incremental post processing, the reason is: should not trace intermediate info.",
-        "incrementalPhase": "postProcessing",
-        "total_file_count": 0,
-        "skipped_file_count": 0
-      },
-      "processors": {}
-    }
-  ],
-  "version_info": {},
   "groups": [
     {
       "xrefmap": "xrefmap.yml"
