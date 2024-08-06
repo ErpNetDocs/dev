@@ -14,8 +14,6 @@ When the transaction is committed, the entire dataset is submitted to the databa
 
 **BeginTransaction** is unbound (not bound to any entity) action (actions are called with HTTP POST method) that initializes an object transaction on the server and  returns a *TransactionId* token as a plain text (not json - for example XXXXX). This object transaction is something like memory data-set that holds copies of database records. 
 
-The transaction lives in the server memory for 20 minutes sliding expiration. 
-
 If any subsequent request includes the *TransactionId* token in the HTTP header (like this: TransactionId:XXXXX) the requested operation will not be executed against the database but against the memory transaction. This means that any POST, PATCH and DELETE requests will be executed only in memory.
 
 ### Parameters
