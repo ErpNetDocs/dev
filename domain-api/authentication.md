@@ -76,7 +76,7 @@ The result of this request will be:
       "AdditionalProperties": null
     },
     {
-      "Type": "API",
+      "Type": "DomainAPI",
       "Status": "Working",
       "Url": "https://demodb.my.erp.net/api",
       "AdditionalProperties": {
@@ -93,7 +93,7 @@ By the result of this request you can understand where the Identity Server is lo
 The site types at the moment are:
 
 * ID - Identity Server Site - the authorization provider for the ERP.net instance.
-* API - Domain API Site 
+* DomainAPI - Domain API Site 
 * TableAPI - Table API Site
 * Other site types that provide different functionalities.
 
