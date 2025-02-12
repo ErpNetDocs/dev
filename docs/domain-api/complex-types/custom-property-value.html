@@ -89,17 +89,17 @@
 
 <p>Custom Properties (also called Custom Attributes in the domain terminology) are user-defined attributes, which can supplement the predefined system attributes.</p>
 <h2 id="definition-of-а-custom-property">Definition of а Custom Property</h2>
-<p>For reference information about the definition of the custom properties, see <a class="xref" href="https://erpnetdocs.github.io/model/entities/General.CustomProperties.html">General.CustomProperties Entity</a>.</p>
+<p>For reference information about the definition of the custom properties, see @General.CustomProperties.</p>
 <p>Here are some highlights for the definition record:</p>
 <ul>
 <li><p><em>EntityName</em> contains the name of the entity, for which the property is defined.
 You can find the entity name for each entity in the model documentation.
-For example, the entity name for <a class="xref" href="https://erpnetdocs.github.io/model/entities/Crm.Customers.html">Crm.Customers Entity</a> is &quot;Crm_Customers&quot; (check it out in the link - see the tag line under the entity name).</p>
+For example, the entity name for @Crm.Customers is &quot;Crm_Customers&quot; (check it out in the link - see the tag line under the entity name).</p>
 </li>
 <li><p><em>LimitToAllowedValues</em> - this defines whether the property is free text or is limited to a list of allowed values.</p>
 </li>
 <li><p><em>AllowedValuesEntityName</em> -  specifies that the allowed values are retrieved from the specified entity.
-When this is NULL, the allowed values are retrieved from <a class="xref" href="https://erpnetdocs.github.io/model/entities/General.CustomPropertyAllowedValues.html">General.CustomPropertyAllowedValues Entity</a> .</p>
+When this is NULL, the allowed values are retrieved from @General.CustomPropertyAllowedValues .</p>
 </li>
 </ul>
 <h2 id="data-type-and-values">Data type and values</h2>
