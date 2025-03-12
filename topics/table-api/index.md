@@ -1,4 +1,3 @@
-![image](https://github.com/user-attachments/assets/cc4d0865-27bd-4248-b490-18b5677d78e8)![image](https://github.com/user-attachments/assets/cc41b933-ec8d-46cb-b144-b88cb2928da0)---
 uid: table-api
 ---
 # Table API
