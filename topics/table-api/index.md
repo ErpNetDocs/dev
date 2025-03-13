@@ -228,21 +228,21 @@ General guidelines for operation are provided through the following points:
    Date.EndOfDay(Date.AddDays(RangeEnd,-1))
    ```
 
-   > [!IMPORTANT]
-   > In the filter, you can use only: <br>
-   > - The logical operator '**and**'
-   > - The comparison operators '**eq**', '**le**', '**ge**'
-   > - The operator '**like**'
-   > - The comparison operator with list of values '**in**' <br>
-   > 
-   > If a logical **OR** operator is needed in the filter, the query must be split into several separate queries that do not contain OR, which are then combined into a single query using "**Append queries**". <br>
-   > An exception is the above-described statement for filtering by enumerated values of the type:
-   > 
-   >     **and (Field eq 'Value1' or Field eq 'Value2' ... or Field eq 'ValueN')**
-   > 
-   > which is equivalent to the standard supported statement:
-   > 
-   >     **and Field in ('Value1', 'Value2', ...,'ValueN')**
+> [!IMPORTANT]
+> In the filter, you can use only: <br>
+> - The logical operator '**and**'
+> - The comparison operators '**eq**', '**le**', '**ge**'
+> - The operator '**like**'
+> - The comparison operator with list of values '**in**' <br>
+> 
+> If a logical **OR** operator is needed in the filter, the query must be split into several separate queries that do not contain OR, which are then combined into a single query using "**Append queries**". <br>
+> An exception is the above-described statement for filtering by enumerated values of the type:
+> 
+>     **and (Field eq 'Value1' or Field eq 'Value2' ... or Field eq 'ValueN')** <br>
+> 
+> which is equivalent to the standard supported statement: <br>
+> 
+>     **and Field in ('Value1', 'Value2', ...,'ValueN')** <br>
 
 In PowerBI, it is possible to set up **incremental updating**. 
 
