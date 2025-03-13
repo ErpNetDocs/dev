@@ -250,25 +250,23 @@ For this purpose, you must create two parameters (**RangeStart**, **RangeEnd**) 
 
 ### Using incremental refresh to accelerate data updates in PowerBI
 
-To achieve filtering for lines and other tables by the Document_Date field of the document head, it is necessary to use a filter by reference field.
+To achieve filtering for lines and other tables by the **Document_Date** field of the document head, it is necessary to filter by a reference field. However, an incremental refresh problem will then arise. It is not possible to set the required filtering without manually setting parameters by which to filter, and PowerBI online does not support refreshing from the source that was set this way.
 
-However, an incremental refresh problem then arises. It is not possible to set the required filtering without manually setting parameters by which to filter, and PowerBI online does not support refreshing from the source set this way.
+**It is imperative that you set the general parameters described at the beginning of this article before proceeding!**
 
-**It is imperative that the general parameters described at the beginning are set before proceeding!**
+#### Data loading via Web Content with the ability to filter by reference fields and compatibility with incremental refresh
 
-Data loading via Web Content with the ability to filter by reference fields and compatibility with incremental refresh.
-
-We apply the following approach:
+Let's apply the following approach:
 
 1. Use Web Content as data source
 2. Manually set all possible filters that should be applied in the data source to reduce the transferred data as much as possible
 3. Manually set the list of fields to be returned to reduce the amount of data
 4. Convert the returned data to JSON
-5. Convert the result to a table, after which other processing can continue
+5. Convert the result to a table, after which other processings can continue
    
-It is easiest to use the example provided, modifying as needed.
+It is easiest to use the example provided, which can be changed as needed.
 
-Example of data filtering for table Crm_Sales_Order_Lines_Table:
+An example of data filtering for table **Crm_Sales_Order_Lines_Table**:
 
 ```
 let
@@ -290,108 +288,106 @@ in
     #"Result"
 ```
 
-### Add new table with incremental step-by-step refresh capability
+### Add new table with incremental refresh capability (step-by-step)
 
-1. Switch to edit data sources mode (select from Home -> Queries -> Transform data)
+1. Switch to edit data sources mode (select from **Home -> Queries -> Transform data**).
 
-2. Create a new query (table) from Home -> New Source -> Blank Query
+2. Create a new query (table) from **Home -> New Source -> Blank Query**.
 
-Then, by clicking Home -> Query -> Advanced editor, open the window in which the M code of the query is written.
+   Then, navigate to **Home -> Query -> Advanced editor** to open the window in which the M code of the query is written.
+   
+   The result is as follows:
+   
+   ![Add new table](pictures/add_new_table.png)
 
-The result is as follows:
-
-![Add new table](pictures/add_new_table.png)
-
-3. Replace the text in the window with the above sample text (for Crm_Sales_Order_Lines_Table)
+3. Replace the text in the window with the above sample text (for **Crm_Sales_Order_Lines_Table**).
  
-4. Edit the value of the strEntityHeadReference variable with the reference field to the new entity whose lines you will load
+4. Edit the value of the **strEntityHeadReference** variable with the reference field pointing to the new entity whose will be loaded.
 
-Edit the value of strEntity with the name of the new entity. If it will be loaded from the head of the entity, the field should be empty. If you are going to load, for example, Crm_Sales_Orders_Table, edit the fields as follows:
+   Edit the value of **strEntity** with the name of the new entity. If it will be loaded from the head of the entity, the field must be empty.
 
-```
-strEntity = "Crm_Sales_Orders",
-strEntityHeadReference = "",
-```
-    
-If it is loaded from Gen_Documents, then change the strDocHead to:
+   If you are going to load **Crm_Sales_Orders_Table**, for example, edit the fields as follows:
+   
+   ```
+   strEntity = "Crm_Sales_Orders",
+   strEntityHeadReference = "",
+   ```
+       
+   If it is loaded from **Gen_Documents**, then change the **strDocHead** to:
+   
+   ```
+   strDocHead = "",
+   ```
 
-```
-strDocHead = "",
-```
+5. Then, select the columns to be included in the table by deleting the last step of the conversions. Using the **expanding feature** (the yellow highlighted icon) from the "**Converted to Table**" step, we select the necessary fields as shown in the screenshot:
 
-5. Then, select the columns to be included in the table by deleting the last step of the conversions and using the expanding feature (the yellow highlighted icon) from the "Converted to Table" step to select the necessary fields as shown in the picture:
+   ![Converted to table](pictures/converted_to_table.png)
+   
+   This assumes that the string in **strSelectFields** is empty (```strSelectFields=""```).
+   
+   If it is filled with certain fields like:
+   
+   ```
+   strSelectFields="Sales_Order_Id, Customer_Id, Store_Id, Sales_Person_Id, Dealer_Id, Document_Currency_Id",
+   ```
+   
+   then only these will be visible, and only they will be returned from TableAPI, which will save time in data transfer and speed up loading.
+   
+   For this reason, specifying the field names to be returned by the query is highly recommended.
+   
+   ![Name setting](pictures/name_setting.png)
 
-![Converted to table](pictures/converted_to_table.png)
-
-This assumes that the string in strSelectFields is empty (strSelectFields="").
-
-If it is filled with certain fields such as:
-
-```
-strSelectFields="Sales_Order_Id, Customer_Id, Store_Id, Sales_Person_Id, Dealer_Id, Document_Currency_Id",
-```
-
-only these will be visible, and only these will be returned from TableAPI, which will save time in data transfer and speed up loading.
-
-For this reason, specifying the field names to be returned by the query is highly recommended.
-
-![Name setting](pictures/name_setting.png)
-
-There is one line in the above code:
+There is one line in the code above:
 
 ```
 value = if List.NonNullCount(ResultList) = 0 then List.Union({ResultList, {null}}) else ResultList,
 ```
     
-which may seem redundant but is very important for the synchronization to run without error.
+which may seem redundant but is very important for the synchronization to run without error. It is used to check the returned result, and if no data is returned, an empty line is added. Missing data causes an error in the next steps of conversion to the tabular form in which we need the data. An error would occur if any information is missing in any incremental refresh period.
 
-It is used to check the returned result, and if no data is returned, an empty line is added. Missing data causes an error in the next steps of conversion to the tabular form in which we need the data. An error would occur if any information is missing in any incremental refresh period.
-
-Executing the above code will result in sending the following data fetch command:
+Executing the code above will result in sending the following data fetch command:
 
 ```
 HTTP GET /tableapi/data/Crm_Sales_Orders?$filter=Document_Reference/Void eq false and Document_Reference/State ge 30 and Document_Reference/Document_Date ge 2015-01-01T00:00:00Z and Document_Reference/Document_Date le 2024-01-09T00:00:00Z&$select=Sales_Order_Id, Customer_Id, Store_Id, Sales_Person_Id, Dealer_Id, Document_Currency_Id&$top=500
 ```
 
-The Document_Date filtering and the value of the $top parameter are determined by the parameters we have defined. This is for PowerBI Desktop queries. When querying from online PowerBI with an incremental update defined for the object, the parameter values will be automatically populated, and separate queries will be generated and executed for each update period.
+The **Document_Date** filtering and the value of the **$top** parameter are determined by the parameters we have defined. This applies to PowerBI Desktop queries. When querying from online PowerBI with incremental update defined for the object, the parameter values will be automatically filled, and separate queries will be generated and executed for each update period.
 
-Once the project is published to PowerBI, the first thing to set is to change the TopCount parameter value to a large enough value, for example 500000000.
+Once the project is published to PowerBI, the first thing to set is chaning **TopCount** parameter to a large enough value, for example 500000000. After that, a manual **Refresh** can be run at an appropriate time as this will cause the data to be fully loaded (from the processing period set in the incremental refresh).
 
-After that, a manual Refresh can be run at the appropriate time because this will cause the data to be fully loaded (from the incremental refresh set in the incremental refresh processing period).
-
-Let's also pay attention to the Timeout parameter set in the sample query, with value:
+Let's also pay attention to the **Timeout** parameter set in this sample query:
 
 ```
 Timeout=#duration(0, 2, 0, 0)
 ```
 
-It is used to set the timeout of the single data download request, and the above setting changes it to 2 hours. This is the maximum time given to one request (each incremental period) at a time.
+It is used to set the timeout of a single data download request. The above setting changes it to 2 hours. This is the maximum time given to one request (each incremental period) at a time. In PowerBI, this value defaults to 600 seconds, which can be insufficient, especially during the initial data load when the archive period data is loaded. 
 
-In PowerBI, this value defaults to 600 seconds, which can be insufficient, especially during the initial data load when the archive period data is loaded. The default time for a single query may not be enough if the settings are, for example, as in the picture:
+The default time for a single query may not be enough if the settings are as follows:
 
 ![Set import and refresh](pictures/set_import_and_refresh.png)
 
-Archival data periods will be one year in size. This means that the amount of data to be loaded will be very large, and the query will be slow to execute. Either increase the timeout, as we have done in the example, or change the period to an equivalent but smaller size.
+Archival data periods will be 1 year in size. This means that the amount of data to be loaded will be very large, and the query will be slow to execute. We need to either increase the timeout, as we have done in the example, or change the period to an equivalent but with a smaller size.
 
 We can set the following:
 
-Archive data starting **60 Month** before refresh date
+_Archive data starting **60 Month** before refresh date_
 
-which is equivalent to the above settings, but the period of data processed with one query will be one month.
+which is equivalent to the above settings, but the period of data processed with one query will be one month. This will reduce the execution time and the probability of timeout of single queries on initial data load.
 
-This will reduce the execution time and probability of timeout of single queries on initial data load.
+The archive period data is loaded once on the first **Refresh** after the project is published. Data loading in the periods defined by **Incrementally refresh data** is done on each Refresh, but the refresh time will not increase proportionally to the total data in the database - rather, to the volume of data in the periods being processed.
 
-The archive period data is loaded once on the first Refresh after the project is published. Data loading in the periods defined by Incrementally refresh data is done at each Refresh, but the refresh time will not increase proportionally to the total data in the database, but to the volume of data in the periods being processed.
+The use of **TableAPI** allows multiple queries to pull data from the database simultaneously without overloading the server and disrupting the primary operations.
 
-The use of TableAPI allows multiple queries to pull data from the database simultaneously without overloading the server and significantly affecting the underlying work.
+### Optimized loading of user features
 
-### Optimized loading of custom features
+Custom features are also used in the analyses performed in PowerBI. 
 
-Custom features are also used in the analyses performed in PowerBI. Because their volume is significant, it is very important to load and work with them efficiently.
+Since their volume is significant, it is very important for them to be loaded and used efficiently.
 
 #### Optimized loading of all necessary features
 
-For this purpose, we use the following code defining a query named Gen_Property_Values:
+For this purpose, we use the following code defining a query named **Gen_Property_Values**:
 
 ```
 let
@@ -414,17 +410,19 @@ The construct:
 
 can be reduced or expanded with more members.
 
-Note the operation:
+**Note the following operation:**
 
 ```
 #"Filtered Rows" = Table.Buffer(#"Removed Other Columns")
 ```
     
-It specifies that the data will be statically buffered in memory. In subsequent operations that use Gen_Property_Values (the query we define) as the source, data will be taken from the buffer in memory, saving significant re-fetching time.
+It specifies that the data will be statically buffered in memory. In the next operations that use as a source **Gen_Property_Values** (the query we define), data will be retrieved from the buffer in the memory which will save significant re-fetching time.
 
-Another optimization comes from loading only the required fields listed in the Table.SelectColumns operation. This reduces the returned data and speeds up the query. This is possible thanks to the Folding support when using an **OData feed** data source.
+Another optimization comes from loading only the required fields listed in the **Table.SelectColumns** operation. This reduces the returned data and speeds up the query. This is possible thanks to the **Folding** support which is active when using an **OData feed** data source.
 
-The processing can continue by creating a new query (e.g., Entity1_Property_Values) with the following code:
+#### Dividing the loaded features by entities to which they refer
+
+The processing can continue by creating a new query (e.g., **Entity1_Property_Values**) with the following code:
 
 ```
 let
