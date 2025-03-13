@@ -21,234 +21,232 @@ For information about the tables that can be queried, see the [Table Model](http
 
 ### Introduction
 
-The first step in building a BI system is loading (Extract) data from the source database. This is done using a TableAPI site that allows an authorized user to access raw data at the table level.
+The first step in building a BI system is loading (Extract) data from the source database. This is done using a TableAPI site that allows an authorized user to access raw data at the table level. It is essential to achieve optimal transfer speed by using the capabilities provided for filtering the primary information to minimize data refresh time.
 
-It is essential to achieve optimal transfer speed by using the filtering capabilities provided on the primary information to minimize data refresh time.
-
-For this reason, we describe best practices when using TableAPI (OData) data source to power PowerBI and BI data analysis platforms in general. The information is organized with increasing complexity and presented through examples for ease of understanding, allowing for step-by-step code copying and testing.
-
-Following these guidelines is necessary to avoid potential errors and delays when loading data.
+For this reason, we describe best practices when using TableAPI (OData) data source to power PowerBI and BI data analysis platforms in general. The information is organized with increasing complexity and presented through examples for ease of understanding, allowing for step-by-step code copying and testing. Following these guidelines is necessary to avoid potential errors and delays when loading data.
 
 There are two main ways to download data:
 
-1. Using OData.Feed to read data from the source
-2. Using Web.Contents to read data from the source
+1. **Using OData.Feed to read data from the source**
+2. **Using Web.Contents to read data from the source**
    
 In both approaches, you must manually set parameters and filters for queries to achieve optimal results. This includes specifying the fields returned by the query (listed in the select clause) and setting the filter that will be applied to determine the data.
 
-Filters can be applied either on fields of the table being loaded or on related tables at a higher level in the hierarchical model. This means a table containing document rows can be filtered by fields in the document head (e.g., filtering by Document_Date), which enables incremental refreshing of data.
+Filters can be applied either on fields of the table that will be loaded, or on related tables at a higher level in the hierarchical model. This means that a table containing document rows can be filtered by fields in the document head (e.g., filtering by **Document_Date**), which will enable incremental refreshing of data.
 
-Both options use authentication via Basic identification (username and password). These access authorization parameters must be entered in both PowerBI Desktop and the published online PowerBI model.
+Both options use authentication via **Basic identification** (username and password). These access authorization parameters must be entered in both PowerBI Desktop and the PowerBI model published online.
 
-For a small database, it may be possible to skip the presets described below. However, as databases grow, BI models extend, and service configurations change, it becomes imperative to define initial parameters to be used throughout the BI project.
+For a small database, it may be possible to skip the presets described below. However, as databases grow, BI models extend, and service configurations change, it becomes imperative to define initial parameters to be used throughout the entire BI project.
 
 ### Pre-defining and setting important common parameters
 
-The main parameters required for operation are:
+The main parameters required for work are:
 
 - **RangeStart** - System mandatory parameter when using incremental refresh, setting the start time for a subperiod
 - **RangeEnd** - System required parameter when using incremental refresh, setting the end time for a subperiod
 - **TopCount** - User parameter to facilitate project editing, containing the number of records to download
-- **baseURL** - User parameter specifying the site (TableAPI) from which data is downloaded
+- **baseURL** - User parameter specifying a site (TableAPI) from which data is downloaded
 
-The RangeStart and RangeEnd parameters are of type Date/Time and must be set to values to load preview data when working with the model in PowerBI Desktop.
+The **RangeStart** and **RangeEnd** parameters are of type **Date/Time** and must have values set so that preview data can be loaded when working with the model in PowerBI Desktop.
 
-The TopCount parameter is of type Decimal number and sets the number of records to be fetched with a single query. In the PowerBI Desktop development environment, this should be a relatively small value, such as 500, to load preview data quickly.
+The **TopCount** parameter is of type **Decimal number** and sets the number of records to be fetched with a single query. In the PowerBI Desktop development environment, this should be a relatively small value, such as **500**, so that preview data can be loaded quickly.
 
-The baseURL parameter is of type **Text** and contains the address of the TableAPI site. It's beneficial to define it this way because it can be easily changed from one location in the entire project should any change occur.
+The **baseURL** parameter is of type **Text** and contains the address of the TableAPI site. It's good to define it this way because it can be easily changed from one location in the entire project should any change occur.
 
 For example, it could have the following value: 
 
-**https://test-tableAPI.erp.net**
+**"https://test-tableAPI.erp.net"**
 
 ![Parameters management](pictures/manage_parameters.png)
 
 ### Loading model information
 
-Select "OData feed" from the menu using the "**New source**" button.
+Select "**OData feed**" from the menu using the "**New source**" button.
 
-Fill in the data as shown in the picture (assuming we have defined the baseURL parameter as shown above).
+Fill in the data as shown in the screenshot (assuming we have defined the **baseURL** parameter as shown above).
 
 ![OData feed](pictures/OData_feed.png)
 
-The data for available objects is then loaded, allowing you to see what each one looks like. This is necessary to determine the field names you'll need to filter by or use when filtering by a reference field.
+The available objects data will be loaded, allowing you to see what each one looks like. This is necessary to determine the field names you'll need to filter by or use when filtering by a reference field.
 
-The following image shows what the **Crm_Sales_Orders** object looks like, particularly the field used to reference the document head needed for filtering (**Document_Reference** field).
+The following screenshot shows what the **Crm_Sales_Orders** object looks like, particularly the field used to reference the document head needed for filtering (the **Document_Reference** field).
 
 ![Navigator](pictures/navigator.png)
 
-You can choose to load data directly this way, as it supports additional filtering by fields in the table and selecting which fields to load. This method **does NOT SUPPORT** filtering by reference fields and is therefore not applicable if incremental refresh is to be used!
+You can choose to load data directly this way, as it supports additional filtering by fields in the table and selecting which fields to load. This method **does NOT SUPPORT** **filtering by reference fields and is therefore not applicable if incremental refresh is to be used!**
 
-### Load data via OData.Feed read from source
+### Loading data via OData.Feed reading from source
 
-This method is only suitable for testing in PowerBI Desktop because it is **NOT SUPPORTED** by online PowerBI. It is described here as it provides basic information needed to understand and work with TableAPI queries.
+This method is suitable for testing **only in PowerBI Desktop** because it is **NOT SUPPORTED** **by online PowerBI**. It is described here as it provides basic insights into understanding and working with TableAPI queries.
 
-Some of the steps described below are also applicable to other data sources.
+Some of the steps described below are also applicable to other data sources. 
 
 General guidelines for operation are provided through the following points:
 
-1. Set the data source for each Query using TableAPI in the first step (Source) as follows:
+1. Set the data source for each Query that uses TableAPI in the first step (Source) as follows:
 
-= OData.Feed(baseURL & "/tableapi/odata/{Table_Name}{Parameters}", null, [Implementation="2.0"]) 
-      
-{Table_Name} - replaced with the name of the table to be loaded, e.g., Gen_Documents
-{Parameters} - replaced with OPTIONAL parameters to the query
+   ```
+   = OData.Feed(baseURL & "/tableapi/odata/{Table_Name}{Parameters}", null, [Implementation="2.0"])
+   ```
+         
+   - **{Table_Name}** - replaced with the name of the table to be loaded, e.g., **Gen_Documents**
+   - **{Parameters}** - replaced with OPTIONAL parameters to the query
+   
+   If access authorization is not set yet, you must select one with **Basic** type and specify the values of the "**User name**" and "**Password**" parameters for the user who has access to the TableAPI application.
+   
+   The parameter section (if present) must begin with a "?" symbol. Parameters are separated from one other by the "&" symbol.
+   
+   Possible parameters are:
+   
+   - "**$filter=**" - Specifies the conditions that the returned data will meet
+   - "**$select=**" - Sets the fields to be returned by the query
+   - "**$top=**" - Sets the maximum number of records to return from the query
 
-If access authorization is not yet set, you must select one with the Basic type and specify the values of the "User name" and "Password" parameters for the user who has access to the TableAPI application.
+2. Use permanent filtering.
 
-The parameter section (if present) must begin with a "?" character. Parameters are separated from each other by the "&" symbol.
-
-The possible parameters are:
-
-- "**$filter=**" - Specifies the conditions that the returned data will meet
-- "**$select=**" - Sets the fields to be returned by the query
-- "**$top=**" - Sets the maximum number of records to return from the query
-
-2. Use permanent filtration.
-
-Add the appropriate filter in the URL using the options supported by TableAPI.
-
-Example of filtering table Gen_Document by active (Void=false) and released (State>=30) documents:
-
-```
-let
-Source = OData.Feed(baseURL & "/tableapi/odata/Gen_Documents?$filter=Void eq false and State ge 30", null, [Implementation="2.0"])
-in
-Source
-```
-
-To get this step code, you can add the following in the OData source URL (in addition to the one shown in Figure 2):
-
-/tableapi/odata/**Gen_Documents?$filter=Void eq false and State ge 30**
+   Add the appropriate filter in the URL using the options supported by TableAPI.
+   
+   An example of filtering table **Gen_Document** by active (Void=false) and released (State>=30) documents:
+   
+   ```
+   let
+      Source = OData.Feed(baseURL & "/tableapi/odata/Gen_Documents?$filter=Void eq false and State ge 30", null, [Implementation="2.0"])
+   in
+      Source
+   ```
+   
+   To get this step code, you can add the following in the OData source URL (in addition to the one shown in Screenshot 2):
+   
+   ```
+   /tableapi/odata/Gen_Documents?$filter=Void eq false and State ge 30
+   ```
 
 3. Add filtering by fields with listed values.
 
-To the above example, we also add filtering by Entity_Name for values 'Inv_Transactions' and 'Crm_Sales_Orders':
-
-```
-=OData.Feed(baseURL & "/tableapi/odata/Gen_Documents?$filter=Void eq false and State ge 30 and Entity_Name in ('Inv_Transactions','Crm_Sales_Orders')", null, [Implementation="2.0"])
-```
-
-It should be noted that support for filtering by enumerated values has been added to TableAPI, allowing it to be used directly from the PowerBI Desktop interface.
-
-Here is what the query looks like that is generated by PowerBI Desktop before adding the filtering:
-
-```
-HTTP GET /tableapi/odata/Gen_Documents?$filter=Void eq false and State ge 30&$top=1000
-```
-
-This happens if the Void and State filterings for Gen_Documents are selected entirely through the interface.
-
-The steps generated in this process can be viewed in the Advanced editor:
-
-```
-let
-    Source = OData.Feed(baseURL & "/tableapi/odata/", null, [Implementation="2.0"]),
-    Gen_Documents_table = Source{[Name="Gen_Documents",Signature="table"]}[Data],
-    #"Filtered Rows" = Table.SelectRows(Gen_Documents_table, each([Void] = false)),
-    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each [State] >= 30)
-in
-    #"Filtered Rows1"
-```
-    
-Through the interface, we can also add Entity_Name filtering as shown in the following image:
-
-![Entity name filtering](pictures/entity_name.png)
-
-This will trigger the creation of the next step with code:
-
-```
-= Table.SelectRows(#"Filtered Rows1", each([Entity_Name] = "Crm_Sales_Orders" or [Entity_Name] = "Inv_Transactions"))
-```
-
-The following query will be executed to the data source:
-
-```
-HTTP GET /tableapi/data/Gen_Documents?$filter=Void eq false and State ge 30 and (Entity_Name eq 'Crm_Sales_Orders' or Entity_Name eq 'Inv_Transactions')&$top=1000
-```
-
-This example shows the structure in the TableAPI filter construct: 
-
-```
-and (Field_Name eq 'Value1' or Field_Name eq 'Value2' ... or Field_Name eq 'ValueN')
-```
-
-Everything described in this section can be used for nomenclatures that will be fully loaded or do not need filtering by reference fields.
+   To the above example, you also need to add filtering by Entity_Name for values 'Inv_Transactions' and 'Crm_Sales_Orders':
+   
+   ```
+   =OData.Feed(baseURL & "/tableapi/odata/Gen_Documents?$filter=Void eq false and State ge 30 and Entity_Name in ('Inv_Transactions','Crm_Sales_Orders')", null, [Implementation="2.0"])
+   ```
+   
+   It should be noted that TableAPI supports filtering by enumerated values, and this can be done directly from the PowerBI Desktop interface.
+   
+   Here is what the query generated by PowerBI Desktop looks like before adding the filtering:
+   
+   ```
+   HTTP GET /tableapi/odata/Gen_Documents?$filter=Void eq false and State ge 30&$top=1000
+   ```
+   
+   This happens if the Void and State filterings for **Gen_Documents**, as well as **Gen_Documents** itself, are selected entirely through the interface.
+   
+   The steps generated in this process can be viewed in the **Advanced editor**:
+   
+   ```
+   let
+       Source = OData.Feed(baseURL & "/tableapi/odata/", null, [Implementation="2.0"]),
+       Gen_Documents_table = Source{[Name="Gen_Documents",Signature="table"]}[Data],
+       #"Filtered Rows" = Table.SelectRows(Gen_Documents_table, each([Void] = false)),
+       #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each [State] >= 30)
+   in
+       #"Filtered Rows1"
+   ```
+       
+   Through the interface, we can also add **Entity_Name** filtering as shown in the following screenshot:
+   
+   ![Entity name filtering](pictures/entity_name.png)
+   
+   This will trigger the creation of the next step with code:
+   
+   ```
+   = Table.SelectRows(#"Filtered Rows1", each([Entity_Name] = "Crm_Sales_Orders" or [Entity_Name] = "Inv_Transactions"))
+   ```
+   
+   The following query will be executed to the data source, where the addition from this filtering is shown:
+   
+   ```
+   HTTP GET /tableapi/data/Gen_Documents?$filter=Void eq false and State ge 30 and (Entity_Name eq 'Crm_Sales_Orders' or Entity_Name eq 'Inv_Transactions')&$top=1000
+   ```
+   
+   This example shows the support in the TableAPI filter construct: 
+   
+   ```
+   and (Field_Name eq 'Value1' or Field_Name eq 'Value2' ... or Field_Name eq 'ValueN')
+   ```
+   
+   Everything described in this section can be used for nomenclatures that will be fully loaded or do not need filtering by reference fields.
 
 4. Filtering by date type fields.
 
-As an example, we will use the Document_Date field to select documents only from the first 6 months of the year:
-
-```
-=OData.Feed(baseURL & "/tableapi/odata/Gen_Documents?$filter=Void eq false and State ge 30 and Document_Date ge 2023-01-01T00:00:00Z and Document_Date le 2023-06-30T00:00:00Z", null, [Implementation="2.0"])
-```
-
-Note the date format 'YYYY-MM-DDThh:mm:ssZ' and observe it when using dates.
-
-5. Filter by referenced fields (fields from related tables that are not present in the current table)
-
-An example of such a query is filtering records from the Inv_Transactions table by taking only those that are for unreferenced (Void=false) and released (State>=30) documents:
-
-```
-=OData.Feed(baseURL & "/tableapi/odata/Inv_Transactions?$filter=Document_Reference/Void eq false and Document_Reference/State ge 30", null, [Implementation="2.0"])
-```
-
-As you can see, the filtering is similar to that in item 2, with the difference being the specification of the reference to the field to filter on. The names of the fields pointing to the reference tables can be defined as shown in Figure 3.
-
-In order to support filtering by reference, this needs to be explicitly documented in the Table model documentation.
-
-6. Filtering by fields from tables present in the Owner Tables Hierarchy list.
+   As an example, we will use the **Document_Date** field to select documents only from the first 6 months of the year:
    
-Filtering by fields for tables present in the Owner Tables Hierarchy list described in the Table model documentation is always supported!
+   ```
+   =OData.Feed(baseURL & "/tableapi/odata/Gen_Documents?$filter=Void eq false and State ge 30 and Document_Date ge 2023-01-01T00:00:00Z and Document_Date le 2023-06-30T00:00:00Z", null, [Implementation="2.0"])
+   ```
+   
+   Note the date format '**YYYY-MM-DDThh:mm:ssZ**' and respect it when using dates.
 
-Additionally, you can filter on a field that is not in a directly related table (located more than one level away in the hierarchy).
+5. Filter by referenced fields (fields from related tables that are not present in the current table).
 
-For example, if we want to filter Inv_Transaction_Lines by the date of the document in which the rows are included (Document_Date field of Gen_Documents), we must pass through two consecutive references as shown in the example:
+   An example of such a query is filtering records from the **Inv_Transactions** table by taking only those for unreferenced (Void=false) and released (State>=30) documents:
+   
+   ```
+   =OData.Feed(baseURL & "/tableapi/odata/Inv_Transactions?$filter=Document_Reference/Void eq false and Document_Reference/State ge 30", null, [Implementation="2.0"])
+   ```
+   
+   This filtering is similar to the one in step 2, the only difference being a reference to the field by which we will filter. You can define the names of the fields pointing to reference tables as shown in Screenshot 3. In order to support filtering by reference, this needs to be explicitly documented in the **Table model** documentation.
 
-```
-=OData.Feed(baseURL & "/tableapi/odata/Inv_Transaction_Lines?$filter=Transaction_Reference/Document_Date ge 2023-01-01T00:00:00Z and Transaction_Reference/Document_Reference/Document_Date le 2023-01-31T23:59:59Z", null, [Implementation="2.0"])
-```
+6. Filter by fields from tables present in the Owner Tables Hierarchy list.
+   
+   **Filtering by fields for tables present in the Owner Tables Hierarchy list described in the Table model documentation is always supported!**
+   
+   Additionally, you can filter on a field that is not in a directly related table (located more than one level away in the hierarchy).
+   
+   For example, if we want to filter **Inv_Transaction_Lines** by a date of the document in which the rows are included (**Document_Date** field of **Gen_Documents**), we must pass through two consecutive references as shown in the example:
+   
+   ```
+   =OData.Feed(baseURL & "/tableapi/odata/Inv_Transaction_Lines?$filter=Transaction_Reference/Document_Date ge 2023-01-01T00:00:00Z and Transaction_Reference/Document_Reference/Document_Date le 2023-01-31T23:59:59Z", null, [Implementation="2.0"])
+   ```
+   
+   This is due to the hierarchical relationship between the tables, which follows a certain connectivity scheme (**Field(Table)** format):
 
-This is due to the hierarchical relationship between the tables, which follows this connectivity scheme (Field(Table) format):
+   ```
+   Transaction_Reference(Inv_Transaction_Lines) -> Transaction_Id(Inv_Transactions)
+   Document_Reference(Inv_Transactions) -> Id(Gen_Documents)
+   ```
 
-Transaction_Reference(Inv_Transaction_Lines) -> Transaction_Id(Inv_Transactions)
-Document_Reference(Inv_Transactions) -> Id(Gen_Documents)
+7. Filter data by the date of the document in which it is included.
 
-7. Data filtering by date of document in which it is included.
+   Using OData feed **does NOT allow incremental refresh of data**. The example below uses **Web.Contents** as a way to fetch data:
+   
+   ```
+   =Json.Document(Web.Contents(baseURL & "/tableapi/odata/Inv_Transaction_Lines",[Query=[#"$filter" = "Transaction_Reference/Document_Reference/Document_Date ge " & DateTime.ToText(RangeStart,[Format="yyyy-MM-dd'T'HH:mm:ss'Z'", Culture="en-US"]) & " and Transaction_Reference/Document_Reference/Document_Date le " & DateTime.ToText(Date.EndOfDay(Date.AddDays(RangeEnd,-1)),[Format="yyyy-MM-dd'T'HH:mm:ss'Z'", Culture="en-US"])]], 65001)
+   ```
+   
+   Since a comparison using 'le' (comparison operator <=) must be used, the following statement calculates the correct end date of the period:
+   
+   ```
+   Date.EndOfDay(Date.AddDays(RangeEnd,-1))
+   ```
 
-Use of OData feed does NOT allow incremental refresh of data. The example below uses Web.Contents as a way to fetch data:
+   > [!IMPORTANT]
+   > In the filter, you can use only: <br>
+   > - The logical operator '**and**'
+   > - The comparison operators '**eq**', '**le**', '**ge**'
+   > - The operator '**like**'
+   > - The comparison operator with list of values '**in**' <br>
+   > 
+   > If a logical **OR** operator is needed in the filter, the query must be split into several separate queries that do not contain OR, which are then combined into a single query using "**Append queries**". <br>
+   > An exception is the above-described statement for filtering by enumerated values of the type:
+   > 
+   >     **and (Field eq 'Value1' or Field eq 'Value2' ... or Field eq 'ValueN')**
+   > 
+   > which is equivalent to the standard supported statement:
+   > 
+   >     **and Field in ('Value1', 'Value2', ...,'ValueN')**
 
-```
-=Json.Document(Web.Contents(baseURL & "/tableapi/odata/Inv_Transaction_Lines",[Query=[#"$filter" = "Transaction_Reference/Document_Reference/Document_Date ge " & DateTime.ToText(RangeStart,[Format="yyyy-MM-dd'T'HH:mm:ss'Z'", Culture="en-US"]) & " and Transaction_Reference/Document_Reference/Document_Date le " & DateTime.ToText(Date.EndOfDay(Date.AddDays(RangeEnd,-1)),[Format="yyyy-MM-dd'T'HH:mm:ss'Z'", Culture="en-US"])]], 65001)
-```
+In PowerBI, it is possible to set up **incremental updating**. 
 
-Since a comparison using 'le' (comparison operator <=) must be used, the following statement calculates the correct end date of the period:
-
-```
-Date.EndOfDay(Date.AddDays(RangeEnd,-1))
-```
-
-> [!IMPORTANT]
-> In the filter, you can use only:
-> - The logical operator 'and'
-> - The comparison operators 'eq', 'le', 'ge'
-> - Operator 'like'
-> - Comparison operator with list of values 'in'
-> 
-> If a logical OR operator is needed in the filter, the query must be split into several separate queries that do not contain OR, then combined into a single query using "Append queries".
-> The exception is the above-described statement for filtering by enumerated values of the type:
-> 
->     and (Field eq 'Value1' or Field eq 'Value2' ... or Field eq 'ValueN')
-> 
-> which is equivalent to the standard supported statement:
-> 
->     and Field in ('Value1', 'Value2', ...,'ValueN')
-
-In PowerBI, it is possible to set up incremental updating.
-
-For this purpose, you must create two parameters (RangeStart, RangeEnd) of type DateTime whose values automatically change according to the incremental updating policy set for the specific object in PowerBI.
-
-Here, it is necessary to manually modify the query after the initial URL is set, because there is no way to add the information from the input parameters formatted in the desired way.
+For this purpose, you must create two parameters (**RangeStart**, **RangeEnd**) of type **DateTime** whose values automatically change according to the incremental updating policy set for the specific object in PowerBI. Here, it is necessary to manually modify the query after the initial URL is set, because there is no way to add the information from the input parameters formatted in the desired way.
 
 ### Using incremental refresh to accelerate data updates in PowerBI
 
