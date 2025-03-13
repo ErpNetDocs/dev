@@ -57,7 +57,7 @@ For example, it could have the following value:
 
 **"https://test-tableAPI.erp.net"**
 
-![Parameters management](pictures/manage_parameters.png)
+![Parameters management](pictures/manage_parameters.png) <br> _Graph 1_
 
 ### Loading model information
 
@@ -137,9 +137,7 @@ General guidelines for operation are provided through the following points:
    HTTP GET /tableapi/odata/Gen_Documents?$filter=Void eq false and State ge 30&$top=1000
    ```
    
-   This happens if the Void and State filterings for **Gen_Documents**, as well as **Gen_Documents**, are selected entirely through the interface.
-   
-   The steps generated in this process can be viewed in the **Advanced editor**:
+   This happens if the Void and State filterings for **Gen_Documents**, as well as **Gen_Documents**, are selected entirely through the interface. The steps generated in this process can be viewed in the **Advanced editor**:
    
    ```
    let
@@ -222,7 +220,7 @@ General guidelines for operation are provided through the following points:
    =Json.Document(Web.Contents(baseURL & "/tableapi/odata/Inv_Transaction_Lines",[Query=[#"$filter" = "Transaction_Reference/Document_Reference/Document_Date ge " & DateTime.ToText(RangeStart,[Format="yyyy-MM-dd'T'HH:mm:ss'Z'", Culture="en-US"]) & " and Transaction_Reference/Document_Reference/Document_Date le " & DateTime.ToText(Date.EndOfDay(Date.AddDays(RangeEnd,-1)),[Format="yyyy-MM-dd'T'HH:mm:ss'Z'", Culture="en-US"])]], 65001)
    ```
    
-   Since a comparison using 'le' (comparison operator <=) must be used, the following statement calculates the correct end date of the period:
+   Since a comparison using 'le' (operator <=) must be used, the following statement calculates the correct end date of the period:
    
    ```
    Date.EndOfDay(Date.AddDays(RangeEnd,-1))
@@ -367,7 +365,7 @@ The default time for a single query may not be enough if the settings are as fol
 
 ![Set import and refresh](pictures/set_import_and_refresh.png)
 
-Archival data periods will be 1 year in size. This means that the amount of data to be loaded will be very large, and the query will be slow to execute. We need to either increase the timeout, as we have done in the example, or change the period to an equivalent but with a smaller size.
+Archival data periods will be 1 year in size. This means the amount of data to be loaded will be very large, and the query will be slow to execute. We need to increase the timeout, as we have done in the example, or change the period to an equivalent but with a smaller size.
 
 We can set the following:
 
