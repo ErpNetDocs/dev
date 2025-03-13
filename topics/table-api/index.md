@@ -61,15 +61,21 @@ For example, it could have the following value:
 
 **https://test-tableAPI.erp.net**
 
+![Pictures](pictures/manage_parameters.png)
+
 ### Loading model information
 
 Select "OData feed" from the menu using the "**New source**" button. 
 
 Fill in the data as shown in the picture (assuming we have defined the baseURL parameter as shown above).
 
+![Pictures](pictures/OData_feed.png)
+
 The data for the available objects is then loaded and you can see what each one looks like. This is necessary to determine the field names we will need to filter by or use when filtering by a reference field. 
 
 The following image shows what the **Crm_Sales_Orders** object looks like and in particular the field that is used to reference the document head we need to filter on (**Document_Reference** field).
+
+![Pictures](pictures/navigator.png)
 
 We can choose to load data directly this way, as it supports additional filtering by fields in the table and selecting which fields to load. This method **does NOT SUPPORT** filtering by reference fields and is therefore not applicable if incremental refresh is to be used!
 
@@ -138,6 +144,8 @@ in
     #"Filtered Rows1"
     
 Again through the interface, we can also add Entity_Name filtering as shown in the following image.
+
+![Pictures](pictures/entity_name.png)
 
 This will trigger the creation of the next step with code:
 
@@ -259,11 +267,13 @@ in
 
 1. Switch to edit data sources mode (select from Home -> Queries -> Transform data);
 
-2. Create a new query(table) from Home -> New Source -> Blank Query.
+2. Create a new query (table) from Home -> New Source -> Blank Query.
 
 Then, by clicking Home -> Query -> Advanced editor, we open the window in which the M code of the query is written.  
 
 The result is as follows:
+
+![Pictures](pictures/add_new_table.png)
 
 3. Replace the text in the window with the above sample text(for Crm_Sales_Order_Lines_Table);
  
@@ -278,7 +288,9 @@ If it is loaded from Gen_Documents, then we need to change the strDocHead so
 
     strDocHead = "",
 
-Then, select the columns to be included in the table by deleting the last step of the conversions and using the expanding (the yellow highlighted icon) from the "Converted to Table" step select the necessary fields as shown in the picture:
+5. Then, select the columns to be included in the table by deleting the last step of the conversions and using the expanding (the yellow highlighted icon) from the "Converted to Table" step select the necessary fields as shown in the picture:
+
+![Pictures](pictures/converted_to_table.png)
 
 This is assuming that the string in strSelectFields is empty (strSelectFields="").
 
@@ -289,6 +301,8 @@ strSelectFields="Sales_Order_Id, Customer_Id, Store_Id, Sales_Person_Id, Dealer_
 only these will be visible, and only these will be returned from TableAPI, which will save time in data transfer and speed up loading.
 
 For this reason, specifying the field names to be returned by the query is highly recommended.
+
+![Pictures](pictures/name_setting.png)
 
 There is one line in the above code
 
@@ -315,6 +329,8 @@ Timeout=#duration(0, 2, 0, 0)
 It is used to set the timeout of the single data download request and the above setting changes it to 2 hours. This is the maximum time given to one request(each incremental period) at a time. 
 
 In PowerBI, this value defaults to 600 sec, which can be small and insufficient, especially during the initial data load when the archive period data is loaded. The default time for a single query may not be enough if the settings are, for example, as in the picture:
+
+![Pictures](pictures/set_import_and_refresh.png)
 
 Archival data periods will be one year in size. This means that the amount of data to be loaded will be very large and the query will be slow to execute. Either we need to increase the timeout, as we have done in the example, or change the period to an equivalent but smaller size. 
 
@@ -392,6 +408,8 @@ This will allow us to link it to the entity table to which these custom properti
 
 As a final step, the grouping by Entity_Item_Id is performed and the data is ready to be associated with the Entity data it refers to. If we were to go ahead and add the link to the same query, the linking dialog would look something like this: 
 
+![Pictures](pictures/entity_item_id.png)
+
 The relationship must be **Outher** (not all entries in the entity table have a match in the feature value table) and in this case it is **Right**, because the base table where all the data is is the second (named **Documents_ODATA**). 
 
 If we added the properties to Documents_ODATA in Entity1_Property_Values, then we would have a Join Kind of type Left Outher.
@@ -412,13 +430,19 @@ For each source (table) that will be read from TableAPI when using the WEB Conte
 
 For a source using OData Feed, the necessary access rights are set once. Only the **Basic authentication** method is supported!
 
+![Pictures](pictures/data_source_credentials.png)
+
 For these settings, it is necessary to check the box "Skip test connection", as shown in the picture.
+
+![Pictures](pictures/skip_test_connection.png)
 
 For the OData source, it is not a problem to leave this check box empty. It is even a good idea to first set the access for the OData source with an empty check box, thus checking that the correct credentials (user, password) are set. 
 
 If there is a problem, you will receive a notification about this. When there is no problem, you can set the access for the others in the same way, but with a check box.
 
 Before the first run to load the data after uploading the project, it is necessary to set the “TopCount” parameter to a value that does not limit the volume of the loaded data (e.g. 500000000, as shown in the picture).
+
+![Pictures](pictures/topcount.png)
 
 If for some reason the data source has been renamed, this can be easily corrected here by simply changing the “baseURL” parameter to match the correct one, without the need for a correction in the project and a new upload.
 
