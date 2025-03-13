@@ -57,21 +57,21 @@ For example, it could have the following value:
 
 **"https://test-tableAPI.erp.net"**
 
-![Parameters management](pictures/manage_parameters.png) <br> _Graph 1_
+![Parameters management](pictures/manage_parameters.png) <br> _Picture 1_
 
 ### Loading model information
 
 Select "**OData feed**" from the menu using the "**New source**" button.
 
-Fill in the data as shown in the screenshot (assuming we have defined the **baseURL** parameter as shown above).
+Fill in the data as shown in the picture (assuming we have defined the **baseURL** parameter as shown above).
 
-![OData feed](pictures/OData_feed.png)
+![OData feed](pictures/OData_feed.png)<br> _Picture 2_
 
 The available objects data will be loaded, allowing you to see what each one looks like. This is necessary to determine the field names you'll need to filter by or use when filtering by a reference field.
 
-The following screenshot shows what the **Crm_Sales_Orders** object looks like, particularly the field used to reference the document head needed for filtering (the **Document_Reference** field).
+The following picture shows what the **Crm_Sales_Orders** object looks like, particularly the field used to reference the document head needed for filtering (the **Document_Reference** field).
 
-![Navigator](pictures/navigator.png)
+![Navigator](pictures/navigator.png)<br> _Picture 3_
 
 You can choose to load data directly this way, as it supports additional filtering by fields in the table and selecting which fields to load. This method **does NOT SUPPORT** **filtering by reference fields and is therefore not applicable if incremental refresh is to be used!**
 
@@ -115,7 +115,7 @@ General guidelines for operation are provided through the following points:
       Source
    ```
    
-   To get this step code, you can add the following in the OData source URL (in addition to the one shown in Screenshot 2):
+   To get this step code, you can add the following in the OData source URL (in addition to the one shown in picture 2):
    
    ```
    /tableapi/odata/Gen_Documents?$filter=Void eq false and State ge 30
@@ -149,9 +149,9 @@ General guidelines for operation are provided through the following points:
        #"Filtered Rows1"
    ```
        
-   Through the interface, we can also add **Entity_Name** filtering as shown in the following screenshot:
+   Through the interface, we can also add **Entity_Name** filtering as shown in the following picture:
    
-   ![Entity name filtering](pictures/entity_name.png)
+   ![Entity name filtering](pictures/entity_name.png)<br> _Picture 4_
    
    This will trigger the creation of the next step with code:
    
@@ -191,7 +191,7 @@ General guidelines for operation are provided through the following points:
    =OData.Feed(baseURL & "/tableapi/odata/Inv_Transactions?$filter=Document_Reference/Void eq false and Document_Reference/State ge 30", null, [Implementation="2.0"])
    ```
    
-   This filtering is similar to the one in step 2, the only difference being a reference to the field by which we will filter. You can define the names of the fields pointing to reference tables as shown in Screenshot 3. In order to support filtering by reference, this needs to be explicitly documented in the **Table model** documentation.
+   This filtering is similar to the one in step 2, the only difference being a reference to the field by which we will filter. You can define the names of the fields pointing to reference tables as shown in picture 3. In order to support filtering by reference, this needs to be explicitly documented in the **Table model** documentation.
 
 6. Filter by fields from tables present in the Owner Tables Hierarchy list.
    
@@ -296,7 +296,7 @@ in
    
    The result is as follows:
    
-   ![Add new table](pictures/add_new_table.png)
+   ![Add new table](pictures/add_new_table.png)<br> _Picture 5_
 
 3. Replace the text in the window with the above sample text (for **Crm_Sales_Order_Lines_Table**).
  
@@ -317,9 +317,9 @@ in
    strDocHead = "",
    ```
 
-5. Then, select the columns to be included in the table by deleting the last step of the conversions. Using the **expanding feature** (the yellow highlighted icon) from the "**Converted to Table**" step, we select the necessary fields as shown in the screenshot:
+5. Then, select the columns to be included in the table by deleting the last step of the conversions. Using the **expanding feature** (the yellow highlighted icon) from the "**Converted to Table**" step, we select the necessary fields as shown in the picture:
 
-   ![Converted to table](pictures/converted_to_table.png)
+   ![Converted to table](pictures/converted_to_table.png)<br> _Picture 6_
    
    This assumes that the string in **strSelectFields** is empty (```strSelectFields=""```).
    
@@ -333,7 +333,7 @@ in
    
    For this reason, specifying the field names to be returned by the query is highly recommended.
    
-   ![Name setting](pictures/name_setting.png)
+   ![Name setting](pictures/name_setting.png)<br> _Picture 7_
 
 There is one line in the code above:
 
@@ -363,7 +363,7 @@ It is used to set the timeout of a single data download request. The above setti
 
 The default time for a single query may not be enough if the settings are as follows:
 
-![Set import and refresh](pictures/set_import_and_refresh.png)
+![Set import and refresh](pictures/set_import_and_refresh.png)<br> _Picture 8_
 
 Archival data periods will be 1 year in size. This means the amount of data to be loaded will be very large, and the query will be slow to execute. We need to increase the timeout, as we have done in the example, or change the period to an equivalent but with a smaller size.
 
@@ -447,7 +447,7 @@ This will allow you to link it to the entity table to which these custom propert
 
 As a final step, the grouping by Entity_Item_Id is performed, and the data is ready to be associated with the Entity data it refers to. If you were to add the link to the same query, the linking dialog would look something like this:
 
-![Entity item ID](pictures/entity_item_id.png)
+![Entity item ID](pictures/entity_item_id.png)<br> _Picture 9_
 
 The relationship must be **Outer** (not all entries in the entity table have a match in the feature value table), and in this case, it is **Right** because the base table where all the data is stored is the second (named **Documents_ODATA**).
 
@@ -470,11 +470,11 @@ For each source (table) that will be read from TableAPI when using the WEB Conte
 
 For a source using OData Feed, the necessary access rights are set once. Only the **Basic authentication** method is supported!
 
-![Data source credentials](pictures/data_source_credentials.png)
+![Data source credentials](pictures/data_source_credentials.png)<br> _Picture 10_
 
 For these settings, it is necessary to check the box "Skip test connection," as shown in the picture:
 
-![Skip test connection](pictures/skip_test_connection.png)
+![Skip test connection](pictures/skip_test_connection.png)<br> _Picture 11_
 
 For the OData source, it is not a problem to leave this check box empty. It is even advisable to first set the access for the OData source with an empty check box, thus verifying that the correct credentials (user, password) are set.
 
@@ -482,7 +482,7 @@ If there is a problem, you will receive a notification. When there is no problem
 
 Before the first run to load the data after uploading the project, it is necessary to set the "TopCount" parameter to a value that does not limit the volume of the loaded data (e.g., 500000000, as shown in the picture):
 
-![TopCount parameter](pictures/topcount.png)
+![TopCount parameter](pictures/topcount.png)<br> _Picture 12_
 
 If for some reason the data source has been renamed, this can be easily corrected by simply changing the "baseURL" parameter to match the correct one, without needing to make corrections in the project and upload it again.
 
