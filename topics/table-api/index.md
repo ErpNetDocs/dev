@@ -461,7 +461,7 @@ When reading user features, there is no way to filter by the date of the documen
 
 These settings are required to set the access rights when connecting to the data source (in this case, TableAPI). It is important to configure the correct values for these settings to avoid creating additional problems and disturbances when loading the data.
 
-For each source (table) that will be read from TableAPI when using the **WEB Content** access method, it is necessary to set the rights separately.
+For each source (table) read from TableAPI when using the **WEB Content** access method, it is necessary to set the rights separately.
 
 For a source using **OData Feed**, the necessary access rights are set once. Only the **Basic authentication** method is supported!
 
