@@ -1,3 +1,8 @@
+---
+erp.type: sample
+erp.topic: generic
+---
+
 # Javascript Interactive Client
 
 1. [Register Public Trusted Application](../common-tasks/register-trusted-app.md#register-interactive-public-application)

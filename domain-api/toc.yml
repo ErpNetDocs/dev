@@ -26,3 +26,4 @@
   href: libraries.md
 - name: Example apps
   href: samples/toc.yml
+  topicHref: samples/index.md

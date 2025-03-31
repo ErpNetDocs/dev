@@ -1,3 +1,8 @@
+---
+erp.type: sample
+erp.topic: generic
+---
+
 # PHP Service Application
 
 1. [Register Service Trusted Application](../common-tasks/register-trusted-app.md#register-service-application)
