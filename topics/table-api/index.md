@@ -185,7 +185,7 @@ General guidelines for operation are provided through the following points:
 
 5. Filter by referenced fields (fields from related tables that are not present in the current table).
 
-   An example of such a query is filtering records from the **Inv_Transactions** table by taking only those for unreferenced (Void=false) and released (State>=30) documents:
+   An example of such a query is filtering records from the **Inv_Transactions** table by taking only those for active (Void=false) and released (State>=30) documents:
    
    ```
    =OData.Feed(baseURL & "/tableapi/odata/Inv_Transactions?$filter=Document_Reference/Void eq false and Document_Reference/State ge 30", null, [Implementation="2.0"])
@@ -377,13 +377,13 @@ The archive period data is loaded once on the first **Refresh** after the projec
 
 The use of **TableAPI** allows multiple queries to pull data from the database simultaneously without overloading the server and disrupting the primary operations.
 
-### Optimized loading of user features
+### Optimized loading of custom properties
 
-Custom features are also used in the analyses performed in PowerBI. 
+Custom properties are also used in the analyses performed in PowerBI. 
 
 Since their volume is significant, it is very important for them to be loaded and used efficiently.
 
-#### Optimized loading of all necessary features
+#### Optimized loading of all necessary properties
 
 For this purpose, we use the following code defining a query named **Gen_Property_Values**:
 
@@ -398,7 +398,7 @@ in
     #"Filtered Rows"
 ```
 
-In this example, the four GUID feature numbers listed are randomly selected. You need to replace and supplement them with the IDs of the features you need.
+In this example, the four GUID feature numbers listed are randomly selected. You need to replace and supplement them with the IDs of the properties you need.
 
 The construct:
 
@@ -418,7 +418,7 @@ It specifies that the data will be statically buffered in memory. In the next op
 
 Another optimization comes from loading only the required fields listed in the **Table.SelectColumns** operation. This reduces the returned data and speeds up the query. This is possible thanks to the **Folding** support which is active when using an **OData feed** data source.
 
-#### Dividing the loaded features by entities to which they refer
+#### Dividing the loaded properties by entities to which they refer
 
 The processing can continue by creating a new query (e.g., **Entity1_Property_Values**) with the following code:
 
@@ -437,11 +437,11 @@ in
 
 In the first step, select the **Gen_Property_Values** query created earlier as the data source, which will buffer the data load.
 
-The next step performs filtering, taking the values of only two of the properties that apply to a single entity to optimize and reduce the data to process. They must not be null or empty (""). If needed, the filtering list can be expanded or reduced according to the features being processed and already loaded by the previous query.
+The next step performs filtering, taking the values of only two of the properties that apply to a single entity to optimize and reduce the data to process. They must not be null or empty (""). If needed, the filtering list can be expanded or reduced according to the properties being processed and already loaded by the previous query.
 
 In the following steps, new columns are created that contain only values for a particular **Property_Id**. 
 
-This is necessary to prepare data for grouping by **Entity_Item_Id**, which will convert the table into one with no more than one row for each entity. Afterwards, you can link it to the entity table to which the user features apply. These steps must be edited or completed for the specific **Property_Id** that are processed.
+This is necessary to prepare data for grouping by **Entity_Item_Id**, which will convert the table into one with no more than one row for each entity. Afterwards, you can link it to the entity table to which the custom properties apply. These steps must be edited or completed for the specific **Property_Id** that are processed.
 
 As a final step, grouping by **Entity_Item_Id** is performed and data is ready to be associated with the entity data it refers to. If you add the link to the same query, the linking dialog would look something like this:
 
@@ -449,13 +449,13 @@ As a final step, grouping by **Entity_Item_Id** is performed and data is ready t
 
 The link must be **Outher** (not all records in the entity table have a match in the table with feature values), and in this case, it is **Right** because the base table where all data is stored is second (named **Documents_ODATA**).
 
-If we add the features in **Entity1_Property_Values** to **Documents_ODATA**, then we would have a **Join Kind** of type **Left Outer**.
+If we add the properties in **Entity1_Property_Values** to **Documents_ODATA**, then we would have a **Join Kind** of type **Left Outer**.
 
 > [!WARNING]
 > **Reading data from the Gen_Property_Values_Table is always slow because it triggers a scan (full crawl) of the table, which is very large. This has a very negative impact on the SQL server and slows down the updating of PowerBI. Therefore, it is imperative to follow the recommended approach shown here! There may be other optimal methods, but the table scanning and large execution time of a query should always be considered.** <br><br>
 > **The only exception might be if you filter by a list of values for Entity_Item_Id, in which case the query will execute quickly as it will use SEEK in the database. However, due to the nature of BI, this option is likely not practical.**
 
-When reading user features, there is no way to filter by the date of the document they refer to and therefore no way to use incremental refresh. That is why the example uses the standard **OData feed** as a data source.
+When reading custom properties, there is no way to filter by the date of the document they refer to and therefore no way to use incremental refresh. That is why the example uses the standard **OData feed** as a data source.
 
 ### PowerBI setup after uploading the project
 
@@ -473,15 +473,17 @@ For these settings, it is necessary to check the "**Skip test connection**" box,
 
 For the **OData** source, you may leave this box empty. It is even advisable to first set the access for the OData source with an empty check box, verifying that the correct credentials (user, password) are set. If there is a problem, you will receive a notification. If everything is alright, you can proceed to configure the access for the other sources in the same way, but with the check box selected.
 
-Before the first run which loads the data after uploading the project, it is necessary to set the "**TopCount**" parameter to a value that does not limit the volume of the loaded data (e.g. 500000000, as shown in the picture):
+**As of version 23.2 SP4**, it is no longer necessary to uncheck "**Skip test connection**", because the system behavior when disconnecting from TableAPI has been adjusted.
+
+Before the first run which loads the data after uploading the project, it is necessary to set the "**TopCount**" parameter to a value that does not limit the volume of the loaded data (e.g. 500000000, as shown in the picture).  Be careful not to set a too large value for the parameter. The maximum allowed value is 2^31 (MAXINT), after which the query will return an error.
 
 ![TopCount parameter](pictures/topcount.png)<br> _Picture 12_ <br>
 
-If for some reason the data source has been renamed, this can be easily corrected here by changing the "**baseURL**" parameter to match the correct one, without needing to make project corrections and re-uploads.
+If for whatever reason the data source has been renamed, this can be easily corrected here by changing the "**baseURL**" parameter to match the correct one, without needing to make project corrections and re-uploads.
 
 ### Conclusion
 
-Through these techniques, you can take advantage of PowerBI's incremental refresh capability, which makes the refresh time relatively constant and proportional to the growth of data in the last selected refresh periods.
+Through these techniques, you are ready to take advantage of PowerBI's incremental refresh capability, which makes the refresh time relatively constant and proportional to the growth of data in the last selected refresh periods.
 
 This capability has been tested in practice with 4 parallel connections, which did not lead to a significant load on the TableAPI site, AppServer, or SQL Server. We can assume that Refresh even with 5-10 connections will still be within the permissible load limits and will not significantly affect the system's performance.
 
