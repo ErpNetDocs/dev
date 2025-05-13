@@ -1,7 +1,10 @@
+pdf: true
+pdfFileName: Dev.pdf
+items:
 - name: General
-  href: topics/
+  href: topics/toc.yml
 - name: Domain API
-  href: domain-api/
+  href: domain-api/toc.yml
 - name: API Reference
   href: https://docs.erp.net/model/entities/
 - name: Return to DOCS ⏶

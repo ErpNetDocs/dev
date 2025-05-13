@@ -1,3 +1,8 @@
+---
+erp.type: sample
+erp.topic: generic
+---
+
 # Dot Net Web Application
 
 1. [Register Trusted Application](../common-tasks/register-trusted-app.md#register-interactive-confidential-application)

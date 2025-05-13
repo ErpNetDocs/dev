@@ -1,3 +1,8 @@
+---
+erp.type: sample
+erp.topic: generic
+---
+
 # Dot Net Service Application
 
 This app demonstrates a Service Application created in .net.

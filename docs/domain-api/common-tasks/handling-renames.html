@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Handling entity type renames | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Handling entity type renames | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/handling-renames.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="handling-entity-type-renames">Handling entity type renames</h1>
+
+<p>Sometimes, entity types in ERP.net are renamed. In one version, they are called X, and in the next version, they are called Y. Of course, we avoid doing this as much as we can. But sometimes it is unavoidable and has to be done.</p>
+<p>For example, we have renamed &quot;General.DocumentPrintImages&quot; (&quot;General_DocumentPrintImages&quot; in the API) to &quot;Systems.Internal.DocumentPrintImages&quot;.</p>
+<p>This, naturally, is a problem for applications, which access these entities through the API.</p>
+<p>To alleviate the problem, we have taken numerous measures:</p>
+<h2 id="1-error-message-containing-the-new-name">1. Error message containing the new name</h2>
+<p>When you access an entity, which has been renamed, ERP.net Domain API returns an informative error message, which contains the new name of the entity type</p>
+<p>For example:</p>
+<pre><code>The provided entity set name 'General_DocumentPrintImages' is no more supported.
+The new name of this entity is 'Systems_Internal_DocumentPrintImages'.
+List of all entity renames can be found at https://testdb.my.erp.net/api/domain/odata/GetRenamedEntityTypes.
+</code></pre>
+<p>You have to change your application to use the new name.</p>
+<h2 id="2-support-both-old-and-new-versions">2. Support both old and new versions</h2>
+<p>If you want your app to support both the old and the new version of ERP.net Domain API, you can check the version with the following function:</p>
+<p>/GetVersion</p>
+<p>The function returns a JSON object with &quot;version&quot; property.</p>
+<p>Example:</p>
+<p><a href="https://testdb.my.erp.net/api/domain/odata/GetVersion">https://testdb.my.erp.net/api/domain/odata/GetVersion</a></p>
+<p>Example response:</p>
+<pre><code>{
+  &quot;@odata.context&quot;: &quot;https://testdb.my.erp.net/api/domain/odata/$metadata#Erp.OpenObject&quot;,
+  &quot;version&quot;: &quot;24.1.5.41&quot;
+}
+</code></pre>
+<h2 id="3-automate-entity-type-renames">3. Automate entity type renames</h2>
+<p>If you want to implement some form of automation for these pesky renames, we support end-point, which returns all renames, along with some related data:</p>
+<p>/GetRenamedEntityTypes</p>
+<p>The function returns a JSON array with entity type rename containig OldName, NewName and Version (the version when the new name replaces the old name).</p>
+<p>Example:</p>
+<p><a href="https://testdb.my.erp.net/api/domain/odata/GetRenamedEntityTypes">https://testdb.my.erp.net/api/domain/odata/GetRenamedEntityTypes</a></p>
+<p>Example response:</p>
+<pre><code>
+  &quot;@odata.context&quot;: &quot;https://testdb.my.erp.net/api/domain/odata/$metadata#Collection(Erp.OpenObject)&quot;,
+  &quot;value&quot;: [
+    {
+      &quot;OldName&quot;: &quot;Systems_Core_DataEntryDefaultValues&quot;,
+      &quot;NewName&quot;: &quot;Systems_Internal_DataEntryDefaultValues&quot;,
+      &quot;Version&quot;: &quot;24.1.5.35&quot;
+    },
+    {
+      &quot;OldName&quot;: &quot;Systems_Core_ExtensibleDataObjects&quot;,
+      &quot;NewName&quot;: &quot;Systems_Internal_ExtensibleDataObjects&quot;,
+      &quot;Version&quot;: &quot;24.1.5.35&quot;
+    },
+    ...
+</code></pre>
+<h3 id="finding-the-actual-entity-type-name">Finding the Actual Entity Type Name</h3>
+<p>You can use the result of this function to determine the actual entity type name. Here is an example of how this can be achieved:</p>
+<pre><code>// The variable $renames contains the array of all entity type renames returned by the ~/GetRenamedEntityTypes function.
+// The variable $entitySet is the provided entity set name, which may have been renamed.
+
+// The $renames collection may contain entries where an entity type name has been renamed multiple times.
+// To find the valid name, we need to iterate through all renames and update the $entitySet accordingly.
+
+foreach (var rename in $renames)
+{
+    if (rename.OldName == $entitySet) 
+    {
+        $entitySet = rename.NewName;
+    }
+}
+
+// After the loop, $entitySet will contain the actual entity type name.
+
+</code></pre>
+<h2 id="4-list-of-renames">4. List of renames</h2>
+<p>To view the list of renamed entity types, go to the following address:</p>
+<p><a href="https://docs.erp.net/model/entities/renames.html">Renamed entity types</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/handling-renames.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

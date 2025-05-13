@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Create notification | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Create notification | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/create-notification.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="create-notification">Create notification</h1>
+
+<h2 id="overview">Overview</h2>
+<p>As already known, notifications in ERP.net are an entity, part of the domain model.</p>
+<p><a href="https://docs.erp.net/model/entities/Communities.Notifications.html">Communities.Notifications Entity</a>.</p>
+<p>Roughly, each notification is a message intended for a specific user. Additionally, the notification MAY reference a data object- e.g. the notification subject.</p>
+<p>This is expressed through the following entity attributes:</p>
+<ul>
+<li><a href="https://docs.erp.net/model/entities/Communities.Notifications.html#user">User</a></li>
+<li><a href="https://docs.erp.net/model/entities/Communities.Notifications.html#dataobject">DataObject</a></li>
+</ul>
+<p>ERP.net creates and manages various notifications according to certain business rules, triggered by specific events. E.g. when someone replies to your comment- you'll get a notification. This flow is managed by a specific business rule (<a href="https://docs.erp.net/model/business-rules/R33428.html">R33428 SocialComment - Notify User Comment Replied</a>)</p>
+<p>More information about all notification types (i.e. notification classes) and when they're created can be found in the separate topic <strong><a href="https://docs.erp.net/tech/modules/community/social-interactions/notifications/index.html">Notifications</a></strong>.</p>
+<h2 id="create-a-notification-programmatically">Create a notification programmatically</h2>
+<p>It's possible to create a notification yourself via the Domain API. You simple need to:</p>
+<ol>
+<li>Specify the entity that will be the subject of the notification.</li>
+<li>Invoke its method <code>CreateNotificaiton</code>.</li>
+<li>Populate the required notification's attributes such as the target user, the notification class, the notification subject.</li>
+</ol>
+<pre><code class="lang-HTTP">POST /api/domain/odata/Crm_Customers(79f3f74e-098a-4d91-9714-c4f845c2dc62)/CreateNotification HTTP/1.1
+Host: demodb.my.erp.net
+Content-Type: application/json
+
+{
+    &quot;user&quot;: {
+        &quot;@odata.id&quot;: &quot;Systems_Security_Users(9da64839-a8d0-491d-aebb-4d18fa42b014)&quot;
+    },
+    &quot;notificationClass&quot;: &quot;NT_SOC_NEW_POST&quot;,
+    &quot;subject&quot;: &quot;Hello from Domain API!&quot;
+}
+
+</code></pre>
+<p>That's it.</p>
+<p>A notification will be created. Addressed to the specified user; originating from the specified customer.</p>
+<h2 id="createnotification-in-detail">CreateNotification() in detail</h2>
+<p><code>CreateNotification</code> is an API method, defined in the <code>EntityObject</code> type. This means that it can be invoked from any entity.</p>
+<p>It's available for every entity in our Domain Model documententation. Here's a link to the method, used in the example from above,</p>
+<p><a href="https://docs.erp.net/model/entities/Crm.Customers.html#createnotification">https://docs.erp.net/model/entities/Crm.Customers.html#createnotification</a></p>
+<p>Additionally, once the notification is created (as persistent data, in the database), it will be wrapped in a real-time event, which will be sent to the target user (as a real-time event). In this way, you can not only create notifications programmatically, but also notify users in real time.</p>
+<p>More information about real-time events can be found in the separate topic in the documentation. <a href="https://docs.erp.net/tech/advanced/concepts/real-time-events.html">Real-time events</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/create-notification.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

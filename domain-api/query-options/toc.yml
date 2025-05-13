@@ -4,5 +4,7 @@
   href: filter.md
 - name: $select
   href: select.md
+- name: $search
+  href: search.md
 - name: $options
   href: options.md

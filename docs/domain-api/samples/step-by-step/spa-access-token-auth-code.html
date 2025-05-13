@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Access token via authorization code flow in a SPA (Single Page Application) | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Access token via authorization code flow in a SPA (Single Page Application) | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/samples/step-by-step/spa-access-token-auth-code.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="access-token-via-authorization-code-flow-in-a-spa-single-page-application">Access token via authorization code flow in a SPA (Single Page Application)</h1>
+
+<h2 id="objective">Objective</h2>
+<p>You have an external SPA that will be authorized via the ERP.net login form on behalf of an internal or external user. The application WILL provide an UI, so there'll be user interaction. Your application will be a &quot;pure&quot; front-end and will run entirely in the client's browser.</p>
+<p>Or,</p>
+<ul>
+<li>Your external app is an interactive application.</li>
+<li>Your external app is a web application.</li>
+<li>It will be authenticated and authorized via the ERP.net login form (on behalf of an ERP.net internal or external user).</li>
+<li>Your external application will access the ERP.net instance on behalf of the logged user.</li>
+<li>Your external app WILL provide UI.</li>
+<li>Will work entirely in a client environment, so it won't be able to keep a secret. I.e., it's a public application (without a secret).</li>
+<li>There'll be user interaction, so your external app will use <a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow">authorization code flow</a>.</li>
+</ul>
+<h2 id="the-whole-process-in-a-nutshell">The whole process in a nutshell</h2>
+<p>After all, your final goal is to acquire an access token. The process is very similar to this example <a href="web-app-access-token-auth-code.html">Basic example of acquiring an access token</a>, but here is added another intermediate step - the process of impersonating a user. Here's a summary of how the whole process goes:</p>
+<ol>
+<li>Your external app will navigate to the <a href="../../authentication.html#authorize-endpoint">authorize endpoint</a>, passing your trusted app details (the trusted app, corresponding to your external app).</li>
+<li>If all's OK, the browser where your app is opened will be redirected to the ERP.net login page, where the user will enter their credentials.</li>
+<li>If the user logs in successfully, the ERP.net login page (i.e. ERP.net Identity Server) will be redirect to an uri, back to your external SPA.</li>
+<li>There you'll receive an authorization code.</li>
+<li>Finally you'll exchange the auth code for an access and refresh tokens at the token endpoint.</li>
+<li>You'll obtain an access and refresh tokens on behalf of the logged user (2).</li>
+</ol>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>You have a trusted application, defined as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>My first trusted app</td>
+<td>This value doesn't matter much. It's used for user-friendly identification.</td>
+</tr>
+<tr>
+<td>ApplicationUri</td>
+<td>my.trusted.app</td>
+<td>This is your trusted app's unique identifier. It's used in the authentication process.</td>
+</tr>
+<tr>
+<td>IsEnabled</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td>ImpersonateAsInternalUserAllowed</td>
+<td>true</td>
+<td>The trusted application will allow authentication from internal users.</td>
+</tr>
+<tr>
+<td>ImpersonateAsCommunityUserAllowed</td>
+<td>true</td>
+<td>If your application allows external users.</td>
+</tr>
+<tr>
+<td>ImpersonateLoginUrl</td>
+<td><a href="https://my.trusted.app/index.html">https://my.trusted.app/index.html</a></td>
+<td>The url where your external app will receive the authorization code when the user logs in successfully (see <a href="web-app-access-token-auth-code.html#the-whole-process-in-a-nutshell">step 3 in the section above</a>).</td>
+</tr>
+<tr>
+<td>ClientType</td>
+<td>Public</td>
+<td>Your external app will run entirely in a client-side uncontrolled environment, meaning it cannot keep a secret. Meaning it must be a <strong>public</strong> applicaiton.</td>
+</tr>
+</tbody>
+</table>
+<p>All other attributes can have their default values. They are not covered by this example.</p>
+<h2 id="steps">Steps</h2>
+<p>The application below presents a single user page using html and pure javascript.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><strong>Don't use this code in production.</strong></p>
+<p>Its purpose is only demonstrative. It lacks input validations, error handling and so.</p>
+</div>
+<h3 id="initialization">Initialization</h3>
+<p>First we'll define some constants which we'll use later.</p>
+<pre><code class="lang-js">var config = {
+    client_id: &quot;my.trusted.app&quot;,
+    redirect_uri: &quot;https://my.trusted.app/app.html&quot;,
+    authorization_endpoint: &quot;https://demodb.my.erp.net/id/connect/authorize&quot;,
+    token_endpoint: &quot;https://demodb.my.erp.net/id/connect/token&quot;,
+    requested_scopes: &quot;offline_access DomainApi update&quot;
+};
+</code></pre>
+<p>We won't waste time, explaining about the constants, their names are self-explanatory.</p>
+<p>But there's one important detail- the <code>offline_access</code> in the <code>requested_scopes</code>. Its presence means that together with the access token you want also to receive a refresh token. It can be omitted, but then you'll only receive an access token and when it expires the user has to repeat the auth steps - i.e. to reenter its credentials.</p>
+<h3 id="body">Body</h3>
+<pre><code class="lang-html">&lt;a href=&quot;#&quot; id=&quot;start&quot;&gt;Click to Sign In&lt;/a&gt;
+&lt;div id=&quot;token&quot; class=&quot;hidden&quot;&gt;
+    &lt;h2&gt;Access Token&lt;/h2&gt;
+    &lt;div id=&quot;access_token&quot; class=&quot;code&quot;&gt;no access token :(&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;token&quot; class=&quot;hidden&quot;&gt;
+    &lt;h2&gt;Refresh Token&lt;/h2&gt;
+    &lt;div id=&quot;refresh_token&quot; class=&quot;code&quot;&gt;no refresh token :(&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>That's all the UI.</p>
+<ul>
+<li>A button that initiates the auth process.</li>
+<li>Two &quot;boxes&quot; visualizing the acquired access and refresh tokens.</li>
+</ul>
+<h3 id="authorization-request-authorize-endpoint">Authorization request (Authorize endpoint)</h3>
+<p>The snippet below adds an event listener to the &quot;Click to Sign In&quot; button. When you press it, you'll trigger the authorization request - i.e. the defined function.</p>
+<pre><code class="lang-js">document.getElementById(&quot;start&quot;).addEventListener(&quot;click&quot;, async function(e) {
+    
+    e.preventDefault();
+
+    // Create and store a random &quot;state&quot; value
+    var state = generateRandomString();
+    localStorage.setItem(&quot;pkce_state&quot;, state);
+
+    var url = config.authorization_endpoint 
+        + &quot;?response_type=code&quot;
+        + &quot;&amp;client_id=&quot; + config.client_id
+        + &quot;&amp;state=&quot; + state
+        + &quot;&amp;scope=&quot; + config.requested_scopes
+        + &quot;&amp;redirect_uri=&quot; + config.redirect_uri;       
+
+    window.location = url;
+});
+</code></pre>
+<p>Just set-up the necessary arguments for the authroize endpoint and initiate a redirect. The Identity Server will take care of everything else, i.e.,</p>
+<ol>
+<li>Will navigate to the ERP.net login page.</li>
+<li>After successful user login, will redirect to your <code>config.redirect_uri</code>.</li>
+</ol>
+<p>As you see, you're passing the following:</p>
+<ul>
+<li>The uri (i.e. the client id) of your trusted app <code>config.client_id</code>.</li>
+<li>The <code>config.redirect_uri</code> - the uri where you're waiting for the callback, when the user signs in.</li>
+<li>The scopes your external app needs.</li>
+<li><code>response_type=code</code>. This &quot;instructs&quot; the Identity Server to send you a <strong>code</strong> (i.e. authorization code).</li>
+</ul>
+<h3 id="access-token-request-token-endpoint">Access token request (Token endpoint)</h3>
+<p>The process of acquiring an access token is very simple also. When you already have the authorization code, you just have to send (i.e. make a POST request) it to the token endpoint. After, you will receive your access and refresh tokens as a response to your callback uri.</p>
+<p>First, we'll define a helper function, that will send a POST request.</p>
+<pre><code class="lang-js">function sendPostRequest(url, params, success, error) {
+    var request = new XMLHttpRequest();
+    request.open('POST', url, true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    request.onload = function() {
+
+        var body = JSON.parse(request.response);
+
+        if(request.status == 200) {
+            success(request, body);
+        } else {
+            error(request, body);
+        }
+    }
+
+    var body = Object.keys(params).map(key =&gt; key + '=' + params[key]).join('&amp;');
+    request.send(body);
+}
+</code></pre>
+<p>Now, the following is the actual request to the token endpoint:</p>
+<pre><code class="lang-js">var args = window.location.search.substring(1);
+if (args != &quot;&quot;) {
+
+    // OAUTH REDIRECT HANDLING
+    var idServerResponse = JSON.parse(
+      '{&quot;' + args.replace(/&amp;/g, '&quot;,&quot;').replace(/=/g,'&quot;:&quot;') + '&quot;}', 
+      function(key, value) { return key===&quot;&quot;?value:decodeURIComponent(value) });
+
+    if (idServerResponse.code) {
+        
+        // Exchange the authorization code for an access token
+        sendPostRequest(config.token_endpoint, {
+            grant_type: &quot;authorization_code&quot;,
+            code: idServerResponse.code,
+            client_id: config.client_id,
+            redirect_uri: config.redirect_uri
+        }, function(request, body) {
+            // Here you have your access and refresh tokens.
+            document.getElementById(&quot;access_token&quot;).innerText = body.access_token;
+            document.getElementById(&quot;refresh_token&quot;).innerText = body.refresh_token;
+        });
+    };
+}
+</code></pre>
+<p>Or here's what it does broken into steps:</p>
+<ul>
+<li>Get the arguments from the current URI. That's because we're expecting the <code>redirect_uri</code> callback. I.e. the identity server sends our authorization code.</li>
+<li>If there're arguments (i.e. we <strong>are</strong> in the redirect scenario)- proceed.</li>
+<li>Parse the arguments and extract the authorization code - <code>idServerResponse.code</code>.</li>
+<li>Send a POST request, including the authorization code, client id and the redirect uri. The redirect uri is passed again, just as a security measure.</li>
+<li>Response is received- parse the access and refresh tokens and update the corresponding UI elements.</li>
+</ul>
+<h3 id="everything-together">Everything together</h3>
+<pre><code class="lang-html">&lt;html&gt;
+&lt;title&gt;ERP.net - Pure JS access token acquisition&lt;/title&gt;
+
+&lt;script&gt;
+  var config = {
+    client_id: &quot;my.trusted.app&quot;,
+    redirect_uri: &quot;https://my.trusted.app/app.html&quot;,
+    authorization_endpoint: &quot;https:///demodb.my.erp.net/id/connect/authorize&quot;,
+    token_endpoint: &quot;https:///demodb.my.erp.net/id/connect/token&quot;,
+    requested_scopes: &quot;offline_access DomainApi update&quot;
+  };
+&lt;/script&gt;
+
+&lt;a href=&quot;#&quot; id=&quot;start&quot;&gt;Click to Sign In&lt;/a&gt;
+&lt;div id=&quot;token&quot; class=&quot;hidden&quot;&gt;
+    &lt;h2&gt;Access Token&lt;/h2&gt;
+    &lt;div id=&quot;access_token&quot; class=&quot;code&quot;&gt;:(&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;token&quot; class=&quot;hidden&quot;&gt;
+    &lt;h2&gt;Refresh Token&lt;/h2&gt;
+    &lt;div id=&quot;refresh_token&quot; class=&quot;code&quot;&gt;:(&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  document.getElementById(&quot;start&quot;).addEventListener(&quot;click&quot;, async function(e) {
+      
+      e.preventDefault();
+
+      // Create and store a random &quot;state&quot; value
+      var state = generateRandomString();
+
+      var url = config.authorization_endpoint 
+          + &quot;?response_type=code&quot;
+          + &quot;&amp;client_id=&quot; + config.client_id
+          + &quot;&amp;state=&quot; + state
+          + &quot;&amp;scope=&quot; + config.requested_scopes
+          + &quot;&amp;redirect_uri=&quot; + config.redirect_uri;
+
+      window.location = url;
+  });
+
+  var args = window.location.search.substring(1);
+  if (args != &quot;&quot;) {
+
+      // OAUTH REDIRECT HANDLING
+      var idServerResponse = JSON.parse(
+        '{&quot;' + args.replace(/&amp;/g, '&quot;,&quot;').replace(/=/g,'&quot;:&quot;') + '&quot;}',
+        function(key, value) { return key===&quot;&quot;?value:decodeURIComponent(value) });
+
+      if (idServerResponse.code) {
+          
+          // Exchange the authorization code for an access token
+          sendPostRequest(config.token_endpoint, {
+              grant_type: &quot;authorization_code&quot;,
+              code: idServerResponse.code,
+              client_id: config.client_id,
+              redirect_uri: config.redirect_uri,
+              code_verifier: localStorage.getItem(&quot;pkce_code_verifier&quot;)
+          }, function(request, body) {
+              // Here you have your access token.
+              document.getElementById(&quot;access_token&quot;).innerText = body.access_token;
+          });
+      };
+  }
+
+  function sendPostRequest(url, params, success, error) {
+      var request = new XMLHttpRequest();
+      request.open('POST', url, true);
+      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+      request.onload = function() {
+
+          var body = JSON.parse(request.response);
+
+          if(request.status == 200) {
+              success(request, body);
+          } else {
+              error(request, body);
+          }
+      }
+
+      var body = Object.keys(params).map(key =&gt; key + '=' + params[key]).join('&amp;');
+      request.send(body);
+  }
+&lt;/script&gt;
+
+&lt;/html&gt;
+</code></pre>
+<h2 id="resources">Resources</h2>
+<p>The sample project in this example can be found here:</p>
+<p><a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/samples/src/step-by-step/AccessTokenCodeSPA">https://github.com/ErpNetDocs/dev/blob/master/domain-api/samples/src/step-by-step/AccessTokenCodeSPA</a></p>
+<p>--</p>
+<p><a href="https://docs.erp.net/dev/topics/authentication/authentication-flows.html">https://docs.erp.net/dev/topics/authentication/authentication-flows.html</a></p>
+<p><a href="https://docs.erp.net/dev/topics/authentication/trusted-applications.html">https://docs.erp.net/dev/topics/authentication/trusted-applications.html</a></p>
+<p><a href="https://docs.erp.net/dev/domain-api/authentication.html">https://docs.erp.net/dev/domain-api/authentication.html</a></p>
+<p><a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow">https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/samples/step-by-step/spa-access-token-auth-code.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

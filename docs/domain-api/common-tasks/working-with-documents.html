@@ -1,129 +1,137 @@
-﻿<!DOCTYPE html>
-<!--[if IE]><![endif]-->
+<!DOCTYPE html>
 <html>
-  
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Working with documents | ERP.net Developer Docs </title>
-    <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Working with documents | ERP.net Developer Docs ">
-    <meta name="generator" content="docfx 2.56.9.0">
-    
-    <link rel="shortcut icon" href="../../favicon.ico">
-    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../../styles/docfx.css">
-    <link rel="stylesheet" href="../../styles/main.css">
-    <meta property="docfx:navrel" content="../../toc.html">
-    <meta property="docfx:tocrel" content="../toc.html">
-    
-    <meta property="docfx:rel" content="../../">
-    
+      <title>Working with documents | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Working with documents | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/working-with-documents.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
   </head>
-  <body data-spy="scroll" data-target="#affix" data-offset="120">
-    <div id="wrapper">
-      <header>
-        
-        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              
-              <a class="navbar-brand" href="../../index.html">
-                <img id="logo" class="svg" src="../../logo.svg" alt="">
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-              <form class="navbar-form navbar-right" role="search" id="search">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
-                </div>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
               </form>
             </div>
           </div>
-        </nav>
-        
-        <div class="subnav navbar navbar-default">
-          <div class="container hide-when-search" id="breadcrumb">
-            <ul class="breadcrumb">
-              <li></li>
-            </ul>
-          </div>
         </div>
-      </header>
-      <div class="container body-content">
-        
-        <div id="search-results">
-          <div class="search-list"></div>
-          <div class="sr-items">
-            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
           </div>
-          <ul id="pagination"></ul>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
         </div>
       </div>
-      <div role="main" class="container body-content hide-when-search">
-        
-        <div class="sidenav hide-when-search">
-          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
-          <div class="sidetoggle collapse" id="sidetoggle">
-            <div id="sidetoc"></div>
-          </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
         </div>
-        <div class="article row grid-right">
-          <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="">
+
+        <article data-uid="">
 <h1 id="working-with-documents">Working with documents</h1>
 
-<p>See <a href="xref:Documents">Documents</a> on technical documentation.</p>
+<p>See <a class="xref" href="https://erpnetdocs.github.io/tech/concepts/documents/index.html">Documents</a> on technical documentation.</p>
 <p>Retrieving and updating documents is the same as any other entity in the domain.</p>
-<p>However there are some specific rules that apply only to documents. For example documents on state Released or above can not be modified directly. They must be modified with <a href="xref:Adjustment-Documents">adjustment documents</a>.</p>
-<p>Another important attribute of the documents that can not be modified with simple PATCH request is <a href="xref:Document-States">State</a>.</p>
+<p>However there are some specific rules that apply only to documents. For example documents on state Released or above can not be modified directly. They must be modified with <a class="xref" href="https://erpnetdocs.github.io/tech/concepts/documents/adjustments.html">adjustment documents</a>.</p>
+<p>Another important attribute of the documents that can not be modified with simple PATCH request is <a class="xref" href="https://erpnetdocs.github.io/tech/concepts/documents/states.html">State</a>.</p>
 <p>The examples below show some tasks related to documents.</p>
-<h2 id="create-document">Create Document</h2>
+<h2 id="create-document">Create document</h2>
 <p>Document can be created only by specifying the required properties. Other properties will be filled by it's constant default value or it's LateDefault expression.</p>
 <p>If Front-End model is used in <a href="../transactions.html">API Transaction</a> dependent property values are recalculated upon property change.  For example in SalesOrderLine line.ProductDescription is set to line.Product.Name when line.Product changes.</p>
 <p>In the example bellow a new SalesOrder is created with one SalesOrderLine.</p>
 <p>Note that measurement units and currencies are specified before passing <a href="../complex-types/quantity.html">Quantity</a> or <a href="../complex-types/amount.html">Amount</a> values. This is required because the quantity or amount contains the code of the measurement unit or currency.</p>
-<p>POST ~/Crm_Sales_SalesOrders</p>
-<pre><code class="lang-json">{
-&quot;DocumentType&quot;: {
-&quot;@odata.id&quot;: &quot;General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)&quot;
-},
-&quot;EnterpriseCompany&quot;: {
-&quot;@odata.id&quot;: &quot;General_EnterpriseCompanies(b0e80577-fbbe-4c9b-811e-20b6c6dd465f)&quot;
-},
-&quot;Customer&quot;: {
-&quot;@odata.id&quot;: &quot;Crm_Customers(15f2640f-f374-4017-ae2d-d2a41535f054)&quot;
-},
-&quot;DocumentCurrency&quot;: {
-&quot;@odata.id&quot;: &quot;General_Currencies(3187833a-d3c1-4804-bfc0-e17e6aee3069)&quot;
-},
-&quot;Lines&quot;: [
+<pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders
 {
-&quot;Product&quot;: {
-&quot;@odata.id&quot;: &quot;General_Products_Products(81d38b50-fd06-e611-8292-b31071e2ee7f)&quot;
-},
-&quot;QuantityUnit&quot;: {
-&quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
-},
-&quot;Quantity&quot;: {
-&quot;Value&quot;: 1,
-&quot;Unit&quot;: &quot;pcs&quot;
-},
-&quot;UnitPrice&quot;: {
-&quot;Value&quot;: 20,
-&quot;Currency&quot;: &quot;BGN&quot;
-}
-}
-]
+  &quot;DocumentType&quot;: {
+    &quot;@odata.id&quot;: &quot;General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)&quot;
+  },
+  &quot;EnterpriseCompany&quot;: {
+    &quot;@odata.id&quot;: &quot;General_EnterpriseCompanies(b0e80577-fbbe-4c9b-811e-20b6c6dd465f)&quot;
+  },
+  &quot;Customer&quot;: {
+    &quot;@odata.id&quot;: &quot;Crm_Customers(15f2640f-f374-4017-ae2d-d2a41535f054)&quot;
+  },
+  &quot;DocumentCurrency&quot;: {
+    &quot;@odata.id&quot;: &quot;General_Currencies(3187833a-d3c1-4804-bfc0-e17e6aee3069)&quot;
+  },
+  &quot;Lines&quot;: [
+    {
+      &quot;Product&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Products_Products(81d38b50-fd06-e611-8292-b31071e2ee7f)&quot;
+      },
+      &quot;QuantityUnit&quot;: {
+        &quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+      },
+      &quot;Quantity&quot;: {
+        &quot;Value&quot;: 1,
+        &quot;Unit&quot;: &quot;pcs&quot;
+      },
+      &quot;UnitPrice&quot;: {
+        &quot;Value&quot;: 20,
+        &quot;Currency&quot;: &quot;BGN&quot;
+      }
+    }
+  ]
 }
 </code></pre>
-<h2 id="change-document-state">Change Document State</h2>
+<h2 id="change-document-state">Change document state</h2>
 <p>HTTP C#</p>
 <pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders(59098bcf-f331-478f-91c2-f5520590f534)/ChangeState
 {
@@ -131,7 +139,7 @@
 &quot;userStatus&quot;: {&quot;@odata.id&quot;: &quot;General_DocumentTypeUserStatuses(1ee1249e-4ef5-46b4-8409-26b2130d09c7)&quot;}
 }
 </code></pre>
-<h2 id="make-document-void">Make Document Void</h2>
+<h2 id="make-document-void">Make document void</h2>
 <p>HTTP C#</p>
 <pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders(11217345-3659-43be-a85d-005eaaa3aaac)/MakeVoid
 {
@@ -139,14 +147,14 @@
 &quot;voidType&quot;: &quot;VoidDocument&quot;
 }
 </code></pre>
-<h2 id="recalculate-document">Recalculate Document</h2>
+<h2 id="recalculate-document">Recalculate document</h2>
 <p>This method is used to recalculate some document details such as Document Amounts (like VAT), Bonus Programs etc. It make sense only in the context of Front-End transaction because the recalculated changes remain only in memory. They must be commited to the database with a separate call to EndTransaction{commit=true}.</p>
 <p>HTTP C#</p>
 <pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders(11217345-3659-43be-a85d-005eaaa3aaac)/Recalculate
 </code></pre>
-<h2 id="create-adjustment-documents">Create Adjustment Documents</h2>
+<h2 id="create-adjustment-documents">Create adjustment documents</h2>
 <p>Released documents can be modified only with adjustment documents. The API provides a convenient method to create adjustment documents: CreateAdjustmentDocuments. The method requires TransactionId in the request header.</p>
-<p>The method creates adjustment documents for modified released documents.  The adjustment documents are created in separate transaction and their state is changed to 'Adjustment'. The method does not commit or rollback the current front-end transaction.</p>
+<p>The method creates adjustment documents for modified released documents. The adjustment documents are created in separate transaction and their state is changed to 'Adjustment'. The method does not commit or rollback the current front-end transaction.</p>
 <p>HTTP C#</p>
 <pre><code class="lang-json">// Begin a front-end transaction
 
@@ -162,7 +170,7 @@ POST ~/BeginTransaction
 
 // Update some sales order lines.
 
-PATH ~/Crm_Sales_SalesOrderLines(34217345-3659-43be-a85d-005eaaa3aaac)
+PATCH ~/Crm_Sales_SalesOrderLines(34217345-3659-43be-a85d-005eaaa3aaac)
 
 TransactionId: xxxx
 
@@ -174,7 +182,7 @@ TransactionId: xxxx
 
 // Update another line.
 
-PATH ~/Crm_Sales_SalesOrderLines(65217345-3659-43be-a85d-005eaaa3aaac)
+PATCH ~/Crm_Sales_SalesOrderLines(65217345-3659-43be-a85d-005eaaa3aaac)
 
 TransactionId: xxxx
 
@@ -208,42 +216,141 @@ TransactionId: xxxx
 
 }
 </code></pre>
+<h2 id="create-multiple-lines-to-an-existing-document">Create multiple lines to an existing document</h2>
+<p>A possible scenario is when you have a document created, but later you want to add its lines.</p>
+<pre><code class="lang-json">PATCH ~/Crm_Sales_SalesOrders(283e4c71-2d77-4083-81b6-4c7f17668d7e)
+{
+  &quot;Lines&quot;: [
+    {
+      &quot;LineNo&quot;: 10,
+      &quot;Product&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Products_Products(81d38b50-fd06-e611-8292-b31071e2ee7f)&quot;
+      },
+      &quot;QuantityUnit&quot;: {
+        &quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+      },
+      &quot;Quantity&quot;: {
+        &quot;Value&quot;: 1,
+        &quot;Unit&quot;: &quot;pcs&quot;
+      },
+      &quot;UnitPrice&quot;: {
+        &quot;Value&quot;: 20,
+        &quot;Currency&quot;: &quot;BGN&quot;
+      }
+    },
+    {
+      &quot;LineNo&quot;: 20,
+      &quot;Product&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Products_Products(08fc0b95-01d8-4876-9074-67898c0bd98b)&quot;
+      },
+      &quot;QuantityUnit&quot;: {
+        &quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+      },
+      &quot;Quantity&quot;: {
+        &quot;Value&quot;: 5,
+        &quot;Unit&quot;: &quot;pcs&quot;
+      },
+      &quot;UnitPrice&quot;: {
+        &quot;Value&quot;: 10,
+        &quot;Currency&quot;: &quot;BGN&quot;
+      }
+    },
+    {
+      &quot;LineNo&quot;: 30,
+      &quot;Product&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Products_Products(396f958d-1952-4c6f-ac66-9211962720d4)&quot;
+      },
+      &quot;QuantityUnit&quot;: {
+        &quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+      },
+      &quot;Quantity&quot;: {
+        &quot;Value&quot;: 67,
+        &quot;Unit&quot;: &quot;pcs&quot;
+      },
+      &quot;UnitPrice&quot;: {
+        &quot;Value&quot;: 1.23,
+        &quot;Currency&quot;: &quot;BGN&quot;
+      }
+    }    
+  ]
+}
+</code></pre>
+<h2 id="create-a-sales-order-with-automatic-calculation-of-line-prices-and-amounts">Create a sales order with automatic calculation of line prices and amounts</h2>
+<p>The term &quot;automatic&quot; actually means the execution of the front-end business rules, related to the sales order and its sales order lines.</p>
+<p>Therefore, this is only possible in a front-end transaction.</p>
+<pre><code class="lang-json">POST ~/BeginTransaction
+
+{
+  &quot;model&quot;: &quot;frontend&quot;
+}
+</code></pre>
+<p>After, just create the sales order and its lines at once:</p>
+<pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders
+TransactionId: xxxx
+
+{
+  &quot;DocumentNo&quot;: &quot;12345&quot;,
+  &quot;DocumentType&quot;: {
+    &quot;@odata.id&quot;: &quot;General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)&quot;
+  },
+  &quot;EnterpriseCompany&quot;: {
+    &quot;@odata.id&quot;: &quot;General_EnterpriseCompanies(b11b2f31-71b5-4443-a4b7-b5e9cd664a64)&quot;
+  },
+  &quot;Customer&quot;: {
+    &quot;@odata.id&quot;: &quot;Crm_Customers(eebf02a5-052e-4a8d-9a24-270546d73942)&quot;
+  },
+  &quot;DocumentCurrency&quot;: {
+    &quot;@odata.id&quot;: &quot;General_Currencies(3187833a-d3c1-4804-bfc0-e17e6aee3069)&quot;
+  },
+  &quot;Lines&quot;: [
+    {
+      &quot;LineNo&quot;: 10,
+      &quot;QuantityUnit&quot;: {
+        &quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+      },
+      &quot;Quantity&quot;: {
+        &quot;Value&quot;: 2,
+        &quot;Unit&quot;: &quot;PCS&quot;
+      },
+      &quot;Product&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Products_Products(bc5a90ed-eca3-4e70-9987-395da25f6487)&quot;
+      }
+    }
+  ]
+}
+</code></pre>
+<p>Finally, commit the transaction:</p>
+<pre><code class="lang-json">POST ~/EndTransaction
+TransactionId: xxxx
+
+{
+  &quot;commit&quot;: true
+}
+</code></pre>
+
 </article>
-          </div>
-          
-          <div class="hidden-sm col-md-2" role="complementary">
-            <div class="sideaffix">
-              <div class="contribution">
-                <ul class="nav">
-                  <li>
-                    <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/working-with-documents.md/#L1" class="contribution-link">Improve this Doc</a>
-                  </li>
-                </ul>
-              </div>
-              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
-              </nav>
-            </div>
-          </div>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/working-with-documents.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
         </div>
       </div>
-      
-      <footer>
-        <div class="grad-bottom"></div>
-        <div class="footer">
-          <div class="container">
-            <span class="pull-right">
-              <a href="#top">Back to top</a>
-            </span>
-            
-            <span>Generated by <strong>DocFX</strong></span>
-          </div>
-        </div>
-      </footer>
-    </div>
-    
-    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
-    <script type="text/javascript" src="../../styles/docfx.js"></script>
-    <script type="text/javascript" src="../../styles/main.js"></script>
+    </footer>
   </body>
 </html>

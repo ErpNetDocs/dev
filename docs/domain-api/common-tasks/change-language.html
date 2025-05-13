@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Change the response language | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Change the response language | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/change-language.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="change-the-response-language">Change the response language</h1>
+
+<h2 id="overview">Overview</h2>
+<p>Thanks to the built-in <a href="https://docs.erp.net/tech/concepts/multi-language.html">multilanguage support</a> you can save data in multiple languages.</p>
+<p>Then, when you retrieve them back via the Domain API, you get the data all at once as a complex type of <a href="../complex-types/multi-language-string.html">multilanguage string</a>- i.e. all translations you have defined.</p>
+<pre><code class="lang-json">{
+  &quot;en&quot;: &quot;Apple&quot;,
+  &quot;de&quot;: &quot;Apfel&quot;
+}
+</code></pre>
+<h2 id="document-printout">Document printout</h2>
+<p>However, sometimes there are cases where the data must be returned, visualized for a particular language. I.e. it's not appropriate to return all defined translations at once.</p>
+<p>An example of this is when you acquire a <a href="https://docs.erp.net/model/entities/General.Documents.html#getprintout">document printout</a>. The result of this feature is a document, a file, rendered in a specific language. What if you want the printout to be displayed in a language other than the default?</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The default language in Domain API is English (en).</p>
+</div>
+<p>If you want it to be generated in German, you must specify it explicitly.</p>
+<h2 id="supported-ways-to-specify-the-response-language">Supported ways to specify the response language</h2>
+<ol>
+<li>Url parameter: <code>culture=de</code></li>
+<li>Cookie, containing a key=value: <code>.AspNetCore.Culture=de</code></li>
+<li>Accept-Language HTTP header: <code>Accept-Language: de</code></li>
+</ol>
+<p>All you have to do is to specify the language in one of the ways listed above.</p>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p>The methods mentioned above are applicable only when using OAuth for authorization. You can find additional information <a href="#specify-response-language-when-using-basic-auth">here</a>.</p>
+</div>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>If there's more than one way to change the language at the same time, prioritization takes place. The priority is the same as listed above: (1) url parameter, (2) cookie, (3) accept-language header. I.e. if you send a request, containing a url parameter <code>culture=de</code> and also specify an HTTP header <code>Accept-Language: en</code>, the chosen language will be German.</p>
+</div>
+<p>Going back to the example of generating a document printout mentioned above, here's what a typical request looks like,</p>
+<pre><code class="lang-HTTP">POST /api/domain/odata/Crm_Invoicing_Invoices(51a63a99-c96d-4876-b205-fced610143ae)/GetPrintout HTTP/1.1
+Host: demodb.my.erp.net
+Content-Type: application/json
+
+{
+    &quot;fileFormat&quot;: &quot;pdf&quot;,
+    &quot;printout&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Printouts(f5229037-b420-46a4-81a0-f11f7d112879)&quot;
+    }
+}
+</code></pre>
+<p>The result of the request will be the printout as base64 encoded pdf file in the default Domain API language.</p>
+<p>If you want to change the language, it's enough to simply specify it in one of the three ways above,</p>
+<pre><code class="lang-HTTP">POST /api/domain/odata/Crm_Invoicing_Invoices(51a63a99-c96d-4876-b205-fced610143ae)/GetPrintout HTTP/1.1
+Host: demodb.my.erp.net
+Content-Type: application/json
+Accept-Language: de
+
+{
+    &quot;fileFormat&quot;: &quot;pdf&quot;,
+    &quot;printout&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Printouts(f5229037-b420-46a4-81a0-f11f7d112879)&quot;
+    }
+}
+</code></pre>
+<p>The only change is the additional request HTTP header <code>Accept-Language: de</code>.</p>
+<p>The result will be the same printout, but in German.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Changing the language simply instructs ERP.net to &quot;choose&quot; it from what is saved in the multilanguage string attributes.</p>
+<ul>
+<li>If the &quot;chosen&quot; language isn't present in a multulanguage string attribute, it will be returned <a href="https://docs.erp.net/tech/concepts/multi-language.html#transliteration">transliterated</a>.</li>
+<li>All non-multilanguage strings will be returned as they are.</li>
+</ul>
+</div>
+<h3 id="specify-response-language-when-using-basic-auth">Specify response language when using Basic Auth</h3>
+<p>Unlike the recommended OAuth authorization method, changing the response language while using Basic Auth can only be accomplished by specifying the <code>lang</code> parameter in the request URL.</p>
+<p>E.g.,</p>
+<pre><code class="lang-HTTP">POST /api/domain/odata/Crm_Invoicing_Invoices(51a63a99-c96d-4876-b205-fced610143ae)/GetPrintout?lang=bg HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Basic xxxxx
+</code></pre>
+<p><code>lang=bg</code> - that's the addition, and as a result, the prinout will be returned, but in Bulgarian.</p>
+<p>Anyway, the use of Basic Auth is strongly discouraged and should be approached with special caution, only as a last resort.</p>
+<p>Here, you can find information on how to migrate your Basic Auth workflow to OAuth:</p>
+<ul>
+<li><a href="../authentication.html">Authentication in ERP.net</a></li>
+<li><a href="register-trusted-app.html">Register trusted app</a></li>
+<li><a href="../samples/step-by-step/basic-acquire-access-token.html">Step-by-step / acquire an access token</a></li>
+</ul>
+<h2 id="other-cases-where-language-change-has-an-effect">Other cases, where language change has an effect</h2>
+<h3 id="error-responses--messages">Error responses / messages</h3>
+<p>For example, we'll update a customer, but in such a way that we get an error back. We'll trigger the <a href="https://docs.erp.net/model/business-rules/R27159.html">R27159</a> validation business rule.</p>
+<pre><code class="lang-HTTP">PATCH /api/domain/odata/Crm_Customers(e99186bc-d3bc-4a93-b169-5baec1d45540) HTTP/1.1
+Host: demodb.my.erp.net
+Content-Type: application/json
+
+{
+    &quot;FromDate&quot;: &quot;2022-01-01&quot;,
+    &quot;ThruDate&quot;: &quot;2021-01-01&quot;
+}
+</code></pre>
+<p>Accordingly, the result will be the following error:</p>
+<pre><code class="lang-JSON">{
+    &quot;error&quot;: {
+        &quot;message&quot;: &quot;An error occurred while saving data to the database\r\n  The validation R27159: FromDateLessThanThruDate failed for event Commit: \r\n\r\nCustomer's From Date 1/1/2022 12:00:00 AM should not be greater than customer's Thru Date 1/1/2021 12:00:00 AM. (Constraint R27159)&quot;
+    }
+}
+</code></pre>
+<p>If we change the language (this time as a url parameter), the request will look like this,</p>
+<pre><code class="lang-HTTP">PATCH /api/domain/odata/Crm_Customers(e99186bc-d3bc-4a93-b169-5baec1d45540)?culture=bg HTTP/1.1
+Host: demodb.my.erp.net
+Content-Type: application/json
+
+{
+    &quot;FromDate&quot;: &quot;2022-01-01&quot;,
+    &quot;ThruDate&quot;: &quot;2021-01-01&quot;
+}
+</code></pre>
+<p>The difference is adding the <code>culture=bg</code> parameter to the url.</p>
+<p>We'll receive the same message, but translated into Bulgarian:</p>
+<pre><code class="lang-JSON">{
+    &quot;error&quot;: {
+        &quot;message&quot;: &quot;Грешка при записване.\r\n  Валидацията R27159: FromDateLessThanThruDate не е била успешна при събитие Commit: \r\n\r\nСтойността на полето 'От дата' 1.01.2022 г. 0:00:00 ч. не трябва да надвишава стойността на полето 'До дата' 1.01.2021 г. 0:00:00 ч. (Constraint R27159)&quot;
+    }
+}
+</code></pre>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/change-language.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

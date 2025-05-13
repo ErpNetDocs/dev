@@ -1,97 +1,111 @@
-﻿<!DOCTYPE html>
-<!--[if IE]><![endif]-->
+<!DOCTYPE html>
 <html>
-  
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Domain API Transactions | ERP.net Developer Docs </title>
-    <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Domain API Transactions | ERP.net Developer Docs ">
-    <meta name="generator" content="docfx 2.56.9.0">
-    
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="stylesheet" href="../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../styles/docfx.css">
-    <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
-    <meta property="docfx:tocrel" content="toc.html">
-    
-    <meta property="docfx:rel" content="../">
-    
+      <title>Domain API Transactions | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Domain API Transactions | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/transactions.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
   </head>
-  <body data-spy="scroll" data-target="#affix" data-offset="120">
-    <div id="wrapper">
-      <header>
-        
-        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              
-              <a class="navbar-brand" href="../index.html">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-              <form class="navbar-form navbar-right" role="search" id="search">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
-                </div>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
               </form>
             </div>
           </div>
-        </nav>
-        
-        <div class="subnav navbar navbar-default">
-          <div class="container hide-when-search" id="breadcrumb">
-            <ul class="breadcrumb">
-              <li></li>
-            </ul>
-          </div>
         </div>
-      </header>
-      <div class="container body-content">
-        
-        <div id="search-results">
-          <div class="search-list"></div>
-          <div class="sr-items">
-            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
           </div>
-          <ul id="pagination"></ul>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
         </div>
       </div>
-      <div role="main" class="container body-content hide-when-search">
-        
-        <div class="sidenav hide-when-search">
-          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
-          <div class="sidetoggle collapse" id="sidetoggle">
-            <div id="sidetoc"></div>
-          </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
         </div>
-        <div class="article row grid-right">
-          <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="">
+
+        <article data-uid="">
 <h1 id="domain-api-transactions">Domain API Transactions</h1>
 
-<p>Тhe ErpNet Domain API introduces a server-side transaction that holds any change of an entity object made between calls of BeginTransaction and EndTransaction.</p>
+<p>Тhe ErpNet Domain API introduces a server-side transaction that holds any change of an entity object made between calls of <code>BeginTransaction</code> and <code>EndTransaction</code>.</p>
+<p>An api transaction is a data set that contains the data for the objects used in the transaction. When we create a domain object in a transaction, a data set containing the data for this object is created in the memory of the api process. If we create another object in the same transaction, the second object is also saved in the same data set. The data is not yet present in the database until we commit the transaction.</p>
+<p>If we update the same field with different API requests in the same transaction, the value of the field remains the one submitted last.</p>
+<p>If we use a front-end transaction, each submission of a value for a given field will trigger front-end events that may update other fields.</p>
+<p>When the transaction is committed, the entire dataset is submitted to the database. At this point, we don't guarantee the order in which records from the same table are inserted into database. That's why several objects that have reference to the same entity type must be created in different transactions (for example parent-child related documents).</p>
+<h2 id="begintransaction">BeginTransaction</h2>
 <p><strong>BeginTransaction</strong> is unbound (not bound to any entity) action (actions are called with HTTP POST method) that initializes an object transaction on the server and  returns a <em>TransactionId</em> token as a plain text (not json - for example XXXXX). This object transaction is something like memory data-set that holds copies of database records.</p>
-<p>The transaction lives in the server memory for 20 minutes sliding expiration.</p>
 <p>If any subsequent request includes the <em>TransactionId</em> token in the HTTP header (like this: TransactionId:XXXXX) the requested operation will not be executed against the database but against the memory transaction. This means that any POST, PATCH and DELETE requests will be executed only in memory.</p>
-<p><strong>Parameters:</strong></p>
+<h3 id="parameters">Parameters</h3>
 <ul>
-<li><strong>model:</strong> allowed values are &quot;common&quot; or &quot;frontend&quot;. This parameter indicates the data model used for the transaction. Front-end data model uses front-end business rules. For example front-end logic is when Quantity of a SalesOrderLine is changed the corresponding QuantityBase is calculated by a dedicated front-end business rule. Common model defines minimal business logic applicable in all cases - front-end or back-end. The default is &quot;common&quot;.</li>
-<li><strong>trackChanges:</strong> true or false. This parameter enables the usage of GetChanges and WaitForChanges functions. This means that if parameter trackChanges is not true any call to GetChanges and WaitForChanges will return error.</li>
+<li><strong>model:</strong> allowed values are <code>common</code> or <code>frontend</code>. This parameter indicates the data model used for the transaction. Front-end data model uses front-end business rules. For example front-end logic is when Quantity of a SalesOrderLine is changed the corresponding QuantityBase is calculated by a dedicated front-end business rule. Common model defines minimal business logic applicable in all cases - front-end or back-end. The default is <code>common</code>.</li>
+<li><strong>trackChanges:</strong> <code>true</code> or <code>false</code>. This parameter enables the usage of GetChanges and WaitForChanges functions. This means that if parameter <code>trackChanges</code> is not <code>true</code> any call to <code>GetChanges</code> and <code>WaitForChanges</code> will return error.</li>
 </ul>
-<p><strong>GetChanges</strong> is unbound function - functions are invoked through GET HTTP method. This function requires the HTTP header <em>TransactionId</em> to be passed. It also requires the front-end transaction to be initialized with  <em>trackChanges</em>: true. Front-end transactions support front-end business rules. These are rules that are usually triggered on attribute change. For example if we change the DocumentDate attribute of a SalesOrder (using regular PATCH request including the <em>TransactionId</em> in the request header), this change will trigger updates of several other attributes. If the front-end transaction is initialized with <em>trackChanges</em>: true, the changes will be collected in the server side (inside the front-end transaction). GetChanges returns all changes made after the last call of GetChanges or WaitForChanges. The changes are grouped by operation type (insert, update, delete), entity name, entity id. The call of GetChanges (or WaitForChanges) clears the collected changes in the transaction. If no change is made after the last call of GetChanges it will return empty result (empty JSON object).</p>
-<p><strong>WaitForChanges</strong> is unbound function that returns the same result as GetChanges but if there is not any change the function blocks until a change occurs or until it times out. The wait timeout is 2 minutes. This function requires the HTTP header <em>TransactionId</em> to be passed. It also requires the front-end transaction to be initialized with <em>trackChanges</em>: true.</p>
+<h2 id="getchanges">GetChanges</h2>
+<p><strong>GetChanges</strong> is unbound function - functions are invoked through GET HTTP method. This function requires the HTTP header <em>TransactionId</em> to be passed. It also requires the front-end transaction to be initialized with  <em>trackChanges</em>: <code>true</code>. Front-end transactions support front-end business rules. These are rules that are usually triggered on attribute change. For example if we change the DocumentDate attribute of a SalesOrder (using regular PATCH request including the <em>TransactionId</em> in the request header), this change will trigger updates of several other attributes. If the front-end transaction is initialized with <em>trackChanges</em>: <code>true</code>, the changes will be collected in the server side (inside the front-end transaction). GetChanges returns all changes made after the last call of GetChanges or WaitForChanges. The changes are grouped by operation type (insert, update, delete), entity name, entity id. The call of GetChanges (or WaitForChanges) clears the collected changes in the transaction. If no change is made after the last call of GetChanges it will return empty result (empty JSON object).</p>
+<h2 id="waitforchanges">WaitForChanges</h2>
+<p><strong>WaitForChanges</strong> is unbound function that returns the same result as GetChanges but if there is not any change the function blocks until a change occurs or until it times out. The wait timeout is 2 minutes. This function requires the HTTP header <em>TransactionId</em> to be passed. It also requires the front-end transaction to be initialized with <em>trackChanges</em>: <code>true</code>.</p>
 <p>The response format of GetChanges and WaitForChanges follows this JSON schema:</p>
-<pre><code class="lang-json">&quot;insert&quot; | &quot;update&quot; | &quot;delete&quot; : {
+<pre><code>&quot;insert&quot; | &quot;update&quot; | &quot;delete&quot; : {
     &quot;&lt;entity-name&gt;&quot; : {   // example: &quot;General_Products_Products&quot;
         &quot;&lt;id&gt;&quot;: { // example: 59098bcf-f331-478f-91c2-f5520590f534 (Guid)
             &quot;&lt;attribute&gt;&quot;: &lt;value&gt; // example: &quot;ABCClass&quot;: &quot;A&quot;
@@ -99,96 +113,105 @@
     }
 }
 </code></pre>
-<p><strong>EndTransaction</strong> is unbound action that disposes the memory transaction created with BeginTransaction. After EndTransaction the transaction id becomes invalid.</p>
-<p>Parameters:</p>
+<h2 id="endtransaction">EndTransaction</h2>
+<p><strong>EndTransaction</strong> is unbound action that disposes the memory transaction created with <code>BeginTransaction</code>. After <code>EndTransaction</code> the transaction id becomes invalid.</p>
+<h3 id="parameters-1">Parameters</h3>
 <ul>
-<li><strong>commit:</strong> true or false. Specifies whether to commit the transaction (save the changes) or not. Default is true.</li>
+<li><strong>commit:</strong> <code>true</code> or <code>false</code>. Specifies whether to commit the transaction (save the changes) or not. Default is <code>true</code>.</li>
 </ul>
-<p>To commit the changes made in the memory transaction to the database you should provide the parameter commit = true.</p>
+<p>To commit the changes made in the memory transaction to the database you should provide the parameter commit = <code>true</code>.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>The object transaction is called Front-End because any change of an entity object will trigger front-end business rules. For example if Quantiy of a SalesOrderLine is changed the corresponding QuantityBase will be automatically recalculated. This is front-end behavior - if front-end transaction is not used the QuantityBase will not be automatically recalculated and it's value must be explicitly set.<br>
-Through Front-End Transaction, GetChanges or WaitForChanges we can synchronize our UI passing only the user actions to the server - such as update of an attribute, creating new object or deleting existing object.</p>
+<p>The object transaction is called Front-End because any change of an entity object will trigger front-end business rules. For example if Quantiy of a SalesOrderLine is changed the corresponding QuantityBase will be automatically recalculated. This is front-end behavior - if front-end transaction is not used the QuantityBase will not be automatically recalculated and it's value must be explicitly set.</p>
+<p>Through Front-End Transaction, GetChanges or WaitForChanges we can synchronize our UI passing only the user actions to the server - such as update of an attribute, creating new object or deleting existing object.</p>
 </div>
-<h4 id="example1">Example1:</h4>
-<pre><code class="lang-json">Simple usage of front end transaction.
-
-POST /api/domain/odata/BeginTransaction HTTP/1.1
-Host: https://example.com
-Content-Type: application/json
-
-
-Result: xcasfawed
-
-Make subsequent updates of products
-
-PATCH /api/domain/odata/General_Products_Products(59098bcf-f331-478f-91c2-f5520590f534) HTTP/1.1
-Host: https://example.com
-Content-Type: application/json
-TransactionId: xcasfawed
-{
-
-&quot;ABCClass&quot;:&quot;A&quot;,
-
-&quot;StandardLotSizeBase&quot;:{&quot;Value&quot;:3.45,&quot;Unit&quot;:&quot;PCS&quot;},
-
-&quot;MeasurementUnit@odata.bind&quot;:&quot;https://example.com/api/domain/odata/General_MeasurementUnits(5c5e77ce-60bb-4338-abd0-3a2acb27ff93)&quot;
-
-}
-
-Commit transaction
-
-POST /api/domain/odata/EndTransaction HTTP/1.1
-Host: https://example.com
-Content-Type: application/json
-TransactionId: xcasfawed
-{
-
-&quot;commit&quot;: true
-
-}
-
+<h2 id="transaction-lifespan-and-management">Transaction Lifespan and Management</h2>
+<p>Each transaction has a defined lifespan.</p>
+<p>In a typical scenario:</p>
+<ul>
+<li>The lifespan of a transaction starts with the <code>BeginTransaction</code> call</li>
+<li>and ends with the <code>EndTransaction</code> call</li>
+</ul>
+<p>Additionally, each transaction has an absolute maximum lifespan, which is <strong>25 minutes</strong>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Every transaction will be automatically cleared 25 minutes after its creation unless it has already been explicitly cleared with EndTransaction.</p>
+</div>
+<p>If you reference the <code>TransactionId</code> of a cleared (or not existing) transaction, an error will be returned:</p>
+<pre><code>&quot;Invalid TransactionId {id}&quot;.
 </code></pre>
-<h4 id="example1-1">Example1:</h4>
-<pre><code class="lang-json">Updating SalesOrder.DocumentDate and calling GetChanges.
-
-POST /api/domain/odata/BeginTransaction HTTP/1.1
+<div class="NOTE">
+<h5>Note</h5>
+<p>It is best practice to keep transactions short and always close them when your work with them is complete.</p>
+</div>
+<h2 id="examples">Examples</h2>
+<h3 id="simple-usage-of-a-front-end-transaction">Simple usage of a front end transaction</h3>
+<h4 id="begintransaction-1">BeginTransaction</h4>
+<pre><code class="lang-http">POST /api/domain/odata/BeginTransaction HTTP/1.1
 Host: https://example.com
 Content-Type: application/json
+
 {
-
-&quot;model&quot;: &quot;frontend&quot;,
-
-&quot;trackChanges&quot;: true
-
+  &quot;model&quot;: &quot;frontend&quot;
 }
-
-Result: uf3d1yc4rqg
-
-Updating DocumentDate. This update triggers many front-end business rules that update many other attributes in the sales order and it's lines.
-
-PATCH /api/domain/odata/Crm_Sales_SalesOrders(33cd6cb9-0f43-df11-a1e1-0018f3790817)
-
+</code></pre>
+<p>Response (Transaction id): <code>843f05ff3f62400c990d2a3b119e256e</code></p>
+<h4 id="update">Update</h4>
+<p>Make subsequent updates of products</p>
+<pre><code class="lang-http">PATCH /api/domain/odata/General_Products_Products(59098bcf-f331-478f-91c2-f5520590f534) HTTP/1.1
 Host: https://example.com
 Content-Type: application/json
-TransactionId: uf3d1yc4rqg
+TransactionId: 843f05ff3f62400c990d2a3b119e256e
+
 {
-&quot;DocumentDate&quot;: &quot;2020-05-08T00:00:00Z&quot;
+  &quot;ABCClass&quot;:&quot;A&quot;,
+  &quot;StandardLotSizeBase&quot;:{&quot;Value&quot;:3.45,&quot;Unit&quot;:&quot;PCS&quot;},
+  &quot;MeasurementUnit@odata.bind&quot;:&quot;https://example.com/api/domain/odata/General_MeasurementUnits(5c5e77ce-60bb-4338-abd0-3a2acb27ff93)&quot;
 }
-
-Result: nocontent
-
-Call GetChanges. The result is a JSON object with all changes made after the last call to GetChanges (or BeginTransaction if GetChanges is not called yet).
-
-GET /api/domain/odata/GetChanges HTTP/1.1
-
+</code></pre>
+<h4 id="committransaction">CommitTransaction</h4>
+<pre><code class="lang-http">POST /api/domain/odata/EndTransaction HTTP/1.1
 Host: https://example.com
 Content-Type: application/json
-TransactionId: uf3d1yc4rqg
-
-Result:
+TransactionId: 843f05ff3f62400c990d2a3b119e256e
 
 {
+  &quot;commit&quot;: true
+}
+</code></pre>
+<h4 id="updating-salesorderdocumentdate-and-calling-getchanges">Updating SalesOrder.DocumentDate and calling <code>GetChanges</code></h4>
+<h3 id="begintransaction-2">BeginTransaction</h3>
+<pre><code class="lang-http">POST /api/domain/odata/BeginTransaction HTTP/1.1
+Host: https://example.com
+Content-Type: application/json
+
+{
+  &quot;model&quot;: &quot;frontend&quot;,
+  &quot;trackChanges&quot;: true
+}
+</code></pre>
+<p>Response (Transaction id): <code>fd5d3bbc38ae4dd9a8a5c0ff46c8e3af</code></p>
+<h3 id="updating-documentdate">Updating DocumentDate</h3>
+<p>This update triggers many front-end business rules that update many other attributes in the sales order and it's lines.</p>
+<pre><code class="lang-http">PATCH /api/domain/odata/Crm_Sales_SalesOrders(33cd6cb9-0f43-df11-a1e1-0018f3790817)
+Host: https://example.com
+Content-Type: application/json
+TransactionId: fd5d3bbc38ae4dd9a8a5c0ff46c8e3af
+
+{
+  &quot;DocumentDate&quot;: &quot;2020-05-08T00:00:00Z&quot;
+}
+</code></pre>
+<p>Response: <code>nocontent</code></p>
+<h3 id="call-getchanges">Call GetChanges</h3>
+<p>The result is a JSON object with all changes made after the last call to GetChanges (or <code>BeginTransaction</code> if <code>GetChanges</code> is not called yet).</p>
+<pre><code class="lang-http">GET /api/domain/odata/GetChanges HTTP/1.1
+Host: https://example.com
+Content-Type: application/json
+TransactionId: fd5d3bbc38ae4dd9a8a5c0ff46c8e3af
+</code></pre>
+<p>Response:</p>
+<pre><code class="lang-json">{
   &quot;@odata.context&quot;: &quot;https://clients.inco.bg/api/domain/odata/$metadata#Erp.OpenObject&quot;,
   &quot;update&quot;: {
     &quot;Crm_Sales_SalesOrders&quot;: {
@@ -308,42 +331,30 @@ Result:
   }
 }
 </code></pre>
+
 </article>
-          </div>
-          
-          <div class="hidden-sm col-md-2" role="complementary">
-            <div class="sideaffix">
-              <div class="contribution">
-                <ul class="nav">
-                  <li>
-                    <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/transactions.md/#L1" class="contribution-link">Improve this Doc</a>
-                  </li>
-                </ul>
-              </div>
-              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
-              </nav>
-            </div>
-          </div>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/transactions.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
         </div>
       </div>
-      
-      <footer>
-        <div class="grad-bottom"></div>
-        <div class="footer">
-          <div class="container">
-            <span class="pull-right">
-              <a href="#top">Back to top</a>
-            </span>
-            
-            <span>Generated by <strong>DocFX</strong></span>
-          </div>
-        </div>
-      </footer>
-    </div>
-    
-    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
-    <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>
+    </footer>
   </body>
 </html>

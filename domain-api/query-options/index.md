@@ -18,6 +18,7 @@ $orderby | OData | Specifies an expression for determining which values are used
 [$select](select.md) | OData | Limits the data to the specified attributes.
 $skip | OData | The $skip query option requests the number of items in the queried collection that are to be skipped and not included in the result.
 $top | OData | The $top system query option requests the number of items in the queried collection to be included in the result.
+[$search](search.md) | OData | The $search system query option allows clients to request items within a collection matching a free-text. Each entity implements the searching in a different way.
 [options](options.md) | Extension | List of comma separated options/flags that affect the behavior of the system.
 
 > [!note]

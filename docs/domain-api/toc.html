@@ -1,19 +1,22 @@
-﻿
+
 <div id="sidetoggle">
   <div>
     <div class="sidefilter">
       <form class="toc-filter">
         <span class="glyphicon glyphicon-filter filter-icon"></span>
         <span class="glyphicon glyphicon-remove clear-icon" id="toc_filter_clear"></span>
-        <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+        <input type="text" id="toc_filter_input" placeholder="Filter by title" onkeypress="if(event.keyCode==13) {return false;}">
       </form>
     </div>
     <div class="sidetoc">
       <div class="toc" id="toc">
-          
+
           <ul class="nav level1">
                 <li>
                     <a href="index.html" name="" title="Introduction">Introduction</a>
+                </li>
+                <li>
+                    <a href="authentication.html" name="" title="Authentication">Authentication</a>
                 </li>
                 <li>
                     <a href="url-components.html" name="" title="URL components">URL components</a>
@@ -21,7 +24,7 @@
                 <li>
                     <span class="expand-stub"></span>
                     <a href="query-options/index.html" name="" title="Query options">Query options</a>
-                    
+
                     <ul class="nav level2">
                           <li>
                               <a href="query-options/index.html" name="" title="Overview">Overview</a>
@@ -31,6 +34,9 @@
                           </li>
                           <li>
                               <a href="query-options/select.html" name="" title="$select">$select</a>
+                          </li>
+                          <li>
+                              <a href="query-options/search.html" name="" title="$search">$search</a>
                           </li>
                           <li>
                               <a href="query-options/options.html" name="" title="$options">$options</a>
@@ -43,7 +49,7 @@
                 <li>
                     <span class="expand-stub"></span>
                     <a href="complex-types/index.html" name="" title="Complex types">Complex types</a>
-                    
+
                     <ul class="nav level2">
                           <li>
                               <a href="complex-types/index.html" name="" title="Overview">Overview</a>
@@ -71,7 +77,7 @@
                 <li>
                     <span class="expand-stub"></span>
                     <a href="common-tasks/index.html" name="" title="Common tasks">Common tasks</a>
-                    
+
                     <ul class="nav level2">
                           <li>
                               <a href="common-tasks/index.html" name="" title="Overview">Overview</a>
@@ -88,12 +94,24 @@
                           <li>
                               <a href="common-tasks/master-detail-attributes.html" name="" title="Master/Detail attributes">Master/Detail attributes</a>
                           </li>
+                          <li>
+                              <a href="common-tasks/change-language.html" name="" title="Change the response language">Change the response language</a>
+                          </li>
+                          <li>
+                              <a href="common-tasks/create-notification.html" name="" title="Create notification">Create notification</a>
+                          </li>
+                          <li>
+                              <a href="common-tasks/context-parameters.html" name="" title="Providing context parameters">Providing context parameters</a>
+                          </li>
+                          <li>
+                              <a href="common-tasks/handling-renames.html" name="" title="Handling renames">Handling renames</a>
+                          </li>
                     </ul>
                 </li>
                 <li>
                     <span class="expand-stub"></span>
                     <a href="data-sync/index.html" name="" title="Data sync">Data sync</a>
-                    
+
                     <ul class="nav level2">
                           <li>
                               <a href="data-sync/index.html" name="" title="Overview">Overview</a>
@@ -114,9 +132,37 @@
                 </li>
                 <li>
                     <span class="expand-stub"></span>
-                    <a>Example apps</a>
-                    
+                    <a href="samples/index.md" name="" title="Example apps">Example apps</a>
+
                     <ul class="nav level2">
+                          <li>
+                              <span class="expand-stub"></span>
+                              <a href="samples/step-by-step/index.html" name="" title="Step by step guides">Step by step guides</a>
+
+                              <ul class="nav level3">
+                                    <li>
+                                        <a href="samples/step-by-step/index.html" name="" title="Overview">Overview</a>
+                                    </li>
+                                    <li>
+                                        <a href="samples/step-by-step/basic-acquire-access-token.html" name="" title="Basic example of acquiring an access token">Basic example of acquiring an access token</a>
+                                    </li>
+                                    <li>
+                                        <a href="samples/step-by-step/basic-exchange-auth-code-access-token.html" name="" title="Exchange an auth code for an access token">Exchange an auth code for an access token</a>
+                                    </li>
+                                    <li>
+                                        <a href="samples/step-by-step/basic-renew-access-token.html" name="" title="Renew an access token via a refresh token">Renew an access token via a refresh token</a>
+                                    </li>
+                                    <li>
+                                        <a href="samples/step-by-step/web-app-access-token-auth-code.html" name="" title="Access token via authorization code flow in a web app">Access token via authorization code flow in a web app</a>
+                                    </li>
+                                    <li>
+                                        <a href="samples/step-by-step/console-app-access-token-auth-code.html" name="" title="Access token via authorization code flow in a console app">Access token via authorization code flow in a console app</a>
+                                    </li>
+                                    <li>
+                                        <a href="samples/step-by-step/spa-access-token-auth-code.html" name="" title="Access token via authorization code flow in a SPA (Single Page Application)">Access token via authorization code flow in a SPA (Single Page Application)</a>
+                                    </li>
+                              </ul>
+                          </li>
                           <li>
                               <a href="samples/javascript-client.html" name="" title="Javascript Client">Javascript Client</a>
                           </li>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Recommendations for using TableAPI as a data source for BI | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Recommendations for using TableAPI as a data source for BI | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/topics/table-api/usage-guide.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="recommendations-for-using-tableapi-as-a-data-source-for-bi">Recommendations for using TableAPI as a data source for BI</h1>
+
+<p>Respecting the technical capabilities of the TableAPI, such as its filtering and data presentation capabilities, is necessary to ensure fast, efficient, and trouble-free operation.
+To achieve this, the following recommendations should be followed:</p>
+<ol>
+<li><p><strong>Select only the necessary tables from which you will load data.</strong></p>
+</li>
+<li><p><strong>Filter the table as early as possible by using solid constraints that the data must meet.
+Negative constructions, OR statements, and unsupported types of filtering should not be used.
+This should be aligned with the documentation for each field being filtered.</strong></p>
+<p>For example, do not use &quot;&lt;&gt;&quot;, &quot;&lt;&quot;, &quot;&gt;&quot;, &quot;OR&quot;, &quot;NOT&quot; as they are not supported.<br>
+The supported constructions are <em><strong>&quot;AND&quot;</strong></em> ,<em><strong>&quot;=&quot;</strong></em> (including <em><strong>&quot;= null&quot;</strong></em>), <em><strong>&quot;&lt;=&quot;</strong></em>, <em><strong>&quot;&gt;=&quot;</strong></em>.</p>
+</li>
+<li><p><strong>Remove unnecessary fields as early as possible. Here it matters whether you choose &quot;Remove other columns&quot; or &quot;Remove columns&quot; (different functions, where one keeps the listed columns and the other removes them). Use the former (&quot;Remove other columns&quot;), which will ensure that if there is a modification in the table structure, the result will remain the same.</strong></p>
+</li>
+<li><p><strong>Supplement the data (add rows) from other sources if more complex data filtering containing OR clauses is required.
+All OR-separated filters should be divided into several sub-filters, where each sub-filter requires a separate query to the same table with the respective sub-filter.
+Finally, all these sub-queries should be combined into one table by appending queries.</strong></p>
+</li>
+<li><p><strong>When filtering data based on related tables (filter is not on a field from the current table), use table merging (Merge queries), where the main table to which you are making a connection should already be filtered, and use the &quot;Inner join - only matching rows&quot; type of join.</strong></p>
+<p>For example, if you need to filter only certain documents from <strong>Crm_Sales_Orders</strong>, you should first filter <strong>Gen_Documents</strong> for the desired documents (based on <em>Entity_Name</em>, <em>Void</em>, <em>State</em>, <em>Document_Date</em>, etc.), and then merge <strong>Crm_Sales_Orders</strong> with <strong>Gen_Documents</strong> using an <strong><em>Inner join</em></strong> and specifying the corresponding fields <em>Document_Id</em> (<strong>Crm_Sales_Orders</strong>) <strong>-&gt;</strong> <em>Id</em> (<strong>Gen_Documents</strong>).</p>
+</li>
+<li><p><strong>If the tables have a relatively small volume (number of records), you may not need to follow the above filtering recommendations, as in that case, the entire table will likely be loaded into BI, and the filtering will be applied afterwards by BI.</strong></p>
+</li>
+</ol>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/topics/table-api/usage-guide.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

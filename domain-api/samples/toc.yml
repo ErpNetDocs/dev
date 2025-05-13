@@ -1,3 +1,6 @@
+- name: Step by step guides
+  href: step-by-step/toc.yml
+  topicHref: step-by-step/index.md
 - name: Javascript Client
   href: javascript-client.md
 - name: PHP Interactive Client

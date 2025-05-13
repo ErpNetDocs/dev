@@ -2,16 +2,14 @@
   "build": {
     "content": [
       {
-        "files": [
-          "toc.yml",
-          "**.md",
-          "**/toc.yml"
-        ]
+        "files": [ "toc.yml", "**.md", "**/toc.yml" ],
+        "exclude": [ "docs/**/*.*" ]
       }
     ],
     "resource": [
       {
-        "files": [ "images/**", "**.svg", "**.png" ]
+        "files": [ "images/**", "**.svg", "**.png", "favicon.ico" ],
+        "exclude": [ "docs/**/*.*" ]
       }
     ],
     "xref": [
@@ -21,14 +19,19 @@
     "dest": "docs",
     "globalMetadata": {
       "_appTitle": "ERP.net Developer Docs",
-      "_enableSearch": true
+      "_enableSearch": true,
+      "_appFaviconPath": "favicon.ico",
+	  "pdf": false,
+	  "_disableToc": false
     },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
-      "default"
+      "default",
+      "modern",
+      "templates/material"
     ],
-    "postProcessors": [],
+    "postProcessors": ["ExtractSearchIndex"],
     "markdownEngineName": "markdig",
     "noLangKeyword": false,
     "keepFileLink": false,
