@@ -64,31 +64,31 @@ Domain API and Table API allow basic authentication but require their correspond
     
 Authentication faled for user 'test'.
  
-Current request uses basic authentication but the provided application 'DEMOAPP' is not found among the trusted applications.
+Current request uses basic authentication but the provided application 'DEMOAPP' **is not found among the trusted applications**.
   
-Contact your system administrator to create trusted application 'DEMOAPP' and configure it to allow basic authentication.
+Contact your system administrator **to create trusted application** 'DEMOAPP' and configure it to allow basic authentication.
 
 ---
 
 Authentication failed for user 'test'.
  
-Current request uses basic authentication but the trusted application 'DEMOAPP' is not enabled.
+Current request uses basic authentication but the trusted application 'DEMOAPP' **is not enabled**.
  
-Contact your system administrator to enable the trusted application 'DEMOAPP' and configure it to allow basic authentication.
+Contact your system administrator **to enable the trusted application** 'DEMOAPP' and configure it to allow basic authentication.
 
 ---
 
 Authentication failed for user 'test'.
  
-Current request uses basic authentication but the provided application 'DEMOAPP' is not configured to allow basic authentication.
+Current request uses basic authentication but the provided application 'DEMOAPP' **is not configured** to allow basic authentication.
 
-Contact your system administrator to configure the trusted application 'DEMOAPP' to allow basic authentication.
+Contact your system administrator **to configure the trusted application** 'DEMOAPP' to allow basic authentication.
 
 ---
 
 Authentication failed for user 'test'.
 
-Current request uses basic authentication but the corresponding trusted application 'DEMOAPP' is configured for system user that is different from the provided user 'test'.
+Current request uses basic authentication but the corresponding trusted application 'DEMOAPP' **is configured for system user that is different** from the provided user 'test'.
 
-Use the correct application user to log in or contact your system administrator to configure the trusted application 'DEMOAPP' for different user.  
+Use the correct application user to log in or contact your system administrator **to configure the trusted application** 'DEMOAPP' for different user.  
   
