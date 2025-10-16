@@ -7,4 +7,4 @@ This page provides a clear overview of technical modifications, schema updates, 
 
 You can explore the version-specific threads to review changes, migration notes, and new development tools introduced in each release.
 
-## Version 26.2
+[!list folder="." depth=1 limit=100 default-text="None"]
