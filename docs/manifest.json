@@ -892,6 +892,16 @@
         }
       },
       "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "whats-new/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "whats-new/index.html"
+        }
+      },
+      "version": ""
     }
   ],
   "groups": [
