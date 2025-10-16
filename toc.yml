@@ -7,5 +7,8 @@ items:
   href: domain-api/toc.yml
 - name: API Reference
   href: https://docs.erp.net/model/entities/
+- name: What's New
+  href: whats-new/toc.yml
+  topicHref: whats-new/index.md
 - name: Return to DOCS ⏶
   href: https://docs.erp.net/
