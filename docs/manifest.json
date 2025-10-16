@@ -902,6 +902,29 @@
         }
       },
       "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "whats-new/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "whats-new/toc.html"
+        },
+        ".json": {
+          "relative_path": "whats-new/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "whats-new/v26-2/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "whats-new/v26-2/index.html"
+        }
+      },
+      "version": ""
     }
   ],
   "groups": [
