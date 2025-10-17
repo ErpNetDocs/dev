@@ -106,15 +106,15 @@ Specification with example:</p>
 </code></pre>
 <h2 id="parameters">Parameters</h2>
 <ul>
-<li><strong>model:</strong> - allowed values are <code>common</code> or <code>frontend</code>. This parameter indicates the data model used for the import. Front-end data model uses front-end business rules. For example front-end logic is when Quantity of a SalesOrderLine is changed the corresponding QuantityBase is calculated by a dedicated front-end business rule. Common model defines minimal business logic applicable in all cases - front-end or back-end. The default is <code>common</code>.</li>
-<li><strong>transaction:</strong> - <code>all-objects</code> or <code>per-object</code>. This parameter defines when the changes will be commited to the database. If <code>all-objects</code> is specified all changes are committed at once at the end of the import. If <code>per-object</code> is specified every object is saved once the data is imported.</li>
+<li><strong>model:</strong> - allowed values are <code>common</code> or <code>frontend</code>. This parameter indicates the data model used for the import. Front-end data model uses front-end business rules. For example front-end logic is when Quantity of a SalesOrderLine is changed the corresponding QuantityBase is calculated by a dedicated front-end business rule. Common model defines minimal business logic applicable in all cases - front-end or back-end. The default is <code>frontend</code>.</li>
+<li><strong>transaction:</strong> - <code>all-objects</code> or <code>per-object</code>. This parameter defines when the changes will be commited to the database. If <code>all-objects</code> is specified all changes are committed at once at the end of the import. If <code>per-object</code> is specified every object is saved when it is ready. The default is <code>per-object</code>.</li>
 <li><strong>objects</strong> - an array of entity objects for import.</li>
 </ul>
 <h3 id="properties-of-the-objects-element">Properties of the objects element</h3>
 <ul>
 <li><strong>&quot;@odata.type&quot;</strong> - Each object must specify valid entity type. The entity type is the singular form of the entity set and can be found in the documentation for each entity. The @odata.type always starts with the default namespace <code>Erp.</code> - Example <a href="https://docs.erp.net/model/entities/General.Products.Products.html">Erp.General_Products_Product</a></li>
-<li><strong>&quot;@erpnet.action&quot;</strong> - This is an optional annotation for the desired import action. For more information see this article. For top-level objects the default action is <code>create</code>.</li>
-<li><strong>&quot;@erpnet.findBy&quot;</strong> - This is an optional annotation that specifies the search criteria for the find action. For more information see this article.</li>
+<li><strong>&quot;@erpnet.action&quot;</strong> - This is an optional annotation for the desired import action. For top-level objects the default action is <code>create</code>. <a href="erpnet-annotation.md">For more information see this article</a>.</li>
+<li><strong>&quot;@erpnet.findBy&quot;</strong> - This is an optional annotation that specifies the search criteria for the find action. <a href="erpnet-annotation.md">For more information see this article</a>.</li>
 <li>Any data property of the imported object.</li>
 </ul>
 <h2 id="return-value">Return value</h2>
@@ -135,18 +135,21 @@ Specification with example:</p>
 </code></pre>
 <h3 id="properties-of-the-result-value">Properties of the result value</h3>
 <ul>
-<li>**@erpnet.result** - <code>success</code> or <code>fail</code>. The result is <code>success</code> only if all objects are imported successfully.</li>
+<li><strong>&quot;@erpnet.result&quot;</strong> - <code>success</code> or <code>fail</code>. The result is <code>success</code> only if all objects are imported successfully.</li>
 <li><strong>objects</strong> - an array of object results - one object for each imported object.</li>
 </ul>
 <h3 id="properies-of-the-each-returned-object">Properies of the each returned object</h3>
 <ul>
-<li>**@erpnet.result** - <code>success</code> or <code>fail</code>.</li>
+<li><strong>&quot;@erpnet.result&quot;</strong> - <code>success</code> or <code>fail</code>.</li>
 <li><strong>&quot;@odata.id&quot;</strong> - the ODATA Id of the imported object. If result is <code>fail</code> this is not available.</li>
 <li><strong>&quot;@erpnet.message&quot;</strong> - the error message.</li>
 <li><strong>&quot;@erpnet.state&quot;</strong> -  the status of the imported object. One of &quot;Added&quot; | &quot;Modified&quot; | &quot;Deleted&quot; | &quot;Unchanged&quot;. Indicates the operation performed for the object.
-Only the @odata.id is included in the result - no other properties.</li>
+Only the &quot;@odata.id&quot; is included in the result - no other properties.</li>
 </ul>
 <h2 id="examples">Examples</h2>
+<p>The following example performs <code>merge</code> action for General_Products_Products.
+If existing product is found by the provided ExternalId it's PartNumber, BaseMeasurementCategory, MeasurementUnit, Name and ProductGroup are updated.
+The action for the referenced objects is <code>find</code> because the included properties are only these that can be used in find criteria. BaseMeasurementCategory is searched by Name (providing @erpnet.findBy), MeasurementUnit and ProductGroup are searched by Code.</p>
 <pre><code>POST ~/Import
 {
   &quot;model&quot;: &quot;frontend&quot;,

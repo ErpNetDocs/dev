@@ -88,7 +88,7 @@
 <h1 id="-instance-annotation">@erpnet.action instance annotation</h1>
 
 <p>In OData instance annotations can be used to define additional information associated with a particular result, entity, property, or error.
-The <code>@erpnet.action</code> annotation can be provided in the body of update request (POST, PATCH) or in the <a href="import.html">Import action</a></p>
+The <code>@erpnet.action</code> annotation can be provided in the body of update request (POST, PATCH) or in the <a href="import.html">Import action</a>.</p>
 <p>Example usage</p>
 <pre><code>POST General_Products_Products
 {
@@ -108,41 +108,148 @@ The <code>@erpnet.action</code> annotation can be provided in the body of update
 	}
 }
 </code></pre>
-<p>The goal of this annotation is to provide better way to import (update or create) data.
-The value of the <code>@erpnet.action</code> annotation determines the type of operation that is to be performed with the provided JSON data.</p>
+<p>The purpose of this annotation is to provide a better way to import, update, or create data.
+The value of the @erpnet.action annotation determines the type of operation that will be performed using the provided JSON data.</p>
 <h2 id="allowed-values">Allowed values</h2>
-<ul>
-<li><p><strong>create</strong> - Always creates new object.</p>
-</li>
-<li><p><strong>update</strong> - Updates existing object. This is the default for top-level JSON object in PATCH request. If <code>&quot;@odata.action&quot;: &quot;update&quot;</code> is explicitly specified in nested/referenced object, the properties of the refered objects are modified.</p>
-</li>
-<li><p><strong>find</strong> - Searches matching object and uses the first found. If no matching object is found an error is thrown. <strong>If the JSON object contains data properties they are ignored - the found object remains unchanged</strong>.</p>
-</li>
-<li><p><strong>findOrNull</strong> - Searches matching object and uses the first found. If no matching object is found returns <code>null</code>. <strong>If the JSON object contains data properties they are ignored - the found object remains unchanged</strong>.</p>
-</li>
-<li><p><strong>findOrCreate</strong> - Searches matching object and uses the first found. If no matching object is found a new object is created and populated with the provided data properties.</p>
-</li>
-<li><p><strong>findSingle</strong> - Searches matching object and uses the first found. If no matching object is found <strong>or there is more than one matching object an error is thrown</strong>.</p>
-</li>
-<li><p><strong>findSingleOrNull</strong> - Searches matching object and uses the first found. If no matching object is found <strong>or there is more than one matching object returns null</strong>.</p>
-</li>
-<li><p><strong>merge</strong> - Searches matching object and uses the first found. If no matching object is found a new object is created and populated with the provided data properties. <strong>If an existing object is found it is updated with the provided data properties</strong>.</p>
-</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>create</strong></td>
+<td>Always creates a new object.</td>
+</tr>
+<tr>
+<td><strong>update</strong></td>
+<td>Updates an existing object. This is the default for the top-level JSON object in a <code>PATCH</code> request. If <code>@erpnet.action: update</code> is explicitly specified for a nested (referenced) object, the properties of the referenced object are modified.</td>
+</tr>
+<tr>
+<td><strong>find</strong></td>
+<td>Searches for a matching object and uses the first found. If no matching object is found, an error is thrown. <br> <strong>If the JSON object contains data properties, they are ignored — the found object remains unchanged.</strong></td>
+</tr>
+<tr>
+<td><strong>findOrNull</strong></td>
+<td>Searches for a matching object and uses the first found. If none is found, returns <code>null</code>. <br> <strong>If the JSON object contains data properties, they are ignored — the found object remains unchanged.</strong></td>
+</tr>
+<tr>
+<td><strong>findOrCreate</strong></td>
+<td>Searches for a matching object and uses the first found. If none is found, a new object is created and populated with the provided data properties.</td>
+</tr>
+<tr>
+<td><strong>findSingle</strong></td>
+<td>Searches for a matching object and uses the first found. If no matching object is found <strong>or more than one matching object is found</strong>, an error is thrown.</td>
+</tr>
+<tr>
+<td><strong>findSingleOrNull</strong></td>
+<td>Searches for a matching object and uses the first found. If no matching object is found <strong>or more than one matching object is found</strong>, returns <code>null</code>.</td>
+</tr>
+<tr>
+<td><strong>merge</strong></td>
+<td>Searches for a matching object and uses the first found. If none is found, a new object is created and populated with the provided data properties. <br> <strong>If an existing object is found, it is updated with the provided data properties.</strong></td>
+</tr>
+</tbody>
+</table>
 <h2 id="default-values">Default values</h2>
-<p>If <code>@erpnet.action</code> annotation is not present in the object the following default value is applied:</p>
-<p><strong>For Top-Level object:</strong></p>
+<p>If the @erpnet.action annotation is not present in the object, the following defaults are applied:</p>
+<p><strong>For top-level objects</strong>:</p>
+<p>POST → @erpnet.action: <strong>create</strong></p>
+<p>PATCH → @erpnet.action: <strong>update</strong></p>
+<p><strong>For nested objects</strong>:</p>
+<p>If only properties defining the search criteria are provided (either @erpnet.findBy or data properties usable in a find action),
+→ @erpnet.action: <strong>find</strong></p>
+<p>Otherwise
+→ @erpnet.action: <strong>merge</strong></p>
+<h1 id="-annotation">@erpnet.findBy annotation</h1>
+<p>The @erpnet.findBy annotation explicitly defines the search criteria when an existing object should be found.
+It is applicable to the following @erpnet.action values:</p>
 <ul>
-<li>POST = <code>@erpnet.action: create</code></li>
-<li>PATCH = <code>@erpnet.action: update</code></li>
+<li>find</li>
+<li>findOrNull</li>
+<li>findOrCreate</li>
+<li>findSingle</li>
+<li>findSingleOrNull</li>
+<li>merge</li>
 </ul>
-<p><strong>For nested object:</strong></p>
+<p>The value of this annotation is an object with one of the following (string) properties:</p>
+<pre><code>{
+	ExternalId,
+	ExternalSystem,
+	Id,
+	Code,
+	Name,
+	DisplayText
+}
+</code></pre>
 <ul>
-<li>if the provided properties (@erpnet.findBy or data properties that are usable in find action) are only properties that define the find criteria 'find'
-<code>@erpnet.action: find</code></li>
-<li>otherwise
-<code>@erpnet.action: merge</code></li>
+<li><strong>ExternalId</strong> is provided when we want to find existing object with particular ExternalId.</li>
+<li><strong>ExternalSystem</strong> may be provided alongside ExternalId.</li>
+<li><strong>Id</strong> is provided if we want to find object by it's Id. This is a Guid.</li>
+<li><strong>Code</strong> is provided if we want to find object by it's Code. This is applicable only for entities that provde CodeDataMember. The CodeDataMember of the entity can be found in the entity <a href="https://docs.erp.net/model/entities/General.Products.Products.html#default-visualization">documentation</a>.</li>
+<li><strong>Name</strong> is provided if we want to find object by it's Name. This is applicable only for entities that provde NameDataMember. The NameDataMember of the entity can be found in the entity <a href="https://docs.erp.net/model/entities/General.Products.Products.html#default-visualization">documentation</a>. Search by Name is performed with <code>contains</code> operation.</li>
+<li><strong>DisplayText</strong> - performs search by entity's display text - also <code>contains</code>. This search is equivalent to the $search odata url parameter.</li>
 </ul>
+<h2 id="default-value">Default value</h2>
+<p>If <code>@erpnet.findBy</code> annotation is missing the search criteria is filled by the provided object properties.
+For example</p>
+<pre><code>{
+&quot;Customer&quot;: {
+    &quot;Number&quot;: &quot;Г89163&quot;
+  }
+}
+</code></pre>
+<p>is equivalent to</p>
+<pre><code>{
+&quot;Customer&quot;: {
+	&quot;@erpnet.action&quot;: &quot;find&quot;,
+    &quot;@erpnet.findBy&quot;: {&quot;Code&quot;: &quot;Г89163&quot;}
+  }
+}
+</code></pre>
+<p>because &quot;Number&quot; is the CodeDataMember for customers we perform search by Code.
+This is a nested object and only CodeDataMember property is provided so the <code>@erpnet.action</code> is determined as <code>find</code>.</p>
+<h1 id="examples">Examples</h1>
+<p>In this example we create a sales order whithout using any IDs.</p>
+<pre><code>POST Crm_Sales_SalesOrders
+{
+  &quot;DocumentType&quot;: { // this defaults to action: find &amp; findBy: Code
+    &quot;Code&quot;: &quot;CRM_SALES_ORDER&quot;
+  },
+  &quot;EnterpriseCompany&quot;: { // this defaults to action: find
+    &quot;@erpnet.findBy&quot;: {&quot;Code&quot;: &quot;546346373&quot;}
+  },
+  &quot;EnterpriseCompanyLocation&quot;: { // this defaults to action: find &amp; findBy: Code
+    &quot;PartyCode&quot;: &quot;00193&quot;
+  },
+  &quot;Customer&quot;: { // this defaults to action: find &amp; findBy: Code
+    &quot;Number&quot;: &quot;Г89163&quot;
+  },
+  &quot;DocumentCurrency&quot;: { // this defaults to action: find &amp; findBy: Code
+    &quot;CurrencySign&quot;: &quot;BGN&quot;
+  },
+  &quot;Lines&quot;: [
+    {
+      &quot;Product&quot;: { // this defaults to action: find &amp; findBy: Code
+        &quot;PartNumber&quot;: &quot;DAT001&quot;
+      },
+      &quot;QuantityUnit&quot;: { // this defaults to action: find &amp; findBy: Code
+        &quot;Code&quot;: &quot;PCE&quot;
+      },
+      &quot;Quantity&quot;: {
+        &quot;Value&quot;: 1,
+        &quot;Unit&quot;: &quot;PCE&quot;
+      },
+      &quot;UnitPrice&quot;: {
+        &quot;Value&quot;: 20,
+        &quot;Currency&quot;: &quot;BGN&quot;
+      }
+    }
+  ]
+}
+</code></pre>
 
 </article>
 
