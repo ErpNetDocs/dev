@@ -69,7 +69,7 @@ GET /id/connect/authorize?
     response_type=code id_token&  
     scope=openid profile offline_access DomainApi&
     nonce=abc&  
-    state=xyz HTTP/1.1
+    state=dkZmYxMzE2 HTTP/1.1
 Host: demodb.my.erp.net
 ```
 
@@ -145,3 +145,4 @@ https://docs.erp.net/dev/topics/authentication/trusted-applications.html
 https://docs.erp.net/dev/domain-api/authentication.html
 
 https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow
+
