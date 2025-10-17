@@ -46,17 +46,17 @@ If the @erpnet.action annotation is not present in the object, the following def
 
 **For top-level objects**:
 
-POST → @erpnet.action: create
+POST → @erpnet.action: **create**
 
-PATCH → @erpnet.action: update
+PATCH → @erpnet.action: **update**
 
 **For nested objects**:
 
 If only properties defining the search criteria are provided (either @erpnet.findBy or data properties usable in a find action),
-→ @erpnet.action: find
+→ @erpnet.action: **find**
 
 Otherwise
-→ @erpnet.action: merge
+→ @erpnet.action: **merge**
 
 
 # @erpnet.findBy annotation
@@ -87,5 +87,69 @@ The value of this annotation is an object with one of the following (string) pro
 - **Id** is provided if we want to find object by it's Id. This is a Guid.
 - **Code** is provided if we want to find object by it's Code. This is applicable only for entities that provde CodeDataMember. The CodeDataMember of the entity can be found in the entity [documentation](https://docs.erp.net/model/entities/General.Products.Products.html#default-visualization).
 - **Name** is provided if we want to find object by it's Name. This is applicable only for entities that provde NameDataMember. The NameDataMember of the entity can be found in the entity [documentation](https://docs.erp.net/model/entities/General.Products.Products.html#default-visualization). Search by Name is performed with `contains` operation.
-- **DisplayText** - performs search by entity's display text - also `contains`. This search is equivalent to the $search odata url parameter. 
+- **DisplayText** - performs search by entity's display text - also `contains`. This search is equivalent to the $search odata url parameter.
+
+## Default value
+If `@erpnet.findBy` annotation is missing the search criteria is filled by the provided object properties.
+For example 
+```
+{
+"Customer": {
+    "Number": "Г89163"
+  }
+}
+```
+is equivalent to 
+```
+{
+"Customer": {
+	"@erpnet.action": "find",
+    "@erpnet.findBy": {"Code": "Г89163"}
+  }
+}
+```
+because "Number" is the CodeDataMember for customers we perform search by Code.
+This is a nested object and only CodeDataMember property is provided so the `@erpnet.action` is determined as `find`. 
+
+# Examples
+
+In this example we create a sales order whithout using any IDs.
+```
+POST Crm_Sales_SalesOrders
+{
+  "DocumentType": { // this defaults to action: find & findBy: Code
+    "Code": "CRM_SALES_ORDER"
+  },
+  "EnterpriseCompany": { // this defaults to action: find
+    "@erpnet.findBy": {"Code": "546346373"}
+  },
+  "EnterpriseCompanyLocation": { // this defaults to action: find & findBy: Code
+    "PartyCode": "00193"
+  },
+  "Customer": { // this defaults to action: find & findBy: Code
+    "Number": "Г89163"
+  },
+  "DocumentCurrency": { // this defaults to action: find & findBy: Code
+    "CurrencySign": "BGN"
+  },
+  "Lines": [
+    {
+      "Product": { // this defaults to action: find & findBy: Code
+        "PartNumber": "DAT001"
+      },
+      "QuantityUnit": { // this defaults to action: find & findBy: Code
+        "Code": "PCE"
+      },
+      "Quantity": {
+        "Value": 1,
+        "Unit": "PCE"
+      },
+      "UnitPrice": {
+        "Value": 20,
+        "Currency": "BGN"
+      }
+    }
+  ]
+}
+```
 
