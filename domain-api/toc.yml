@@ -16,6 +16,8 @@
   href: filterable-references.md
 - name: Transactions
   href: transactions.md
+- name: Data Import
+  href: import.md
 - name: Common tasks
   href: common-tasks/toc.yml
   topicHref: common-tasks/index.md
