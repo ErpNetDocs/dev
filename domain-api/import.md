@@ -21,14 +21,14 @@ Specification with example:
 ```
 
 ## Parameters
-- **model:** - allowed values are `common` or `frontend`. This parameter indicates the data model used for the import. Front-end data model uses front-end business rules. For example front-end logic is when Quantity of a SalesOrderLine is changed the corresponding QuantityBase is calculated by a dedicated front-end business rule. Common model defines minimal business logic applicable in all cases - front-end or back-end. The default is `common`.
-- **transaction:** - `all-objects` or `per-object`. This parameter defines when the changes will be commited to the database. If `all-objects` is specified all changes are committed at once at the end of the import. If `per-object` is specified every object is saved once the data is imported.
+- **model:** - allowed values are `common` or `frontend`. This parameter indicates the data model used for the import. Front-end data model uses front-end business rules. For example front-end logic is when Quantity of a SalesOrderLine is changed the corresponding QuantityBase is calculated by a dedicated front-end business rule. Common model defines minimal business logic applicable in all cases - front-end or back-end. The default is `frontend`.
+- **transaction:** - `all-objects` or `per-object`. This parameter defines when the changes will be commited to the database. If `all-objects` is specified all changes are committed at once at the end of the import. If `per-object` is specified every object is saved when it is ready. The default is `per-object`.
 - **objects** - an array of entity objects for import.
 
 ### Properties of the objects element
 - **"@odata.type"** - Each object must specify valid entity type. The entity type is the singular form of the entity set and can be found in the documentation for each entity. The @odata.type always starts with the default namespace `Erp.` - Example [Erp.General_Products_Product](https://docs.erp.net/model/entities/General.Products.Products.html)
-- **"@erpnet.action"** - This is an optional annotation for the desired import action. For more information see this article. For top-level objects the default action is `create`.
-- **"@erpnet.findBy"** - This is an optional annotation that specifies the search criteria for the find action. For more information see this article.
+- **"@erpnet.action"** - This is an optional annotation for the desired import action. For top-level objects the default action is `create`. [For more information see this article](erpnet-annotation.md).
+- **"@erpnet.findBy"** - This is an optional annotation that specifies the search criteria for the find action. [For more information see this article](erpnet-annotation.md).
 - Any data property of the imported object.
 
 
@@ -51,17 +51,21 @@ Specification with example
 ```
 
 ### Properties of the result value
-- **@erpnet.result** - `success` or `fail`. The result is `success` only if all objects are imported successfully.
+- **"@erpnet.result"** - `success` or `fail`. The result is `success` only if all objects are imported successfully.
 - **objects** - an array of object results - one object for each imported object.
 
 ### Properies of the each returned object
-- **@erpnet.result** - `success` or `fail`.
+- **"@erpnet.result"** - `success` or `fail`.
 - **"@odata.id"** - the ODATA Id of the imported object. If result is `fail` this is not available.
 - **"@erpnet.message"** - the error message.
 - **"@erpnet.state"** -  the status of the imported object. One of "Added" | "Modified" | "Deleted" | "Unchanged". Indicates the operation performed for the object.
-Only the @odata.id is included in the result - no other properties.
+Only the "@odata.id" is included in the result - no other properties.
 
 ## Examples
+
+The following example performs `merge` action for General_Products_Products. 
+If existing product is found by the provided ExternalId it's PartNumber, BaseMeasurementCategory, MeasurementUnit, Name and ProductGroup are updated.
+The action for the referenced objects is `find` because the included properties are only these that can be used in find criteria. BaseMeasurementCategory is searched by Name (providing @erpnet.findBy), MeasurementUnit and ProductGroup are searched by Code.
 ```
 POST ~/Import
 {
