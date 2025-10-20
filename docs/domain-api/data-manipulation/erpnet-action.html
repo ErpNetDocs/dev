@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> instance annotation | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" instance annotation | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/erpnet-action.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="-instance-annotation">@erpnet.action instance annotation</h1>
+
+<p>In OData instance annotations can be used to define additional information associated with a particular result, entity, property, or error.
+The <code>@erpnet.action</code> annotation can be provided in the body of update request (POST, PATCH) or in the <a href="import.html">Import action</a>.</p>
+<p>Example usage</p>
+<pre><code>POST General_Products_Products
+{
+   &quot;@erpnet.action&quot;: &quot;merge&quot;,
+    &quot;PartNumber&quot;: &quot;DAT003&quot;,
+    &quot;BaseMeasurementCategory&quot;: {
+        &quot;@erpnet.action&quot;: &quot;find&quot;,
+        &quot;@erpnet.findBy&quot;: {&quot;Name&quot;: &quot;Unit&quot; }
+    },
+    &quot;MeasurementUnit&quot;: {
+        &quot;Code&quot;: &quot;PCE&quot;
+    },
+    &quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Test 002&quot;},
+    &quot;ProductGroup&quot;: {
+        &quot;Code&quot;: &quot;DATG01&quot;,
+        &quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Tests&quot;}
+	}
+}
+</code></pre>
+<p>The purpose of this annotation is to provide a better way to import, update, or create data.
+The value of the @erpnet.action annotation determines the type of operation that will be performed using the provided JSON data.</p>
+<h2 id="allowed-values">Allowed values</h2>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>create</strong></td>
+<td>Always creates a new object.</td>
+</tr>
+<tr>
+<td><strong>update</strong></td>
+<td>Updates an existing object. This is the default for the top-level JSON object in a <code>PATCH</code> request. If <code>@erpnet.action: update</code> is explicitly specified for a nested (referenced) object, the properties of the referenced object are modified.</td>
+</tr>
+<tr>
+<td><strong>delete</strong></td>
+<td>Deletes an existing object. Can be used in <a href="import.html">Import</a>.</td>
+</tr>
+<tr>
+<td><strong>find</strong></td>
+<td>Searches for a matching object and uses the first found. If no matching object is found, an error is thrown. <br> <strong>If the JSON object contains data properties, they are ignored — the found object remains unchanged.</strong></td>
+</tr>
+<tr>
+<td><strong>findOrNull</strong></td>
+<td>Searches for a matching object and uses the first found. If none is found, returns <code>null</code>. <br> <strong>If the JSON object contains data properties, they are ignored — the found object remains unchanged.</strong></td>
+</tr>
+<tr>
+<td><strong>findOrCreate</strong></td>
+<td>Searches for a matching object and uses the first found. If none is found, a new object is created and populated with the provided data properties.</td>
+</tr>
+<tr>
+<td><strong>findSingle</strong></td>
+<td>Searches for a matching object and uses the first found. If no matching object is found <strong>or more than one matching object is found</strong>, an error is thrown.</td>
+</tr>
+<tr>
+<td><strong>findSingleOrNull</strong></td>
+<td>Searches for a matching object and uses the first found. If no matching object is found <strong>or more than one matching object is found</strong>, returns <code>null</code>.</td>
+</tr>
+<tr>
+<td><strong>merge</strong></td>
+<td>Searches for a matching object and uses the first found. If none is found, a new object is created and populated with the provided data properties. <br> <strong>If an existing object is found, it is updated with the provided data properties.</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="default-values">Default values</h2>
+<p>If the @erpnet.action annotation is not present in the object, the following defaults are applied:</p>
+<p><strong>For top-level objects</strong>:</p>
+<p>POST → @erpnet.action: <strong>create</strong></p>
+<p>PATCH → @erpnet.action: <strong>update</strong></p>
+<p><strong>For nested objects</strong>:</p>
+<p>If only properties defining the search criteria are provided (either @erpnet.findBy or data properties usable in a find action),
+→ @erpnet.action: <strong>find</strong></p>
+<p>Otherwise
+→ @erpnet.action: <strong>merge</strong></p>
+<h1 id="erpnetfindby-annotation"><code>@erpnet.findBy</code> Annotation</h1>
+<p>The <code>@erpnet.findBy</code> annotation explicitly defines the search criteria used when an existing object should be located.<br>
+It is applicable to the following <code>@erpnet.action</code> values:</p>
+<ul>
+<li><code>find</code></li>
+<li><code>findOrNull</code></li>
+<li><code>findOrCreate</code></li>
+<li><code>findSingle</code></li>
+<li><code>findSingleOrNull</code></li>
+<li><code>merge</code></li>
+</ul>
+<hr>
+<h2 id="structure">Structure</h2>
+<p>The value of the annotation is an object with one or more of the following string properties:</p>
+<pre><code class="lang-json">{
+  &quot;ExternalId&quot;: &quot;...&quot;,
+  &quot;ExternalSystem&quot;: &quot;...&quot;,
+  &quot;Id&quot;: &quot;...&quot;,
+  &quot;Code&quot;: &quot;...&quot;,
+  &quot;Name&quot;: &quot;...&quot;,
+  &quot;DisplayText&quot;: &quot;...&quot;
+}
+</code></pre>
+<h2 id="property-details">Property Details</h2>
+<p><strong>ExternalId</strong> — Used to find an existing object by its specific external identifier.</p>
+<p><strong>ExternalSystem</strong> — Optional. Can be provided alongside ExternalId to further qualify the search.</p>
+<p><strong>Id</strong> — Used to find an object by its unique identifier (Guid).</p>
+<p><strong>Code</strong> — Used to find an object by its code.
+This applies only to entities that provide a <strong>CodeDataMember</strong>.
+The CodeDataMember for a specific entity can be found in its documentation.</p>
+<p><strong>Name</strong> — Used to find an object by its name.
+This applies only to entities that provide a <strong>NameDataMember</strong>.
+The NameDataMember for a specific entity can be found in its documentation.
+The search operation performs a case-insensitive contains match.</p>
+<p><strong>DisplayText</strong> — Searches by the entity’s display text using a contains operation.
+This is equivalent to using the $search parameter in OData queries.</p>
+<h2 id="find-criteria-evaluation">Find Criteria Evaluation</h2>
+<p>The find operation uses only the first available criterion from the @erpnet.findBy annotation in the following priority order:</p>
+<ol>
+<li><code>ExternalId</code> (+ optional <code>ExternalSystem</code>)</li>
+<li><code>Id</code></li>
+<li><code>Code</code></li>
+<li><code>Name</code></li>
+<li><code>DisplayText</code></li>
+</ol>
+<p>If multiple properties are specified, only the first one (in the order they appear) is used.
+For example:</p>
+<pre><code>&quot;@erpnet.findBy&quot;: {
+  &quot;ExternalId&quot;: &quot;123&quot;,
+  &quot;ExternalSystem&quot;: &quot;SomeSystem&quot;,
+  &quot;Code&quot;: &quot;345&quot;
+}
+</code></pre>
+<p>In this case, the search will be performed only by ExternalId and ExternalSystem, while Code will be ignored.</p>
+<h2 id="default-behavior">Default behavior</h2>
+<p>If the @erpnet.findBy annotation is omitted, the search criteria are automatically derived from the provided object’s properties.</p>
+<p>For example</p>
+<pre><code>{
+&quot;Customer&quot;: {
+    &quot;Number&quot;: &quot;Г89163&quot;
+  }
+}
+</code></pre>
+<p>is equivalent to</p>
+<pre><code>{
+&quot;Customer&quot;: {
+    &quot;@erpnet.action&quot;: &quot;find&quot;,
+    &quot;@erpnet.findBy&quot;: {&quot;Code&quot;: &quot;Г89163&quot;}
+  }
+}
+</code></pre>
+<p>because &quot;Number&quot; is the <strong>CodeDataMember</strong> for customers we perform search by Code.
+This is a nested object and only CodeDataMember property is provided so the <code>@erpnet.action</code> is determined as <code>find</code>.</p>
+<h1 id="examples">Examples</h1>
+<p>In this example, we create a sales order <strong>without using any IDs</strong>.<br>
+The system automatically determines the <code>@erpnet.action</code> and <code>@erpnet.findBy</code> criteria based on the provided properties.</p>
+<pre><code class="lang-http">POST Crm_Sales_SalesOrders
+{
+  &quot;DocumentType&quot;: { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
+    &quot;Code&quot;: &quot;CRM_SALES_ORDER&quot;
+  },
+  &quot;EnterpriseCompany&quot;: { // defaults to: @erpnet.action = find
+    &quot;@erpnet.findBy&quot;: { &quot;Code&quot;: &quot;546346373&quot; }
+  },
+  &quot;EnterpriseCompanyLocation&quot;: { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
+    &quot;PartyCode&quot;: &quot;00193&quot;
+  },
+  &quot;Customer&quot;: { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
+    &quot;Number&quot;: &quot;Г89163&quot;
+  },
+  &quot;DocumentCurrency&quot;: { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
+    &quot;CurrencySign&quot;: &quot;BGN&quot;
+  },
+  &quot;Lines&quot;: [
+    {
+      &quot;Product&quot;: { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
+        &quot;PartNumber&quot;: &quot;DAT001&quot;
+      },
+      &quot;QuantityUnit&quot;: { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
+        &quot;Code&quot;: &quot;PCE&quot;
+      },
+      &quot;Quantity&quot;: {
+        &quot;Value&quot;: 1,
+        &quot;Unit&quot;: &quot;PCE&quot;
+      },
+      &quot;UnitPrice&quot;: {
+        &quot;Value&quot;: 20,
+        &quot;Currency&quot;: &quot;BGN&quot;
+      }
+    }
+  ]
+}
+</code></pre>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/erpnet-action.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

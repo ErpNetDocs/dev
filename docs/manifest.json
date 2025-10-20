@@ -198,10 +198,43 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "domain-api/data-manipulation/erpnet-action.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-manipulation/erpnet-action.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/data-manipulation/import.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-manipulation/import.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "domain-api/data-manipulation/index.md",
       "output": {
         ".html": {
           "relative_path": "domain-api/data-manipulation/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "domain-api/data-manipulation/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-manipulation/toc.html"
+        },
+        ".json": {
+          "relative_path": "domain-api/data-manipulation/toc.json"
         }
       },
       "version": ""
@@ -255,26 +288,6 @@
         },
         ".json": {
           "relative_path": "domain-api/data-sync/toc.json"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "domain-api/erpnet-action.md",
-      "output": {
-        ".html": {
-          "relative_path": "domain-api/erpnet-action.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "domain-api/import.md",
-      "output": {
-        ".html": {
-          "relative_path": "domain-api/import.html"
         }
       },
       "version": ""
@@ -388,6 +401,19 @@
         },
         ".json": {
           "relative_path": "domain-api/querying-data/query-options/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "domain-api/querying-data/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/querying-data/toc.html"
+        },
+        ".json": {
+          "relative_path": "domain-api/querying-data/toc.json"
         }
       },
       "version": ""

@@ -88,30 +88,229 @@
 <h1 id="data-manipulation">Data Manipulation</h1>
 
 <h2 id="create-operations">Create Operations</h2>
-<p>Creating Entities: Provide guidelines for creating new records.</p>
-<p>Required Fields: List mandatory fields for entity creation.</p>
-<p>Validation: Explain validation mechanisms during creation.</p>
+<h4 id="creating-an-entity">Creating an Entity</h4>
+<p>To create a new entity in ERP.net, you use the <strong>POST</strong> method of the OData service. The request body contains the entity data in JSON format.</p>
+<p><strong>Example:</strong></p>
+<p>Creating a new <code>Crm_Sales_SalesOrder</code>:</p>
+<pre><code>POST https://testdb.my.erp.net/api/domain/odata/Crm_Sales_SalesOrders
+Content-Type: application/json
+
+{
+    &quot;DocumentType&quot;: { &quot;@odata.id&quot;: &quot;Systems_Documents_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)&quot; }, 
+    &quot;EnterpriseCompany&quot;: {&quot;@odata.id&quot;: &quot;General_EnterpriseCompanies(2115c294-33e9-41bd-bc0d-0cd0b7ee1735)&quot; }, 
+    &quot;Customer&quot;: { &quot;@odata.id&quot;: &quot;Crm_Sales_Customers(c8a65f60-26d0-4c3a-81c9-f367dd811908)&quot; },
+    &quot;DocumentNotes&quot;: &quot;New sales order for testing&quot;
+}
+</code></pre>
+<p><strong>Required Fields:</strong></p>
+<ul>
+<li><strong>DocumentType:</strong> Type of the document.</li>
+<li><strong>EnterpriseCompany:</strong> The company that owns the order.</li>
+<li><strong>Customer:</strong> The customer for this sales order.</li>
+</ul>
+<p>Other fields are optional or have defaults. Always validate your data according to the entity model.</p>
+<p>For full details on the <code>Crm_Sales_SalesOrder</code> entity and all available fields, see the documentation of the used entity. For example <a href="https://docs.erp.net/model/entities/Crm.Sales.SalesOrders.html">Sales Orders</a>.</p>
+<p>Create a sales order along with the lines.</p>
+<pre><code>POST https://testdb.my.erp.net/api/domain/odata/Crm_Sales_SalesOrders
+{
+  &quot;DocumentType&quot;: {
+    &quot;@odata.id&quot;: &quot;General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)&quot;
+  },
+  &quot;EnterpriseCompany&quot;: {
+    &quot;@odata.id&quot;: &quot;General_EnterpriseCompanies(b0e80577-fbbe-4c9b-811e-20b6c6dd465f)&quot;
+  },
+  &quot;Customer&quot;: {
+    &quot;@odata.id&quot;: &quot;Crm_Customers(15f2640f-f374-4017-ae2d-d2a41535f054)&quot;
+  },
+  &quot;DocumentCurrency&quot;: {
+    &quot;@odata.id&quot;: &quot;General_Currencies(3187833a-d3c1-4804-bfc0-e17e6aee3069)&quot;
+  },
+  &quot;Lines&quot;: [
+    {
+      &quot;Product&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Products_Products(81d38b50-fd06-e611-8292-b31071e2ee7f)&quot;
+      },
+      &quot;QuantityUnit&quot;: {
+        &quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+      },
+      &quot;Quantity&quot;: {
+        &quot;Value&quot;: 1,
+        &quot;Unit&quot;: &quot;pcs&quot;
+      },
+      &quot;UnitPrice&quot;: {
+        &quot;Value&quot;: 20,
+        &quot;Currency&quot;: &quot;BGN&quot;
+      }
+    }
+  ]
+}
+
+</code></pre>
+<h3 id="property-dependencies-and-update-order">Property Dependencies and Update Order</h3>
+<p>In ERP.net, setting a property may trigger internal <strong>events</strong> that automatically update other dependent properties. Because of this, the <strong>order in which properties are set is important</strong> when creating or updating entities through the API.</p>
+<p>For example, the <code>Quantity</code> field is a complex type that depends on the <code>QuantityUnit</code> reference.<br>
+If you set the <code>Quantity</code> before assigning the correct <code>QuantityUnit</code>, the system may interpret the value using an outdated or incorrect unit, leading to validation or conversion errors.</p>
+<p>To ensure correct behavior, always set the unit <strong>before</strong> the quantity value.</p>
+<p><strong>Example:</strong></p>
+<pre><code>{`
+    &quot;QuantityUnit&quot;: { &quot;@odata.id&quot;: &quot;General_MeasurementUnits(6f7cbe0e-9a2a-4e3b-9b64-4f86d8c9e7f0)&quot; },
+    &quot;Quantity&quot;: { &quot;Value&quot;: 1.00, &quot;Unit&quot;: &quot;PCE&quot; }
+}
+</code></pre>
+<p>This ensures that the system knows which measurement unit applies before processing the quantity, preventing inconsistencies when working with values in different units.</p>
+<blockquote>
+<p><strong>NOTE:</strong> The same rule applies to other dependent fields such as <code>Amount</code> and <code>Currency</code> — always set the currency reference before specifying the amount value.</p>
+</blockquote>
+<h3 id="data-validation-and-business-rules">Data Validation and Business Rules</h3>
+<p>ERP.net enforces <strong>data validation</strong> through a combination of <strong>System Business Rules</strong> and <strong>User Business Rules</strong>:</p>
+<ul>
+<li><p><strong>System Business Rules:</strong> Predefined rules for each entity (e.g., <code>Crm.Sales.SalesOrders</code>) that automatically enforce business logic on the back-end. Examples include assigning a sales person, validating fiscal numbers, or restricting line directions. These rules ensure data consistency and compliance without manual intervention.</p>
+</li>
+<li><p><strong>User Business Rules:</strong> Custom rules defined by developers or administrators to implement organization-specific validations. These can be applied on the back-end for security and integrity, and optionally on the front-end for immediate feedback.</p>
+</li>
+</ul>
+<p>Together, system and user business rules ensure that all data entered or modified in ERP.net adheres to required business logic and organizational policies.</p>
+<h3 id="front-end-vs-back-end-models">Front-End vs. Back-End Models</h3>
+<p>ERP.net uses two models to handle entity data and business logic — the <strong>front-end model</strong> and the <strong>back-end model</strong>.<br>
+While both represent the same entities, they differ in the <strong>business rules</strong> and <strong>data validations</strong> that are executed.</p>
+<ul>
+<li><p><strong>Front-End Model:</strong><br>
+Designed for immediate feedback in client applications.<br>
+It contains business rules that are triggered on <strong>attribute change events</strong> — for example, when a user edits a field in a form, dependent fields may be recalculated or validated right away.<br>
+This provides a dynamic and interactive user experience.</p>
+</li>
+<li><p><strong>Back-End Model:</strong><br>
+Used when the data is <strong>committed to the server</strong> (e.g., on save, post, or document state change).<br>
+It contains rules and validations that enforce business integrity, such as required field checks, calculated defaults, and document-level logic triggered by workflow events like state transitions.</p>
+</li>
+</ul>
+<p>In short, the <strong>front-end model reacts to user edits</strong>, while the <strong>back-end model enforces consistency and performs final validations</strong> before persisting the data.</p>
+<p>For more details, see <a href="https://docs.erp.net/dev/domain-api/transactions.html">Transactions in Domain API</a>.</p>
 <h2 id="update-operations">Update Operations</h2>
-<p>Updating Entities: Describe how to modify existing records.</p>
-<p>Partial Updates: Explain partial update strategies.</p>
+<p>ERP.net supports updating entities using the <strong>PATCH</strong> method, which performs <strong>partial updates</strong>.<br>
+Only the fields included in the request are modified; all other properties remain unchanged (except dependent properties updated by business rules triggered on attribute change).</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Use <strong>PATCH</strong> to modify one or more fields of an existing entity.</li>
+<li>You do <strong>not</strong> need to send the entire entity.</li>
+<li>Always consider <strong>property dependencies</strong> — some fields must be set in a specific order (e.g., <code>QuantityUnit</code> before <code>Quantity</code>, <code>Currency</code> before <code>Amount</code>).</li>
+<li>Business rules and validations defined in the front-end or back-end models will be applied depending on how the data is processed.</li>
+<li>ERP.net supports <strong>optimistic locking</strong> to prevent conflicts during concurrent updates. Learn more in <a href="https://docs.erp.net/dev/domain-api/data-sync/optimistic-locking.html">Optimistic Locking</a>.</li>
+</ul>
+<p><strong>Example:</strong> Updating the notes of a sales order:</p>
+<pre><code>PATCH https://testdb.my.erp.net/api/domain/odata/Crm_Sales_SalesOrders(f3fe442a-d5fe-49a9-8bda-00c895d630bb)
+Content-Type: application/json
+
+{
+    &quot;DocumentNotes&quot;: &quot;Updated sales order description&quot;
+}
+</code></pre>
+<p><strong>Required Considerations:</strong></p>
+<ul>
+<li>If updating fields involved in calculations or triggers, ensure dependent properties are included in the correct order.</li>
+<li>Only include fields you intend to modify; others will remain unchanged.</li>
+<li>System and user business rules will execute as appropriate (front-end rules on attribute changes, back-end rules on commit or document events).</li>
+</ul>
+<p>For more details on entity properties and rules, refer to the documentation of each entity. Foe example <a href="https://docs.erp.net/model/entities/Crm.Sales.SalesOrders.html">Sales Orders Documentation</a>.</p>
 <p>Concurrency Control: Discuss handling concurrent updates.</p>
-<h2 id="delete-operations">Delete Operations</h2>
-<p>Deleting Entities: Provide steps to delete records.</p>
-<p>Soft vs. Hard Deletes: Explain the difference and when to use each.</p>
-<p>Cascade Deletes: Discuss implications of cascading deletes.</p>
-<h2 id="transactions">Transactions</h2>
-<p>BeginTransaction and EndTransaction: Explain how to start and commit transactions.</p>
-<p>Entity Changes: Detail how to track and apply changes to entities within a transaction.</p>
-<p>Concurrency Handling: Discuss strategies for managing concurrent data modifications.</p>
-<h2 id="erpnet-action-annotation">ERP.net action annotation</h2>
-<h2 id="data-import">Data Import</h2>
-<p>Import Strategies: Outline methods for importing large datasets.</p>
-<p>Data Mapping: Discuss mapping external data to ERP.net entities.</p>
-<p>Error Handling: Provide guidelines for managing import errors.</p>
-<h2 id="data-synchronization">Data Synchronization</h2>
-<p>Sync Mechanisms: Describe methods for synchronizing data between ERP.net and external systems.</p>
-<p>Conflict Resolution: Explain strategies for resolving data conflicts.</p>
-<p>Scheduling Syncs: Discuss scheduling and automating synchronization tasks.</p>
+<h3 id="delete-operations">Delete Operations</h3>
+<p>ERP.net supports deleting entities using the <strong>DELETE</strong> HTTP method.<br>
+The request removes the specified entity from the system.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Use <strong>DELETE</strong> with the entity’s OData ID.</li>
+<li>Business rules on the back-end may enforce restrictions or cascade actions during deletion.</li>
+</ul>
+<p><strong>Example:</strong> Deleting a sales order:</p>
+<pre><code>DELETE https://testdb.my.erp.net/api/domain/odata/Crm_Sales_SalesOrders(f3fe442a-d5fe-49a9-8bda-00c895d630bb)
+</code></pre>
+<p>Only the entity specified in the request is removed; related entities may be affected according to system rules and cascades.</p>
+<h3 id="transactions">Transactions</h3>
+<p>ERP.net supports <strong>transactions</strong> to ensure that multiple operations on entities are processed consistently.<br>
+Transactions allow you to group create, update, or delete operations into a single unit of work that is either <strong>committed</strong> or <strong>rolled back</strong> as a whole.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Use transactions to maintain <strong>data integrity</strong> when performing multiple operations.</li>
+<li>Transactions support <strong>partial updates, deletes, and inserts</strong> in a single request.</li>
+<li>Business rules and validations are applied according to the choosen model: front-end or back-end.</li>
+<li>ERP.net ensures that either all operations in a transaction succeed, or none are applied.</li>
+</ul>
+<p>For full details, see the <a href="../transactions.html">Transactions documentation</a>.</p>
+<h3 id="erpnet-actions-erpnetaction">ERP.net Actions (<code>@erpnet.action</code>)</h3>
+<p>ERP.net uses the <code>@erpnet.action</code> annotation to control how JSON data is processed when creating, updating, or importing entities.<br>
+It provides a flexible way to specify operations such as <code>create</code>, <code>update</code>, <code>delete</code>, <code>find</code>, and <code>merge</code> for top-level or nested objects.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Determines the operation performed on the object.</li>
+<li>Can be applied to nested objects with optional <code>@erpnet.findBy</code> criteria for locating existing entities.</li>
+<li>Supports combined operations, e.g., find or create, merge, and partial updates.</li>
+<li>Defaults are automatically applied if the annotation is omitted.</li>
+</ul>
+<p><strong>Example:</strong> Creating or updating a product with a merge action:</p>
+<pre><code>POST General_Products_Products
+{
+    &quot;@erpnet.action&quot;: &quot;merge&quot;,
+    &quot;PartNumber&quot;: &quot;DAT003&quot;,
+    &quot;MeasurementUnit&quot;: { &quot;Code&quot;: &quot;PCE&quot; },
+    &quot;Name&quot;: { &quot;EN&quot;: &quot;Domain API Test 002&quot; }
+}
+</code></pre>
+<p>For more details, see the <a href="erpnet-action.html">ERP.net Actions documentation</a>.</p>
+<h3 id="data-import">Data Import</h3>
+<p>ERP.net provides an <strong>Import</strong> endpoint that allows you to insert, update, or delete multiple entities in a single request. This unbound action enables efficient bulk operations, supporting both front-end and back-end models.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><strong>Model Options:</strong> Choose between <code>frontend</code> (default) or <code>backend</code> models, affecting the business logic applied during the import.</li>
+<li><strong>Transaction Modes:</strong> Select <code>all-objects</code> to commit all changes at once, or <code>per-object</code> to commit each object individually.</li>
+<li><strong>Actions:</strong> Specify operations like <code>create</code>, <code>update</code>, <code>delete</code>, or <code>merge</code> for each object.</li>
+<li><strong>Find Criteria:</strong> Use <code>@erpnet.findBy</code> to define search criteria for locating existing entities during the import.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-json">POST ~/Import
+{
+  &quot;model&quot;: &quot;frontend&quot;,
+  &quot;transaction&quot;: &quot;per-object&quot;,
+  &quot;objects&quot;: [
+    {
+      &quot;@odata.type&quot;: &quot;Erp.General_Products_Product&quot;,
+      &quot;@erpnet.action&quot;: &quot;merge&quot;,
+      &quot;ExternalId&quot;: &quot;EXT000&quot;,
+      &quot;PartNumber&quot;: &quot;DATP000&quot;,
+      &quot;BaseMeasurementCategory&quot;: {
+        &quot;@erpnet.action&quot;: &quot;find&quot;,
+        &quot;@erpnet.findBy&quot;: {
+          &quot;Name&quot;: &quot;Unit&quot;
+        }
+      },
+      &quot;MeasurementUnit&quot;: {
+        &quot;Code&quot;: &quot;PCE&quot;
+      },
+      &quot;Name&quot;: {
+        &quot;EN&quot;: &quot;Domain API Test 000&quot;
+      },
+      &quot;ProductGroup&quot;: {
+        &quot;Code&quot;: &quot;DATG01&quot;,
+        &quot;Name&quot;: {
+          &quot;EN&quot;: &quot;Domain API Tests&quot;
+        }
+      }
+    }
+  ]
+}
+</code></pre>
+<p>For more details, refer to the <a href="import.html">Data Import documentation</a>.</p>
+<h3 id="data-sync">Data Sync</h3>
+<p>ERP.net provides <strong>Data Synchronization</strong> to efficiently keep client applications up-to-date with system changes.<br>
+Instead of fetching all data repeatedly, Data Sync retrieves only entities that have changed since the last synchronization, ensuring minimal network usage and fast updates.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><strong>Incremental Updates:</strong> Fetch only new or modified entities since a given timestamp or object version.</li>
+<li><strong>Object Versioning:</strong> Each entity aggregate has a version number that increments when any related property or reference changes, allowing precise change tracking.</li>
+<li><strong>Front-End and Back-End Models:</strong> Supports both models, applying appropriate business rules during synchronization.</li>
+<li><strong>Optimistic Locking:</strong> Prevents conflicts when multiple clients attempt to modify the same entity concurrently.</li>
+<li><strong>Use Cases:</strong> Ideal for mobile apps, offline clients, integrations, and scenarios requiring near real-time data consistency.</li>
+</ul>
+<p>For more details, see the <a href="https://docs.erp.net/dev/domain-api/data-sync/index.html">Data Sync documentation</a> and <a href="https://docs.erp.net/dev/domain-api/data-sync/object-version.html">Object Versioning</a>.</p>
 
 </article>
 
