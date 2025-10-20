@@ -109,7 +109,7 @@ Expanded navigation properties MUST be returned, even if they are not specified 
 <li>Calculated attributes</li>
 </ul>
 <p>Example:</p>
-<pre><code class="lang-odata">GET ~/General_Products_ProductTypes?$top=2
+<pre><code>GET ~/General_Products_ProductTypes?$top=2
 </code></pre>
 <p>The result is:</p>
 <pre><code class="lang-json">{
@@ -151,12 +151,12 @@ Expanded navigation properties MUST be returned, even if they are not specified 
 <p>Non default properties must be explicitly specified in the $select clause.</p>
 </div>
 <p>Example:</p>
-<pre><code class="lang-odata">GET ~/General_Products_Products?$top=2&amp;$select=CustomProperty_WebName,CalculatedAttribute_ExampleAttr
+<pre><code>GET ~/General_Products_Products?$top=2&amp;$select=CustomProperty_WebName,CalculatedAttribute_ExampleAttr
 </code></pre>
 <p>The result will only contain the selected properties.</p>
 <h2 id="the-default-select-keyword">The <strong>default</strong> $select keyword</h2>
 <p>You can explicitly use the keyword <strong>default</strong> in the $select clause to include all default properties.</p>
-<pre><code class="lang-odata">GET ~/General_Products_Products?$top=2&amp;$select=default,CustomProperty_WebName,CalculatedAttribute_ExampleAttr
+<pre><code>GET ~/General_Products_Products?$top=2&amp;$select=default,CustomProperty_WebName,CalculatedAttribute_ExampleAttr
 </code></pre>
 <p>The result will contain all default properties plus the selected CustomProperty_WebName and CalculatedAttribute_ExampleAttr.</p>
 

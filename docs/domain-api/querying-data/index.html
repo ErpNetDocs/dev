@@ -86,9 +86,9 @@
 
         <article data-uid="">
 
-<h2 id="2-querying-data">2. Querying Data</h2>
+<h2 id="querying-data">Querying Data</h2>
 <p>The <strong>Querying Data</strong> section explains how to retrieve information from ERP.net using the Domain API. All queries use standard OData conventions, with some ERP.net-specific extensions.</p>
-<h3 id="21-odata-basics">2.1 OData Basics</h3>
+<h3 id="odata-basics">OData Basics</h3>
 <p>ERP.net exposes entities (repositories) through an OData-compliant service. Each entity represents a type of data in the system, such as <code>Customer</code>, <code>Order</code>, or <code>Product</code>.</p>
 <ul>
 <li><p><strong>Service Root URL:</strong> The base URL for all queries. Example:</p>
@@ -102,7 +102,7 @@
 <li><p><a href="https://docs.erp.net/model/entities/General.Products.Products.html">General_Products_Products</a></p>
 </li>
 </ul>
-<h3 id="22-query-options">2.2 Query Options</h3>
+<h3 id="query-options">Query Options</h3>
 <p>ERP.net supports standard OData query options:</p>
 <ul>
 <li><p><strong>$filter:</strong> Filter data using conditions.<br>
@@ -128,7 +128,7 @@ Example: <code>?$search=&quot;Widget&quot;</code></p>
 </li>
 </ul>
 <p>Here is an extended topic for <a href="query-options/index.html">Query Options</a></p>
-<h3 id="23-query-builder">2.3 Query Builder</h3>
+<h3 id="query-builder">Query Builder</h3>
 <p>ERP.net includes a <strong>Visual Query Designer</strong> to simplify query creation. For more examples and instructions, see <a href="query-builder.html">Query Builder</a>.</p>
 <ol>
 <li>Select the entity type to query.</li>
@@ -136,7 +136,7 @@ Example: <code>?$search=&quot;Widget&quot;</code></p>
 <li>Add filters, sorting, and pagination.</li>
 <li>Preview and execute the query.</li>
 </ol>
-<h3 id="24-query-tool">2.4 Query Tool</h3>
+<h3 id="query-tool">Query Tool</h3>
 <p>ERP.net provides a <strong>Query Tool</strong> to quickly test and explore queries in your browser. You can run OData queries directly against your service without writing code.</p>
 <p><strong>Example:</strong> Retrieve the top 10 products and include their product groups, sorted by part number:</p>
 <p><a href="https://testdb.my.erp.net/api/domain/query?GET+General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber">https://testdb.my.erp.net/api/domain/query?GET+General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber</a></p>
@@ -144,7 +144,7 @@ Example: <code>?$search=&quot;Widget&quot;</code></p>
 <p><strong>Example Queries:</strong></p>
 <p><a href="https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&amp;$select=Party,Number,CreditLimit&amp;$expand=Party">https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&amp;$select=Party,Number,CreditLimit&amp;$expand=Party</a></p>
 <p><a href="https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber">https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber</a></p>
-<h3 id="25-handling-complex-data-types">2.5 Handling Complex Data Types</h3>
+<h3 id="handling-complex-data-types">Handling Complex Data Types</h3>
 <p>Some entities include complex or multi-part data types. For detailed explanations and examples, see <a href="../complex-types/index.html">Complex Data Types</a>.</p>
 <ul>
 <li><strong>Multi-language Strings:</strong> Some fields may have different values for each language. These fields are represented as a complex object with one property per language. For example:</li>
@@ -188,7 +188,7 @@ Example: <code>?$search=&quot;Widget&quot;</code></p>
 <p><a href="https://testdb.my.erp.net/api/domain/query?GET+Crm_Sales_SalesOrders?$top=10&amp;$filter=State+eq+%27Released%27&amp;$orderby=DocumentDate+desc">Crm_Sales_SalesOrders?$top=10&amp;$filter=State eq 'Released'&amp;$orderby=DocumentDate desc</a></p>
 <p>To filter by reference use it's odata id:</p>
 <p><a href="https://testdb.my.erp.net/api/domain/query?GET+Crm_Sales_SalesOrders?$top=10&amp;$filter=DocumentType+eq+%27Systems_Documents_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)%27">Crm_Sales_SalesOrders?$top=10&amp;$filter=DocumentType eq 'Systems_Documents_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)'</a></p>
-<h3 id="26-filterable-references">2.6 Filterable References</h3>
+<h3 id="filterable-references">Filterable References</h3>
 <p>Some ERP.net entities include <strong>reference fields</strong>, which point to other entities. In OData queries, you can filter data based on properties of the referenced entity.</p>
 <p><strong>Example:</strong> Retrieve sales order lines where the parent order's document date is on or after October 23, 2025:</p>
 <pre><code>Crm_Sales_SalesOrderLines?$filter=SalesOrder/DocumentDate ge 2025-10-23T00:00:00
@@ -197,7 +197,7 @@ Example: <code>?$search=&quot;Widget&quot;</code></p>
 <p><strong>Concept:</strong> The filter navigates through the reference (<code>SalesOrder</code>) to access a property (<code>DocumentDate</code>) of the related entity.</p>
 </blockquote>
 <p><strong>Important:</strong> Not all reference fields support filtering. Only certain reference fields are filterable. For more information see <a href="filterable-references.html">Filterable References</a>.</p>
-<h3 id="27-batch-requests">2.7 Batch Requests</h3>
+<h3 id="batch-requests">Batch Requests</h3>
 <p>ERP.net supports <a href="https://www.odata.org/getting-started/advanced-tutorial/#batch" target="_blank">batch requests</a>, allowing multiple queries in a single HTTP request:</p>
 <ul>
 <li>Combine multiple read or write requests into one batch.</li>

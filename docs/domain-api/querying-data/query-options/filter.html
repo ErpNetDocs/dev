@@ -131,26 +131,26 @@ Not every operation and function provided by the OData standard are implemented.
 <ul>
 <li>List of Id values:</li>
 </ul>
-<pre><code class="lang-odata">General_Products_Products?$filter=Id in (0e8fb111-5b04-4eab-a890-47cfb9cfa4c4, 14389ba0-ee5c-459e-afd0-d74c17240f28)
+<pre><code>General_Products_Products?$filter=Id in (0e8fb111-5b04-4eab-a890-47cfb9cfa4c4, 14389ba0-ee5c-459e-afd0-d74c17240f28)
 </code></pre>
 <ul>
 <li>List of enum values:</li>
 </ul>
-<pre><code class="lang-odata">Crm_Sales_SalesOrders?$top=10&amp;$filter=State in ('FirmPlanned', 'Released')&amp;$select=State
+<pre><code>Crm_Sales_SalesOrders?$top=10&amp;$filter=State in ('FirmPlanned', 'Released')&amp;$select=State
 </code></pre>
 <ul>
 <li>List of reference values:</li>
 </ul>
-<pre><code class="lang-odata">Crm_Sales_SalesOrders?$top=10&amp;$select=DocumentType&amp;$filter=DocumentType in ('General_DocumentTypes(f8a93d3a-8cf3-4a09-9d45-667d664cb98d)', 'General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)')
+<pre><code>Crm_Sales_SalesOrders?$top=10&amp;$select=DocumentType&amp;$filter=DocumentType in ('General_DocumentTypes(f8a93d3a-8cf3-4a09-9d45-667d664cb98d)', 'General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)')
 </code></pre>
 <ul>
 <li>List of reference values with different object types (the reference is of the base object type):</li>
 </ul>
-<pre><code class="lang-odata">Crm_Sales_SalesOrders?$top=10&amp;$filter=ToParty in ('General_Contacts_Persons(adb66f3f-e173-4a37-878c-000920f44ff0)', 'General_Contacts_Companies(39148781-d316-4d4d-a392-0002f73710f2)')
+<pre><code>Crm_Sales_SalesOrders?$top=10&amp;$filter=ToParty in ('General_Contacts_Persons(adb66f3f-e173-4a37-878c-000920f44ff0)', 'General_Contacts_Companies(39148781-d316-4d4d-a392-0002f73710f2)')
 </code></pre>
 <h2 id="filter-by-date-and-date-time-attributes">Filter by date and date-time attributes</h2>
 <p>Example:</p>
-<pre><code class="lang-odata">Crm_Sales_SalesOrders?$top=10&amp;$filter=DocumentDate ge 2020-01-01Z
+<pre><code>Crm_Sales_SalesOrders?$top=10&amp;$filter=DocumentDate ge 2020-01-01Z
 </code></pre>
 <blockquote>
 <p>Note!
@@ -183,27 +183,27 @@ This is an invalid filter:<br>
 <h3 id="edmboolean-containserpmultilanguagestring-edmstring">Edm.Boolean contains(Erp.MultilanguageString, Edm.String)</h3>
 <p>Returns true if the second string is contained in any language of the first multi-language string.</p>
 <p>Example:</p>
-<pre><code class="lang-odata">~/Crm_Customers?$filter=contains(Party/PartyName,'Peter')
+<pre><code>~/Crm_Customers?$filter=contains(Party/PartyName,'Peter')
 </code></pre>
 <h3 id="edmboolean-containsnavigationproperty-edmstring">Edm.Boolean contains(NavigationProperty, Edm.String)</h3>
 <p>Returns true if the string is contained in the entity, refereced by the navigation property.</p>
 <p>Example:</p>
-<pre><code class="lang-odata">~/Crm_Customers?$filter=contains(SalesPerson,'Peter')
+<pre><code>~/Crm_Customers?$filter=contains(SalesPerson,'Peter')
 </code></pre>
 <h3 id="edmboolean-equalnullany-typeany-type">Edm.Boolean equalnull(any-type,any-type)</h3>
 <p>Returns true if the first argument is equal to the second argument or the first argument is null.</p>
 <p>Example:</p>
-<pre><code class="lang-odata">~/Crm_Sales_SalesOrders?&amp;$filter=equalnull(Store,'Logistics_Inventory_Stores(8d7dd360-17cc-47f4-a878-1ee0f06445ad)')
+<pre><code>~/Crm_Sales_SalesOrders?&amp;$filter=equalnull(Store,'Logistics_Inventory_Stores(8d7dd360-17cc-47f4-a878-1ee0f06445ad)')
 </code></pre>
 <h3 id="edmboolean-lessequalnullany-typeany-type">Edm.Boolean lessequalnull(any-type,any-type)</h3>
 <p>Returns true if the first argument is less than or equal to the second argument or the first argument is null.</p>
 <p>Example:</p>
-<pre><code class="lang-odata">~/Crm_SalesPersons?$top=10&amp;$filter=lessequalnull(ContractEndDate,2019-02-01T00:00:00.000Z)
+<pre><code>~/Crm_SalesPersons?$top=10&amp;$filter=lessequalnull(ContractEndDate,2019-02-01T00:00:00.000Z)
 </code></pre>
 <h3 id="edmboolean-greaterequalnullany-typeany-type">Edm.Boolean greaterequalnull(any-type,any-type)</h3>
 <p>Returns true if the first argument is greater than or equal to the second argument or the first argument is null.</p>
 <p>Example:</p>
-<pre><code class="lang-odata">~/Crm_SalesPersons?$top=10&amp;$filter=greaterequalnull(ContractStartDate,2019-02-01T00:00:00.000Z)
+<pre><code>~/Crm_SalesPersons?$top=10&amp;$filter=greaterequalnull(ContractStartDate,2019-02-01T00:00:00.000Z)
 </code></pre>
 
 </article>
