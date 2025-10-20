@@ -2,24 +2,17 @@
   href: index.md
 - name: Authentication
   href: authentication.md
-- name: URL components
-  href: url-components.md
-- name: Query options
-  href: query-options/toc.yml
-  topicHref: query-options/index.md
-- name: Query Builder
-  href: query-builder.md
+- name: Querying Data
+  href: querying-data/toc.yml
+  topicHref: querying-data/index.md
+- name: Data Manipulation
+  href: data-manipulation/toc.yml
+  topicHref: data-manipulation/index.md
 - name: Complex types
   href: complex-types/toc.yml
   topicHref: complex-types/index.md
-- name: Filterable references
-  href: filterable-references.md
 - name: Transactions
   href: transactions.md
-- name: ErpNet action annotation
-  href: erpnet-action.md
-- name: Data Import
-  href: import.md
 - name: Common tasks
   href: common-tasks/toc.yml
   topicHref: common-tasks/index.md
