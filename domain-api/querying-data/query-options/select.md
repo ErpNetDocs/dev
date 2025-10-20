@@ -31,7 +31,7 @@ The following attributes are not returned by default:
 
 Example:
 
-```odata
+```
 GET ~/General_Products_ProductTypes?$top=2
 ```
 
@@ -78,7 +78,7 @@ The result is:
 
 Example:
 
-```odata
+```
 GET ~/General_Products_Products?$top=2&$select=CustomProperty_WebName,CalculatedAttribute_ExampleAttr
 ```
 
@@ -88,7 +88,7 @@ The result will only contain the selected properties.
 
 You can explicitly use the keyword **default** in the $select clause to include all default properties.
 
-```odata
+```
 GET ~/General_Products_Products?$top=2&$select=default,CustomProperty_WebName,CalculatedAttribute_ExampleAttr
 ```
 

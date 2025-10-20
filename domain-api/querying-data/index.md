@@ -1,8 +1,8 @@
-## 2. Querying Data
+## Querying Data
 
 The **Querying Data** section explains how to retrieve information from ERP.net using the Domain API. All queries use standard OData conventions, with some ERP.net-specific extensions.
 
-### 2.1 OData Basics
+### OData Basics
 
 ERP.net exposes entities (repositories) through an OData-compliant service. Each entity represents a type of data in the system, such as `Customer`, `Order`, or `Product`.
 
@@ -13,7 +13,7 @@ ERP.net exposes entities (repositories) through an OData-compliant service. Each
 - [Crm_Sales_SalesOrders](https://docs.erp.net/model/entities/Crm.Sales.SalesOrders.html)
 - [General_Products_Products](https://docs.erp.net/model/entities/General.Products.Products.html)
 
-### 2.2 Query Options
+### Query Options
 
 ERP.net supports standard OData query options:
 
@@ -42,7 +42,7 @@ Here is an extended topic for [Query Options](query-options/index.md)
 
 
 
-### 2.3 Query Builder
+### Query Builder
 
 ERP.net includes a **Visual Query Designer** to simplify query creation. For more examples and instructions, see [Query Builder](query-builder.md).
 
@@ -51,7 +51,7 @@ ERP.net includes a **Visual Query Designer** to simplify query creation. For mor
 3. Add filters, sorting, and pagination.  
 4. Preview and execute the query.
 
-### 2.4 Query Tool
+### Query Tool
 
 ERP.net provides a **Query Tool** to quickly test and explore queries in your browser. You can run OData queries directly against your service without writing code.  
 
@@ -68,7 +68,7 @@ https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&$select=Pa
 
 https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&$expand=ProductGroup&$orderby=PartNumber
 
-### 2.5 Handling Complex Data Types
+### Handling Complex Data Types
 
 Some entities include complex or multi-part data types. For detailed explanations and examples, see [Complex Data Types](../complex-types/index.md).
 
@@ -122,7 +122,7 @@ To filter by reference use it's odata id:
 [Crm_Sales_SalesOrders?$top=10&$filter=DocumentType eq 'Systems_Documents_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)'](https://testdb.my.erp.net/api/domain/query?GET+Crm_Sales_SalesOrders?$top=10&$filter=DocumentType+eq+%27Systems_Documents_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)%27)
 
 
-### 2.6 Filterable References
+### Filterable References
 
 Some ERP.net entities include **reference fields**, which point to other entities. In OData queries, you can filter data based on properties of the referenced entity.  
 
@@ -138,7 +138,7 @@ Crm_Sales_SalesOrderLines?$filter=SalesOrder/DocumentDate ge 2025-10-23T00:00:00
 
 
 
-### 2.7 Batch Requests
+### Batch Requests
 
 ERP.net supports <a href="https://www.odata.org/getting-started/advanced-tutorial/#batch" target="_blank">batch requests</a>, allowing multiple queries in a single HTTP request:
 

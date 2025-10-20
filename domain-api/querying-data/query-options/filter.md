@@ -31,32 +31,32 @@ Examples:
 
 * List of Id values:
 
-```odata
+```
 General_Products_Products?$filter=Id in (0e8fb111-5b04-4eab-a890-47cfb9cfa4c4, 14389ba0-ee5c-459e-afd0-d74c17240f28)
 ```
 
 * List of enum values:
 
-```odata
+```
 Crm_Sales_SalesOrders?$top=10&$filter=State in ('FirmPlanned', 'Released')&$select=State
 ```
 
 * List of reference values:
 
-```odata
+```
 Crm_Sales_SalesOrders?$top=10&$select=DocumentType&$filter=DocumentType in ('General_DocumentTypes(f8a93d3a-8cf3-4a09-9d45-667d664cb98d)', 'General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)')
 ```
 
 * List of reference values with different object types (the reference is of the base object type):
 
-```odata
+```
 Crm_Sales_SalesOrders?$top=10&$filter=ToParty in ('General_Contacts_Persons(adb66f3f-e173-4a37-878c-000920f44ff0)', 'General_Contacts_Companies(39148781-d316-4d4d-a392-0002f73710f2)')
 ```
 
 ## Filter by date and date-time attributes
 
 Example:
-```odata
+```
 Crm_Sales_SalesOrders?$top=10&$filter=DocumentDate ge 2020-01-01Z
 ```
 
@@ -101,7 +101,7 @@ This is an invalid filter:
 Returns true if the second string is contained in any language of the first multi-language string.
 
 Example: 
-```odata
+```
 ~/Crm_Customers?$filter=contains(Party/PartyName,'Peter')
 ```
 
@@ -110,7 +110,7 @@ Example:
 Returns true if the string is contained in the entity, refereced by the navigation property.
 
 Example: 
-```odata
+```
 ~/Crm_Customers?$filter=contains(SalesPerson,'Peter')
 ```
 
@@ -119,7 +119,7 @@ Example:
 Returns true if the first argument is equal to the second argument or the first argument is null.
 
 Example: 
-```odata
+```
 ~/Crm_Sales_SalesOrders?&$filter=equalnull(Store,'Logistics_Inventory_Stores(8d7dd360-17cc-47f4-a878-1ee0f06445ad)')
 ```
 
@@ -129,7 +129,7 @@ Returns true if the first argument is less than or equal to the second argument 
 
 Example: 
 
-```odata
+```
 ~/Crm_SalesPersons?$top=10&$filter=lessequalnull(ContractEndDate,2019-02-01T00:00:00.000Z)
 ```
 
@@ -139,6 +139,6 @@ Returns true if the first argument is greater than or equal to the second argume
 
 Example: 
 
-```odata
+```
 ~/Crm_SalesPersons?$top=10&$filter=greaterequalnull(ContractStartDate,2019-02-01T00:00:00.000Z)
 ```
