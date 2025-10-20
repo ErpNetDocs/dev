@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/index.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<h2 id="2-querying-data">2. Querying Data</h2>
+<p>The <strong>Querying Data</strong> section explains how to retrieve information from ERP.net using the Domain API. All queries use standard OData conventions, with some ERP.net-specific extensions.</p>
+<h3 id="21-odata-basics">2.1 OData Basics</h3>
+<p>ERP.net exposes entities (repositories) through an OData-compliant service. Each entity represents a type of data in the system, such as <code>Customer</code>, <code>Order</code>, or <code>Product</code>.</p>
+<ul>
+<li><p><strong>Service Root URL:</strong> The base URL for all queries. Example:</p>
+</li>
+<li><p><strong>Entity Types:</strong> Each entity can be queried independently. Common entities include:</p>
+</li>
+<li><p><a href="https://docs.erp.net/model/entities/Crm.Sales.Customers.html">Crm_Sales_Customers</a></p>
+</li>
+<li><p><a href="https://docs.erp.net/model/entities/Crm.Sales.SalesOrders.html">Crm_Sales_SalesOrders</a></p>
+</li>
+<li><p><a href="https://docs.erp.net/model/entities/General.Products.Products.html">General_Products_Products</a></p>
+</li>
+</ul>
+<h3 id="22-query-options">2.2 Query Options</h3>
+<p>ERP.net supports standard OData query options:</p>
+<ul>
+<li><p><strong>$filter:</strong> Filter data using conditions.<br>
+Example: Retrieve orders where <code>Status eq 'Open'</code>.</p>
+</li>
+<li><p><strong>$select:</strong> Retrieve only specific fields to reduce payload.<br>
+Example: <code>?$select=Id,Name,Status</code></p>
+</li>
+<li><p><strong>$expand:</strong> Include related entities in the response.<br>
+Example: <code>?$expand=Customer,Lines</code></p>
+</li>
+<li><p><strong>$orderby:</strong> Sort the results by a specific field.<br>
+Example: <code>?$orderby=DocumentDate desc</code></p>
+</li>
+<li><p><strong>$top / $skip:</strong> Control pagination.<br>
+Example: <code>?$top=50&amp;$skip=100</code></p>
+</li>
+<li><p><strong>$count:</strong> Get the total number of records matching the query.<br>
+Example: <code>?$count=true</code></p>
+</li>
+<li><p><strong>$search:</strong> Search by DisplayText of the specific entity.<br>
+Example: <code>?$search=&quot;Widget&quot;</code></p>
+</li>
+</ul>
+<p>Here is an extended topic for <a href="query-options/index.html">Query Options</a></p>
+<h3 id="23-query-builder">2.3 Query Builder</h3>
+<p>ERP.net includes a <strong>Visual Query Designer</strong> to simplify query creation. For more examples and instructions, see <a href="query-builder.html">Query Builder</a>.</p>
+<ol>
+<li>Select the entity type to query.</li>
+<li>Choose fields and relationships.</li>
+<li>Add filters, sorting, and pagination.</li>
+<li>Preview and execute the query.</li>
+</ol>
+<h3 id="24-query-tool">2.4 Query Tool</h3>
+<p>ERP.net provides a <strong>Query Tool</strong> to quickly test and explore queries in your browser. You can run OData queries directly against your service without writing code.</p>
+<p><strong>Example:</strong> Retrieve the top 10 products and include their product groups, sorted by part number:</p>
+<p><a href="https://testdb.my.erp.net/api/domain/query?GET+General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber">https://testdb.my.erp.net/api/domain/query?GET+General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber</a></p>
+<p>Use this tool to experiment with <code>$filter</code>, <code>$select</code>, <code>$expand</code>, <code>$orderby</code>, and other query options interactively.</p>
+<p><strong>Example Queries:</strong></p>
+<p><a href="https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&amp;$select=Party,Number,CreditLimit&amp;$expand=Party">https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&amp;$select=Party,Number,CreditLimit&amp;$expand=Party</a></p>
+<p><a href="https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber">https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber</a></p>
+<h3 id="25-handling-complex-data-types">2.5 Handling Complex Data Types</h3>
+<p>Some entities include complex or multi-part data types. For detailed explanations and examples, see <a href="../complex-types/index.html">Complex Data Types</a>.</p>
+<ul>
+<li><strong>Multi-language Strings:</strong> Some fields may have different values for each language. These fields are represented as a complex object with one property per language. For example:</li>
+</ul>
+<pre><code>{
+    &quot;Name&quot;: {
+        &quot;EN&quot;: &quot;Laptop&quot;,
+        &quot;DE&quot;: &quot;Laptop&quot;,
+        &quot;FR&quot;: &quot;Ordinateur portable&quot;
+    }
+}
+</code></pre>
+<p>Use the property corresponding to the desired language when displaying or processing the value.</p>
+<blockquote>
+<p><strong>NOTE:</strong> Multi-language fields support only filtering with the <code>contains(Field, 'value')</code> function. Other filter operators are not supported.</p>
+</blockquote>
+<ul>
+<li><strong>Quantities and Amounts:</strong> Fields with units (e.g., <code>Quantity</code>, <code>Amount</code>) require attention to precision and currency. Example:</li>
+</ul>
+<pre><code>&quot;Quantity&quot;: {
+    &quot;Value&quot;: 12.5,
+    &quot;Unit&quot;: &quot;kg&quot;,
+}
+&quot;Amount&quot;: {
+    &quot;Value&quot;: 250.00,
+    &quot;Currency&quot;: &quot;USD&quot;
+}
+</code></pre>
+<ul>
+<li><strong>Enums and References:</strong> Some fields reference other entities or use enumerated values. Use <code>$expand</code> or lookups to resolve them. Example:</li>
+</ul>
+<pre><code>{
+    &quot;State&quot;: &quot;New&quot;,
+    &quot;Customer&quot;: {
+        &quot;Id&quot;: 123,
+        &quot;Number&quot;: &quot;009987&quot;
+    }
+}
+</code></pre>
+<p>The enum values are represented as string. You can filter by enum value like this</p>
+<p><a href="https://testdb.my.erp.net/api/domain/query?GET+Crm_Sales_SalesOrders?$top=10&amp;$filter=State+eq+%27Released%27&amp;$orderby=DocumentDate+desc">Crm_Sales_SalesOrders?$top=10&amp;$filter=State eq 'Released'&amp;$orderby=DocumentDate desc</a></p>
+<p>To filter by reference use it's odata id:</p>
+<p><a href="https://testdb.my.erp.net/api/domain/query?GET+Crm_Sales_SalesOrders?$top=10&amp;$filter=DocumentType+eq+%27Systems_Documents_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)%27">Crm_Sales_SalesOrders?$top=10&amp;$filter=DocumentType eq 'Systems_Documents_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)'</a></p>
+<h3 id="26-filterable-references">2.6 Filterable References</h3>
+<p>Some ERP.net entities include <strong>reference fields</strong>, which point to other entities. In OData queries, you can filter data based on properties of the referenced entity.</p>
+<p><strong>Example:</strong> Retrieve sales order lines where the parent order's document date is on or after October 23, 2025:</p>
+<pre><code>Crm_Sales_SalesOrderLines?$filter=SalesOrder/DocumentDate ge 2025-10-23T00:00:00
+</code></pre>
+<blockquote>
+<p><strong>Concept:</strong> The filter navigates through the reference (<code>SalesOrder</code>) to access a property (<code>DocumentDate</code>) of the related entity.</p>
+</blockquote>
+<p><strong>Important:</strong> Not all reference fields support filtering. Only certain reference fields are filterable. For more information see <a href="filterable-references.html">Filterable References</a>.</p>
+<h3 id="27-batch-requests">2.7 Batch Requests</h3>
+<p>ERP.net supports <a href="https://www.odata.org/getting-started/advanced-tutorial/#batch" target="_blank">batch requests</a>, allowing multiple queries in a single HTTP request:</p>
+<ul>
+<li>Combine multiple read or write requests into one batch.</li>
+<li>Reduce network overhead and improve performance.</li>
+<li>Example use cases: retrieving multiple entity types or related data simultaneously.</li>
+</ul>
+<p><strong>Best Practices:</strong></p>
+<ul>
+<li>Keep batches reasonably sized to avoid timeouts.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/index.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

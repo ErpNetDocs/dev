@@ -2,21 +2,21 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Domain API | ERP.net Developer Docs </title>
+      <title>Data Manipulation | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Domain API | ERP.net Developer Docs ">
+      <meta name="title" content="Data Manipulation | ERP.net Developer Docs ">
       
       
-      <link rel="icon" href="../favicon.ico">
-      <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
-      <meta name="docfx:navrel" content="../toc.html">
-      <meta name="docfx:tocrel" content="../toc.html">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
       
-      <meta name="docfx:rel" content="../">
+      <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/index.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/index.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -30,7 +30,7 @@
       <meta name="loc:copy" content="Copy">
       <meta name="loc:downloadPdf" content="Download PDF">
 
-      <script type="module" src="./../public/docfx.min.js"></script>
+      <script type="module" src="./../../public/docfx.min.js"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -43,8 +43,8 @@
     <header class="bg-body border-bottom">
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
-          <a class="navbar-brand" href="../index.html">
-            <img id="logo" class="svg" src="../logo.svg" alt="">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
             
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,38 +85,38 @@
         </div>
 
         <article data-uid="">
-<h1 id="domain-api">Domain API</h1>
+<h1 id="data-manipulation">Data Manipulation</h1>
 
-<h2 id="introduction">Introduction</h2>
-<p>The Domain API is the primary API for accessing and manipulating data in ERP.net.
-It is most useful for UI and service apps.
-For BI, you should use the <a href="../topics/table-api/index.html">Table API</a>.</p>
-<p>For an overview and introduction of the Domain API, read the thorough presentation at the <a href="../index.html#the-domain-api">home page of the developer docs</a>.</p>
-<h2 id="based-on-odata">Based on OData</h2>
-<p>The Domain API is based on the <a href="https://www.odata.org/">OData protocol</a>.
-It allows object-oriented access to the data exposed by the ERP.net domain objects.</p>
-<p>The OData API is structured along a number of entity types (called &quot;repositories&quot; in ERP.net), that represent the Domain Model of the ERP Instance.
-Each entity type contains data attributes, which can be filtered, sorted, etc.
-The model also provides information on how to navigate between the repositories.</p>
-<p>For a quick introduction to OData, check the beginners tutorial at the OData site:</p>
-<p><a href="https://www.odata.org/getting-started/understand-odata-in-6-steps/">https://www.odata.org/getting-started/understand-odata-in-6-steps/</a></p>
-<h2 id="step-by-step">Step by step</h2>
-<p>To learn more about the ERP.net Domain API, read below:</p>
-<ol>
-<li><a href="querying-data/index.html">Querying data</a> - Introduction to data querying.</li>
-<li><a href="querying-data/url-components.html">URL components</a> - OData is heavy on the URL. Read this topic to understand the structure of the URL.</li>
-<li><a href="querying-data/query-options/index.html">Query options</a> - read more about the supported OData query constructs like $filter, $top and similar.</li>
-<li><a href="querying-data/query-builder.html">Query Builder</a> - the visual query designer can help you easily build complex $select/$expand queries.</li>
-<li><a href="complex-types/index.html">Complex types</a> - ERP.net defines several OData complex types, including quantity, amount and multi-language string.</li>
-<li><a href="transactions.html">Transactions</a> - ERP.net supports server-side front-end transactions.</li>
-<li><a href="common-tasks/working-with-documents.html">Working with documents</a> - working with documents is a common scenario when using the API.</li>
-<li><a href="https://www.odata.org/getting-started/advanced-tutorial/#batch">Batch requests</a> (OData site) - ERP.net fully supports batch requests, saving round-trips to the server.</li>
-</ol>
+<h2 id="create-operations">Create Operations</h2>
+<p>Creating Entities: Provide guidelines for creating new records.</p>
+<p>Required Fields: List mandatory fields for entity creation.</p>
+<p>Validation: Explain validation mechanisms during creation.</p>
+<h2 id="update-operations">Update Operations</h2>
+<p>Updating Entities: Describe how to modify existing records.</p>
+<p>Partial Updates: Explain partial update strategies.</p>
+<p>Concurrency Control: Discuss handling concurrent updates.</p>
+<h2 id="delete-operations">Delete Operations</h2>
+<p>Deleting Entities: Provide steps to delete records.</p>
+<p>Soft vs. Hard Deletes: Explain the difference and when to use each.</p>
+<p>Cascade Deletes: Discuss implications of cascading deletes.</p>
+<h2 id="transactions">Transactions</h2>
+<p>BeginTransaction and EndTransaction: Explain how to start and commit transactions.</p>
+<p>Entity Changes: Detail how to track and apply changes to entities within a transaction.</p>
+<p>Concurrency Handling: Discuss strategies for managing concurrent data modifications.</p>
+<h2 id="erpnet-action-annotation">ERP.net action annotation</h2>
+<h2 id="data-import">Data Import</h2>
+<p>Import Strategies: Outline methods for importing large datasets.</p>
+<p>Data Mapping: Discuss mapping external data to ERP.net entities.</p>
+<p>Error Handling: Provide guidelines for managing import errors.</p>
+<h2 id="data-synchronization">Data Synchronization</h2>
+<p>Sync Mechanisms: Describe methods for synchronizing data between ERP.net and external systems.</p>
+<p>Conflict Resolution: Explain strategies for resolving data conflicts.</p>
+<p>Scheduling Syncs: Discuss scheduling and automating synchronization tasks.</p>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/index.md/#L1" class="edit-link">Suggest improvement to this page</a>
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/index.md/#L1" class="edit-link">Suggest improvement to this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

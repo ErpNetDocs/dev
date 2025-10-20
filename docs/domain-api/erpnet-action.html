@@ -93,18 +93,18 @@ The <code>@erpnet.action</code> annotation can be provided in the body of update
 <pre><code>POST General_Products_Products
 {
    &quot;@erpnet.action&quot;: &quot;merge&quot;,
-	&quot;PartNumber&quot;: &quot;DAT003&quot;,
+    &quot;PartNumber&quot;: &quot;DAT003&quot;,
     &quot;BaseMeasurementCategory&quot;: {
-		&quot;@erpnet.action&quot;: &quot;find&quot;,
-		&quot;@erpnet.findBy&quot;: {&quot;Name&quot;: &quot;Unit&quot; }
+        &quot;@erpnet.action&quot;: &quot;find&quot;,
+        &quot;@erpnet.findBy&quot;: {&quot;Name&quot;: &quot;Unit&quot; }
     },
     &quot;MeasurementUnit&quot;: {
-		&quot;Code&quot;: &quot;PCE&quot;
+        &quot;Code&quot;: &quot;PCE&quot;
     },
-	&quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Test 002&quot;},
-	&quot;ProductGroup&quot;: {
-		&quot;Code&quot;: &quot;DATG01&quot;,
-		&quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Tests&quot;}
+    &quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Test 002&quot;},
+    &quot;ProductGroup&quot;: {
+        &quot;Code&quot;: &quot;DATG01&quot;,
+        &quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Tests&quot;}
 	}
 }
 </code></pre>
@@ -126,6 +126,10 @@ The value of the @erpnet.action annotation determines the type of operation that
 <tr>
 <td><strong>update</strong></td>
 <td>Updates an existing object. This is the default for the top-level JSON object in a <code>PATCH</code> request. If <code>@erpnet.action: update</code> is explicitly specified for a nested (referenced) object, the properties of the referenced object are modified.</td>
+</tr>
+<tr>
+<td><strong>delete</strong></td>
+<td>Deletes an existing object. Can be used in <a href="import.html">Import</a>.</td>
 </tr>
 <tr>
 <td><strong>find</strong></td>
@@ -163,38 +167,63 @@ The value of the @erpnet.action annotation determines the type of operation that
 → @erpnet.action: <strong>find</strong></p>
 <p>Otherwise
 → @erpnet.action: <strong>merge</strong></p>
-<h1 id="-annotation">@erpnet.findBy annotation</h1>
-<p>The @erpnet.findBy annotation explicitly defines the search criteria when an existing object should be found.
-It is applicable to the following @erpnet.action values:</p>
+<h1 id="erpnetfindby-annotation"><code>@erpnet.findBy</code> Annotation</h1>
+<p>The <code>@erpnet.findBy</code> annotation explicitly defines the search criteria used when an existing object should be located.<br>
+It is applicable to the following <code>@erpnet.action</code> values:</p>
 <ul>
-<li>find</li>
-<li>findOrNull</li>
-<li>findOrCreate</li>
-<li>findSingle</li>
-<li>findSingleOrNull</li>
-<li>merge</li>
+<li><code>find</code></li>
+<li><code>findOrNull</code></li>
+<li><code>findOrCreate</code></li>
+<li><code>findSingle</code></li>
+<li><code>findSingleOrNull</code></li>
+<li><code>merge</code></li>
 </ul>
-<p>The value of this annotation is an object with one of the following (string) properties:</p>
-<pre><code>{
-	ExternalId,
-	ExternalSystem,
-	Id,
-	Code,
-	Name,
-	DisplayText
+<hr>
+<h2 id="structure">Structure</h2>
+<p>The value of the annotation is an object with one or more of the following string properties:</p>
+<pre><code class="lang-json">{
+  &quot;ExternalId&quot;: &quot;...&quot;,
+  &quot;ExternalSystem&quot;: &quot;...&quot;,
+  &quot;Id&quot;: &quot;...&quot;,
+  &quot;Code&quot;: &quot;...&quot;,
+  &quot;Name&quot;: &quot;...&quot;,
+  &quot;DisplayText&quot;: &quot;...&quot;
 }
 </code></pre>
-<ul>
-<li><strong>ExternalId</strong> is provided when we want to find existing object with particular ExternalId.</li>
-<li><strong>ExternalSystem</strong> may be provided alongside ExternalId.</li>
-<li><strong>Id</strong> is provided if we want to find object by it's Id. This is a Guid.</li>
-<li><strong>Code</strong> is provided if we want to find object by it's Code. This is applicable only for entities that provde CodeDataMember. The CodeDataMember of the entity can be found in the entity <a href="https://docs.erp.net/model/entities/General.Products.Products.html#default-visualization">documentation</a>.</li>
-<li><strong>Name</strong> is provided if we want to find object by it's Name. This is applicable only for entities that provde NameDataMember. The NameDataMember of the entity can be found in the entity <a href="https://docs.erp.net/model/entities/General.Products.Products.html#default-visualization">documentation</a>. Search by Name is performed with <code>contains</code> operation.</li>
-<li><strong>DisplayText</strong> - performs search by entity's display text - also <code>contains</code>. This search is equivalent to the $search odata url parameter.</li>
-</ul>
-<h2 id="default-value">Default value</h2>
-<p>If <code>@erpnet.findBy</code> annotation is missing the search criteria is filled by the provided object properties.
-For example</p>
+<h2 id="property-details">Property Details</h2>
+<p><strong>ExternalId</strong> — Used to find an existing object by its specific external identifier.</p>
+<p><strong>ExternalSystem</strong> — Optional. Can be provided alongside ExternalId to further qualify the search.</p>
+<p><strong>Id</strong> — Used to find an object by its unique identifier (Guid).</p>
+<p><strong>Code</strong> — Used to find an object by its code.
+This applies only to entities that provide a <strong>CodeDataMember</strong>.
+The CodeDataMember for a specific entity can be found in its documentation.</p>
+<p><strong>Name</strong> — Used to find an object by its name.
+This applies only to entities that provide a <strong>NameDataMember</strong>.
+The NameDataMember for a specific entity can be found in its documentation.
+The search operation performs a case-insensitive contains match.</p>
+<p><strong>DisplayText</strong> — Searches by the entity’s display text using a contains operation.
+This is equivalent to using the $search parameter in OData queries.</p>
+<h2 id="find-criteria-evaluation">Find Criteria Evaluation</h2>
+<p>The find operation uses only the first available criterion from the @erpnet.findBy annotation in the following priority order:</p>
+<ol>
+<li><code>ExternalId</code> (+ optional <code>ExternalSystem</code>)</li>
+<li><code>Id</code></li>
+<li><code>Code</code></li>
+<li><code>Name</code></li>
+<li><code>DisplayText</code></li>
+</ol>
+<p>If multiple properties are specified, only the first one (in the order they appear) is used.
+For example:</p>
+<pre><code>&quot;@erpnet.findBy&quot;: {
+  &quot;ExternalId&quot;: &quot;123&quot;,
+  &quot;ExternalSystem&quot;: &quot;SomeSystem&quot;,
+  &quot;Code&quot;: &quot;345&quot;
+}
+</code></pre>
+<p>In this case, the search will be performed only by ExternalId and ExternalSystem, while Code will be ignored.</p>
+<h2 id="default-behavior">Default behavior</h2>
+<p>If the @erpnet.findBy annotation is omitted, the search criteria are automatically derived from the provided object’s properties.</p>
+<p>For example</p>
 <pre><code>{
 &quot;Customer&quot;: {
     &quot;Number&quot;: &quot;Г89163&quot;
@@ -204,38 +233,39 @@ For example</p>
 <p>is equivalent to</p>
 <pre><code>{
 &quot;Customer&quot;: {
-	&quot;@erpnet.action&quot;: &quot;find&quot;,
+    &quot;@erpnet.action&quot;: &quot;find&quot;,
     &quot;@erpnet.findBy&quot;: {&quot;Code&quot;: &quot;Г89163&quot;}
   }
 }
 </code></pre>
-<p>because &quot;Number&quot; is the CodeDataMember for customers we perform search by Code.
+<p>because &quot;Number&quot; is the <strong>CodeDataMember</strong> for customers we perform search by Code.
 This is a nested object and only CodeDataMember property is provided so the <code>@erpnet.action</code> is determined as <code>find</code>.</p>
 <h1 id="examples">Examples</h1>
-<p>In this example we create a sales order whithout using any IDs.</p>
-<pre><code>POST Crm_Sales_SalesOrders
+<p>In this example, we create a sales order <strong>without using any IDs</strong>.<br>
+The system automatically determines the <code>@erpnet.action</code> and <code>@erpnet.findBy</code> criteria based on the provided properties.</p>
+<pre><code class="lang-http">POST Crm_Sales_SalesOrders
 {
-  &quot;DocumentType&quot;: { // this defaults to action: find &amp; findBy: Code
+  &quot;DocumentType&quot;: { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
     &quot;Code&quot;: &quot;CRM_SALES_ORDER&quot;
   },
-  &quot;EnterpriseCompany&quot;: { // this defaults to action: find
-    &quot;@erpnet.findBy&quot;: {&quot;Code&quot;: &quot;546346373&quot;}
+  &quot;EnterpriseCompany&quot;: { // defaults to: @erpnet.action = find
+    &quot;@erpnet.findBy&quot;: { &quot;Code&quot;: &quot;546346373&quot; }
   },
-  &quot;EnterpriseCompanyLocation&quot;: { // this defaults to action: find &amp; findBy: Code
+  &quot;EnterpriseCompanyLocation&quot;: { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
     &quot;PartyCode&quot;: &quot;00193&quot;
   },
-  &quot;Customer&quot;: { // this defaults to action: find &amp; findBy: Code
+  &quot;Customer&quot;: { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
     &quot;Number&quot;: &quot;Г89163&quot;
   },
-  &quot;DocumentCurrency&quot;: { // this defaults to action: find &amp; findBy: Code
+  &quot;DocumentCurrency&quot;: { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
     &quot;CurrencySign&quot;: &quot;BGN&quot;
   },
   &quot;Lines&quot;: [
     {
-      &quot;Product&quot;: { // this defaults to action: find &amp; findBy: Code
+      &quot;Product&quot;: { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
         &quot;PartNumber&quot;: &quot;DAT001&quot;
       },
-      &quot;QuantityUnit&quot;: { // this defaults to action: find &amp; findBy: Code
+      &quot;QuantityUnit&quot;: { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
         &quot;Code&quot;: &quot;PCE&quot;
       },
       &quot;Quantity&quot;: {

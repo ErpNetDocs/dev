@@ -198,6 +198,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "domain-api/data-manipulation/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-manipulation/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "domain-api/data-sync/event-push.md",
       "output": {
         ".html": {
@@ -261,16 +271,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "domain-api/filterable-references.md",
-      "output": {
-        ".html": {
-          "relative_path": "domain-api/filterable-references.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "domain-api/import.md",
       "output": {
         ".html": {
@@ -301,73 +301,103 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "domain-api/query-builder.md",
+      "source_relative_path": "domain-api/querying-data/filterable-references.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/query-builder.html"
+          "relative_path": "domain-api/querying-data/filterable-references.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "domain-api/query-options/filter.md",
+      "source_relative_path": "domain-api/querying-data/index.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/query-options/filter.html"
+          "relative_path": "domain-api/querying-data/index.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "domain-api/query-options/index.md",
+      "source_relative_path": "domain-api/querying-data/query-builder.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/query-options/index.html"
+          "relative_path": "domain-api/querying-data/query-builder.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "domain-api/query-options/options.md",
+      "source_relative_path": "domain-api/querying-data/query-options/filter.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/query-options/options.html"
+          "relative_path": "domain-api/querying-data/query-options/filter.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "domain-api/query-options/search.md",
+      "source_relative_path": "domain-api/querying-data/query-options/index.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/query-options/search.html"
+          "relative_path": "domain-api/querying-data/query-options/index.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "domain-api/query-options/select.md",
+      "source_relative_path": "domain-api/querying-data/query-options/options.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/query-options/select.html"
+          "relative_path": "domain-api/querying-data/query-options/options.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/querying-data/query-options/search.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/querying-data/query-options/search.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/querying-data/query-options/select.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/querying-data/query-options/select.html"
         }
       },
       "version": ""
     },
     {
       "type": "Toc",
-      "source_relative_path": "domain-api/query-options/toc.yml",
+      "source_relative_path": "domain-api/querying-data/query-options/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "domain-api/query-options/toc.html"
+          "relative_path": "domain-api/querying-data/query-options/toc.html"
         },
         ".json": {
-          "relative_path": "domain-api/query-options/toc.json"
+          "relative_path": "domain-api/querying-data/query-options/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/querying-data/url-components.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/querying-data/url-components.html"
         }
       },
       "version": ""
@@ -567,16 +597,6 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/transactions.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "domain-api/url-components.md",
-      "output": {
-        ".html": {
-          "relative_path": "domain-api/url-components.html"
         }
       },
       "version": ""

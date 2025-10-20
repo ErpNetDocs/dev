@@ -2,21 +2,21 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Domain API | ERP.net Developer Docs </title>
+      <title>Query Builder | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Domain API | ERP.net Developer Docs ">
+      <meta name="title" content="Query Builder | ERP.net Developer Docs ">
       
       
-      <link rel="icon" href="../favicon.ico">
-      <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
-      <meta name="docfx:navrel" content="../toc.html">
-      <meta name="docfx:tocrel" content="../toc.html">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
       
-      <meta name="docfx:rel" content="../">
+      <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/index.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/query-builder.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -30,7 +30,7 @@
       <meta name="loc:copy" content="Copy">
       <meta name="loc:downloadPdf" content="Download PDF">
 
-      <script type="module" src="./../public/docfx.min.js"></script>
+      <script type="module" src="./../../public/docfx.min.js"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -43,8 +43,8 @@
     <header class="bg-body border-bottom">
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
-          <a class="navbar-brand" href="../index.html">
-            <img id="logo" class="svg" src="../logo.svg" alt="">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
             
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,38 +85,39 @@
         </div>
 
         <article data-uid="">
-<h1 id="domain-api">Domain API</h1>
+<h1 id="query-builder">Query Builder</h1>
 
-<h2 id="introduction">Introduction</h2>
-<p>The Domain API is the primary API for accessing and manipulating data in ERP.net.
-It is most useful for UI and service apps.
-For BI, you should use the <a href="../topics/table-api/index.html">Table API</a>.</p>
-<p>For an overview and introduction of the Domain API, read the thorough presentation at the <a href="../index.html#the-domain-api">home page of the developer docs</a>.</p>
-<h2 id="based-on-odata">Based on OData</h2>
-<p>The Domain API is based on the <a href="https://www.odata.org/">OData protocol</a>.
-It allows object-oriented access to the data exposed by the ERP.net domain objects.</p>
-<p>The OData API is structured along a number of entity types (called &quot;repositories&quot; in ERP.net), that represent the Domain Model of the ERP Instance.
-Each entity type contains data attributes, which can be filtered, sorted, etc.
-The model also provides information on how to navigate between the repositories.</p>
-<p>For a quick introduction to OData, check the beginners tutorial at the OData site:</p>
-<p><a href="https://www.odata.org/getting-started/understand-odata-in-6-steps/">https://www.odata.org/getting-started/understand-odata-in-6-steps/</a></p>
-<h2 id="step-by-step">Step by step</h2>
-<p>To learn more about the ERP.net Domain API, read below:</p>
-<ol>
-<li><a href="querying-data/index.html">Querying data</a> - Introduction to data querying.</li>
-<li><a href="querying-data/url-components.html">URL components</a> - OData is heavy on the URL. Read this topic to understand the structure of the URL.</li>
-<li><a href="querying-data/query-options/index.html">Query options</a> - read more about the supported OData query constructs like $filter, $top and similar.</li>
-<li><a href="querying-data/query-builder.html">Query Builder</a> - the visual query designer can help you easily build complex $select/$expand queries.</li>
-<li><a href="complex-types/index.html">Complex types</a> - ERP.net defines several OData complex types, including quantity, amount and multi-language string.</li>
-<li><a href="transactions.html">Transactions</a> - ERP.net supports server-side front-end transactions.</li>
-<li><a href="common-tasks/working-with-documents.html">Working with documents</a> - working with documents is a common scenario when using the API.</li>
-<li><a href="https://www.odata.org/getting-started/advanced-tutorial/#batch">Batch requests</a> (OData site) - ERP.net fully supports batch requests, saving round-trips to the server.</li>
-</ol>
+<h2 id="description">Description</h2>
+<p>ERP.net has an integrated visual Query Builder.</p>
+<p><img src="../../query-builder.png" alt="Query Builder"></p>
+<p>The Query Builder allows building queries, specific to the ERP Instance.
+When you use the Query Builder, it allows you to select the user-defined data and calculated attributes in that instance.</p>
+<p>The Query Builder allows the developers to create the query visually and then just re-use the query text, replacing the parameters.</p>
+<h2 id="try-it">Try it</h2>
+<p>To access the Query Builder for DEMODB, go to:</p>
+<blockquote>
+<p><a href="https://demodb.my.erp.net/api/domain/querybuilder">https://demodb.my.erp.net/api/domain/querybuilder</a></p>
+</blockquote>
+<div class="TIP">
+<h5>Tip</h5>
+<p><strong>User:</strong> Admin</p>
+<p><strong>Password:</strong> 123</p>
+</div>
+<p>While the query is built, the Query Builder changes its URL.
+For example, to preview the same query for the first 10 products in the Query Builder, head to:</p>
+<blockquote>
+<p><a href="https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10"><a href="https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10">https://demodb.my.erp.net/api/domain/querybuilder#General_Products_Products?$top=10</a></p>
+</blockquote>
+<p>When you press Execute in the Query Builder, you can preview the result both as table and as JSON.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Pay attention to the link under the selected entity, which opens the documentation for the entity.</p>
+</div>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/index.md/#L1" class="edit-link">Suggest improvement to this page</a>
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/query-builder.md/#L1" class="edit-link">Suggest improvement to this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>
