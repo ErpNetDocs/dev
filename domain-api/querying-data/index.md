@@ -68,7 +68,7 @@ https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&$select=Pa
 
 https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&$expand=ProductGroup&$orderby=PartNumber
 
-### 2.4 Handling Complex Data Types
+### 2.5 Handling Complex Data Types
 
 Some entities include complex or multi-part data types. For detailed explanations and examples, see [Complex Data Types](../complex-types/index.md).
 
@@ -113,8 +113,16 @@ Use the property corresponding to the desired language when displaying or proces
     }
 }
 ```
+The enum values are represented as string. You can filter by enum value like this
 
-### Filterable References
+[Crm_Sales_SalesOrders?$top=10&$filter=State eq 'Released'&$orderby=DocumentDate desc](https://testdb.my.erp.net/api/domain/query?GET+Crm_Sales_SalesOrders?$top=10&$filter=State+eq+%27Released%27&$orderby=DocumentDate+desc)
+
+To filter by reference use it's odata id:
+
+[Crm_Sales_SalesOrders?$top=10&$filter=DocumentType eq 'Systems_Documents_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)'](https://testdb.my.erp.net/api/domain/query?GET+Crm_Sales_SalesOrders?$top=10&$filter=DocumentType+eq+%27Systems_Documents_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)%27)
+
+
+### 2.6 Filterable References
 
 Some ERP.net entities include **reference fields**, which point to other entities. In OData queries, you can filter data based on properties of the referenced entity.  
 
@@ -130,7 +138,7 @@ Crm_Sales_SalesOrderLines?$filter=SalesOrder/DocumentDate ge 2025-10-23T00:00:00
 
 
 
-### 2.5 Batch Requests
+### 2.7 Batch Requests
 
 ERP.net supports <a href="https://www.odata.org/getting-started/advanced-tutorial/#batch" target="_blank">batch requests</a>, allowing multiple queries in a single HTTP request:
 
