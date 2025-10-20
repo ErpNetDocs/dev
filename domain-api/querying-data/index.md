@@ -64,13 +64,9 @@ Use this tool to experiment with `$filter`, `$select`, `$expand`, `$orderby`, an
 
 **Example Queries:**
 
-```
-GET https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&$select=Party,Number,CreditLimit&$expand=Party
-```
+https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&$select=Party,Number,CreditLimit&$expand=Party
 
-```
-GET https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&$expand=ProductGroup&$orderby=PartNumber
-```
+https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&$expand=ProductGroup&$orderby=PartNumber
 
 ### 2.4 Handling Complex Data Types
 
