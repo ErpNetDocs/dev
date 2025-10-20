@@ -9,18 +9,18 @@ Example usage
 POST General_Products_Products
 {
    "@erpnet.action": "merge",
-	"PartNumber": "DAT003",
+    "PartNumber": "DAT003",
     "BaseMeasurementCategory": {
-		"@erpnet.action": "find",
-		"@erpnet.findBy": {"Name": "Unit" }
+        "@erpnet.action": "find",
+        "@erpnet.findBy": {"Name": "Unit" }
     },
     "MeasurementUnit": {
-		"Code": "PCE"
+        "Code": "PCE"
     },
-	"Name": {"EN": "Domain API Test 002"},
-	"ProductGroup": {
-		"Code": "DATG01",
-		"Name": {"EN": "Domain API Tests"}
+    "Name": {"EN": "Domain API Test 002"},
+    "ProductGroup": {
+        "Code": "DATG01",
+        "Name": {"EN": "Domain API Tests"}
 	}
 }
 ```
@@ -59,38 +59,83 @@ Otherwise
 → @erpnet.action: **merge**
 
 
-# @erpnet.findBy annotation
+# `@erpnet.findBy` Annotation
 
-The @erpnet.findBy annotation explicitly defines the search criteria when an existing object should be found.
-It is applicable to the following @erpnet.action values:
-- find
-- findOrNull
-- findOrCreate
-- findSingle
-- findSingleOrNull
-- merge
+The `@erpnet.findBy` annotation explicitly defines the search criteria used when an existing object should be located.  
+It is applicable to the following `@erpnet.action` values:
 
-The value of this annotation is an object with one of the following (string) properties:
-```
+- `find`
+- `findOrNull`
+- `findOrCreate`
+- `findSingle`
+- `findSingleOrNull`
+- `merge`
+
+---
+
+## Structure
+
+The value of the annotation is an object with one or more of the following string properties:
+
+```json
 {
-	ExternalId,
-	ExternalSystem,
-	Id,
-	Code,
-	Name,
-	DisplayText
+  "ExternalId": "...",
+  "ExternalSystem": "...",
+  "Id": "...",
+  "Code": "...",
+  "Name": "...",
+  "DisplayText": "..."
 }
 ```
 
-- **ExternalId** is provided when we want to find existing object with particular ExternalId.
-- **ExternalSystem** may be provided alongside ExternalId.
-- **Id** is provided if we want to find object by it's Id. This is a Guid.
-- **Code** is provided if we want to find object by it's Code. This is applicable only for entities that provde CodeDataMember. The CodeDataMember of the entity can be found in the entity [documentation](https://docs.erp.net/model/entities/General.Products.Products.html#default-visualization).
-- **Name** is provided if we want to find object by it's Name. This is applicable only for entities that provde NameDataMember. The NameDataMember of the entity can be found in the entity [documentation](https://docs.erp.net/model/entities/General.Products.Products.html#default-visualization). Search by Name is performed with `contains` operation.
-- **DisplayText** - performs search by entity's display text - also `contains`. This search is equivalent to the $search odata url parameter.
+## Property Details
 
-## Default value
-If `@erpnet.findBy` annotation is missing the search criteria is filled by the provided object properties.
+**ExternalId** — Used to find an existing object by its specific external identifier.
+
+**ExternalSystem** — Optional. Can be provided alongside ExternalId to further qualify the search.
+
+**Id** — Used to find an object by its unique identifier (Guid).
+
+**Code** — Used to find an object by its code.
+This applies only to entities that provide a **CodeDataMember**.
+The CodeDataMember for a specific entity can be found in its documentation.
+
+**Name** — Used to find an object by its name.
+This applies only to entities that provide a **NameDataMember**.
+The NameDataMember for a specific entity can be found in its documentation.
+The search operation performs a case-insensitive contains match.
+
+**DisplayText** — Searches by the entity’s display text using a contains operation.
+This is equivalent to using the $search parameter in OData queries.
+
+
+## Find Criteria Evaluation
+
+The find operation uses only the first available criterion from the @erpnet.findBy annotation in the following priority order:
+
+1. `ExternalId` (+ optional `ExternalSystem`)
+2. `Id`
+3. `Code`
+4. `Name`
+5. `DisplayText`
+
+If multiple properties are specified, only the first one (in the order they appear) is used.
+For example:
+
+```
+"@erpnet.findBy": {
+  "ExternalId": "123",
+  "ExternalSystem": "SomeSystem",
+  "Code": "345"
+}
+```
+In this case, the search will be performed only by ExternalId and ExternalSystem, while Code will be ignored.
+
+
+## Default behavior
+
+If the @erpnet.findBy annotation is omitted, the search criteria are automatically derived from the provided object’s properties.
+
 For example 
 ```
 {
@@ -103,41 +148,44 @@ is equivalent to
 ```
 {
 "Customer": {
-	"@erpnet.action": "find",
+    "@erpnet.action": "find",
     "@erpnet.findBy": {"Code": "Г89163"}
   }
 }
 ```
-because "Number" is the CodeDataMember for customers we perform search by Code.
+because "Number" is the __CodeDataMember__ for customers we perform search by Code.
 This is a nested object and only CodeDataMember property is provided so the `@erpnet.action` is determined as `find`. 
+
 
 # Examples
 
-In this example we create a sales order whithout using any IDs.
-```
+In this example, we create a sales order **without using any IDs**.  
+The system automatically determines the `@erpnet.action` and `@erpnet.findBy` criteria based on the provided properties.
+
+```http
 POST Crm_Sales_SalesOrders
 {
-  "DocumentType": { // this defaults to action: find & findBy: Code
+  "DocumentType": { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
     "Code": "CRM_SALES_ORDER"
   },
-  "EnterpriseCompany": { // this defaults to action: find
-    "@erpnet.findBy": {"Code": "546346373"}
+  "EnterpriseCompany": { // defaults to: @erpnet.action = find
+    "@erpnet.findBy": { "Code": "546346373" }
   },
-  "EnterpriseCompanyLocation": { // this defaults to action: find & findBy: Code
+  "EnterpriseCompanyLocation": { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
     "PartyCode": "00193"
   },
-  "Customer": { // this defaults to action: find & findBy: Code
+  "Customer": { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
     "Number": "Г89163"
   },
-  "DocumentCurrency": { // this defaults to action: find & findBy: Code
+  "DocumentCurrency": { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
     "CurrencySign": "BGN"
   },
   "Lines": [
     {
-      "Product": { // this defaults to action: find & findBy: Code
+      "Product": { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
         "PartNumber": "DAT001"
       },
-      "QuantityUnit": { // this defaults to action: find & findBy: Code
+      "QuantityUnit": { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
         "Code": "PCE"
       },
       "Quantity": {
@@ -152,4 +200,3 @@ POST Crm_Sales_SalesOrders
   ]
 }
 ```
-
