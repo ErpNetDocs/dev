@@ -108,7 +108,7 @@ Use the property corresponding to the desired language when displaying or proces
 
 - **Enums and References:** Some fields reference other entities or use enumerated values. Use `$expand` or lookups to resolve them. Example:
 
----
+```
 {
     "State": "New",
     "Customer": {
@@ -116,7 +116,23 @@ Use the property corresponding to the desired language when displaying or proces
         "Number": "009987"
     }
 }
----
+```
+
+### Filterable References
+
+Some ERP.net entities include **reference fields**, which point to other entities. In OData queries, you can filter data based on properties of the referenced entity.  
+
+**Example:** Retrieve sales order lines where the parent order's document date is on or after October 23, 2025:
+
+```
+Crm_Sales_SalesOrderLines?$filter=SalesOrder/DocumentDate ge 2025-10-23T00:00:00
+```
+
+> **Concept:** The filter navigates through the reference (`SalesOrder`) to access a property (`DocumentDate`) of the related entity.
+
+**Important:** Not all reference fields support filtering. Only certain reference fields are filterable. For more information see [Filterable References](filterable-references.md).
+
+
 
 ### 2.5 Batch Requests
 
