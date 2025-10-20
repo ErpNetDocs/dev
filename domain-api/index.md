@@ -25,9 +25,10 @@ For a quick introduction to OData, check the beginners tutorial at the OData sit
 
 To learn more about the @@name Domain API, read below:
 
-1. [URL components](url-components.md) - OData is heavy on the URL. Read this topic to understand the structure of the URL.
-1. [Query options](query-options/index.md) - read more about the supported OData query constructs like $filter, $top and similar.
-1. [Query Builder](query-builder.md) - the visual query designer can help you easily build complex $select/$expand queries.
+1. [Querying data](querying-data/index.md) - Introduction to data querying.
+1. [URL components](querying-data/url-components.md) - OData is heavy on the URL. Read this topic to understand the structure of the URL.
+1. [Query options](querying-data/query-options/index.md) - read more about the supported OData query constructs like $filter, $top and similar.
+1. [Query Builder](querying-data/query-builder.md) - the visual query designer can help you easily build complex $select/$expand queries.
 1. [Complex types](complex-types/index.md) - @@name defines several OData complex types, including quantity, amount and multi-language string.
 1. [Transactions](transactions.md) - @@name supports server-side front-end transactions.
 1. [Working with documents](common-tasks/working-with-documents.md) - working with documents is a common scenario when using the API.
