@@ -3,7 +3,7 @@
 
 ## Create Operations
 
-#### Creating an Entity
+### Creating an Entity
 
 To create a new entity in ERP.net, you use the **POST** method of the OData service. The request body contains the entity data in JSON format.  
 
