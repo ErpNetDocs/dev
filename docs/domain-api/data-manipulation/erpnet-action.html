@@ -96,10 +96,10 @@ The <code>@erpnet.action</code> annotation can be provided in the body of update
     &quot;PartNumber&quot;: &quot;DAT003&quot;,
     &quot;BaseMeasurementCategory&quot;: {
         &quot;@erpnet.action&quot;: &quot;find&quot;,
-        &quot;@erpnet.findBy&quot;: {&quot;Name&quot;: &quot;Unit&quot; }
+        &quot;@erpnet.findBy&quot;: {&quot;Name&quot;: &quot;Pieces&quot; }
     },
     &quot;MeasurementUnit&quot;: {
-        &quot;Code&quot;: &quot;PCE&quot;
+        &quot;Code&quot;: &quot;pcs&quot;
     },
     &quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Test 002&quot;},
     &quot;ProductGroup&quot;: {
@@ -241,7 +241,127 @@ For example:</p>
 <p>because &quot;Number&quot; is the <strong>CodeDataMember</strong> for customers we perform search by Code.
 This is a nested object and only CodeDataMember property is provided so the <code>@erpnet.action</code> is determined as <code>find</code>.</p>
 <h1 id="examples">Examples</h1>
-<p>In this example, we create a sales order <strong>without using any IDs</strong>.<br>
+<h3 id="product-import-examples">Product Import Examples</h3>
+<p>Below are several examples of importing products.</p>
+<p>In this first example, we create a product while providing the measurement unit and category by their IDs.<br>
+The <strong>ProductGroup</strong> uses <strong>implicit merge</strong>, meaning it searches by code.</p>
+<p><strong>Note:</strong> If a product group is found, its code and name will be updated with the provided values.<br>
+If there are no changes, the object remains <strong>Unchanged</strong> and is not written to the database.<br>
+However, if the group’s name was manually edited after the initial import (for example, a the group name is translated to some other language), this change will be lost due to the <strong>MERGE</strong>, which will set the entire multi-language value for Name attribute.</p>
+<pre><code class="lang-json">POST General_Products_Products
+{
+  &quot;PartNumber&quot;: &quot;DAT001&quot;,
+  &quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Test 001&quot;},
+  &quot;BaseMeasurementCategory@odata.bind&quot;: &quot;General_Products_MeasurementCategories(045d1e60-2114-4ca7-b636-0666dd0d2ec8)&quot;,
+  &quot;MeasurementUnit@odata.bind&quot;: &quot;General_Products_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;,
+  &quot;ProductGroup&quot;: {
+    &quot;Code&quot;: &quot;DATG01&quot;,
+    &quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Tests&quot;}
+  }
+}
+</code></pre>
+<p>In this example, we explicitly set <code>@erpnet.action: merge</code>.<br>
+This means the system will first look for a product by its code before creating a new one.</p>
+<pre><code class="lang-json">POST General_Products_Products
+{
+  &quot;@erpnet.action&quot;: &quot;merge&quot;,
+  &quot;PartNumber&quot;: &quot;DAT002&quot;,
+  &quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Test 002&quot;},
+  &quot;BaseMeasurementCategory@odata.bind&quot;: &quot;General_Products_MeasurementCategories(045d1e60-2114-4ca7-b636-0666dd0d2ec8)&quot;,
+  &quot;MeasurementUnit@odata.bind&quot;: &quot;General_Products_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;,
+  &quot;ProductGroup&quot;: {
+    &quot;Code&quot;: &quot;DATG01&quot;,
+    &quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Tests&quot;}
+  }
+}
+</code></pre>
+<p>Same as above, but without using IDs for the measurement unit and category — only the name and code are used.
+The BaseMeasurementCategory is searched by Name - this is <code>General_MeasurementCategories?$filter=contains(Name,&quot;Pieces&quot;)</code>.</p>
+<pre><code class="lang-json">POST General_Products_Products
+{
+  &quot;@erpnet.action&quot;: &quot;merge&quot;,
+  &quot;PartNumber&quot;: &quot;DAT003&quot;,
+  &quot;BaseMeasurementCategory&quot;: {
+    &quot;@erpnet.action&quot;: &quot;find&quot;,
+    &quot;@erpnet.findBy&quot;: {&quot;Name&quot;: &quot;Pieces&quot;}
+  },
+  &quot;MeasurementUnit&quot;: {
+    &quot;@erpnet.action&quot;: &quot;find&quot;,
+    &quot;Code&quot;: &quot;pcs&quot;
+  },
+  &quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Test 003&quot;},
+  &quot;ProductGroup&quot;: {
+    &quot;Code&quot;: &quot;DATG01&quot;,
+    &quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Tests&quot;}
+  }
+}
+</code></pre>
+<p>Same as the previous example, but the measurement unit omits the <code>@erpnet.action</code> annotation. The action again is <strong>find</strong> because we only provide the code attribute.</p>
+<pre><code class="lang-json">POST General_Products_Products
+{
+  &quot;@erpnet.action&quot;: &quot;merge&quot;,
+  &quot;PartNumber&quot;: &quot;DAT003&quot;,
+  &quot;BaseMeasurementCategory&quot;: {
+    &quot;@erpnet.action&quot;: &quot;find&quot;,
+    &quot;@erpnet.findBy&quot;: {&quot;Name&quot;: &quot;Pieces&quot;}
+  },
+  &quot;MeasurementUnit&quot;: {
+    &quot;Code&quot;: &quot;pcs&quot;
+  },
+  &quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Test 003&quot;},
+  &quot;ProductGroup&quot;: {
+    &quot;Code&quot;: &quot;DATG01&quot;,
+    &quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Tests&quot;}
+  }
+}
+</code></pre>
+<p>This example searches by <strong>ExternalId</strong>.</p>
+<pre><code class="lang-json">POST General_Products_Products
+{
+  &quot;@erpnet.action&quot;: &quot;merge&quot;,
+  &quot;ExternalId&quot;: &quot;EXT004&quot;,
+  &quot;PartNumber&quot;: &quot;DAT004&quot;,
+  &quot;BaseMeasurementCategory&quot;: {
+    &quot;@erpnet.action&quot;: &quot;find&quot;,
+    &quot;@erpnet.findBy&quot;: {&quot;Name&quot;: &quot;Pieces&quot;}
+  },
+  &quot;MeasurementUnit&quot;: {
+    &quot;Code&quot;: &quot;pcs&quot;
+  },
+  &quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Test 004&quot;},
+  &quot;ProductGroup&quot;: {
+    &quot;Code&quot;: &quot;DATG01&quot;,
+    &quot;Name&quot;: {&quot;EN&quot;: &quot;Domain API Tests&quot;}
+  }
+}
+</code></pre>
+<hr>
+<p>In the following example we are editing a sales order and want to MERGE the customer.
+The <code>merge</code> action first attempts to find an existing object by the provided attributes.
+The provided customer data is interpretted as  <code>&quot;@erpnet.action&quot;: &quot;merge&quot;, &quot;@erpnet.findBy&quot;: { &quot;Code&quot;: &quot;CS0099&quot; }</code>
+First, the system will search for a customer with Number = &quot;CS0099&quot;.
+If none is found, it will create a new customer and fill it's Number and Party.
+The Party will also attempt a merge.
+The provided data can't be transformed to <code>@erpnet.findBy</code> because we provide Company.Name, which is not a NameDataMember for the PartiesRepository, so no lookup by name will be performed. The NameDataMember for parties is &quot;PartyName&quot;.
+If there is no <strong>findBy</strong> arguments a new Party will be created.
+<strong>Erp.General_Contacts_Party</strong> is abstract class so we can't create a party directly. We should specify the exact inheritor type. This is done with
+<code>&quot;@odata.type&quot;: &quot;Erp.General_Contacts_Company&quot;</code>. Now the system knows what object to create.
+As a result, a new company will be created.
+It is safe to pass the attributes defined in &quot;Erp.General_Contacts_Company&quot; type, so the system can set their values in the created company.</p>
+<pre><code>PATCH Crm_Sales_SalesOrders(fd8e5bd8-5fa4-4eae-a763-aad226b9101d)
+{
+   &quot;Customer&quot;: {
+     &quot;Number&quot;: &quot;CS0099&quot;,
+     &quot;Party&quot;: {
+       &quot;@odata.type&quot;: &quot;Erp.General_Contacts_Company&quot;,
+       &quot;Name&quot;: { &quot;EN&quot;: &quot;New Company&quot;},
+       &quot;RegistrationType&quot;: {&quot;EN&quot;: &quot;Ltd&quot; }
+     }
+   }
+}
+</code></pre>
+<hr>
+<p>In the following example, we create a sales order <strong>without using any IDs</strong>.<br>
 The system automatically determines the <code>@erpnet.action</code> and <code>@erpnet.findBy</code> criteria based on the provided properties.</p>
 <pre><code class="lang-http">POST Crm_Sales_SalesOrders
 {
@@ -266,11 +386,11 @@ The system automatically determines the <code>@erpnet.action</code> and <code>@e
         &quot;PartNumber&quot;: &quot;DAT001&quot;
       },
       &quot;QuantityUnit&quot;: { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
-        &quot;Code&quot;: &quot;PCE&quot;
+        &quot;Code&quot;: &quot;pcs&quot;
       },
       &quot;Quantity&quot;: {
         &quot;Value&quot;: 1,
-        &quot;Unit&quot;: &quot;PCE&quot;
+        &quot;Unit&quot;: &quot;pcs&quot;
       },
       &quot;UnitPrice&quot;: {
         &quot;Value&quot;: 20,
@@ -280,6 +400,7 @@ The system automatically determines the <code>@erpnet.action</code> and <code>@e
   ]
 }
 </code></pre>
+<hr>
 
 </article>
 
