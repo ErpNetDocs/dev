@@ -12,10 +12,10 @@ POST General_Products_Products
     "PartNumber": "DAT003",
     "BaseMeasurementCategory": {
         "@erpnet.action": "find",
-        "@erpnet.findBy": {"Name": "Unit" }
+        "@erpnet.findBy": {"Name": "Pieces" }
     },
     "MeasurementUnit": {
-        "Code": "PCE"
+        "Code": "pcs"
     },
     "Name": {"EN": "Domain API Test 002"},
     "ProductGroup": {
@@ -160,7 +160,150 @@ This is a nested object and only CodeDataMember property is provided so the `@er
 
 # Examples
 
-In this example, we create a sales order **without using any IDs**.  
+### Product Import Examples
+
+Below are several examples of importing products.
+
+In this first example, we create a product while providing the measurement unit and category by their IDs.  
+The **ProductGroup** uses **implicit merge**, meaning it searches by code.
+
+**Note:** If a product group is found, its code and name will be updated with the provided values.  
+If there are no changes, the object remains **Unchanged** and is not written to the database.  
+However, if the group’s name was manually edited after the initial import (for example, a the group name is translated to some other language), this change will be lost due to the **MERGE**, which will set the entire multi-language value for Name attribute.
+```json
+POST General_Products_Products
+{
+  "PartNumber": "DAT001",
+  "Name": {"EN": "Domain API Test 001"},
+  "BaseMeasurementCategory@odata.bind": "General_Products_MeasurementCategories(045d1e60-2114-4ca7-b636-0666dd0d2ec8)",
+  "MeasurementUnit@odata.bind": "General_Products_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)",
+  "ProductGroup": {
+    "Code": "DATG01",
+    "Name": {"EN": "Domain API Tests"}
+  }
+}
+```
+
+
+In this example, we explicitly set `@erpnet.action: merge`.  
+This means the system will first look for a product by its code before creating a new one.
+```json
+POST General_Products_Products
+{
+  "@erpnet.action": "merge",
+  "PartNumber": "DAT002",
+  "Name": {"EN": "Domain API Test 002"},
+  "BaseMeasurementCategory@odata.bind": "General_Products_MeasurementCategories(045d1e60-2114-4ca7-b636-0666dd0d2ec8)",
+  "MeasurementUnit@odata.bind": "General_Products_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)",
+  "ProductGroup": {
+    "Code": "DATG01",
+    "Name": {"EN": "Domain API Tests"}
+  }
+}
+```
+
+
+Same as above, but without using IDs for the measurement unit and category — only the name and code are used.
+The BaseMeasurementCategory is searched by Name - this is `General_MeasurementCategories?$filter=contains(Name,"Pieces")`.
+```json
+POST General_Products_Products
+{
+  "@erpnet.action": "merge",
+  "PartNumber": "DAT003",
+  "BaseMeasurementCategory": {
+    "@erpnet.action": "find",
+    "@erpnet.findBy": {"Name": "Pieces"}
+  },
+  "MeasurementUnit": {
+    "@erpnet.action": "find",
+    "Code": "pcs"
+  },
+  "Name": {"EN": "Domain API Test 003"},
+  "ProductGroup": {
+    "Code": "DATG01",
+    "Name": {"EN": "Domain API Tests"}
+  }
+}
+```
+
+
+Same as the previous example, but the measurement unit omits the `@erpnet.action` annotation. The action again is **find** because we only provide the code attribute.
+```json
+POST General_Products_Products
+{
+  "@erpnet.action": "merge",
+  "PartNumber": "DAT003",
+  "BaseMeasurementCategory": {
+    "@erpnet.action": "find",
+    "@erpnet.findBy": {"Name": "Pieces"}
+  },
+  "MeasurementUnit": {
+    "Code": "pcs"
+  },
+  "Name": {"EN": "Domain API Test 003"},
+  "ProductGroup": {
+    "Code": "DATG01",
+    "Name": {"EN": "Domain API Tests"}
+  }
+}
+```
+
+This example searches by **ExternalId**.
+```json
+POST General_Products_Products
+{
+  "@erpnet.action": "merge",
+  "ExternalId": "EXT004",
+  "PartNumber": "DAT004",
+  "BaseMeasurementCategory": {
+    "@erpnet.action": "find",
+    "@erpnet.findBy": {"Name": "Pieces"}
+  },
+  "MeasurementUnit": {
+    "Code": "pcs"
+  },
+  "Name": {"EN": "Domain API Test 004"},
+  "ProductGroup": {
+    "Code": "DATG01",
+    "Name": {"EN": "Domain API Tests"}
+  }
+}
+```
+
+---
+
+
+In the following example we are editing a sales order and want to MERGE the customer.
+The `merge` action first attempts to find an existing object by the provided attributes.
+The provided customer data is interpretted as  `"@erpnet.action": "merge", "@erpnet.findBy": { "Code": "CS0099" }`
+First, the system will search for a customer with Number = "CS0099". 
+If none is found, it will create a new customer and fill it's Number and Party.
+The Party will also attempt a merge. 
+The provided data can't be transformed to `@erpnet.findBy` because we provide Company.Name, which is not a NameDataMember for the PartiesRepository, so no lookup by name will be performed. The NameDataMember for parties is "PartyName".
+If there is no __findBy__ arguments a new Party will be created.
+**Erp.General_Contacts_Party** is abstract class so we can't create a party directly. We should specify the exact inheritor type. This is done with
+`"@odata.type": "Erp.General_Contacts_Company"`. Now the system knows what object to create.
+As a result, a new company will be created.
+It is safe to pass the attributes defined in "Erp.General_Contacts_Company" type, so the system can set their values in the created company.
+
+
+```
+PATCH Crm_Sales_SalesOrders(fd8e5bd8-5fa4-4eae-a763-aad226b9101d)
+{
+   "Customer": {
+     "Number": "CS0099",
+     "Party": {
+       "@odata.type": "Erp.General_Contacts_Company",
+       "Name": { "EN": "New Company"},
+       "RegistrationType": {"EN": "Ltd" }
+     }
+   }
+}
+```
+
+---
+
+In the following example, we create a sales order **without using any IDs**.  
 The system automatically determines the `@erpnet.action` and `@erpnet.findBy` criteria based on the provided properties.
 
 ```http
@@ -187,11 +330,11 @@ POST Crm_Sales_SalesOrders
         "PartNumber": "DAT001"
       },
       "QuantityUnit": { // defaults to: @erpnet.action = find, @erpnet.findBy = Code
-        "Code": "PCE"
+        "Code": "pcs"
       },
       "Quantity": {
         "Value": 1,
-        "Unit": "PCE"
+        "Unit": "pcs"
       },
       "UnitPrice": {
         "Value": 20,
@@ -201,3 +344,5 @@ POST Crm_Sales_SalesOrders
   ]
 }
 ```
+
+---

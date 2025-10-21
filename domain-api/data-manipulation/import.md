@@ -80,11 +80,11 @@ POST ~/Import
       "BaseMeasurementCategory": {
         "@erpnet.action": "find",
         "@erpnet.findBy": {
-          "Name": "Unit"
+          "Name": "Pieces"
         }
       },
       "MeasurementUnit": {
-        "Code": "PCE"
+        "Code": "pcs"
       },
       "Name": {
         "EN": "Domain API Test 000"
@@ -104,11 +104,11 @@ POST ~/Import
       "BaseMeasurementCategory": {
         "@erpnet.action": "find",
         "@erpnet.findBy": {
-          "Name": "Unit"
+          "Name": "Pieces"
         }
       },
       "MeasurementUnit": {
-        "Code": "PCE"
+        "Code": "pcs"
       },
       "Name": {
         "EN": "Domain API Test 001"
@@ -128,11 +128,11 @@ POST ~/Import
       "BaseMeasurementCategory": {
         "@erpnet.action": "find",
         "@erpnet.findBy": {
-          "Name": "Unit"
+          "Name": "Pieces"
         }
       },
       "MeasurementUnit": {
-        "Code": "PCE"
+        "Code": "pcs"
       },
       "Name": {
         "EN": "Domain API Test 002"
