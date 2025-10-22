@@ -255,18 +255,18 @@ POST https://testdb.my.erp.net/api/domain/odata/Import
 
 | Property | Automatic Action | Description |
 |-----------|------------------|--------------|
-| **DocumentType** | `find` | The system searches for a document type with `Code = "CRM_SALES_ORDER"`. Document types are predefined, so a new one is never created. |
+| **DocumentType** | `find` | The system searches for a document type with `Code = "CRM_SALES_ORDER"`. Document types are predefined, so we search by code. |
 | **EnterpriseCompany** | `find` | Since only `Code` is provided, the system performs a lookup for an existing Enterprise Company with that code. |
 | **EnterpriseCompanyLocation** | `find` | The field `PartyCode` uniquely identifies the company location, so the system searches by it. |
-| **Customer** | `merge` | Customers are matched by `Number`. If a customer with `Number = "CST001"` exists, it’s updated. Otherwise, a new one is created. The `Party` subobject (Company) will also be created if missing. |
-| **Customer → Party** | `create` | Because `Party` is an abstract class, the type is explicitly specified as `Erp.General_Contacts_Company`. A new Party (Company) record is created if none exists (The system first looks up existing party by PartyCode). |
+| **Customer** | `merge` | Customers are matched by `Number`. If a customer with `Number = "CST001"` exists, it’s passed to the sales order. Otherwise, a new one is created. The `Party` subobject (Company) will also be created if missing. |
+| **Customer → Party** | `merge` | Because `Party` is an abstract class, the type is explicitly specified as `Erp.General_Contacts_Company`. A new Party (Company) record is created if none exists (The system first looks up existing party by PartyCode). |
 | **DocumentCurrency** | `find` | The `CurrencySign` uniquely identifies the currency (e.g., "GBP"), so an existing record is used. |
 | **Lines** | — | Represents an array of line items that will be created as part of the sales order. |
 | **Product** | `merge` | The system searches for an existing product with `PartNumber = "PRD001"`. If not found, a new product is created. This behavior prevents duplicate product definitions. |
-| **Product → BaseMeasurementCategory** | `find` | Uses `Name = "Pieces"` to locate the measurement category. |
+| **Product → BaseMeasurementCategory** | `find` | Uses `Name = "Pieces"` to locate the measurement category. Note that searching by multi-language properties is always with `contains` criteria. |
 | **Product → MeasurementUnit** | `find` | Looks up the measurement unit by `Code = "pcs"`. |
 | **Product → ProductGroup** | `merge` | Uses `Code = "PGT01"` to find or create a product group. If it exists, it’s reused; otherwise, it’s created with the given name. |
-| **QuantityUnit / Quantity / UnitPrice** | — | These are scalar and complex properties related to the order line and are directly assigned, not looked up. |
+| **QuantityUnit / Quantity / UnitPrice** | — | These are references and complex properties of the order line and are directly assigned, not looked up. |
 
 
 ### Error Handling
