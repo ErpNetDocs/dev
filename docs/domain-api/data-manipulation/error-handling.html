@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Querying Data | ERP.net Developer Docs </title>
+      <title>Error Handling | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Querying Data | ERP.net Developer Docs ">
+      <meta name="title" content="Error Handling | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/index.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/error-handling.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,52 +85,54 @@
         </div>
 
         <article data-uid="">
-<h1 id="querying-data">Querying Data</h1>
+<h1 id="error-handling">Error Handling</h1>
 
-<p>The <strong>Querying Data</strong> section explains how to retrieve information from ERP.net using the Domain API. All queries use standard OData conventions, with some ERP.net-specific extensions.</p>
-<h2 id="odata-basics">OData Basics</h2>
-<p>ERP.net exposes entities (repositories) through an OData-compliant service. Each entity represents a type of data in the system, such as <code>Customer</code>, <code>Order</code>, or <code>Product</code>.</p>
+<p>When an error occurs during a Domain API operation, the service returns an HTTP status code <strong>500 (Internal Server Error)</strong> and a JSON body containing detailed error information.</p>
+<p>The JSON response provides:</p>
 <ul>
-<li><p><strong>Service Root URL:</strong> The base URL for all queries. Example: <a href="https://testdb.my.erp.net/api/domain/odata/">https://testdb.my.erp.net/api/domain/odata/</a></p>
-</li>
-<li><p><strong>Entity Types:</strong> Each entity can be queried independently. Common entities include:</p>
-</li>
-<li><p><a href="https://docs.erp.net/model/entities/Crm.Sales.Customers.html">Crm_Sales_Customers</a></p>
-</li>
-<li><p><a href="https://docs.erp.net/model/entities/Crm.Sales.SalesOrders.html">Crm_Sales_SalesOrders</a></p>
-</li>
-<li><p><a href="https://docs.erp.net/model/entities/General.Products.Products.html">General_Products_Products</a></p>
-</li>
+<li>A user-readable message (<code>message</code>)</li>
+<li>A technical error code (<code>code</code>)</li>
+<li>The error type (<code>type</code>)</li>
+<li>Additional diagnostic details (<code>info</code>)</li>
 </ul>
-<h2 id="in-this-section">In This Section</h2>
-<p><a href="query-options/index.html">Query Options</a><br>
-Explains the URL parameters used for querying data.</p>
-<p><a href="query-builder.html">Query Builder</a><br>
-ERP.net includes a <strong>Visual Query Designer</strong> to simplify query creation</p>
-<p><a href="query-tool.html">Query Tool</a><br>
-The <strong>ERP.net Query Tool</strong> allows you to experiment with Domain API requests directly in the browser.</p>
-<p><a href="filterable-references.html">Filterable References</a>
-Filter by properties of a referenced object.</p>
-<p><strong>Example Queries:</strong></p>
-<p><a href="https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&amp;$select=Party,Number,CreditLimit&amp;$expand=Party">https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&amp;$select=Party,Number,CreditLimit&amp;$expand=Party</a></p>
-<p><a href="https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber">https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber</a></p>
-<p>More examples you can find in the <a href="../common-tasks/index.html">Common Tasks</a> topic.</p>
-<h3 id="batch-requests">Batch Requests</h3>
-<p>ERP.net supports <a href="https://www.odata.org/getting-started/advanced-tutorial/#batch" target="_blank">batch requests</a>, allowing multiple queries in a single HTTP request:</p>
+<p>Example:</p>
+<hr>
+<p>POST <a href="https://testdb.my.erp.net/api/domain/odata/General_Products_Products">https://testdb.my.erp.net/api/domain/odata/General_Products_Products</a></p>
+<p>***json
+{
+&quot;PartNumber&quot;: &quot;DAT100&quot;,
+&quot;Name&quot;: { &quot;EN&quot;: &quot;Duplicate Test&quot; },
+&quot;MeasurementUnit@odata.bind&quot;: &quot;General_Products_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+}</p>
+<hr>
+<p>Response:
+***json
+{
+&quot;message&quot;: &quot;Prohibited duplication in table 'dbo.Gen_Products_Table'.\n\nThe set of values for the following fields could not be saved more than once...&quot;,
+&quot;code&quot;: 2129,
+&quot;type&quot;: &quot;Aloe.EnterpriseOne.Server.ServerAPI.Exceptions.EnterpriseOneServerException&quot;,
+&quot;info&quot;: &quot;System.Exception: Prohibited duplication in table 'dbo.Gen_Products_Table'...&quot;,
+&quot;messageFormat&quot;: &quot;Prohibited duplication in table '{0}'.\n\nThe set of values for the following fields could not be saved more than once.\n\nFields: ({1})\n\nDuplicated value: ({2})\n\nIndex: {3}\n\nPlease remove the duplicate record or change the value of any of the fields listed.&quot;,
+&quot;parameters&quot;: [
+&quot;dbo.Gen_Products_Table&quot;,
+&quot;IX_Inv_Materials_Table_Number&quot;,
+&quot;DAT100&quot;,
+&quot;IX_Inv_Materials_Table_Number&quot;
+]
+}</p>
+<hr>
+<hr>
+<h3 id="notes">Notes</h3>
 <ul>
-<li>Combine multiple read or write requests into one batch.</li>
-<li>Reduce network overhead and improve performance.</li>
-<li>Example use cases: retrieving multiple entity types or related data simultaneously.</li>
-</ul>
-<p><strong>Best Practices:</strong></p>
-<ul>
-<li>Keep batches reasonably sized to avoid timeouts.</li>
+<li>The <strong><code>message</code></strong> field usually contains localized user-readable text.</li>
+<li>The <strong><code>info</code></strong> field can include a stack trace for debugging in non-production environments.</li>
+<li>The <strong><code>parameters</code></strong> and <strong><code>messageFormat</code></strong> fields are useful for programmatic handling or translation of structured errors.</li>
 </ul>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/index.md/#L1" class="edit-link">Suggest improvement to this page</a>
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/error-handling.md/#L1" class="edit-link">Suggest improvement to this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

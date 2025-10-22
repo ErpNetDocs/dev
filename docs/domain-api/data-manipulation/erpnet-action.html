@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> instance annotation | ERP.net Developer Docs </title>
+      <title>@erpnet.action instance annotation | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" instance annotation | ERP.net Developer Docs ">
+      <meta name="title" content="@erpnet.action instance annotation | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,7 +85,7 @@
         </div>
 
         <article data-uid="">
-<h1 id="-instance-annotation">@erpnet.action instance annotation</h1>
+<h1 id="erpnetaction-instance-annotation"><code>@erpnet.action</code> instance annotation</h1>
 
 <p>In OData instance annotations can be used to define additional information associated with a particular result, entity, property, or error.
 The <code>@erpnet.action</code> annotation can be provided in the body of update request (POST, PATCH) or in the <a href="import.html">Import action</a>.</p>
@@ -108,7 +108,7 @@ The <code>@erpnet.action</code> annotation can be provided in the body of update
 	}
 }
 </code></pre>
-<p>The purpose of this annotation is to provide a better way to import, update, or create data.
+<p>The purpose of this annotation is to provide a better way to update, create, merge or delete data.
 The value of the @erpnet.action annotation determines the type of operation that will be performed using the provided JSON data.</p>
 <h2 id="allowed-values">Allowed values</h2>
 <table>
@@ -241,6 +241,12 @@ For example:</p>
 <p>because &quot;Number&quot; is the <strong>CodeDataMember</strong> for customers we perform search by Code.
 This is a nested object and only CodeDataMember property is provided so the <code>@erpnet.action</code> is determined as <code>find</code>.</p>
 <h1 id="examples">Examples</h1>
+<blockquote>
+<p><strong>Note:</strong><br>
+You can try all examples directly in the <a href="https://testdb.my.erp.net/api/domain/query?GET+General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber">ERP.net Query Tool</a>.<br>
+In the tool, you can choose the HTTP method and execute not only GET requests, but also POST, PATCH, and DELETE.<br>
+This allows you to test queries, create, update, or delete data directly against the public test database.</p>
+</blockquote>
 <h3 id="product-import-examples">Product Import Examples</h3>
 <p>Below are several examples of importing products.</p>
 <p>In this first example, we create a product while providing the measurement unit and category by their IDs.<br>

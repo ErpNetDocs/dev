@@ -198,10 +198,50 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "domain-api/data-manipulation/create.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-manipulation/create.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/data-manipulation/data-validation.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-manipulation/data-validation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/data-manipulation/delete.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-manipulation/delete.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "domain-api/data-manipulation/erpnet-action.md",
       "output": {
         ".html": {
           "relative_path": "domain-api/data-manipulation/erpnet-action.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/data-manipulation/error-handling.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-manipulation/error-handling.html"
         }
       },
       "version": ""
@@ -235,6 +275,36 @@
         },
         ".json": {
           "relative_path": "domain-api/data-manipulation/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/data-manipulation/transactions.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-manipulation/transactions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/data-manipulation/update-order.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-manipulation/update-order.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/data-manipulation/update.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-manipulation/update.html"
         }
       },
       "version": ""
@@ -308,6 +378,16 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/libraries.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/querying-data/complex-types.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/querying-data/complex-types.html"
         }
       },
       "version": ""
@@ -401,6 +481,16 @@
         },
         ".json": {
           "relative_path": "domain-api/querying-data/query-options/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/querying-data/query-tool.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/querying-data/query-tool.html"
         }
       },
       "version": ""
@@ -613,16 +703,6 @@
         },
         ".json": {
           "relative_path": "domain-api/toc.json"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "domain-api/transactions.md",
-      "output": {
-        ".html": {
-          "relative_path": "domain-api/transactions.html"
         }
       },
       "version": ""

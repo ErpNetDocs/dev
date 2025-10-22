@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Querying Data | ERP.net Developer Docs </title>
+      <title> | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Querying Data | ERP.net Developer Docs ">
+      <meta name="title" content=" | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/index.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/complex-types.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,52 +85,64 @@
         </div>
 
         <article data-uid="">
-<h1 id="querying-data">Querying Data</h1>
 
-<p>The <strong>Querying Data</strong> section explains how to retrieve information from ERP.net using the Domain API. All queries use standard OData conventions, with some ERP.net-specific extensions.</p>
-<h2 id="odata-basics">OData Basics</h2>
-<p>ERP.net exposes entities (repositories) through an OData-compliant service. Each entity represents a type of data in the system, such as <code>Customer</code>, <code>Order</code>, or <code>Product</code>.</p>
+<h2 id="handling-complex-data-types">Handling Complex Data Types</h2>
+<p>Some entities include complex or multi-part data types. For detailed explanations and examples, see <a href="../complex-types/index.html">Complex Data Types</a>.</p>
 <ul>
-<li><p><strong>Service Root URL:</strong> The base URL for all queries. Example: <a href="https://testdb.my.erp.net/api/domain/odata/">https://testdb.my.erp.net/api/domain/odata/</a></p>
-</li>
-<li><p><strong>Entity Types:</strong> Each entity can be queried independently. Common entities include:</p>
-</li>
-<li><p><a href="https://docs.erp.net/model/entities/Crm.Sales.Customers.html">Crm_Sales_Customers</a></p>
-</li>
-<li><p><a href="https://docs.erp.net/model/entities/Crm.Sales.SalesOrders.html">Crm_Sales_SalesOrders</a></p>
-</li>
-<li><p><a href="https://docs.erp.net/model/entities/General.Products.Products.html">General_Products_Products</a></p>
-</li>
+<li><strong>Multi-language Strings:</strong> Some fields may have different values for each language. These fields are represented as a complex object with one property per language. For example:</li>
 </ul>
-<h2 id="in-this-section">In This Section</h2>
-<p><a href="query-options/index.html">Query Options</a><br>
-Explains the URL parameters used for querying data.</p>
-<p><a href="query-builder.html">Query Builder</a><br>
-ERP.net includes a <strong>Visual Query Designer</strong> to simplify query creation</p>
-<p><a href="query-tool.html">Query Tool</a><br>
-The <strong>ERP.net Query Tool</strong> allows you to experiment with Domain API requests directly in the browser.</p>
-<p><a href="filterable-references.html">Filterable References</a>
-Filter by properties of a referenced object.</p>
-<p><strong>Example Queries:</strong></p>
-<p><a href="https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&amp;$select=Party,Number,CreditLimit&amp;$expand=Party">https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&amp;$select=Party,Number,CreditLimit&amp;$expand=Party</a></p>
-<p><a href="https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber">https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber</a></p>
-<p>More examples you can find in the <a href="../common-tasks/index.html">Common Tasks</a> topic.</p>
-<h3 id="batch-requests">Batch Requests</h3>
-<p>ERP.net supports <a href="https://www.odata.org/getting-started/advanced-tutorial/#batch" target="_blank">batch requests</a>, allowing multiple queries in a single HTTP request:</p>
+<pre><code>{
+    &quot;Name&quot;: {
+        &quot;EN&quot;: &quot;Laptop&quot;,
+        &quot;DE&quot;: &quot;Laptop&quot;,
+        &quot;FR&quot;: &quot;Ordinateur portable&quot;
+    }
+}
+</code></pre>
+<p>Use the property corresponding to the desired language when displaying or processing the value.</p>
+<blockquote>
+<p><strong>NOTE:</strong> Multi-language fields support only filtering with the <code>contains(Field, 'value')</code> function. Other filter operators are not supported.</p>
+</blockquote>
+<p>Example:</p>
+<p><a href="https://testdb.my.erp.net/api/domain/query?General_Products_Products?$filter=contains(Name,%27ap%27)&amp;$top=10">General_Products_Products?$filter=contains(Name,'ap')&amp;$top=10</a></p>
 <ul>
-<li>Combine multiple read or write requests into one batch.</li>
-<li>Reduce network overhead and improve performance.</li>
-<li>Example use cases: retrieving multiple entity types or related data simultaneously.</li>
+<li><strong>Quantities and Amounts:</strong> Fields with units (e.g., <code>Quantity</code>, <code>Amount</code>) require attention to precision and currency. Example:</li>
 </ul>
-<p><strong>Best Practices:</strong></p>
+<pre><code>&quot;Quantity&quot;: {
+    &quot;Value&quot;: 12.5,
+    &quot;Unit&quot;: &quot;kg&quot;,
+}
+&quot;Amount&quot;: {
+    &quot;Value&quot;: 250.00,
+    &quot;Currency&quot;: &quot;USD&quot;
+}
+</code></pre>
+<p>Example:</p>
+<p>To filter by Quantity or Amount value you can use the special (internal) property named {Property}Value.
+For example in Crm_Sales_SalesOrderLines we have Quantity property. We can filter by quantity value:</p>
+<p>[Crm_Sales_SalesOrderLines?$top=10&amp;$filter=QuantityValue ge 10](<a href="https://testdb.my.erp.net/api/domain/query?GET+Crm_Sales_SalesOrderLines?$top=10&amp;$filter=QuantityValue">https://testdb.my.erp.net/api/domain/query?GET+Crm_Sales_SalesOrderLines?$top=10&amp;$filter=QuantityValue</a> ge 10)</p>
 <ul>
-<li>Keep batches reasonably sized to avoid timeouts.</li>
+<li><strong>Enums and References:</strong> Some fields reference other entities or use enumerated values. Use <code>$expand</code> or lookups to resolve them. Example:</li>
 </ul>
+<pre><code>{
+    &quot;State&quot;: &quot;New&quot;,
+    &quot;Customer&quot;: {
+        &quot;Id&quot;: 123,
+        &quot;Number&quot;: &quot;009987&quot;
+    }
+}
+</code></pre>
+<p>Examples:</p>
+<p>The enum values are represented as string. You can filter by enum value like this</p>
+<p><a href="https://testdb.my.erp.net/api/domain/query?GET+Crm_Sales_SalesOrders?$top=10&amp;$filter=State+eq+%27Released%27&amp;$orderby=DocumentDate+desc">Crm_Sales_SalesOrders?$top=10&amp;$filter=State eq 'Released'&amp;$orderby=DocumentDate desc</a></p>
+<p>To filter by reference use it's odata id:</p>
+<p><a href="https://testdb.my.erp.net/api/domain/query?GET+Crm_Sales_SalesOrders?$top=10&amp;$filter=DocumentType+eq+%27Systems_Documents_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)%27">Crm_Sales_SalesOrders?$top=10&amp;$filter=DocumentType eq 'Systems_Documents_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)'</a></p>
+<h2 id="for-more-information-see-complex-types-topic">For more information see <a href="../complex-types/index.html">Complex Types Topic</a></h2>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/index.md/#L1" class="edit-link">Suggest improvement to this page</a>
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/complex-types.md/#L1" class="edit-link">Suggest improvement to this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

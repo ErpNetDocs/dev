@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Querying Data | ERP.net Developer Docs </title>
+      <title>Delete Operations | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Querying Data | ERP.net Developer Docs ">
+      <meta name="title" content="Delete Operations | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/index.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/delete.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,52 +85,24 @@
         </div>
 
         <article data-uid="">
-<h1 id="querying-data">Querying Data</h1>
+<h1 id="delete-operations">Delete Operations</h1>
 
-<p>The <strong>Querying Data</strong> section explains how to retrieve information from ERP.net using the Domain API. All queries use standard OData conventions, with some ERP.net-specific extensions.</p>
-<h2 id="odata-basics">OData Basics</h2>
-<p>ERP.net exposes entities (repositories) through an OData-compliant service. Each entity represents a type of data in the system, such as <code>Customer</code>, <code>Order</code>, or <code>Product</code>.</p>
+<p>ERP.net supports deleting entities using the <strong>DELETE</strong> HTTP method.<br>
+The request removes the specified entity from the system.</p>
+<p><strong>Key Points:</strong></p>
 <ul>
-<li><p><strong>Service Root URL:</strong> The base URL for all queries. Example: <a href="https://testdb.my.erp.net/api/domain/odata/">https://testdb.my.erp.net/api/domain/odata/</a></p>
-</li>
-<li><p><strong>Entity Types:</strong> Each entity can be queried independently. Common entities include:</p>
-</li>
-<li><p><a href="https://docs.erp.net/model/entities/Crm.Sales.Customers.html">Crm_Sales_Customers</a></p>
-</li>
-<li><p><a href="https://docs.erp.net/model/entities/Crm.Sales.SalesOrders.html">Crm_Sales_SalesOrders</a></p>
-</li>
-<li><p><a href="https://docs.erp.net/model/entities/General.Products.Products.html">General_Products_Products</a></p>
-</li>
+<li>Use <strong>DELETE</strong> with the entity’s OData ID.</li>
+<li>Business rules on the back-end may enforce restrictions or cascade actions during deletion.</li>
 </ul>
-<h2 id="in-this-section">In This Section</h2>
-<p><a href="query-options/index.html">Query Options</a><br>
-Explains the URL parameters used for querying data.</p>
-<p><a href="query-builder.html">Query Builder</a><br>
-ERP.net includes a <strong>Visual Query Designer</strong> to simplify query creation</p>
-<p><a href="query-tool.html">Query Tool</a><br>
-The <strong>ERP.net Query Tool</strong> allows you to experiment with Domain API requests directly in the browser.</p>
-<p><a href="filterable-references.html">Filterable References</a>
-Filter by properties of a referenced object.</p>
-<p><strong>Example Queries:</strong></p>
-<p><a href="https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&amp;$select=Party,Number,CreditLimit&amp;$expand=Party">https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&amp;$select=Party,Number,CreditLimit&amp;$expand=Party</a></p>
-<p><a href="https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber">https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber</a></p>
-<p>More examples you can find in the <a href="../common-tasks/index.html">Common Tasks</a> topic.</p>
-<h3 id="batch-requests">Batch Requests</h3>
-<p>ERP.net supports <a href="https://www.odata.org/getting-started/advanced-tutorial/#batch" target="_blank">batch requests</a>, allowing multiple queries in a single HTTP request:</p>
-<ul>
-<li>Combine multiple read or write requests into one batch.</li>
-<li>Reduce network overhead and improve performance.</li>
-<li>Example use cases: retrieving multiple entity types or related data simultaneously.</li>
-</ul>
-<p><strong>Best Practices:</strong></p>
-<ul>
-<li>Keep batches reasonably sized to avoid timeouts.</li>
-</ul>
+<p><strong>Example:</strong> Deleting a sales order:</p>
+<pre><code>DELETE https://testdb.my.erp.net/api/domain/odata/Crm_Sales_SalesOrders(f3fe442a-d5fe-49a9-8bda-00c895d630bb)
+</code></pre>
+<p>Only the entity specified in the request is removed; related entities may be affected according to system rules and cascades.</p>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/index.md/#L1" class="edit-link">Suggest improvement to this page</a>
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/delete.md/#L1" class="edit-link">Suggest improvement to this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

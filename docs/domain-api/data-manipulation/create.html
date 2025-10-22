@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Querying Data | ERP.net Developer Docs </title>
+      <title> | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Querying Data | ERP.net Developer Docs ">
+      <meta name="title" content=" | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/index.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/create.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,52 +85,71 @@
         </div>
 
         <article data-uid="">
-<h1 id="querying-data">Querying Data</h1>
 
-<p>The <strong>Querying Data</strong> section explains how to retrieve information from ERP.net using the Domain API. All queries use standard OData conventions, with some ERP.net-specific extensions.</p>
-<h2 id="odata-basics">OData Basics</h2>
-<p>ERP.net exposes entities (repositories) through an OData-compliant service. Each entity represents a type of data in the system, such as <code>Customer</code>, <code>Order</code>, or <code>Product</code>.</p>
+<h2 id="create-operations">Create Operations</h2>
+<h3 id="creating-an-entity">Creating an Entity</h3>
+<p>To create a new entity in ERP.net, you use the <strong>POST</strong> method of the OData service. The request body contains the entity data in JSON format.</p>
+<p><strong>Example:</strong></p>
+<p>Creating a new <code>Crm_Sales_SalesOrder</code>:</p>
+<pre><code>POST https://testdb.my.erp.net/api/domain/odata/Crm_Sales_SalesOrders
+Content-Type: application/json
+
+{
+    &quot;DocumentType&quot;: { &quot;@odata.id&quot;: &quot;Systems_Documents_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)&quot; }, 
+    &quot;EnterpriseCompany&quot;: {&quot;@odata.id&quot;: &quot;General_EnterpriseCompanies(2115c294-33e9-41bd-bc0d-0cd0b7ee1735)&quot; }, 
+    &quot;Customer&quot;: { &quot;@odata.id&quot;: &quot;Crm_Sales_Customers(c8a65f60-26d0-4c3a-81c9-f367dd811908)&quot; },
+    &quot;DocumentNotes&quot;: &quot;New sales order for testing&quot;
+}
+</code></pre>
+<p><strong>Required Fields:</strong></p>
 <ul>
-<li><p><strong>Service Root URL:</strong> The base URL for all queries. Example: <a href="https://testdb.my.erp.net/api/domain/odata/">https://testdb.my.erp.net/api/domain/odata/</a></p>
-</li>
-<li><p><strong>Entity Types:</strong> Each entity can be queried independently. Common entities include:</p>
-</li>
-<li><p><a href="https://docs.erp.net/model/entities/Crm.Sales.Customers.html">Crm_Sales_Customers</a></p>
-</li>
-<li><p><a href="https://docs.erp.net/model/entities/Crm.Sales.SalesOrders.html">Crm_Sales_SalesOrders</a></p>
-</li>
-<li><p><a href="https://docs.erp.net/model/entities/General.Products.Products.html">General_Products_Products</a></p>
-</li>
+<li><strong>DocumentType:</strong> Type of the document.</li>
+<li><strong>EnterpriseCompany:</strong> The company that owns the order.</li>
+<li><strong>Customer:</strong> The customer for this sales order.</li>
 </ul>
-<h2 id="in-this-section">In This Section</h2>
-<p><a href="query-options/index.html">Query Options</a><br>
-Explains the URL parameters used for querying data.</p>
-<p><a href="query-builder.html">Query Builder</a><br>
-ERP.net includes a <strong>Visual Query Designer</strong> to simplify query creation</p>
-<p><a href="query-tool.html">Query Tool</a><br>
-The <strong>ERP.net Query Tool</strong> allows you to experiment with Domain API requests directly in the browser.</p>
-<p><a href="filterable-references.html">Filterable References</a>
-Filter by properties of a referenced object.</p>
-<p><strong>Example Queries:</strong></p>
-<p><a href="https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&amp;$select=Party,Number,CreditLimit&amp;$expand=Party">https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&amp;$select=Party,Number,CreditLimit&amp;$expand=Party</a></p>
-<p><a href="https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber">https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber</a></p>
-<p>More examples you can find in the <a href="../common-tasks/index.html">Common Tasks</a> topic.</p>
-<h3 id="batch-requests">Batch Requests</h3>
-<p>ERP.net supports <a href="https://www.odata.org/getting-started/advanced-tutorial/#batch" target="_blank">batch requests</a>, allowing multiple queries in a single HTTP request:</p>
-<ul>
-<li>Combine multiple read or write requests into one batch.</li>
-<li>Reduce network overhead and improve performance.</li>
-<li>Example use cases: retrieving multiple entity types or related data simultaneously.</li>
-</ul>
-<p><strong>Best Practices:</strong></p>
-<ul>
-<li>Keep batches reasonably sized to avoid timeouts.</li>
-</ul>
+<p>Other fields are optional or have defaults. Always validate your data according to the entity model.</p>
+<p>For full details on the <code>Crm_Sales_SalesOrder</code> entity and all available fields, see the documentation of the used entity. For example <a href="https://docs.erp.net/model/entities/Crm.Sales.SalesOrders.html">Sales Orders</a>.</p>
+<p>Create a sales order along with the lines.</p>
+<pre><code>POST https://testdb.my.erp.net/api/domain/odata/Crm_Sales_SalesOrders
+{
+  &quot;DocumentType&quot;: {
+    &quot;@odata.id&quot;: &quot;General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)&quot;
+  },
+  &quot;EnterpriseCompany&quot;: {
+    &quot;@odata.id&quot;: &quot;General_EnterpriseCompanies(b0e80577-fbbe-4c9b-811e-20b6c6dd465f)&quot;
+  },
+  &quot;Customer&quot;: {
+    &quot;@odata.id&quot;: &quot;Crm_Customers(15f2640f-f374-4017-ae2d-d2a41535f054)&quot;
+  },
+  &quot;DocumentCurrency&quot;: {
+    &quot;@odata.id&quot;: &quot;General_Currencies(3187833a-d3c1-4804-bfc0-e17e6aee3069)&quot;
+  },
+  &quot;Lines&quot;: [
+    {
+      &quot;Product&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Products_Products(81d38b50-fd06-e611-8292-b31071e2ee7f)&quot;
+      },
+      &quot;QuantityUnit&quot;: {
+        &quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+      },
+      &quot;Quantity&quot;: {
+        &quot;Value&quot;: 1,
+        &quot;Unit&quot;: &quot;pcs&quot;
+      },
+      &quot;UnitPrice&quot;: {
+        &quot;Value&quot;: 20,
+        &quot;Currency&quot;: &quot;BGN&quot;
+      }
+    }
+  ]
+}
+
+</code></pre>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/index.md/#L1" class="edit-link">Suggest improvement to this page</a>
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/create.md/#L1" class="edit-link">Suggest improvement to this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

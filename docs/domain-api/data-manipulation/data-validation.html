@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Querying Data | ERP.net Developer Docs </title>
+      <title>Data Validation and Business Rules | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Querying Data | ERP.net Developer Docs ">
+      <meta name="title" content="Data Validation and Business Rules | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/index.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/data-validation.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,52 +85,37 @@
         </div>
 
         <article data-uid="">
-<h1 id="querying-data">Querying Data</h1>
+<h1 id="data-validation-and-business-rules">Data Validation and Business Rules</h1>
 
-<p>The <strong>Querying Data</strong> section explains how to retrieve information from ERP.net using the Domain API. All queries use standard OData conventions, with some ERP.net-specific extensions.</p>
-<h2 id="odata-basics">OData Basics</h2>
-<p>ERP.net exposes entities (repositories) through an OData-compliant service. Each entity represents a type of data in the system, such as <code>Customer</code>, <code>Order</code>, or <code>Product</code>.</p>
+<p>ERP.net enforces <strong>data validation</strong> through a combination of <strong>System Business Rules</strong> and <strong>User Business Rules</strong>:</p>
 <ul>
-<li><p><strong>Service Root URL:</strong> The base URL for all queries. Example: <a href="https://testdb.my.erp.net/api/domain/odata/">https://testdb.my.erp.net/api/domain/odata/</a></p>
+<li><p><strong>System Business Rules:</strong> Predefined rules for each entity (e.g., <code>Crm.Sales.SalesOrders</code>) that automatically enforce business logic on the back-end. Examples include assigning a sales person, validating fiscal numbers, or restricting line directions. These rules ensure data consistency and compliance without manual intervention.</p>
 </li>
-<li><p><strong>Entity Types:</strong> Each entity can be queried independently. Common entities include:</p>
-</li>
-<li><p><a href="https://docs.erp.net/model/entities/Crm.Sales.Customers.html">Crm_Sales_Customers</a></p>
-</li>
-<li><p><a href="https://docs.erp.net/model/entities/Crm.Sales.SalesOrders.html">Crm_Sales_SalesOrders</a></p>
-</li>
-<li><p><a href="https://docs.erp.net/model/entities/General.Products.Products.html">General_Products_Products</a></p>
+<li><p><strong>User Business Rules:</strong> Custom rules defined by developers or administrators to implement organization-specific validations. These can be applied on the back-end for security and integrity, and optionally on the front-end for immediate feedback.</p>
 </li>
 </ul>
-<h2 id="in-this-section">In This Section</h2>
-<p><a href="query-options/index.html">Query Options</a><br>
-Explains the URL parameters used for querying data.</p>
-<p><a href="query-builder.html">Query Builder</a><br>
-ERP.net includes a <strong>Visual Query Designer</strong> to simplify query creation</p>
-<p><a href="query-tool.html">Query Tool</a><br>
-The <strong>ERP.net Query Tool</strong> allows you to experiment with Domain API requests directly in the browser.</p>
-<p><a href="filterable-references.html">Filterable References</a>
-Filter by properties of a referenced object.</p>
-<p><strong>Example Queries:</strong></p>
-<p><a href="https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&amp;$select=Party,Number,CreditLimit&amp;$expand=Party">https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=5&amp;$select=Party,Number,CreditLimit&amp;$expand=Party</a></p>
-<p><a href="https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber">https://testdb.my.erp.net/api/domain/odata/General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber</a></p>
-<p>More examples you can find in the <a href="../common-tasks/index.html">Common Tasks</a> topic.</p>
-<h3 id="batch-requests">Batch Requests</h3>
-<p>ERP.net supports <a href="https://www.odata.org/getting-started/advanced-tutorial/#batch" target="_blank">batch requests</a>, allowing multiple queries in a single HTTP request:</p>
+<p>Together, system and user business rules ensure that all data entered or modified in ERP.net adheres to required business logic and organizational policies.</p>
+<h1 id="front-end-vs-back-end-models">Front-End vs. Back-End Models</h1>
+<p>ERP.net uses two models to handle entity data and business logic — the <strong>front-end model</strong> and the <strong>back-end model</strong>.<br>
+While both represent the same entities, they differ in the <strong>business rules</strong> and <strong>data validations</strong> that are executed.</p>
 <ul>
-<li>Combine multiple read or write requests into one batch.</li>
-<li>Reduce network overhead and improve performance.</li>
-<li>Example use cases: retrieving multiple entity types or related data simultaneously.</li>
+<li><p><strong>Front-End Model:</strong><br>
+Designed for immediate feedback in client applications.<br>
+It contains business rules that are triggered on <strong>attribute change events</strong> — for example, when a user edits a field in a form, dependent fields may be recalculated or validated right away.<br>
+This provides a dynamic and interactive user experience.</p>
+</li>
+<li><p><strong>Back-End Model:</strong><br>
+Used when the data is <strong>committed to the server</strong> (e.g., on save, post, or document state change).<br>
+It contains rules and validations that enforce business integrity, such as required field checks, calculated defaults, and document-level logic triggered by workflow events like state transitions.</p>
+</li>
 </ul>
-<p><strong>Best Practices:</strong></p>
-<ul>
-<li>Keep batches reasonably sized to avoid timeouts.</li>
-</ul>
+<p>In short, the <strong>front-end model reacts to user edits</strong>, while the <strong>back-end model enforces consistency and performs final validations</strong> before persisting the data.</p>
+<p>For more details, see <a href="https://docs.erp.net/dev/domain-api/transactions.html">Transactions in Domain API</a>.</p>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/index.md/#L1" class="edit-link">Suggest improvement to this page</a>
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/data-validation.md/#L1" class="edit-link">Suggest improvement to this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>
