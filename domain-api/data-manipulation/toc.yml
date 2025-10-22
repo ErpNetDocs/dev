@@ -1,4 +1,18 @@
-- name: ErpNet Action Annotation
+- name: Overview
+  href: index.md
+- name: Create
+  href: create.md
+- name: Update
+  href: update.md
+- name: Delete
+  href: delete.md
+- name: Update Order
+  href: update-order.md
+- name: Business Rules
+  href: data-validation.md
+- name: Transactions
+  href: transactions.md
+- name: ERP.net Actions
   href: erpnet-action.md
 - name: Import Data
   href: import.md

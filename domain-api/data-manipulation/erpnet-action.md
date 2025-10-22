@@ -1,4 +1,4 @@
-# @erpnet.action instance annotation
+# `@erpnet.action` instance annotation
 
 In OData instance annotations can be used to define additional information associated with a particular result, entity, property, or error.
 The `@erpnet.action` annotation can be provided in the body of update request (POST, PATCH) or in the [Import action](import.md).
@@ -24,7 +24,7 @@ POST General_Products_Products
 	}
 }
 ```
-The purpose of this annotation is to provide a better way to import, update, or create data.
+The purpose of this annotation is to provide a better way to update, create, merge or delete data.
 The value of the @erpnet.action annotation determines the type of operation that will be performed using the provided JSON data.
 
 ## Allowed values
