@@ -7,5 +7,7 @@
   topicHref: query-options/index.md
 - name: Query Builder
   href: query-builder.md
+- name: Query Tool
+  href: query-tool.md
 - name: Filterable references
   href: filterable-references.md

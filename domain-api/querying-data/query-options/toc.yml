@@ -6,5 +6,5 @@
   href: select.md
 - name: $search
   href: search.md
-- name: $options
+- name: options
   href: options.md
