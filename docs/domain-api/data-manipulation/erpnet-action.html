@@ -240,14 +240,13 @@ For example:</p>
 </code></pre>
 <p>because &quot;Number&quot; is the <strong>CodeDataMember</strong> for customers we perform search by Code.
 This is a nested object and only CodeDataMember property is provided so the <code>@erpnet.action</code> is determined as <code>find</code>.</p>
-<h1 id="examples">Examples</h1>
+<h2 id="examples">Examples</h2>
 <blockquote>
 <p><strong>Note:</strong><br>
 You can try all examples directly in the <a href="https://testdb.my.erp.net/api/domain/query?GET+General_Products_Products?$top=10&amp;$expand=ProductGroup&amp;$orderby=PartNumber">ERP.net Query Tool</a>.<br>
 In the tool, you can choose the HTTP method and execute not only GET requests, but also POST, PATCH, and DELETE.<br>
 This allows you to test queries, create, update, or delete data directly against the public test database.</p>
 </blockquote>
-<h3 id="product-import-examples">Product Import Examples</h3>
 <p>Below are several examples of importing products.</p>
 <p>In this first example, we create a product while providing the measurement unit and category by their IDs.<br>
 The <strong>ProductGroup</strong> uses <strong>implicit merge</strong>, meaning it searches by code.</p>

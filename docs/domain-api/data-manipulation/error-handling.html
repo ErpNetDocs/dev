@@ -96,31 +96,28 @@
 <li>Additional diagnostic details (<code>info</code>)</li>
 </ul>
 <p>Example:</p>
-<hr>
 <p>POST <a href="https://testdb.my.erp.net/api/domain/odata/General_Products_Products">https://testdb.my.erp.net/api/domain/odata/General_Products_Products</a></p>
-<p>***json
-{
-&quot;PartNumber&quot;: &quot;DAT100&quot;,
-&quot;Name&quot;: { &quot;EN&quot;: &quot;Duplicate Test&quot; },
-&quot;MeasurementUnit@odata.bind&quot;: &quot;General_Products_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
-}</p>
-<hr>
-<p>Response:
-***json
-{
-&quot;message&quot;: &quot;Prohibited duplication in table 'dbo.Gen_Products_Table'.\n\nThe set of values for the following fields could not be saved more than once...&quot;,
-&quot;code&quot;: 2129,
-&quot;type&quot;: &quot;Aloe.EnterpriseOne.Server.ServerAPI.Exceptions.EnterpriseOneServerException&quot;,
-&quot;info&quot;: &quot;System.Exception: Prohibited duplication in table 'dbo.Gen_Products_Table'...&quot;,
-&quot;messageFormat&quot;: &quot;Prohibited duplication in table '{0}'.\n\nThe set of values for the following fields could not be saved more than once.\n\nFields: ({1})\n\nDuplicated value: ({2})\n\nIndex: {3}\n\nPlease remove the duplicate record or change the value of any of the fields listed.&quot;,
-&quot;parameters&quot;: [
-&quot;dbo.Gen_Products_Table&quot;,
-&quot;IX_Inv_Materials_Table_Number&quot;,
-&quot;DAT100&quot;,
-&quot;IX_Inv_Materials_Table_Number&quot;
-]
-}</p>
-<hr>
+<pre><code class="lang-json">{
+  &quot;PartNumber&quot;: &quot;DAT100&quot;,
+  &quot;Name&quot;: { &quot;EN&quot;: &quot;Duplicate Test&quot; },
+  &quot;MeasurementUnit@odata.bind&quot;: &quot;General_Products_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+}
+</code></pre>
+<p>Response:</p>
+<pre><code class="lang-json">{
+  &quot;message&quot;: &quot;Prohibited duplication in table 'dbo.Gen_Products_Table'.\n\nThe set of values for the following fields could not be saved more than once...&quot;,
+  &quot;code&quot;: 2129,
+  &quot;type&quot;: &quot;Aloe.EnterpriseOne.Server.ServerAPI.Exceptions.EnterpriseOneServerException&quot;,
+  &quot;info&quot;: &quot;System.Exception: Prohibited duplication in table 'dbo.Gen_Products_Table'...&quot;,
+  &quot;messageFormat&quot;: &quot;Prohibited duplication in table '{0}'.\n\nThe set of values for the following fields could not be saved more than once.\n\nFields: ({1})\n\nDuplicated value: ({2})\n\nIndex: {3}\n\nPlease remove the duplicate record or change the value of any of the fields listed.&quot;,
+  &quot;parameters&quot;: [
+    &quot;dbo.Gen_Products_Table&quot;,
+    &quot;IX_Inv_Materials_Table_Number&quot;,
+    &quot;DAT100&quot;,
+    &quot;IX_Inv_Materials_Table_Number&quot;
+  ]
+}
+</code></pre>
 <hr>
 <h3 id="notes">Notes</h3>
 <ul>
