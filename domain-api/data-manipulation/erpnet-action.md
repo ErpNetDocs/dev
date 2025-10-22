@@ -158,15 +158,13 @@ because "Number" is the __CodeDataMember__ for customers we perform search by Co
 This is a nested object and only CodeDataMember property is provided so the `@erpnet.action` is determined as `find`. 
 
 
-# Examples
+## Examples
 
 > **Note:**  
 > You can try all examples directly in the [ERP.net Query Tool](https://testdb.my.erp.net/api/domain/query?GET+General_Products_Products?$top=10&$expand=ProductGroup&$orderby=PartNumber).  
 > In the tool, you can choose the HTTP method and execute not only GET requests, but also POST, PATCH, and DELETE.  
 > This allows you to test queries, create, update, or delete data directly against the public test database.
 
-
-### Product Import Examples
 
 Below are several examples of importing products.
 
@@ -291,8 +289,6 @@ If there is no __findBy__ arguments a new Party will be created.
 `"@odata.type": "Erp.General_Contacts_Company"`. Now the system knows what object to create.
 As a result, a new company will be created.
 It is safe to pass the attributes defined in "Erp.General_Contacts_Company" type, so the system can set their values in the created company.
-
-
 ```
 PATCH Crm_Sales_SalesOrders(fd8e5bd8-5fa4-4eae-a763-aad226b9101d)
 {

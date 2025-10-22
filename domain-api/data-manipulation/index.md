@@ -1,38 +1,38 @@
 # Data Manipulation
 
 
-1. [Create](./create.md)
+* [Create](./create.md)  
    Create new entity record.
 
-1. [Update](./update.md)
+* [Update](./update.md)  
    Update  entity.
 
-1. [Delete](./delete.md)
+* [Delete](./delete.md)  
    Delete entity.
 
-1. [Property Dependencies and Update Order](./update-order.md)
+* [Property Dependencies and Update Order](./update-order.md)  
    The order of provided properties is important.
 
-1. [Data Validation and Business Rules](./data-validation.md)
+* [Data Validation and Business Rules](./data-validation.md)  
    ERP.net uses two models to handle entity data and business logic — the front-end model and the back-end model.
    While both represent the same entities, they differ in the business rules and data validations that are executed.
 
-1. [Transactions](./transactions.md)
+* [Transactions](./transactions.md)  
    ERP.net supports transactions to ensure that multiple operations on entities are processed consistently.
    Transactions allow you to group create, update, or delete operations into a single unit of work that is either committed or rolled back as a whole.
 
-1. [Actions](./erpnet-action.md)
+* [Actions](./erpnet-action.md)  
    ERP.net uses the `@erpnet.action` annotation to control how JSON data is processed when creating, updating, or importing entities.  
    It provides a flexible way to specify operations such as `create`, `update`, `delete`, `find`, and `merge` for top-level or nested objects.
 
-1. [Data Import](./import.md)
+* [Data Import](./import.md)  
    ERP.net provides an **Import** endpoint that allows you to insert, update, or delete multiple entities in a single request. This unbound action enables efficient bulk operations, supporting both front-end and back-end models.
 
-1. [Data Sync](../data-sync/index.md)
+* [Data Sync](../data-sync/index.md)  
    ERP.net provides **Data Synchronization** to efficiently keep client applications up-to-date with system changes.  
    Instead of fetching all data repeatedly, Data Sync retrieves only entities that have changed since the last synchronization, ensuring minimal network usage and fast updates.
 
-1. [Error Handling](./error-handling.md)
+* [Error Handling](./error-handling.md)  
    When an error occurs during a Domain API operation, the service returns an HTTP status code **500 (Internal Server Error)** and a JSON body containing detailed error information.
 
 

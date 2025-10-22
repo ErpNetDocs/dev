@@ -10,19 +10,18 @@ The JSON response provides:
 
 Example:
 
----
 POST https://testdb.my.erp.net/api/domain/odata/General_Products_Products
 
-***json
+```json
 {
   "PartNumber": "DAT100",
   "Name": { "EN": "Duplicate Test" },
   "MeasurementUnit@odata.bind": "General_Products_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)"
 }
-***
+```
 
 Response:
-***json
+```json
 {
   "message": "Prohibited duplication in table 'dbo.Gen_Products_Table'.\n\nThe set of values for the following fields could not be saved more than once...",
   "code": 2129,
@@ -36,8 +35,7 @@ Response:
     "IX_Inv_Materials_Table_Number"
   ]
 }
-***
-
+```
 
 ---
 
