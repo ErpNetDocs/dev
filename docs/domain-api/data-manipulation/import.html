@@ -336,7 +336,7 @@ See <a href="erpnet-action.html">@erpnet.action</a> topic.</p>
 <tr>
 <td><strong>DocumentType</strong></td>
 <td><code>find</code></td>
-<td>The system searches for a document type with <code>Code = &quot;CRM_SALES_ORDER&quot;</code>. Document types are predefined, so a new one is never created.</td>
+<td>The system searches for a document type with <code>Code = &quot;CRM_SALES_ORDER&quot;</code>. Document types are predefined, so we search by code.</td>
 </tr>
 <tr>
 <td><strong>EnterpriseCompany</strong></td>
@@ -351,11 +351,11 @@ See <a href="erpnet-action.html">@erpnet.action</a> topic.</p>
 <tr>
 <td><strong>Customer</strong></td>
 <td><code>merge</code></td>
-<td>Customers are matched by <code>Number</code>. If a customer with <code>Number = &quot;CST001&quot;</code> exists, it’s updated. Otherwise, a new one is created. The <code>Party</code> subobject (Company) will also be created if missing.</td>
+<td>Customers are matched by <code>Number</code>. If a customer with <code>Number = &quot;CST001&quot;</code> exists, it’s passed to the sales order. Otherwise, a new one is created. The <code>Party</code> subobject (Company) will also be created if missing.</td>
 </tr>
 <tr>
 <td><strong>Customer → Party</strong></td>
-<td><code>create</code></td>
+<td><code>merge</code></td>
 <td>Because <code>Party</code> is an abstract class, the type is explicitly specified as <code>Erp.General_Contacts_Company</code>. A new Party (Company) record is created if none exists (The system first looks up existing party by PartyCode).</td>
 </tr>
 <tr>
@@ -376,7 +376,7 @@ See <a href="erpnet-action.html">@erpnet.action</a> topic.</p>
 <tr>
 <td><strong>Product → BaseMeasurementCategory</strong></td>
 <td><code>find</code></td>
-<td>Uses <code>Name = &quot;Pieces&quot;</code> to locate the measurement category.</td>
+<td>Uses <code>Name = &quot;Pieces&quot;</code> to locate the measurement category. Note that searching by multi-language properties is always with <code>contains</code> criteria.</td>
 </tr>
 <tr>
 <td><strong>Product → MeasurementUnit</strong></td>
@@ -389,9 +389,14 @@ See <a href="erpnet-action.html">@erpnet.action</a> topic.</p>
 <td>Uses <code>Code = &quot;PGT01&quot;</code> to find or create a product group. If it exists, it’s reused; otherwise, it’s created with the given name.</td>
 </tr>
 <tr>
-<td><strong>QuantityUnit / Quantity / UnitPrice</strong></td>
+<td><strong>QuantityUnit</strong></td>
+<td><code>find</code></td>
+<td>The system searches for a measurement unit with <code>Code = &quot;pcs&quot;</code>.</td>
+</tr>
+<tr>
+<td><strong>Quantity / UnitPrice</strong></td>
 <td>—</td>
-<td>These are scalar and complex properties related to the order line and are directly assigned, not looked up.</td>
+<td>These are complex properties of the order line and are directly assigned, not looked up.</td>
 </tr>
 </tbody>
 </table>
