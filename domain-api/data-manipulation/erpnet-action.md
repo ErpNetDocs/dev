@@ -166,6 +166,8 @@ This is a nested object and only CodeDataMember property is provided so the `@er
 > This allows you to test queries, create, update, or delete data directly against the public test database.
 
 
+### Import products
+
 Below are several examples of importing products.
 
 In this first example, we create a product while providing the measurement unit and category by their IDs.  
@@ -276,6 +278,7 @@ POST General_Products_Products
 
 ---
 
+### Merging Customer
 
 In the following example we are editing a sales order and want to MERGE the customer.
 The `merge` action first attempts to find an existing object by the provided attributes.
@@ -304,6 +307,8 @@ PATCH Crm_Sales_SalesOrders(fd8e5bd8-5fa4-4eae-a763-aad226b9101d)
 ```
 
 ---
+
+### Import Sales Order
 
 In the following example, we create a sales order **without using any IDs**.  
 The system automatically determines the `@erpnet.action` and `@erpnet.findBy` criteria based on the provided properties.
