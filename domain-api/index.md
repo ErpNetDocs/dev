@@ -21,15 +21,12 @@ For a quick introduction to OData, check the beginners tutorial at the OData sit
 
 <https://www.odata.org/getting-started/understand-odata-in-6-steps/>
 
-## Step by step
+## Next steps
 
 To learn more about the @@name Domain API, read below:
 
 1. [Querying data](querying-data/index.md) - Introduction to data querying.
-1. [URL components](querying-data/url-components.md) - OData is heavy on the URL. Read this topic to understand the structure of the URL.
-1. [Query options](querying-data/query-options/index.md) - read more about the supported OData query constructs like $filter, $top and similar.
-1. [Query Builder](querying-data/query-builder.md) - the visual query designer can help you easily build complex $select/$expand queries.
-1. [Complex types](complex-types/index.md) - @@name defines several OData complex types, including quantity, amount and multi-language string.
-1. [Transactions](transactions.md) - @@name supports server-side front-end transactions.
+1. [Data manipulation](data-manipulation/index.md) - Introduction to data manipulation.
+1. [Common tasks](common-tasks/index.md) - Useful examples. 
 1. [Working with documents](common-tasks/working-with-documents.md) - working with documents is a common scenario when using the API.
 1. [Batch requests](https://www.odata.org/getting-started/advanced-tutorial/#batch) (OData site) - @@name fully supports batch requests, saving round-trips to the server.

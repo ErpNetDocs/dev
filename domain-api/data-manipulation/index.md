@@ -295,3 +295,10 @@ Instead of fetching all data repeatedly, Data Sync retrieves only entities that 
 
 For more details, see the [Data Sync documentation](https://docs.erp.net/dev/domain-api/data-sync/index.html) and [Object Versioning](https://docs.erp.net/dev/domain-api/data-sync/object-version.html).
 
+
+## Error Handling
+
+When an error occurs during a Domain API operation, the service returns an HTTP status code **500 (Internal Server Error)** and a JSON body containing detailed error information.
+
+For more details, see [Error Handling Topic](./error-handling.md)
+

@@ -160,6 +160,12 @@ This is a nested object and only CodeDataMember property is provided so the `@er
 
 # Examples
 
+> **Note:**  
+> You can try all examples directly in the [ERP.net Query Tool](https://testdb.my.erp.net/api/domain/query?GET+General_Products_Products?$top=10&$expand=ProductGroup&$orderby=PartNumber).  
+> In the tool, you can choose the HTTP method and execute not only GET requests, but also POST, PATCH, and DELETE.  
+> This allows you to test queries, create, update, or delete data directly against the public test database.
+
+
 ### Product Import Examples
 
 Below are several examples of importing products.
