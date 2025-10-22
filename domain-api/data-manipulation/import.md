@@ -266,7 +266,8 @@ POST https://testdb.my.erp.net/api/domain/odata/Import
 | **Product → BaseMeasurementCategory** | `find` | Uses `Name = "Pieces"` to locate the measurement category. Note that searching by multi-language properties is always with `contains` criteria. |
 | **Product → MeasurementUnit** | `find` | Looks up the measurement unit by `Code = "pcs"`. |
 | **Product → ProductGroup** | `merge` | Uses `Code = "PGT01"` to find or create a product group. If it exists, it’s reused; otherwise, it’s created with the given name. |
-| **QuantityUnit / Quantity / UnitPrice** | — | These are references and complex properties of the order line and are directly assigned, not looked up. |
+| **QuantityUnit** | `find` | The system searches for a measurement unit with `Code = "pcs"`. |
+| **Quantity / UnitPrice** | — | These are complex properties of the order line and are directly assigned, not looked up. |
 
 
 ### Error Handling
