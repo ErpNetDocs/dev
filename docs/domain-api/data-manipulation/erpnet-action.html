@@ -247,6 +247,7 @@ You can try all examples directly in the <a href="https://testdb.my.erp.net/api/
 In the tool, you can choose the HTTP method and execute not only GET requests, but also POST, PATCH, and DELETE.<br>
 This allows you to test queries, create, update, or delete data directly against the public test database.</p>
 </blockquote>
+<h3 id="import-products">Import products</h3>
 <p>Below are several examples of importing products.</p>
 <p>In this first example, we create a product while providing the measurement unit and category by their IDs.<br>
 The <strong>ProductGroup</strong> uses <strong>implicit merge</strong>, meaning it searches by code.</p>
@@ -341,6 +342,7 @@ The BaseMeasurementCategory is searched by Name - this is <code>General_Measurem
 }
 </code></pre>
 <hr>
+<h3 id="merging-customer">Merging Customer</h3>
 <p>In the following example we are editing a sales order and want to MERGE the customer.
 The <code>merge</code> action first attempts to find an existing object by the provided attributes.
 The provided customer data is interpretted as  <code>&quot;@erpnet.action&quot;: &quot;merge&quot;, &quot;@erpnet.findBy&quot;: { &quot;Code&quot;: &quot;CS0099&quot; }</code>
@@ -366,6 +368,7 @@ It is safe to pass the attributes defined in &quot;Erp.General_Contacts_Company&
 }
 </code></pre>
 <hr>
+<h3 id="import-sales-order">Import Sales Order</h3>
 <p>In the following example, we create a sales order <strong>without using any IDs</strong>.<br>
 The system automatically determines the <code>@erpnet.action</code> and <code>@erpnet.findBy</code> criteria based on the provided properties.</p>
 <pre><code class="lang-http">POST Crm_Sales_SalesOrders

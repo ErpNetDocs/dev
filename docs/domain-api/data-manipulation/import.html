@@ -147,6 +147,7 @@ Specification with example:</p>
 Only the &quot;@odata.id&quot; is included in the result - no other properties.</li>
 </ul>
 <h2 id="examples">Examples</h2>
+<h3 id="import-products">Import Products</h3>
 <p>The following example performs <code>merge</code> action for General_Products_Products.
 If existing product is found by the provided ExternalId it's PartNumber, BaseMeasurementCategory, MeasurementUnit, Name and ProductGroup are updated.
 The action for the referenced objects is <code>find</code> because the included properties are only these that can be used in find criteria. BaseMeasurementCategory is searched by Name (providing @erpnet.findBy), MeasurementUnit and ProductGroup are searched by Code.</p>
@@ -231,6 +232,190 @@ The action for the referenced objects is <code>find</code> because the included 
 }
 </code></pre>
 <p><a href="https://testdb.my.erp.net/api/domain/query?POST+Import&amp;payload=ewogICJtb2RlbCI6ICJmcm9udGVuZCIsCiAgInRyYW5zYWN0aW9uIjogInBlci1vYmplY3QiLAogICJvYmplY3RzIjogWwogICAgewogICAgICAiQG9kYXRhLnR5cGUiOiAiRXJwLkdlbmVyYWxfUHJvZHVjdHNfUHJvZHVjdCIsCiAgICAgICJAZXJwbmV0LmFjdGlvbiI6ICJtZXJnZSIsCiAgICAgICJFeHRlbmFsSWQiOiAiRVhUMDAwIiwKICAgICAgIlBhcnROdW1iZXIiOiAiREFUUDAwMCIsCiAgICAgICJCYXNlTWVhc3VyZW1lbnRDYXRlZ29yeSI6IHsKICAgICAgICAiQGVycG5ldC5hY3Rpb24iOiAiZmluZCIsCiAgICAgICAgIkBlcnBuZXQuZmluZEJ5IjogewogICAgICAgICAgIk5hbWUiOiAiUGllY2VzIgogICAgICAgIH0KICAgICAgfSwKICAgICAgIk1lYXN1cmVtZW50VW5pdCI6IHsKICAgICAgICAiQ29kZSI6ICJwY3MiCiAgICAgIH0sCiAgICAgICJOYW1lIjogewogICAgICAgICJFTiI6ICJEb21haW4gQVBJIFRlc3QgMDAwIgogICAgICB9LAogICAgICAiUHJvZHVjdEdyb3VwIjogewogICAgICAgICJDb2RlIjogIkRBVEcwMSIsCiAgICAgICAgIk5hbWUiOiB7CiAgICAgICAgICAiRU4iOiAiRG9tYWluIEFQSSBUZXN0cyIKICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJAb2RhdGEudHlwZSI6ICJFcnAuR2VuZXJhbF9Qcm9kdWN0c19Qcm9kdWN0IiwKICAgICAgIkBlcnBuZXQuYWN0aW9uIjogIm1lcmdlIiwKICAgICAgIkV4dGVuYWxJZCI6ICJFWFQwMDEiLAogICAgICAiUGFydE51bWJlciI6ICJEQVRQMDAxIiwKICAgICAgIkJhc2VNZWFzdXJlbWVudENhdGVnb3J5IjogewogICAgICAgICJAZXJwbmV0LmFjdGlvbiI6ICJmaW5kIiwKICAgICAgICAiQGVycG5ldC5maW5kQnkiOiB7CiAgICAgICAgICAiTmFtZSI6ICJQaWVjZXMiCiAgICAgICAgfQogICAgICB9LAogICAgICAiTWVhc3VyZW1lbnRVbml0IjogewogICAgICAgICJDb2RlIjogInBjcyIKICAgICAgfSwKICAgICAgIk5hbWUiOiB7CiAgICAgICAgIkVOIjogIkRvbWFpbiBBUEkgVGVzdCAwMDEiCiAgICAgIH0sCiAgICAgICJQcm9kdWN0R3JvdXAiOiB7CiAgICAgICAgIkNvZGUiOiAiREFURzAxIiwKICAgICAgICAiTmFtZSI6IHsKICAgICAgICAgICJFTiI6ICJEb21haW4gQVBJIFRlc3RzIgogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgIHsKICAgICAgIkBvZGF0YS50eXBlIjogIkVycC5HZW5lcmFsX1Byb2R1Y3RzX1Byb2R1Y3QiLAogICAgICAiQGVycG5ldC5hY3Rpb24iOiAibWVyZ2UiLAogICAgICAiRXh0ZW5hbElkIjogIkVYVDAwMiIsCiAgICAgICJQYXJ0TnVtYmVyIjogIkRBVFAwMDIiLAogICAgICAiQmFzZU1lYXN1cmVtZW50Q2F0ZWdvcnkiOiB7CiAgICAgICAgIkBlcnBuZXQuYWN0aW9uIjogImZpbmQiLAogICAgICAgICJAZXJwbmV0LmZpbmRCeSI6IHsKICAgICAgICAgICJOYW1lIjogIlBpZWNlcyIKICAgICAgICB9CiAgICAgIH0sCiAgICAgICJNZWFzdXJlbWVudFVuaXQiOiB7CiAgICAgICAgIkNvZGUiOiAicGNzIgogICAgICB9LAogICAgICAiTmFtZSI6IHsKICAgICAgICAiRU4iOiAiRG9tYWluIEFQSSBUZXN0IDAwMiIKICAgICAgfSwKICAgICAgIlByb2R1Y3RHcm91cCI6IHsKICAgICAgICAiQ29kZSI6ICJEQVRHMDEiLAogICAgICAgICJOYW1lIjogewogICAgICAgICAgIkVOIjogIkRvbWFpbiBBUEkgVGVzdHMiCiAgICAgICAgfQogICAgICB9CiAgICB9CiAgXQp9">Try it Yourself</a></p>
+<h3 id="import-sales-order">Import Sales Order</h3>
+<p>In this example, the <strong>Import</strong> action demonstrates how you can create or update complex records <strong>without manually specifying IDs</strong>.<br>
+The key convenience is that <strong>referenced objects (like Customer, Product, or ProductGroup)</strong> can be <strong>automatically imported or updated</strong> within the same request.</p>
+<p>This makes the Import API extremely useful for <strong>data synchronization with external systems</strong>, where you may not have direct access to internal record IDs but still need to ensure all related entities are properly linked and up to date.</p>
+<p>The system automatically determines the <code>@erpnet.action</code> and <code>@erpnet.findBy</code> criteria based on the provided properties of the nested objects.</p>
+<pre><code class="lang-http">POST https://testdb.my.erp.net/api/domain/odata/Import
+{
+   &quot;objects&quot;:[
+      {
+         &quot;@odata.type&quot;:&quot;Erp.Crm_Sales_SalesOrder&quot;,
+         &quot;DocumentType&quot;:{
+            &quot;Code&quot;:&quot;CRM_SALES_ORDER&quot;
+         },
+         &quot;EnterpriseCompany&quot;:{
+            &quot;@erpnet.findBy&quot;:{
+               &quot;Code&quot;:&quot;714895&quot;
+            }
+         },
+         &quot;EnterpriseCompanyLocation&quot;:{
+            &quot;PartyCode&quot;:&quot;00111&quot;
+         },
+         &quot;Customer&quot;:{
+            &quot;Number&quot;:&quot;CST001&quot;,
+            &quot;Party&quot;:{
+               &quot;@odata.type&quot;:&quot;Erp.General_Contacts_Company&quot;,
+               &quot;PartyCode&quot;:&quot;CST001&quot;,
+               &quot;Name&quot;:{
+                  &quot;EN&quot;:&quot;Customer 01&quot;
+               },
+               &quot;RegistrationType&quot;:{
+                  &quot;EN&quot;:&quot;Ltd&quot;
+               },
+               &quot;RegistrationNumber&quot;:&quot;001001001&quot;
+            },
+            &quot;EnterpriseCompany&quot;:{
+               &quot;@erpnet.findBy&quot;:{
+                  &quot;Code&quot;:&quot;714895&quot;
+               }
+            }
+         },
+         &quot;DocumentCurrency&quot;:{
+            &quot;CurrencySign&quot;:&quot;GBP&quot;
+         },
+         &quot;Lines&quot;:[
+            {
+               &quot;Product&quot;:{
+                  &quot;PartNumber&quot;:&quot;PRD001&quot;,
+                  &quot;BaseMeasurementCategory&quot;:{
+                     &quot;@erpnet.action&quot;:&quot;find&quot;,
+                     &quot;@erpnet.findBy&quot;:{
+                        &quot;Name&quot;:&quot;Pieces&quot;
+                     }
+                  },
+                  &quot;MeasurementUnit&quot;:{
+                     &quot;Code&quot;:&quot;pcs&quot;
+                  },
+                  &quot;Name&quot;:{
+                     &quot;EN&quot;:&quot;Product 001&quot;
+                  },
+                  &quot;ProductGroup&quot;:{
+                     &quot;Code&quot;:&quot;PGT01&quot;,
+                     &quot;Name&quot;:{
+                        &quot;EN&quot;:&quot;Product Group 01&quot;
+                     }
+                  }
+               },
+               &quot;QuantityUnit&quot;:{
+                  &quot;Code&quot;:&quot;pcs&quot;
+               },
+               &quot;Quantity&quot;:{
+                  &quot;Value&quot;:1,
+                  &quot;Unit&quot;:&quot;pcs&quot;
+               },
+               &quot;UnitPrice&quot;:{
+                  &quot;Value&quot;:20,
+                  &quot;Currency&quot;:&quot;GBP&quot;
+               }
+            }
+         ]
+      }
+   ]
+}
+</code></pre>
+<p><a href="https://testdb.my.erp.net/api/domain/query?POST+Import&amp;payload=ewogICAib2JqZWN0cyI6WwogICAgICB7CiAgICAgICAgICJAb2RhdGEudHlwZSI6IkVycC5Dcm1fU2FsZXNfU2FsZXNPcmRlciIsCiAgICAgICAgICJEb2N1bWVudFR5cGUiOnsKICAgICAgICAgICAgIkNvZGUiOiJDUk1fU0FMRVNfT1JERVIiCiAgICAgICAgIH0sCiAgICAgICAgICJFbnRlcnByaXNlQ29tcGFueSI6ewogICAgICAgICAgICAiQGVycG5ldC5maW5kQnkiOnsKICAgICAgICAgICAgICAgIkNvZGUiOiI3MTQ4OTUiCiAgICAgICAgICAgIH0KICAgICAgICAgfSwKICAgICAgICAgIkVudGVycHJpc2VDb21wYW55TG9jYXRpb24iOnsKICAgICAgICAgICAgIlBhcnR5Q29kZSI6IjAwMTExIgogICAgICAgICB9LAogICAgICAgICAiQ3VzdG9tZXIiOnsKICAgICAgICAgICAgIk51bWJlciI6IkNTVDAwMSIsCiAgICAgICAgICAgICJQYXJ0eSI6ewogICAgICAgICAgICAgICAiQG9kYXRhLnR5cGUiOiJFcnAuR2VuZXJhbF9Db250YWN0c19Db21wYW55IiwKICAgICAgICAgICAgICAgIlBhcnR5Q29kZSI6IkNTVDAwMSIsCiAgICAgICAgICAgICAgICJOYW1lIjp7CiAgICAgICAgICAgICAgICAgICJFTiI6IkN1c3RvbWVyIDAxIgogICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAiUmVnaXN0cmF0aW9uVHlwZSI6ewogICAgICAgICAgICAgICAgICAiRU4iOiJMdGQiCiAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICJSZWdpc3RyYXRpb25OdW1iZXIiOiIwMDEwMDEwMDEiCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgICJFbnRlcnByaXNlQ29tcGFueSI6ewogICAgICAgICAgICAgICAiQGVycG5ldC5maW5kQnkiOnsKICAgICAgICAgICAgICAgICAgIkNvZGUiOiI3MTQ4OTUiCiAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfQogICAgICAgICB9LAogICAgICAgICAiRG9jdW1lbnRDdXJyZW5jeSI6ewogICAgICAgICAgICAiQ3VycmVuY3lTaWduIjoiR0JQIgogICAgICAgICB9LAogICAgICAgICAiTGluZXMiOlsKICAgICAgICAgICAgewogICAgICAgICAgICAgICAiUHJvZHVjdCI6ewogICAgICAgICAgICAgICAgICAiUGFydE51bWJlciI6IlBSRDAwMSIsCiAgICAgICAgICAgICAgICAgICJCYXNlTWVhc3VyZW1lbnRDYXRlZ29yeSI6ewogICAgICAgICAgICAgICAgICAgICAiQGVycG5ldC5hY3Rpb24iOiJmaW5kIiwKICAgICAgICAgICAgICAgICAgICAgIkBlcnBuZXQuZmluZEJ5Ijp7CiAgICAgICAgICAgICAgICAgICAgICAgICJOYW1lIjoiUGllY2VzIgogICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICJNZWFzdXJlbWVudFVuaXQiOnsKICAgICAgICAgICAgICAgICAgICAgIkNvZGUiOiJwY3MiCiAgICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICAgICJOYW1lIjp7CiAgICAgICAgICAgICAgICAgICAgICJFTiI6IlByb2R1Y3QgMDAxIgogICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgICAiUHJvZHVjdEdyb3VwIjp7CiAgICAgICAgICAgICAgICAgICAgICJDb2RlIjoiUEdUMDEiLAogICAgICAgICAgICAgICAgICAgICAiTmFtZSI6ewogICAgICAgICAgICAgICAgICAgICAgICAiRU4iOiJQcm9kdWN0IEdyb3VwIDAxIgogICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIlF1YW50aXR5VW5pdCI6ewogICAgICAgICAgICAgICAgICAiQ29kZSI6InBjcyIKICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIlF1YW50aXR5Ijp7CiAgICAgICAgICAgICAgICAgICJWYWx1ZSI6MSwKICAgICAgICAgICAgICAgICAgIlVuaXQiOiJwY3MiCiAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICJVbml0UHJpY2UiOnsKICAgICAgICAgICAgICAgICAgIlZhbHVlIjoyMCwKICAgICAgICAgICAgICAgICAgIkN1cnJlbmN5IjoiR0JQIgogICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICAgXQogICAgICB9CiAgIF0KfQ==">Try it Yourself</a></p>
+<blockquote>
+<p><strong>NOTE</strong>
+In case <code>@erpnet.action</code> annotation is missing, a default value is used.
+For top-level objects the default value of <code>@erpnet.action</code> is <code>create</code>.
+For nested objects the default <code>@erpnet.action</code> is <code>find</code> if only properties defining the search criteria are provided (either @erpnet.findBy or data properties usable in a find action). If other data properties are provided the default <code>@erpnet.action</code> is <code>merge</code>.
+See <a href="erpnet-action.html">@erpnet.action</a> topic.</p>
+</blockquote>
+<p><strong>Explanation of the Automatic Actions</strong></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Automatic Action</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DocumentType</strong></td>
+<td><code>find</code></td>
+<td>The system searches for a document type with <code>Code = &quot;CRM_SALES_ORDER&quot;</code>. Document types are predefined, so a new one is never created.</td>
+</tr>
+<tr>
+<td><strong>EnterpriseCompany</strong></td>
+<td><code>find</code></td>
+<td>Since only <code>Code</code> is provided, the system performs a lookup for an existing Enterprise Company with that code.</td>
+</tr>
+<tr>
+<td><strong>EnterpriseCompanyLocation</strong></td>
+<td><code>find</code></td>
+<td>The field <code>PartyCode</code> uniquely identifies the company location, so the system searches by it.</td>
+</tr>
+<tr>
+<td><strong>Customer</strong></td>
+<td><code>merge</code></td>
+<td>Customers are matched by <code>Number</code>. If a customer with <code>Number = &quot;CST001&quot;</code> exists, it’s updated. Otherwise, a new one is created. The <code>Party</code> subobject (Company) will also be created if missing.</td>
+</tr>
+<tr>
+<td><strong>Customer → Party</strong></td>
+<td><code>create</code></td>
+<td>Because <code>Party</code> is an abstract class, the type is explicitly specified as <code>Erp.General_Contacts_Company</code>. A new Party (Company) record is created if none exists (The system first looks up existing party by PartyCode).</td>
+</tr>
+<tr>
+<td><strong>DocumentCurrency</strong></td>
+<td><code>find</code></td>
+<td>The <code>CurrencySign</code> uniquely identifies the currency (e.g., &quot;GBP&quot;), so an existing record is used.</td>
+</tr>
+<tr>
+<td><strong>Lines</strong></td>
+<td>—</td>
+<td>Represents an array of line items that will be created as part of the sales order.</td>
+</tr>
+<tr>
+<td><strong>Product</strong></td>
+<td><code>merge</code></td>
+<td>The system searches for an existing product with <code>PartNumber = &quot;PRD001&quot;</code>. If not found, a new product is created. This behavior prevents duplicate product definitions.</td>
+</tr>
+<tr>
+<td><strong>Product → BaseMeasurementCategory</strong></td>
+<td><code>find</code></td>
+<td>Uses <code>Name = &quot;Pieces&quot;</code> to locate the measurement category.</td>
+</tr>
+<tr>
+<td><strong>Product → MeasurementUnit</strong></td>
+<td><code>find</code></td>
+<td>Looks up the measurement unit by <code>Code = &quot;pcs&quot;</code>.</td>
+</tr>
+<tr>
+<td><strong>Product → ProductGroup</strong></td>
+<td><code>merge</code></td>
+<td>Uses <code>Code = &quot;PGT01&quot;</code> to find or create a product group. If it exists, it’s reused; otherwise, it’s created with the given name.</td>
+</tr>
+<tr>
+<td><strong>QuantityUnit / Quantity / UnitPrice</strong></td>
+<td>—</td>
+<td>These are scalar and complex properties related to the order line and are directly assigned, not looked up.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="error-handling">Error Handling</h3>
+<p>The result contains the error message for each failed object.</p>
+<p>Example:</p>
+<pre><code>{
+  &quot;@erpnet.result&quot;: &quot;fail&quot;,
+  &quot;objects&quot;: [
+    {
+      &quot;@erpnet.result&quot;: &quot;fail&quot;,
+      &quot;@erpnet.message&quot;: &quot;Object not found: EnterpriseCompany, action: find, findBy: {\&quot;Code\&quot;:\&quot;546346373\&quot;}.&quot;,
+      &quot;@erpnet.error&quot;: {
+        &quot;message&quot;: &quot;Object not found: EnterpriseCompany, action: find, findBy: {\&quot;Code\&quot;:\&quot;546346373\&quot;}.&quot;,
+        &quot;code&quot;: 0,
+        &quot;type&quot;: &quot;InvalidOperationException&quot;,
+        &quot;info&quot;: &quot;System.InvalidOperationException: Object not found: EnterpriseCompany, action: find, findBy: {\&quot;Code\&quot;:\&quot;546346373\&quot;}.\r\n   at ErpNet.Model.OData.ODataResourceInfo.GetObject()\r\n   at ErpNet.Model.OData.ODataResourceInfo.Execute()\r\n   at ErpNet.Model.OData.ODataResourceInfo.Execute()\r\n   at ErpNet.Model.OData.ODataResourceInfo.Execute()\r\n   at ErpNet.Model.OData.Operations.ImportAction.HandleRequest(ODataContext odataContext, IDictionary`2 parameters, IODataRequestMessage requestMessage)&quot;,
+        &quot;messageFormat&quot;: null,
+        &quot;parameters&quot;: null
+      }
+    }
+  ]
+}
+</code></pre>
 
 </article>
 
