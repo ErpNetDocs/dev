@@ -27,8 +27,8 @@ Specification with example:
 
 ### Properties of the objects element
 - **"@odata.type"** - Each object must specify valid entity type. The entity type is the singular form of the entity set and can be found in the documentation for each entity. The @odata.type always starts with the default namespace `Erp.` - Example [Erp.General_Products_Product](https://docs.erp.net/model/entities/General.Products.Products.html)
-- **"@erpnet.action"** - This is an optional annotation for the desired import action. For top-level objects the default action is `create`. [For more information see this article](erpnet-annotation.md).
-- **"@erpnet.findBy"** - This is an optional annotation that specifies the search criteria for the find action. [For more information see this article](erpnet-annotation.md).
+- **"@erpnet.action"** - This is an optional annotation for the desired import action. For top-level objects the default action is `create`. [For more information see this article](./erpnet-annotation.md).
+- **"@erpnet.findBy"** - This is an optional annotation that specifies the search criteria for the find action. [For more information see this article](./erpnet-annotation.md).
 - Any data property of the imported object.
 
 
