@@ -214,7 +214,7 @@ This is equivalent to using the $search parameter in OData queries.</p>
 </ol>
 <p>If multiple properties are specified, only the first one (in the order they appear) is used.
 For example:</p>
-<pre><code>&quot;@erpnet.findBy&quot;: {
+<pre><code class="lang-json">&quot;@erpnet.findBy&quot;: {
   &quot;ExternalId&quot;: &quot;123&quot;,
   &quot;ExternalSystem&quot;: &quot;SomeSystem&quot;,
   &quot;Code&quot;: &quot;345&quot;
@@ -224,14 +224,14 @@ For example:</p>
 <h2 id="default-behavior">Default behavior</h2>
 <p>If the @erpnet.findBy annotation is omitted, the search criteria are automatically derived from the provided object’s properties.</p>
 <p>For example</p>
-<pre><code>{
+<pre><code class="lang-json">{
 &quot;Customer&quot;: {
     &quot;Number&quot;: &quot;Г89163&quot;
   }
 }
 </code></pre>
 <p>is equivalent to</p>
-<pre><code>{
+<pre><code class="lang-json">{
 &quot;Customer&quot;: {
     &quot;@erpnet.action&quot;: &quot;find&quot;,
     &quot;@erpnet.findBy&quot;: {&quot;Code&quot;: &quot;Г89163&quot;}

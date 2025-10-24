@@ -90,7 +90,7 @@
 <p>ERP.net Domain API defines an Import endpoint which can be used to import multiple entities at once.</p>
 <p><strong>Import</strong> is unbound (not bound to any entity) action (actions are called with HTTP POST method) that inserts, updates or deletes multiple objects.
 Specification with example:</p>
-<pre><code>{
+<pre><code class="lang-json">{
   &quot;transaction&quot;: &quot;all-objects&quot; | &quot;per-object&quot; (default),
   &quot;model&quot;: &quot;frontend&quot; (default) | &quot;backend&quot;,
   &quot;objects&quot;:
@@ -113,13 +113,13 @@ Specification with example:</p>
 <h3 id="properties-of-the-objects-element">Properties of the objects element</h3>
 <ul>
 <li><strong>&quot;@odata.type&quot;</strong> - Each object must specify valid entity type. The entity type is the singular form of the entity set and can be found in the documentation for each entity. The @odata.type always starts with the default namespace <code>Erp.</code> - Example <a href="https://docs.erp.net/model/entities/General.Products.Products.html">Erp.General_Products_Product</a></li>
-<li><strong>&quot;@erpnet.action&quot;</strong> - This is an optional annotation for the desired import action. For top-level objects the default action is <code>create</code>. <a href="./erpnet-annotation.md">For more information see this article</a>.</li>
-<li><strong>&quot;@erpnet.findBy&quot;</strong> - This is an optional annotation that specifies the search criteria for the find action. <a href="./erpnet-annotation.md">For more information see this article</a>.</li>
+<li><strong>&quot;@erpnet.action&quot;</strong> - This is an optional annotation for the desired import action. For top-level objects the default action is <code>create</code>. <a href="erpnet-action.html">For more information see this article</a>.</li>
+<li><strong>&quot;@erpnet.findBy&quot;</strong> - This is an optional annotation that specifies the search criteria for the find action. <a href="erpnet-action.html">For more information see this article</a>.</li>
 <li>Any data property of the imported object.</li>
 </ul>
 <h2 id="return-value">Return value</h2>
 <p>Specification with example</p>
-<pre><code>{
+<pre><code class="lang-json">{
   &quot;result&quot;: &quot;success&quot; | &quot;fail&quot;, 
   &quot;objects&quot;:
   [
@@ -151,7 +151,7 @@ Only the &quot;@odata.id&quot; is included in the result - no other properties.<
 <p>The following example performs <code>merge</code> action for General_Products_Products.
 If existing product is found by the provided ExternalId it's PartNumber, BaseMeasurementCategory, MeasurementUnit, Name and ProductGroup are updated.
 The action for the referenced objects is <code>find</code> because the included properties are only these that can be used in find criteria. BaseMeasurementCategory is searched by Name (providing @erpnet.findBy), MeasurementUnit and ProductGroup are searched by Code.</p>
-<pre><code>POST ~/Import
+<pre><code class="lang-json">POST ~/Import
 {
   &quot;model&quot;: &quot;frontend&quot;,
   &quot;transaction&quot;: &quot;per-object&quot;,
@@ -237,7 +237,7 @@ The action for the referenced objects is <code>find</code> because the included 
 The key convenience is that <strong>referenced objects (like Customer, Product, or ProductGroup)</strong> can be <strong>automatically imported or updated</strong> within the same request.</p>
 <p>This makes the Import API extremely useful for <strong>data synchronization with external systems</strong>, where you may not have direct access to internal record IDs but still need to ensure all related entities are properly linked and up to date.</p>
 <p>The system automatically determines the <code>@erpnet.action</code> and <code>@erpnet.findBy</code> criteria based on the provided properties of the nested objects.</p>
-<pre><code class="lang-http">POST https://testdb.my.erp.net/api/domain/odata/Import
+<pre><code class="lang-json">POST https://testdb.my.erp.net/api/domain/odata/Import
 {
    &quot;objects&quot;:[
       {
@@ -403,7 +403,7 @@ See <a href="erpnet-action.html">@erpnet.action</a> topic.</p>
 <h3 id="error-handling">Error Handling</h3>
 <p>The result contains the error message for each failed object.</p>
 <p>Example:</p>
-<pre><code>{
+<pre><code class="lang-json">{
   &quot;@erpnet.result&quot;: &quot;fail&quot;,
   &quot;objects&quot;: [
     {
