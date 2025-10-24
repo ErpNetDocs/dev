@@ -4,7 +4,7 @@ ERP.net Domain API defines an Import endpoint which can be used to import multip
 
 **Import** is unbound (not bound to any entity) action (actions are called with HTTP POST method) that inserts, updates or deletes multiple objects.
 Specification with example:
-```
+```json
 {
   "transaction": "all-objects" | "per-object" (default),
   "model": "frontend" (default) | "backend",
@@ -27,14 +27,14 @@ Specification with example:
 
 ### Properties of the objects element
 - **"@odata.type"** - Each object must specify valid entity type. The entity type is the singular form of the entity set and can be found in the documentation for each entity. The @odata.type always starts with the default namespace `Erp.` - Example [Erp.General_Products_Product](https://docs.erp.net/model/entities/General.Products.Products.html)
-- **"@erpnet.action"** - This is an optional annotation for the desired import action. For top-level objects the default action is `create`. [For more information see this article](./erpnet-annotation.md).
-- **"@erpnet.findBy"** - This is an optional annotation that specifies the search criteria for the find action. [For more information see this article](./erpnet-annotation.md).
+- **"@erpnet.action"** - This is an optional annotation for the desired import action. For top-level objects the default action is `create`. [For more information see this article](./erpnet-action.md).
+- **"@erpnet.findBy"** - This is an optional annotation that specifies the search criteria for the find action. [For more information see this article](./erpnet-action.md).
 - Any data property of the imported object.
 
 
 ## Return value
 Specification with example
-```
+```json
 {
   "result": "success" | "fail", 
   "objects":
@@ -68,7 +68,7 @@ Only the "@odata.id" is included in the result - no other properties.
 The following example performs `merge` action for General_Products_Products. 
 If existing product is found by the provided ExternalId it's PartNumber, BaseMeasurementCategory, MeasurementUnit, Name and ProductGroup are updated.
 The action for the referenced objects is `find` because the included properties are only these that can be used in find criteria. BaseMeasurementCategory is searched by Name (providing @erpnet.findBy), MeasurementUnit and ProductGroup are searched by Code.
-```
+```json
 POST ~/Import
 {
   "model": "frontend",
@@ -163,7 +163,7 @@ This makes the Import API extremely useful for **data synchronization with exter
 The system automatically determines the `@erpnet.action` and `@erpnet.findBy` criteria based on the provided properties of the nested objects.
 
 
-```http
+```json
 POST https://testdb.my.erp.net/api/domain/odata/Import
 {
    "objects":[
@@ -276,7 +276,7 @@ The result contains the error message for each failed object.
 
 Example:
 
-```
+```json
 {
   "@erpnet.result": "fail",
   "objects": [

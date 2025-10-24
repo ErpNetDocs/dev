@@ -123,7 +123,7 @@ The find operation uses only the first available criterion from the @erpnet.find
 If multiple properties are specified, only the first one (in the order they appear) is used.
 For example:
 
-```
+```json
 "@erpnet.findBy": {
   "ExternalId": "123",
   "ExternalSystem": "SomeSystem",
@@ -138,7 +138,7 @@ In this case, the search will be performed only by ExternalId and ExternalSystem
 If the @erpnet.findBy annotation is omitted, the search criteria are automatically derived from the provided object’s properties.
 
 For example 
-```
+```json
 {
 "Customer": {
     "Number": "Г89163"
@@ -146,7 +146,7 @@ For example
 }
 ```
 is equivalent to 
-```
+```json
 {
 "Customer": {
     "@erpnet.action": "find",
