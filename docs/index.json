@@ -77,7 +77,7 @@
   "domain-api/complex-types/quantity.html": {
     "href": "domain-api/complex-types/quantity.html",
     "title": "Quantity (Complex value) | ERP.net Developer Docs",
-    "summary": "Quantity (Complex value) The ERP domain model declares a special type for quantity properties. The quantity is represented by value and measurement unit. Properties Name Type Description Unit String TThe measurement unit of the quantity represented by it's code. Value Decimal The value of the quantity. Domain API Example: { \"LineAmount\": { \"Value\": \"5.555\", \"Unit\": \"PCS\" } } Note Because Quantity is odata complex object it can not participate in uri $filter query parameter. To filter by Amount or Quantity properties you can use the following: ~/Logistics_Inventory_StoreTransactionLines?$filter=QuantityValue ge 5.555 ~/Crm_Sales_SalesOrderLines?$filter=LineAmountValue ge 5.555"
+    "summary": "Quantity (Complex value) The ERP domain model declares a special type for quantity properties. The quantity is represented by value and measurement unit. Properties Name Type Description Unit String TThe measurement unit of the quantity represented by it's code. Value Decimal The value of the quantity. Domain API Example: { \"Quantity\": { \"Value\": \"5.555\", \"Unit\": \"PCS\" } } Note Because Quantity is odata complex object it can not participate in uri $filter query parameter. To filter by Amount or Quantity properties you can use the following: ~/Logistics_Inventory_StoreTransactionLines?$filter=QuantityValue ge 5.555 ~/Crm_Sales_SalesOrderLines?$filter=LineAmountValue ge 5.555"
   },
   "domain-api/data-manipulation/create.html": {
     "href": "domain-api/data-manipulation/create.html",
