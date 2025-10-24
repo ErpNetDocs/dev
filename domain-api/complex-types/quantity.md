@@ -15,7 +15,7 @@ Domain API Example:
 
 ```json
 {
-  "LineAmount": {
+  "Quantity": {
     "Value": "5.555",
     "Unit": "PCS"
   }
