@@ -90,3 +90,4 @@ This model allows @@name Apps to be open, extensible, and secure - forming a fle
 
 - **[Authentication and Authorization](../auth/overview.md)**  
   See how the built-in Identity Server authenticates and authorizes apps and users.
+  
