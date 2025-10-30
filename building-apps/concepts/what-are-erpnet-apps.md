@@ -90,3 +90,4 @@ This lifecycle applies equally to internal tools, partner integrations, and mark
 
 - **[Authentication and Authorization](../auth/overview.md)**  
   See how the built-in Identity Server authenticates and authorizes apps and users.
+  
