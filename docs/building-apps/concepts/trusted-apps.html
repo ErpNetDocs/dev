@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Trusted Applications | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Trusted Applications | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/concepts/trusted-apps.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="trusted-applications">Trusted Applications</h1>
+
+<p>A <strong>Trusted Application</strong> in ERP.net defines the relationship between an app and a specific ERP.net instance.</p>
+<p>It represents a registered entity within that instance that identifies the app and governs how it is allowed to interact with the system's APIs and data.</p>
+<p>Every app that connects to ERP.net has a corresponding Trusted Application entity that represents its identity inside the instance.</p>
+<h2 id="what-a-trusted-application-represents">What a Trusted Application Represents</h2>
+<p>A Trusted Application acts as a bridge between the ERP.net platform and external or internal software.</p>
+<p>It defines:</p>
+<ul>
+<li><strong>Who the app is</strong> – its unique identifier within the instance</li>
+<li><strong>What the app can access</strong> – its defined permissions and scope</li>
+<li><strong>How the instance treats it</strong> – whether it is active, internal, or external</li>
+<li><strong>Who manages it</strong> – administrators who control its configuration and lifecycle</li>
+</ul>
+<p>This ensures that all connected apps are intentional, identifiable, and controlled.</p>
+<p>Every integration or API call can be traced back to a known, trusted app identity.</p>
+<h2 id="why-trusted-applications-exist">Why Trusted Applications Exist</h2>
+<p>Trusted Applications provide a secure and maintainable way to manage how different apps connect to ERP.net.</p>
+<p>They prevent unregistered or unauthorized systems from accessing data and give administrators full visibility and control over integrations.</p>
+<p>Key benefits include:</p>
+<ul>
+<li>Centralized control over app access and configuration</li>
+<li>Clear separation between ERP.net's internal components and external software</li>
+<li>Flexibility to enable or disable integrations at any time</li>
+<li>Transparency and auditability for all connected apps</li>
+</ul>
+<h2 id="key-concepts">Key Concepts</h2>
+<p>Each Trusted Application entity contains essential information that defines its relationship with the ERP.net instance:</p>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Name</strong></td>
+<td>A human-readable identifier for administrators and users.</td>
+</tr>
+<tr>
+<td><strong>Application URI</strong></td>
+<td>A unique identifier for the app (for example, <code>com.company.myapp</code>).</td>
+</tr>
+<tr>
+<td><strong>Client Type</strong></td>
+<td>Describes whether the app can securely handle sensitive information (public or confidential).</td>
+</tr>
+<tr>
+<td><strong>Scopes</strong></td>
+<td>Define which parts of the ERP.net environment the app is allowed to access.</td>
+</tr>
+<tr>
+<td><strong>System User</strong></td>
+<td>An optional user account associated with background or automated apps.</td>
+</tr>
+<tr>
+<td><strong>Status (Enabled/Disabled)</strong></td>
+<td>Controls whether the app is currently allowed to connect.</td>
+</tr>
+</tbody>
+</table>
+<p>Together, these attributes define how ERP.net recognizes and governs each app that communicates with it.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The attributes listed above represent only a subset of all available fields.<br>
+They are included here to illustrate how a Trusted Application defines and governs communication between an app and the instance.</p>
+</div>
+<h2 id="how-trusted-applications-are-created">How Trusted Applications Are Created</h2>
+<p>Trusted Applications can appear in an instance in several ways:</p>
+<ul>
+<li><strong>Manually created</strong> by an administrator when setting up a new integration</li>
+<li><strong>Automatically registered</strong> when an app is installed from the <a href="https://marketplace.erp.net/">ERP.net Marketplace</a></li>
+<li><strong>Preconfigured</strong> for internal apps that are part of the ERP.net platform</li>
+</ul>
+<p>Once registered, the Trusted Application becomes the system's reference point for managing and auditing that app's activity.</p>
+<hr>
+<h2 id="lifecycle-of-a-trusted-application">Lifecycle of a Trusted Application</h2>
+<p>Trusted Applications follow a simple lifecycle:</p>
+<ol>
+<li><strong>Registration</strong> – The app is added to the instance and assigned its identifiers.</li>
+<li><strong>Configuration</strong> – Administrators define its type, permissions, and allowed operations.</li>
+<li><strong>Use</strong> – The app interacts with ERP.net data through the defined APIs.</li>
+<li><strong>Review</strong> – Activity can be monitored and adjusted as needed.</li>
+<li><strong>Revocation</strong> – Access can be disabled or removed at any time.</li>
+</ol>
+<p>This process ensures that each app's access remains secure, visible, and manageable throughout its lifecycle.</p>
+<hr>
+<h2 id="relationship-to-apps-and-the--instance">Relationship to Apps and the ERP.net Instance</h2>
+<p>A Trusted Application connects the worlds of external software and the ERP.net platform.</p>
+<p>It does not execute any code itself; instead, it defines how an app is trusted to interact with the instance.</p>
+<pre><code class="lang-mermaid">flowchart LR
+  app([External or Internal App]) --&gt; ta([Trusted Application])
+  ta --&gt; instance([ERP.net Instance])
+</code></pre>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="what-are-erpnet-apps.html">What Are ERP.net Apps</a><br>
+Learn how apps extend and integrate with ERP.net.</p>
+</li>
+<li><p><a href="app-types.html">Application Types</a><br>
+Explore the different kinds of ERP.net applications.</p>
+</li>
+<li><p><a href="../auth/overview.md">Authentication and Authorization</a><br>
+See how apps authenticate and obtain permissions through ERP.net's Identity Server.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/concepts/trusted-apps.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
