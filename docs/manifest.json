@@ -22,6 +22,69 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "building-apps/concepts/app-lifecycle.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/concepts/app-lifecycle.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/concepts/app-types.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/concepts/app-types.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/concepts/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/concepts/overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "building-apps/concepts/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/concepts/toc.html"
+        },
+        ".json": {
+          "relative_path": "building-apps/concepts/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/concepts/trusted-apps.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/concepts/trusted-apps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/concepts/what-are-erpnet-apps.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/concepts/what-are-erpnet-apps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "domain-api/authentication.md",
       "output": {
         ".html": {

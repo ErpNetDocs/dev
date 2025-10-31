@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Application Types | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Application Types | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/concepts/app-types.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="application-types">Application Types</h1>
+
+<p>ERP.net supports several types of applications, depending on:</p>
+<ul>
+<li>where they run</li>
+<li>who develops them</li>
+<li>and how they are distributed</li>
+</ul>
+<p>All ERP.net Apps follow the same security and connectivity model - they communicate with an ERP.net instance through the built-in <strong>Identity Server</strong> and <strong>APIs</strong>, and are represented in the system by a <strong>Trusted Application</strong> entity.</p>
+<h2 id="internal-applications">Internal Applications</h2>
+<p><strong>Internal applications</strong> are part of the ERP.net platform itself.</p>
+<p>They are developed, deployed, and maintained by ERP.net as core components of the system.</p>
+<p>These apps are installed within the ERP.net instance and operate using the same security and authentication infrastructure as external apps.</p>
+<p>Examples include:</p>
+<ul>
+<li><strong><a href="https://docs.erp.net/webclient/">Web Client</a></strong> - the main ERP.net web interface used by end users to access and manage data across all functional modules</li>
+<li><strong><a href="https://docs.erp.net/tech/modules/crm/clientcenter/index.html">Client Center</a></strong> - a portal that allows customers and business partners to view documents, orders, and invoices, and to communicate with the company directly</li>
+<li><strong>Legal</strong> - a built-in app for managing legal entities and compliance information</li>
+</ul>
+<p>Characteristics:</p>
+<ul>
+<li>Deployed as part of the ERP.net instance</li>
+<li>Fully managed and updated with the platform</li>
+<li>Use the same APIs and Identity Server for consistency</li>
+<li><strong>Trusted Application registration:</strong> may be preconfigured by the platform or require manual registration/configuration, depending on the app and deployment</li>
+</ul>
+<h2 id="external-applications">External Applications</h2>
+<p><strong>External applications</strong> are developed outside of the ERP.net platform, by customers, partners, or independent developers.</p>
+<p>They run separately from the ERP.net instance but connect to it securely via the Identity Server and APIs.</p>
+<p>External apps can take many forms - mobile clients, integrations, automation tools, or standalone web applications.</p>
+<p>Examples include:</p>
+<ul>
+<li>A logistics dashboard that monitors deliveries and shipment statuses in real time</li>
+<li>A custom production planning tool that retrieves and updates manufacturing data</li>
+<li>A cloud integration that syncs ERP.net data with an accounting or shipping service</li>
+<li>A background service that automates invoice exports</li>
+</ul>
+<p>Characteristics:</p>
+<ul>
+<li>Hosted outside of the ERP.net instance</li>
+<li>Must be registered as <strong>Trusted Applications</strong> in each instance they connect to</li>
+<li>Authenticate and authorize through the built-in Identity Server</li>
+<li>Can use interactive (user) or non-interactive (service) access modes</li>
+</ul>
+<h2 id="marketplace-applications">Marketplace Applications</h2>
+<p><strong>Marketplace applications</strong> are a special category of external apps that are published to the <a href="https://marketplace.erp.net/">ERP.net Marketplace</a>.</p>
+<p>They are developed by ERP.net partners or third parties and made available to multiple tenants for installation or activation.</p>
+<p>When a tenant administrator installs a marketplace app, the ERP.net instance automatically registers it as a Trusted Application.</p>
+<p>Examples include:</p>
+<ul>
+<li><strong>Currency Rates Sync</strong> – Automate your currency updates with fresh ECB rates, daily.</li>
+<li><strong>Retail POS</strong> – A modern, offline-capable POS system designed for retail businesses. Fast, intuitive, and built to work seamlessly with ERP.net.</li>
+<li><strong>Preventive Maintenance Planner</strong> – Transform your maintenance operations with intelligent planning.</li>
+</ul>
+<p>Characteristics:</p>
+<ul>
+<li>Developed externally but distributed through the ERP.net Marketplace</li>
+<li>Automatically registered and authorized during installation</li>
+<li>Can be activated by tenant administrators</li>
+<li>Must comply with platform validation and security requirements</li>
+</ul>
+<h2 id="hybrid-embedded-applications">Hybrid (Embedded) Applications</h2>
+<p><strong>Hybrid (Embedded) applications</strong> combine aspects of external and internal apps.</p>
+<p>They are hosted outside the ERP.net instance but can be embedded directly inside the <strong>Web Client</strong> interface using a <strong>WebView</strong>.</p>
+<p>This allows developers to create specialized web experiences that appear as a seamless part of the ERP.net UI while being maintained and deployed independently.</p>
+<h3 id="behavior-and-access">Behavior and Access</h3>
+<p>Hybrid apps behave differently depending on where they are hosted:</p>
+<ol>
+<li><p><strong>Apps hosted on a trusted domain</strong><br>
+If the app is part of the ERP.net Marketplace or hosted under the official domain <code>https://*.app.erp.net</code>, it can securely access the ERP.net APIs <strong>without performing explicit authorization</strong>.
+In this case, the Web Client shares the user's active session (via cookies), and the app can make API calls on behalf of the logged-in user.</p>
+</li>
+<li><p><strong>Apps hosted elsewhere</strong>
+If the app is hosted on any other domain, it cannot access ERP.net data directly.<br>
+The only information it receives is the <strong>URL passed to the WebView</strong> when it is opened from the Web Client.
+To access data, such apps must perform standard authentication through the Identity Server using a registered Trusted Application.</p>
+</li>
+</ol>
+<h3 id="typical-use-cases">Typical Use Cases</h3>
+<ul>
+<li>Partner-developed dashboards or widgets integrated into the ERP.net Web Client</li>
+<li>Company-specific extensions that enhance standard UI modules</li>
+<li>Marketplace apps that extend ERP.net visually within the main user experience</li>
+</ul>
+<h3 id="characteristics">Characteristics</h3>
+<ul>
+<li>Hosted externally but embedded in the Web Client through a WebView</li>
+<li>May use the active user session for authentication (if hosted on trusted domain)</li>
+<li>Must follow strict domain and security policies to access ERP.net data</li>
+<li>Can be distributed through the ERP.net Marketplace or deployed privately</li>
+</ul>
+<h2 id="comparing-application-types">Comparing Application Types</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Hosted By</th>
+<th>Registered As Trusted App</th>
+<th>Example</th>
+<th>Typical Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Internal</strong></td>
+<td>ERP.net Platform</td>
+<td>Preconfigured or manual (varies)</td>
+<td><a href="https://docs.erp.net/webclient/">Web Client</a>, <a href="https://docs.erp.net/tech/modules/crm/clientcenter/index.html">Client Center</a></td>
+<td>Core ERP.net functionality</td>
+</tr>
+<tr>
+<td><strong>External</strong></td>
+<td>Customer or Partner</td>
+<td>Manual</td>
+<td>Custom integration, automation service</td>
+<td>Private or custom solutions</td>
+</tr>
+<tr>
+<td><strong>Marketplace</strong></td>
+<td>Partner / Third Party</td>
+<td>Automatic on installation</td>
+<td>Retail POS, Currency Rates Sync, Preventive Maintenance Planner</td>
+<td>Public or commercial apps</td>
+</tr>
+<tr>
+<td><strong>Hybrid (Embedded)</strong></td>
+<td>ERP.net Platform / Partner / Third Party</td>
+<td>Depends on hosting domain</td>
+<td>Embedded dashboard, company widget</td>
+<td>Embedded web experiences</td>
+</tr>
+</tbody>
+</table>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><strong><a href="what-are-erpnet-apps.html">What Are ERP.net Apps</a></strong><br>
+Understand the core concept of ERP.net Apps and how they connect to an ERP.net instance.</p>
+</li>
+<li><p><strong><a href="trusted-apps.html">Trusted Applications</a></strong><br>
+Learn how each app is registered, managed, and granted access within ERP.net.</p>
+</li>
+<li><p><strong><a href="../auth/overview.md">Authentication and Authorization</a></strong><br>
+See how the built-in Identity Server authenticates and authorizes apps and users.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/concepts/app-types.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Overview | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Overview | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/concepts/overview.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="overview">Overview</h1>
+
+<p>ERP.net Apps allow developers to extend, integrate, and automate ERP.net systems using the ERP.net APIs.</p>
+<p>They make it possible to build new user experiences, connect ERP.net with other software, and streamline business processes.</p>
+<p>Every app - whether internal, external, or marketplace - connects to ERP.net securely through its built-in <strong>Identity Server</strong> and is represented in the system by a <strong>Trusted Application</strong> entity.</p>
+<p>Together, these components ensure that every app is properly identified, authenticated, and authorized with appropriate access.</p>
+<h2 id="what-are--apps">What Are ERP.net Apps</h2>
+<p>An <em>ERP.net App</em> is any application, service, or integration that communicates with an ERP.net instance through its public APIs.</p>
+<p>Apps can range from small automation scripts to complete web or mobile solutions built around ERP.net data and business logic.</p>
+<p>Examples of ERP.net Apps include:</p>
+<ul>
+<li>A web store that allows customers to browse products and place orders online</li>
+<li>A background integration that synchronizes stock levels with an online store</li>
+<li>A web portal that allows suppliers to update product information</li>
+<li>An analytics service that extracts and processes ERP data for reporting</li>
+</ul>
+<p>Apps can be developed by in-house teams, partners, or independent developers and can operate in private environments or be distributed through the <a href="https://marketplace.erp.net/">ERP.net Marketplace</a>.</p>
+<h2 id="why-build-apps">Why Build Apps</h2>
+<p>Apps extend the value of ERP.net beyond its core modules.</p>
+<p>They allow organizations to:</p>
+<ul>
+<li>Tailor ERP.net to their unique business workflows</li>
+<li>Integrate with external platforms and internal systems</li>
+<li>Automate routine operations and data flows</li>
+<li>Deliver focused experiences for specific users or roles</li>
+</ul>
+<p>By connecting securely to an ERP.net instance, apps help organizations innovate without altering the base system.</p>
+<h2 id="how-apps-work-with-an--instance">How Apps Work with an ERP.net Instance</h2>
+<p>Each app communicates with an ERP.net instance through standard APIs that are part of the instance itself.</p>
+<p>Before it can do so, the app must be recognized and granted the right level of access.</p>
+<p>This is handled by two core components of the platform:</p>
+<ul>
+<li>The <strong>Identity Server</strong>, which authenticates users and services and enforces authorization decisions based on instance policies</li>
+<li>The <strong>Trusted Application</strong>, which represents the app's registration and configuration inside the instance</li>
+</ul>
+<p>When an app needs to access data, it initiates authentication with the Identity Server (either interactively through a user or non-interactively as a service).</p>
+<p>After successful authentication and authorization, the app calls the APIs within the instance to read or update ERP.net data in line with its allowed permissions.</p>
+<pre><code class="lang-mermaid">flowchart LR
+  user([User or Service]) --- app([ERP.net App])
+
+  subgraph &quot;ERP.net Instance&quot;
+    direction TB
+    idp([ERP.net Identity Server])
+    api([ERP.net APIs])
+    data([ERP.net Data])
+    api --&gt; data
+  end
+
+  app --&gt;|Auth| idp
+  app --&gt;|API Calls| api
+</code></pre>
+<h2 id="apps-as-part-of-the--platform">Apps as Part of the ERP.net Platform</h2>
+<p>ERP.net treats every app as a managed, auditable part of the system.</p>
+<p>Administrators can see which apps are trusted, what they are authorized to access, and how they interact with the instance.</p>
+<p>They can also revoke or adjust access at any time, maintaining full control over integrations.</p>
+<p>This model allows ERP.net Apps to be open, extensible, and secure - forming a flexible ecosystem where developers can build new solutions without compromising platform integrity.</p>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><strong><a href="what-are-erpnet-apps.html">What Are ERP.net Apps</a></strong><br>
+Understand what ERP.net Apps are and how they connect to an ERP.net instance.</p>
+</li>
+<li><p><strong><a href="app-types.html">Application Types</a></strong><br>
+Explore the different kinds of ERP.net Apps - internal, external, and marketplace.</p>
+</li>
+<li><p><strong><a href="trusted-apps.html">Trusted Applications</a></strong><br>
+Learn how each app is registered, managed, and granted access within ERP.net.</p>
+</li>
+<li><p><strong><a href="../auth/overview.md">Authentication and Authorization</a></strong><br>
+See how the built-in Identity Server authenticates and authorizes apps and users.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/concepts/overview.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
