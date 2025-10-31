@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>How Apps Connect to ERP.net – The Short Version | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="How Apps Connect to ERP.net – The Short Version | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/how-apps-connect/tldr.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="how-apps-connect-to---the-short-version">How Apps Connect to ERP.net – The Short Version</h1>
+
+<h2 id="tldr">TL;DR</h2>
+<p>Connecting an app to ERP.net isn't complicated - it always follows the same pattern:</p>
+<ol>
+<li>The app must first be <strong>registered as a Trusted Application</strong> in the ERP.net instance.</li>
+<li>It authenticates through the <strong>Identity Server</strong>, which verifies who's signing in.</li>
+<li>The Identity Server issues a <strong>token</strong> that defines what the app can access.</li>
+<li>The app uses that token to securely call ERP.net APIs.</li>
+</ol>
+<p>No passwords are shared, and every action is tied to an authenticated user or service.</p>
+<p>That's how ERP.net keeps integrations both open and secure.</p>
+<h2 id="a-real-world-example">A Real-World Example</h2>
+<p>Freddie manages his live events and merchandise through ERP.net.</p>
+<p>His tech-savvy partner <strong>Brian</strong> builds a custom app called <strong>BackstageHub</strong> to make things easier - but Brian doesn't want Freddie's password anywhere near the app.</p>
+<p>Here's how it works:</p>
+<ol>
+<li>Brian registers <strong>BackstageHub</strong> in ERP.net as a <strong>Trusted Application</strong> - that's how ERP.net knows it's safe.</li>
+<li>Freddie opens the app and clicks <strong>Sign In</strong>. The app redirects him to the <strong>Identity Server</strong>, the secure login page of the instance.</li>
+<li>The Identity Server verifies Freddie's credentials and issues a <strong>token</strong> saying:<br>
+&quot;Freddie is verified, and BackstageHub can access his tour data.&quot;</li>
+<li>The app uses that token to call <strong>ERP.net APIs</strong> and sync data.</li>
+<li>The APIs check the token, confirm it's valid, and allow only what's permitted.</li>
+</ol>
+<p>No passwords are shared.</p>
+<p>Access is authorized.</p>
+<p>ERP.net stays secure, and Freddie stays on stage.</p>
+<pre><code class="lang-mermaid">flowchart LR
+  Freddie([🎤 Freddie - User]) --&gt;|Logs in| App[🎸 BackstageHub App]
+  App --&gt;|Auth Request| IDP[🛡️ ERP.net Identity Server]
+  IDP --&gt;|Token Issued| App
+  App --&gt;|API Calls with Token| API[🎛️ ERP.net APIs]
+  API --&gt;|Access Data| Data[(📊 ERP.net Data)]
+</code></pre>
+<p><strong>In short:</strong><br>
+Brian's app connects to ERP.net through the Identity Server.</p>
+<p>Freddie signs in, gets a token, and everything just works - securely, smoothly, and in tune.</p>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="identity-server.html"><strong>Identity Server</strong></a><br>
+Learn about the built-in authentication authority in every ERP.net instance.</p>
+</li>
+<li><p><a href="oauth2-overview.html"><strong>OAuth 2.0</strong></a><br>
+Understand how apps obtain tokens and delegate access securely.</p>
+</li>
+<li><p><a href="trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+See how apps are registered, trusted, and managed inside ERP.net.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/how-apps-connect/tldr.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
