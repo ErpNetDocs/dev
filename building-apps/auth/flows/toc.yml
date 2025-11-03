@@ -1,0 +1,12 @@
+- name: TL;DR
+  href: tldr.md
+- name: Overview
+  href: overview.md
+- name: Authorization Code (Interactive Apps)
+  href: auth-code/toc.yml
+- name: Client Credentials (Service Apps)
+  href: client-credentials/toc.yml
+- name: Authorization Code + Client Credentials (Hybrid Apps)
+  href: combined/toc.yml
+- name: Choosing the Right Flow
+  href: choosing-flow.md

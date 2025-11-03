@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Authentication Flows | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Authentication Flows | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/authentication-flows.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="authentication-flows">Authentication Flows</h1>
+
+<p>Authentication Flows are the process flows, which an external app can use to request access to the ERP Instance.</p>
+<h2 id="authorization-code">Authorization Code</h2>
+<p>This authorization flow is used by interactive user applications, which access the ERP Instance on behalf of the logged user.</p>
+<p>If we relate to Tom and Jane scenario, this would be the case when we want Toms app to create the Sales Orders using Jane account and access permissions.</p>
+<p>Jane wants to start using Toms app to create her Sales Orders.
+Toms app is generally authorized for the ERP Instance (with Trusted Application record), but Jane has not yet authorized it to work on her behalf!</p>
+<p>If Toms app presents a login screen to get Janes credentials and use them to access the ERP Instance, this would expose the credentials to the app author.
+So, instead, the <em>app</em> asks the <em>platform</em> to verify that it is Jane in front of the computer.</p>
+<ol>
+<li><p>Toms app requests the ERP Instance to authenticate the user using the browser.
+Jane is presented with a familiar log-in screen, which is used by ALL apps.
+Since Jane trusts the platform, she securely enters her user name and password.</p>
+</li>
+<li><p>The ERP Instance validates Janes credentials and creates a special <em>id token</em>.
+The token is actually just a string, which contains Janes details, like name, profile picture and email.</p>
+</li>
+<li><p>The token is passed back to the app, using the apps <a href="trusted-applications.html#impersonate-login-url">Login URL</a>.</p>
+</li>
+</ol>
+<p>Now, Toms app knows that it is Jane which is using his app, but without ever gaining access to her credentials!</p>
+<h2 id="client-credentials">Client Credentials</h2>
+<p>Client Credentials is an authorization flow, with which an app requests service access.</p>
+<p>The service account, which is used to create the session is configured in the Trusted Application record.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The service session is not related to any specific interactive user. It can be created on service startup and renewed whenever necessary.</p>
+</div>
+<p>Lets relate this to the Tom and Jane scenario from the <a href="index.html">Overview</a>.
+With service access, Toms app will create all Sales Orders with the same service account.
+It would not use Janes or any other user account to access the ERP Instance.</p>
+<p>The basic flow is the following:</p>
+<ol>
+<li>Toms app provides its application URI and application secret to the ERP Instance.
+The URI and secret are much like user name and password, but for application.</li>
+<li>The ERP Instance looks up the Trusted Application record for Toms app.
+Based on the Service Account specified in the record, the ERP Instance creates a special <em>access token</em> and passes it to Toms app.
+The access token is just a string, containing the granted access permissions, which is digitally signed.</li>
+<li>Toms app uses the <em>access token</em> to call the ERP APIs and create the Sales Orders.</li>
+</ol>
+<h2 id="basic-authentication">Basic Authentication</h2>
+<p>In basic HTTP authentication, a request contains a header field in the form of Authorization: Basic <credentials>, where credentials is the Base64 encoding of user name and password joined by a single colon :.</credentials></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Basic Authentication is not recommended because it is less secure than OAuth!</p>
+</div>
+<p>In ERP.net basic authentication can be used by applications, which access the ERP Instance on behalf of the logged user.</p>
+<p>Some legacy external applications use the obsolete SDK API to access the ERP Instance. To authenticate they must provide username, password and application name. If the provided application name is not found among the trusted applications in the ERP Instance the authentication will fail.</p>
+<p>Domain API and Table API allow basic authentication but require their corresponding trusted application to <a href="trusted-applications.html#basic-authentication-allowed">allow basic authentication</a>.</p>
+<p><strong>Possible errors:</strong></p>
+<p>Authentication faled for user 'test'.</p>
+<p>Current request uses basic authentication but the provided application 'DEMOAPP' <strong>is not found among the trusted applications</strong>.</p>
+<p>Contact your system administrator <strong>to create trusted application</strong> 'DEMOAPP' and configure it to allow basic authentication.</p>
+<hr>
+<p>Authentication failed for user 'test'.</p>
+<p>Current request uses basic authentication but the trusted application 'DEMOAPP' <strong>is not enabled</strong>.</p>
+<p>Contact your system administrator <strong>to enable the trusted application</strong> 'DEMOAPP' and configure it to allow basic authentication.</p>
+<hr>
+<p>Authentication failed for user 'test'.</p>
+<p>Current request uses basic authentication but the provided application 'DEMOAPP' <strong>is not configured</strong> to allow basic authentication.</p>
+<p>Contact your system administrator <strong>to configure the trusted application</strong> 'DEMOAPP' to allow basic authentication.</p>
+<hr>
+<p>Authentication failed for user 'test'.</p>
+<p>Current request uses basic authentication but the corresponding trusted application 'DEMOAPP' <strong>is configured for system user that is different</strong> from the provided user 'test'.</p>
+<p>Use the correct application user to log in or contact your system administrator <strong>to configure the trusted application</strong> 'DEMOAPP' for different user.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/authentication-flows.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

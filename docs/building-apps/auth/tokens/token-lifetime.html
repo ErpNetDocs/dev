@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Token Lifetime and Renewal | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Token Lifetime and Renewal | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/tokens/token-lifetime.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="token-lifetime-and-renewal">Token Lifetime and Renewal</h1>
+
+<p>ERP.net uses multiple token types, each with its own lifetime and renewal strategy.</p>
+<p>Understanding these durations helps design secure and reliable authentication flows.</p>
+<h2 id="access-tokens">Access Tokens</h2>
+<p>Access tokens are <strong>short-lived</strong> credentials used to authorize API requests.</p>
+<ul>
+<li><strong>Lifetime:</strong> 1 hour</li>
+<li><strong>Purpose:</strong> To authenticate API calls on behalf of a user or application.</li>
+<li><strong>Renewal:</strong> Obtain a new access token via a <strong>refresh token</strong> (interactive flows) or by repeating the <strong>client credentials</strong> request (service flows).</li>
+<li><strong>Reasoning:</strong> Short validity limits the impact of token leakage.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Access tokens are automatically verified by ERP.net APIs on every request.<br>
+Expired tokens result in HTTP 401 (Unauthorized).</p>
+</div>
+<h2 id="refresh-tokens">Refresh Tokens</h2>
+<p>Refresh tokens are <strong>longer-lived</strong> credentials that allow obtaining new access tokens without requiring the user to log in again.</p>
+<ul>
+<li><strong>Lifetime:</strong> 1 month</li>
+<li><strong>Issued To:</strong> Confidential, interactive applications (authorization code flow).</li>
+<li><strong>Not Available For:</strong> Non-interactive (service) applications.</li>
+<li><strong>Purpose:</strong> Maintain seamless user sessions without re-authentication.</li>
+<li><strong>Usage:</strong> Exchange at <code>/id/connect/token</code> with <code>grant_type=refresh_token</code>.</li>
+</ul>
+<p>Example:</p>
+<pre><code class="lang-http">POST /id/connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=my.trusted.app
+client_secret=&lt;app_secret&gt;
+grant_type=refresh_token
+refresh_token=&lt;refresh_token_value&gt;
+</code></pre>
+<h2 id="reference-access-tokens-pat-sat">Reference Access Tokens (PAT, SAT)</h2>
+<p>Reference tokens are manually issued, long-lived credentials designed for persistent or automated access.</p>
+<ul>
+<li><strong>Lifetime:</strong> User-specified (days, months, or indefinite).</li>
+<li><strong>Types:</strong>
+<ul>
+<li><strong>PAT</strong> – Personal Access Token (represents a specific user identity).</li>
+<li><strong>SAT</strong> – Service Access Token (represents the system user defined in the Trusted Application).</li>
+</ul>
+</li>
+<li><strong>Revocation:</strong> Immediate; can be manually revoked from the Profile Site (PATs) or the Instance Manager Site (SATs).</li>
+<li><strong>Requirements:</strong> The corresponding Trusted Application must allow issuing reference tokens through its <strong>AccessTokens</strong> policy (<code>AuthenticatedUsers</code> or <code>AdministratorsOnly</code>).</li>
+<li><strong>Use Case:</strong> Persistent integrations, automation services, and developer utilities that need stable credentials across sessions.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Use reference tokens only when automation or persistent access is required.<br>
+For all other cases, prefer short-lived OAuth access tokens.</p>
+</div>
+<h2 id="renewal-strategy">Renewal Strategy</h2>
+<table>
+<thead>
+<tr>
+<th>Token Type</th>
+<th>Lifetime</th>
+<th>How to Renew</th>
+<th>Typical Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Access Token</strong></td>
+<td>1 hour</td>
+<td>Refresh token or new token request</td>
+<td>API calls</td>
+</tr>
+<tr>
+<td><strong>Refresh Token</strong></td>
+<td>1 month</td>
+<td>User re-authentication</td>
+<td>Interactive apps</td>
+</tr>
+<tr>
+<td><strong>Reference Token (PAT, SAT)</strong></td>
+<td>User-defined</td>
+<td>Manual reissue</td>
+<td>Long-lived integrations</td>
+</tr>
+</tbody>
+</table>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="access-tokens.html"><strong>Access Tokens</strong></a><br>
+Understand token format, claims, and validation.</p>
+</li>
+<li><p><a href="reference-access-tokens.html"><strong>Reference Access Tokens (PAT, SAT)</strong></a><br>
+Learn how to create and manage long-lived manual tokens.</p>
+</li>
+<li><p><a href="scopes.html"><strong>Scopes and Permissions</strong></a><br>
+See how scopes define access levels in all token types.</p>
+</li>
+<li><p><a href="../../how-apps-connect/trusted-apps-access.md"><strong>Trusted Applications and Access Control</strong></a><br>
+Learn how token policies and expiration limits are enforced.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/tokens/token-lifetime.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Common Errors in Interactive Apps | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Common Errors in Interactive Apps | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../../favicon.ico">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/flows/auth-code/interactive-apps-errors.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="common-errors-in-interactive-apps">Common Errors in Interactive Apps</h1>
+
+<p>When implementing <strong>Authorization Code flow</strong> in an interactive app, errors can occur at different stages of the process.</p>
+<p>Most are caused by incorrect configuration in the <strong>Trusted Application</strong>, invalid redirects, or token misuse.</p>
+<p>This table lists the most common issues, their causes, and how to fix them.</p>
+<hr>
+<table>
+<thead>
+<tr>
+<th><strong>Error</strong></th>
+<th><strong>Typical Message</strong></th>
+<th><strong>Cause</strong></th>
+<th><strong>Fix</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Invalid Redirect URI</strong></td>
+<td><code>invalid_redirect_uri</code></td>
+<td>The <code>redirect_uri</code> in your request doesn’t match any value in <code>ImpersonateLoginUrl</code> or <code>ImpersonateLogoutUrl</code> of the Trusted Application.</td>
+<td>Make sure the URI matches exactly (case-sensitive). Use HTTPS in production. Example: <code>https://app.example.com/auth/callback</code>.</td>
+</tr>
+<tr>
+<td><strong>Missing or Invalid Client Credentials</strong></td>
+<td><code>invalid_client</code></td>
+<td>Wrong <code>client_id</code> or <code>client_secret</code>. Trying to use a secret for a Public client or missing it for a Confidential one.</td>
+<td>Verify <code>client_id</code> matches the app’s <code>ApplicationUri</code>. Use the correct secret for Confidential clients.</td>
+</tr>
+<tr>
+<td><strong>Unauthorized Grant Type</strong></td>
+<td><code>unsupported_grant_type</code></td>
+<td>The grant type is not allowed by the Trusted Application.</td>
+<td>Only use <code>authorization_code</code> or <code>refresh_token</code>. Check flags like <code>SystemUserAllowed</code> and impersonation settings.</td>
+</tr>
+<tr>
+<td><strong>PKCE Validation Failed</strong></td>
+<td><code>invalid_grant: PKCE verification failed</code></td>
+<td>The PKCE challenge or verifier does not match.</td>
+<td>Make sure your SPA/mobile app uses the same <code>code_verifier</code> and <code>code_challenge</code> (method <code>S256</code>).</td>
+</tr>
+<tr>
+<td><strong>Invalid Scope</strong></td>
+<td><code>invalid_scope</code></td>
+<td>The requested scopes aren’t allowed for the app.</td>
+<td>Verify the Trusted Application’s <code>Scope</code> field includes them. Example: <code>openid profile offline_access DomainApi</code>.</td>
+</tr>
+<tr>
+<td><strong>Expired or Invalid Authorization Code</strong></td>
+<td><code>invalid_grant</code></td>
+<td>Code expired, was reused, or redirect URIs don’t match.</td>
+<td>Exchange the code immediately, match <code>redirect_uri</code> exactly, and don’t reuse codes.</td>
+</tr>
+<tr>
+<td><strong>Invalid or Expired Refresh Token</strong></td>
+<td><code>invalid_grant: refresh token is expired or invalid</code></td>
+<td>The refresh token expired, was revoked, or the app config changed.</td>
+<td>Use a new authorization code (user sign-in). Always store the latest refresh token.</td>
+</tr>
+<tr>
+<td><strong>Token Expired</strong></td>
+<td>API returns <code>401 Unauthorized</code></td>
+<td>The access token expired or was revoked.</td>
+<td>Use refresh tokens to get a new access token or reauthenticate.</td>
+</tr>
+<tr>
+<td><strong>Disabled or Missing Trusted Application</strong></td>
+<td><code>unauthorized_client</code></td>
+<td>The Trusted Application record is disabled or missing.</td>
+<td>Verify the app exists, <code>IsEnabled = true</code>, and you’re using the correct instance.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="overview.html"><strong>Interactive Apps (Authorization Code Flow)</strong></a><br>
+Overview of how interactive apps authenticate users.</p>
+</li>
+<li><p><a href="interactive-apps-redirects-pkce.html"><strong>Redirect URIs and PKCE</strong></a><br>
+How to secure redirects and apply PKCE.</p>
+</li>
+<li><p><a href="interactive-apps-refresh-tokens.html"><strong>Refresh Tokens</strong></a><br>
+How to renew tokens without requiring user reauthentication.</p>
+</li>
+<li><p><a href="../../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+Learn how app registration affects permissions and validation.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/flows/auth-code/interactive-apps-errors.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

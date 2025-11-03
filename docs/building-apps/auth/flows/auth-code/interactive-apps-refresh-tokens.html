@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Refresh Tokens in Interactive Apps | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Refresh Tokens in Interactive Apps | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../../favicon.ico">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/flows/auth-code/interactive-apps-refresh-tokens.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="refresh-tokens-in-interactive-apps">Refresh Tokens in Interactive Apps</h1>
+
+<p>Interactive applications that use the <strong>Authorization Code flow</strong> can receive a <strong>refresh token</strong> together with their access token.</p>
+<p>A refresh token allows the app to obtain new access tokens without requiring the user to sign in again.</p>
+<p>This enables a smoother experience for users and helps maintain secure, continuous access to ERP.net APIs.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Refresh tokens are <strong>only available to interactive apps</strong> using the Authorization Code flow.<br>
+They are <strong>not issued</strong> for the Client Credentials flow or non-interactive service apps.</p>
+</div>
+<h2 id="how-refresh-tokens-work">How Refresh Tokens Work</h2>
+<ol>
+<li><p>The app completes the <strong>Authorization Code flow</strong> and receives:</p>
+<ul>
+<li>An <strong>access token</strong> – short-lived, used for API calls.</li>
+<li>A <strong>refresh token</strong> – long-lived, used to request new access tokens.</li>
+</ul>
+</li>
+<li><p>When the access token expires, the app calls the <strong>token endpoint</strong> again, this time using the refresh token.</p>
+</li>
+<li><p>ERP.net Identity Server validates the refresh token and issues a <strong>new access token</strong> (and possibly a new refresh token).</p>
+</li>
+<li><p>The app replaces the expired token and continues calling the API without user interaction.</p>
+</li>
+</ol>
+<pre><code class="lang-mermaid">sequenceDiagram
+    participant App
+    participant IDP as ERP.net Identity Server
+    participant API as ERP.net API
+
+    App-&gt;&gt;IDP: POST /token (grant_type=authorization_code)
+    IDP--&gt;&gt;App: access_token + refresh_token
+    App-&gt;&gt;API: Call API with access_token
+    API--&gt;&gt;App: Return data
+    Note over App: Access token expires
+    App-&gt;&gt;IDP: POST /token (grant_type=refresh_token)
+    IDP--&gt;&gt;App: New access_token (+ refresh_token)
+    App-&gt;&gt;API: Continue API calls
+</code></pre>
+<h2 id="requesting-a-refresh-token">Requesting a Refresh Token</h2>
+<p>To receive a refresh token, the app must include the <code>offline_access</code> scope when requesting authorization:</p>
+<pre><code class="lang-http">GET /id/connect/authorize?
+    client_id=my.trusted.app&amp;
+    redirect_uri=https://localhost/signin-callback&amp;
+    response_type=code&amp;
+    scope=openid profile offline_access DomainApi&amp;
+    state=xyz
+</code></pre>
+<p>The <code>offline_access</code> scope signals that the app wants permission to act on behalf of the user even when they are not actively signed in.</p>
+<h2 id="exchanging-a-refresh-token">Exchanging a Refresh Token</h2>
+<p>When your access token expires, send a new request to the token endpoint:</p>
+<pre><code class="lang-http">POST /id/connect/token HTTP/1.1
+Host: demodb.my.erp.net
+Content-Type: application/x-www-form-urlencoded
+
+client_id=my.trusted.app&amp;
+client_secret=&lt;my_secret&gt;&amp;
+grant_type=refresh_token&amp;
+refresh_token=&lt;your_refresh_token&gt;
+</code></pre>
+<h3 id="example-response">Example Response</h3>
+<pre><code class="lang-json">{
+  &quot;access_token&quot;: &quot;eyJhbGciOiJSUzI1NiIs...&quot;,
+  &quot;expires_in&quot;: 3600,
+  &quot;refresh_token&quot;: &quot;SvQvQ9cxcYzs0AWg6tsGW1-YK7O5xP...&quot;,
+  &quot;scope&quot;: &quot;openid profile DomainApi offline_access&quot;
+}
+</code></pre>
+<p>Use the new access token for subsequent API calls.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Each refresh issues a new refresh token.
+Always store the latest one, as older tokens will be revoked.</p>
+</div>
+<h2 id="token-lifetime-and-renewal">Token Lifetime and Renewal</h2>
+<table>
+<thead>
+<tr>
+<th>Token Type</th>
+<th>Typical Lifetime</th>
+<th>Renewable</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Access Token</strong></td>
+<td>Short-lived (1 hour)</td>
+<td>Yes (via refresh token)</td>
+<td>Short-lived for security</td>
+</tr>
+<tr>
+<td><strong>Refresh Token</strong></td>
+<td>Long-lived (1 month)</td>
+<td>Yes, until revoked</td>
+<td>Use to obtain new access tokens</td>
+</tr>
+</tbody>
+</table>
+<h2 id="best-practices">Best Practices</h2>
+<ul>
+<li>Always request <code>offline_access</code> <strong>only when needed</strong>.</li>
+<li>Store refresh tokens securely (encrypted and server-side).</li>
+<li>Handle token renewal <strong>transparently</strong> for users.</li>
+<li>Implement fallback to full login if the refresh token fails.</li>
+<li>Always update your stored refresh token with the latest one issued.</li>
+</ul>
+<h2 id="example-refresh-token-renewal">Example: Refresh Token Renewal</h2>
+<pre><code class="lang-http">POST /id/connect/token HTTP/1.1
+Host: demodb.my.erp.net
+Content-Type: application/x-www-form-urlencoded
+
+client_id=my.trusted.app&amp;
+client_secret=&lt;my_secret&gt;&amp;
+grant_type=refresh_token&amp;
+refresh_token=&lt;old_refresh_token&gt;
+</code></pre>
+<p>Response:</p>
+<pre><code class="lang-json">{
+  &quot;access_token&quot;: &quot;new_access_token_value&quot;,
+  &quot;refresh_token&quot;: &quot;new_refresh_token_value&quot;,
+  &quot;expires_in&quot;: 3600
+}
+</code></pre>
+<p>Replace your existing tokens with these new ones and continue using the API.</p>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="overview.html"><strong>Interactive Apps (Authorization Code Flow)</strong></a><br>
+How interactive apps sign in and obtain tokens.</p>
+</li>
+<li><p><a href="interactive-apps-redirects-pkce.html"><strong>Redirect URIs and PKCE</strong></a><br>
+Securing redirects and preventing code interception.</p>
+</li>
+<li><p><a href="../../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+Learn how app configuration affects token issuance.</p>
+</li>
+<li><p><a href="interactive-apps-errors.html"><strong>Common Errors</strong></a><br>
+Handling invalid or expired refresh tokens.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/flows/auth-code/interactive-apps-refresh-tokens.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

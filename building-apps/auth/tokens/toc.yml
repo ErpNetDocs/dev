@@ -1,0 +1,10 @@
+- name: Overview
+  href: tokens-overview.md
+- name: Access Tokens
+  href: access-tokens.md
+- name: Reference Access Tokens (PAT, SAT)
+  href: reference-access-tokens.md
+- name: Scopes and Permissions
+  href: scopes.md
+- name: Token Lifetime and Renewal
+  href: token-lifetime.md

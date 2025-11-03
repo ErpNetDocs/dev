@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Service and Background Apps (Client Credentials Flow) | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Service and Background Apps (Client Credentials Flow) | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../../favicon.ico">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/flows/client-credentials/overview.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="service-and-background-apps-client-credentials-flow">Service and Background Apps (Client Credentials Flow)</h1>
+
+<p>Service applications connect to ERP.net using the <strong>Client Credentials</strong> grant.</p>
+<p>They run without user interaction and receive tokens that represent the app's configured <strong>System User</strong>.</p>
+<p>Use this flow for integrations, schedulers, imports, exports, and daemon services.</p>
+<h2 id="when-to-use">When to use</h2>
+<ul>
+<li>No user signs in; the app runs unattended.</li>
+<li>You need stable access under a known identity.</li>
+<li>The app can securely store a <strong>client secret</strong> (Confidential client).</li>
+<li>Operations should run with permissions of a least-privilege <strong>System User</strong>.</li>
+</ul>
+<h2 id="how-it-works">How it works</h2>
+<ol>
+<li>The app authenticates to the ERP.net <strong>Identity Server</strong> with its <code>client_id</code> and <code>client_secret</code>.</li>
+<li>ERP.net Identity Server validates the app against its <strong>Trusted Application</strong> record.</li>
+<li>If allowed, it issues a short-lived <strong>access token</strong> that represents the app's <strong>System User</strong>.</li>
+<li>The app calls ERP.net APIs with the token.</li>
+<li>When the token expires, the app requests a new one.</li>
+</ol>
+<pre><code class="lang-mermaid">sequenceDiagram
+    participant App
+    participant IDP as ERP.net Identity Server
+    participant API as ERP.net APIs
+
+    App-&gt;&gt;IDP: POST /connect/token (grant_type=client_credentials, client_id, client_secret, scope)
+    IDP--&gt;&gt;App: access_token (System User context)
+    App-&gt;&gt;API: Call with Authorization: Bearer &lt;token&gt;
+    API--&gt;&gt;App: Authorized response
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Client Credentials flow does not issue refresh tokens. Request a new access token when needed.</p>
+</div>
+<h2 id="trusted-application-requirements">Trusted Application requirements</h2>
+<ul>
+<li><code>ClientType = Confidential</code></li>
+<li><code>SystemUserAllowed = true</code></li>
+<li><code>SystemUser = &lt;least-privilege account&gt;</code></li>
+<li><code>Scope</code> lists only the permissions the service needs</li>
+<li><code>IsEnabled = true</code></li>
+</ul>
+<h2 id="security-highlights">Security highlights</h2>
+<ul>
+<li>Store the client secret securely; never embed in public code.</li>
+<li>Use a dedicated <strong>System User</strong> with least privilege.</li>
+<li>Rotate secrets and the System User password periodically.</li>
+<li>Log token requests and API calls for auditing.</li>
+</ul>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="service-apps-step-by-step.html"><strong>Step-by-Step Example</strong></a><br>
+Minimal sequence to obtain a token and call the APIs.</p>
+</li>
+<li><p><a href="service-apps-token.html"><strong>Token Request and Response</strong></a><br>
+Exact parameters, examples, and response fields.</p>
+</li>
+<li><p><a href="service-apps-errors.html"><strong>Common Errors</strong></a><br>
+Quick fixes for invalid_client, invalid_scope, and more.</p>
+</li>
+<li><p><a href="../../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+Configure System User, scopes, and policies.</p>
+</li>
+<li><p><a href="../choosing-flow.html"><strong>Choosing the Right Flow</strong></a><br>
+When to use Client Credentials vs interactive or hybrid.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/flows/client-credentials/overview.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

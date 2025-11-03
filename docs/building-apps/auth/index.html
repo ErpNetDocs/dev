@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Introduction to authentication in ERP.net | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Introduction to authentication in ERP.net | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/index.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="introduction-to-authentication-in-">Introduction to authentication in ERP.net</h1>
+
+<p>ERP.net APIs use <a href="https://oauth.net/2/">OAuth 2</a> for authentication and authorization.
+In OAuth 2, the authentication and authorization is performed by an identity provider.
+ERP.net has built-in identity provider, which conforms to the <a href="https://openid.net/connect/">OpenID Connect</a> specification.</p>
+<h2 id="why-do-we-need-oauth-2">Why do we need OAuth 2?</h2>
+<p>In the good old days of lesser security, there was just a user and a password.
+If we need to access an app, we enter the user name and the password and voila - we get access!</p>
+<p>So, what is the problem to continue like this?</p>
+<p>Suppose Tom has created a good little app, which automates the Sales Order creation.
+You just select from one of three predefined templates and your sales order is created.</p>
+<p>The problem is: How should Toms app access your ERP Instance?</p>
+<p>Option 1 would be to give him your user name and password.
+OK, but then your user name and password are no longer so secure, aren't they?
+Even if you don't give them directly to Tom, but &quot;just&quot; enter them in a web form, Tom still receives your precious security secret!</p>
+<p>Option 2 would be ... Can't we can just give Toms app access to the ERP Instance, but without sharing our credentials?</p>
+<p>This is where OAuth 2 comes in. A group of very clever people have come up with a standard, which allows users to <em>authorize</em> apps to do things on their behalf.</p>
+<p>Enter the age of <em>platforms</em> and <em>apps</em>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>To be more precise, it should be called age of Identity providers and apps.
+But in the current case, the platform is also the Identity provider.</p>
+</div>
+<h2 id="trust-an-application">Trust an application</h2>
+<p>When you install an app on your phone, you authorize this app to do certain things with your data.
+The Android or iOS <em>platform</em> allows the <em>app</em> to access only the data you have authorized it to access.
+You fully trust the platform, but you don't fully trust any app out there.
+The platform should stop malicious attempts to steal and manipulate your data.</p>
+<p>Similar, but still a bit more complicated paradigm can be applied to ERP Instances.
+The administrator of the ERP Instance plays the role of the phone owner.
+The ERP Instance is the <em>platform</em> and the <em>app</em> is, well, the app.</p>
+<p>In our phones, before using an app, we need to install it.
+With ERP Instances, we don't actually install the app, because the app is already hosted somewhere.
+So, this step is skipped.
+We just have to tell the system, that we trust this app.</p>
+<h3 id="manually-trust-an-application">Manually trust an application</h3>
+<p>To manually trust an application, you create a Trusted Application record, which informs the ERP Instance, that you trust this application.</p>
+<p>For more information, see <a href="trusted-applications.html">Trusted Applications</a>.</p>
+<h3 id="install-from-a-marketplace">Install from a marketplace</h3>
+<p>Another way to trust an application is to activate it from a marketplace.
+In this case, the marketplace redirects the browser to a &quot;Register Trusted Application&quot; endpoint in your ERP Instance.
+The registration process verifies that you are an administrator of the ERP Instance and then simply asks you if you want to trust this application.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This is very similar to the way your phone asks you if you trust a new application.</p>
+</div>
+<h2 id="access-data-in-the-erp-instance">Access data in the ERP Instance</h2>
+<p>Once an application is trusted, it can use two ways to access ERP data - through user account or through service access.</p>
+<h3 id="interactive-applications">Interactive applications</h3>
+<p>Interactive applications have UI and use <em>Authorization Code</em> flow to request user access.</p>
+<h3 id="service-applications">Service applications</h3>
+<p>Service applications have no UI and use only service accounts.
+They use the <em>Client Credentials</em> flow to request service access.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>A single application can use both interactive user login and service access to perform different functions.</p>
+</div>
+<p>Read more about <a href="authentication-flows.html">Authentication Flows</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/index.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
