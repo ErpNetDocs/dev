@@ -1,6 +1,2 @@
 
-<<<<<<< HEAD
 {"order":100,"items":[{"name":"TL;DR","href":"tldr.html","topicHref":"tldr.html"},{"name":"Overview","href":"overview.html","topicHref":"overview.html"},{"name":"OAuth 2.0","href":"oauth2-overview.html","topicHref":"oauth2-overview.html"},{"name":"Identity Server","href":"identity-server.html","topicHref":"identity-server.html"},{"name":"Trusted Applications and Access Control","href":"trusted-apps-access.html","topicHref":"trusted-apps-access.html"}],"pdf":false}
-=======
-{"items":[{"name":"TL;DR","href":"tldr.html","topicHref":"tldr.html"},{"name":"Overview","href":"overview.html","topicHref":"overview.html"},{"name":"OAuth 2.0","href":"oauth2-overview.html","topicHref":"oauth2-overview.html"},{"name":"Identity Server","href":"identity-server.html","topicHref":"identity-server.html"},{"name":"Trusted Applications and Access Control","href":"trusted-apps-access.html","topicHref":"trusted-apps-access.html"}],"pdf":false}
->>>>>>> d996a814ed3a217ce43574637418dc5c7a093686

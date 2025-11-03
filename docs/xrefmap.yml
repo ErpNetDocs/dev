@@ -12,4 +12,4 @@ references:
   href: includes/name.html
 - uid: the-table-api
   name: Table API
-  href: topics/table-api/index.html
+  href: table-api/index.html

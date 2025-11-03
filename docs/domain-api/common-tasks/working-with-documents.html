@@ -94,7 +94,7 @@
 <p>The examples below show some tasks related to documents.</p>
 <h2 id="create-document">Create document</h2>
 <p>Document can be created only by specifying the required properties. Other properties will be filled by it's constant default value or it's LateDefault expression.</p>
-<p>If Front-End model is used in <a href="../transactions.md">API Transaction</a> dependent property values are recalculated upon property change.  For example in SalesOrderLine line.ProductDescription is set to line.Product.Name when line.Product changes.</p>
+<p>If Front-End model is used in <a href="../data-manipulation/transactions.html">API Transaction</a> dependent property values are recalculated upon property change.  For example in SalesOrderLine line.ProductDescription is set to line.Product.Name when line.Product changes.</p>
 <p>In the example bellow a new SalesOrder is created with one SalesOrderLine.</p>
 <p>Note that measurement units and currencies are specified before passing <a href="../complex-types/quantity.html">Quantity</a> or <a href="../complex-types/amount.html">Amount</a> values. This is required because the quantity or amount contains the code of the measurement unit or currency.</p>
 <pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders
