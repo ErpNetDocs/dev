@@ -14,7 +14,7 @@ The examples below show some tasks related to documents.
 
 Document can be created only by specifying the required properties. Other properties will be filled by it's constant default value or it's LateDefault expression.
 
-If Front-End model is used in [API Transaction](../transactions.md) dependent property values are recalculated upon property change.  For example in SalesOrderLine line.ProductDescription is set to line.Product.Name when line.Product changes.
+If Front-End model is used in [API Transaction](../data-manipulation/transactions.md) dependent property values are recalculated upon property change.  For example in SalesOrderLine line.ProductDescription is set to line.Product.Name when line.Product changes.
 
 In the example bellow a new SalesOrder is created with one SalesOrderLine.
 

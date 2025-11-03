@@ -22,6 +22,79 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/how-apps-connect/identity-server.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/how-apps-connect/identity-server.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/how-apps-connect/oauth2-overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/how-apps-connect/oauth2-overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/how-apps-connect/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/how-apps-connect/overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/how-apps-connect/tldr.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/how-apps-connect/tldr.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "building-apps/auth/how-apps-connect/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/how-apps-connect/toc.html"
+        },
+        ".json": {
+          "relative_path": "building-apps/auth/how-apps-connect/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/how-apps-connect/trusted-apps-access.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/how-apps-connect/trusted-apps-access.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "building-apps/concepts/app-lifecycle.md",
       "output": {
         ".html": {

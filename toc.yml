@@ -5,9 +5,13 @@ items:
   href: topics/toc.yml
 - name: Domain API
   href: domain-api/toc.yml
+- name: Table API
+  href: table-api/toc.yml  
+- name: Building Apps
+  href: building-apps/toc.yml
 - name: API Reference
   href: https://docs.erp.net/model/entities/
-- name: "What’s New"
+- name: "What's New"
   href: whats-new/toc.yml
   topicHref: whats-new/index.md
 - name: Return to DOCS ⏶

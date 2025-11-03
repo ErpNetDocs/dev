@@ -7,9 +7,9 @@ The following query:
 3. Selects the following attributes:
    - **Id** - the unique Id of the product.
    - **Part Number** - the product code.
-   - **Name** - the [multi-language](~/topics/domain-api/multi-language-string.md) product name.
+   - **Name** - the [multi-language](../complex-types/multi-language-string.md) product name.
    - **ProductGroup** - reference to the Product Group containing the product.
-   - **StandardPricePerLot** - [Amount](~/topics/domain-api/amount.md) object, containing the standard price.
+   - **StandardPricePerLot** - [Amount](../complex-types/amount.md) object, containing the standard price.
    - **Description** - textual description of the product. This description is clear text and does not support any formatting. There is also Description_Html attribute, which can be used to contain description with HTML formatting.
    - **MeasurementUnit** - reference to measurement units. This is the default sales measurement unit of the product.
 
