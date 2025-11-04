@@ -1,2 +1,5 @@
 # Version 26.2
-TBD
+
+- [**Reference Access Tokens (PAT, SAT)**](../../building-apps/auth/tokens/reference-access-tokens.md)  
+  Now supported for long-lived, manually issued access - ideal for automation, scripts, and service integrations.
+  
