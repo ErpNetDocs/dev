@@ -6,3 +6,5 @@
   href: auth/toc.yml
 - name: API Access
   href: api-access/toc.yml
+- name: Glossary and Key Terms
+  href: glossary.md  

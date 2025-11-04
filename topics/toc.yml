@@ -4,3 +4,5 @@
   href: erp-instances.md  
 - name: Application Types
   href: application-types.md
+- name: Application Server Endpoints
+  href: application-server-endpoints.md
