@@ -146,20 +146,19 @@
 <li>Can be activated by tenant administrators</li>
 <li>Must comply with platform validation and security requirements</li>
 </ul>
-<h2 id="hybrid-embedded-applications">Hybrid (Embedded) Applications</h2>
-<p><strong>Hybrid (Embedded) applications</strong> combine aspects of external and internal apps.</p>
-<p>They are hosted outside the ERP.net instance but can be embedded directly inside the <strong>Web Client</strong> interface using a <strong>WebView</strong>.</p>
-<p>This allows developers to create specialized web experiences that appear as a seamless part of the ERP.net UI while being maintained and deployed independently.</p>
+<h2 id="embedded-in-client-applications">Embedded (In-Client) Applications</h2>
+<p><strong>Embedded (In-Client) applications</strong> are external web apps that can be displayed directly inside the ERP.net Web Client using a <strong>WebView</strong>.</p>
+<p>They allow developers to create specialized web experiences that look and feel like a native part of ERP.net, while being hosted and maintained independently.</p>
 <h3 id="behavior-and-access">Behavior and Access</h3>
-<p>Hybrid apps behave differently depending on where they are hosted:</p>
+<p>Embedded apps behave differently depending on where they are hosted:</p>
 <ol>
 <li><p><strong>Apps hosted on a trusted domain</strong><br>
-If the app is part of the ERP.net Marketplace or hosted under the official domain <code>https://*.app.erp.net</code>, it can securely access the ERP.net APIs <strong>without performing explicit authorization</strong>.
+If the app is part of the ERP.net Marketplace or hosted under the official domain <code>https://*.app.erp.net</code>, it can securely access the ERP.net APIs <strong>without performing explicit authorization</strong>.<br>
 In this case, the Web Client shares the user's active session (via cookies), and the app can make API calls on behalf of the logged-in user.</p>
 </li>
-<li><p><strong>Apps hosted elsewhere</strong>
+<li><p><strong>Apps hosted elsewhere</strong><br>
 If the app is hosted on any other domain, it cannot access ERP.net data directly.<br>
-The only information it receives is the <strong>URL passed to the WebView</strong> when it is opened from the Web Client.
+The only information it receives is the <strong>URL passed to the WebView</strong> when it is opened from the Web Client.<br>
 To access data, such apps must perform standard authentication through the Identity Server using a registered Trusted Application.</p>
 </li>
 </ol>
@@ -210,7 +209,7 @@ To access data, such apps must perform standard authentication through the Ident
 <td>Public or commercial apps</td>
 </tr>
 <tr>
-<td><strong>Hybrid (Embedded)</strong></td>
+<td><strong>Embedded</strong></td>
 <td>ERP.net Platform / Partner / Third Party</td>
 <td>Depends on hosting domain</td>
 <td>Embedded dashboard, company widget</td>
@@ -218,6 +217,7 @@ To access data, such apps must perform standard authentication through the Ident
 </tr>
 </tbody>
 </table>
+<hr>
 <h2 id="learn-more">Learn More</h2>
 <ul>
 <li><p><strong><a href="what-are-erpnet-apps.html">What Are ERP.net Apps</a></strong><br>

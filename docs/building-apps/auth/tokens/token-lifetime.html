@@ -105,7 +105,7 @@ Expired tokens result in HTTP 401 (Unauthorized).</p>
 <h2 id="refresh-tokens">Refresh Tokens</h2>
 <p>Refresh tokens are <strong>longer-lived</strong> credentials that allow obtaining new access tokens without requiring the user to log in again.</p>
 <ul>
-<li><strong>Lifetime:</strong> 1 month</li>
+<li><strong>Lifetime:</strong> 1 month for confidential apps / 24 hours for public apps</li>
 <li><strong>Issued To:</strong> Confidential, interactive applications (authorization code flow).</li>
 <li><strong>Not Available For:</strong> Non-interactive (service) applications.</li>
 <li><strong>Purpose:</strong> Maintain seamless user sessions without re-authentication.</li>
@@ -158,7 +158,7 @@ For all other cases, prefer short-lived OAuth access tokens.</p>
 </tr>
 <tr>
 <td><strong>Refresh Token</strong></td>
-<td>1 month</td>
+<td>1 month (confidential) / 24 hours (public)</td>
 <td>User re-authentication</td>
 <td>Interactive apps</td>
 </tr>
@@ -181,7 +181,7 @@ Learn how to create and manage long-lived manual tokens.</p>
 <li><p><a href="scopes.html"><strong>Scopes and Permissions</strong></a><br>
 See how scopes define access levels in all token types.</p>
 </li>
-<li><p><a href="../../how-apps-connect/trusted-apps-access.md"><strong>Trusted Applications and Access Control</strong></a><br>
+<li><p><a href="../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
 Learn how token policies and expiration limits are enforced.</p>
 </li>
 </ul>

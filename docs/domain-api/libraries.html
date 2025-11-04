@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | ERP.net Developer Docs </title>
+      <title>Domain API Libraries | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | ERP.net Developer Docs ">
+      <meta name="title" content="Domain API Libraries | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,18 +85,83 @@
         </div>
 
         <article data-uid="">
+<h1 id="domain-api-libraries">Domain API Libraries</h1>
 
-<p>The Domain API is based on the <a href="https://www.odata.org/">OData protocol</a>.
-It allows object-oriented access to the data exposed by the ERP.net domain objects.</p>
-<p>Since the Domain API is an HTTP RESTfull API, it can be accessed by simple HTTP requests.
-However there are many <a href="https://www.odata.org/libraries/">ODATA libraries</a> that can be used.</p>
-<h2 id="erpnet-libraries">ERP.net libraries</h2>
+<p>The <strong>Domain API</strong> is based on the <a href="https://www.odata.org/">OData protocol</a>.<br>
+It provides object-oriented access to the data exposed by ERP.net domain objects.</p>
+<p>The Domain API is an HTTP RESTful API and can be accessed through standard HTTP requests.<br>
+However, using a client library simplifies authentication, request building, and result parsing.</p>
+<h2 id="-libraries">ERP.net Libraries</h2>
 <h3 id="net">.NET</h3>
-<p><a href="https://github.com/erpnet/ErpNet.Api.Client">ErpNet.Api.Client</a> - Handles authentication of service clients and work with Domain API requests, both - untyped and typed.</p>
-<h3 id="javascript">Javascript</h3>
-<p><a href="https://github.com/IdentityModel/oidc-client-js">oidc-client</a> - Library to provide OpenID Connect (OIDC) and OAuth2 protocol support for client-side, browser-based JavaScript client applications. Also included is support for user session and access token management.</p>
-<h3 id="php">PHP</h3>
-<p><a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/samples/src/php/ErpNetClient.php">OpenIdConnect client</a> - A simple library that allows an application to authenticate a user through the basic OpenID Connect flow.</p>
+<h4 id="erpnetapiclient"><a href="https://github.com/erpnet/ErpNet.Api.Client">ErpNet.Api.Client</a></h4>
+<p><strong>ErpNet.Api.Client</strong> is the official .NET client library for ERP.net APIs.</p>
+<p>It supports both <strong>Table API</strong> and <strong>Domain API</strong>, built on top of the OData standard.</p>
+<p><strong>NuGet packages:</strong></p>
+<ul>
+<li><a href="https://www.nuget.org/packages/ErpNet.Api.Client">ErpNet.Api.Client</a></li>
+<li><a href="https://www.nuget.org/packages/ErpNet.Api.Client.DomainApi">ErpNet.Api.Client.DomainApi</a></li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-csharp">var erpNetDatabaseUri = &quot;https://demodb.my.erp.net&quot;;
+
+// Create ErpNetServiceClient object to obtain a service access token.
+// In the database there must be trusted application registration with 
+// ApplicationUri: &quot;ServiceDemoClient&quot; and ApplcationSecretHash=Sha256(&quot;DEMO&quot;).
+ErpNetServiceClient identityClient = new ErpNetServiceClient(
+    erpNetDatabaseUri,
+    &quot;ServiceDemoClient&quot;,
+    &quot;DEMO&quot;);
+
+// Obtain the web address of the DomainApi for the database.
+var apiRoot = await identityClient.GetDomainApiODataServiceRootAsync();
+
+// Create the service
+DomainApiService service = new DomainApiService(
+    apiRoot,
+    identityClient.GetAccessTokenAsync);
+
+// Create query command with $top, $filter, $select and $expand clauses.
+ODataCommand command = new ODataCommand(&quot;General_Products_Products&quot;);
+command.Type = ErpCommandType.Query;
+command.FilterClause = &quot;contains(PartNumber,'001')&quot;;
+command.SelectClause = &quot;Id,PartNumber,Name,ProductGroup&quot;;
+command.ExpandClause = &quot;ProductGroup($select=Id,Code,Name)&quot;;
+command.TopClause = 5;
+
+// Get the ODATA json result as IDictionary&lt;string,object&gt;
+var result = await service.ExecuteDictionaryAsync(command);
+</code></pre>
+<p><strong>Using typed entities:</strong></p>
+<pre><code class="lang-csharp">// Use anonymous types for $select and $expand clause
+var cmd = service.Command&lt;Product&gt;()
+    .Top(5)
+    .Filter(p =&gt; p.PartNumber.Contains(&quot;001&quot;))
+    .Select(p =&gt; new 
+    {
+        p.Id, 
+        p.PartNumber, 
+        p.Name, 
+        ProductGroup = new 
+        { 
+            p.ProductGroup.Id, 
+            p.ProductGroup.Code, 
+            p.ProductGroup.Name
+        }
+    });
+
+var result = await cmd.LoadAsync();
+
+// The HTTP command is:
+// GET General_Products_Products?$top=5&amp;$filter=contains(PartNumber,'001')
+// &amp;$select=Id,PartNumber,Name,ProductGroup
+// &amp;$expand=ProductGroup($select=Id,Code,Name)
+</code></pre>
+<p>For more samples, see:<br>
+<a href="https://github.com/ErpNetDocs/dev/tree/master/domain-api/samples/src/dotnet/ErpNet.Api.Client.Samples">ErpNet.Api.Client Samples</a></p>
+<h2 id="generic-odata-libraries">Generic OData Libraries</h2>
+<p>The Domain API follows the OData standard, so any OData-compliant library can be used to access it.</p>
+<p>You can explore a list of available client libraries for different programming languages at:<br>
+<a href="https://www.odata.org/libraries/">https://www.odata.org/libraries/</a></p>
 
 </article>
 

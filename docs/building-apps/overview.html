@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Building Apps for ERP.net | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Building Apps for ERP.net | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/overview.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="building-apps-for-">Building Apps for ERP.net</h1>
+
+<p>The <strong>Building Apps</strong> section is your complete guide to developing secure, modern, and scalable applications for ERP.net.</p>
+<p>ERP.net provides a unified platform where apps can <strong>connect</strong>, <strong>authenticate</strong>, and <strong>extend</strong> the system safely - whether they are internal extensions, web apps, background services, or external integrations.</p>
+<h2 id="what-you-can-build">What You Can Build</h2>
+<p>You can build:</p>
+<ul>
+<li><strong>Interactive web or desktop apps</strong> – for users who sign in and work with ERP.net data.</li>
+<li><strong>Service or background integrations</strong> – automated jobs that sync or process data.</li>
+<li><strong>Hybrid apps</strong> – combined solutions with both user-facing and background components.</li>
+<li><strong>BI dashboards and connectors</strong> – systems that analyze ERP.net data through APIs.</li>
+</ul>
+<p>Every app connects securely through the ERP.net <strong>Identity Server</strong> and uses <strong>tokens</strong> to access the <strong>Domain API</strong> or <strong>Table API</strong>.</p>
+<h2 id="sections-overview">Sections Overview</h2>
+<p><a href="concepts/overview.html"><strong>Concepts</strong></a><br>
+Understand what ERP.net apps are, how they are classified, and how trusted applications manage access and lifecycle.</p>
+<p><a href="auth/overview.html"><strong>Authentication and Authorization</strong></a><br>
+Learn how apps sign in, request tokens, and interact securely with the Identity Server using OAuth 2.0.</p>
+<p><a href="api-access/overview.html"><strong>API Access</strong></a><br>
+Discover how to access and manipulate ERP.net data through the Domain API and Table API, including security and performance best practices.</p>
+<p><a href="auth/sessions/overview.html"><strong>Sessions and Licensing</strong></a><br>
+See how sessions are created, how they consume licenses, and how to manage compliance.</p>
+<p><a href="auth/samples/index.html"><strong>Samples</strong></a><br>
+Practical examples showing how to authenticate, get tokens, and call APIs from different app types.</p>
+<p><a href="auth/security-best-practices.html"><strong>Security Best Practices</strong></a><br>
+Essential recommendations for keeping your integrations secure, compliant, and maintainable.</p>
+<h2 id="before-you-start">Before You Start</h2>
+<ol>
+<li>Make sure your ERP.net instance is accessible.</li>
+<li>Register your app as a <strong>Trusted Application</strong> in that instance.</li>
+<li>Choose the proper <strong>authentication flow</strong> for your app type.</li>
+<li>Start testing API calls using tools like <strong>Postman</strong> or <strong>curl</strong>.</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>If you're new to ERP.net development, begin with the<br>
+<a href="concepts/overview.html"><strong>Concepts - Overview</strong></a> page to understand how apps fit into the ERP.net ecosystem.</p>
+</div>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="../domain-api/index.html"><strong>Domain API</strong></a><br>
+Learn how to query and manipulate business data programmatically.</p>
+</li>
+<li><p><a href="../table-api/index.html"><strong>Table API</strong></a><br>
+Build fast BI connectors with streaming data access.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/overview.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

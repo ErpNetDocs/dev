@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Best Practices for Calling ERP.net APIs Securely | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Best Practices for Calling ERP.net APIs Securely | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/api-access/best-practices.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="best-practices-for-calling--apis-securely">Best Practices for Calling ERP.net APIs Securely</h1>
+
+<p>Building apps that interact with ERP.net APIs requires careful attention to <strong>security</strong>, <strong>performance</strong>, and <strong>license usage</strong>.</p>
+<p>The following guidelines apply to both the <strong>Domain API</strong> and <strong>Table API</strong> and help ensure your integrations run safely and efficiently.</p>
+<h2 id="authentication-and-tokens">Authentication and Tokens</h2>
+<ul>
+<li>Always use <strong>OAuth 2.0</strong> authentication via the <strong>ERP.net Identity Server</strong>.</li>
+<li>Never hardcode tokens, client secrets, or credentials in source code.</li>
+<li>Store access tokens securely - for example, in encrypted storage or a secure vault.</li>
+<li>Use <strong>short-lived access tokens</strong> and <strong>refresh tokens</strong> for long-running apps.</li>
+<li>For automation, use <strong>Service Access Tokens (SATs)</strong> instead of user tokens.</li>
+<li>Rotate tokens regularly and revoke any unused or compromised credentials.</li>
+</ul>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p>Do not use Basic Authentication unless absolutely necessary (e.g., legacy BI tools).<br>
+It is deprecated and significantly less secure.</p>
+</div>
+<h2 id="https-and-data-protection">HTTPS and Data Protection</h2>
+<ul>
+<li>Always use <strong>HTTPS</strong> when calling any ERP.net API.</li>
+<li>Never transmit access tokens or sensitive data over unencrypted channels.</li>
+<li>Validate SSL/TLS certificates to prevent man-in-the-middle attacks.</li>
+<li>Sanitize user inputs to avoid injection or malformed OData queries.</li>
+</ul>
+<h2 id="api-efficiency">API Efficiency</h2>
+<p>Efficient API design improves performance, reduces server load, and minimizes license usage.</p>
+<ul>
+<li>Always <strong>filter requests</strong> to return only the necessary records.</li>
+<li>Use <code>$select</code> to fetch only the fields you actually need.</li>
+<li>Prefer <strong>bulk queries</strong> instead of fetching one record per call.<br>
+It is faster and uses fewer sessions and network round-trips.</li>
+<li><strong>Cache static or rarely changing entities</strong>, such as enterprise companies, user defined types or configurations.<br>
+Avoid re-requesting them on every operation.</li>
+<li>For complex reports or data aggregations, use the <strong>Table API</strong> instead of the Domain API.</li>
+<li>Handle pagination with <code>$skip</code> and <code>$top</code> for large datasets, rather than requesting all data at once.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Well-structured queries and smart caching dramatically reduce latency and license overhead while improving user experience.</p>
+</div>
+<h2 id="session-and-license-management">Session and License Management</h2>
+<ul>
+<li>Each active session consumes a <strong>license slot</strong>.</li>
+<li>Avoid unnecessary session creation by reusing tokens where possible.</li>
+<li>Close idle sessions by logging out (interactive apps) or letting them expire naturally.</li>
+<li>For background integrations, use a dedicated <strong>system user</strong> to prevent conflicts.</li>
+<li>Monitor session counts and license usage in the Instance Manager.</li>
+</ul>
+<h2 id="error-handling-and-resilience">Error Handling and Resilience</h2>
+<ul>
+<li>Handle <code>401 Unauthorized</code> by reauthenticating or refreshing the token.</li>
+<li>Handle <code>429 Too Many Requests</code> by applying <strong>exponential backoff</strong> or retry delays.</li>
+<li>Validate all API responses before processing.</li>
+<li>Log errors with sufficient context (endpoint, status code, token type).</li>
+<li>Design idempotent operations - repeatable without side effects.</li>
+</ul>
+<h2 id="security-for-bi-and-table-api-usage">Security for BI and Table API Usage</h2>
+<ul>
+<li>When using the <strong>Table API</strong>, always restrict data access with minimal scopes and filters.</li>
+<li>Apply row-level security through ERP.net permissions whenever possible.</li>
+<li>Use <strong>service identities</strong> (SATs) for scheduled BI refreshes instead of user credentials.</li>
+<li>Rotate BI access tokens periodically and audit their usage.</li>
+</ul>
+<h2 id="development-and-testing">Development and Testing</h2>
+<ul>
+<li>Use <strong>sandbox instances</strong> for development.</li>
+<li>Separate test and production trusted applications.</li>
+<li>Never reuse production tokens in non-production environments.</li>
+<li>Enable verbose logging during testing - but redact tokens from logs.</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<p>Following these best practices will ensure your ERP.net integrations are:</p>
+<ul>
+<li><strong>Secure</strong> – data and credentials are protected.</li>
+<li><strong>Efficient</strong> – API usage is optimized for performance and cost.</li>
+<li><strong>Compliant</strong> – sessions, licenses, and identities follow ERP.net rules.</li>
+</ul>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="../../domain-api/index.html"><strong>Domain API Reference</strong></a><br>
+Learn how to query and manipulate ERP.net business data.</p>
+</li>
+<li><p><a href="../../table-api/index.html"><strong>Table API Reference</strong></a><br>
+Retrieve high-volume analytical data with streaming support.</p>
+</li>
+<li><p><a href="../auth/tokens/tokens-overview.html"><strong>Tokens Overview</strong></a><br>
+Understand access tokens, reference tokens, and scopes.</p>
+</li>
+<li><p><a href="../auth/sessions/license-slot.html"><strong>License Slot Usage</strong></a><br>
+Learn how API sessions affect license consumption.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/api-access/best-practices.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

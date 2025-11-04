@@ -22,10 +22,73 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/authentication-flows.md",
+      "source_relative_path": "building-apps/api-access/best-practices.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/authentication-flows.html"
+          "relative_path": "building-apps/api-access/best-practices.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/api-access/domain-api.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/api-access/domain-api.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/api-access/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/api-access/overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/api-access/table-api.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/api-access/table-api.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "building-apps/api-access/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/api-access/toc.html"
+        },
+        ".json": {
+          "relative_path": "building-apps/api-access/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/client-libraries.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/client-libraries.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/faq.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/faq.html"
         }
       },
       "version": ""
@@ -297,16 +360,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/index.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/index.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "building-apps/auth/overview.md",
       "output": {
         ".html": {
@@ -399,6 +452,56 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/security-best-practices.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/security-best-practices.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/sessions/license-compliance.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/sessions/license-compliance.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/sessions/license-slot.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/sessions/license-slot.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/sessions/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/sessions/overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/sessions/session-revocation.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/sessions/session-revocation.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Toc",
       "source_relative_path": "building-apps/auth/sessions/toc.yml",
       "output": {
@@ -407,6 +510,26 @@
         },
         ".json": {
           "relative_path": "building-apps/auth/sessions/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/sessions/token-session-relationship.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/sessions/token-session-relationship.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/tldr.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/tldr.html"
         }
       },
       "version": ""
@@ -430,6 +553,56 @@
       "output": {
         ".html": {
           "relative_path": "building-apps/auth/tokens/access-tokens.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "building-apps/auth/tokens/images/im-create-sat.png",
+      "output": {
+        "resource": {
+          "relative_path": "building-apps/auth/tokens/images/im-create-sat.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "building-apps/auth/tokens/images/im-trusted-app-tokens.png",
+      "output": {
+        "resource": {
+          "relative_path": "building-apps/auth/tokens/images/im-trusted-app-tokens.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "building-apps/auth/tokens/images/profile-create-pat.png",
+      "output": {
+        "resource": {
+          "relative_path": "building-apps/auth/tokens/images/profile-create-pat.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "building-apps/auth/tokens/images/profile-tokens-list.png",
+      "output": {
+        "resource": {
+          "relative_path": "building-apps/auth/tokens/images/profile-tokens-list.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/tokens/issuing-reference-tokens.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/tokens/issuing-reference-tokens.html"
         }
       },
       "version": ""
@@ -483,16 +656,6 @@
       "output": {
         ".html": {
           "relative_path": "building-apps/auth/tokens/tokens-overview.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/trusted-applications.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/trusted-applications.html"
         }
       },
       "version": ""
@@ -562,10 +725,20 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/index.md",
+      "source_relative_path": "building-apps/glossary.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/index.html"
+          "relative_path": "building-apps/glossary.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/overview.html"
         }
       },
       "version": ""
@@ -579,16 +752,6 @@
         },
         ".json": {
           "relative_path": "building-apps/toc.json"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "domain-api/authentication.md",
-      "output": {
-        ".html": {
-          "relative_path": "domain-api/authentication.html"
         }
       },
       "version": ""
@@ -1123,6 +1286,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "domain-api/samples/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/samples/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "domain-api/samples/javascript-client.md",
       "output": {
         ".html": {
@@ -1429,6 +1602,16 @@
         },
         ".json": {
           "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "topics/application-server-endpoints.md",
+      "output": {
+        ".html": {
+          "relative_path": "topics/application-server-endpoints.html"
         }
       },
       "version": ""

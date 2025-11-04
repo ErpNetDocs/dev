@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Application Server Endpoints | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Application Server Endpoints | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/topics/application-server-endpoints.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="application-server-endpoints">Application Server Endpoints</h1>
+
+<p>Each ERP.net instance is represented by an <strong>application server</strong>, which is the central component of the platform.</p>
+<p>It provides access to essential runtime information, configuration details, and basic diagnostic tools through a small set of root-level HTTP endpoints.</p>
+<p>These endpoints are exposed directly under the instance root and are designed for discovery, monitoring, and administrative purposes.</p>
+<p>They operate independently of the hosted sites such as ERP.net Identity Server, Web Client, Client Center, Domain API, Table API.</p>
+<p>The base URL of an instance looks like this:</p>
+<pre><code class="lang-http">https://&lt;my-instance&gt;.my.erp.net
+</code></pre>
+<p>From this address, you can access a small set of public tools and information endpoints.</p>
+<p>They are primarily designed for system discovery, health monitoring, and administration utilities.</p>
+<h2 id="instance-landing-page---">Instance Landing Page - <code>/</code></h2>
+<p>Displays the default landing page with basic system information.</p>
+<p><strong>Returns:</strong></p>
+<ul>
+<li>Server version</li>
+<li>&quot;What's new&quot; link</li>
+<li>A list of available sites (Web Client, APIs, etc.)</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-http">GET https://&lt;my-instance&gt;.my.erp.net/
+</code></pre>
+<h2 id="site-auto-discovery---toolsauto-discovery">Site Auto-Discovery - <code>/tools/auto-discovery</code></h2>
+<p>Returns a JSON document that describes the current instance and the publicly exposed sites.</p>
+<h3 id="response-model">Response model</h3>
+<pre><code class="lang-json">{
+  &quot;Host&quot;: &quot;string&quot;,                 // Instance host name
+  &quot;DbName&quot;: &quot;string|null&quot;,          // Database name (if available)
+  &quot;WebSites&quot;: [                     // Public sites for this instance
+    {
+      &quot;Type&quot;: &quot;DomainAPI&quot;,          // See WebsiteType enum
+      &quot;Status&quot;: &quot;Working&quot;,          // See WebsiteStatus enum
+      &quot;StatusDescription&quot;: &quot;string&quot;,
+      &quot;Url&quot;: &quot;https://.../api&quot;,     // Absolute URL
+      &quot;System&quot;: false,              // true for system sites (e.g., ID)
+      &quot;AdditionalProperties&quot;: {     // Optional, site-specific extras
+        &quot;ODataServiceRoot&quot;: &quot;https://.../api/domain/odata/&quot; // Only for DomainAPI
+      }
+    }
+  ]
+}
+</code></pre>
+<h3 id="properties">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Host</strong></td>
+<td><code>string</code></td>
+<td>Instance host name.</td>
+</tr>
+<tr>
+<td><strong>DbName</strong></td>
+<td><code>string \| null</code></td>
+<td>Database name, if known.</td>
+</tr>
+<tr>
+<td><strong>WebSites</strong></td>
+<td><code>AutoDiscoveryWebSite[]</code></td>
+<td>List of publicly exposed sites.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="autodiscoverywebsite">AutoDiscoveryWebSite</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Type</strong></td>
+<td><code>WebsiteType</code></td>
+<td>Type of site.</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td><code>WebsiteStatus</code></td>
+<td>Current status.</td>
+</tr>
+<tr>
+<td><strong>StatusDescription</strong></td>
+<td><code>string</code></td>
+<td>Optional human-readable status detail.</td>
+</tr>
+<tr>
+<td><strong>Url</strong></td>
+<td><code>string</code> (absolute URL)</td>
+<td>Root URL of the site.</td>
+</tr>
+<tr>
+<td><strong>System</strong></td>
+<td><code>boolean</code></td>
+<td><code>true</code> for system sites (e.g., Identity).</td>
+</tr>
+<tr>
+<td><strong>AdditionalProperties</strong></td>
+<td><code>Dictionary&lt;string,string&gt;</code></td>
+<td>Optional site-specific extras. For <code>DomainAPI</code>, includes <code>ODataServiceRoot</code> pointing to the OData service root (<code>&lt;domain-api-url&gt;/domain/odata/</code>).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="server-info--downloads---toolsserver-info">Server Info &amp; Downloads - <code>/tools/server-info</code></h2>
+<pre><code class="lang-http">GET https://&lt;my-instance&gt;.my.erp.net/server-info
+</code></pre>
+<p><strong>Response (example):</strong></p>
+<pre><code class="lang-json">{
+  &quot;Version&quot;: &quot;26.1.0&quot;,
+  &quot;Downloads&quot;: {
+    &quot;WhatsNew&quot;: &quot;https://&lt;my-instance&gt;.my.erp.net/sys/downloads/ErpNet_Whats_New.txt&quot;,
+    &quot;WinClient&quot;: &quot;https://&lt;my-instance&gt;.my.erp.net/sys/downloads/ErpNet.WinClient.Setup.x86.msi&quot;,
+    &quot;PosClient&quot;: &quot;https://&lt;my-instance&gt;.my.erp.net/sys/downloads/EnterpriseOne.Pos.Setup.x86.msi&quot;,
+    &quot;WinClient64&quot;: &quot;https://&lt;my-instance&gt;.my.erp.net/sys/downloads/ErpNet.WinClient.Setup.x64.msi&quot;,
+    &quot;PosClient64&quot;: &quot;https://&lt;my-instance&gt;.my.erp.net/sys/downloads/EnterpriseOne.Pos.Setup.x64.msi&quot;
+  },
+  &quot;InternalApi&quot;: {
+    &quot;UseHttpCompression&quot;: true
+  }
+}
+</code></pre>
+<h2 id="resource-monitor---toolsresource-monitor">Resource Monitor - <code>/tools/resource-monitor</code></h2>
+<p>Shows live resource usage statistics such as CPU and memory consumption.</p>
+<p><strong>Response:</strong> <code>application/json</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-http">GET https://&lt;my-instance&gt;.my.erp.net/resource-monitor
+</code></pre>
+<p><strong>Response (example):</strong></p>
+<pre><code class="lang-json">{
+  &quot;CPUUsage&quot;: 7.12,
+  &quot;ProcessorCount&quot;: 8,
+  &quot;AvailableMemoryMiB&quot;: 24567.3,
+  &quot;UsedMemoryMiB&quot;: 1234.8,
+  &quot;CommittedMemoryMiB&quot;: 13802.6,
+  &quot;TotalMemoryMiB&quot;: 25802.1
+}
+</code></pre>
+<h2 id="sha-256-utility---toolssha256">SHA-256 Utility - <code>/tools/sha256</code></h2>
+<p>Generates a SHA-256 hash from a given string and returns it as Base64.</p>
+<p><strong>Query parameters:</strong></p>
+<ul>
+<li><code>secret</code> - The input string to hash</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-http">GET https://&lt;my-instance&gt;.my.erp.net/tools/sha256?secret=DEMO
+</code></pre>
+<p><strong>Response:</strong></p>
+<pre><code class="lang-json">{ &quot;sha256&quot;: &quot;dZ4Y...==&quot; }
+</code></pre>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/topics/application-server-endpoints.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

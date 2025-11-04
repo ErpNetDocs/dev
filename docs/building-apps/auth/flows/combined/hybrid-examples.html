@@ -88,7 +88,7 @@
 <h1 id="example-scenarios">Example Scenarios</h1>
 
 <p>Hybrid applications combine user-facing interaction with system-level automation.</p>
-<p>They are especially useful when the app serves <strong>external ERP.net users</strong> but also needs to perform <strong>privileged background operations</strong> — all under a single, controlled app identity.</p>
+<p>They are especially useful when the app serves <strong>external ERP.net users</strong> but also needs to perform <strong>privileged background operations</strong> - all under a single, controlled app identity.</p>
 <p>Below are several practical hybrid patterns you can adapt for your integration or portal design.</p>
 <h2 id="scenario-1-external-partner-portal-with-automated-sync">Scenario 1: External Partner Portal with Automated Sync</h2>
 <p><strong>Use case:</strong></p>
@@ -103,7 +103,7 @@ Meanwhile, a backend service synchronizes stock data nightly using elevated perm
 <ul>
 <li>A <strong>backend service</strong> (using Client Credentials flow) performs all privileged tasks, like syncing stock or processing orders.</li>
 <li>The backend uses a <strong>SystemUser</strong> identity to authenticate and access ERP.net data.</li>
-<li><strong>No ERP.net data is directly exposed to external users</strong> — all access is controlled via the service account.</li>
+<li><strong>No ERP.net data is directly exposed to external users</strong> - all access is controlled via the service account.</li>
 </ul>
 <p><strong>Result:</strong></p>
 <p>External users interact with their data securely through the portal, while the backend service updates the data automatically, without requiring manual intervention.</p>
@@ -120,7 +120,7 @@ The frontend authenticates the customer, but the backend manages all data access
 <ul>
 <li>The <strong>backend</strong> uses Client Credentials flow to obtain a <strong>service token</strong>. This token is used for all interactions with ERP.net APIs.</li>
 <li>The backend is responsible for checking the customer's access rights and fetching the relevant data from ERP.net.</li>
-<li><strong>External customers never directly interact with ERP.net APIs</strong> — all access is managed by the backend.</li>
+<li><strong>External customers never directly interact with ERP.net APIs</strong> - all access is managed by the backend.</li>
 </ul>
 <p><strong>Result:</strong></p>
 <p>External customers authenticate to the system, but the frontend only passes relevant identity context to the backend. The backend makes all the calls to ERP.net using a service token.</p>

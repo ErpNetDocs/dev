@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Security and Best Practices | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Security and Best Practices | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/security-best-practices.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="security-and-best-practices">Security and Best Practices</h1>
+
+<p>Strong authentication and authorization practices are essential for keeping ERP.net integrations secure.</p>
+<p>This page summarizes best practices when working with OAuth 2.0, ERP.net Identity Server, and trusted applications.</p>
+<h2 id="always-use-https">Always Use HTTPS</h2>
+<ul>
+<li>All authentication and token exchange endpoints require <strong>HTTPS</strong>.</li>
+<li>Never use <code>http://</code> except in local development with valid self-signed certificates.</li>
+<li>Redirect URIs must also use HTTPS for production deployments.</li>
+</ul>
+<h2 id="protect-client-secrets">Protect Client Secrets</h2>
+<ul>
+<li>Only <strong>Confidential</strong> clients can have secrets.</li>
+<li>Do not include secrets in public apps (SPAs, mobile, or native clients).</li>
+<li>Store secrets securely on the server using environment variables or secret vaults.</li>
+<li>Rotate secrets periodically and immediately after exposure.</li>
+</ul>
+<h2 id="use-the-correct-flow">Use the Correct Flow</h2>
+<ul>
+<li>Use <strong>Authorization Code flow (with PKCE)</strong> for interactive apps.</li>
+<li>Use <strong>Client Credentials flow</strong> for backend or service integrations.</li>
+<li>Use <strong>Hybrid flow</strong> only when both front-end and back-end components need separate tokens.</li>
+<li>Avoid workarounds such as embedding service credentials in front-end apps.</li>
+</ul>
+<h2 id="apply-least-privilege">Apply Least Privilege</h2>
+<ul>
+<li>Request only the scopes your app needs (<code>read</code>, <code>update</code>, etc.).</li>
+<li>Avoid unnecessary permissions or broad access.</li>
+<li>Configure Trusted Applications with minimal scopes and access modes.</li>
+<li>Use separate apps for different integrations when possible.</li>
+</ul>
+<h2 id="handle-tokens-securely">Handle Tokens Securely</h2>
+<ul>
+<li>Treat all tokens as confidential credentials.</li>
+<li>Never log, email, or store tokens in plain text.</li>
+<li>Always send tokens in the <code>Authorization: Bearer</code> header.</li>
+<li>Do not include tokens in URLs or query parameters.</li>
+<li>Validate token signatures and expiration if implementing custom middleware.</li>
+</ul>
+<h2 id="refresh-and-reference-tokens">Refresh and Reference Tokens</h2>
+<ul>
+<li>Use <strong>refresh tokens</strong> only in confidential clients.</li>
+<li>Public clients (SPAs, mobile) must re-authenticate when access tokens expire.</li>
+<li>Use <strong>Reference Access Tokens (PAT or SAT)</strong> only when long-lived access is required.</li>
+<li>Always restrict their scopes and lifetime.</li>
+</ul>
+<h2 id="secure-redirect-uris">Secure Redirect URIs</h2>
+<ul>
+<li>Register all redirect URIs exactly in the Trusted Application definition.</li>
+<li>Reject unknown redirect URIs to prevent redirection attacks.</li>
+<li>Use HTTPS and avoid wildcards.</li>
+<li>Always implement <strong>PKCE</strong> in public clients.</li>
+</ul>
+<h2 id="validate-trusted-applications-regularly">Validate Trusted Applications Regularly</h2>
+<ul>
+<li>Audit all registered Trusted Applications for correctness and minimal access.</li>
+<li>Disable or delete unused apps (<code>IsEnabled = false</code>).</li>
+<li>Review who can issue reference tokens via the <strong>AccessTokens</strong> policy (<code>None</code>, <code>AuthenticatedUsers</code>, <code>AdministratorsOnly</code>).</li>
+<li>Confirm each service user is least-privilege and properly licensed.</li>
+</ul>
+<h2 id="avoid-token-reuse">Avoid Token Reuse</h2>
+<ul>
+<li>Do not share access tokens between users, services, or environments.</li>
+<li>Each user or service identity should obtain its own token.</li>
+<li>Never reuse a service token across multiple integrations.</li>
+</ul>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="how-apps-connect/oauth2-overview.html"><strong>OAuth 2.0 Overview</strong></a><br>
+Learn how ERP.net implements standard OAuth flows.</p>
+</li>
+<li><p><a href="how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+How trusted app definitions control access and security modes.</p>
+</li>
+<li><p><a href="tokens/access-tokens.html"><strong>Access Tokens</strong></a><br>
+Token contents, signatures, and validation.</p>
+</li>
+<li><p><a href="tokens/reference-access-tokens.html"><strong>Reference Access Tokens (PAT, SAT)</strong></a><br>
+Managing long-lived automation credentials securely.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/security-best-practices.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
