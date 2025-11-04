@@ -110,14 +110,14 @@
 <a href="https://testdb.my.erp.net/id">https://testdb.my.erp.net/id</a></p>
 <p>You can discover this automatically through the system's discovery endpoint (see below).</p>
 <h2 id="discovering-the-identity-server">Discovering the Identity Server</h2>
-<p>Every ERP.net instance exposes an <strong>auto-discovery endpoint</strong> that lists all available sites and services — including the Identity Server, Domain API, and other functional components.</p>
+<p>Every ERP.net instance exposes an <strong>auto-discovery endpoint</strong> that lists all available sites and services - including the Identity Server, Domain API, and other functional components.</p>
 <p>This allows developers (and tools) to dynamically determine where to send authentication and API requests.</p>
-<p><strong>Request</strong></p>
+<p><strong>Request:</strong></p>
 <pre><code class="lang-http">GET https://{instance-root}/sys/auto-discovery
 </code></pre>
 <pre><code class="lang-http">GET https://testdb.my.erp.net/sys/auto-discovery
 </code></pre>
-<p><strong>Response (truncated)</strong></p>
+<p><strong>Response (truncated):</strong></p>
 <pre><code class="lang-json">{
   &quot;WebSites&quot;: [
     {
@@ -140,14 +140,14 @@
 <h2 id="standard-endpoints">Standard endpoints</h2>
 <p>The Identity Server exposes the standard OAuth 2.0 and OpenID Connect endpoints. The most commonly used ones are:</p>
 <h3 id="1-discovery-endpoint">1) Discovery endpoint</h3>
-<p>The <strong>discovery endpoint</strong> provides metadata about the Identity Server — including its issuer name, supported scopes, signing keys, and the exact URLs for authentication, token exchange, and logout.</p>
+<p>The <strong>discovery endpoint</strong> provides metadata about the Identity Server - including its issuer name, supported scopes, signing keys, and the exact URLs for authentication, token exchange, and logout.</p>
 <p>This information helps client libraries and apps automatically configure themselves without hardcoding endpoints.</p>
-<p><strong>Request</strong></p>
+<p><strong>Request:</strong></p>
 <pre><code class="lang-http">GET https://{instance-root}/id/.well-known/openid-configuration
 </code></pre>
 <pre><code class="lang-http">GET https://testdb.my.erp.net/id/.well-known/openid-configuration
 </code></pre>
-<p><strong>Example response (truncated)</strong></p>
+<p><strong>Example response (truncated):</strong></p>
 <pre><code class="lang-json">{
   &quot;issuer&quot;: &quot;https://testdb.my.erp.net/id&quot;,
   &quot;authorization_endpoint&quot;: &quot;https://testdb.my.erp.net/id/connect/authorize&quot;,
@@ -173,7 +173,7 @@
   ]
 }
 </code></pre>
-<p><strong>Key properties</strong></p>
+<p><strong>Key properties:</strong></p>
 <ul>
 <li><strong>issuer</strong> - The base URL identifying the Identity Server. Used to validate tokens issued by this instance.</li>
 <li><strong>authorization_endpoint</strong> - The URL where interactive user logins begin (used in the Authorization Code flow).</li>
@@ -196,7 +196,7 @@ Applications should use it dynamically rather than hardcoding endpoints.</p>
 <p>Starts an interactive sign-in and authorization request. Used by apps that act on behalf of a user (Authorization Code flow).</p>
 <pre><code class="lang-http">GET https://{instance-root}/id/connect/authorize
 </code></pre>
-<p><strong>Example request</strong></p>
+<p><strong>Example request:</strong></p>
 <pre><code class="lang-http">GET https://testdb.my.erp.net/id/connect/authorize?
   client_id=MyApp&amp;
   redirect_uri=https%3A%2F%2Fmyapp.com%2Fcallback&amp;
@@ -209,7 +209,7 @@ Applications should use it dynamically rather than hardcoding endpoints.</p>
 <p>Exchanges an authorization code or client credentials for access tokens (and refresh tokens where applicable).</p>
 <pre><code class="lang-http">POST https://{instance-root}/id/connect/token
 </code></pre>
-<p><strong>Example: exchange authorization code</strong></p>
+<p><strong>Example: exchange authorization code:</strong></p>
 <pre><code class="lang-http">POST /id/connect/token
 Content-Type: application/x-www-form-urlencoded
 
@@ -219,7 +219,7 @@ grant_type=authorization_code&amp;
 code=abc123&amp;
 redirect_uri=https%3A%2F%2Fmyapp.com%2Fcallback
 </code></pre>
-<p><strong>Example response: exchange authorization code</strong></p>
+<p><strong>Example response: exchange authorization code:</strong></p>
 <pre><code class="lang-http">{
   &quot;access_token&quot;: &quot;eyJhbGciOi...&quot;,
   &quot;token_type&quot;: &quot;Bearer&quot;,
@@ -228,7 +228,7 @@ redirect_uri=https%3A%2F%2Fmyapp.com%2Fcallback
   &quot;scope&quot;: &quot;openid profile offline_access&quot;
 }
 </code></pre>
-<p><strong>Example: client credentials</strong></p>
+<p><strong>Example: client credentials:</strong></p>
 <pre><code class="lang-http">POST /id/connect/token
 Content-Type: application/x-www-form-urlencoded
 
@@ -237,7 +237,7 @@ client_secret=secret&amp;
 grant_type=client_credentials&amp;
 scope=update
 </code></pre>
-<p><strong>Example response: client credentials</strong></p>
+<p><strong>Example response: client credentials:</strong></p>
 <pre><code class="lang-http">{
   &quot;access_token&quot;: &quot;eyJhbGciOi...&quot;,
   &quot;token_type&quot;: &quot;Bearer&quot;,
@@ -254,7 +254,7 @@ They are not issued for Client Credentials.</p>
 <p>Triggers logout and single sign-out across participating apps.</p>
 <pre><code class="lang-http">GET https://{instance-root}/id/connect/endsession
 </code></pre>
-<p><strong>Example: end session</strong></p>
+<p><strong>Example: end session:</strong></p>
 <pre><code class="lang-http">GET https://testdb.my.erp.net/id/connect/endsession?
   id_token_hint=eyJhbGciOi...&amp;
   post_logout_redirect_uri=https%3A%2F%2Fmyapp.com%2Flogout-complete

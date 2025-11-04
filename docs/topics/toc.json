@@ -1,2 +1,2 @@
 
-{"order":100,"items":[{"name":"Overview","href":"index.html","topicHref":"index.html"},{"name":"ERP Instances","href":"erp-instances.html","topicHref":"erp-instances.html"},{"name":"Application Types","href":"application-types.html","topicHref":"table-api/index.md"}],"pdf":false}
+{"order":100,"items":[{"name":"Overview","href":"index.html","topicHref":"index.html"},{"name":"ERP Instances","href":"erp-instances.html","topicHref":"erp-instances.html"},{"name":"Application Types","href":"application-types.html","topicHref":"application-types.html"},{"name":"Application Server Endpoints","href":"application-server-endpoints.html","topicHref":"application-server-endpoints.html"}],"pdf":false}

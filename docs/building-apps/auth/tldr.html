@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Authentication and Authorization – The Short Version | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Authentication and Authorization – The Short Version | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/tldr.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="authentication-and-authorization--the-short-version">Authentication and Authorization – The Short Version</h1>
+
+<h2 id="tldr">TL;DR</h2>
+<p>Every app that connects to ERP.net must first be <strong>trusted</strong>, then <strong>authenticated</strong>, and finally <strong>authorized</strong> to act within the system.</p>
+<p>Here's how it always works:</p>
+<ol>
+<li>The app is <strong>registered as a Trusted Application</strong> in the target ERP.net instance.</li>
+<li>It authenticates through the <strong>Identity Server</strong>, which verifies who (or what) is signing in.</li>
+<li>The server issues an <strong>access token</strong> that defines what the app can do.</li>
+<li>The app uses that token to call <strong>ERP.net APIs</strong> securely and efficiently.</li>
+</ol>
+<p>All tokens are issued and verified by the instance's <strong>Identity Server</strong> - no passwords are exchanged and no direct database access is needed.</p>
+<p>That's the foundation of secure, auditable, and consistent access across all ERP.net integrations.</p>
+<h2 id="a-real-world-example">A Real-World Example</h2>
+<p><strong>Alice</strong> manages operations at a distribution company powered by ERP.net.</p>
+<p>Her developer <strong>Bob</strong> creates a web app to help sales reps update orders in real time.</p>
+<p>Here's what happens under the hood:</p>
+<ol>
+<li>Bob registers the app as a <strong>Trusted Application</strong> in the company's ERP.net instance.</li>
+<li>When a sales rep logs in, the app redirects them to the <strong>Identity Server</strong> - the official login portal.</li>
+<li>After authentication, the server issues a <strong>token</strong> saying:<br>
+<em>This user is verified, and the app may update sales orders.</em></li>
+<li>The app uses that token when calling the <strong>ERP.net APIs</strong>, which check it for validity and scope before processing the request.</li>
+</ol>
+<p>Every request is authenticated, authorized, and traceable - without exposing user passwords or credentials.</p>
+<pre><code class="lang-mermaid">flowchart LR
+  Alice([👩‍💼 Alice - User]) --&gt;|Signs in| App[💻 Sales Portal App]
+  App --&gt;|Auth Request| IDP[🛡️ ERP.net Identity Server]
+  IDP --&gt;|Access Token| App
+  App --&gt;|API Calls with Token| API[🎛️ ERP.net APIs]
+  API --&gt;|Access Data| Data[(📊 ERP.net Data)]
+</code></pre>
+<p><strong>In short:</strong></p>
+<ul>
+<li>Authentication proves <em>who</em> is calling.</li>
+<li>Authorization defines <em>what</em> they can do.</li>
+<li>Together, they keep ERP.net secure and integrations predictable.</li>
+</ul>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="overview.html"><strong>Autentication and Authorization Overview</strong></a></p>
+</li>
+<li><p><a href="how-apps-connect/identity-server.html"><strong>Identity Server</strong></a><br>
+Learn how ERP.net authenticates users and apps.</p>
+</li>
+<li><p><a href="how-apps-connect/oauth2-overview.html"><strong>OAuth 2.0 Overview</strong></a><br>
+Understand tokens, scopes, and grants.</p>
+</li>
+<li><p><a href="how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+See how app registrations define permissions and modes.</p>
+</li>
+<li><p><a href="flows/overview.html"><strong>Authentication Flows Overview</strong></a><br>
+Compare Authorization Code, Client Credentials, and Hybrid flows.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/tldr.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

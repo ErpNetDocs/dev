@@ -95,7 +95,7 @@ References also can be filtered, by equalling them to single or multiple instanc
 <h5>Note</h5>
 <p>In SQL terms, this is very similar to JOIN-ing the referenced table and then filtering in the WHERE by some of the columns of the referenced table.</p>
 </div>
-<p>For example, in the <a href="xref:Crm.Customers">Customers Entity</a>, we might want to filter by the attributes of the related <a class="xref" href="https://erpnetdocs.github.io/model/entities/General.Contacts.Parties.html">Parties Entity</a>.</p>
+<p>For example, in the <a class="xref" href="https://erpnetdocs.github.io/model/entities/Crm.Sales.Customers.html">Customers Entity</a>, we might want to filter by the attributes of the related <a class="xref" href="https://erpnetdocs.github.io/model/entities/General.Contacts.Parties.html">Parties Entity</a>.</p>
 <h2 id="finding-out-if-a-reference-is-filterable">Finding out if a reference is filterable</h2>
 <p>Because of the static way the SQL data access layer is built (using only Stored Procedures), filtering by the attributes of a referenced entity is not always possible.
 To be able to filter by a reference, the auto-generated SQL procedures should already JOIN the referenced table.

@@ -94,14 +94,16 @@ To learn more, see <a href="erp-instances.html">ERP Instances</a>.</p>
 <h2 id="choose-application-type">Choose application type</h2>
 <p>When designing a new app, the first step is to choose which authentication type and API should be used.
 To simplify this, we have compiled a list of common <a href="application-types.html">application types</a>.</p>
-<h2 id="authentication">Authentication</h2>
-<p>All APIs in ERP.net use the same authentication mechanism, based on OAuth2.</p>
-<p>To understand authentication, see <a href="authentication/index.md">Authentication</a>.</p>
+<h2 id="authentication-and-authorization">Authentication and Authorization</h2>
+<p>All APIs in ERP.net use the same security model, based on <strong>OAuth 2.0</strong> and <strong>OpenID Connect</strong>.</p>
+<p>Authentication verifies <strong>who</strong> the caller is (user or application).<br>
+Authorization defines <strong>what</strong> that caller is allowed to do, based on <strong>scopes</strong>, <strong>roles</strong>, and <strong>trusted application</strong> settings.</p>
+<p>To learn more, see <a href="../building-apps/auth/overview.html">Authentication and Authorization</a>.</p>
 <h2 id="select-api">Select API</h2>
 <p>Choose the correct API:</p>
 <ul>
 <li><strong><a href="../domain-api/index.html">Domain API</a></strong> - Object oriented API, based on the <a href="https://docs.erp.net/model/entities/">Domain Model</a>. The main API for processing data by web sites, services and other business logic apps.</li>
-<li><strong><a href="table-api/index.md">Table API</a></strong> - Limited purpose read-only, fast-forward API based on the raw table data model. Intended for Business Intelligence and backup apps, requiring fast dumping of big quantities of raw data.</li>
+<li><strong><a href="../table-api/index.html">Table API</a></strong> - Limited purpose read-only, fast-forward API based on the raw table data model. Intended for Business Intelligence and backup apps, requiring fast dumping of big quantities of raw data.</li>
 <li><strong>Data Access API</strong> - Legacy API, exposing table-based methods for retrieving and manipulating data.
 Not documented and not recommended for new developments.</li>
 </ul>

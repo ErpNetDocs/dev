@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>OAuth2 and OpenID Connect Client Libraries | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="OAuth2 and OpenID Connect Client Libraries | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/client-libraries.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="oauth2-and-openid-connect-client-libraries">OAuth2 and OpenID Connect Client Libraries</h1>
+
+<p>ERP.net uses standard <strong>OAuth 2.0</strong> and <strong>OpenID Connect (OIDC)</strong> protocols for authentication and authorization.</p>
+<p>You can connect using any compliant client library - no proprietary SDK is required.</p>
+<h2 id="supported-standards">Supported Standards</h2>
+<p>ERP.net Identity Server implements:</p>
+<ul>
+<li><strong>OAuth 2.0 Authorization Framework</strong> (<a href="https://datatracker.ietf.org/doc/html/rfc6749">RFC 6749</a>)</li>
+<li><strong>OpenID Connect Core 1.0</strong> (<a href="https://openid.net/specs/openid-connect-core-1_0.html">openid.net/specs/openid-connect-core-1_0.html</a>)</li>
+<li><strong>PKCE (Proof Key for Code Exchange)</strong> (<a href="https://datatracker.ietf.org/doc/html/rfc7636">RFC 7636</a>)</li>
+<li><strong>OpenID Discovery Document</strong></li>
+</ul>
+<p>Available at:</p>
+<pre><code class="lang-http">https://&lt;your-instance&gt;.my.erp.net/id/.well-known/openid-configuration
+</code></pre>
+<p>Any library or framework that supports these standards will work with ERP.net.</p>
+<h2 id="choosing-a-library">Choosing a Library</h2>
+<p>You can use either a <strong>generic OAuth2/OIDC library</strong> or a <strong>framework-integrated</strong> solution.</p>
+<p>Choose one that matches your environment and flow type.</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Recommended Libraries</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>.NET / C#</strong></td>
+<td><a href="https://docs.duendesoftware.com/identitymodel/">IdentityModel</a>, <a href="https://github.com/AzureAD/microsoft-authentication-library-for-dotnet">Microsoft.Identity.Client (MSAL)</a></td>
+<td>Full OAuth2 + OIDC support</td>
+</tr>
+<tr>
+<td><strong>JavaScript / SPA</strong></td>
+<td><a href="https://github.com/authts/oidc-client-ts">oidc-client-ts</a>, <a href="https://authjs.dev/">Auth.js / NextAuth</a></td>
+<td>Built-in PKCE and redirect handling</td>
+</tr>
+<tr>
+<td><strong>Python</strong></td>
+<td><a href="https://docs.authlib.org/">Authlib</a>, <a href="https://requests-oauthlib.readthedocs.io/">requests-oauthlib</a></td>
+<td>Simple flow helpers</td>
+</tr>
+<tr>
+<td><strong>Java / Spring</strong></td>
+<td><a href="https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html">Spring Security OAuth2 Client</a></td>
+<td>Integrated token management</td>
+</tr>
+<tr>
+<td><strong>PHP</strong></td>
+<td><a href="https://oauth2-client.thephpleague.com/">League OAuth2 Client</a></td>
+<td>Clean API for Auth Code and Client Credentials</td>
+</tr>
+<tr>
+<td><strong>Node.js (backend)</strong></td>
+<td><a href="https://github.com/lelylan/simple-oauth2">simple-oauth2</a>, <a href="https://github.com/panva/node-openid-client">openid-client</a></td>
+<td>Handles tokens and discovery automatically</td>
+</tr>
+<tr>
+<td><strong>Go</strong></td>
+<td><a href="https://pkg.go.dev/golang.org/x/oauth2">golang.org/x/oauth2</a></td>
+<td>Minimal and reliable</td>
+</tr>
+<tr>
+<td><strong>Swift / iOS</strong></td>
+<td><a href="https://github.com/openid/AppAuth-iOS">AppAuth-iOS</a></td>
+<td>Native OIDC flow with PKCE</td>
+</tr>
+<tr>
+<td><strong>Android / Kotlin</strong></td>
+<td><a href="https://github.com/openid/AppAuth-Android">AppAuth-Android</a></td>
+<td>Official OIDC SDK for Android</td>
+</tr>
+</tbody>
+</table>
+<h2 id="example-using-identitymodel-c">Example: Using IdentityModel (C#)</h2>
+<pre><code class="lang-csharp">using IdentityModel.Client;
+using System.Net.Http;
+
+// Discover endpoints from metadata
+var client = new HttpClient();
+var disco = await client.GetDiscoveryDocumentAsync(&quot;https://your-instance.my.erp.net/id&quot;);
+if (disco.IsError)
+  throw new Exception(disco.Error);
+
+// Request token using Client Credentials.
+var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+{
+  Address = disco.TokenEndpoint,
+  ClientId = &quot;myapp&quot;,
+  ClientSecret = &quot;supersecret&quot;,
+  Scope = &quot;read update&quot;
+});
+
+Console.WriteLine(tokenResponse.AccessToken);
+</code></pre>
+<h2 id="example-using-oidc-client-ts-javascript-spa">Example: Using oidc-client-ts (JavaScript SPA)</h2>
+<pre><code class="lang-js">import { UserManager } from &quot;oidc-client-ts&quot;;
+
+const settings = {
+  authority: &quot;https://your-instance.my.erp.net/id&quot;,
+  client_id: &quot;myapp&quot;,
+  redirect_uri: &quot;https://app.example.com/auth/callback&quot;,
+  response_type: &quot;code&quot;,
+  scope: &quot;openid profile read update&quot;,
+};
+
+const userManager = new UserManager(settings);
+await userManager.signinRedirect(); // Redirects to ERP.net login page
+</code></pre>
+<h2 id="example-using-requests-oauthlib-python">Example: Using requests-oauthlib (Python)</h2>
+<pre><code class="lang-python">from requests_oauthlib import OAuth2Session
+
+client_id = &quot;myapp&quot;
+client_secret = &quot;supersecret&quot;
+token_url = &quot;https://your-instance.my.erp.net/id/connect/token&quot;
+
+oauth = OAuth2Session(client_id)
+token = oauth.fetch_token(
+    token_url=token_url,
+    client_id=client_id,
+    client_secret=client_secret,
+    scope=[&quot;read&quot;, &quot;update&quot;]
+)
+
+print(token[&quot;access_token&quot;])
+</code></pre>
+<h2 id="notes-for--developers">Notes for ERP.net Developers</h2>
+<ul>
+<li>All token requests and authorizations must go through your instance's Identity Server (<code>/id</code> path).</li>
+<li>Always request scopes explicitly (<code>read</code>, <code>update</code>, etc.).</li>
+<li>Use <strong>PKCE</strong> for public apps that cannot store secrets.</li>
+<li>Never hardcode client secrets in browser code or mobile apps.</li>
+<li>Refresh tokens are supported for <strong>interactive</strong> apps.</li>
+<li>For service integrations, prefer Client Credentials flow - simpler and more stable.</li>
+</ul>
+<h2 id="testing-and-debugging">Testing and Debugging</h2>
+<p>You can safely test authentication flows in:</p>
+<pre><code class="lang-http">https://&lt;your-instance&gt;.my.erp.net/id/.well-known/openid-configuration
+</code></pre>
+<p>Use tools like <strong>Postman</strong>, <strong>curl</strong>, or <strong>jwt.io</strong> to:</p>
+<ul>
+<li>Inspect tokens</li>
+<li>Validate scopes and claims</li>
+<li>Check expiration and issuer</li>
+<li>View key rotation metadata (JWKS)</li>
+</ul>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="how-apps-connect/oauth2-overview.html"><strong>OAuth 2.0 Overview</strong></a><br>
+Understand the core principles behind ERP.net authentication.</p>
+</li>
+<li><p><a href="how-apps-connect/identity-server.html"><strong>Identity Server</strong></a><br>
+Learn how ERP.net issues and validates tokens.</p>
+</li>
+<li><p><a href="flows/overview.html"><strong>Auth Flows Overview</strong></a><br>
+Explore the different OAuth flows for interactive, service, and hybrid apps.</p>
+</li>
+<li><p><a href="tokens/access-tokens.html"><strong>Access Tokens</strong></a><br>
+See how tokens are structured and used to access APIs.</p>
+</li>
+<li><p><a href="tokens/reference-access-tokens.html"><strong>Reference Access Tokens (PAT, SAT)</strong></a><br>
+Learn how to use long-lived tokens for integrations and automation.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/client-libraries.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Session Revocation and Logout | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Session Revocation and Logout | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/sessions/session-revocation.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="session-revocation-and-logout">Session Revocation and Logout</h1>
+
+<p>Sessions in ERP.net represent active, licensed connections between an authenticated user or app and the ERP.net instance.</p>
+<p>When a session ends, its license slot is immediately released and can be used by another user or integration.</p>
+<h2 id="how-sessions-end">How Sessions End</h2>
+<p>A session can end in several ways:</p>
+<ul>
+<li><strong>User logout</strong> – The user explicitly signs out via ERP.net Identity Server.</li>
+<li><strong>Inactivity timeout</strong> – After 20 minutes of inactivity, the session closes automatically.</li>
+<li><strong>Absolute timeout</strong> – Service sessions (Client Credentials Flow) expire after 1 hour, even if active.</li>
+<li><strong>Server restart</strong> – All sessions are cleared when the application server restarts.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Session lifetime and license usage are completely independent of token validity.<br>
+A token may still be valid even after its session is closed - a new session will be created automatically when it's used again.</p>
+</div>
+<h2 id="logging-out-interactive-apps">Logging Out (Interactive Apps)</h2>
+<p>Interactive applications using the <strong>Authorization Code Flow</strong> can explicitly end the user session via ERP.net Identity Server's logout endpoint.</p>
+<pre><code class="lang-http">GET https://&lt;instance&gt;.my.erp.net/id/connect/endsession
+</code></pre>
+<p>When this endpoint is called:</p>
+<ul>
+<li>The user is redirected to a logout confirmation page.</li>
+<li>After confirmation, the Identity Server terminates the session.</li>
+<li>The session license is released immediately.</li>
+<li>The user can safely close the browser or sign in again.</li>
+</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>This logout flow only applies to <strong>interactive sessions</strong> where a user is present.<br>
+<strong>Service applications</strong> (using Client Credentials) do not use this mechanism.</p>
+</div>
+<h2 id="service-sessions">Service Sessions</h2>
+<p>Service (non-interactive) applications cannot log out interactively.</p>
+<p>Their sessions end automatically when:</p>
+<ul>
+<li>The 1-hour absolute expiration time passes, or</li>
+<li>The application becomes inactive for 20 minutes.</li>
+</ul>
+<p>Once the session ends, the license slot is released automatically.</p>
+<h2 id="after-revocation">After Revocation</h2>
+<p>When a session closes - either due to logout, timeout, or inactivity:</p>
+<ul>
+<li>The license slot becomes available for other users or services.</li>
+<li>If the <strong>token is still valid</strong>, the <strong>next API call with the same token</strong> will <strong>reopen (reactivate) the same session</strong>, and a license will be allocated again if one is available.</li>
+<li>A <code>401 Unauthorized</code> occurs only if the token itself is <strong>expired</strong> or <strong>invalid</strong> (not simply because the previous session ended).</li>
+</ul>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="token-session-relationship.html"><strong>Tokens and Sessions Relationship</strong></a><br>
+How tokens start sessions and how both lifetimes interact.</p>
+</li>
+<li><p><a href="license-slot.html"><strong>License Slot Usage</strong></a><br>
+How licenses are consumed, released, and reserved.</p>
+</li>
+<li><p><a href="license-compliance.html"><strong>License Compliance and Violations</strong></a><br>
+Understand correct license usage, avoid token sharing, and ensure compliance with ERP.net licensing terms.</p>
+</li>
+<li><p><a href="../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+How trusted app configuration affects license behavior and user access.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/sessions/session-revocation.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

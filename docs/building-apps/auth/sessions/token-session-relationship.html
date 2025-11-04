@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Tokens and Sessions Relationship | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Tokens and Sessions Relationship | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/sessions/token-session-relationship.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="tokens-and-sessions-relationship">Tokens and Sessions Relationship</h1>
+
+<p>In ERP.net, an <strong>access token</strong> is only a proof of authorization - it does <strong>not</strong> open a session or consume a license.</p>
+<p>A <strong>session</strong> is created only when the token is actually used to call an ERP.net API.</p>
+<p>This distinction is important for understanding why a user may still hold a valid token but no active session.</p>
+<h2 id="how-it-works">How It Works</h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>What Happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>The app obtains an <strong>access token</strong> from ERP.net Identity Server.</td>
+<td>No session yet. The token only proves identity and permissions.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>The app makes its <strong>first API call</strong> using that token.</td>
+<td>ERP.net opens a new session, assigns it to the token's user or system identity, and consumes one license slot.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>The app continues making API calls.</td>
+<td>The same session is reused and its sliding expiration timer (20 minutes) is refreshed after each request.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>The app becomes inactive.</td>
+<td>After 20 minutes without requests, the session closes automatically and releases the license slot.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>The app makes a new API call with the <strong>same still-valid token</strong>.</td>
+<td>ERP.net opens a new session (if a license is available) and continues execution. If all licenses are in use, an error is returned.</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Tokens and sessions are independent: a token may still be valid even if its session has expired.</p>
+</div>
+<h2 id="token-expiration-vs-session-expiration">Token Expiration vs Session Expiration</h2>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>What It Affects</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Token expires</strong></td>
+<td>Authorization</td>
+<td>The app must renew or refresh the token. Existing sessions are unaffected but cannot be reused once expired.</td>
+</tr>
+<tr>
+<td><strong>Session expires</strong></td>
+<td>Connection and licensing</td>
+<td>The session is destroyed after inactivity or reaching absolute lifetime. A new session will be created on the next request.</td>
+</tr>
+</tbody>
+</table>
+<p>In short:</p>
+<ul>
+<li>Token = proof of access</li>
+<li>Session = active connection consuming a license</li>
+</ul>
+<h2 id="refreshing-tokens">Refreshing Tokens</h2>
+<p>When a refresh token is used to obtain a new access token:</p>
+<ul>
+<li>The <strong>session remains the same</strong>, if still active.</li>
+<li>The new token continues using the same session identity.</li>
+<li>No additional license is consumed.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Refreshing a token does <strong>not</strong> open a new session - it simply extends authorization for the existing one.</p>
+</div>
+<h2 id="example-timeline">Example Timeline</h2>
+<table>
+<thead>
+<tr>
+<th>Time</th>
+<th>Event</th>
+<th>Token State</th>
+<th>Session State</th>
+<th>License</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10:00</td>
+<td>User logs in and obtains access token</td>
+<td>Valid</td>
+<td>No session</td>
+<td>Not used</td>
+</tr>
+<tr>
+<td>10:01</td>
+<td>First API call</td>
+<td>Valid</td>
+<td>Session created</td>
+<td>1 license used</td>
+</tr>
+<tr>
+<td>10:15</td>
+<td>Active usage</td>
+<td>Valid</td>
+<td>Session alive</td>
+<td>License held</td>
+</tr>
+<tr>
+<td>10:35</td>
+<td>Inactive for 20+ min</td>
+<td>Valid</td>
+<td>Session closed</td>
+<td>License released</td>
+</tr>
+<tr>
+<td>10:40</td>
+<td>New API call with same token</td>
+<td>Valid</td>
+<td>New session opened</td>
+<td>New license used</td>
+</tr>
+<tr>
+<td>11:00</td>
+<td>Token expires</td>
+<td>Expired</td>
+<td>Session may still exist</td>
+<td>License may still be held until inactivity timeout</td>
+</tr>
+</tbody>
+</table>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>A valid token does <strong>not guarantee</strong> that a license is available.<br>
+If all licenses are used, a new session cannot be opened even with a valid token.</p>
+</div>
+<h2 id="summary">Summary</h2>
+<ul>
+<li>Sessions are created <strong>on demand</strong>, not when tokens are issued.</li>
+<li>Token validity and session lifetime are separate mechanisms.</li>
+<li>Refreshing a token keeps the same session identity.</li>
+<li>If a session expires, the next API call will attempt to create a new one.</li>
+<li>Each session consumes one license while active.</li>
+</ul>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="license-slot.html"><strong>License Slot Usage</strong></a><br>
+Understand how sessions consume and release license slots.</p>
+</li>
+<li><p><a href="license-compliance.html"><strong>License Compliance and Violations</strong></a><br>
+Understand correct license usage, avoid token sharing, and ensure compliance with ERP.net licensing terms.</p>
+</li>
+<li><p><a href="session-revocation.html"><strong>Session Revocation and Logout</strong></a><br>
+Learn how users and apps can close sessions explicitly.</p>
+</li>
+<li><p><a href="../tokens/token-lifetime.html"><strong>Token Lifetime and Renewal</strong></a><br>
+See how tokens expire and refresh independently from sessions.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/sessions/token-session-relationship.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
