@@ -582,6 +582,6 @@
   "whats-new/v26-2/index.html": {
     "href": "whats-new/v26-2/index.html",
     "title": "Version 26.2 | ERP.net Developer Docs",
-    "summary": "Version 26.2 TBD"
+    "summary": "Version 26.2 Reference Access Tokens (PAT, SAT) Now supported for long-lived, manually issued access - ideal for automation, scripts, and service integrations."
   }
 }
