@@ -142,7 +142,7 @@ Choose the flow that matches how your app operates - and let the @@name Identity
 
 ## Learn More
 
-- [**Flows Overview**](flows-overview.md)  
+- [**Flows Overview**](./overview.md)  
   Understand how the main OAuth 2.0 flows fit into @@name.
 
 - [**Trusted Applications and Access Control**](../how-apps-connect/trusted-apps-access.md)  

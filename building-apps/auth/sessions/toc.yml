@@ -1,8 +1,10 @@
 - name: Overview
-  href: sessions-overview.md
+  href: overview.md
 - name: Tokens and Sessions Relationship
-  href: token-session-link.md
+  href: token-session-relationship.md
 - name: License Slot Usage
   href: license-slot.md
 - name: Session Revocation and Logout
   href: session-revocation.md
+- name: License Compliance and Violations
+  href: license-compliance.md

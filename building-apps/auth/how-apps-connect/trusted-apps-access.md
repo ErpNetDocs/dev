@@ -205,7 +205,7 @@ Scope = read update
 
 Used when the same application has both an interactive UI (user sign-in) and background service features (scheduled sync or automation).
 
-By defining Trusted Applications carefully, administrators can ensure that every integration or app connection to @@name is authenticated, authorized, and traceable — providing both flexibility and strong access control.
+By defining Trusted Applications carefully, administrators can ensure that every integration or app connection to @@name is authenticated, authorized, and traceable - providing both flexibility and strong access control.
 
 ---
 
@@ -220,7 +220,7 @@ By defining Trusted Applications carefully, administrators can ensure that every
 - [**Auth Flows**](../flows/overview.md)  
 Choose and implement the right flow  
 
-- [**Tokens**](../tokens/overview.md)  
+- [**Tokens**](../tokens/tokens-overview.md)  
 Access tokens, scopes, and renewal  
 
 - [**Sessions**](../sessions/overview.md)  

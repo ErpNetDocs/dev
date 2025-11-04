@@ -2,7 +2,7 @@
 
 Hybrid applications combine user-facing interaction with system-level automation.  
 
-They are especially useful when the app serves **external @@name users** but also needs to perform **privileged background operations** — all under a single, controlled app identity.
+They are especially useful when the app serves **external @@name users** but also needs to perform **privileged background operations** - all under a single, controlled app identity.
 
 Below are several practical hybrid patterns you can adapt for your integration or portal design.
 
@@ -22,7 +22,7 @@ Meanwhile, a backend service synchronizes stock data nightly using elevated perm
 
 - A **backend service** (using Client Credentials flow) performs all privileged tasks, like syncing stock or processing orders.
 - The backend uses a **SystemUser** identity to authenticate and access @@name data.
-- **No @@name data is directly exposed to external users** — all access is controlled via the service account.
+- **No @@name data is directly exposed to external users** - all access is controlled via the service account.
 
 **Result:**  
 
@@ -44,7 +44,7 @@ The frontend authenticates the customer, but the backend manages all data access
 
 - The **backend** uses Client Credentials flow to obtain a **service token**. This token is used for all interactions with @@name APIs.
 - The backend is responsible for checking the customer's access rights and fetching the relevant data from @@name.
-- **External customers never directly interact with @@name APIs** — all access is managed by the backend.
+- **External customers never directly interact with @@name APIs** - all access is managed by the backend.
 
 **Result:**  
 

@@ -195,7 +195,7 @@ Register and configure your app inside an @@name instance
 - [**Auth Flows**](../flows/overview.md)  
 Choose and implement the right flow  
 
-- [**Tokens**](../tokens/overview.md)  
+- [**Tokens**](../tokens/tokens-overview.md)  
 Access tokens, scopes, and renewal  
 
 - [**Sessions**](../sessions/overview.md)  

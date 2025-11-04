@@ -72,25 +72,23 @@ Characteristics:
 - Can be activated by tenant administrators
 - Must comply with platform validation and security requirements
 
-## Hybrid (Embedded) Applications
+## Embedded (In-Client) Applications
 
-**Hybrid (Embedded) applications** combine aspects of external and internal apps.
+**Embedded (In-Client) applications** are external web apps that can be displayed directly inside the @@name Web Client using a **WebView**.
 
-They are hosted outside the @@name instance but can be embedded directly inside the **Web Client** interface using a **WebView**.
-
-This allows developers to create specialized web experiences that appear as a seamless part of the @@name UI while being maintained and deployed independently.
+They allow developers to create specialized web experiences that look and feel like a native part of @@name, while being hosted and maintained independently.
 
 ### Behavior and Access
 
-Hybrid apps behave differently depending on where they are hosted:
+Embedded apps behave differently depending on where they are hosted:
 
 1. **Apps hosted on a trusted domain**  
-   If the app is part of the @@name Marketplace or hosted under the official domain `https://*.app.erp.net`, it can securely access the @@name APIs **without performing explicit authorization**.
+   If the app is part of the @@name Marketplace or hosted under the official domain `https://*.app.erp.net`, it can securely access the @@name APIs **without performing explicit authorization**.  
    In this case, the Web Client shares the user's active session (via cookies), and the app can make API calls on behalf of the logged-in user.
 
-2. **Apps hosted elsewhere**
+2. **Apps hosted elsewhere**  
    If the app is hosted on any other domain, it cannot access @@name data directly.  
-   The only information it receives is the **URL passed to the WebView** when it is opened from the Web Client.
+   The only information it receives is the **URL passed to the WebView** when it is opened from the Web Client.  
    To access data, such apps must perform standard authentication through the Identity Server using a registered Trusted Application.
 
 ### Typical Use Cases
@@ -113,7 +111,9 @@ Hybrid apps behave differently depending on where they are hosted:
 | **Internal** | @@name Platform | Preconfigured or manual (varies) | [Web Client](https://docs.erp.net/webclient/), [Client Center](https://docs.erp.net/tech/modules/crm/clientcenter/index.html) | Core @@name functionality |
 | **External** | Customer or Partner | Manual | Custom integration, automation service | Private or custom solutions |
 | **Marketplace** | Partner / Third Party | Automatic on installation | Retail POS, Currency Rates Sync, Preventive Maintenance Planner | Public or commercial apps |
-| **Hybrid (Embedded)** | @@name Platform / Partner / Third Party | Depends on hosting domain | Embedded dashboard, company widget | Embedded web experiences |
+| **Embedded** | @@name Platform / Partner / Third Party | Depends on hosting domain | Embedded dashboard, company widget | Embedded web experiences |
+
+---
 
 ## Learn More
 

@@ -74,5 +74,5 @@ The resulting access token will contain the allowed scopes as part of its payloa
 - [**Token Lifetime and Renewal**](token-lifetime.md)  
   See how token expiration interacts with scoped access.
 
-- [**Trusted Applications and Access Control**](../../how-apps-connect/trusted-apps-access.md)  
+- [**Trusted Applications and Access Control**](../how-apps-connect/trusted-apps-access.md)  
   Learn how trusted app configurations define which scopes are permitted.

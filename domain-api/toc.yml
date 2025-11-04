@@ -1,7 +1,5 @@
 - name: Introduction
   href: index.md
-- name: Authentication
-  href: authentication.md
 - name: Querying Data
   href: querying-data/toc.yml
   topicHref: querying-data/index.md

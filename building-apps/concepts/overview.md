@@ -77,6 +77,8 @@ They can also revoke or adjust access at any time, maintaining full control over
 
 This model allows @@name Apps to be open, extensible, and secure - forming a flexible ecosystem where developers can build new solutions without compromising platform integrity.
 
+---
+
 ## Learn More
 
 - **[What Are @@name Apps](what-are-erpnet-apps.md)**  

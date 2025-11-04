@@ -80,6 +80,8 @@ Each app:
 
 This lifecycle applies equally to internal tools, partner integrations, and marketplace apps.
 
+---
+
 ## Learn More
 
 - **[Application Types](app-types.md)**  

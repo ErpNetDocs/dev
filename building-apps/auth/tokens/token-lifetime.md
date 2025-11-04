@@ -21,7 +21,7 @@ Access tokens are **short-lived** credentials used to authorize API requests.
 
 Refresh tokens are **longer-lived** credentials that allow obtaining new access tokens without requiring the user to log in again.
 
-- **Lifetime:** 1 month  
+- **Lifetime:** 1 month for confidential apps / 24 hours for public apps
 - **Issued To:** Confidential, interactive applications (authorization code flow).  
 - **Not Available For:** Non-interactive (service) applications.  
 - **Purpose:** Maintain seamless user sessions without re-authentication.  
@@ -60,7 +60,7 @@ Reference tokens are manually issued, long-lived credentials designed for persis
 | Token Type | Lifetime | How to Renew | Typical Use Case |
 |-------------|-----------|---------------|------------------|
 | **Access Token** | 1 hour | Refresh token or new token request | API calls |
-| **Refresh Token** | 1 month | User re-authentication | Interactive apps |
+| **Refresh Token** | 1 month (confidential) / 24 hours (public) | User re-authentication | Interactive apps |
 | **Reference Token (PAT, SAT)** | User-defined | Manual reissue | Long-lived integrations |
 
 ## Learn More
@@ -74,5 +74,5 @@ Reference tokens are manually issued, long-lived credentials designed for persis
 - [**Scopes and Permissions**](scopes.md)  
   See how scopes define access levels in all token types.
 
-- [**Trusted Applications and Access Control**](../../how-apps-connect/trusted-apps-access.md)  
+- [**Trusted Applications and Access Control**](../how-apps-connect/trusted-apps-access.md)  
   Learn how token policies and expiration limits are enforced.

@@ -169,7 +169,7 @@ This allows administrators to review and audit all reference token activity.
 - [**Scopes and Permissions**](scopes.md)  
   Understand how scopes control what data your tokens can access.
 
-- [**Trusted Applications and Access Control**](../../how-apps-connect/trusted-apps-access.md)  
+- [**Trusted Applications and Access Control**](../how-apps-connect/trusted-apps-access.md)  
   See how trusted apps define system users, modes, and scope policies.
 
 - [**Token Lifetime and Renewal**](token-lifetime.md)  

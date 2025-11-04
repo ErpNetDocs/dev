@@ -133,5 +133,5 @@ To validate a token:
 - [**Token Lifetime and Renewal**](token-lifetime.md)  
   See how token expiration works and how refresh tokens extend access.
 
-- [**Trusted Applications and Access Control**](../../how-apps-connect/trusted-apps-access.md)  
+- [**Trusted Applications and Access Control**](../how-apps-connect/trusted-apps-access.md)  
   Learn how app registrations define system users and permissions.

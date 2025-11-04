@@ -33,11 +33,11 @@ You can discover this automatically through the system's discovery endpoint (see
 
 ## Discovering the Identity Server
 
-Every @@name instance exposes an **auto-discovery endpoint** that lists all available sites and services — including the Identity Server, Domain API, and other functional components.
+Every @@name instance exposes an **auto-discovery endpoint** that lists all available sites and services - including the Identity Server, Domain API, and other functional components.
 
 This allows developers (and tools) to dynamically determine where to send authentication and API requests.
 
-**Request**
+**Request:**
 
 ```http
 GET https://{instance-root}/sys/auto-discovery
@@ -47,7 +47,7 @@ GET https://{instance-root}/sys/auto-discovery
 GET https://testdb.my.erp.net/sys/auto-discovery
 ```
 
-**Response (truncated)**
+**Response (truncated):**
 
 ```json
 {
@@ -77,11 +77,11 @@ The Identity Server exposes the standard OAuth 2.0 and OpenID Connect endpoints.
 
 ### 1) Discovery endpoint
 
-The **discovery endpoint** provides metadata about the Identity Server — including its issuer name, supported scopes, signing keys, and the exact URLs for authentication, token exchange, and logout.
+The **discovery endpoint** provides metadata about the Identity Server - including its issuer name, supported scopes, signing keys, and the exact URLs for authentication, token exchange, and logout.
 
 This information helps client libraries and apps automatically configure themselves without hardcoding endpoints.
 
-**Request**
+**Request:**
 
 ```http
 GET https://{instance-root}/id/.well-known/openid-configuration
@@ -91,7 +91,7 @@ GET https://{instance-root}/id/.well-known/openid-configuration
 GET https://testdb.my.erp.net/id/.well-known/openid-configuration
 ```
 
-**Example response (truncated)**
+**Example response (truncated):**
 
 ```json
 {
@@ -120,7 +120,7 @@ GET https://testdb.my.erp.net/id/.well-known/openid-configuration
 }
 ```
 
-**Key properties**
+**Key properties:**
 
 - **issuer** - The base URL identifying the Identity Server. Used to validate tokens issued by this instance.
 - **authorization_endpoint** - The URL where interactive user logins begin (used in the Authorization Code flow).
@@ -145,7 +145,7 @@ Starts an interactive sign-in and authorization request. Used by apps that act o
 GET https://{instance-root}/id/connect/authorize
 ```
 
-**Example request**
+**Example request:**
 
 ```http
 GET https://testdb.my.erp.net/id/connect/authorize?
@@ -166,7 +166,7 @@ Exchanges an authorization code or client credentials for access tokens (and ref
 POST https://{instance-root}/id/connect/token
 ```
 
-**Example: exchange authorization code**
+**Example: exchange authorization code:**
 
 ```http
 POST /id/connect/token
@@ -179,7 +179,7 @@ code=abc123&
 redirect_uri=https%3A%2F%2Fmyapp.com%2Fcallback
 ```
 
-**Example response: exchange authorization code**
+**Example response: exchange authorization code:**
 
 ```http
 {
@@ -191,7 +191,7 @@ redirect_uri=https%3A%2F%2Fmyapp.com%2Fcallback
 }
 ```
 
-**Example: client credentials**
+**Example: client credentials:**
 
 ```http
 POST /id/connect/token
@@ -203,7 +203,7 @@ grant_type=client_credentials&
 scope=update
 ```
 
-**Example response: client credentials**
+**Example response: client credentials:**
 
 ```http
 {
@@ -226,7 +226,7 @@ Triggers logout and single sign-out across participating apps.
 GET https://{instance-root}/id/connect/endsession
 ```
 
-**Example: end session**
+**Example: end session:**
 
 ```http
 GET https://testdb.my.erp.net/id/connect/endsession?

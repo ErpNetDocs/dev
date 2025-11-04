@@ -78,6 +78,8 @@ flowchart LR
 
 The lifecycle provides a clear, structured way to manage @@name Apps from creation to retirement - supporting transparency, control, and long-term reliability.
 
+---
+
 ## Learn More
 
 - [Trusted Applications](trusted-apps.md)  

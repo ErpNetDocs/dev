@@ -63,8 +63,6 @@ Trusted Applications can appear in an instance in several ways:
 
 Once registered, the Trusted Application becomes the system's reference point for managing and auditing that app's activity.
 
----
-
 ## Lifecycle of a Trusted Application
 
 Trusted Applications follow a simple lifecycle:
@@ -76,8 +74,6 @@ Trusted Applications follow a simple lifecycle:
 5. **Revocation** – Access can be disabled or removed at any time.  
 
 This process ensures that each app's access remains secure, visible, and manageable throughout its lifecycle.
-
----
 
 ## Relationship to Apps and the @@name Instance
 
@@ -91,13 +87,15 @@ flowchart LR
   ta --> instance([ERP.net Instance])
 ```
 
+---
+
 ## Learn More
 
-- [What Are @@name Apps](what-are-erpnet-apps.md)  
+- **[What Are @@name Apps](what-are-erpnet-apps.md)**  
   Learn how apps extend and integrate with @@name.
 
-- [Application Types](app-types.md)  
+- **[Application Types](app-types.md)**  
   Explore the different kinds of @@name applications.
 
-- [Authentication and Authorization](../auth/overview.md)  
+- **[Authentication and Authorization](../auth/overview.md)**  
   See how apps authenticate and obtain permissions through @@name's Identity Server.

@@ -97,9 +97,9 @@ Anyway, the use of Basic Auth is strongly discouraged and should be approached w
 
 Here, you can find information on how to migrate your Basic Auth workflow to OAuth:
 
-- [Authentication in ERP.net](../authentication.md)
+- [Authentication in ERP.net](../../building-apps/auth/overview.md)
 - [Register trusted app](register-trusted-app.md)
-- [Step-by-step / acquire an access token](../samples/step-by-step/basic-acquire-access-token.md)
+- [Step-by-step / acquire an access token](../../building-apps/auth/samples/basic-acquire-access-token.md)
 
 ## Other cases, where language change has an effect
 

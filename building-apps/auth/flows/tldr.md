@@ -2,7 +2,7 @@
 
 ## TL;DR
 
-Every app that connects to @@name uses an **OAuth 2.0 flow** — a predefined way to obtain access tokens securely.
+Every app that connects to @@name uses an **OAuth 2.0 flow** - a predefined way to obtain access tokens securely.
 
 There are only two real flows, and some apps use both:
 

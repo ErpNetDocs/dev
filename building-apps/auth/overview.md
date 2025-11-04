@@ -103,8 +103,8 @@ Once authentication and authorization complete successfully:
 - [**Auth Flows**](./flows/overview.md)  
   Learn about the available OAuth 2.0 flows for different app types.
 
-- [**Tokens**](./tokens/overview.md)  
+- [**Tokens**](./tokens/tokens-overview.md)  
   Understand access tokens, scopes, and permissions.
 
-- [**Sessions**](./sessions/sessions.md)  
+- [**Sessions**](./sessions/overview.md)  
   Learn how tokens map to sessions and license slots within @@name.

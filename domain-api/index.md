@@ -4,9 +4,9 @@
 
 The Domain API is the primary API for accessing and manipulating data in @@name.
 It is most useful for UI and service apps.
-For BI, you should use the [Table API](~/topics/table-api/index.md).
+For BI, you should use the [Table API](../table-api/index.md).
 
-For an overview and introduction of the Domain API, read the thorough presentation at the [home page of the developer docs](~/index.md#the-domain-api).
+For an overview and introduction of the Domain API, read the thorough presentation at the [home page of the developer docs](../index.md#the-domain-api).
 
 ## Based on OData
 

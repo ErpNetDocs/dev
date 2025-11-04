@@ -10,7 +10,7 @@ Sometimes however, we don't know the exact referened entity, but want to filter 
 > [!note]
 > In SQL terms, this is very similar to JOIN-ing the referenced table and then filtering in the WHERE by some of the columns of the referenced table.
 
-For example, in the [Customers Entity](xref:Crm.Customers), we might want to filter by the attributes of the related [Parties Entity](xref:General.Contacts.Parties).
+For example, in the [Customers Entity](xref:Crm.Sales.Customers), we might want to filter by the attributes of the related [Parties Entity](xref:General.Contacts.Parties).
 
 ## Finding out if a reference is filterable
 

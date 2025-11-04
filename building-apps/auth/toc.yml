@@ -1,3 +1,5 @@
+- name: TL;DR
+  href: tldr.md
 - name: Overview
   href: overview.md
 - name: How Apps Connect
@@ -12,5 +14,7 @@
   href: samples/toc.yml
 - name: Security Best Practices
   href: security-best-practices.md
-- name: Troubleshooting and Common Errors
-  href: troubleshooting.md
+- name: Frequently Asked Questions (FAQ)
+  href: faq.md
+- name: Client Libraries
+  href: client-libraries.md  

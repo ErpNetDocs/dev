@@ -12,17 +12,20 @@ To learn more, see [ERP Instances](erp-instances.md).
 When designing a new app, the first step is to choose which authentication type and API should be used.
 To simplify this, we have compiled a list of common [application types](application-types.md).
 
-## Authentication
+## Authentication and Authorization
 
-All APIs in @@name use the same authentication mechanism, based on OAuth2.
+All APIs in @@name use the same security model, based on **OAuth 2.0** and **OpenID Connect**.
 
-To understand authentication, see [Authentication](authentication/index.md).
+Authentication verifies **who** the caller is (user or application).  
+Authorization defines **what** that caller is allowed to do, based on **scopes**, **roles**, and **trusted application** settings.
+
+To learn more, see [Authentication and Authorization](../building-apps/auth/overview.md).
 
 ## Select API
 
 Choose the correct API:
 
-* **[Domain API](~/domain-api/index.md)** - Object oriented API, based on the [Domain Model](https://docs.erp.net/model/entities/). The main API for processing data by web sites, services and other business logic apps.
-* **[Table API](table-api/index.md)** - Limited purpose read-only, fast-forward API based on the raw table data model. Intended for Business Intelligence and backup apps, requiring fast dumping of big quantities of raw data.
+* **[Domain API](../domain-api/index.md)** - Object oriented API, based on the [Domain Model](https://docs.erp.net/model/entities/). The main API for processing data by web sites, services and other business logic apps.
+* **[Table API](../table-api/index.md)** - Limited purpose read-only, fast-forward API based on the raw table data model. Intended for Business Intelligence and backup apps, requiring fast dumping of big quantities of raw data.
 * **Data Access API** - Legacy API, exposing table-based methods for retrieving and manipulating data. 
 Not documented and not recommended for new developments.
