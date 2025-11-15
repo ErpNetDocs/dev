@@ -12,3 +12,5 @@
   href: console-app-access-token-auth-code.md
 - name: Access token via authorization code flow in a SPA (Single Page Application)
   href: spa-access-token-auth-code.md
+- name: Sign in with ERP.net Identity Server (multi-platform)
+  href: erpnet-external-idp-samples.md
