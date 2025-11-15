@@ -297,6 +297,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/how-apps-connect/erpnet-as-external-idp.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/how-apps-connect/erpnet-as-external-idp.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "building-apps/auth/how-apps-connect/identity-server.md",
       "output": {
         ".html": {
@@ -404,6 +414,16 @@
       "output": {
         ".html": {
           "relative_path": "building-apps/auth/samples/console-app-access-token-auth-code.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/samples/erpnet-external-idp-samples.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/samples/erpnet-external-idp-samples.html"
         }
       },
       "version": ""
