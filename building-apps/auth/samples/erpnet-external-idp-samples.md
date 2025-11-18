@@ -4,7 +4,7 @@ This page shows how to use **@@name Identity Server** as an OpenID Connect provi
 
 All samples use the same key parameters:
 
-- **Authority**: `https://id.erp.net`
+- **Authority**: `https://id.erp.net/id`
 - **Client ID**: `<your-client-id>`
 - **Client Secret**: `<your-client-secret>` (confidential clients only)
 - **Redirect URI**: `<your-redirect-uri>`
@@ -79,7 +79,7 @@ npm install oidc-client-ts
 import { UserManager, WebStorageStateStore } from 'oidc-client-ts';
 
 const settings = {
-  authority: 'https://id.erp.net',
+  authority: 'https://id.erp.net/id',
   client_id: '<your-public-client-id>',      // no secret
   redirect_uri: 'https://your-spa.com/auth/callback',
   post_logout_redirect_uri: 'https://your-spa.com/',
@@ -130,7 +130,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AuthModule.forRoot({
       config: {
-        authority: 'https://id.erp.net',
+        authority: 'https://id.erp.net/id',
         clientId: '<your-public-client-id>', // no secret
         redirectUrl: 'https://your-angular-app.com',
         postLogoutRedirectUri: 'https://your-angular-app.com',
@@ -199,7 +199,7 @@ npm install react-native-app-auth
 import { authorize, refresh, revoke, AuthConfiguration } from 'react-native-app-auth';
 
 const config: AuthConfiguration = {
-  issuer: 'https://id.erp.net',
+  issuer: 'https://id.erp.net/id',
   clientId: '<your-public-client-id>',   // no secret
   redirectUrl: 'myapp://auth/callback',  // custom scheme
   scopes: ['openid', 'profile'],
@@ -239,7 +239,7 @@ app.use(session({
 let client; // will hold the ERP.net OIDC client
 
 async function initClient() {
-  const erpnetIssuer = await Issuer.discover('https://id.erp.net');
+  const erpnetIssuer = await Issuer.discover('https://id.erp.net/id');
   client = new erpnetIssuer.Client({
     client_id: '<your-client-id>',
     client_secret: '<your-client-secret>',
@@ -306,7 +306,7 @@ spring:
             authorization-grant-type: authorization_code
         provider:
           erpnet:
-            issuer-uri: https://id.erp.net
+            issuer-uri: https://id.erp.net/id
 ```
 
 Security configuration (Spring Security 5+ lambda style):
@@ -358,7 +358,7 @@ require 'vendor/autoload.php';
 use Jumbojett\OpenIDConnectClient;
 
 $oidc = new OpenIDConnectClient(
-    'https://id.erp.net',
+    'https://id.erp.net/id',
     '<your-client-id>',
     '<your-client-secret>'
 );
@@ -407,7 +407,7 @@ var (
 func main() {
     ctx := context.Background()
 
-    provider, err := oidc.NewProvider(ctx, "https://id.erp.net")
+    provider, err := oidc.NewProvider(ctx, "https://id.erp.net/id")
     if err != nil {
         log.Fatal(err)
     }
@@ -496,7 +496,7 @@ erpnet = oauth.register(
     name='erpnet',
     client_id='<your-client-id>',
     client_secret='<your-client-secret>',
-    server_metadata_url='https://id.erp.net/.well-known/openid-configuration',
+    server_metadata_url='https://id.erp.net/id/.well-known/openid-configuration',
     client_kwargs={
         'scope': 'openid profile',
     },
@@ -550,7 +550,7 @@ builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
 builder.Services.AddOidcAuthentication(options =>
 {
     // ERP.net ID configuration
-    options.ProviderOptions.Authority = "https://id.erp.net";
+    options.ProviderOptions.Authority = "https://id.erp.net/id";
     options.ProviderOptions.ClientId = "<your-public-client-id>"; // no secret
     options.ProviderOptions.ResponseType = "code id_token";                // code + PKCE
     options.ProviderOptions.DefaultScopes.Add("openid");
@@ -606,7 +606,7 @@ builder.Services
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddOpenIdConnect("ErpNet", options =>
     {
-        options.Authority = "https://id.erp.net";
+        options.Authority = "https://id.erp.net/id";
 
         // Must match the confidential client registered in ERP.net ID
         options.ClientId = "<your-client-id>";
@@ -643,7 +643,7 @@ app.Run();
 
 All platforms use the same core OIDC parameters:
 
-- Authority: `https://id.erp.net`
+- Authority: `https://id.erp.net/id`
 - Client ID / Client Secret: from @@name
 - Redirect URI: your app's callback
 - Scopes: openid profile (and others as needed)
