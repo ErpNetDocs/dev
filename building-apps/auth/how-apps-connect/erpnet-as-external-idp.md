@@ -24,7 +24,7 @@ To integrate your application with @@name Identity Server, configure an OIDC cli
 ### Required settings
 
 - **Authority**  
-  `https://id.erp.net`  
+  `https://id.erp.net/id`  
   *(or your tenant-specific @@name Identity Server URL)*
 
 - **Client ID** (provided by @@name)
@@ -49,7 +49,7 @@ To integrate your application with @@name Identity Server, configure an OIDC cli
 ```csharp
 .AddOpenIdConnect("ErpNet", options =>
 {
-    options.Authority = "https://id.erp.net";
+    options.Authority = "https://id.erp.net/id";
     options.ClientId = "<your-client-id>";
     options.ClientSecret = "<your-client-secret>";
     options.ResponseType = "code id_token";
@@ -133,7 +133,7 @@ To authenticate users with @@name:
 
 1. Register your application as an OIDC client inside @@name  
 2. Configure your application with the provided **Client ID** and (if applicable) **Client Secret**  
-3. Use `https://id.erp.net` as the authority  
+3. Use `https://id.erp.net/id` as the authority  
 4. Register correct **login** and **logout** callback URLs  
 5. Use OIDC claims to identify the user  
 
