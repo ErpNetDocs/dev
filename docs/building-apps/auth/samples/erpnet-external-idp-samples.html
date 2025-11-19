@@ -90,7 +90,7 @@
 <p>This page shows how to use <strong>ERP.net Identity Server</strong> as an OpenID Connect provider from different platforms.</p>
 <p>All samples use the same key parameters:</p>
 <ul>
-<li><strong>Authority</strong>: <code>https://id.erp.net</code></li>
+<li><strong>Authority</strong>: <code>https://id.erp.net/id</code></li>
 <li><strong>Client ID</strong>: <code>&lt;your-client-id&gt;</code></li>
 <li><strong>Client Secret</strong>: <code>&lt;your-client-secret&gt;</code> (confidential clients only)</li>
 <li><strong>Redirect URI</strong>: <code>&lt;your-redirect-uri&gt;</code></li>
@@ -154,7 +154,7 @@ They can safely store a <strong>Client Secret</strong>.</p>
 import { UserManager, WebStorageStateStore } from 'oidc-client-ts';
 
 const settings = {
-  authority: 'https://id.erp.net',
+  authority: 'https://id.erp.net/id',
   client_id: '&lt;your-public-client-id&gt;',      // no secret
   redirect_uri: 'https://your-spa.com/auth/callback',
   post_logout_redirect_uri: 'https://your-spa.com/',
@@ -198,7 +198,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AuthModule.forRoot({
       config: {
-        authority: 'https://id.erp.net',
+        authority: 'https://id.erp.net/id',
         clientId: '&lt;your-public-client-id&gt;', // no secret
         redirectUrl: 'https://your-angular-app.com',
         postLogoutRedirectUri: 'https://your-angular-app.com',
@@ -258,7 +258,7 @@ export class AppComponent implements OnInit {
 import { authorize, refresh, revoke, AuthConfiguration } from 'react-native-app-auth';
 
 const config: AuthConfiguration = {
-  issuer: 'https://id.erp.net',
+  issuer: 'https://id.erp.net/id',
   clientId: '&lt;your-public-client-id&gt;',   // no secret
   redirectUrl: 'myapp://auth/callback',  // custom scheme
   scopes: ['openid', 'profile'],
@@ -292,7 +292,7 @@ app.use(session({
 let client; // will hold the ERP.net OIDC client
 
 async function initClient() {
-  const erpnetIssuer = await Issuer.discover('https://id.erp.net');
+  const erpnetIssuer = await Issuer.discover('https://id.erp.net/id');
   client = new erpnetIssuer.Client({
     client_id: '&lt;your-client-id&gt;',
     client_secret: '&lt;your-client-secret&gt;',
@@ -354,7 +354,7 @@ app.listen(3000, () =&gt; console.log('Listening on http://localhost:3000'));
             authorization-grant-type: authorization_code
         provider:
           erpnet:
-            issuer-uri: https://id.erp.net
+            issuer-uri: https://id.erp.net/id
 </code></pre>
 <p>Security configuration (Spring Security 5+ lambda style):</p>
 <pre><code class="lang-java">import org.springframework.context.annotation.Bean;
@@ -395,7 +395,7 @@ require 'vendor/autoload.php';
 use Jumbojett\OpenIDConnectClient;
 
 $oidc = new OpenIDConnectClient(
-    'https://id.erp.net',
+    'https://id.erp.net/id',
     '&lt;your-client-id&gt;',
     '&lt;your-client-secret&gt;'
 );
@@ -437,7 +437,7 @@ var (
 func main() {
     ctx := context.Background()
 
-    provider, err := oidc.NewProvider(ctx, &quot;https://id.erp.net&quot;)
+    provider, err := oidc.NewProvider(ctx, &quot;https://id.erp.net/id&quot;)
     if err != nil {
         log.Fatal(err)
     }
@@ -520,7 +520,7 @@ erpnet = oauth.register(
     name='erpnet',
     client_id='&lt;your-client-id&gt;',
     client_secret='&lt;your-client-secret&gt;',
-    server_metadata_url='https://id.erp.net/.well-known/openid-configuration',
+    server_metadata_url='https://id.erp.net/id/.well-known/openid-configuration',
     client_kwargs={
         'scope': 'openid profile',
     },
@@ -570,7 +570,7 @@ builder.Services.AddScoped(sp =&gt; sp.GetRequiredService&lt;IHttpClientFactory&
 builder.Services.AddOidcAuthentication(options =&gt;
 {
     // ERP.net ID configuration
-    options.ProviderOptions.Authority = &quot;https://id.erp.net&quot;;
+    options.ProviderOptions.Authority = &quot;https://id.erp.net/id&quot;;
     options.ProviderOptions.ClientId = &quot;&lt;your-public-client-id&gt;&quot;; // no secret
     options.ProviderOptions.ResponseType = &quot;code id_token&quot;;                // code + PKCE
     options.ProviderOptions.DefaultScopes.Add(&quot;openid&quot;);
@@ -619,7 +619,7 @@ builder.Services
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddOpenIdConnect(&quot;ErpNet&quot;, options =&gt;
     {
-        options.Authority = &quot;https://id.erp.net&quot;;
+        options.Authority = &quot;https://id.erp.net/id&quot;;
 
         // Must match the confidential client registered in ERP.net ID
         options.ClientId = &quot;&lt;your-client-id&gt;&quot;;
@@ -654,7 +654,7 @@ app.Run();
 <h2 id="summary">Summary</h2>
 <p>All platforms use the same core OIDC parameters:</p>
 <ul>
-<li>Authority: <code>https://id.erp.net</code></li>
+<li>Authority: <code>https://id.erp.net/id</code></li>
 <li>Client ID / Client Secret: from ERP.net</li>
 <li>Redirect URI: your app's callback</li>
 <li>Scopes: openid profile (and others as needed)</li>

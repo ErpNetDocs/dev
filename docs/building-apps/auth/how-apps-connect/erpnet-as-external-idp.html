@@ -104,7 +104,7 @@
 <h3 id="required-settings">Required settings</h3>
 <ul>
 <li><p><strong>Authority</strong><br>
-<code>https://id.erp.net</code><br>
+<code>https://id.erp.net/id</code><br>
 <em>(or your tenant-specific ERP.net Identity Server URL)</em></p>
 </li>
 <li><p><strong>Client ID</strong> (provided by ERP.net)</p>
@@ -133,7 +133,7 @@ URL where ERP.net redirects after logout.</p>
 <h2 id="example-aspnet-core-confidential-web-app">Example: ASP.NET Core (Confidential Web App)</h2>
 <pre><code class="lang-csharp">.AddOpenIdConnect(&quot;ErpNet&quot;, options =&gt;
 {
-    options.Authority = &quot;https://id.erp.net&quot;;
+    options.Authority = &quot;https://id.erp.net/id&quot;;
     options.ClientId = &quot;&lt;your-client-id&gt;&quot;;
     options.ClientSecret = &quot;&lt;your-client-secret&gt;&quot;;
     options.ResponseType = &quot;code id_token&quot;;
@@ -201,7 +201,7 @@ URL where ERP.net redirects after logout.</p>
 <ol>
 <li>Register your application as an OIDC client inside ERP.net</li>
 <li>Configure your application with the provided <strong>Client ID</strong> and (if applicable) <strong>Client Secret</strong></li>
-<li>Use <code>https://id.erp.net</code> as the authority</li>
+<li>Use <code>https://id.erp.net/id</code> as the authority</li>
 <li>Register correct <strong>login</strong> and <strong>logout</strong> callback URLs</li>
 <li>Use OIDC claims to identify the user</li>
 </ol>
