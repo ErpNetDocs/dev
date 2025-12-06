@@ -1,5 +1,3 @@
-- name: TL;DR
-  href: tldr.md
 - name: Overview
   href: overview.md
 - name: Authorization Code (Interactive Apps)
