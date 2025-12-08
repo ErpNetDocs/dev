@@ -72,7 +72,7 @@ Returns a JSON document that describes the current instance and the publicly exp
 | Field | Type | Notes |
 |-------|------|-------|
 | **Type** | `WebsiteType` | Type of site. |
-| **Status** | `WebsiteStatus` | Current status. |
+| **Status** | `WebsiteStatus` | Operational state of the site:<br>• **Unknown** status not yet determined<br>• **Working** site responds normally<br>• **NotWorking** site is unreachable or unresponsive |
 | **StatusDescription** | `string` | Optional human-readable status detail. |
 | **Url** | `string` (absolute URL) | Root URL of the site. |
 | **System** | `boolean` | `true` for system sites (e.g., Identity). |
