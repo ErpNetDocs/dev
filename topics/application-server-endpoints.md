@@ -122,12 +122,12 @@ GET https://<my-instance>.my.erp.net/tools/resource-monitor
 
 ```json
 {
-  "CPUUsage": 7.12,
-  "ProcessorCount": 8,
-  "AvailableMemoryMiB": 24567.3,
-  "UsedMemoryMiB": 1234.8,
-  "CommittedMemoryMiB": 13802.6,
-  "TotalMemoryMiB": 25802.1
+  "cpuUsage": 7.12,
+  "processorCount": 8,
+  "availableMemoryMiB": 24567.3,
+  "usedMemoryMiB": 1234.8,
+  "committedMemoryMiB": 13802.6,
+  "totalMemoryMiB": 25802.1
 }
 ```
 
