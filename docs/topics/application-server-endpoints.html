@@ -109,7 +109,9 @@
 </code></pre>
 <h2 id="site-auto-discovery---toolsauto-discovery">Site Auto-Discovery - <code>/tools/auto-discovery</code></h2>
 <p>Returns a JSON document that describes the current instance and the publicly exposed sites.</p>
-<h3 id="response-model">Response model</h3>
+<pre><code class="lang-http">GET https://&lt;my-instance&gt;.my.erp.net/tools/auto-discovery
+</code></pre>
+<p><strong>Response model (example):</strong></p>
 <pre><code class="lang-json">{
   &quot;Host&quot;: &quot;string&quot;,                 // Instance host name
   &quot;DbName&quot;: &quot;string|null&quot;,          // Database name (if available)
@@ -197,7 +199,7 @@
 </tbody>
 </table>
 <h2 id="server-info--downloads---toolsserver-info">Server Info &amp; Downloads - <code>/tools/server-info</code></h2>
-<pre><code class="lang-http">GET https://&lt;my-instance&gt;.my.erp.net/server-info
+<pre><code class="lang-http">GET https://&lt;my-instance&gt;.my.erp.net/tools/server-info
 </code></pre>
 <p><strong>Response (example):</strong></p>
 <pre><code class="lang-json">{
@@ -218,7 +220,7 @@
 <p>Shows live resource usage statistics such as CPU and memory consumption.</p>
 <p><strong>Response:</strong> <code>application/json</code></p>
 <p><strong>Example:</strong></p>
-<pre><code class="lang-http">GET https://&lt;my-instance&gt;.my.erp.net/resource-monitor
+<pre><code class="lang-http">GET https://&lt;my-instance&gt;.my.erp.net/tools/resource-monitor
 </code></pre>
 <p><strong>Response (example):</strong></p>
 <pre><code class="lang-json">{
@@ -229,6 +231,14 @@
   &quot;CommittedMemoryMiB&quot;: 13802.6,
   &quot;TotalMemoryMiB&quot;: 25802.1
 }
+</code></pre>
+<h2 id="current-instance-version---toolsver">Current instance version - <code>/tools/ver</code></h2>
+<p>Returns the current ERP.net instance version.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-http">GET https://&lt;my-instance&gt;.my.erp.net/tools/ver
+</code></pre>
+<p><strong>Response:</strong></p>
+<pre><code class="lang-plain">26.2.0.76
 </code></pre>
 <h2 id="sha-256-utility---toolssha256">SHA-256 Utility - <code>/tools/sha256</code></h2>
 <p>Generates a SHA-256 hash from a given string and returns it as Base64.</p>
