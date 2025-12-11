@@ -38,7 +38,11 @@ GET https://<my-instance>.my.erp.net/
 
 Returns a JSON document that describes the current instance and the publicly exposed sites.
 
-### Response model
+```http
+GET https://<my-instance>.my.erp.net/tools/auto-discovery
+```
+
+**Response model (example):**
 
 ```json
 {
@@ -81,7 +85,7 @@ Returns a JSON document that describes the current instance and the publicly exp
 ## Server Info & Downloads - `/tools/server-info`
 
 ```http
-GET https://<my-instance>.my.erp.net/server-info
+GET https://<my-instance>.my.erp.net/tools/server-info
 ```
 
 **Response (example):**
@@ -111,7 +115,7 @@ Shows live resource usage statistics such as CPU and memory consumption.
 **Example:**
 
 ```http
-GET https://<my-instance>.my.erp.net/resource-monitor
+GET https://<my-instance>.my.erp.net/tools/resource-monitor
 ```
 
 **Response (example):**
@@ -125,6 +129,22 @@ GET https://<my-instance>.my.erp.net/resource-monitor
   "CommittedMemoryMiB": 13802.6,
   "TotalMemoryMiB": 25802.1
 }
+```
+
+## Current instance version - `/tools/ver`
+
+Returns the current @@name instance version.
+
+**Example:**
+
+```http
+GET https://<my-instance>.my.erp.net/tools/ver
+```
+
+**Response:**
+
+```plain
+26.2.0.76
 ```
 
 ## SHA-256 Utility - `/tools/sha256`
