@@ -92,16 +92,16 @@ GET https://<my-instance>.my.erp.net/tools/server-info
 
 ```json
 {
-  "Version": "26.1.0",
-  "Downloads": {
-    "WhatsNew": "https://<my-instance>.my.erp.net/sys/downloads/ErpNet_Whats_New.txt",
-    "WinClient": "https://<my-instance>.my.erp.net/sys/downloads/ErpNet.WinClient.Setup.x86.msi",
-    "PosClient": "https://<my-instance>.my.erp.net/sys/downloads/EnterpriseOne.Pos.Setup.x86.msi",
-    "WinClient64": "https://<my-instance>.my.erp.net/sys/downloads/ErpNet.WinClient.Setup.x64.msi",
-    "PosClient64": "https://<my-instance>.my.erp.net/sys/downloads/EnterpriseOne.Pos.Setup.x64.msi"
+  "version": "26.1.0",
+  "downloads": {
+    "whatsNew": "https://<my-instance>.my.erp.net/sys/downloads/ErpNet_Whats_New.txt",
+    "winClient": "https://<my-instance>.my.erp.net/sys/downloads/ErpNet.WinClient.Setup.x86.msi",
+    "posClient": "https://<my-instance>.my.erp.net/sys/downloads/EnterpriseOne.Pos.Setup.x86.msi",
+    "winClient64": "https://<my-instance>.my.erp.net/sys/downloads/ErpNet.WinClient.Setup.x64.msi",
+    "posClient64": "https://<my-instance>.my.erp.net/sys/downloads/EnterpriseOne.Pos.Setup.x64.msi"
   },
-  "InternalApi": {
-    "UseHttpCompression": true
+  "internalApi": {
+    "useHttpCompression": true
   }
 }
 ```
