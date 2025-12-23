@@ -22,9 +22,9 @@ Or,
 
 After all, your final goal is to acquire an access token. The process is very similar to this example [Basic example of acquiring an access token](./web-app-access-token-auth-code.md), but here is added another intermediate step - the process of impersonating a user. Here's a summary of how the whole process goes:
 
-1. Your external app will navigate to the [authorize endpoint](../how-apps-connect/identity-server.md), passing your trusted app details (the trusted app, corresponding to your external app).
+1. Your external app will navigate to the [authorize endpoint](../concepts/how-apps-connect/identity-server.md), passing your trusted app details (the trusted app, corresponding to your external app).
 2. If all's OK, the browser where your app is opened will be redirected to the @@erpnet login page, where the user will enter their credentials.
-3. If the user logs in successfully, the @@erpnet login page (i.e. @@erpnet Identity Server) will be redirect to an uri, back to your external SPA.
+3. If the user logs in successfully, the @@erpnet login page (i.e. @@erpnet Identity) will be redirect to an uri, back to your external SPA.
 4. There you'll receive an authorization code.
 5. Finally you'll exchange the auth code for an access and refresh tokens at the token endpoint.
 6. You'll obtain an access and refresh tokens on behalf of the logged user (2).
@@ -115,7 +115,7 @@ document.getElementById("start").addEventListener("click", async function(e) {
     window.location = url;
 });
 ```
-Just set-up the necessary arguments for the authroize endpoint and initiate a redirect. The Identity Server will take care of everything else, i.e.,
+Just set-up the necessary arguments for the authroize endpoint and initiate a redirect. @@name Identity will take care of everything else, i.e.,
 1. Will navigate to the @@erpnet login page.
 2. After successful user login, will redirect to your `config.redirect_uri`.
 
@@ -123,7 +123,7 @@ As you see, you're passing the following:
 - The uri (i.e. the client id) of your trusted app `config.client_id`.
 - The `config.redirect_uri` - the uri where you're waiting for the callback, when the user signs in.
 - The scopes your external app needs.
-- `response_type=code`. This "instructs" the Identity Server to send you a **code** (i.e. authorization code).
+- `response_type=code`. This "instructs" @@name Identity to send you a **code** (i.e. authorization code).
 
 ### Access token request (Token endpoint)
 
@@ -181,7 +181,7 @@ if (args != "") {
 ```
 
 Or here's what it does broken into steps:
-- Get the arguments from the current URI. That's because we're expecting the `redirect_uri` callback. I.e. the identity server sends our authorization code.
+- Get the arguments from the current URI. That's because we're expecting the `redirect_uri` callback. I.e. @@name Identity sends our authorization code.
 - If there're arguments (i.e. we **are** in the redirect scenario)- proceed.
 - Parse the arguments and extract the authorization code - `idServerResponse.code`.
 - Send a POST request, including the authorization code, client id and the redirect uri. The redirect uri is passed again, just as a security measure.

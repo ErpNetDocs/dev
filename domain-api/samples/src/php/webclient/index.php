@@ -78,7 +78,7 @@ echo "<h3>Access Token</h3>";
 
 print_r($claims);
 
-// This is a interactive application. Interactive application show the identity server login page. 
+// This is a interactive application. Interactive application show the ERP.net identity login page. 
 // For each user login id_token is issued and stored in cookie. 
 // The id_token identifies one occupied license on the Erp Application Server.
 

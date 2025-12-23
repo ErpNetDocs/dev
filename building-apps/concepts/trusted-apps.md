@@ -98,4 +98,4 @@ flowchart LR
   Explore the different kinds of @@name applications.
 
 - **[Authentication and Authorization](../auth/overview.md)**  
-  See how apps authenticate and obtain permissions through @@name's Identity Server.
+  See how apps authenticate and obtain permissions through @@name's Identity.

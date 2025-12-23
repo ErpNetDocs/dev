@@ -144,7 +144,7 @@ namespace ErpNetDemoClient
                         RedirectUri = $"{ctx.Request.Scheme}://{ctx.Request.Host}"
                     };
 
-                    // Sign out from ERP.net identity server and remove authentication cookies.
+                    // Sign out from ERP.net identity and remove authentication cookies.
                     await ctx.SignOutAsync("erpnet", authProps);
                     await ctx.SignOutAsync("Cookies", authProps);
                     

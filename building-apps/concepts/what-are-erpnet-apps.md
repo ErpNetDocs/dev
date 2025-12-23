@@ -17,7 +17,7 @@ An app:
 - Operates outside of the @@name instance, but connects to it securely
 - Uses the standard @@name APIs that are part of every instance
 - Is recognized by the system through a **Trusted Application** entity
-- Authenticates and authorizes through the built-in **Identity Server**
+- Authenticates and authorizes through the built-in **@@name Identity**
 
 Apps are used by businesses to adapt @@name to their specific needs, integrate it with other systems, or deliver tailored digital experiences.
 
@@ -28,7 +28,7 @@ Apps are used by businesses to adapt @@name to their specific needs, integrate i
 | **Ownership** | Apps can be developed and managed by a tenant, a partner, or published to the @@name Marketplace. |
 | **Access** | Each app must be registered as a Trusted Application in the @@name instance to be recognized and authorized. |
 | **Interaction** | Apps communicate with the instance using APIs that are part of the @@name platform. |
-| **Security** | Access control and authentication are handled by the built-in Identity Server and system policies. |
+| **Security** | Access control and authentication are handled by the built-in @@name Identity and system policies. |
 | **Deployment** | Apps can run anywhere - on-premises, in the cloud, or embedded in another service. |
 | **Lifespan** | Apps can be enabled, disabled, or updated at any time without affecting the instance core. |
 
@@ -48,7 +48,7 @@ flowchart TB
 
   subgraph instance["ERP.net Instance"]
     direction TB
-    idp([ERP.net Identity Server])
+    idp([ERP.net Identity])
     api([ERP.net APIs])
     data([ERP.net Data])
     api --> data
@@ -65,7 +65,7 @@ flowchart TB
 
 Each app:
 
-- Authenticates through the Identity Server inside the instance
+- Authenticates through @@name Identity inside the instance
 - Uses APIs that are part of the same instance
 - Reads or writes data according to its granted permissions
 
@@ -91,5 +91,5 @@ This lifecycle applies equally to internal tools, partner integrations, and mark
   Understand how each app is registered and recognized by the ERP.net instance.
 
 - **[Authentication and Authorization](../auth/overview.md)**  
-  See how the built-in Identity Server authenticates and authorizes apps and users.
+  See how the built-in @@name Identity authenticates and authorizes apps and users.
   

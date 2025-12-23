@@ -22,9 +22,9 @@ Or,
 
 After all, your final goal is to acquire an access token. The process is very similar to this example [Basic example of acquiring an access token](./basic-acquire-access-token.md), but here is added another intermediate step - the process of impersonating a user. Here's a summary of how the whole process goes:
 
-1. Your external app will navigate to the so called [authorize endpoint](../how-apps-connect/identity-server.md#2-authorize-endpoint), passing your trusted app details (the trusted app, corresponding to your external app).
+1. Your external app will navigate to the so called [authorize endpoint](../concepts/how-apps-connect/identity-server.md#2-authorize-endpoint), passing your trusted app details (the trusted app, corresponding to your external app).
 2. If all's OK, the browser where your app is opened will be redirected to the @@erpnet login page, where the user will enter their credentials.
-3. If the user logs in successfully, the @@erpnet login page (i.e. @@erpnet Identity Server) will be redirect to a uri, back to your external web app.
+3. If the user logs in successfully, the @@erpnet login page (i.e. @@erpnet Identity) will be redirect to a uri, back to your external web app.
 4. There you'll receive an authorization code.
 5. Finally you'll exchange the auth code for an access token at the token endpoint.
 6. You'll obtain an access token on behalf of the logged user (2).
@@ -89,7 +89,7 @@ sendAuthorizationRequest();
 
 This is the main "algorithm" of our example external app. What does it do? Easy,
 - If a POST request is made and its array contains `code`:
-  - Assume that this `code` is the authorization code, sent back from the Identity Server.
+  - Assume that this `code` is the authorization code, sent back from @@name Identity.
   - Pass this code to `acquireAccessToken`, so an access code will be acquired.
   - Make a call to the DomainApi via `domainApiCall`, passing the access token.
 - Else send a new authorization request.
@@ -112,7 +112,7 @@ function sendAuthorizationRequest() {
     header("Location: $authorizeRequest");
 }
 ```
-Just set-up the necessary arguments for the authroize endpoint and initiate a redirect. The Identity Server will take care of everything else, i.e.,
+Just set-up the necessary arguments for the authroize endpoint and initiate a redirect. @@name Identity will take care of everything else, i.e.,
 1. Will navigate to the @@erpnet login page.
 2. After successful user login, will redirect to your `CALLBACK_URI`.
 
@@ -122,8 +122,8 @@ As you see, you're passing the following:
 - The scopes your external app needs.
 
 In addition, there're two other important arguments:
-- `response_type=code id_token`. This "instructs" the Identity Server to send you a **code** (i.e. authorization code) and an identity token (not discussed in this topic).
-- `response_mode=form_post`. This "tells" the Identity Server that you're expecting the callback request as an HTTP POST request.
+- `response_type=code id_token`. This "instructs" @@name Identity to send you a **code** (i.e. authorization code) and an identity token (not discussed in this topic).
+- `response_mode=form_post`. This "tells" @@name Identity that you're expecting the callback request as an HTTP POST request.
 
 ### Access token request (Token endpoint)
 

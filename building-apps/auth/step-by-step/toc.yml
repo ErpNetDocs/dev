@@ -1,0 +1,17 @@
+- name: ERP.net ID for Web Applications
+  href: erpnet-id-web-apps.md
+
+- name: Instance ID for SPA Applications
+  href: instance-id-spa-apps.md
+
+- name: Instance ID for Web Applications
+  href: instance-id-web-apps.md
+
+- name: Instance ID for Web Portals
+  href: instance-id-web-portals.md    
+
+- name: Service Applications
+  href: service-apps.md
+
+- name: Automations 
+  href: automation.md  

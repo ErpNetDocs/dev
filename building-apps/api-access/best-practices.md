@@ -6,7 +6,7 @@ The following guidelines apply to both the **Domain API** and **Table API** and 
 
 ## Authentication and Tokens
 
-- Always use **OAuth 2.0** authentication via the **@@name Identity Server**.  
+- Always use **OAuth 2.0** authentication via the **@@name Identity**.  
 - Never hardcode tokens, client secrets, or credentials in source code.  
 - Store access tokens securely - for example, in encrypted storage or a secure vault.  
 - Use **short-lived access tokens** and **refresh tokens** for long-running apps.  
@@ -88,8 +88,8 @@ Following these best practices will ensure your @@name integrations are:
 - [**Table API Reference**](../../table-api/index.md)  
   Retrieve high-volume analytical data with streaming support.
 
-- [**Tokens Overview**](../auth/tokens/tokens-overview.md)  
+- [**Tokens Overview**](../auth/concepts/tokens/tokens-overview.md)  
   Understand access tokens, reference tokens, and scopes.
 
-- [**License Slot Usage**](../auth/sessions/license-slot.md)  
+- [**License Slot Usage**](../auth/concepts/sessions/license-slot.md)  
   Learn how API sessions affect license consumption.

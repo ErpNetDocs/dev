@@ -21,7 +21,7 @@ Backup | Application | Basic Authentication | Table API
 These are internal enterprise applications, used by the [internal users](https://info.erp.net/information/licensing/user-types.html#internal-users).
 
 * **User type:** [Internal users](https://info.erp.net/information/licensing/user-types.html#internal-users)
-* **Authentication:** [Authorization Code](../building-apps/auth/flows/auth-code/overview.md)
+* **Authentication:** [Authorization Code](../building-apps/auth/concepts/flows/auth-code/overview.md)
 * **API:** [Domain API](../domain-api/index.md)
 
 ### External Web App
@@ -30,7 +30,7 @@ External web apps are geared towards [external users](https://info.erp.net/infor
 External web apps use [Application Accounts](https://info.erp.net/information/licensing/user-types.html#application-accounts) to access the ERP resources on behalf of the external users.
 
 * **User type:** [External users](https://info.erp.net/information/licensing/user-types.html#external-users)
-* **Authentication:** [Client Credentials](../building-apps/auth/flows/client-credentials/overview.md)
+* **Authentication:** [Client Credentials](../building-apps/auth/concepts/flows/client-credentials/overview.md)
 * **API:** [Domain API](../domain-api/index.md)
 
 > [!NOTE]
@@ -42,7 +42,7 @@ External web apps use [Application Accounts](https://info.erp.net/information/li
 Service applications are applications, which run usually in background and do not require user login.
 
 * **User type:** [Application Account](https://info.erp.net/information/licensing/user-types.html#application-accounts)
-* **Authentication:** [Client Credentials](../building-apps/auth/flows/client-credentials/overview.md)
+* **Authentication:** [Client Credentials](../building-apps/auth/concepts/flows/client-credentials/overview.md)
 * **API:** [Domain API](../domain-api/index.md)
 
 ### BI application

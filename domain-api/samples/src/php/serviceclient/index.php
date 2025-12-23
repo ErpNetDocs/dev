@@ -12,7 +12,7 @@ $erpHostName = "demodb.my.erp.net";
 //$erpHostName = "e1-nstable.local";
 
 $client = new ErpNetClient(
-    // The address of the ErpNet Identity Server.
+    // The address of the ErpNet Identity.
     "https://$erpHostName/id",
     // The client_id registered in the demo database as trusted application.
     'ServiceDemoClient',
@@ -39,7 +39,7 @@ if(file_exists(($accessTokenFile)))
 
 if(!$accessTokenIsValid)
 {
-    // request new access_token from identity server. 
+    // request new access_token from ERP.net identity. 
     $client->requestClientCredentialsToken();
     // store the access_token locally to reuse it.
     file_put_contents($accessTokenFile, $client->accessToken);

@@ -1,20 +1,10 @@
 - name: Overview
   href: overview.md
-- name: How Apps Connect
-  href: how-apps-connect/toc.yml  
-- name: Auth Flows
-  href: flows/toc.yml
-- name: Tokens
-  href: tokens/toc.yml  
-- name: Sessions
-  href: sessions/toc.yml
-- name: Common Scenarios
-  href: common-scenarios/toc.yml  
+- name: Step by Step  
+  href: step-by-step/toc.yml
+- name: Concepts
+  href: concepts/toc.yml
 - name: Samples
   href: samples/toc.yml
-- name: Security Best Practices
-  href: security-best-practices.md
-- name: Frequently Asked Questions (FAQ)
-  href: faq.md
 - name: Client Libraries
   href: client-libraries.md  

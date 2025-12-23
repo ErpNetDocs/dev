@@ -6,7 +6,7 @@ It provides access to essential runtime information, configuration details, and 
 
 These endpoints are exposed directly under the instance root and are designed for discovery, monitoring, and administrative purposes.  
 
-They operate independently of the hosted sites such as @@name Identity Server, Web Client, Client Center, Domain API, Table API.
+They operate independently of the hosted sites such as @@name Identity, Web Client, Client Center, Domain API, Table API.
 
 The base URL of an instance looks like this:
 

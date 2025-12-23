@@ -35,7 +35,7 @@ class ErpNetClient
      * @param $authorityUri - Uri of ientity server
      * @param $applicationName - Unique name of the application. The application must be registered as trusted application in the used ErpNet database.
      * @param $applicationSecret - The secret of the trusted application.
-     * @param $applicationSignInUri - The uri where the application will receive tokens and codes from identity server.
+     * @param $applicationSignInUri - The uri where the application will receive tokens and codes from ERP.net identity.
      * @param $applicationSignOutUri - The uri where the application will be redirected after sign out.
      * @param $domainApiUri - the Domain API base address.
      */
@@ -197,8 +197,8 @@ class ErpNetClient
     }
     /**
      * Sets a cookie holding the access and refresh tokens.
-     * @param string $accessToken - the access token returned from identity server.
-     * @param string $refreshToken - the refresh token returned from identity server.
+     * @param string $accessToken - the access token returned from ERP.net identity.
+     * @param string $refreshToken - the refresh token returned from ERP.net identity.
      */
     protected function setTokensCookie()
     {

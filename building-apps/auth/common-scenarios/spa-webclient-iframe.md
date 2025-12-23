@@ -1,1 +1,0 @@
-# SPA Embedded in Web Client (iframe)

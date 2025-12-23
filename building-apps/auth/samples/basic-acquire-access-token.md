@@ -48,7 +48,7 @@ scope=DomainApi
 ```
 
 Yes, it's that simple. Here are some clarifications:
-* The POST request is sent to the identity server's token endpoint directly.
+* The POST request is sent to the @@name Identity token endpoint directly.
 * The body of the request:
   - client_id - your trusted app's application uri.
   - client_secret - the plain secret phrase of the trusted app.

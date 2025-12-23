@@ -6,7 +6,7 @@
 - who develops them
 - and how they are distributed
 
-All @@name Apps follow the same security and connectivity model - they communicate with an @@name instance through the built-in **Identity Server** and **APIs**, and are represented in the system by a **Trusted Application** entity.
+All @@name Apps follow the same security and connectivity model - they communicate with an @@name instance through the built-in **@@name Identity** and **APIs**, and are represented in the system by a **Trusted Application** entity.
 
 ## Internal Applications
 
@@ -26,14 +26,14 @@ Characteristics:
 
 - Deployed as part of the @@name instance  
 - Fully managed and updated with the platform  
-- Use the same APIs and Identity Server for consistency  
+- Use the same APIs and @@name Identity for consistency  
 - **Trusted Application registration:** may be preconfigured by the platform or require manual registration/configuration, depending on the app and deployment
 
 ## External Applications
 
 **External applications** are developed outside of the @@name platform, by customers, partners, or independent developers.
 
-They run separately from the @@name instance but connect to it securely via the Identity Server and APIs.
+They run separately from the @@name instance but connect to it securely via @@name Identity and APIs.
 
 External apps can take many forms - mobile clients, integrations, automation tools, or standalone web applications.
 
@@ -48,7 +48,7 @@ Characteristics:
 
 - Hosted outside of the @@name instance  
 - Must be registered as **Trusted Applications** in each instance they connect to
-- Authenticate and authorize through the built-in Identity Server
+- Authenticate and authorize through the built-in @@name Identity
 - Can use interactive (user) or non-interactive (service) access modes
 
 ## Marketplace Applications
@@ -89,7 +89,7 @@ Embedded apps behave differently depending on where they are hosted:
 2. **Apps hosted elsewhere**  
    If the app is hosted on any other domain, it cannot access @@name data directly.  
    The only information it receives is the **URL passed to the WebView** when it is opened from the Web Client.  
-   To access data, such apps must perform standard authentication through the Identity Server using a registered Trusted Application.
+   To access data, such apps must perform standard authentication through @@name Identity using a registered Trusted Application.
 
 ### Typical Use Cases
 
@@ -124,4 +124,4 @@ Embedded apps behave differently depending on where they are hosted:
   Learn how each app is registered, managed, and granted access within @@name.
 
 - **[Authentication and Authorization](../auth/overview.md)**  
-  See how the built-in Identity Server authenticates and authorizes apps and users.
+  See how the built-in @@name Identity authenticates and authorizes apps and users.

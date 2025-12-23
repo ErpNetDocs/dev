@@ -2,7 +2,7 @@
 
 @@name provides several powerful APIs, each designed for a specific integration scenario.
 
-All APIs share the same **authentication**, **authorization**, and **security** foundation - access is always through OAuth 2.0 tokens issued by the Identity Server.
+All APIs share the same **authentication**, **authorization**, and **security** foundation - access is always through OAuth 2.0 tokens issued by the @@name Identity.
 
 Use this section to choose the right API for your use case and learn how to access it securely.
 

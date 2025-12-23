@@ -23,20 +23,20 @@ This example doesn't show a specific implementiation, but the required steps you
 The main difference with the [Basic example of acquiring an access token](./basic-acquire-access-token.md) is that there's an additional step, which is a subject of a specific technical implementation. I.e.,
 
 1. Your external app performs an HTTP GET request to the authorize endpoint.
-2. Wait for the Identity Server to:
+2. Wait for @@name Identity to:
     1. Redirect to the @@erpnet login page.
     2. "Make" an HTTP request to your external app, after the user logs in successfully.
 3. Now your external app can make an HTTP POST request to the token endpoint.
-4. The Identity Server creates an access token and and returns it to you.
+4. @@name Identity creates an access token and and returns it to you.
 
 As you can see, the extra steps, compared to the other example, are (1) and (2). I.e., 
 1. You have to provide a way to visualize the @@erpnet login page (the usual way is via a web browser).
 2. Also a mechanism to handle a HTTP request.
 
-Actually, this is the essential difference between `client_credentials flow` and the `authorization code flow`. The first is bound to a specific, so-called service user while the other- to the user who will log in via the login form of the Identity Provider (i.e., the @@erpnet Identity Server).
+Actually, this is the essential difference between `client_credentials flow` and the `authorization code flow`. The first is bound to a specific, so-called service user while the other- to the user who will log in via the login form of the Identity Provider (i.e., the @@erpnet Identity).
 
 > [!NOTE]
-> It's important to clarify the following quote above, _(2.2) "Make" an HTTP request to your external app, after the user logs in successfully._, referring the @@erpnet Identity Server.
+> It's important to clarify the following quote above, _(2.2) "Make" an HTTP request to your external app, after the user logs in successfully._, referring the @@erpnet Identity.
 >
 > The HTTP request to your external app (i.e. the redirect) is made locally, as a result from your request to the authorize endpoint. In general, this means that your external app doesn't need to be accessible outside of the network where it's avaialble. So said, if your app is a "pure" local one, external callbacks such as `localhost/signin-callback`, `192.168.10.55/signin-callback` are completely fine.
 

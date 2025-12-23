@@ -6,7 +6,7 @@ You can connect using any compliant client library - no proprietary SDK is requi
 
 ## Supported Standards
 
-@@name Identity Server implements:
+@@name Identity implements:
 
 - **OAuth 2.0 Authorization Framework** ([RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749))
 - **OpenID Connect Core 1.0** ([openid.net/specs/openid-connect-core-1_0.html](https://openid.net/specs/openid-connect-core-1_0.html))
@@ -102,7 +102,7 @@ print(token["access_token"])
 
 ## Notes for @@name Developers
 
-- All token requests and authorizations must go through your instance's Identity Server (`/id` path).
+- All token requests and authorizations must go through your instance's Identity (`/id` path).
 - Always request scopes explicitly (`read`, `update`, etc.).
 - Use **PKCE** for public apps that cannot store secrets.
 - Never hardcode client secrets in browser code or mobile apps.
@@ -128,17 +128,17 @@ Use tools like **Postman**, **curl**, or **jwt.io** to:
 
 ## Learn More
 
-- [**OAuth 2.0 Overview**](./how-apps-connect/oauth2-overview.md)  
+- [**OAuth 2.0 Overview**](./concepts/how-apps-connect/oauth2-overview.md)  
   Understand the core principles behind @@name authentication.
 
-- [**Identity Server**](./how-apps-connect/identity-server.md)  
+- [**ERP.net Identity**](./concepts/how-apps-connect/identity-server.md)  
   Learn how @@name issues and validates tokens.
 
-- [**Auth Flows Overview**](./flows/overview.md)  
+- [**Auth Flows Overview**](./concepts/flows/overview.md)  
   Explore the different OAuth flows for interactive, service, and hybrid apps.
 
-- [**Access Tokens**](./tokens/access-tokens.md)  
+- [**Access Tokens**](./concepts/tokens/access-tokens.md)  
   See how tokens are structured and used to access APIs.
 
-- [**Reference Access Tokens (PAT, SAT)**](./tokens/reference-access-tokens.md)  
+- [**Reference Access Tokens (PAT, SAT)**](./concepts/tokens/reference-access-tokens.md)  
   Learn how to use long-lived tokens for integrations and automation.

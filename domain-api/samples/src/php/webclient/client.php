@@ -11,7 +11,7 @@ include("../ErpNetClient.php");
 $erpHostName = "demodb.my.erp.net";
 
 $client = new ErpNetClient(
-    // The address of the ErpNet Identity Server.
+    // The address of the ErpNet Identity.
     "https://$erpHostName/id",
     // The client_id registered in the demo database as trusted application.
     'ConfidentialDemoClient',

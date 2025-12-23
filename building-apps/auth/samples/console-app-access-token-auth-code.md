@@ -26,7 +26,7 @@ Or,
 
 After all, your final goal is to acquire an access token. The process is very similar to this example [Basic example of acquiring an access token](./basic-acquire-access-token.md), but here is added another intermediate step - the process of impersonating a user. Here's a summary of how the whole process goes:
 
-1. Your external app will open the so called [authorize endpoint](../how-apps-connect/identity-server.md) with your trusted app details (the trusted app, corresponding to your external app).
+1. Your external app will open the so called [authorize endpoint](../concepts/how-apps-connect/identity-server.md) with your trusted app details (the trusted app, corresponding to your external app).
 
 > [!NOTE]
 > An important detail is that the authorize endpoint must be opened in a browser (see next point and its note). 
@@ -38,7 +38,7 @@ After all, your final goal is to acquire an access token. The process is very si
 > - If your external app is web-based, you don't have to do anything (because it will work in a browser anyway).
 > - If your external app is NOT web-based, you have to handle this process by yourself (the example below is just like that).
 
-3. If the user logs in successfully, the @@erpnet login page (i.e. @@erpnet Identity Server) will be redirect to a uri where **your external app is listening**.
+3. If the user logs in successfully, the @@erpnet login page (i.e. @@erpnet Identity) will be redirect to a uri where **your external app is listening**.
 4. There you'll receive an authorization code.
 5. Finally you'll exchange the auth code for an access token at the token endpoint.
 6. You'll obtain an access token on behalf of the logged user (2).
@@ -87,7 +87,7 @@ ClientAuthData clientData;
 
 The `authCode` keeps the authorization code you'll receive after the internal user logs in successfully. So, initially will be an empty string.
 
-The `authState` is a random string, used for security purpose. You'll pass it to the authorize endpoint and the Identity Server will return it back to your `CallbackUri` uri (as you can guess, you need to compare them- if they differ, it's most likely a malicious attempt).
+The `authState` is a random string, used for security purpose. You'll pass it to the authorize endpoint and @@name Identity will return it back to your `CallbackUri` uri (as you can guess, you need to compare them- if they differ, it's most likely a malicious attempt).
 
 The last variable `clientData` will help us, holding the client (i.e. internal user) auth data such as access token, scopes, access token expiration, etc. Here's what the `ClientAuthData` type looks like:
 
@@ -171,8 +171,8 @@ As you see, you're passing the following:
 - The `authState`, described at the beginning.
 
 In addition, there are two other important arguments:
-- `response_type=code id_token`. This "instructs" the Identity Server to send you a **code** (i.e. authorization code) and an identity token (not discussed in this topic).
-- `response_mode=form_post`. This "tells" the Identity Server that you are expecting the callback request as an HTTP POST request.
+- `response_type=code id_token`. This "instructs" @@name Identity to send you a **code** (i.e. authorization code) and an identity token (not discussed in this topic).
+- `response_mode=form_post`. This "tells" @@name Identity that you are expecting the callback request as an HTTP POST request.
 
 Our request args are prepared, so we just have to execute the GET request (i.e. the authorize endpoint).
 
@@ -254,7 +254,7 @@ As you can see, it's quite simple. You're passing the following:
 * Your trusted app uri and its secret `TrustedAppUri`, `TrustedAppSecret`.
 * The authorization code you received in the previous step `authCode`.
 * The `CallbackUri`.
-* And the very important one `grant_type=authroization_code` - this is the moment when you "tell" the Identity Server that you'll use the authorization code flow.
+* And the very important one `grant_type=authroization_code` - this is the moment when you "tell" @@name Identity that you'll use the authorization code flow.
 
 Then just send it and make sure that the returned http status code is a successful one:
 

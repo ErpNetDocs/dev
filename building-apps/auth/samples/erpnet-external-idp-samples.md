@@ -1,6 +1,6 @@
-# Sign in with @@name Identity Server (Multi-Platform Samples)
+# Sign in with @@name Identity (Multi-Platform Samples)
 
-This page shows how to use **@@name Identity Server** as an OpenID Connect provider from different platforms.
+This page shows how to use **@@name Identity** as an OpenID Connect provider from different platforms.
 
 All samples use the same key parameters:
 
@@ -11,7 +11,7 @@ All samples use the same key parameters:
 - **Scopes**: `openid profile` (plus `offline_access` if you need refresh tokens)
 
 > [!WARNING]
-> The Client ID and Client Secret must be created in @@name Identity Server for your application.  
+> The Client ID and Client Secret must be created in @@name Identity for your application.  
 > They are not public and cannot be reused from another app.
 
 ## Public vs. Confidential Clients
@@ -47,7 +47,7 @@ Characteristics:
 
 ### @@name Configuration Requirement
 
-Whether your application is public or confidential is determined by its **Trusted Application** configuration inside the @@name Identity Server.
+Whether your application is public or confidential is determined by its **Trusted Application** configuration inside the @@name Identity.
 
 When you request client registration from @@name, specify:
 
@@ -647,4 +647,4 @@ All platforms use the same core OIDC parameters:
 - Client ID / Client Secret: from @@name
 - Redirect URI: your app's callback
 - Scopes: openid profile (and others as needed)
-- Choose a library for your platform, plug in these values, and you can sign users in with @@name Identity Server.
+- Choose a library for your platform, plug in these values, and you can sign users in with @@name Identity.

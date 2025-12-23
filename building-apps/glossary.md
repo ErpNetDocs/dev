@@ -6,7 +6,7 @@ This glossary explains common terms and concepts used throughout the @@name deve
 
 ### Access Token
 
-A short-lived token issued by the Identity Server that authorizes API requests.  
+A short-lived token issued by @@name Identity that authorizes API requests.  
 Used to prove that an app or user has permission to access @@name resources.
 
 ---
@@ -58,7 +58,7 @@ Each active session consumes a license slot until it ends or times out.
 
 ---
 
-### Identity Server
+### ERP.net Identity
 
 The built-in @@name authentication authority that handles sign-in, issues tokens, and validates access for all apps.
 
@@ -121,6 +121,6 @@ Supports **streaming** for efficient large dataset transfers.
 For a deeper understanding of these terms, explore:
 
 - [Authentication and Authorization](./auth/overview.md)
-- [Tokens](./auth/tokens/tokens-overview.md)
-- [Sessions](./auth/sessions/overview.md)
+- [Tokens](./auth/concepts/tokens/tokens-overview.md)
+- [Sessions](./auth/concepts/sessions/overview.md)
 - [API Access](./api-access/overview.md)
