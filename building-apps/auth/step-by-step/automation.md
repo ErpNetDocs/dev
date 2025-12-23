@@ -53,4 +53,3 @@ If the token is valid and includes the required scopes, the API returns the requ
 
 - Use only one method per request (either `Authorization` or an API key header).
 - Reference tokens are opaque and validated by @@name; they are not exchanged for other tokens.
-

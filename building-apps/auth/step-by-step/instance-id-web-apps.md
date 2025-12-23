@@ -93,7 +93,7 @@ Granting broader scopes than necessary increases the impact of a compromised tok
 **Result:**
 The user is redirected to the @@name login page and signs in.
 
-## 2. Receive the sign-in response (callback)
+### 2. Receive the sign-in response (callback)
 
 After a successful sign-in, the @@name Instance ID redirects the user back to the configured callback URL.
 
@@ -112,7 +112,7 @@ The backend must:
 - Extract the `authorization code`
 - Preserve the original `code_verifier` for the token request
 
-## 3. Exchange the authorization code (token request)
+### 3. Exchange the authorization code (token request)
 
 The backend exchanges the authorization code at the Instance ID token endpoint.
 
