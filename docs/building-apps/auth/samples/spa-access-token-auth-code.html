@@ -102,9 +102,9 @@
 <h2 id="the-whole-process-in-a-nutshell">The whole process in a nutshell</h2>
 <p>After all, your final goal is to acquire an access token. The process is very similar to this example <a href="web-app-access-token-auth-code.html">Basic example of acquiring an access token</a>, but here is added another intermediate step - the process of impersonating a user. Here's a summary of how the whole process goes:</p>
 <ol>
-<li>Your external app will navigate to the <a href="../how-apps-connect/identity-server.html">authorize endpoint</a>, passing your trusted app details (the trusted app, corresponding to your external app).</li>
+<li>Your external app will navigate to the <a href="../concepts/how-apps-connect/identity-server.html">authorize endpoint</a>, passing your trusted app details (the trusted app, corresponding to your external app).</li>
 <li>If all's OK, the browser where your app is opened will be redirected to the ERP.net login page, where the user will enter their credentials.</li>
-<li>If the user logs in successfully, the ERP.net login page (i.e. ERP.net Identity Server) will be redirect to an uri, back to your external SPA.</li>
+<li>If the user logs in successfully, the ERP.net login page (i.e. ERP.net Identity) will be redirect to an uri, back to your external SPA.</li>
 <li>There you'll receive an authorization code.</li>
 <li>Finally you'll exchange the auth code for an access and refresh tokens at the token endpoint.</li>
 <li>You'll obtain an access and refresh tokens on behalf of the logged user (2).</li>
@@ -214,7 +214,7 @@
     window.location = url;
 });
 </code></pre>
-<p>Just set-up the necessary arguments for the authroize endpoint and initiate a redirect. The Identity Server will take care of everything else, i.e.,</p>
+<p>Just set-up the necessary arguments for the authroize endpoint and initiate a redirect. ERP.net Identity will take care of everything else, i.e.,</p>
 <ol>
 <li>Will navigate to the ERP.net login page.</li>
 <li>After successful user login, will redirect to your <code>config.redirect_uri</code>.</li>
@@ -224,7 +224,7 @@
 <li>The uri (i.e. the client id) of your trusted app <code>config.client_id</code>.</li>
 <li>The <code>config.redirect_uri</code> - the uri where you're waiting for the callback, when the user signs in.</li>
 <li>The scopes your external app needs.</li>
-<li><code>response_type=code</code>. This &quot;instructs&quot; the Identity Server to send you a <strong>code</strong> (i.e. authorization code).</li>
+<li><code>response_type=code</code>. This &quot;instructs&quot; ERP.net Identity to send you a <strong>code</strong> (i.e. authorization code).</li>
 </ul>
 <h3 id="access-token-request-token-endpoint">Access token request (Token endpoint)</h3>
 <p>The process of acquiring an access token is very simple also. When you already have the authorization code, you just have to send (i.e. make a POST request) it to the token endpoint. After, you will receive your access and refresh tokens as a response to your callback uri.</p>
@@ -275,7 +275,7 @@ if (args != &quot;&quot;) {
 </code></pre>
 <p>Or here's what it does broken into steps:</p>
 <ul>
-<li>Get the arguments from the current URI. That's because we're expecting the <code>redirect_uri</code> callback. I.e. the identity server sends our authorization code.</li>
+<li>Get the arguments from the current URI. That's because we're expecting the <code>redirect_uri</code> callback. I.e. ERP.net Identity sends our authorization code.</li>
 <li>If there're arguments (i.e. we <strong>are</strong> in the redirect scenario)- proceed.</li>
 <li>Parse the arguments and extract the authorization code - <code>idServerResponse.code</code>.</li>
 <li>Send a POST request, including the authorization code, client id and the redirect uri. The redirect uri is passed again, just as a security measure.</li>

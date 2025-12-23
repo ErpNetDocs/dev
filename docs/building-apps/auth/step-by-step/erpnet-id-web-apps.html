@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>ERP.net ID for Web Applications | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="ERP.net ID for Web Applications | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/step-by-step/erpnet-id-web-apps.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="erpnet-id-for-web-applications">ERP.net ID for Web Applications</h1>
+
+<p>ERP.net Identity acts as an external identity provider.<br>
+It enables external applications to identify users and trust the identity information they receive.</p>
+<p>This topic covers the following scenario:</p>
+<ul>
+<li>A user signs in through ERP.net Identity</li>
+<li>The application receives a verified user identity</li>
+<li>The application uses the received identity to recognize the signed-in user</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>ERP.net Identity must have a defined trusted application with the configuration below.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The values shown below (such as <code>myapp.myhost.net</code> and the sign-in callback URL) are <strong>examples only</strong>.<br>
+They must be replaced with values that match the actual domain and callback endpoint of your external application.</p>
+</div>
+<p>Typical values are:</p>
+<ul>
+<li><strong>ApplicationUri</strong>: a DNS name or URI that uniquely identifies your application<br>
+(for example: <code>myapp.myhost.net</code>)</li>
+<li><strong>ImpersonateLoginUrl</strong>: a publicly reachable callback endpoint handled by your backend<br>
+(for example: <code>https://myapp.myhost.net/signin-callback</code>)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>My trusted app</td>
+<td>Used only for user-friendly identification.</td>
+</tr>
+<tr>
+<td>ApplicationUri</td>
+<td>myapp.myhost.net</td>
+<td>The unique identifier of the trusted application. This value must be unique and is defined by the external application.</td>
+</tr>
+<tr>
+<td>IsEnabled</td>
+<td>true</td>
+<td>Enables the trusted application.</td>
+</tr>
+<tr>
+<td>ImpersonateAsInternalUserAllowed</td>
+<td>true</td>
+<td>Allows authentication of internal users.</td>
+</tr>
+<tr>
+<td>ImpersonateAsCommunityUserAllowed</td>
+<td>true</td>
+<td>Allows authentication of external (community) users.</td>
+</tr>
+<tr>
+<td>ImpersonateLoginUrl</td>
+<td><a href="https://myapp.myhost.net/signin-callback">https://myapp.myhost.net/signin-callback</a></td>
+<td>The callback URL of the external application. This must exactly match the URL where the application listens for the sign-in response.</td>
+</tr>
+<tr>
+<td>ClientType</td>
+<td>Confidential</td>
+<td>Indicates that the external application is a confidential client and can securely store a secret.</td>
+</tr>
+<tr>
+<td>ApplicationSecretHash</td>
+<td><code>&lt;base64(sha256(your-secret))&gt;</code></td>
+<td>The hashed secret of the external application.</td>
+</tr>
+</tbody>
+</table>
+<p>All other attributes can keep their default values and are not relevant for this scenario.</p>
+<h2 id="implementation">Implementation</h2>
+<p>This section demonstrates a sign-in flow that uses a hybrid response type (<code>code id_token</code>) for compatibility with existing integrations.<br>
+The flow also uses PKCE (Proof Key for Code Exchange).</p>
+<h3 id="1-start-sign-in-authorize-request">1. Start sign-in (authorize request)</h3>
+<p>The external application redirects the user's browser to the ERP.net Identity authorize endpoint at <strong><code>id.erp.net</code></strong>.</p>
+<p>Generate the following values per sign-in request:</p>
+<ul>
+<li><code>state</code> – <code>&lt;base64url(random(32 bytes))&gt;</code></li>
+<li><code>nonce</code> – <code>&lt;base64url(random(32 bytes))&gt;</code></li>
+<li><code>code_verifier</code> - <code>&lt;random(64 chars)&gt;</code></li>
+<li><code>code_challenge</code> - <code>&lt;base64url(sha256(code_verifier))&gt;</code></li>
+</ul>
+<p>Authorize request example:</p>
+<pre><code class="lang-http">GET /id/connect/authorize?
+  client_id=myapp.myhost.net&amp;
+  redirect_uri=https%3A%2F%2Fmyapp.myhost.net%2Fsignin-callback&amp;
+  response_type=code%20id_token&amp;
+  response_mode=form_post&amp;
+  scope=openid%20profile&amp;
+  state=YzQ5ZDc4M2QxN2Q0NDU3YjlhM2Y5OWE1ZTY4OTc0ZGM&amp;
+  nonce=ZTRjOTM2M2Y0ODFhNGQ0NGE4NmU1N2ExYjY2NjE3ZmQ&amp;
+  code_challenge=VZ9R6l3kPpJ6m2m9kR9cR9n8s3c7J4GmQ9FZp5mX1kQ&amp;
+  code_challenge_method=S256
+Host: id.erp.net
+</code></pre>
+<h3 id="2-receive-the-sign-in-response-callback">2. Receive the sign-in response (callback)</h3>
+<p>After a successful sign-in, ERP.net Identity redirects the user to the configured callback URL using <code>form_post</code>.</p>
+<p>Example callback request received by the external application:</p>
+<pre><code class="lang-http">POST /signin-callback/ HTTP/1.1
+Host: myapp.myhost.net
+Content-Type: application/x-www-form-urlencoded
+
+code=SplxlOBeZQQYbYS6WxSbIA&amp;state=YzQ5ZDc4M2QxN2Q0NDU3YjlhM2Y5OWE1ZTY4OTc0ZGM&amp;id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiSldUIn0.eyJuYmYiOjE3NjY0OTM3ODEsImV4cCI6MTc2NjQ5NDA4MSwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJQSyIsIm5vbmNlIjoiNjUwMTAwMWU0NGUzNGFlY2FiMTQzMTRiMDI4YzM0YzQiLCJpYXQiOjE3NjY0OTM3ODEsImF0X2hhc2giOiIwYWpYNkhYODNtbmJVNVhxVDUtUUZ3Iiwic19oYXNoIjoib1RRalZZUXdBRDZEMWV2TzlBTVNrUSIsInNpZCI6IkQxRkZFREZFNENCMzIzMDBEMjZDMjY1QjlCRDM3NEZCIiwic3ViIjoiYWRtaW4iLCJhdXRoX3RpbWUiOjE3NjY0OTM0OTUsImlkcCI6ImxvY2FsIiwiYW1yIjpbInB3ZCJdfQ.hL4SpH9yoMx5j0e2KMmd6Xttw3M5ktRNbs39m2cJ0-8MvCIoeTkkNtasXS7burHX9mh1vxAow1kYYdcedOQNRWERyGsNQM3jy1yal5jCixBRTPkC86bkAeS_h9Q7gWWLFSrSeaHvi_xJGoRFBLymS44dM20kZxFI9o1qZfOX79hnNnIoF_j7BEV0u77lj7Bb7OE3Xh2cyBcn0-yQB9SmGhesvt5B2IqZ0odn6il_qMabnAK_sm80b-4HtA4w8uLCCpD4JBg6g4O2zmhm_jVUQtYsqS9VjPMA4F1-pTB3ayrP40Dvq_cGP5dPspenR2GCxJqAg0bQu8AcBqLJkVcD-w
+</code></pre>
+<p>The external application must:</p>
+<ul>
+<li>Validate that the returned <code>state</code> equals the value sent in the authorize request</li>
+<li>Extract the <code>authorization code</code></li>
+</ul>
+<h3 id="3-exchange-the-authorization-code-token-request">3. Exchange the authorization code (token request)</h3>
+<p>The external application exchanges the authorization code at the token endpoint.</p>
+<p>The token request must include the original <code>code_verifier</code>.</p>
+<pre><code class="lang-http">POST /id/connect/token HTTP/1.1
+Host: id.erp.net
+Content-Type: application/x-www-form-urlencoded
+
+client_id=myapp.myhost.net&amp;
+client_secret=&lt;PLAIN_CLIENT_SECRET&gt;&amp;
+grant_type=authorization_code&amp;
+code=SplxlOBeZQQYbYS6WxSbIA&amp;
+redirect_uri=https%3A%2F%2Fmyapp.myhost.net%2Fsignin-callback&amp;
+code_verifier=dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
+</code></pre>
+<p>Example token response:</p>
+<pre><code class="lang-http">HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;id_token&quot;: &quot;eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiSldUIn0.eyJuYmYiOjE3NjY0OTM3ODEsImV4cCI6MTc2NjQ5NDA4MSwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJQSyIsIm5vbmNlIjoiNjUwMTAwMWU0NGUzNGFlY2FiMTQzMTRiMDI4YzM0YzQiLCJpYXQiOjE3NjY0OTM3ODEsImF0X2hhc2giOiIwYWpYNkhYODNtbmJVNVhxVDUtUUZ3Iiwic19oYXNoIjoib1RRalZZUXdBRDZEMWV2TzlBTVNrUSIsInNpZCI6IkQxRkZFREZFNENCMzIzMDBEMjZDMjY1QjlCRDM3NEZCIiwic3ViIjoiYWRtaW4iLCJhdXRoX3RpbWUiOjE3NjY0OTM0OTUsImlkcCI6ImxvY2FsIiwiYW1yIjpbInB3ZCJdfQ.hL4SpH9yoMx5j0e2KMmd6Xttw3M5ktRNbs39m2cJ0-8MvCIoeTkkNtasXS7burHX9mh1vxAow1kYYdcedOQNRWERyGsNQM3jy1yal5jCixBRTPkC86bkAeS_h9Q7gWWLFSrSeaHvi_xJGoRFBLymS44dM20kZxFI9o1qZfOX79hnNnIoF_j7BEV0u77lj7Bb7OE3Xh2cyBcn0-yQB9SmGhesvt5B2IqZ0odn6il_qMabnAK_sm80b-4HtA4w8uLCCpD4JBg6g4O2zmhm_jVUQtYsqS9VjPMA4F1-pTB3ayrP40Dvq_cGP5dPspenR2GCxJqAg0bQu8AcBqLJkVcD-w&quot;,
+  &quot;access_token&quot;: &quot;eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE3NjY0OTM3ODEsImV4cCI6MTc2NjQ5NzM4MSwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJodHRwczovL2UxLWRldi5sb2NhbC9pZC9yZXNvdXJjZXMiLCJjbGllbnRfaWQiOiJQSyIsInN1YiI6ImFkbWluIiwiYXV0aF90aW1lIjoxNzY2NDkzNDk1LCJpZHAiOiJsb2NhbCIsImlkIjoiOWRhNjQ4MzktYThkMC00OTFkLWFlYmItNGQxOGZhNDJiMDE0IiwibmFtZSI6IkpvaG4gRG9lIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsInVzZXJfdHlwZSI6IkludGVybmFsVXNlciIsImlzX2FkbWluIjoidHJ1ZSIsImVtYWlsX3ZlcmlmaWVkIjoiZmFsc2UiLCJkYiI6IkUxX0RFVi0xIFRlc3QiLCJsb2NhbGUiOiJiZyIsImp0aSI6IkM4MTcxRjlFQ0FEN0U2OThEMjBFN0Q2Qjc5ODQyMjYwIiwic2lkIjoiRDFGRkVERkU0Q0IzMjMwMEQyNkMyNjVCOUJEMzc0RkIiLCJpYXQiOjE3NjY0OTM3ODEsInNjb3BlIjpbIm9wZW5pZCIsInByb2ZpbGUiXSwiYW1yIjpbInB3ZCJdfQ.TWePn6yinGcAaItZzfmNM9en3ESfGFhcLulTR7U7wfVK86RW9s8LlsgqoAc2SkigH2cXrovnADCe8uwp7BFSKbQBsN18vH5GmidFpILEr-M_WnOWfFZt941SA04vXpBzDJaiunzRl4FAEMd4RKXJ2L_wCZW8DNaKmsZfS9SH8N6QAYABrNoHZbrRV83pUh7suUnsBF_Ps-jdFNTnuxoj4UooRghAp7dn6LYw3MBcTb3GNdrJosb63DXpQY-Kq58gbYrov0Of4H_RD6lEaKcFbRVmIpg5S1UoM2DFaS-PWxKN_DF9_4A8zazBHM8BgGN4hA7JPOv6W7waODLvNqhnzQ&quot;,
+  &quot;expires_in&quot;: 3600,
+  &quot;scope&quot;: &quot;openid profile&quot;
+}
+</code></pre>
+<p>The application can use the returned ID token to identify and recognize the signed-in user.</p>
+<h2 id="implementation-considerations">Implementation considerations</h2>
+<ul>
+<li>Because the application is a <strong>confidential client</strong>, the sign-in callback <strong>must be handled by a backend component</strong>. Handling the callback in frontend code would expose sensitive data.</li>
+<li>For the same reason, the <strong>token request must be performed by the backend</strong>. The client secret is stored and used there and must never be sent to or stored in the frontend.</li>
+<li>The <strong>client secret must never be exposed</strong> in browser code, mobile apps, or any other client-side environment.</li>
+<li>The <code>state</code> value must be generated per sign-in request and <strong>validated on callback</strong>. Skipping this opens the door to CSRF attacks.</li>
+<li>The <code>code_verifier</code> must be generated per request and <strong>stored securely</strong> until the token exchange is performed.</li>
+<li>The <code>nonce</code> value must be unique per sign-in request and <strong>validated against the ID token</strong>. Reusing a static nonce defeats its purpose.</li>
+<li>ERP.net Identity at <code>id.erp.net</code> <strong>does not allow embedding</strong> in iframes. If authentication is initiated from within an iframe, the sign-in flow must be opened in a <strong>popup window or a top-level browser navigation</strong>.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/step-by-step/erpnet-id-web-apps.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

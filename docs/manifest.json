@@ -85,368 +85,484 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/common-scenarios/erpnet-id-global-confidential-apps.md",
+      "source_relative_path": "building-apps/auth/concepts/faq.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/common-scenarios/erpnet-id-global-confidential-apps.html"
+          "relative_path": "building-apps/auth/concepts/faq.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/common-scenarios/instance-id-confidential-apps.md",
+      "source_relative_path": "building-apps/auth/concepts/flows/auth-code/interactive-apps-errors.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/common-scenarios/instance-id-confidential-apps.html"
+          "relative_path": "building-apps/auth/concepts/flows/auth-code/interactive-apps-errors.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/common-scenarios/instance-id-spa-public-apps.md",
+      "source_relative_path": "building-apps/auth/concepts/flows/auth-code/interactive-apps-redirects-pkce.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/common-scenarios/instance-id-spa-public-apps.html"
+          "relative_path": "building-apps/auth/concepts/flows/auth-code/interactive-apps-redirects-pkce.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/common-scenarios/overview.md",
+      "source_relative_path": "building-apps/auth/concepts/flows/auth-code/interactive-apps-refresh-tokens.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/common-scenarios/overview.html"
+          "relative_path": "building-apps/auth/concepts/flows/auth-code/interactive-apps-refresh-tokens.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/common-scenarios/service-access-confidential-apps.md",
+      "source_relative_path": "building-apps/auth/concepts/flows/auth-code/interactive-apps-step-by-step.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/common-scenarios/service-access-confidential-apps.html"
+          "relative_path": "building-apps/auth/concepts/flows/auth-code/interactive-apps-step-by-step.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/common-scenarios/service-public-apps.md",
+      "source_relative_path": "building-apps/auth/concepts/flows/auth-code/overview.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/common-scenarios/service-public-apps.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/common-scenarios/spa-webclient-iframe.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/common-scenarios/spa-webclient-iframe.html"
+          "relative_path": "building-apps/auth/concepts/flows/auth-code/overview.html"
         }
       },
       "version": ""
     },
     {
       "type": "Toc",
-      "source_relative_path": "building-apps/auth/common-scenarios/toc.yml",
+      "source_relative_path": "building-apps/auth/concepts/flows/auth-code/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/common-scenarios/toc.html"
+          "relative_path": "building-apps/auth/concepts/flows/auth-code/toc.html"
         },
         ".json": {
-          "relative_path": "building-apps/auth/common-scenarios/toc.json"
+          "relative_path": "building-apps/auth/concepts/flows/auth-code/toc.json"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/faq.md",
+      "source_relative_path": "building-apps/auth/concepts/flows/choosing-flow.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/faq.html"
+          "relative_path": "building-apps/auth/concepts/flows/choosing-flow.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/flows/auth-code/interactive-apps-errors.md",
+      "source_relative_path": "building-apps/auth/concepts/flows/client-credentials/overview.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/flows/auth-code/interactive-apps-errors.html"
+          "relative_path": "building-apps/auth/concepts/flows/client-credentials/overview.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/flows/auth-code/interactive-apps-redirects-pkce.md",
+      "source_relative_path": "building-apps/auth/concepts/flows/client-credentials/service-apps-errors.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/flows/auth-code/interactive-apps-redirects-pkce.html"
+          "relative_path": "building-apps/auth/concepts/flows/client-credentials/service-apps-errors.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/flows/auth-code/interactive-apps-refresh-tokens.md",
+      "source_relative_path": "building-apps/auth/concepts/flows/client-credentials/service-apps-step-by-step.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/flows/auth-code/interactive-apps-refresh-tokens.html"
+          "relative_path": "building-apps/auth/concepts/flows/client-credentials/service-apps-step-by-step.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/flows/auth-code/interactive-apps-step-by-step.md",
+      "source_relative_path": "building-apps/auth/concepts/flows/client-credentials/service-apps-token.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/flows/auth-code/interactive-apps-step-by-step.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/flows/auth-code/overview.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/flows/auth-code/overview.html"
+          "relative_path": "building-apps/auth/concepts/flows/client-credentials/service-apps-token.html"
         }
       },
       "version": ""
     },
     {
       "type": "Toc",
-      "source_relative_path": "building-apps/auth/flows/auth-code/toc.yml",
+      "source_relative_path": "building-apps/auth/concepts/flows/client-credentials/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/flows/auth-code/toc.html"
+          "relative_path": "building-apps/auth/concepts/flows/client-credentials/toc.html"
         },
         ".json": {
-          "relative_path": "building-apps/auth/flows/auth-code/toc.json"
+          "relative_path": "building-apps/auth/concepts/flows/client-credentials/toc.json"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/flows/choosing-flow.md",
+      "source_relative_path": "building-apps/auth/concepts/flows/combined/hybrid-architecture.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/flows/choosing-flow.html"
+          "relative_path": "building-apps/auth/concepts/flows/combined/hybrid-architecture.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/flows/client-credentials/overview.md",
+      "source_relative_path": "building-apps/auth/concepts/flows/combined/hybrid-examples.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/flows/client-credentials/overview.html"
+          "relative_path": "building-apps/auth/concepts/flows/combined/hybrid-examples.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/flows/client-credentials/service-apps-errors.md",
+      "source_relative_path": "building-apps/auth/concepts/flows/combined/overview.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/flows/client-credentials/service-apps-errors.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/flows/client-credentials/service-apps-step-by-step.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/flows/client-credentials/service-apps-step-by-step.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/flows/client-credentials/service-apps-token.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/flows/client-credentials/service-apps-token.html"
+          "relative_path": "building-apps/auth/concepts/flows/combined/overview.html"
         }
       },
       "version": ""
     },
     {
       "type": "Toc",
-      "source_relative_path": "building-apps/auth/flows/client-credentials/toc.yml",
+      "source_relative_path": "building-apps/auth/concepts/flows/combined/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/flows/client-credentials/toc.html"
+          "relative_path": "building-apps/auth/concepts/flows/combined/toc.html"
         },
         ".json": {
-          "relative_path": "building-apps/auth/flows/client-credentials/toc.json"
+          "relative_path": "building-apps/auth/concepts/flows/combined/toc.json"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/flows/combined/hybrid-architecture.md",
+      "source_relative_path": "building-apps/auth/concepts/flows/overview.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/flows/combined/hybrid-architecture.html"
+          "relative_path": "building-apps/auth/concepts/flows/overview.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/flows/combined/hybrid-examples.md",
+      "source_relative_path": "building-apps/auth/concepts/flows/tldr.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/flows/combined/hybrid-examples.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/flows/combined/overview.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/flows/combined/overview.html"
+          "relative_path": "building-apps/auth/concepts/flows/tldr.html"
         }
       },
       "version": ""
     },
     {
       "type": "Toc",
-      "source_relative_path": "building-apps/auth/flows/combined/toc.yml",
+      "source_relative_path": "building-apps/auth/concepts/flows/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/flows/combined/toc.html"
+          "relative_path": "building-apps/auth/concepts/flows/toc.html"
         },
         ".json": {
-          "relative_path": "building-apps/auth/flows/combined/toc.json"
+          "relative_path": "building-apps/auth/concepts/flows/toc.json"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/flows/overview.md",
+      "source_relative_path": "building-apps/auth/concepts/how-apps-connect/erpnet-as-external-idp.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/flows/overview.html"
+          "relative_path": "building-apps/auth/concepts/how-apps-connect/erpnet-as-external-idp.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/flows/tldr.md",
+      "source_relative_path": "building-apps/auth/concepts/how-apps-connect/identity-server.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/flows/tldr.html"
+          "relative_path": "building-apps/auth/concepts/how-apps-connect/identity-server.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/concepts/how-apps-connect/oauth2-overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/concepts/how-apps-connect/oauth2-overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/concepts/how-apps-connect/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/concepts/how-apps-connect/overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/concepts/how-apps-connect/tldr.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/concepts/how-apps-connect/tldr.html"
         }
       },
       "version": ""
     },
     {
       "type": "Toc",
-      "source_relative_path": "building-apps/auth/flows/toc.yml",
+      "source_relative_path": "building-apps/auth/concepts/how-apps-connect/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/flows/toc.html"
+          "relative_path": "building-apps/auth/concepts/how-apps-connect/toc.html"
         },
         ".json": {
-          "relative_path": "building-apps/auth/flows/toc.json"
+          "relative_path": "building-apps/auth/concepts/how-apps-connect/toc.json"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/how-apps-connect/erpnet-as-external-idp.md",
+      "source_relative_path": "building-apps/auth/concepts/how-apps-connect/trusted-apps-access.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/how-apps-connect/erpnet-as-external-idp.html"
+          "relative_path": "building-apps/auth/concepts/how-apps-connect/trusted-apps-access.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/how-apps-connect/identity-server.md",
+      "source_relative_path": "building-apps/auth/concepts/security-best-practices.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/how-apps-connect/identity-server.html"
+          "relative_path": "building-apps/auth/concepts/security-best-practices.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/how-apps-connect/oauth2-overview.md",
+      "source_relative_path": "building-apps/auth/concepts/sessions/license-compliance.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/how-apps-connect/oauth2-overview.html"
+          "relative_path": "building-apps/auth/concepts/sessions/license-compliance.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/how-apps-connect/overview.md",
+      "source_relative_path": "building-apps/auth/concepts/sessions/license-slot.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/how-apps-connect/overview.html"
+          "relative_path": "building-apps/auth/concepts/sessions/license-slot.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/how-apps-connect/tldr.md",
+      "source_relative_path": "building-apps/auth/concepts/sessions/overview.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/how-apps-connect/tldr.html"
+          "relative_path": "building-apps/auth/concepts/sessions/overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/concepts/sessions/session-revocation.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/concepts/sessions/session-revocation.html"
         }
       },
       "version": ""
     },
     {
       "type": "Toc",
-      "source_relative_path": "building-apps/auth/how-apps-connect/toc.yml",
+      "source_relative_path": "building-apps/auth/concepts/sessions/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/how-apps-connect/toc.html"
+          "relative_path": "building-apps/auth/concepts/sessions/toc.html"
         },
         ".json": {
-          "relative_path": "building-apps/auth/how-apps-connect/toc.json"
+          "relative_path": "building-apps/auth/concepts/sessions/toc.json"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/how-apps-connect/trusted-apps-access.md",
+      "source_relative_path": "building-apps/auth/concepts/sessions/token-session-relationship.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/how-apps-connect/trusted-apps-access.html"
+          "relative_path": "building-apps/auth/concepts/sessions/token-session-relationship.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "building-apps/auth/concepts/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/concepts/toc.html"
+        },
+        ".json": {
+          "relative_path": "building-apps/auth/concepts/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/concepts/tokens/access-tokens.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/concepts/tokens/access-tokens.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "building-apps/auth/concepts/tokens/images/im-create-sat.png",
+      "output": {
+        "resource": {
+          "relative_path": "building-apps/auth/concepts/tokens/images/im-create-sat.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "building-apps/auth/concepts/tokens/images/im-trusted-app-tokens.png",
+      "output": {
+        "resource": {
+          "relative_path": "building-apps/auth/concepts/tokens/images/im-trusted-app-tokens.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "building-apps/auth/concepts/tokens/images/profile-create-pat.png",
+      "output": {
+        "resource": {
+          "relative_path": "building-apps/auth/concepts/tokens/images/profile-create-pat.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "building-apps/auth/concepts/tokens/images/profile-tokens-list.png",
+      "output": {
+        "resource": {
+          "relative_path": "building-apps/auth/concepts/tokens/images/profile-tokens-list.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/concepts/tokens/issuing-reference-tokens.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/concepts/tokens/issuing-reference-tokens.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/concepts/tokens/reference-access-tokens.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/concepts/tokens/reference-access-tokens.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/concepts/tokens/scopes.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/concepts/tokens/scopes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "building-apps/auth/concepts/tokens/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/concepts/tokens/toc.html"
+        },
+        ".json": {
+          "relative_path": "building-apps/auth/concepts/tokens/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/concepts/tokens/token-lifetime.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/concepts/tokens/token-lifetime.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/concepts/tokens/tokens-overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/concepts/tokens/tokens-overview.html"
         }
       },
       "version": ""
@@ -556,73 +672,83 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/security-best-practices.md",
+      "source_relative_path": "building-apps/auth/step-by-step/automation.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/security-best-practices.html"
+          "relative_path": "building-apps/auth/step-by-step/automation.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/sessions/license-compliance.md",
+      "source_relative_path": "building-apps/auth/step-by-step/erpnet-id-web-apps.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/sessions/license-compliance.html"
+          "relative_path": "building-apps/auth/step-by-step/erpnet-id-web-apps.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/sessions/license-slot.md",
+      "source_relative_path": "building-apps/auth/step-by-step/instance-id-spa-apps.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/sessions/license-slot.html"
+          "relative_path": "building-apps/auth/step-by-step/instance-id-spa-apps.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/sessions/overview.md",
+      "source_relative_path": "building-apps/auth/step-by-step/instance-id-web-apps.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/sessions/overview.html"
+          "relative_path": "building-apps/auth/step-by-step/instance-id-web-apps.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/sessions/session-revocation.md",
+      "source_relative_path": "building-apps/auth/step-by-step/instance-id-web-portals.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/sessions/session-revocation.html"
+          "relative_path": "building-apps/auth/step-by-step/instance-id-web-portals.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/step-by-step/service-access-confidential-apps.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/step-by-step/service-access-confidential-apps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/step-by-step/service-apps.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/step-by-step/service-apps.html"
         }
       },
       "version": ""
     },
     {
       "type": "Toc",
-      "source_relative_path": "building-apps/auth/sessions/toc.yml",
+      "source_relative_path": "building-apps/auth/step-by-step/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "building-apps/auth/sessions/toc.html"
+          "relative_path": "building-apps/auth/step-by-step/toc.html"
         },
         ".json": {
-          "relative_path": "building-apps/auth/sessions/toc.json"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/sessions/token-session-relationship.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/sessions/token-session-relationship.html"
+          "relative_path": "building-apps/auth/step-by-step/toc.json"
         }
       },
       "version": ""
@@ -652,143 +778,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/tokens/access-tokens.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/tokens/access-tokens.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "building-apps/auth/tokens/images/im-create-sat.png",
-      "output": {
-        "resource": {
-          "relative_path": "building-apps/auth/tokens/images/im-create-sat.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "building-apps/auth/tokens/images/im-trusted-app-tokens.png",
-      "output": {
-        "resource": {
-          "relative_path": "building-apps/auth/tokens/images/im-trusted-app-tokens.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "building-apps/auth/tokens/images/profile-create-pat.png",
-      "output": {
-        "resource": {
-          "relative_path": "building-apps/auth/tokens/images/profile-create-pat.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "building-apps/auth/tokens/images/profile-tokens-list.png",
-      "output": {
-        "resource": {
-          "relative_path": "building-apps/auth/tokens/images/profile-tokens-list.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/tokens/issuing-reference-tokens.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/tokens/issuing-reference-tokens.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/tokens/reference-access-tokens.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/tokens/reference-access-tokens.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/tokens/scopes.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/tokens/scopes.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Toc",
-      "source_relative_path": "building-apps/auth/tokens/toc.yml",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/tokens/toc.html"
-        },
-        ".json": {
-          "relative_path": "building-apps/auth/tokens/toc.json"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/tokens/token-lifetime.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/tokens/token-lifetime.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/tokens/tokens-overview.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/tokens/tokens-overview.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/concepts/app-lifecycle.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/concepts/app-lifecycle.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "building-apps/concepts/app-types.md",
       "output": {
         ".html": {
           "relative_path": "building-apps/concepts/app-types.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/concepts/overview.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/concepts/overview.html"
         }
       },
       "version": ""

@@ -87,12 +87,12 @@
         <article data-uid="">
 <h1 id="register-trusted-application">Register Trusted Application</h1>
 
-<p>In this topic, you register an app in an ERP instance so the ERP.net identity server can provide authentication and authorization services for your application and its users.</p>
+<p>In this topic, you register an app in an ERP instance so the ERP.net Identity can provide authentication and authorization services for your application and its users.</p>
 <p>Each application that uses ERP.net APIs needs to be registered.
 Whether it's a client application like a web or mobile app, or it's a web API that backs a client app, registering it establishes a trust relationship between your application and the ERP instance.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>In future versions of ERP.net platform this way to register a trusted application will no longer be available, because of the <em>sec</em> scope (Only identity server itself will be granted with the <em>sec</em> scope)
+<p>In future versions of ERP.net platform this way to register a trusted application will no longer be available, because of the <em>sec</em> scope (Only ERP.net Identity itself will be granted with the <em>sec</em> scope)
 The ERP.net instance will provide a browser accessible endpoint where the application will provide its client_id, client_secret_hash, scopes and other required parameters to register the application. This endpoint will redirect the user to the login screen and if the user is a database administrator he or she will be able to approve the application registration.</p>
 </div>
 <h2 id="register-an-application">Register an application</h2>
@@ -139,8 +139,8 @@ The Domain Api site is usually hosted on address  https://{COMPANY}.my.erp.net/a
 <li><em>ApplicationSecretHash</em> a hash of the application secret - previously created using   <a href="https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret">https://demodb.my.erp.net/sys/tools/sha256?secret=mysecret</a>  tool.</li>
 <li><em>ImpersonateAsCommunityUserAllowed</em> must be true if your application will work with community users. Community users are users that do not have access to system resources. They are usually customers of the company that owns the ERP.net database instance.</li>
 <li><em>ImpersonateAsInternalUserAllowed</em> must be true if internal users will use the application.</li>
-<li><em>ImpersonateLoginUrl</em> is a comma separated list of allowed URLs that are used from the application to receive the authorization code. When the user loads the application in the browser, if sign in is required, the browser is redirected to ERP.net Identity Server login page. After successful login the browser is redirected to the provided return_url that must be one of the URLs specified in <em>ImpersonateLoginUrl</em> providing the <em>authorization_code</em> through <em>code</em> url parameter. This <em>code</em> is used by the application to request an <em>access_code</em> that is used to gain access to ERP.net server resources.</li>
-<li><em>ImpersonateLogoutUrl</em> is a comma separated list of allowed URLs that are used after the user is logged out from the identity server and &quot;Return to app&quot; button is clicked.</li>
+<li><em>ImpersonateLoginUrl</em> is a comma separated list of allowed URLs that are used from the application to receive the authorization code. When the user loads the application in the browser, if sign in is required, the browser is redirected to ERP.net Identity login page. After successful login the browser is redirected to the provided return_url that must be one of the URLs specified in <em>ImpersonateLoginUrl</em> providing the <em>authorization_code</em> through <em>code</em> url parameter. This <em>code</em> is used by the application to request an <em>access_code</em> that is used to gain access to ERP.net server resources.</li>
+<li><em>ImpersonateLogoutUrl</em> is a comma separated list of allowed URLs that are used after the user is logged out from the <a class="xref" href="../../includes/name.html">name</a> Identity and &quot;Return to app&quot; button is clicked.</li>
 <li><em>SystemUserAllowed</em> specifies if the application can act as a service application that is impersonated as specific user.</li>
 </ul>
 <h2 id="register-interactive-public-application">Register interactive public application</h2>

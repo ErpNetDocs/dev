@@ -107,7 +107,7 @@ It's highly recommended, if you haven't done so, that you read the following top
 </div>
 <p>After all, your final goal is to acquire an access token. The process is very similar to this example <a href="basic-acquire-access-token.html">Basic example of acquiring an access token</a>, but here is added another intermediate step - the process of impersonating a user. Here's a summary of how the whole process goes:</p>
 <ol>
-<li>Your external app will open the so called <a href="../how-apps-connect/identity-server.html">authorize endpoint</a> with your trusted app details (the trusted app, corresponding to your external app).</li>
+<li>Your external app will open the so called <a href="../concepts/how-apps-connect/identity-server.html">authorize endpoint</a> with your trusted app details (the trusted app, corresponding to your external app).</li>
 </ol>
 <div class="NOTE">
 <h5>Note</h5>
@@ -125,7 +125,7 @@ It's highly recommended, if you haven't done so, that you read the following top
 </ul>
 </div>
 <ol start="3">
-<li>If the user logs in successfully, the ERP.net login page (i.e. ERP.net Identity Server) will be redirect to a uri where <strong>your external app is listening</strong>.</li>
+<li>If the user logs in successfully, the ERP.net login page (i.e. ERP.net Identity) will be redirect to a uri where <strong>your external app is listening</strong>.</li>
 <li>There you'll receive an authorization code.</li>
 <li>Finally you'll exchange the auth code for an access token at the token endpoint.</li>
 <li>You'll obtain an access token on behalf of the logged user (2).</li>
@@ -197,7 +197,7 @@ string authState = Guid.NewGuid().ToString();
 ClientAuthData clientData;
 </code></pre>
 <p>The <code>authCode</code> keeps the authorization code you'll receive after the internal user logs in successfully. So, initially will be an empty string.</p>
-<p>The <code>authState</code> is a random string, used for security purpose. You'll pass it to the authorize endpoint and the Identity Server will return it back to your <code>CallbackUri</code> uri (as you can guess, you need to compare them- if they differ, it's most likely a malicious attempt).</p>
+<p>The <code>authState</code> is a random string, used for security purpose. You'll pass it to the authorize endpoint and ERP.net Identity will return it back to your <code>CallbackUri</code> uri (as you can guess, you need to compare them- if they differ, it's most likely a malicious attempt).</p>
 <p>The last variable <code>clientData</code> will help us, holding the client (i.e. internal user) auth data such as access token, scopes, access token expiration, etc. Here's what the <code>ClientAuthData</code> type looks like:</p>
 <pre><code class="lang-cs">public struct ClientAuthData
 {
@@ -266,8 +266,8 @@ httpListener.Start();
 </ul>
 <p>In addition, there are two other important arguments:</p>
 <ul>
-<li><code>response_type=code id_token</code>. This &quot;instructs&quot; the Identity Server to send you a <strong>code</strong> (i.e. authorization code) and an identity token (not discussed in this topic).</li>
-<li><code>response_mode=form_post</code>. This &quot;tells&quot; the Identity Server that you are expecting the callback request as an HTTP POST request.</li>
+<li><code>response_type=code id_token</code>. This &quot;instructs&quot; ERP.net Identity to send you a <strong>code</strong> (i.e. authorization code) and an identity token (not discussed in this topic).</li>
+<li><code>response_mode=form_post</code>. This &quot;tells&quot; ERP.net Identity that you are expecting the callback request as an HTTP POST request.</li>
 </ul>
 <p>Our request args are prepared, so we just have to execute the GET request (i.e. the authorize endpoint).</p>
 <pre><code class="lang-cs">// Start the authorize endpoint with your default browser.
@@ -332,7 +332,7 @@ signCallbackTask.Wait();
 <li>Your trusted app uri and its secret <code>TrustedAppUri</code>, <code>TrustedAppSecret</code>.</li>
 <li>The authorization code you received in the previous step <code>authCode</code>.</li>
 <li>The <code>CallbackUri</code>.</li>
-<li>And the very important one <code>grant_type=authroization_code</code> - this is the moment when you &quot;tell&quot; the Identity Server that you'll use the authorization code flow.</li>
+<li>And the very important one <code>grant_type=authroization_code</code> - this is the moment when you &quot;tell&quot; ERP.net Identity that you'll use the authorization code flow.</li>
 </ul>
 <p>Then just send it and make sure that the returned http status code is a successful one:</p>
 <pre><code class="lang-cs">httpRequest = new HttpRequestMessage()

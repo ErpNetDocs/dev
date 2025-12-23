@@ -93,7 +93,7 @@
 <li>who develops them</li>
 <li>and how they are distributed</li>
 </ul>
-<p>All ERP.net Apps follow the same security and connectivity model - they communicate with an ERP.net instance through the built-in <strong>Identity Server</strong> and <strong>APIs</strong>, and are represented in the system by a <strong>Trusted Application</strong> entity.</p>
+<p>All ERP.net Apps follow the same security and connectivity model - they communicate with an ERP.net instance through the built-in <strong>ERP.net Identity</strong> and <strong>APIs</strong>, and are represented in the system by a <strong>Trusted Application</strong> entity.</p>
 <h2 id="internal-applications">Internal Applications</h2>
 <p><strong>Internal applications</strong> are part of the ERP.net platform itself.</p>
 <p>They are developed, deployed, and maintained by ERP.net as core components of the system.</p>
@@ -108,12 +108,12 @@
 <ul>
 <li>Deployed as part of the ERP.net instance</li>
 <li>Fully managed and updated with the platform</li>
-<li>Use the same APIs and Identity Server for consistency</li>
+<li>Use the same APIs and ERP.net Identity for consistency</li>
 <li><strong>Trusted Application registration:</strong> may be preconfigured by the platform or require manual registration/configuration, depending on the app and deployment</li>
 </ul>
 <h2 id="external-applications">External Applications</h2>
 <p><strong>External applications</strong> are developed outside of the ERP.net platform, by customers, partners, or independent developers.</p>
-<p>They run separately from the ERP.net instance but connect to it securely via the Identity Server and APIs.</p>
+<p>They run separately from the ERP.net instance but connect to it securely via ERP.net Identity and APIs.</p>
 <p>External apps can take many forms - mobile clients, integrations, automation tools, or standalone web applications.</p>
 <p>Examples include:</p>
 <ul>
@@ -126,7 +126,7 @@
 <ul>
 <li>Hosted outside of the ERP.net instance</li>
 <li>Must be registered as <strong>Trusted Applications</strong> in each instance they connect to</li>
-<li>Authenticate and authorize through the built-in Identity Server</li>
+<li>Authenticate and authorize through the built-in ERP.net Identity</li>
 <li>Can use interactive (user) or non-interactive (service) access modes</li>
 </ul>
 <h2 id="marketplace-applications">Marketplace Applications</h2>
@@ -159,7 +159,7 @@ In this case, the Web Client shares the user's active session (via cookies), and
 <li><p><strong>Apps hosted elsewhere</strong><br>
 If the app is hosted on any other domain, it cannot access ERP.net data directly.<br>
 The only information it receives is the <strong>URL passed to the WebView</strong> when it is opened from the Web Client.<br>
-To access data, such apps must perform standard authentication through the Identity Server using a registered Trusted Application.</p>
+To access data, such apps must perform standard authentication through ERP.net Identity using a registered Trusted Application.</p>
 </li>
 </ol>
 <h3 id="typical-use-cases">Typical Use Cases</h3>
@@ -227,7 +227,7 @@ Understand the core concept of ERP.net Apps and how they connect to an ERP.net i
 Learn how each app is registered, managed, and granted access within ERP.net.</p>
 </li>
 <li><p><strong><a href="../auth/overview.html">Authentication and Authorization</a></strong><br>
-See how the built-in Identity Server authenticates and authorizes apps and users.</p>
+See how the built-in ERP.net Identity authenticates and authorizes apps and users.</p>
 </li>
 </ul>
 

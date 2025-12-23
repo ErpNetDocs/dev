@@ -102,24 +102,24 @@
 <p>The main difference with the <a href="basic-acquire-access-token.html">Basic example of acquiring an access token</a> is that there's an additional step, which is a subject of a specific technical implementation. I.e.,</p>
 <ol>
 <li>Your external app performs an HTTP GET request to the authorize endpoint.</li>
-<li>Wait for the Identity Server to:
+<li>Wait for ERP.net Identity to:
 <ol>
 <li>Redirect to the ERP.net login page.</li>
 <li>&quot;Make&quot; an HTTP request to your external app, after the user logs in successfully.</li>
 </ol>
 </li>
 <li>Now your external app can make an HTTP POST request to the token endpoint.</li>
-<li>The Identity Server creates an access token and and returns it to you.</li>
+<li>ERP.net Identity creates an access token and and returns it to you.</li>
 </ol>
 <p>As you can see, the extra steps, compared to the other example, are (1) and (2). I.e.,</p>
 <ol>
 <li>You have to provide a way to visualize the ERP.net login page (the usual way is via a web browser).</li>
 <li>Also a mechanism to handle a HTTP request.</li>
 </ol>
-<p>Actually, this is the essential difference between <code>client_credentials flow</code> and the <code>authorization code flow</code>. The first is bound to a specific, so-called service user while the other- to the user who will log in via the login form of the Identity Provider (i.e., the ERP.net Identity Server).</p>
+<p>Actually, this is the essential difference between <code>client_credentials flow</code> and the <code>authorization code flow</code>. The first is bound to a specific, so-called service user while the other- to the user who will log in via the login form of the Identity Provider (i.e., the ERP.net Identity).</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>It's important to clarify the following quote above, <em>(2.2) &quot;Make&quot; an HTTP request to your external app, after the user logs in successfully.</em>, referring the ERP.net Identity Server.</p>
+<p>It's important to clarify the following quote above, <em>(2.2) &quot;Make&quot; an HTTP request to your external app, after the user logs in successfully.</em>, referring the ERP.net Identity.</p>
 <p>The HTTP request to your external app (i.e. the redirect) is made locally, as a result from your request to the authorize endpoint. In general, this means that your external app doesn't need to be accessible outside of the network where it's avaialble. So said, if your app is a &quot;pure&quot; local one, external callbacks such as <code>localhost/signin-callback</code>, <code>192.168.10.55/signin-callback</code> are completely fine.</p>
 </div>
 <h2 id="prerequisites">Prerequisites</h2>

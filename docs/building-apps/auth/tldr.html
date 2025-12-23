@@ -92,11 +92,11 @@
 <p>Here's how it always works:</p>
 <ol>
 <li>The app is <strong>registered as a Trusted Application</strong> in the target ERP.net instance.</li>
-<li>It authenticates through the <strong>Identity Server</strong>, which verifies who (or what) is signing in.</li>
+<li>It authenticates through the <strong>ERP.net Identity</strong>, which verifies who (or what) is signing in.</li>
 <li>The server issues an <strong>access token</strong> that defines what the app can do.</li>
 <li>The app uses that token to call <strong>ERP.net APIs</strong> securely and efficiently.</li>
 </ol>
-<p>All tokens are issued and verified by the instance's <strong>Identity Server</strong> - no passwords are exchanged and no direct database access is needed.</p>
+<p>All tokens are issued and verified by the instance's <strong>ERP.net Identity</strong> - no passwords are exchanged and no direct database access is needed.</p>
 <p>That's the foundation of secure, auditable, and consistent access across all ERP.net integrations.</p>
 <h2 id="a-real-world-example">A Real-World Example</h2>
 <p><strong>Alice</strong> manages operations at a distribution company powered by ERP.net.</p>
@@ -104,7 +104,7 @@
 <p>Here's what happens under the hood:</p>
 <ol>
 <li>Bob registers the app as a <strong>Trusted Application</strong> in the company's ERP.net instance.</li>
-<li>When a sales rep logs in, the app redirects them to the <strong>Identity Server</strong> - the official login portal.</li>
+<li>When a sales rep logs in, the app redirects them to the <strong>ERP.net Identity</strong> - the official login portal.</li>
 <li>After authentication, the server issues a <strong>token</strong> saying:<br>
 <em>This user is verified, and the app may update sales orders.</em></li>
 <li>The app uses that token when calling the <strong>ERP.net APIs</strong>, which check it for validity and scope before processing the request.</li>
@@ -112,7 +112,7 @@
 <p>Every request is authenticated, authorized, and traceable - without exposing user passwords or credentials.</p>
 <pre><code class="lang-mermaid">flowchart LR
   Alice([👩‍💼 Alice - User]) --&gt;|Signs in| App[💻 Sales Portal App]
-  App --&gt;|Auth Request| IDP[🛡️ ERP.net Identity Server]
+  App --&gt;|Auth Request| IDP[🛡️ ERP.net Identity]
   IDP --&gt;|Access Token| App
   App --&gt;|API Calls with Token| API[🎛️ ERP.net APIs]
   API --&gt;|Access Data| Data[(📊 ERP.net Data)]
@@ -128,16 +128,16 @@
 <ul>
 <li><p><a href="overview.html"><strong>Autentication and Authorization Overview</strong></a></p>
 </li>
-<li><p><a href="how-apps-connect/identity-server.html"><strong>Identity Server</strong></a><br>
+<li><p><a href="concepts/how-apps-connect/identity-server.html"><strong>ERP.net Identity</strong></a><br>
 Learn how ERP.net authenticates users and apps.</p>
 </li>
-<li><p><a href="how-apps-connect/oauth2-overview.html"><strong>OAuth 2.0 Overview</strong></a><br>
+<li><p><a href="concepts/how-apps-connect/oauth2-overview.html"><strong>OAuth 2.0 Overview</strong></a><br>
 Understand tokens, scopes, and grants.</p>
 </li>
-<li><p><a href="how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+<li><p><a href="concepts/how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
 See how app registrations define permissions and modes.</p>
 </li>
-<li><p><a href="flows/overview.html"><strong>Authentication Flows Overview</strong></a><br>
+<li><p><a href="concepts/flows/overview.html"><strong>Authentication Flows Overview</strong></a><br>
 Compare Authorization Code, Client Credentials, and Hybrid flows.</p>
 </li>
 </ul>

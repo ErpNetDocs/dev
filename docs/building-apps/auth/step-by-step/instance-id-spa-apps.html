@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Instance ID for SPA Applications | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Instance ID for SPA Applications | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/step-by-step/instance-id-spa-apps.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="instance-id-for-spa-applications">Instance ID for SPA Applications</h1>
+
+<p>This topic describes how a <strong>Single Page Application (SPA)</strong> with no backend component, running entirely in the user's browser, integrates with an ERP.net Instance ID in order to authenticate users and access protected APIs.</p>
+<p>The following scenario is covered:</p>
+<ul>
+<li>The external application is a <strong>Single Page Application (SPA)</strong> running <strong>entirely</strong> in the user's browser</li>
+<li>The application is a <strong>public client</strong> and <strong>cannot keep a secret</strong></li>
+<li>The application uses the <strong>Authorization Code flow with PKCE</strong></li>
+<li>The application authenticates users and obtains tokens <strong>from a specific ERP.net instance</strong></li>
+<li>The application uses the obtained access token to call APIs on behalf of the signed-in user</li>
+</ul>
+<p>The <strong>Instance ID</strong> is the identity provider of a specific ERP.net instance. It's used by external applications to authenticate and authorize users <strong>against a concrete ERP.net instance</strong>.</p>
+<p>For example, if your ERP.net instance is located at:</p>
+<pre><code class="lang-text">https://mycompany.my.erp.net
+</code></pre>
+<p>then the corresponding Instance ID endpoints are located at:</p>
+<pre><code class="lang-text">https://mycompany.my.erp.net/id
+</code></pre>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Your ERP.net instance must have a trusted application defined with the configuration below.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The values shown below are <strong>examples only</strong> and must be replaced with values that match your SPA.</p>
+</div>
+<p>Typical values:</p>
+<ul>
+<li><strong>ApplicationUri</strong>: <code>spa.example.com</code></li>
+<li><strong>ImpersonateLoginUrl</strong>: <code>https://spa.example.com/signin-callback</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>My SPA app</td>
+<td>Used only for user-friendly identification.</td>
+</tr>
+<tr>
+<td>ApplicationUri</td>
+<td>spa.example.com</td>
+<td>The unique identifier of the SPA.</td>
+</tr>
+<tr>
+<td>IsEnabled</td>
+<td>true</td>
+<td>Enables the trusted application.</td>
+</tr>
+<tr>
+<td>ImpersonateAsInternalUserAllowed</td>
+<td>true</td>
+<td>Allows authentication by internal users.</td>
+</tr>
+<tr>
+<td>ImpersonateAsCommunityUserAllowed</td>
+<td>false</td>
+<td>Disallows authentication by external (community) users.</td>
+</tr>
+<tr>
+<td>ImpersonateLoginUrl</td>
+<td><a href="https://spa.example.com/signin-callback">https://spa.example.com/signin-callback</a></td>
+<td>The callback URL handled by the SPA after sign-in.</td>
+</tr>
+<tr>
+<td>ClientType</td>
+<td>Public</td>
+<td>Indicates that the application is a public client and cannot keep a secret.</td>
+</tr>
+</tbody>
+</table>
+<p>All other attributes can keep their default values and are not relevant for this scenario.</p>
+<h2 id="implementation">Implementation</h2>
+<p>This section demonstrates the Authorization Code flow with PKCE against the Instance ID.</p>
+<h3 id="1-start-sign-in-authorize-request">1. Start sign-in (authorize request)</h3>
+<p>Before starting the sign-in flow, the SPA generates:</p>
+<ul>
+<li><code>state</code> – <code>&lt;base64url(random(32 bytes))&gt;</code></li>
+<li><code>nonce</code> – <code>&lt;base64url(random(32 bytes))&gt;</code></li>
+<li><code>code_verifier</code> - <code>&lt;random(64 chars)&gt;</code></li>
+<li><code>code_challenge</code> - <code>&lt;base64url(sha256(code_verifier))&gt;</code></li>
+</ul>
+<p>The SPA then redirects the browser to the ERP.net Instance ID authorize endpoint:</p>
+<pre><code class="lang-http">GET /id/connect/authorize?
+  client_id=spa.example.com&amp;
+  redirect_uri=https%3A%2F%2Fspa.example.com%2Fsignin-callback&amp;
+  response_type=code&amp;
+  scope=openid%20profile%20read%20update&amp;
+  state=YzQ5ZDc4M2QxN2Q0NDU3YjlhM2Y5OWE1ZTY4OTc0ZGM&amp;
+  nonce=ZTRjOTM2M2Y0ODFhNGQ0NGE4NmU1N2ExYjY2NjE3ZmQ&amp;
+  code_challenge=VZ9R6l3kPpJ6m2m9kR9cR9n8s3c7J4GmQ9FZp5mX1kQ&amp;
+  code_challenge_method=S256
+Host: mycompany.my.erp.net
+</code></pre>
+<p>The requested scopes define the level of access the SPA will have to the instance APIs.</p>
+<p>Common resource scopes:</p>
+<ul>
+<li><code>read</code> – allows <strong>read-only</strong> access to instance resources</li>
+<li><code>update</code> – allows <strong>update</strong> access to instance resources</li>
+</ul>
+<p>Request only the scopes required by the application.<br>
+Granting broader scopes than necessary increases the impact of a compromised token.</p>
+<p><strong>Result:</strong>
+The user is redirected to the ERP.net login page and signs in.</p>
+<h2 id="2-receive-the-sign-in-response-callback">2. Receive the sign-in response (callback)</h2>
+<p>After a successful sign-in, ERP.net Instance ID redirects the browser back to the configured callback URL.</p>
+<p>Example redirect received by the SPA:</p>
+<pre><code class="lang-http">GET /signin-callback?
+  code=SplxlOBeZQQYbYS6WxSbIA&amp;
+  state=YzQ5ZDc4M2QxN2Q0NDU3YjlhM2Y5OWE1ZTY4OTc0ZGM
+Host: spa.example.com
+</code></pre>
+<p>The SPA must:</p>
+<ul>
+<li>Validate that the returned <code>state</code> equals the original value</li>
+<li>Extract the <code>authorization code</code></li>
+<li>Preserve the original <code>code_verifier</code> for the token request</li>
+</ul>
+<h2 id="3-exchange-the-authorization-code-token-request">3. Exchange the authorization code (token request)</h2>
+<p>The SPA exchanges the authorization code at the ERP.net Instance ID token endpoint.</p>
+<p>Because the application is a public client, no client secret is sent.
+The request must include the original <code>code_verifier</code>.</p>
+<pre><code class="lang-http">POST /id/connect/token HTTP/1.1
+Host: mycompany.my.erp.net
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&amp;
+client_id=spa.example.com&amp;
+code=SplxlOBeZQQYbYS6WxSbIA&amp;
+redirect_uri=https%3A%2F%2Fspa.example.com%2Fsignin-callback&amp;
+code_verifier=dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
+</code></pre>
+<p>Example token response:</p>
+<pre><code class="lang-http">HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;access_token&quot;: &quot;eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE3NjY0OTQzOTQsImV4cCI6MTc2NjQ5Nzk5NCwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOlsiRG9tYWluQVBJIiwiVGFibGVBUEkiLCJPTEFQIiwiQXBwU2VydmVyIiwiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQvcmVzb3VyY2VzIl0sImNsaWVudF9pZCI6IlBLIiwic3ViIjoiYWRtaW4iLCJhdXRoX3RpbWUiOjE3NjY0OTM0OTUsImlkcCI6ImxvY2FsIiwiaWQiOiI5ZGE2NDgzOS1hOGQwLTQ5MWQtYWViYi00ZDE4ZmE0MmIwMTQiLCJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwidXNlcl90eXBlIjoiSW50ZXJuYWxVc2VyIiwiaXNfYWRtaW4iOiJ0cnVlIiwiZW1haWxfdmVyaWZpZWQiOiJmYWxzZSIsImRiIjoiRTFfREVWLTEgVGVzdCIsImxvY2FsZSI6ImJnIiwianRpIjoiNUIyNzBBRDU2RDA5OTU1QzQ0Qzg0NjdFODI0NkM4ODEiLCJzaWQiOiJEMUZGRURGRTRDQjMyMzAwRDI2QzI2NUI5QkQzNzRGQiIsImlhdCI6MTc2NjQ5NDM5NCwic2NvcGUiOlsib3BlbmlkIiwicHJvZmlsZSIsInJlYWQiLCJ1cGRhdGUiXSwiYW1yIjpbInB3ZCJdfQ.VeTP6xc1tKxqybNxficqpNz2zvpgJ-zn0evArsYd7oJYTmEqWOiCa4cfM5w4NSpUr_TuSqcrs4o3TO0-aJYvhJ2l3-NhjSDtQTeevHLGw78V_xh5EDVS0JEhhCqNrl0tABXEa5Sn-bNNEc2UDIDlsEy0LPAKIbL9p2iCgZu1jPJcvZoVR_P3l9K0SjDm-DE_OHNEqju_hX7uV70J7O7ZiSoleaJVWK2l26YcwoII0VxtP-rOpUOIQx1RBCGMSFg4W5sUGvfj0MLnt1aMztQ2iI2Ai8pqyxq09te_UQOTSUxcpwHbsBcROCFc1Lb8s-uKwpPf8WkoZpOMtJg18gLe8Q&quot;,
+  &quot;id_token&quot;: &quot;eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiSldUIn0.eyJuYmYiOjE3NjY0OTQzOTQsImV4cCI6MTc2NjQ5NDY5NCwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJQSyIsIm5vbmNlIjoiYjdjMTY3ZWU4NDVjNGFjMWJhYTZjNWFjMTA5Y2RlYTIiLCJpYXQiOjE3NjY0OTQzOTQsImF0X2hhc2giOiJIUU9RQVFnb3ZVbVE4U2ZCZFQteW9RIiwic19oYXNoIjoiV1hjUTc3aHlKb2o5M3YwT1o1UlpQZyIsInNpZCI6IkQxRkZFREZFNENCMzIzMDBEMjZDMjY1QjlCRDM3NEZCIiwic3ViIjoiYWRtaW4iLCJhdXRoX3RpbWUiOjE3NjY0OTM0OTUsImlkcCI6ImxvY2FsIiwiYW1yIjpbInB3ZCJdfQ.dgYjJV9KrEZ39RgXv7O-Fxux5Rk6vXGJN4MW6IkRzHQIP1hr_CivtOWKx8dMVWb1LTLLBh-Lxkuylu48C2i6lBv_gU8mp-NATHer-d5r2TZkYWeO-Ml7EoLStkHxND34mZG3u0fCjhhUAdBsCAr8yidct32G0YPRS6LBxL_EtiXAncabE0WzulhcbwXo0NzohQowFKL9V3yz3DaK0oKkfkmmvkuAJkAO0rSJYtai-q7G8eiTwCk0TwDTX6_TawMy29gMYuYnHMZ00-FjnG2kA9JBqpbcSSCw4PfFiWCOEPcPsBRn28Hdv46OWaxZ2nBbk2pjkaNjva0olTyItcAcdQ&quot;,
+  &quot;expires_in&quot;: 3600,
+  &quot;scope&quot;: &quot;openid profile read update&quot;
+}
+</code></pre>
+<p>The SPA can now:</p>
+<ul>
+<li>Validate the ID token to identify the user</li>
+<li>Use the access token to call APIs on behalf of the signed-in user</li>
+</ul>
+<h2 id="security-and-implementation-considerations">Security and implementation considerations</h2>
+<ul>
+<li>SPAs are <strong>public clients</strong>. A client secret must <strong>never</strong> be used or expected.</li>
+<li>PKCE is <strong>mandatory</strong> and must not be omitted.</li>
+<li>The <code>state</code> value must be generated per request and <strong>validated on callback</strong>.</li>
+<li>The <code>nonce</code> value must be <strong>validated against the ID token</strong>.</li>
+<li>Tokens must be stored carefully (for example, in memory). Persistent browser storage increases exposure.</li>
+<li>The Instance ID <strong>does not allow embedding</strong>. If authentication is initiated from within an iframe, the sign-in flow must be opened in a <strong>popup window or top-level navigation</strong>.</li>
+<li>Redirect URIs must exactly match the configured value.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/step-by-step/instance-id-spa-apps.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

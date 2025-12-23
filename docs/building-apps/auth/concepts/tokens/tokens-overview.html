@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Overview | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Overview | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../../favicon.ico">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/concepts/tokens/tokens-overview.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="overview">Overview</h1>
+
+<p>In ERP.net, <strong>tokens</strong> are used to authenticate and authorize applications and users when interacting with the system's APIs.</p>
+<p>They are the foundation of secure API access and the preferred way for external applications to communicate with ERP.net APIs.</p>
+<h2 id="what-are-tokens">What Are Tokens</h2>
+<p>Tokens are cryptographically signed credentials that represent an authenticated user or application.</p>
+<p>Instead of passing around usernames and passwords, tokens allow applications to securely prove their identity and permissions when calling APIs.</p>
+<p>ERP.net follows the <strong>OAuth 2.0</strong> standard for token management, and all tokens are issued by the instance's <strong>ERP.net Identity</strong>.</p>
+<h2 id="types-of-tokens">Types of Tokens</h2>
+<ol>
+<li><p><strong>Access Tokens</strong><br>
+Used by applications to call ERP.net APIs. They contain authorization data defining who or what the app represents and what it can do.</p>
+</li>
+<li><p><strong>Refresh Tokens</strong><br>
+Used by apps to obtain a new access token without forcing the user to sign in again. Available only to interactive clients.</p>
+</li>
+<li><p><strong>Reference Access Tokens (PAT, SAT)</strong><br>
+Manually issued, long-lived tokens used for integrations, scripts, or automation.</p>
+<ul>
+<li><strong>PAT (Personal Access Token)</strong> – acts on behalf of a specific user.</li>
+<li><strong>SAT (Service Access Token)</strong> – acts as a defined service identity (SystemUser).</li>
+</ul>
+</li>
+</ol>
+<h2 id="how-tokens-work-in-">How Tokens Work in ERP.net</h2>
+<p>Tokens are issued by the ERP.net <strong>Identity</strong> after successful authentication.</p>
+<p>The app then includes the token in API requests using the <code>Authorization: Bearer &lt;token&gt;</code> header.</p>
+<p>Tokens contain:</p>
+<ul>
+<li><strong>Who</strong> is calling (user or service)</li>
+<li><strong>What</strong> they can access (scopes)</li>
+<li><strong>When</strong> the access expires</li>
+<li><strong>Where</strong> the token was issued</li>
+</ul>
+<p>All API calls are validated against these claims before data access is granted.</p>
+<h2 id="why-use-tokens">Why Use Tokens</h2>
+<ul>
+<li><strong>Security</strong> – avoids exposing user credentials in requests.</li>
+<li><strong>Auditing</strong> – all API calls are traceable to a specific app or user identity.</li>
+<li><strong>Scalability</strong> – authentication and authorization are decoupled from API logic.</li>
+<li><strong>Flexibility</strong> – different tokens for different flows (interactive, service, or hybrid).</li>
+</ul>
+<p>Tokens also allow seamless integration with external systems and automation tools without compromising security or requiring direct user credentials.</p>
+<h2 id="token-flow-in-">Token Flow in ERP.net</h2>
+<p>When an external application connects to ERP.net, the flow generally involves:</p>
+<ol>
+<li><strong>Authentication</strong> – The application authenticates via an OAuth 2.0 flow (Authorization Code, Client Credentials, or Hybrid).</li>
+<li><strong>Token Issuance</strong> – ERP.net Identity issues the token representing the app or user identity.</li>
+<li><strong>Accessing APIs</strong> – The app uses the token to authorize API requests.</li>
+<li><strong>Token Expiration</strong> – Tokens expire after a defined period.</li>
+<li><strong>Token Renewal</strong> – The app either uses a refresh token or requests a new access token as needed.</li>
+</ol>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="access-tokens.html"><strong>Access Tokens</strong></a><br>
+Learn about how access tokens are issued and used in API requests.</p>
+</li>
+<li><p><a href="reference-access-tokens.html"><strong>Reference Access Tokens (PAT, SAT)</strong></a><br>
+Understand how long-lived reference tokens enable service or personal access.</p>
+</li>
+<li><p><a href="scopes.html"><strong>Scopes and Permissions</strong></a><br>
+Learn how scopes define which ERP.net resources a token can access.</p>
+</li>
+<li><p><a href="token-lifetime.html"><strong>Token Lifetime and Renewal</strong></a><br>
+See how tokens expire, and how refresh tokens extend access securely.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/concepts/tokens/tokens-overview.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

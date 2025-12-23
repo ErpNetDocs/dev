@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Reference Access Tokens (PAT, SAT) | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Reference Access Tokens (PAT, SAT) | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../../favicon.ico">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/concepts/tokens/reference-access-tokens.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="reference-access-tokens-pat-sat">Reference Access Tokens (PAT, SAT)</h1>
+
+<p>A <strong>reference access token</strong> is a long-lived, manually issued token that provides programmatic access to ERP.net APIs.</p>
+<p>Unlike short-lived OAuth access tokens, reference tokens are designed for <strong>automation</strong>, <strong>integration</strong>, and <strong>developer access</strong> scenarios where user interaction is not practical.</p>
+<p>All reference tokens in ERP.net begin with the <code>enrt_</code> prefix, for example:</p>
+<pre><code class="lang-text">enrt_1D41D4694B4F02D3D6A31FFA07E20B73F48248B26C75A0CCCB5F9DBEE41F7960
+</code></pre>
+<h2 id="overview">Overview</h2>
+<p>Reference tokens are <strong>opaque strings</strong> (not JWTs) that reference an internal record stored and validated by the ERP.net Identity.</p>
+<p>They can be revoked instantly and are traceable by administrators.</p>
+<p>Two types of reference tokens exist:</p>
+<table>
+<thead>
+<tr>
+<th>Token Type</th>
+<th>Full Name</th>
+<th>Represents</th>
+<th>Issued From</th>
+<th>Who Can Create</th>
+<th>Requires Trusted App</th>
+<th>Impersonates</th>
+<th>Scopes Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PAT</strong></td>
+<td>Personal Access Token</td>
+<td>A specific <strong>user</strong></td>
+<td>Profile (User) Site</td>
+<td>Any authenticated user (if allowed)</td>
+<td>Yes</td>
+<td>The user who created it</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>SAT</strong></td>
+<td>Service Access Token</td>
+<td>A specific <strong>trusted application</strong> (via its <strong>system user</strong>)</td>
+<td>Instance Manager Site</td>
+<td>Administrators only (if allowed)</td>
+<td>Yes</td>
+<td>The system user of the trusted app</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="trusted-application-policy-requirement">Trusted Application Policy Requirement</h2>
+<p>Reference tokens cannot be issued unless explicitly allowed in the <strong>Trusted Application definition</strong>.</p>
+<p>Each trusted application includes the following policy setting:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Purpose</strong></th>
+<th><strong>Values</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AccessTokens</strong></td>
+<td>Controls who may issue reference tokens (PAT/SAT).</td>
+<td><code>None</code>, <code>AuthenticatedUsers</code>, or <code>AdministratorsOnly</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Meaning:</strong></p>
+<ul>
+<li><code>None</code> - Reference tokens cannot be issued. (Default and most secure.)</li>
+<li><code>AuthenticatedUsers</code> - Any signed-in user can create a <strong>PAT</strong> for this app.<br>
+Only administrators can issue <strong>SATs</strong>, since the Instance Manager site requires administrative access.</li>
+<li><code>AdministratorsOnly</code> - Only administrators can issue <strong>PATs</strong> or <strong>SATs</strong> for this app.</li>
+</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Even if a user has permissions in the instance, they cannot create a PAT or SAT unless the trusted app explicitly allows it through this setting.</p>
+</div>
+<h2 id="characteristics">Characteristics</h2>
+<ul>
+<li>Always start with <strong><code>enrt_</code></strong>.</li>
+<li>Are <strong>issued manually</strong> - never automatically by OAuth flows.</li>
+<li>Are <strong>bound</strong> to a specific ERP.net instance.</li>
+<li>Have a <strong>defined expiration time</strong> (for security and compliance).</li>
+<li>Are <strong>stored securely</strong> in the ERP.net Identity and <strong>revocable immediately</strong>.</li>
+<li>Can <strong>log last used timestamp</strong> for audit and monitoring.</li>
+<li>Must be <strong>treated as secrets</strong> - never shared or embedded in public code or configuration.</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p>Reference tokens can be used in any request that accepts a standard Bearer token or API key header.</p>
+<h3 id="option-1-authorization-header">Option 1: Authorization Header</h3>
+<pre><code class="lang-http">GET /api/domain/odata/Customers HTTP/1.1
+Host: testdb.my.erp.net
+Authorization: Bearer enrt_1D41D4694B4F02D3D6A31FFA07E20B73F48248B26C75A0CCCB5F9DBEE41F7960
+</code></pre>
+<h3 id="option-2-api-key-header">Option 2: API Key Header</h3>
+<pre><code class="lang-http">GET /api/domain/odata/Customers HTTP/1.1
+Host: testdb.my.erp.net
+X-Api-Key: enrt_1D41D4694B4F02D3D6A31FFA07E20B73F48248B26C75A0CCCB5F9DBEE41F7960
+</code></pre>
+<p>Other supported header names include:</p>
+<ul>
+<li><code>Api-Key</code></li>
+<li><code>X-API-KEY</code></li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Use only <strong>one method</strong> per request - either <code>Authorization</code> or an API key header, not both.</p>
+</div>
+<h2 id="personal-access-tokens-pat">Personal Access Tokens (PAT)</h2>
+<p>A <strong>Personal Access Token</strong> represents an individual user.</p>
+<p>It allows scripts, connectors, or integrations to act <strong>on behalf of that user</strong> without performing OAuth sign-in.</p>
+<p><strong>Created from:</strong> the user's <strong>Profile Site</strong>.</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>An existing <strong>Trusted Application</strong> association.</li>
+<li>The target <strong>Trusted Application</strong> must have <code>AccessTokens</code> set to <code>AuthenticatedUsers</code> or higher.</li>
+<li>A chosen <strong>expiration time</strong>.</li>
+<li>One or more <strong>scopes</strong> (for example, <code>read</code>, <code>update</code>).</li>
+</ul>
+<p><strong>Example use cases:</strong></p>
+<ul>
+<li>A user's Excel connector that reads ERP.net data.</li>
+<li>Automated data exports running as the user.</li>
+<li>Developer testing or API prototyping.</li>
+</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>PATs inherit the permissions of the issuing user.<br>
+Always restrict scopes and expiration to the minimum necessary.</p>
+</div>
+<h2 id="service-access-tokens-sat">Service Access Tokens (SAT)</h2>
+<p>A <strong>Service Access Token</strong> represents an ERP.net <strong>application identity</strong>, not a user.</p>
+<p>It allows fully automated integrations to operate using the <strong>System User</strong> defined in the associated Trusted Application.</p>
+<p><strong>Created from:</strong> the <strong>Instance Manager Site</strong>.<br>
+<strong>Issued by:</strong> administrators only.</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>The target <strong>Trusted Application</strong> must have:
+<ul>
+<li><code>SystemUserAllowed = true</code></li>
+<li>A valid <strong>System User</strong> assigned</li>
+<li><code>AccessTokens</code> set to <code>AdministratorsOnly</code></li>
+</ul>
+</li>
+<li>Explicit <strong>scopes</strong> (for example, <code>read</code>, <code>update</code>)</li>
+<li>Defined <strong>expiration time</strong></li>
+</ul>
+<p><strong>Example use cases:</strong></p>
+<ul>
+<li>Continuous data synchronization or ETL services.</li>
+<li>Middleware or background jobs that perform scheduled tasks.</li>
+<li>Automated integration frameworks that run 24/7.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>SATs use the <strong>system user</strong> of the trusted app.<br>
+This ensures consistent permissions, stable identity, and centralized audit control.</p>
+</div>
+<h2 id="security-guidelines">Security Guidelines</h2>
+<ul>
+<li>Always store reference tokens in <strong>secure vaults</strong> or <strong>encrypted configuration files</strong>.</li>
+<li>Never commit them to source control or logs.</li>
+<li>Use short expiration times and rotate tokens regularly.</li>
+<li>Revoke immediately when an app or user no longer needs access.</li>
+<li>Use <strong>SATs</strong> for integrations, <strong>PATs</strong> for developer or user-level tools.</li>
+<li>Monitor <strong>last used timestamps</strong> to detect unused or suspicious tokens.</li>
+</ul>
+<h2 id="revocation-and-auditing">Revocation and Auditing</h2>
+<p>Reference tokens can be revoked at any time from:</p>
+<ul>
+<li>The <strong>Profile Site</strong> (for PATs)</li>
+<li>The <strong>Instance Manager Site</strong> (for PATs and SATs)</li>
+</ul>
+<p>Revocation is immediate - once revoked, the token becomes invalid for all future requests.</p>
+<p>ERP.net also tracks:</p>
+<ul>
+<li><strong>Creation time</strong></li>
+<li><strong>Creator identity</strong></li>
+<li><strong>Scopes</strong></li>
+<li><strong>Last used timestamp</strong></li>
+</ul>
+<p>This allows administrators to review and audit all reference token activity.</p>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="access-tokens.html"><strong>Access Tokens</strong></a><br>
+Learn how ERP.net uses short-lived OAuth access tokens for standard app flows.</p>
+</li>
+<li><p><a href="scopes.html"><strong>Scopes and Permissions</strong></a><br>
+Understand how scopes control what data your tokens can access.</p>
+</li>
+<li><p><a href="../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+See how trusted apps define system users, modes, and scope policies.</p>
+</li>
+<li><p><a href="token-lifetime.html"><strong>Token Lifetime and Renewal</strong></a><br>
+Learn how expiration and renewal policies affect security.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/concepts/tokens/reference-access-tokens.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

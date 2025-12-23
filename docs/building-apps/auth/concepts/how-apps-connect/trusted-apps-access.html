@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Trusted Applications and Access Control | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Trusted Applications and Access Control | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../../favicon.ico">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/concepts/how-apps-connect/trusted-apps-access.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="trusted-applications-and-access-control">Trusted Applications and Access Control</h1>
+
+<p>A <strong>Trusted Application</strong> defines the relationship between an app and a specific ERP.net instance.</p>
+<p>It represents the app's registration record inside the instance: who the app is, which authentication modes it can use, and what access it may request.</p>
+<p>Every app that connects to ERP.net APIs must first be registered as a Trusted Application in the target instance.</p>
+<p>This ensures that access is secure, auditable, and governed by consistent policies.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>One record per instance:</strong><br>
+If your app connects to multiple instances, register it separately in each.</p>
+</div>
+<h2 id="relationship-to--identity-and-oauth">Relationship to ERP.net Identity and OAuth</h2>
+<p>In ERP.net, the connection between an external app and the instance relies on three cooperating components:</p>
+<ul>
+<li><strong>ERP.net Identity</strong> – authenticates users and services and issues tokens.</li>
+<li><strong>OAuth 2.0</strong> – defines the standard flows for obtaining and using those tokens.</li>
+<li><strong>Trusted Application</strong> – defines <em>which</em> app is calling, <em>how</em> it may authenticate, and <em>what</em> access it may be granted.</li>
+</ul>
+<p>Together, these components ensure that all applications are known, trusted, and subject to the instance's access rules.</p>
+<h2 id="what-a-trusted-application-controls">What a Trusted Application Controls</h2>
+<p>Each Trusted Application record defines several aspects of the app's identity and permissions:</p>
+<ul>
+<li><strong>Identity</strong> – unique <code>ApplicationUri</code> used as the OAuth <code>client_id</code>.</li>
+<li><strong>Client type</strong> – whether the app is <strong>Public</strong> (cannot keep a secret) or <strong>Confidential</strong> (can keep a secret).</li>
+<li><strong>Allowed modes</strong> – whether the app supports user login, background service access, or both.</li>
+<li><strong>Redirects</strong> – approved login/logout redirect URIs for interactive sign-in.</li>
+<li><strong>Scopes</strong> – permissions (such as <code>read</code> or <code>update</code>) that the instance may grant.</li>
+<li><strong>Service identity</strong> – an optional <code>SystemUser</code> that represents the app when running as a background service.</li>
+<li><strong>Reference token policy</strong> – defines who can issue API keys (Personal Access Tokens or Service Access Tokens).</li>
+<li><strong>Lifecycle</strong> – enable or disable the app, rotate secrets, and track changes.</li>
+</ul>
+<h2 id="key-attributes-essentials">Key Attributes (Essentials)</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Purpose</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ApplicationUri</strong></td>
+<td>Unique app identifier (used as <code>client_id</code>).</td>
+<td>Required. Use a stable, globally unique value (for example, <code>com.vendor/app</code>).</td>
+</tr>
+<tr>
+<td><strong>ClientType</strong></td>
+<td>Defines whether the app is Public or Confidential.</td>
+<td>Public = no secret. Confidential = requires secret.</td>
+</tr>
+<tr>
+<td><strong>ApplicationSecretHash</strong></td>
+<td>SHA-256 hash of the app's client secret.</td>
+<td>Confidential apps only. Never store plain text secrets.</td>
+</tr>
+<tr>
+<td><strong>ImpersonateLoginUrl</strong></td>
+<td>Allowed login redirect URIs.</td>
+<td>Comma-separated list; exact match required.</td>
+</tr>
+<tr>
+<td><strong>ImpersonateLogoutUrl</strong></td>
+<td>Allowed post-logout redirect URIs.</td>
+<td>Comma-separated list; exact match required.</td>
+</tr>
+<tr>
+<td><strong>ImpersonateAsInternalUserAllowed</strong></td>
+<td>Allows login for internal users.</td>
+<td>Enables sign-in with internal accounts.</td>
+</tr>
+<tr>
+<td><strong>ImpersonateAsCommunityUserAllowed</strong></td>
+<td>Allows login for community or external users.</td>
+<td>For customer or partner apps. Avoid enabling only community while disabling internal.</td>
+</tr>
+<tr>
+<td><strong>SystemUserAllowed</strong></td>
+<td>Enables background or service (non-interactive) access.</td>
+<td>Required for client credentials flow.</td>
+</tr>
+<tr>
+<td><strong>SystemUser</strong></td>
+<td>The service account to use.</td>
+<td>Required when <code>SystemUserAllowed = true</code>. Use a least-privilege user.</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Space-delimited list of permissions.</td>
+<td>Example: <code>read update</code>. Request only what is necessary.</td>
+</tr>
+<tr>
+<td><strong>AccessTokens</strong></td>
+<td>Controls who may issue reference tokens (PAT/SAT).</td>
+<td><code>None</code>, <code>AuthenticatedUsers</code>, or <code>AdministratorsOnly</code>.</td>
+</tr>
+<tr>
+<td><strong>BasicAuthenticationAllowed</strong></td>
+<td>Enables legacy Basic Auth.</td>
+<td>Off by default. Avoid unless required.</td>
+</tr>
+<tr>
+<td><strong>IsEnabled</strong></td>
+<td>Enables or disables the app.</td>
+<td>Acts as an immediate kill switch.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how--identity-uses-it">How ERP.net Identity Uses It</h2>
+<p>When an app connects to ERP.net, the ERP.net Identity validates its identity using the Trusted Application record.</p>
+<pre><code class="lang-mermaid">sequenceDiagram
+    participant App
+    participant IDP as ERP.net Identity
+    participant TA as Trusted Application Definitions
+
+    App-&gt;&gt;IDP: Authenticate (client_id [+ secret/redirects])
+    IDP-&gt;&gt;TA: Lookup by ApplicationUri
+    TA--&gt;&gt;IDP: ClientType, redirects, flags, scopes, service user
+    IDP--&gt;&gt;App: Issues tokens (if policy allows)
+</code></pre>
+<h2 id="common-configurations">Common Configurations</h2>
+<h3 id="interactive-web-application-server-side">Interactive Web Application (Server-Side)</h3>
+<p>Used by web applications that authenticate users through a browser and operate from a secure backend.</p>
+<p><strong>Typical setup:</strong></p>
+<ul>
+<li><code>ClientType = Confidential</code></li>
+<li><code>ApplicationSecretHash</code> set with SHA-256 of the secret.</li>
+<li><code>ImpersonateLoginUrl</code> and <code>ImpersonateLogoutUrl</code> define the redirect endpoints.</li>
+<li><code>ImpersonateAsInternalUserAllowed = true</code> (and optionally community users).</li>
+<li><code>SystemUserAllowed = false</code></li>
+<li>Minimal <code>Scope</code>, typically <code>read</code> or <code>read update</code>.</li>
+</ul>
+<p><strong>Use for:</strong><br>
+Company portals, admin dashboards, or internal business apps.</p>
+<h3 id="single-page-or-native-application">Single-Page or Native Application</h3>
+<p>Used by SPAs or device apps that cannot safely store secrets.</p>
+<p><strong>Typical setup:</strong></p>
+<ul>
+<li><code>ClientType = Public</code></li>
+<li><code>ImpersonateLoginUrl</code> and <code>ImpersonateLogoutUrl</code> defined for app redirect endpoints.</li>
+<li>Appropriate impersonation flags set for internal and/or community users.</li>
+<li><code>SystemUserAllowed = false</code></li>
+<li><code>Scope = read</code> or <code>read update</code>.</li>
+</ul>
+<p><strong>Use for:</strong><br>
+Browser-based frontends, mobile apps, or desktop clients.</p>
+<h3 id="service-or-integration-application">Service or Integration Application</h3>
+<p>Used by background services, integration agents, or scheduled jobs that run without user interaction.</p>
+<p><strong>Typical setup:</strong></p>
+<ul>
+<li><code>ClientType = Confidential</code></li>
+<li><code>ApplicationSecretHash</code> set to the secret hash.</li>
+<li><code>SystemUserAllowed = true</code> and <code>SystemUser</code> assigned.</li>
+<li><code>ImpersonateAs...Allowed = false</code></li>
+<li><code>Scope = read update</code> or <code>read</code> only for data retrieval.</li>
+</ul>
+<p><strong>Use for:</strong><br>
+ERP.net integrations, synchronization tools, data migration, or automation services.</p>
+<h2 id="scopes-and-access-policies">Scopes and Access Policies</h2>
+<p>Scopes define what actions an application can perform. They are listed as space-delimited strings in the <code>Scope</code> attribute.</p>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Meaning</th>
+<th>Recommended for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>read</code></td>
+<td>Allows reading ERP.net data.</td>
+<td>Default for most apps.</td>
+</tr>
+<tr>
+<td><code>update</code></td>
+<td>Allows modifying ERP.net data.</td>
+<td>Required for write operations.</td>
+</tr>
+<tr>
+<td><code>sec</code></td>
+<td>Access to instance security infrastructure.</td>
+<td>Reserved; not for external apps.</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Always follow least-privilege principles. Start with <code>read</code>, and add <code>update</code> only when required.</p>
+</div>
+<h2 id="accesstokens-policy">AccessTokens Policy</h2>
+<p>The <code>AccessTokens</code> field controls who (if anyone) can issue <strong>reference tokens</strong> for the app (for example, PAT/SAT).</p>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>None</code> - Reference tokens cannot be issued. PAT/SAT are disabled.</li>
+<li><code>AuthenticatedUsers</code> - Any signed-in user can issue reference tokens for this app.</li>
+<li><code>AdministratorsOnly</code> - Only administrators can issue reference tokens.</li>
+</ul>
+<p><strong>Guidance:</strong></p>
+<ul>
+<li>Start with <code>None</code>. Moving away from <code>None</code> introduces additional security risk and should be considered carefully with a clear operational need.</li>
+<li>If you must allow reference tokens, prefer <code>AdministratorsOnly</code>. Avoid <code>AuthenticatedUsers</code> unless there is a narrowly scoped.</li>
+</ul>
+<h2 id="security-guidelines">Security Guidelines</h2>
+<ul>
+<li>Always use OAuth 2.0. Keep <code>BasicAuthenticationAllowed = false</code>.</li>
+<li>Use <strong>Confidential</strong> clients for server-side apps; <strong>Public</strong> for SPAs and native clients.</li>
+<li>Store only secret hashes; never the raw secret.</li>
+<li>Rotate secrets and API keys periodically.</li>
+<li>Grant the minimal required scopes.</li>
+<li>Use a least-privilege <code>SystemUser</code> for service access.</li>
+<li>Restrict redirect URIs to exact, HTTPS-based matches.</li>
+<li>Disable unused apps with <code>IsEnabled = false</code>.</li>
+<li>Audit all trusted apps periodically for owners, scopes, and usage.</li>
+</ul>
+<h2 id="example-minimal-setups">Example Minimal Setups</h2>
+<h3 id="read-only-interactive-app-internal-users">Read-Only Interactive App (Internal Users)</h3>
+<pre><code class="lang-text">ClientType = Confidential
+ImpersonateAsInternalUserAllowed = true
+Scope = read
+SystemUserAllowed = false
+</code></pre>
+<p>Used for internal dashboards or web portals where employees log in through the browser and only need to view ERP.net data.</p>
+<h3 id="write-enabled-service-integration">Write-Enabled Service Integration</h3>
+<pre><code class="lang-text">ClientType = Confidential
+SystemUserAllowed = true
+SystemUser = &lt;least-privilege user&gt;
+Scope = read update
+ImpersonateAs...Allowed = false
+</code></pre>
+<p>Used for backend integrations or scheduled jobs that must update data, such as inventory sync or reporting automation.</p>
+<h3 id="public-spa-read-only">Public SPA (Read-Only)</h3>
+<pre><code class="lang-text">ClientType = Public
+ImpersonateAsCommunityUserAllowed = true
+Scope = read
+SystemUserAllowed = false
+</code></pre>
+<p>Used for front-end applications (for example, customer portals or mobile apps) that display ERP.net data to community users but cannot modify it.</p>
+<h3 id="hybrid-app-interactive--service">Hybrid App (Interactive + Service)</h3>
+<pre><code class="lang-text">ClientType = Confidential
+ImpersonateAsInternalUserAllowed = true
+SystemUserAllowed = true
+SystemUser = &lt;least-privilege user&gt;
+Scope = read update
+</code></pre>
+<p>Used when the same application has both an interactive UI (user sign-in) and background service features (scheduled sync or automation).</p>
+<p>By defining Trusted Applications carefully, administrators can ensure that every integration or app connection to ERP.net is authenticated, authorized, and traceable - providing both flexibility and strong access control.</p>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="identity-server.html"><strong>ERP.net Identity</strong></a><br>
+Learn about the built-in authentication authority in every ERP.net instance.</p>
+</li>
+<li><p><a href="oauth2-overview.html"><strong>OAuth 2.0</strong></a><br>
+Understand how apps obtain tokens and delegate access securely.</p>
+</li>
+<li><p><a href="../flows/overview.html"><strong>Auth Flows</strong></a><br>
+Choose and implement the right flow</p>
+</li>
+<li><p><a href="../tokens/tokens-overview.html"><strong>Tokens</strong></a><br>
+Access tokens, scopes, and renewal</p>
+</li>
+<li><p><a href="../sessions/overview.html"><strong>Sessions</strong></a><br>
+How tokens map to sessions and licensing</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/concepts/how-apps-connect/trusted-apps-access.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
