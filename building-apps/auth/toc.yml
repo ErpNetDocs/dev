@@ -8,6 +8,8 @@
   href: tokens/toc.yml  
 - name: Sessions
   href: sessions/toc.yml
+- name: Common Scenarios
+  href: common-scenarios/toc.yml  
 - name: Samples
   href: samples/toc.yml
 - name: Security Best Practices
