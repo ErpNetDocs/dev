@@ -722,16 +722,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/step-by-step/service-access-confidential-apps.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/step-by-step/service-access-confidential-apps.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "building-apps/auth/step-by-step/service-apps.md",
       "output": {
         ".html": {

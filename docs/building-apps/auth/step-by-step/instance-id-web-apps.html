@@ -200,7 +200,7 @@ Host: mycompany.my.erp.net
 Granting broader scopes than necessary increases the impact of a compromised token.</p>
 <p><strong>Result:</strong>
 The user is redirected to the ERP.net login page and signs in.</p>
-<h2 id="2-receive-the-sign-in-response-callback">2. Receive the sign-in response (callback)</h2>
+<h3 id="2-receive-the-sign-in-response-callback">2. Receive the sign-in response (callback)</h3>
 <p>After a successful sign-in, the ERP.net Instance ID redirects the user back to the configured callback URL.</p>
 <p>Example callback request received by the backend:</p>
 <pre><code class="lang-http">GET /signin-callback?
@@ -214,7 +214,7 @@ Host: backend.example.com
 <li>Extract the <code>authorization code</code></li>
 <li>Preserve the original <code>code_verifier</code> for the token request</li>
 </ul>
-<h2 id="3-exchange-the-authorization-code-token-request">3. Exchange the authorization code (token request)</h2>
+<h3 id="3-exchange-the-authorization-code-token-request">3. Exchange the authorization code (token request)</h3>
 <p>The backend exchanges the authorization code at the Instance ID token endpoint.</p>
 <p>Because the application is confidential, the request includes the client secret.
 The request must include the original <code>code_verifier</code>.</p>

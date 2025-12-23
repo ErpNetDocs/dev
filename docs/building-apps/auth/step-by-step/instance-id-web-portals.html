@@ -87,14 +87,22 @@
         <article data-uid="">
 <h1 id="instance-id-for-web-portals">Instance ID for Web Portals</h1>
 
-<p>This topic describes how a <strong>confidential external application</strong> with a <strong>backend</strong> component capable of securely storing a secret integrates with an ERP.net Instance ID in order to authenticate users and access protected APIs.</p>
+<p>This topic describes how a <strong>web portal</strong> integrates with an ERP.net Instance ID using <strong>both</strong> the <strong>Authorization Code</strong> flow and the <strong>Client Credentials</strong> flow within a <strong>single confidential application</strong>.</p>
+<p>A typical example of such a web portal is an <strong>online store</strong>, where users sign in to manage their profile or place orders, while all backend operations and API calls are performed by the application itself.</p>
+<h2 id="scenario-overview">Scenario Overview</h2>
 <p>The following scenario is covered:</p>
 <ul>
-<li>The external application is a <strong>confidential application</strong></li>
+<li>The external application is a <strong>confidential web application (portal)</strong></li>
 <li>The application has a <strong>backend component</strong> capable of securely storing a secret</li>
-<li>The application authenticates users against a <strong>specific ERP.net instance</strong></li>
-<li>The application uses the <strong>Authorization Code flow</strong></li>
-<li>The application obtains tokens to call instance APIs on behalf of the signed-in user</li>
+<li>Users sign in interactively (internal and/or external)</li>
+<li>The application uses:
+<ul>
+<li><strong>Authorization Code</strong> flow to authenticate users</li>
+<li><strong>Client Credentials</strong> flow to access instance APIs</li>
+</ul>
+</li>
+<li>API calls are executed using a service identity</li>
+<li>A <strong>single Trusted Application</strong> is used for both flows</li>
 </ul>
 <p>The <strong>Instance ID</strong> is the identity provider of a specific ERP.net instance. Confidential applications use it to authenticate users and obtain tokens <strong>against a concrete ERP.net instance</strong>.</p>
 <p>For example, if your ERP.net instance is located at:</p>
@@ -103,6 +111,40 @@
 <p>then the corresponding Instance ID endpoints are located at:</p>
 <pre><code class="lang-text">https://mycompany.my.erp.net/id
 </code></pre>
+<h2 id="design-goal">Design Goal</h2>
+<p>The goal of this approach is to clearly separate user authentication from API access.</p>
+<ul>
+<li>Users are authenticated to establish identity and session context</li>
+<li>API access is performed using a <strong>service identity</strong>, not the user</li>
+<li>External (community) users can sign in without receiving API permissions</li>
+<li>Backend integrations remain stable and centrally controlled</li>
+</ul>
+<h2 id="flow-separation">Flow Separation</h2>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Flow Used</th>
+<th>Token Used</th>
+<th>Identity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>User sign-in</td>
+<td>Authorization Code</td>
+<td>ID token</td>
+<td>Signed-in user</td>
+</tr>
+<tr>
+<td>API access</td>
+<td>Client Credentials</td>
+<td>Access token</td>
+<td>Application system user</td>
+</tr>
+</tbody>
+</table>
+<p>In this model, the Authorization Code flow is used <strong>only</strong> to identify the user, while the Client Credentials flow is used to authorize all API calls.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <p>Your ERP.net instance must have a trusted application defined with the configuration below.</p>
 <div class="NOTE">
@@ -111,8 +153,9 @@
 </div>
 <p>Typical values:</p>
 <ul>
-<li><strong>ApplicationUri</strong>: <code>backend.example.com</code></li>
-<li><strong>ImpersonateLoginUrl</strong>: <code>https://backend.example.com/signin-callback</code></li>
+<li><strong>ApplicationUri</strong>: <code>portal.example.com</code></li>
+<li><strong>ImpersonateLoginUrl</strong>: <code>https://portal.example.com/signin-callback</code></li>
+<li><strong>SystemUser</strong>: <code>&lt;an-internal-erp-user&gt;</code></li>
 </ul>
 <table>
 <thead>
@@ -125,18 +168,28 @@
 <tbody>
 <tr>
 <td>Name</td>
-<td>My confidential app</td>
+<td>My web portal</td>
 <td>Used only for user-friendly identification.</td>
 </tr>
 <tr>
 <td>ApplicationUri</td>
-<td>backend.example.com</td>
+<td>portal.example.com</td>
 <td>The unique identifier of the application.</td>
 </tr>
 <tr>
 <td>IsEnabled</td>
 <td>true</td>
 <td>Enables the trusted application.</td>
+</tr>
+<tr>
+<td>SystemUserAllowed</td>
+<td>true</td>
+<td>Allows the application to authenticate as a service.</td>
+</tr>
+<tr>
+<td>SystemUser</td>
+<td><code>&lt;an-internal-erp-user&gt;</code></td>
+<td>The internal user used for service authentication.</td>
 </tr>
 <tr>
 <td>ImpersonateAsInternalUserAllowed</td>
@@ -146,11 +199,11 @@
 <tr>
 <td>ImpersonateAsCommunityUserAllowed</td>
 <td>true</td>
-<td>External (community) users may authenticate for identification, while API requests may use a service identity.</td>
+<td>Allows authentication by external (community) users.</td>
 </tr>
 <tr>
 <td>ImpersonateLoginUrl</td>
-<td><a href="https://backend.example.com/signin-callback">https://backend.example.com/signin-callback</a></td>
+<td><a href="https://portal.example.com/signin-callback">https://portal.example.com/signin-callback</a></td>
 <td>The callback URL handled by the backend after sign-in.</td>
 </tr>
 <tr>
@@ -161,52 +214,48 @@
 <tr>
 <td>ApplicationSecretHash</td>
 <td><code>&lt;base64(sha256(your-secret))&gt;</code></td>
-<td>The hashed client secret used during the token request.</td>
+<td>The hashed client secret used during token requests.</td>
 </tr>
 </tbody>
 </table>
 <p>All other attributes can keep their default values and are not relevant for this scenario.</p>
 <h2 id="implementation">Implementation</h2>
-<p>This section demonstrates the Authorization Code flow against the Instance ID for a confidential application.</p>
-<h3 id="1-start-sign-in-authorize-request">1. Start sign-in (authorize request)</h3>
-<p>The application redirects the user's browser to the Instance ID authorize endpoint.</p>
+<p>This section demonstrates how a web portal uses:</p>
+<ul>
+<li><strong>Authorization Code</strong> flow to authenticate users</li>
+<li><strong>Client Credential</strong> flow to obtain access tokens for calling instance APIs</li>
+</ul>
+<h3 id="1-start-user-sign-in-authorization-code">1. Start user sign-in (Authorization Code)</h3>
+<p>The portal redirects the user's browser to the Instance ID authorize endpoint.</p>
 <p>For each sign-in request, generate:</p>
 <ul>
 <li><code>state</code> – <code>&lt;base64url(random(32 bytes))&gt;</code></li>
 <li><code>nonce</code> – <code>&lt;base64url(random(32 bytes))&gt;</code></li>
-<li><code>code_verifier</code> - <code>&lt;random(64 chars)&gt;</code></li>
-<li><code>code_challenge</code> - <code>&lt;base64url(sha256(code_verifier))&gt;</code></li>
+<li><code>code_verifier</code> – <code>&lt;random(64 chars)&gt;</code></li>
+<li><code>code_challenge</code> – <code>&lt;base64url(sha256(code_verifier))&gt;</code></li>
 </ul>
 <p>Authorize request example:</p>
 <pre><code class="lang-http">GET /id/connect/authorize?
-  client_id=backend.example.com&amp;
-  redirect_uri=https%3A%2F%2Fbackend.example.com%2Fsignin-callback&amp;
+  client_id=portal.example.com&amp;
+  redirect_uri=https%3A%2F%2Fportal.example.com%2Fsignin-callback&amp;
   response_type=code%20id_token&amp;
   response_mode=form_post&amp;
-  scope=openid%20profile%20offline_access%20read%20update&amp;
+  scope=openid%20profile&amp;
   state=YzQ5ZDc4M2QxN2Q0NDU3YjlhM2Y5OWE1ZTY4OTc0ZGM&amp;
   nonce=ZTRjOTM2M2Y0ODFhNGQ0NGE4NmU1N2ExYjY2NjE3ZmQ&amp;
   code_challenge=VZ9R6l3kPpJ6m2m9kR9cR9n8s3c7J4GmQ9FZp5mX1kQ&amp;
   code_challenge_method=S256
 Host: mycompany.my.erp.net
 </code></pre>
-<p>The requested scopes define the level of access the application will have to the instance APIs.</p>
-<p>Common resource scopes:</p>
-<ul>
-<li><code>read</code> – allows <strong>read-only</strong> access to instance resources</li>
-<li><code>update</code> – allows <strong>update</strong> access to instance resources</li>
-</ul>
-<p>Request only the scopes required by the application.<br>
-Granting broader scopes than necessary increases the impact of a compromised token.</p>
-<p><strong>Result:</strong>
+<p><strong>Result:</strong><br>
 The user is redirected to the ERP.net login page and signs in.</p>
-<h2 id="2-receive-the-sign-in-response-callback">2. Receive the sign-in response (callback)</h2>
+<h3 id="2-receive-the-sign-in-response-callback">2. Receive the sign-in response (callback)</h3>
 <p>After a successful sign-in, the ERP.net Instance ID redirects the user back to the configured callback URL.</p>
 <p>Example callback request received by the backend:</p>
 <pre><code class="lang-http">GET /signin-callback?
   code=SplxlOBeZQQYbYS6WxSbIA&amp;
   state=YzQ5ZDc4M2QxN2Q0NDU3YjlhM2Y5OWE1ZTY4OTc0ZGM
-Host: backend.example.com
+Host: portal.example.com
 </code></pre>
 <p>The backend must:</p>
 <ul>
@@ -214,19 +263,23 @@ Host: backend.example.com
 <li>Extract the <code>authorization code</code></li>
 <li>Preserve the original <code>code_verifier</code> for the token request</li>
 </ul>
-<h2 id="3-exchange-the-authorization-code-token-request">3. Exchange the authorization code (token request)</h2>
+<h3 id="3-exchange-the-authorization-code-user-tokens">3. Exchange the authorization code (user tokens)</h3>
 <p>The backend exchanges the authorization code at the Instance ID token endpoint.</p>
 <p>Because the application is confidential, the request includes the client secret.
 The request must include the original <code>code_verifier</code>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>In this portal model, tokens from this step are used for <strong>user identification</strong> (ID token validation), not for calling instance APIs.</p>
+</div>
 <pre><code class="lang-http">POST /id/connect/token HTTP/1.1
 Host: mycompany.my.erp.net
 Content-Type: application/x-www-form-urlencoded
 
 grant_type=authorization_code&amp;
-client_id=backend.example.com&amp;
+client_id=portal.example.com&amp;
 client_secret=&lt;PLAIN_CLIENT_SECRET&gt;&amp;
 code=SplxlOBeZQQYbYS6WxSbIA&amp;
-redirect_uri=https%3A%2F%2Fbackend.example.com%2Fsignin-callback&amp;
+redirect_uri=https%3A%2F%2Fportal.example.com%2Fsignin-callback&amp;
 code_verifier=dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
 </code></pre>
 <p>Example token response:</p>
@@ -234,23 +287,49 @@ code_verifier=dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
 Content-Type: application/json
 
 {
-  &quot;access_token&quot;: &quot;eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE3NjY0OTQzNDYsImV4cCI6MTc2NjQ5Nzk0NiwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOlsiRG9tYWluQVBJIiwiVGFibGVBUEkiLCJPTEFQIiwiQXBwU2VydmVyIiwiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQvcmVzb3VyY2VzIl0sImNsaWVudF9pZCI6IlBLIiwic3ViIjoiYWRtaW4iLCJhdXRoX3RpbWUiOjE3NjY0OTM0OTUsImlkcCI6ImxvY2FsIiwiaWQiOiI5ZGE2NDgzOS1hOGQwLTQ5MWQtYWViYi00ZDE4ZmE0MmIwMTQiLCJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwidXNlcl90eXBlIjoiSW50ZXJuYWxVc2VyIiwiaXNfYWRtaW4iOiJ0cnVlIiwiZW1haWxfdmVyaWZpZWQiOiJmYWxzZSIsImRiIjoiRTFfREVWLTEgVGVzdCIsImxvY2FsZSI6ImJnIiwianRpIjoiQTUwODY2NDY2NjU3QjM0QjAxNjlGNTRCMTZEODdGN0QiLCJzaWQiOiJEMUZGRURGRTRDQjMyMzAwRDI2QzI2NUI5QkQzNzRGQiIsImlhdCI6MTc2NjQ5NDM0Niwic2NvcGUiOlsib3BlbmlkIiwicHJvZmlsZSIsInJlYWQiLCJ1cGRhdGUiLCJvZmZsaW5lX2FjY2VzcyJdLCJhbXIiOlsicHdkIl19.c9hwe4Jq9V3EoNWugPAcbGbgV_YTLf5MM2HaeUCCvsHdinE5G-g9ZPlVNR8HtQwkz_pzZd192U2_WkrhqweWWsOsAnSihfLlmOQIY0ak2z50_CTpatyHzVkgXGhTieBrCa8myaiBNO57trs9f8kGSbEsx6y3GxCiOd4TDLtfAtDRHyvUmI5PKZLle4dzmVph_srZOS4a4JmOrJGFFJ3hNB5y-dytDV0UNuzrl3QzbyEbU9HJPwCAObXNJf-LqqSnK_CEY54NnUx9IY4UGsUskOg7g131FvDF9Bx_jz7JYEruNfMeq6UTUVjiNJUWaOF7G_twOR5r9w9wbawTt8uV6Q&quot;,
-  &quot;id_token&quot;: &quot;eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiSldUIn0.eyJuYmYiOjE3NjY0OTQzNDYsImV4cCI6MTc2NjQ5NDY0NiwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJQSyIsIm5vbmNlIjoiNzdlN2JjOGQ1NjI4NDI3Njk2NjdiNDM0MjliZWFmODUiLCJpYXQiOjE3NjY0OTQzNDYsImF0X2hhc2giOiJXRGtwcms1UWZScm9YTVJhMlEwckhBIiwic19oYXNoIjoiV044dE14Y2VFVFJkNkVaUmxNeWYwQSIsInNpZCI6IkQxRkZFREZFNENCMzIzMDBEMjZDMjY1QjlCRDM3NEZCIiwic3ViIjoiYWRtaW4iLCJhdXRoX3RpbWUiOjE3NjY0OTM0OTUsImlkcCI6ImxvY2FsIiwiYW1yIjpbInB3ZCJdfQ.Hle13-x4R5INI9VAOqjn_i7frwmf3_jIrDYh_Kg9tyRpg5EExzPSu-Lr0cyulE_hTXG7aFf-a4XYq_fu37mi2XtiXtiqasuOiPzF5PETuxSgn8F8wBfqIxm6EFW-H4cIfxLeY6ODVEEzax4iWAUvKwQkYPRUWMe8GXJLoEIz8JjBaW0kQUFy-djOVNoJcdytqeEAG3oG6vtvAP51sBijWrWPe4JCz_ly7fVa34BTICfH1MigWicUJcFmXx1CwPC9CoSWOqcEleHV3W-R9YesnOUFRgEOiNeSpeUhhXE7HtRZgxWqCjQAQ_AElsSO-pahQ8mWRgpIrn7x_nUXyzRXZQ&quot;,
-  &quot;refresh_token&quot;: &quot;CEA03BDB9ADF650B43215BD114962DEFFBF99B75957F5DFDC781E7315A1CE9E4&quot;,
+  &quot;id_token&quot;: &quot;eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiSldUIn0.eyJuYmYiOjE3NjY0OTM3ODEsImV4cCI6MTc2NjQ5NDA4MSwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJQSyIsIm5vbmNlIjoiNjUwMTAwMWU0NGUzNGFlY2FiMTQzMTRiMDI4YzM0YzQiLCJpYXQiOjE3NjY0OTM3ODEsImF0X2hhc2giOiIwYWpYNkhYODNtbmJVNVhxVDUtUUZ3Iiwic19oYXNoIjoib1RRalZZUXdBRDZEMWV2TzlBTVNrUSIsInNpZCI6IkQxRkZFREZFNENCMzIzMDBEMjZDMjY1QjlCRDM3NEZCIiwic3ViIjoiYWRtaW4iLCJhdXRoX3RpbWUiOjE3NjY0OTM0OTUsImlkcCI6ImxvY2FsIiwiYW1yIjpbInB3ZCJdfQ.hL4SpH9yoMx5j0e2KMmd6Xttw3M5ktRNbs39m2cJ0-8MvCIoeTkkNtasXS7burHX9mh1vxAow1kYYdcedOQNRWERyGsNQM3jy1yal5jCixBRTPkC86bkAeS_h9Q7gWWLFSrSeaHvi_xJGoRFBLymS44dM20kZxFI9o1qZfOX79hnNnIoF_j7BEV0u77lj7Bb7OE3Xh2cyBcn0-yQB9SmGhesvt5B2IqZ0odn6il_qMabnAK_sm80b-4HtA4w8uLCCpD4JBg6g4O2zmhm_jVUQtYsqS9VjPMA4F1-pTB3ayrP40Dvq_cGP5dPspenR2GCxJqAg0bQu8AcBqLJkVcD-w&quot;,
+  &quot;access_token&quot;: &quot;eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE3NjY0OTM3ODEsImV4cCI6MTc2NjQ5NzM4MSwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJodHRwczovL2UxLWRldi5sb2NhbC9pZC9yZXNvdXJjZXMiLCJjbGllbnRfaWQiOiJQSyIsInN1YiI6ImFkbWluIiwiYXV0aF90aW1lIjoxNzY2NDkzNDk1LCJpZHAiOiJsb2NhbCIsImlkIjoiOWRhNjQ4MzktYThkMC00OTFkLWFlYmItNGQxOGZhNDJiMDE0IiwibmFtZSI6IkpvaG4gRG9lIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsInVzZXJfdHlwZSI6IkludGVybmFsVXNlciIsImlzX2FkbWluIjoidHJ1ZSIsImVtYWlsX3ZlcmlmaWVkIjoiZmFsc2UiLCJkYiI6IkUxX0RFVi0xIFRlc3QiLCJsb2NhbGUiOiJiZyIsImp0aSI6IkM4MTcxRjlFQ0FEN0U2OThEMjBFN0Q2Qjc5ODQyMjYwIiwic2lkIjoiRDFGRkVERkU0Q0IzMjMwMEQyNkMyNjVCOUJEMzc0RkIiLCJpYXQiOjE3NjY0OTM3ODEsInNjb3BlIjpbIm9wZW5pZCIsInByb2ZpbGUiXSwiYW1yIjpbInB3ZCJdfQ.TWePn6yinGcAaItZzfmNM9en3ESfGFhcLulTR7U7wfVK86RW9s8LlsgqoAc2SkigH2cXrovnADCe8uwp7BFSKbQBsN18vH5GmidFpILEr-M_WnOWfFZt941SA04vXpBzDJaiunzRl4FAEMd4RKXJ2L_wCZW8DNaKmsZfS9SH8N6QAYABrNoHZbrRV83pUh7suUnsBF_Ps-jdFNTnuxoj4UooRghAp7dn6LYw3MBcTb3GNdrJosb63DXpQY-Kq58gbYrov0Of4H_RD6lEaKcFbRVmIpg5S1UoM2DFaS-PWxKN_DF9_4A8zazBHM8BgGN4hA7JPOv6W7waODLvNqhnzQ&quot;,
   &quot;expires_in&quot;: 3600,
-  &quot;scope&quot;: &quot;openid profile offline_access read update&quot;
+  &quot;scope&quot;: &quot;openid profile&quot;
 }
 </code></pre>
-<p>The application can now:</p>
-<ul>
-<li>Validate the ID token to identify the user</li>
-<li>Use the access token to call instance APIs on behalf of the signed-in user</li>
-</ul>
+<p>The application can now validate the ID token to identify the user.</p>
+<h3 id="4-request-an-access-token-for-api-calls-client-credentials">4. Request an access token for API calls (Client Credentials)</h3>
+<p>The portal backend requests an access token using the Client Credentials flow.</p>
+<pre><code class="lang-http">POST /id/connect/token HTTP/1.1
+Host: mycompany.my.erp.net
+Content-Type: application/x-www-form-urlencoded
+
+client_id=portal.example.com&amp;
+client_secret=&lt;PLAIN_CLIENT_SECRET&gt;&amp;
+grant_type=client_credentials&amp;
+scope=read%20update
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The <code>client_secret</code> is sent as a <strong>plain (unhashed) value</strong> and must exactly match the secret configured for the trusted application.</p>
+</div>
+<p><strong>Result:</strong></p>
+<p>If the request is successful, the Instance ID returns an access token.</p>
+<pre><code class="lang-json">{
+  &quot;access_token&quot;: &quot;eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE3NjY1MDUxNDcsImV4cCI6MTc2NjUwODc0NywiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOlsiRG9tYWluQVBJIiwiVGFibGVBUEkiLCJPTEFQIiwiQXBwU2VydmVyIiwiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQvcmVzb3VyY2VzIl0sImNsaWVudF9pZCI6IlBLIiwiY2xpZW50X3N5c3RlbV91c2VyIjoiYWRtaW4iLCJjbGllbnRfc3lzdGVtX3VzZXJfdHlwZSI6IkludGVybmFsVXNlciIsImNsaWVudF9kYiI6IkUxX0RFVi0xIFRlc3QiLCJqdGkiOiI4RDBCNzA1NTczQTFBOThGREJBREZGMENEN0Y3RUVCNCIsImlhdCI6MTc2NjUwNTE0Nywic2NvcGUiOlsicmVhZCIsInVwZGF0ZSJdfQ.MRvH-EtWu-PWDhjDDn73OVQwH29DZ_RRu6XheFsoRxImyjLQRIU7-S1GuyTnnqPyXEEkGkKTu_s3IEwxGORgY48jLH3l1juJDt8_JvcyJlIdhVZSZNC1Bpft_K1NJswJ6QmJ6bWgev7cqHaxM3p7AEEPjkSmnAjdBCz7ItMV93Yio5kCRBmP9DQUoxtL0webG7zV_f5uOkt8xhbUVHpdU9FQY-XLf_heLJv_81vvpf39kPxD4WTZRly8X_mNdlqi0DxiFXK3TFOnbdoLKxeljke8jV0t-agaHWcZ4B-SMQ77falwtFaxrEzXDY4g-iUg2kl_tABOUxzoqyFkGZm3DA&quot;,
+  &quot;expires_in&quot;: 3600,
+  &quot;token_type&quot;: &quot;Bearer&quot;,
+  &quot;scope&quot;: &quot;read update&quot;
+}
+</code></pre>
+<h3 id="5-call-instance-apis-using-the-service-access-token">5. Call instance APIs using the service access token</h3>
+<p>The following example uses the <strong>Domain API</strong>.</p>
+<pre><code class="lang-http">GET /api/domain/odata/Crm_Customers?$top=10 HTTP/1.1
+Host: mycompany.my.erp.net
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE3NjY1MDUxNDcsImV4cCI6MTc2NjUwODc0NywiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOlsiRG9tYWluQVBJIiwiVGFibGVBUEkiLCJPTEFQIiwiQXBwU2VydmVyIiwiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQvcmVzb3VyY2VzIl0sImNsaWVudF9pZCI6IlBLIiwiY2xpZW50X3N5c3RlbV91c2VyIjoiYWRtaW4iLCJjbGllbnRfc3lzdGVtX3VzZXJfdHlwZSI6IkludGVybmFsVXNlciIsImNsaWVudF9kYiI6IkUxX0RFVi0xIFRlc3QiLCJqdGkiOiI4RDBCNzA1NTczQTFBOThGREJBREZGMENEN0Y3RUVCNCIsImlhdCI6MTc2NjUwNTE0Nywic2NvcGUiOlsicmVhZCIsInVwZGF0ZSJdfQ.MRvH-EtWu-PWDhjDDn73OVQwH29DZ_RRu6XheFsoRxImyjLQRIU7-S1GuyTnnqPyXEEkGkKTu_s3IEwxGORgY48jLH3l1juJDt8_JvcyJlIdhVZSZNC1Bpft_K1NJswJ6QmJ6bWgev7cqHaxM3p7AEEPjkSmnAjdBCz7ItMV93Yio5kCRBmP9DQUoxtL0webG7zV_f5uOkt8xhbUVHpdU9FQY-XLf_heLJv_81vvpf39kPxD4WTZRly8X_mNdlqi0DxiFXK3TFOnbdoLKxeljke8jV0t-agaHWcZ4B-SMQ77falwtFaxrEzXDY4g-iUg2kl_tABOUxzoqyFkGZm3DA
+</code></pre>
 <h2 id="security-and-implementation-considerations">Security and implementation considerations</h2>
 <ul>
-<li>Confidential applications <strong>must handle callbacks and token requests on the backend</strong>.</li>
 <li>The client secret must <strong>never</strong> be exposed to frontend code.</li>
-<li>PKCE is recommended even for confidential clients to reduce authorization code interception risks.</li>
+<li>Use Authorization Code flow tokens for <strong>identity</strong> and session context only.</li>
+<li>Use Client Credentials flow tokens for all <strong>API calls</strong>.</li>
+<li>Restrict scopes to the minimum required by the portal backend.</li>
 <li>The <code>state</code> and <code>nonce</code> values must be generated per request and validated.</li>
 <li>Redirect URIs must exactly match the configured value.</li>
 <li>The Instance ID <strong>does not allow embedding</strong>. If authentication is initiated from within an iframe, the sign-in flow must be opened in a <strong>popup window or top-level navigation</strong>.</li>
