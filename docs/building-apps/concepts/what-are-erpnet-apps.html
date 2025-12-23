@@ -98,7 +98,7 @@
 <li>Operates outside of the ERP.net instance, but connects to it securely</li>
 <li>Uses the standard ERP.net APIs that are part of every instance</li>
 <li>Is recognized by the system through a <strong>Trusted Application</strong> entity</li>
-<li>Authenticates and authorizes through the built-in <strong>Identity Server</strong></li>
+<li>Authenticates and authorizes through the built-in <strong>ERP.net Identity</strong></li>
 </ul>
 <p>Apps are used by businesses to adapt ERP.net to their specific needs, integrate it with other systems, or deliver tailored digital experiences.</p>
 <h2 id="key-characteristics">Key Characteristics</h2>
@@ -124,7 +124,7 @@
 </tr>
 <tr>
 <td><strong>Security</strong></td>
-<td>Access control and authentication are handled by the built-in Identity Server and system policies.</td>
+<td>Access control and authentication are handled by the built-in ERP.net Identity and system policies.</td>
 </tr>
 <tr>
 <td><strong>Deployment</strong></td>
@@ -147,7 +147,7 @@
 
   subgraph instance[&quot;ERP.net Instance&quot;]
     direction TB
-    idp([ERP.net Identity Server])
+    idp([ERP.net Identity])
     api([ERP.net APIs])
     data([ERP.net Data])
     api --&gt; data
@@ -163,7 +163,7 @@
 </code></pre>
 <p>Each app:</p>
 <ul>
-<li>Authenticates through the Identity Server inside the instance</li>
+<li>Authenticates through ERP.net Identity inside the instance</li>
 <li>Uses APIs that are part of the same instance</li>
 <li>Reads or writes data according to its granted permissions</li>
 </ul>
@@ -187,7 +187,7 @@ Learn about the different kinds of ERP.net Apps - internal, external, and market
 Understand how each app is registered and recognized by the ERP.net instance.</p>
 </li>
 <li><p><strong><a href="../auth/overview.html">Authentication and Authorization</a></strong><br>
-See how the built-in Identity Server authenticates and authorizes apps and users.</p>
+See how the built-in ERP.net Identity authenticates and authorizes apps and users.</p>
 </li>
 </ul>
 

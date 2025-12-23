@@ -90,7 +90,7 @@
 <p>ERP.net uses standard <strong>OAuth 2.0</strong> and <strong>OpenID Connect (OIDC)</strong> protocols for authentication and authorization.</p>
 <p>You can connect using any compliant client library - no proprietary SDK is required.</p>
 <h2 id="supported-standards">Supported Standards</h2>
-<p>ERP.net Identity Server implements:</p>
+<p>ERP.net Identity implements:</p>
 <ul>
 <li><strong>OAuth 2.0 Authorization Framework</strong> (<a href="https://datatracker.ietf.org/doc/html/rfc6749">RFC 6749</a>)</li>
 <li><strong>OpenID Connect Core 1.0</strong> (<a href="https://openid.net/specs/openid-connect-core-1_0.html">openid.net/specs/openid-connect-core-1_0.html</a>)</li>
@@ -214,7 +214,7 @@ print(token[&quot;access_token&quot;])
 </code></pre>
 <h2 id="notes-for--developers">Notes for ERP.net Developers</h2>
 <ul>
-<li>All token requests and authorizations must go through your instance's Identity Server (<code>/id</code> path).</li>
+<li>All token requests and authorizations must go through your instance's Identity (<code>/id</code> path).</li>
 <li>Always request scopes explicitly (<code>read</code>, <code>update</code>, etc.).</li>
 <li>Use <strong>PKCE</strong> for public apps that cannot store secrets.</li>
 <li>Never hardcode client secrets in browser code or mobile apps.</li>
@@ -235,19 +235,19 @@ print(token[&quot;access_token&quot;])
 <hr>
 <h2 id="learn-more">Learn More</h2>
 <ul>
-<li><p><a href="how-apps-connect/oauth2-overview.html"><strong>OAuth 2.0 Overview</strong></a><br>
+<li><p><a href="concepts/how-apps-connect/oauth2-overview.html"><strong>OAuth 2.0 Overview</strong></a><br>
 Understand the core principles behind ERP.net authentication.</p>
 </li>
-<li><p><a href="how-apps-connect/identity-server.html"><strong>Identity Server</strong></a><br>
+<li><p><a href="concepts/how-apps-connect/identity-server.html"><strong>ERP.net Identity</strong></a><br>
 Learn how ERP.net issues and validates tokens.</p>
 </li>
-<li><p><a href="flows/overview.html"><strong>Auth Flows Overview</strong></a><br>
+<li><p><a href="concepts/flows/overview.html"><strong>Auth Flows Overview</strong></a><br>
 Explore the different OAuth flows for interactive, service, and hybrid apps.</p>
 </li>
-<li><p><a href="tokens/access-tokens.html"><strong>Access Tokens</strong></a><br>
+<li><p><a href="concepts/tokens/access-tokens.html"><strong>Access Tokens</strong></a><br>
 See how tokens are structured and used to access APIs.</p>
 </li>
-<li><p><a href="tokens/reference-access-tokens.html"><strong>Reference Access Tokens (PAT, SAT)</strong></a><br>
+<li><p><a href="concepts/tokens/reference-access-tokens.html"><strong>Reference Access Tokens (PAT, SAT)</strong></a><br>
 Learn how to use long-lived tokens for integrations and automation.</p>
 </li>
 </ul>

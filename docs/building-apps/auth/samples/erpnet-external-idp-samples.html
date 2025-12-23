@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Sign in with ERP.net Identity Server (Multi-Platform Samples) | ERP.net Developer Docs </title>
+      <title>Sign in with ERP.net Identity (Multi-Platform Samples) | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Sign in with ERP.net Identity Server (Multi-Platform Samples) | ERP.net Developer Docs ">
+      <meta name="title" content="Sign in with ERP.net Identity (Multi-Platform Samples) | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../../favicon.ico">
@@ -85,9 +85,9 @@
         </div>
 
         <article data-uid="">
-<h1 id="sign-in-with--identity-server-multi-platform-samples">Sign in with ERP.net Identity Server (Multi-Platform Samples)</h1>
+<h1 id="sign-in-with--identity-multi-platform-samples">Sign in with ERP.net Identity (Multi-Platform Samples)</h1>
 
-<p>This page shows how to use <strong>ERP.net Identity Server</strong> as an OpenID Connect provider from different platforms.</p>
+<p>This page shows how to use <strong>ERP.net Identity</strong> as an OpenID Connect provider from different platforms.</p>
 <p>All samples use the same key parameters:</p>
 <ul>
 <li><strong>Authority</strong>: <code>https://id.erp.net/id</code></li>
@@ -98,7 +98,7 @@
 </ul>
 <div class="WARNING">
 <h5>Warning</h5>
-<p>The Client ID and Client Secret must be created in ERP.net Identity Server for your application.<br>
+<p>The Client ID and Client Secret must be created in ERP.net Identity for your application.<br>
 They are not public and cannot be reused from another app.</p>
 </div>
 <h2 id="public-vs-confidential-clients">Public vs. Confidential Clients</h2>
@@ -127,7 +127,7 @@ They can safely store a <strong>Client Secret</strong>.</p>
 <li>Applicable to: Angular/React/Vue SPAs, mobile apps, desktop apps</li>
 </ul>
 <h3 id="-configuration-requirement">ERP.net Configuration Requirement</h3>
-<p>Whether your application is public or confidential is determined by its <strong>Trusted Application</strong> configuration inside the ERP.net Identity Server.</p>
+<p>Whether your application is public or confidential is determined by its <strong>Trusted Application</strong> configuration inside the ERP.net Identity.</p>
 <p>When you request client registration from ERP.net, specify:</p>
 <ul>
 <li>If your app is <strong>public</strong> (no secret) -&gt; SPA/mobile/desktop</li>
@@ -658,7 +658,7 @@ app.Run();
 <li>Client ID / Client Secret: from ERP.net</li>
 <li>Redirect URI: your app's callback</li>
 <li>Scopes: openid profile (and others as needed)</li>
-<li>Choose a library for your platform, plug in these values, and you can sign users in with ERP.net Identity Server.</li>
+<li>Choose a library for your platform, plug in these values, and you can sign users in with ERP.net Identity.</li>
 </ul>
 
 </article>

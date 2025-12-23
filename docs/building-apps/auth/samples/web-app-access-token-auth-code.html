@@ -102,9 +102,9 @@
 <h2 id="the-whole-process-in-a-nutshell">The whole process in a nutshell</h2>
 <p>After all, your final goal is to acquire an access token. The process is very similar to this example <a href="basic-acquire-access-token.html">Basic example of acquiring an access token</a>, but here is added another intermediate step - the process of impersonating a user. Here's a summary of how the whole process goes:</p>
 <ol>
-<li>Your external app will navigate to the so called <a href="../how-apps-connect/identity-server.html#2-authorize-endpoint">authorize endpoint</a>, passing your trusted app details (the trusted app, corresponding to your external app).</li>
+<li>Your external app will navigate to the so called <a href="../concepts/how-apps-connect/identity-server.html#2-authorize-endpoint">authorize endpoint</a>, passing your trusted app details (the trusted app, corresponding to your external app).</li>
 <li>If all's OK, the browser where your app is opened will be redirected to the ERP.net login page, where the user will enter their credentials.</li>
-<li>If the user logs in successfully, the ERP.net login page (i.e. ERP.net Identity Server) will be redirect to a uri, back to your external web app.</li>
+<li>If the user logs in successfully, the ERP.net login page (i.e. ERP.net Identity) will be redirect to a uri, back to your external web app.</li>
 <li>There you'll receive an authorization code.</li>
 <li>Finally you'll exchange the auth code for an access token at the token endpoint.</li>
 <li>You'll obtain an access token on behalf of the logged user (2).</li>
@@ -193,7 +193,7 @@ sendAuthorizationRequest();
 <ul>
 <li>If a POST request is made and its array contains <code>code</code>:
 <ul>
-<li>Assume that this <code>code</code> is the authorization code, sent back from the Identity Server.</li>
+<li>Assume that this <code>code</code> is the authorization code, sent back from ERP.net Identity.</li>
 <li>Pass this code to <code>acquireAccessToken</code>, so an access code will be acquired.</li>
 <li>Make a call to the DomainApi via <code>domainApiCall</code>, passing the access token.</li>
 </ul>
@@ -215,7 +215,7 @@ sendAuthorizationRequest();
     header(&quot;Location: $authorizeRequest&quot;);
 }
 </code></pre>
-<p>Just set-up the necessary arguments for the authroize endpoint and initiate a redirect. The Identity Server will take care of everything else, i.e.,</p>
+<p>Just set-up the necessary arguments for the authroize endpoint and initiate a redirect. ERP.net Identity will take care of everything else, i.e.,</p>
 <ol>
 <li>Will navigate to the ERP.net login page.</li>
 <li>After successful user login, will redirect to your <code>CALLBACK_URI</code>.</li>
@@ -228,8 +228,8 @@ sendAuthorizationRequest();
 </ul>
 <p>In addition, there're two other important arguments:</p>
 <ul>
-<li><code>response_type=code id_token</code>. This &quot;instructs&quot; the Identity Server to send you a <strong>code</strong> (i.e. authorization code) and an identity token (not discussed in this topic).</li>
-<li><code>response_mode=form_post</code>. This &quot;tells&quot; the Identity Server that you're expecting the callback request as an HTTP POST request.</li>
+<li><code>response_type=code id_token</code>. This &quot;instructs&quot; ERP.net Identity to send you a <strong>code</strong> (i.e. authorization code) and an identity token (not discussed in this topic).</li>
+<li><code>response_mode=form_post</code>. This &quot;tells&quot; ERP.net Identity that you're expecting the callback request as an HTTP POST request.</li>
 </ul>
 <h3 id="access-token-request-token-endpoint">Access token request (Token endpoint)</h3>
 <p>The process of acquiring an access token is very simple also. When you already have the authorization code, you just have to send (i.e. make a POST request) it to the token endpoint. After, you will receive your access token as a response.</p>
