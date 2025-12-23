@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Automation | ERP.net Developer Docs </title>
+      <title>Automation with Reference Access Tokens | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Automation | ERP.net Developer Docs ">
+      <meta name="title" content="Automation with Reference Access Tokens | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../../favicon.ico">
@@ -85,8 +85,45 @@
         </div>
 
         <article data-uid="">
-<h1 id="automation">Automation</h1>
+<h1 id="automation-with-reference-access-tokens">Automation with Reference Access Tokens</h1>
 
+<p>This topic describes how automated and integration scenarios authenticate to ERP.net APIs using <strong>reference access tokens</strong> (<code>enrt_...</code>), without interacting with the Instance ID or performing OAuth flows.</p>
+<p>Reference access tokens are <strong>manually issued, long-lived, opaque strings</strong>. intended for machine-driven access, background jobs, and developer automation where interactive sign-in is not practical or required. They are validated directly by ERP.net.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>A reference access token (<code>enrt_445659C00F83CCA2D427BF113EFB355319346865C0B4FE5A3C76C16271B06AFF</code>) must be issued in advance</li>
+<li>The token must include the required scopes for the target APIs</li>
+<li>The token must be <strong>valid and not expired</strong></li>
+</ul>
+<h2 id="implementation">Implementation</h2>
+<p>This section demonstrates how to call ERP.net instance APIs using a <strong>reference access token</strong>. No OAuth flow is performed.</p>
+<h3 id="1-provide-the-reference-token">1. Provide the reference token</h3>
+<p>Store the token securely and load it at runtime:</p>
+<pre><code class="lang-text">REFERENCE_TOKEN = enrt_445659C00F83CCA2D427BF113EFB355319346865C0B4FE5A3C76C16271B06AFF
+</code></pre>
+<h3 id="2-call-an-api-with-the-token">2. Call an API with the token</h3>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The following example uses the <strong>Domain API</strong> to demonstrate how a reference access token is sent with an API request.</p>
+</div>
+<p>Send the token in <strong>one</strong> of the supported headers.</p>
+<p><strong>Option A: Authorization header</strong></p>
+<pre><code class="lang-http">GET /api/domain/odata/Customers?$top=10 HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer enrt_445659C00F83CCA2D427BF113EFB355319346865C0B4FE5A3C76C16271B06AFF
+</code></pre>
+<p><strong>Option B: API key header</strong></p>
+<pre><code class="lang-http">GET /api/domain/odata/Customers?$top=10 HTTP/1.1
+Host: demodb.my.erp.net
+X-Api-Key: enrt_445659C00F83CCA2D427BF113EFB355319346865C0B4FE5A3C76C16271B06AFF
+</code></pre>
+<h3 id="result">Result</h3>
+<p>If the token is valid and includes the required scopes, the API returns the requested data.</p>
+<h3 id="notes">Notes</h3>
+<ul>
+<li>Use only one method per request (either <code>Authorization</code> or an API key header).</li>
+<li>Reference tokens are opaque and validated by ERP.net; they are not exchanged for other tokens.</li>
+</ul>
 
 </article>
 
