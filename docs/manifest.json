@@ -85,6 +85,89 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/common-scenarios/erpnet-id-global-confidential-apps.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/common-scenarios/erpnet-id-global-confidential-apps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/common-scenarios/instance-id-confidential-apps.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/common-scenarios/instance-id-confidential-apps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/common-scenarios/instance-id-spa-public-apps.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/common-scenarios/instance-id-spa-public-apps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/common-scenarios/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/common-scenarios/overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/common-scenarios/service-access-confidential-apps.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/common-scenarios/service-access-confidential-apps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/common-scenarios/service-public-apps.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/common-scenarios/service-public-apps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/common-scenarios/spa-webclient-iframe.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/common-scenarios/spa-webclient-iframe.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "building-apps/auth/common-scenarios/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/common-scenarios/toc.html"
+        },
+        ".json": {
+          "relative_path": "building-apps/auth/common-scenarios/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "building-apps/auth/faq.md",
       "output": {
         ".html": {

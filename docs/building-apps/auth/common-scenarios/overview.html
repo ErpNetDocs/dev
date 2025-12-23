@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Overview | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Overview | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/common-scenarios/overview.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="overview">Overview</h1>
+
+<p>ERP.net provides multiple identity integration options, depending on <strong>where your application runs</strong>, <strong>whether it can keep a secret</strong>, and <strong>which ERP.net instance it targets</strong>.</p>
+<p>This section gives a high-level overview of the available identity models and helps you choose the correct approach for your application. Each model is described in detail in its own topic.</p>
+<h2 id="identity-providers-in-">Identity providers in ERP.net</h2>
+<p>ERP.net exposes two distinct identity concepts:</p>
+<ul>
+<li><p><strong>ERP.net ID (Global)</strong><br>
+A global identity provider, shared across all ERP.net instances.<br>
+It is typically used by <strong>server-side confidential applications</strong> that integrate with ERP.net at a global level.</p>
+</li>
+<li><p><strong>Instance ID</strong><br>
+An identity provider bound to a <strong>specific ERP.net instance</strong> (for example, <code>https://mycompany.erp.net/id</code>).<br>
+It is used by applications that authenticate users <strong>against a concrete instance</strong> and act on behalf of those users.</p>
+</li>
+</ul>
+<p>Understanding which identity provider you need is the first and most important decision when integrating.</p>
+<h2 id="application-types">Application types</h2>
+<p>Applications are classified by two main characteristics:</p>
+<ul>
+<li><strong>Execution environment</strong>
+<ul>
+<li>Browser-based (SPA)</li>
+<li>Server-side (backend)</li>
+</ul>
+</li>
+<li><strong>Client type</strong>
+<ul>
+<li><strong>Public</strong>: cannot securely store a secret</li>
+<li><strong>Confidential</strong>: can securely store a secret</li>
+</ul>
+</li>
+</ul>
+<p>These characteristics determine which authentication flow and which identity provider should be used.</p>
+<h2 id="available-integration-scenarios">Available integration scenarios</h2>
+<p>The following topics cover the supported scenarios:</p>
+<h3 id="erpnet-id-global-for-confidential-applications">ERP.net ID (Global) for Confidential Applications</h3>
+<p>Use this when:</p>
+<ul>
+<li>Your application has a backend</li>
+<li>It can securely store a client secret</li>
+<li>It integrates with ERP.net at a <strong>global</strong> level</li>
+</ul>
+<h3 id="instance-id-for-spa-public-applications">Instance ID for SPA (Public) Applications</h3>
+<p>Use this when:</p>
+<ul>
+<li>Your application is a <strong>Single Page Application</strong></li>
+<li>It runs entirely in the browser</li>
+<li>It cannot keep a secret</li>
+<li>It authenticates users against a <strong>specific ERP.net instance</strong></li>
+<li>It uses <strong>Authorization Code flow with PKCE</strong></li>
+</ul>
+<h3 id="instance-id-for-confidential-applications">Instance ID for Confidential Applications</h3>
+<p>Use this when:</p>
+<ul>
+<li>Your application has a backend</li>
+<li>It can securely store a secret</li>
+<li>It authenticates users against a <strong>specific ERP.net instance</strong></li>
+<li>It uses <strong>Authorization Code flow</strong></li>
+</ul>
+<h3 id="spa-embedded-in-web-client-iframe">SPA Embedded in Web Client (iframe)</h3>
+<p>Use this when:</p>
+<ul>
+<li>Your SPA is embedded inside the ERP.net Web Client</li>
+<li>Authentication is constrained by iframe and browser security rules</li>
+<li>Special handling is required to initiate sign-in flows</li>
+</ul>
+<h3 id="service-application-public">Service Application (Public)</h3>
+<p>Use this when:</p>
+<ul>
+<li>Your application runs without user interaction</li>
+<li>It acts as a technical client or service</li>
+<li>It does not provide UI</li>
+<li>It requires limited, predefined access</li>
+</ul>
+<h2 id="choosing-the-right-topic">Choosing the right topic</h2>
+<p>If you are unsure where to start:</p>
+<ul>
+<li><strong>Browser-only app?</strong> - <em>Instance ID for SPA (Public) Applications</em></li>
+<li><strong>Backend app targeting one instance?</strong> - <em>Instance ID for Confidential Applications</em></li>
+<li><strong>Backend app targeting ERP.net globally?</strong> - <em>ERP.net ID (Global) for Confidential Applications</em></li>
+<li><strong>No UI, no users?</strong> - <em>Service Application (Public)</em></li>
+</ul>
+<p>Each topic builds on this overview and provides concrete HTTP examples and configuration guidance.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/common-scenarios/overview.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
