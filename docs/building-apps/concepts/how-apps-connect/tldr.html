@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Authentication Flows - The Short Version | ERP.net Developer Docs </title>
+      <title>How Apps Connect to ERP.net – The Short Version | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Authentication Flows - The Short Version | ERP.net Developer Docs ">
+      <meta name="title" content="How Apps Connect to ERP.net – The Short Version | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../../favicon.ico">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/flows/tldr.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/concepts/how-apps-connect/tldr.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,71 +85,61 @@
         </div>
 
         <article data-uid="">
-<h1 id="authentication-flows---the-short-version">Authentication Flows - The Short Version</h1>
+<h1 id="how-apps-connect-to---the-short-version">How Apps Connect to ERP.net – The Short Version</h1>
 
 <h2 id="tldr">TL;DR</h2>
-<p>Every app that connects to ERP.net uses an <strong>OAuth 2.0 flow</strong> - a predefined way to obtain access tokens securely.</p>
-<p>There are only two real flows, and some apps use both:</p>
+<p>Connecting an app to ERP.net isn't complicated - it always follows the same pattern:</p>
 <ol>
-<li><strong>Interactive apps</strong> use the <strong>Authorization Code flow</strong> - a user signs in, and the app gets a token to act on their behalf.</li>
-<li><strong>Service apps</strong> use the <strong>Client Credentials flow</strong> - no user involved; the app acts as itself.</li>
-<li><strong>Hybrid apps</strong> use both - front end for users, backend for automation or elevated access.</li>
+<li>The app must first be <strong>registered as a Trusted Application</strong> in the ERP.net instance.</li>
+<li>It authenticates through <strong>ERP.net Identity</strong>, which verifies who's signing in.</li>
+<li>ERP.net Identity issues a <strong>token</strong> that defines what the app can access.</li>
+<li>The app uses that token to securely call ERP.net APIs.</li>
 </ol>
-<p>No passwords are shared and every token is issued by ERP.net <strong>Identity</strong>.</p>
-<p>That's how ERP.net keeps authentication consistent across all apps.</p>
+<p>No passwords are shared, and every action is tied to an authenticated user or service.</p>
+<p>That's how ERP.net keeps integrations both open and secure.</p>
 <h2 id="a-real-world-example">A Real-World Example</h2>
-<p><strong>David</strong> runs a production company powered by ERP.net.</p>
-<p>His developer <strong>Roger</strong> builds a solution with two parts:</p>
-<ul>
-<li>A <strong>web app</strong> where David logs in to manage projects.</li>
-<li>A <strong>background service</strong> that syncs schedules and reports overnight.</li>
-</ul>
+<p>Freddie manages his live events and merchandise through ERP.net.</p>
+<p>His tech-savvy partner <strong>Brian</strong> builds a custom app called <strong>BackstageHub</strong> to make things easier - but Brian doesn't want Freddie's password anywhere near the app.</p>
 <p>Here's how it works:</p>
 <ol>
-<li>Roger registers both parts of his solution as <strong>Trusted Applications</strong> in ERP.net.</li>
-<li>When David signs in through the web app, it uses the <strong>Authorization Code flow</strong> to get a user token.</li>
-<li>The background service uses the <strong>Client Credentials flow</strong> to get its own token for system-to-system tasks.</li>
-<li>Both parts call <strong>ERP.net APIs</strong> with their tokens - each token defines exactly what that part is allowed to do.</li>
+<li>Brian registers <strong>BackstageHub</strong> in ERP.net as a <strong>Trusted Application</strong> - that's how ERP.net knows it's safe.</li>
+<li>Freddie opens the app and clicks <strong>Sign In</strong>. The app redirects him to <strong>ERP.net Identity</strong>, the secure login page of the instance.</li>
+<li>ERP.net Identity verifies Freddie's credentials and issues a <strong>token</strong> saying:<br>
+&quot;Freddie is verified, and BackstageHub can access his tour data.&quot;</li>
+<li>The app uses that token to call <strong>ERP.net APIs</strong> and sync data.</li>
+<li>The APIs check the token, confirm it's valid, and allow only what's permitted.</li>
 </ol>
-<p>No passwords are stored, and both the user and service are securely authenticated by ERP.net Identity.</p>
+<p>No passwords are shared.</p>
+<p>Access is authorized.</p>
+<p>ERP.net stays secure, and Freddie stays on stage.</p>
 <pre><code class="lang-mermaid">flowchart LR
-  David([🎸 David - User]) --&gt;|Signs in| WebApp[💻 Web App]
-  WebApp --&gt;|Auth Request| IDP[🛡️ ERP.net Identity]
-  IDP --&gt;|User Token| WebApp
-  WebApp --&gt;|API Calls with Token| API[🎛️ ERP.net APIs]
+  Freddie([🎤 Freddie - User]) --&gt;|Logs in| App[🎸 BackstageHub App]
+  App --&gt;|Auth Request| IDP[🛡️ ERP.net Identity]
+  IDP --&gt;|Token Issued| App
+  App --&gt;|API Calls with Token| API[🎛️ ERP.net APIs]
   API --&gt;|Access Data| Data[(📊 ERP.net Data)]
-  Service[⚙️ Background Service] --&gt;|Token Request| IDP
-  IDP --&gt;|Service Token| Service
-  Service --&gt;|Sync Jobs| API
 </code></pre>
-<p><strong>In short:</strong></p>
-<p>Interactive apps act for users.</p>
-<p>Service apps act for themselves.</p>
-<p>Hybrid apps combine both.</p>
+<p><strong>In short:</strong><br>
+Brian's app connects to ERP.net through ERP.net Identity.</p>
+<p>Freddie signs in, gets a token, and everything just works - securely, smoothly, and in tune.</p>
 <hr>
 <h2 id="learn-more">Learn More</h2>
 <ul>
-<li><p><a href="../../concepts/how-apps-connect/oauth2-overview.html"><strong>OAuth 2.0 Overview</strong></a><br>
-Understand how tokens, grants, and scopes work in ERP.net.</p>
+<li><p><a href="identity-server.html"><strong>ERP.net Identity</strong></a><br>
+Learn about the built-in authentication authority in every ERP.net instance.</p>
 </li>
-<li><p><a href="auth-code/overview.html"><strong>Interactive Apps (Authorization Code Flow)</strong></a><br>
-Learn how user-facing apps sign in securely.</p>
+<li><p><a href="oauth2-overview.html"><strong>OAuth 2.0</strong></a><br>
+Understand how apps obtain tokens and delegate access securely.</p>
 </li>
-<li><p><a href="client-credentials/overview.html"><strong>Service and Background Apps (Client Credentials Flow)</strong></a><br>
-See how integrations and background jobs connect.</p>
-</li>
-<li><p><a href="combined/overview.html"><strong>Hybrid Apps</strong></a><br>
-Combine both flows safely in one solution.</p>
-</li>
-<li><p><a href="choosing-flow.html"><strong>Choosing the Right Flow</strong></a><br>
-Quick guide to selecting the proper flow for your app.</p>
+<li><p><a href="../../auth/configuration/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+See how apps are registered, trusted, and managed inside ERP.net.</p>
 </li>
 </ul>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/flows/tldr.md/#L1" class="edit-link">Suggest improvement to this page</a>
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/concepts/how-apps-connect/tldr.md/#L1" class="edit-link">Suggest improvement to this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

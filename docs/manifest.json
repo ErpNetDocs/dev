@@ -42,59 +42,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/concepts/how-apps-connect/identity-server.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/concepts/how-apps-connect/identity-server.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/concepts/how-apps-connect/oauth2-overview.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/concepts/how-apps-connect/oauth2-overview.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/concepts/how-apps-connect/overview.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/concepts/how-apps-connect/overview.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/auth/concepts/how-apps-connect/tldr.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/concepts/how-apps-connect/tldr.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Toc",
-      "source_relative_path": "building-apps/auth/concepts/how-apps-connect/toc.yml",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/auth/concepts/how-apps-connect/toc.html"
-        },
-        ".json": {
-          "relative_path": "building-apps/auth/concepts/how-apps-connect/toc.json"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "building-apps/auth/concepts/samples/basic-acquire-access-token.md",
       "output": {
         ".html": {
@@ -785,6 +732,59 @@
       "output": {
         ".html": {
           "relative_path": "building-apps/concepts/glossary.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/concepts/how-apps-connect/identity-server.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/concepts/how-apps-connect/identity-server.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/concepts/how-apps-connect/oauth2-overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/concepts/how-apps-connect/oauth2-overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/concepts/how-apps-connect/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/concepts/how-apps-connect/overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/concepts/how-apps-connect/tldr.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/concepts/how-apps-connect/tldr.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "building-apps/concepts/how-apps-connect/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/concepts/how-apps-connect/toc.html"
+        },
+        ".json": {
+          "relative_path": "building-apps/concepts/how-apps-connect/toc.json"
         }
       },
       "version": ""
