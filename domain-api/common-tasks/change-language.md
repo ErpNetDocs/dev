@@ -99,7 +99,7 @@ Here, you can find information on how to migrate your Basic Auth workflow to OAu
 
 - [Authentication in ERP.net](../../building-apps/auth/overview.md)
 - [Register trusted app](register-trusted-app.md)
-- [Step-by-step / acquire an access token](../../building-apps/auth/samples/basic-acquire-access-token.md)
+- [Step-by-step / acquire an access token](../../building-apps/auth/concepts/samples/basic-acquire-access-token.md)
 
 ## Other cases, where language change has an effect
 
