@@ -100,11 +100,11 @@ Once authentication and authorization complete successfully:
 - [**How Apps Connect**](./concepts/how-apps-connect/overview.md)  
   Understand how the @@name Identity, OAuth 2.0, and Trusted Applications work together.
 
-- [**Auth Flows**](./concepts/flows/overview.md)  
+- [**Auth Flows**](./flows/overview.md)  
   Learn about the available OAuth 2.0 flows for different app types.
 
-- [**Tokens**](./concepts/tokens/tokens-overview.md)  
+- [**Tokens**](./tokens/tokens-overview.md)  
   Understand access tokens, scopes, and permissions.
 
-- [**Sessions**](./concepts/sessions/overview.md)  
+- [**Sessions**](./sessions/overview.md)  
   Learn how tokens map to sessions and license slots within @@name.

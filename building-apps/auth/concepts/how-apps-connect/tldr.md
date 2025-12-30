@@ -58,5 +58,5 @@ Freddie signs in, gets a token, and everything just works - securely, smoothly, 
 - [**OAuth 2.0**](oauth2-overview.md)  
   Understand how apps obtain tokens and delegate access securely.
 
-- [**Trusted Applications and Access Control**](trusted-apps-access.md)  
+- [**Trusted Applications and Access Control**](../../configuration/trusted-apps-access.md)  
   See how apps are registered, trusted, and managed inside @@name.

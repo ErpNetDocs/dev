@@ -2,5 +2,9 @@
   href: what-are-erpnet-apps.md
 - name: Application Types
   href: app-types.md
-- name: Trusted Applications
-  href: trusted-apps.md
+- name: Choosing the Right API
+  href: api-access/toc.yml
+- name: Best practices for calling APIs securely
+  href: api-best-practices.md
+- name: Glossary
+  href: glossary.md  

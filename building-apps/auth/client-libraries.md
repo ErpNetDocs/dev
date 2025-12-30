@@ -134,11 +134,11 @@ Use tools like **Postman**, **curl**, or **jwt.io** to:
 - [**ERP.net Identity**](./concepts/how-apps-connect/identity-server.md)  
   Learn how @@name issues and validates tokens.
 
-- [**Auth Flows Overview**](./concepts/flows/overview.md)  
+- [**Auth Flows Overview**](./flows/overview.md)  
   Explore the different OAuth flows for interactive, service, and hybrid apps.
 
-- [**Access Tokens**](./concepts/tokens/access-tokens.md)  
+- [**Access Tokens**](./tokens/access-tokens.md)  
   See how tokens are structured and used to access APIs.
 
-- [**Reference Access Tokens (PAT, SAT)**](./concepts/tokens/reference-access-tokens.md)  
+- [**Reference Access Tokens (PAT, SAT)**](./tokens/reference-access-tokens.md)  
   Learn how to use long-lived tokens for integrations and automation.

@@ -1,11 +1,7 @@
 - name: How Apps Connect
-  href: how-apps-connect/toc.yml  
-- name: Auth Flows
-  href: flows/toc.yml
-- name: Tokens
-  href: tokens/toc.yml  
-- name: Sessions
-  href: sessions/toc.yml
+  href: how-apps-connect/toc.yml   
+- name: Samples
+  href: samples/toc.yml
 - name: Security Best Practices
   href: security-best-practices.md
 - name: Frequently Asked Questions (FAQ)

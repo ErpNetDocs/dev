@@ -1,10 +1,8 @@
 - name: Overview
   href: overview.md
+- name: Configuration
+  href: configuration/toc.yml
 - name: Concepts
   href: concepts/toc.yml
 - name: Authentication and Authorization
   href: auth/toc.yml
-- name: API Access
-  href: api-access/toc.yml
-- name: Glossary and Key Terms
-  href: glossary.md  

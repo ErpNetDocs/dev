@@ -12,7 +12,7 @@ It defines who the app is, what permissions (scopes) it has, and which authentic
 
 Without this registration, @@name Identity will reject all authentication requests.
 
-See: [Trusted Applications and Access Control](./how-apps-connect/trusted-apps-access.md)
+See: [Trusted Applications and Access Control](../configuration/trusted-apps-access.md)
 
 ---
 
@@ -24,7 +24,7 @@ It depends on the type of app you're building:
 - **Background services or automations:** use **Client Credentials Flow**.  
 - **Apps with both frontend and backend:** use the **Hybrid Flow** (combined).
 
-See: [Choosing the Right Flow](./flows/choosing-flow.md)
+See: [Choosing the Right Flow](../flows/choosing-flow.md)
 
 ---
 
@@ -38,7 +38,7 @@ All external access must go through the @@name Identity using OAuth 2.0.
 
 The only exception is **reference tokens** (PAT or SAT), which are manually issued and act like long-lived API keys - but even they require proper scope and authorization.
 
-See: [Reference Access Tokens](./tokens/reference-access-tokens.md)
+See: [Reference Access Tokens](../tokens/reference-access-tokens.md)
 
 ---
 
@@ -49,7 +49,7 @@ See: [Reference Access Tokens](./tokens/reference-access-tokens.md)
 
 They are not interchangeable - user tokens have personal access; service tokens have system-level access.
 
-See: [Tokens Overview](./tokens/tokens-overview.md)
+See: [Tokens Overview](../tokens/tokens-overview.md)
 
 ---
 
@@ -81,8 +81,8 @@ Check your Trusted Application settings and make sure you use the correct client
 
 Public (JavaScript) apps must not send a secret at all.
 
-See: [Interactive Apps Common Errors](./flows/auth-code/interactive-apps-errors.md)
-See: [Service Apps Common Errors](./flows/client-credentials/service-apps-errors.md)
+See: [Interactive Apps Common Errors](../flows/auth-code/interactive-apps-errors.md)
+See: [Service Apps Common Errors](../flows/client-credentials/service-apps-errors.md)
 
 ---
 
@@ -101,8 +101,8 @@ Update the app's allowed scopes, or request only those configured in @@name.
 Common valid scopes are:  
 `read`, `update`, `offline_access`, `profile`.
 
-See: [Interactive Apps Common Errors](./flows/auth-code/interactive-apps-errors.md)
-See: [Service Apps Common Errors](./flows/client-credentials/service-apps-errors.md)
+See: [Interactive Apps Common Errors](../flows/auth-code/interactive-apps-errors.md)
+See: [Service Apps Common Errors](../flows/client-credentials/service-apps-errors.md)
 
 ---
 
@@ -128,7 +128,7 @@ However, **confidential** apps can use a **refresh token** to get a new one auto
 
 If your app is **public** (for example, runs only in the browser), it must ask the user to sign in again when the token expires.
 
-See: [Token Lifetime and Renewal](./tokens/token-lifetime.md)
+See: [Token Lifetime and Renewal](../tokens/token-lifetime.md)
 
 ---
 
@@ -142,7 +142,7 @@ Refresh tokens can expire or be revoked:
 
 Always be ready to prompt the user to sign in again if refreshing fails.
 
-See: [Token Lifetime and Renewal](./tokens/token-lifetime.md)
+See: [Token Lifetime and Renewal](../tokens/token-lifetime.md)
 
 ---
 
@@ -155,7 +155,7 @@ You can have a valid token but fail to open a session if all licenses are in use
 
 Sessions close automatically after inactivity (about 20 minutes).
 
-See: [Tokens and Sessions Relationship](./sessions/token-session-relationship.md)
+See: [Tokens and Sessions Relationship](../sessions/token-session-relationship.md)
 
 ---
 
@@ -171,7 +171,7 @@ The user will see a confirmation page and, after confirming, their session will 
 
 Service (non-interactive) apps do not use this endpoint - their sessions close automatically after expiration.
 
-See: [Session Revocation and Logout](./sessions/session-revocation.md)
+See: [Session Revocation and Logout](../sessions/session-revocation.md)
 
 ---
 
@@ -186,7 +186,7 @@ Even with a valid token, the system cannot open a new session until a slot becom
 - Wait a few minutes - inactive sessions release automatically after 20 minutes.  
 - Plan license capacity based on concurrency.
 
-See: [License Slot Usage](./sessions/license-slot.md)
+See: [License Slot Usage](../sessions/license-slot.md)
 
 ---
 
@@ -198,7 +198,7 @@ Each user or service must have their own session and token.
 
 Parallel requests with the same token share the same session and license.
 
-See: [License Compliance and Violations](./sessions/license-compliance.md)
+See: [License Compliance and Violations](../sessions/license-compliance.md)
 
 ---
 
@@ -227,6 +227,6 @@ This includes URLs for token exchange, authorization, logout, and JSON Web Keys 
 ## Learn More
 
 - [OAuth 2.0 Overview](./how-apps-connect/oauth2-overview.md)  
-- [Trusted Applications and Access Control](./how-apps-connect/trusted-apps-access.md)  
-- [Token Lifetime and Renewal](./tokens/token-lifetime.md)  
-- [License Slot Usage](./sessions/license-slot.md)
+- [Trusted Applications and Access Control](../configuration/trusted-apps-access.md)  
+- [Token Lifetime and Renewal](../tokens/token-lifetime.md)  
+- [License Slot Usage](../sessions/license-slot.md)

@@ -99,13 +99,13 @@ This model allows @@name Apps to be open, extensible, and secure - forming a fle
 [**Authentication and Authorization**](./auth/overview.md)  
 Learn how apps sign in, request tokens, and interact securely with the @@name Identity using OAuth 2.0.
 
-[**API Access**](./api-access/overview.md)  
+[**API Access**](./concepts/api-access/overview.md)  
 Discover how to access and manipulate @@name data through the Domain API and Table API, including security and performance best practices.
 
-[**Sessions and Licensing**](./auth/concepts/sessions/overview.md)  
+[**Sessions and Licensing**](./auth/sessions/overview.md)  
 See how sessions are created, how they consume licenses, and how to manage compliance.
 
-[**Samples**](./auth/samples/index.md)  
+[**Samples**](./auth/concepts/samples/index.md)  
 Practical examples showing how to authenticate, get tokens, and call APIs from different app types.
 
 [**Security Best Practices**](./auth/concepts/security-best-practices.md)  
@@ -127,9 +127,6 @@ Essential recommendations for keeping your integrations secure, compliant, and m
 
 - **[Application Types](./concepts/app-types.md)**  
   Explore the different kinds of @@name Apps - internal, external, and marketplace.
-
-- **[Trusted Applications](./concepts/trusted-apps.md)**  
-  Learn how each app is registered, managed, and granted access within @@name.
 
 - **[Authentication and Authorization](./auth/overview.md)**  
   See how the built-in @@name Identity authenticates and authorizes apps and users.

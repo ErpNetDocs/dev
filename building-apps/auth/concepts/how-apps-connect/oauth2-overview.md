@@ -114,13 +114,13 @@ The token itself is only a signed proof of granted access.
 
 A session is created (or reactivated) only when that token is first used to call an API within the instance.
 
-See [Sessions](../sessions/overview.md) for details about session behavior and licensing.
+See [Sessions](../../sessions/overview.md) for details about session behavior and licensing.
 
 ### Refresh tokens
 
 - Issued only to appropriate interactive confidential clients using Authorization Code flow
 - Not issued for Client Credentials flow
-- See [Token Lifetime and Renewal](../tokens/token-lifetime.md) for renewal behavior and policies
+- See [Token Lifetime and Renewal](../../tokens/token-lifetime.md) for renewal behavior and policies
 
 ### Reference Access Tokens (API Keys)
 
@@ -147,7 +147,7 @@ Scopes describe what an issued token is allowed to do.
 
 They are requested by the app and evaluated by the instance when issuing tokens.  
 
-See [Scopes and Permissions](../tokens/scopes.md) for details and examples.
+See [Scopes and Permissions](../../configuration/scopes.md) for details and examples.
 
 ## High-level Flow
 
@@ -189,14 +189,14 @@ This model keeps credentials out of applications, centralizes access control, an
 
 ## Learn More
 
-- [**Trusted Applications and Access Control**](trusted-apps-access.md)  
+- [**Trusted Applications and Access Control**](../../configuration/trusted-apps-access.md)  
 Register and configure your app inside an @@name instance  
 
-- [**Auth Flows**](../flows/overview.md)  
+- [**Auth Flows**](../../flows/overview.md)  
 Choose and implement the right flow  
 
-- [**Tokens**](../tokens/tokens-overview.md)  
+- [**Tokens**](../../tokens/tokens-overview.md)  
 Access tokens, scopes, and renewal  
 
-- [**Sessions**](../sessions/overview.md)  
+- [**Sessions**](../../sessions/overview.md)  
 How tokens map to sessions and licensing

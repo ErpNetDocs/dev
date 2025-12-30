@@ -73,11 +73,11 @@ This page summarizes best practices when working with OAuth 2.0, @@name Identity
 - [**OAuth 2.0 Overview**](./how-apps-connect/oauth2-overview.md)  
   Learn how @@name implements standard OAuth flows.
 
-- [**Trusted Applications and Access Control**](./how-apps-connect/trusted-apps-access.md)  
+- [**Trusted Applications and Access Control**](../configuration/trusted-apps-access.md)  
   How trusted app definitions control access and security modes.
 
-- [**Access Tokens**](./tokens/access-tokens.md)  
+- [**Access Tokens**](../tokens/access-tokens.md)  
   Token contents, signatures, and validation.
 
-- [**Reference Access Tokens (PAT, SAT)**](./tokens/reference-access-tokens.md)  
+- [**Reference Access Tokens (PAT, SAT)**](../tokens/reference-access-tokens.md)  
   Managing long-lived automation credentials securely.

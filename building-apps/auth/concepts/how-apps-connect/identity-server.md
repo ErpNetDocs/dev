@@ -268,7 +268,7 @@ All paths are relative to `https://{instance-root}/id`.
 - [**OAuth 2.0**](oauth2-overview.md)  
   How apps obtain and renew tokens, and how delegated access is granted.
 
-- [**Trusted Applications and Access Control**](trusted-apps-access.md)  
+- [**Trusted Applications and Access Control**](../../configuration/trusted-apps-access.md)  
   How an app is registered, identified, and granted permissions within an instance.
 
 - [**Authentication and Authorization Overview**](../../overview.md)  

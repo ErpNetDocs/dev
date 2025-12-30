@@ -4,7 +4,3 @@
   href: oauth2-overview.md  
 - name: ERP.net Identity
   href: identity-server.md
-- name: Using ERP.net as External Identity Provider
-  href: erpnet-as-external-idp.md  
-- name: Trusted Applications and Access Control
-  href: trusted-apps-access.md
