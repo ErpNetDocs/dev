@@ -64,7 +64,7 @@ See [OAuth 2.0 in @@name](oauth2-overview.md) for an overview of how these flows
 
 A **Trusted Application** defines how a specific app is recognized by an @@name instance - including its client type, authentication flows, and permissions.
 
-See [Trusted Applications in Authentication](../../configuration/trusted-apps-access.md) to learn more.
+See [Trusted Applications in Authentication](../../auth/configuration/trusted-apps-access.md) to learn more.
 
 ## Putting It All Together
 
@@ -87,5 +87,5 @@ Each step is tightly controlled by instance policies, ensuring that every reques
 - [**OAuth 2.0**](oauth2-overview.md)  
   Learn how apps use OAuth 2.0 flows to obtain and manage tokens.
 
-- [**Trusted Applications and Access Control**](../../configuration/trusted-apps-access.md)  
+- [**Trusted Applications and Access Control**](../../auth/configuration/trusted-apps-access.md)  
   See how apps are registered and governed inside @@name.

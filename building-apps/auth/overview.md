@@ -97,7 +97,7 @@ Once authentication and authorization complete successfully:
 
 ## Learn More
 
-- [**How Apps Connect**](./concepts/how-apps-connect/overview.md)  
+- [**How Apps Connect**](../concepts/how-apps-connect/overview.md)  
   Understand how the @@name Identity, OAuth 2.0, and Trusted Applications work together.
 
 - [**Auth Flows**](./flows/overview.md)  

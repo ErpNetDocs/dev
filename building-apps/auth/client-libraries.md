@@ -128,10 +128,10 @@ Use tools like **Postman**, **curl**, or **jwt.io** to:
 
 ## Learn More
 
-- [**OAuth 2.0 Overview**](./concepts/how-apps-connect/oauth2-overview.md)  
+- [**OAuth 2.0 Overview**](../concepts/how-apps-connect/oauth2-overview.md)  
   Understand the core principles behind @@name authentication.
 
-- [**ERP.net Identity**](./concepts/how-apps-connect/identity-server.md)  
+- [**ERP.net Identity**](../concepts/how-apps-connect/identity-server.md)  
   Learn how @@name issues and validates tokens.
 
 - [**Auth Flows Overview**](./flows/overview.md)  

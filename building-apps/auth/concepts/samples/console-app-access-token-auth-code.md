@@ -26,7 +26,7 @@ Or,
 
 After all, your final goal is to acquire an access token. The process is very similar to this example [Basic example of acquiring an access token](./basic-acquire-access-token.md), but here is added another intermediate step - the process of impersonating a user. Here's a summary of how the whole process goes:
 
-1. Your external app will open the so called [authorize endpoint](../../concepts/how-apps-connect/identity-server.md) with your trusted app details (the trusted app, corresponding to your external app).
+1. Your external app will open the so called [authorize endpoint](../../../concepts/how-apps-connect/identity-server.md) with your trusted app details (the trusted app, corresponding to your external app).
 
 > [!NOTE]
 > An important detail is that the authorize endpoint must be opened in a browser (see next point and its note). 

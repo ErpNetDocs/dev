@@ -2,7 +2,9 @@
   href: what-are-erpnet-apps.md
 - name: Application Types
   href: app-types.md
-- name: Choosing the Right API
+- name: How apps connect
+  href: how-apps-connect/toc.yml
+- name: API Access (Domain API vs Table API)
   href: api-access/toc.yml
 - name: Best practices for calling APIs securely
   href: api-best-practices.md

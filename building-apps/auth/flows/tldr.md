@@ -56,7 +56,7 @@ Hybrid apps combine both.
 
 ## Learn More
 
-- [**OAuth 2.0 Overview**](../concepts/how-apps-connect/oauth2-overview.md)  
+- [**OAuth 2.0 Overview**](../../concepts/how-apps-connect/oauth2-overview.md)  
   Understand how tokens, grants, and scopes work in @@name.
 
 - [**Interactive Apps (Authorization Code Flow)**](./auth-code/overview.md)  
