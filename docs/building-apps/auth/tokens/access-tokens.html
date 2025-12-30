@@ -89,9 +89,9 @@
 
 <p>An <strong>access token</strong> is the credential that allows your application to call ERP.net APIs on behalf of a user or a service.<br>
 It defines <strong>who</strong> is calling, <strong>what</strong> can be accessed, and <strong>for how long</strong>.</p>
-<p>All ERP.net access tokens are issued by the <strong>Identity Server</strong> using the <strong>OAuth 2.0</strong> standard and are formatted as <strong>JWTs (JSON Web Tokens)</strong>.</p>
+<p>All ERP.net access tokens are issued by <strong>ERP.net Identity</strong> using the <strong>OAuth 2.0</strong> standard and are formatted as <strong>JWTs (JSON Web Tokens)</strong>.</p>
 <h2 id="access-token-basics">Access Token Basics</h2>
-<p>When an application successfully authenticates (using Authorization Code or Client Credentials flow), the Identity Server returns an access token.<br>
+<p>When an application successfully authenticates (using Authorization Code or Client Credentials flow), ERP.net Identity returns an access token.<br>
 This token is then passed in the <code>Authorization</code> HTTP header with each API request:</p>
 <pre><code class="lang-http">GET /api/domain/odata/Crm_Customers?$top=5 HTTP/1.1
 Host: testdb.my.erp.net
@@ -156,7 +156,7 @@ Their lifetime is typically around one hour, but can vary depending on configura
 </tr>
 <tr>
 <td><strong>iss</strong></td>
-<td>Issuer - ERP.net Identity Server that issued the token.</td>
+<td>Issuer - ERP.net Identity that issued the token.</td>
 </tr>
 <tr>
 <td><strong>aud</strong></td>
@@ -187,14 +187,14 @@ Their lifetime is typically around one hour, but can vary depending on configura
 <h3 id="3-signature">3. Signature</h3>
 <p>The final part of the token is the digital signature.</p>
 <p>It verifies that the token was issued by ERP.net and has not been tampered with.</p>
-<p>The signature is created using the ERP.net Identity Server's private key, and validated using the public key, available at:</p>
+<p>The signature is created using the ERP.net Identity private key, and validated using the public key, available at:</p>
 <pre><code class="lang-http">https://&lt;instance&gt;/id/.well-known/openid-configuration/jwks
 </code></pre>
 <h2 id="validating-access-tokens">Validating Access Tokens</h2>
 <p>You can decode and inspect tokens using standard JWT libraries or tools such as <a href="https://jwt.io">jwt.io</a>.<br>
 To validate a token:</p>
 <ol>
-<li>Verify the <strong>signature</strong> matches the Identity Server’s public key.</li>
+<li>Verify the <strong>signature</strong> matches ERP.net Identity public key.</li>
 <li>Check the <strong>expiration time (<code>exp</code>)</strong> and <strong>issuer (<code>iss</code>)</strong>.</li>
 <li>Ensure the <strong>audience (<code>aud</code>)</strong> includes the API you are calling.</li>
 <li>Confirm the <strong>scopes</strong> grant the needed access.</li>
@@ -219,14 +219,11 @@ Manual validation is only needed when implementing middleware or custom API gate
 <li><p><a href="reference-access-tokens.html"><strong>Reference Access Tokens (PAT, SAT)</strong></a><br>
 Learn how long-lived reference tokens provide persistent automation access.</p>
 </li>
-<li><p><a href="scopes.html"><strong>Scopes and Permissions</strong></a><br>
+<li><p><a href="../configuration/scopes.html"><strong>Scopes</strong></a><br>
 Understand how scopes define the APIs and actions available to your app.</p>
 </li>
 <li><p><a href="token-lifetime.html"><strong>Token Lifetime and Renewal</strong></a><br>
 See how token expiration works and how refresh tokens extend access.</p>
-</li>
-<li><p><a href="../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
-Learn how app registrations define system users and permissions.</p>
 </li>
 </ul>
 

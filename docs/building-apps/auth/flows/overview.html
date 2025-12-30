@@ -89,7 +89,7 @@
 
 <p>Every app connecting to ERP.net must follow an <strong>OAuth 2.0 authentication flow</strong> - a specific sequence of steps for obtaining and using tokens securely.</p>
 <p>Choosing the right flow depends on <strong>how your app interacts with users</strong> and <strong>how it connects to the APIs</strong>.</p>
-<p>All flows are handled by ERP.net <strong>Identity Server</strong>.</p>
+<p>All flows are handled by ERP.net <strong>Identity</strong>.</p>
 <h2 id="why-flows-matter">Why Flows Matter</h2>
 <p>Each app has a different way of connecting:</p>
 <ul>
@@ -134,11 +134,11 @@
 <p>Hybrid apps combine both flows: the <strong>front end</strong> uses Authorization Code for user access, while the <strong>backend</strong> uses Client Credentials for automation or elevated access.</p>
 </div>
 <h2 id="how-it-works">How It Works</h2>
-<p>All flows follow the same secure pattern, handled by ERP.net Identity Server:</p>
+<p>All flows follow the same secure pattern, handled by ERP.net Identity:</p>
 <pre><code class="lang-mermaid">flowchart LR
   subgraph UserSide[Interactive App]
     U[👤 User] --&gt;|Signs in| App[💻 App]
-    App --&gt;|Auth Request| IDP[🛡️ ERP.net Identity Server]
+    App --&gt;|Auth Request| IDP[🛡️ ERP.net Identity]
     IDP --&gt;|Access Token| App
   end
 
@@ -154,7 +154,7 @@
 <div class="NOTE">
 <h5>Note</h5>
 <p>Every flow leads to the same outcome:<br>
-a <strong>token</strong> issued by the Identity Server that defines <em>who</em> or <em>what</em> is calling the APIs, and <em>what it's allowed to do</em>.</p>
+a <strong>token</strong> issued by ERP.net Identity that defines <em>who</em> or <em>what</em> is calling the APIs, and <em>what it's allowed to do</em>.</p>
 </div>
 <h2 id="choosing-a-flow">Choosing a Flow</h2>
 <p>When selecting a flow, focus on how your app interacts with ERP.net:</p>
@@ -167,7 +167,7 @@ a <strong>token</strong> issued by the Identity Server that defines <em>who</em>
 <h2 id="key-points-to-remember">Key Points to Remember</h2>
 <ul>
 <li>Every app must be <strong>registered as a Trusted Application</strong> in the target ERP.net instance.</li>
-<li>Tokens are always issued by the instance's <strong>Identity Server</strong>.</li>
+<li>Tokens are always issued by the instance's <strong>Identity</strong>.</li>
 <li><strong>Sessions</strong> start only when a token is first used, not when issued.</li>
 <li><strong>Refresh tokens</strong> are only for interactive clients.</li>
 <li><strong>Client secrets</strong> must never be exposed in browsers or SPAs.</li>

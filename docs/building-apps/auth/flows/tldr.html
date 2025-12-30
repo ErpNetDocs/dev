@@ -95,7 +95,7 @@
 <li><strong>Service apps</strong> use the <strong>Client Credentials flow</strong> - no user involved; the app acts as itself.</li>
 <li><strong>Hybrid apps</strong> use both - front end for users, backend for automation or elevated access.</li>
 </ol>
-<p>No passwords are shared and every token is issued by ERP.net <strong>Identity Server</strong>.</p>
+<p>No passwords are shared and every token is issued by ERP.net <strong>Identity</strong>.</p>
 <p>That's how ERP.net keeps authentication consistent across all apps.</p>
 <h2 id="a-real-world-example">A Real-World Example</h2>
 <p><strong>David</strong> runs a production company powered by ERP.net.</p>
@@ -111,10 +111,10 @@
 <li>The background service uses the <strong>Client Credentials flow</strong> to get its own token for system-to-system tasks.</li>
 <li>Both parts call <strong>ERP.net APIs</strong> with their tokens - each token defines exactly what that part is allowed to do.</li>
 </ol>
-<p>No passwords are stored, and both the user and service are securely authenticated by the Identity Server.</p>
+<p>No passwords are stored, and both the user and service are securely authenticated by ERP.net Identity.</p>
 <pre><code class="lang-mermaid">flowchart LR
   David([🎸 David - User]) --&gt;|Signs in| WebApp[💻 Web App]
-  WebApp --&gt;|Auth Request| IDP[🛡️ ERP.net Identity Server]
+  WebApp --&gt;|Auth Request| IDP[🛡️ ERP.net Identity]
   IDP --&gt;|User Token| WebApp
   WebApp --&gt;|API Calls with Token| API[🎛️ ERP.net APIs]
   API --&gt;|Access Data| Data[(📊 ERP.net Data)]
@@ -129,7 +129,7 @@
 <hr>
 <h2 id="learn-more">Learn More</h2>
 <ul>
-<li><p><a href="../how-apps-connect/oauth2-overview.html"><strong>OAuth 2.0 Overview</strong></a><br>
+<li><p><a href="../concepts/how-apps-connect/oauth2-overview.html"><strong>OAuth 2.0 Overview</strong></a><br>
 Understand how tokens, grants, and scopes work in ERP.net.</p>
 </li>
 <li><p><a href="auth-code/overview.html"><strong>Interactive Apps (Authorization Code Flow)</strong></a><br>

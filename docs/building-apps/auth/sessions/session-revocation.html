@@ -92,7 +92,7 @@
 <h2 id="how-sessions-end">How Sessions End</h2>
 <p>A session can end in several ways:</p>
 <ul>
-<li><strong>User logout</strong> – The user explicitly signs out via ERP.net Identity Server.</li>
+<li><strong>User logout</strong> – The user explicitly signs out via ERP.net Identity.</li>
 <li><strong>Inactivity timeout</strong> – After 20 minutes of inactivity, the session closes automatically.</li>
 <li><strong>Absolute timeout</strong> – Service sessions (Client Credentials Flow) expire after 1 hour, even if active.</li>
 <li><strong>Server restart</strong> – All sessions are cleared when the application server restarts.</li>
@@ -103,13 +103,13 @@
 A token may still be valid even after its session is closed - a new session will be created automatically when it's used again.</p>
 </div>
 <h2 id="logging-out-interactive-apps">Logging Out (Interactive Apps)</h2>
-<p>Interactive applications using the <strong>Authorization Code Flow</strong> can explicitly end the user session via ERP.net Identity Server's logout endpoint.</p>
+<p>Interactive applications using the <strong>Authorization Code Flow</strong> can explicitly end the user session via ERP.net Identity logout endpoint.</p>
 <pre><code class="lang-http">GET https://&lt;instance&gt;.my.erp.net/id/connect/endsession
 </code></pre>
 <p>When this endpoint is called:</p>
 <ul>
 <li>The user is redirected to a logout confirmation page.</li>
-<li>After confirmation, the Identity Server terminates the session.</li>
+<li>After confirmation, ERP.net Identity terminates the session.</li>
 <li>The session license is released immediately.</li>
 <li>The user can safely close the browser or sign in again.</li>
 </ul>
@@ -144,9 +144,6 @@ How licenses are consumed, released, and reserved.</p>
 </li>
 <li><p><a href="license-compliance.html"><strong>License Compliance and Violations</strong></a><br>
 Understand correct license usage, avoid token sharing, and ensure compliance with ERP.net licensing terms.</p>
-</li>
-<li><p><a href="../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
-How trusted app configuration affects license behavior and user access.</p>
 </li>
 </ul>
 

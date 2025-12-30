@@ -133,12 +133,12 @@
 </table>
 <div class="NOTE">
 <h5>Note</h5>
-<p>All flows are handled by ERP.net <strong>Identity Server</strong>, which authenticates users, validates app identities, and issues tokens.</p>
+<p>All flows are handled by ERP.net <strong>Identity</strong>, which authenticates users, validates app identities, and issues tokens.</p>
 </div>
 <h2 id="example-scenarios">Example Scenarios</h2>
 <h3 id="interactive-app---authorization-code-flow">Interactive App - Authorization Code Flow</h3>
 <p>Your app presents a <strong>Sign In</strong> button.<br>
-A user logs in through the ERP.net Identity Server, and your app receives an <strong>access token</strong> to act on behalf of that specific user.</p>
+A user logs in through the ERP.net Identity, and your app receives an <strong>access token</strong> to act on behalf of that specific user.</p>
 <p>Use this flow when:</p>
 <ul>
 <li>Your app has a web or mobile interface.</li>
@@ -152,7 +152,7 @@ Never embed a client secret in front-end or mobile code.</p>
 </div>
 <h3 id="service-or-background-app---client-credentials-flow">Service or Background App - Client Credentials Flow</h3>
 <p>Your app runs automatically, without direct user interaction.<br>
-It authenticates directly with the <strong>Identity Server</strong> using its credentials from the Trusted Application record.</p>
+It authenticates directly with the <strong>ERP.net Identity</strong> using its credentials from the Trusted Application record.</p>
 <p>When this flow is used, the instance issues tokens that represent the app's <strong>configured System User</strong>.<br>
 All API calls are executed under that user's permissions.</p>
 <p>Use this flow when:</p>
@@ -301,19 +301,19 @@ Refresh tokens are available only to interactive clients.</p>
 <h2 id="summary">Summary</h2>
 <ul>
 <li>Every app must be <strong>registered as a Trusted Application</strong> in ERP.net.</li>
-<li>The <strong>Identity Server</strong> validates the app and issues tokens according to its configuration.</li>
+<li><strong>ERP.net Identity</strong> validates the app and issues tokens according to its configuration.</li>
 <li><strong>Authorization Code Flow</strong> -&gt; user-driven, interactive access.</li>
 <li><strong>Client Credentials Flow</strong> -&gt; system-driven, using the app's <strong>System User</strong>.</li>
 <li><strong>Hybrid Flow</strong> -&gt; combines both, with strict separation between contexts.</li>
 </ul>
-<p>Choose the flow that matches how your app operates - and let the ERP.net Identity Server handle authentication securely and consistently.</p>
+<p>Choose the flow that matches how your app operates - and let the ERP.net Identity handle authentication securely and consistently.</p>
 <hr>
 <h2 id="learn-more">Learn More</h2>
 <ul>
 <li><p><a href="overview.html"><strong>Flows Overview</strong></a><br>
 Understand how the main OAuth 2.0 flows fit into ERP.net.</p>
 </li>
-<li><p><a href="../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+<li><p><a href="../configuration/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
 Learn how to configure System Users, scopes, and authentication policies.</p>
 </li>
 <li><p><a href="auth-code/overview.html"><strong>Interactive Apps (Authorization Code Flow)</strong></a><br>

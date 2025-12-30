@@ -87,7 +87,7 @@
         <article data-uid="">
 <h1 id="step-by-step-authorization-code-flow">Step-by-Step: Authorization Code Flow</h1>
 
-<p>This guide walks through the exact HTTP steps an interactive app takes to sign in a user with the ERP.net Identity Server, exchange the authorization code for tokens, and call the APIs.</p>
+<p>This guide walks through the exact HTTP steps an interactive app takes to sign in a user with the ERP.net Identity, exchange the authorization code for tokens, and call the APIs.</p>
 <p>It covers both <strong>confidential</strong> web apps (server-side) and <strong>public</strong> clients (SPAs) using <strong>PKCE</strong>.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <p>Register your app as a <strong>Trusted Application</strong> in the target ERP.net instance.</p>
@@ -143,7 +143,7 @@
 <p>For a public SPA, set <code>ClientType = Public</code> and omit the secret. PKCE is required.</p>
 </div>
 <h2 id="1-send-the-user-to-authorize">1) Send the user to authorize</h2>
-<p>Your app redirects the user to the instance ERP.net Identity Server. Example query:</p>
+<p>Your app redirects the user to the instance ERP.net Identity. Example query:</p>
 <pre><code class="lang-http">GET /id/connect/authorize?
     client_id=my.trusted.app/first&amp;
     redirect_uri=https://your-app.example.com/signin-callback&amp;
@@ -162,7 +162,7 @@ Host: testdb.my.erp.net
 </ul>
 <p>If everything is valid, the browser is redirected to the ERP.net login page.</p>
 <h2 id="2-handle-the-sign-in-callback">2) Handle the sign-in callback</h2>
-<p>After the user signs in successfully, the Identity Server redirects back to your registered <code>redirect_uri</code> with a short-lived authorization code:</p>
+<p>After the user signs in successfully, ERP.net Identity redirects back to your registered <code>redirect_uri</code> with a short-lived authorization code:</p>
 <pre><code class="lang-http">GET /signin-callback?
     code=K0dE...short...GZmNjV&amp;
     state=xyz123 HTTP/1.1
@@ -235,7 +235,7 @@ refresh_token=&lt;previous_refresh_token&gt;
 <pre><code class="lang-mermaid">sequenceDiagram
     participant User
     participant App
-    participant IDP as ERP.net Identity Server
+    participant IDP as ERP.net Identity
     participant API as ERP.net APIs
 
     User-&gt;&gt;App: Clicks Sign In
@@ -258,12 +258,12 @@ refresh_token=&lt;previous_refresh_token&gt;
 </ul>
 <h2 id="full-samples">Full samples</h2>
 <ul>
-<li><a href="../../samples/spa-access-token-auth-code.html">Access token via authorization code flow in a SPA (Single Page Application)</a></li>
-<li><a href="../../samples/console-app-access-token-auth-code.html">Access token via authorization code flow in a console app</a></li>
-<li><a href="../../samples/web-app-access-token-auth-code.html">Access token via authorization code flow in a web app</a></li>
-<li><a href="../../samples/basic-acquire-access-token.html">Basic example of acquiring an access token</a></li>
-<li><a href="../../samples/basic-exchange-auth-code-access-token.html">Basic example- exchange an auth code for an access token</a></li>
-<li><a href="../../samples/basic-renew-access-token.html">Basic example- renew an access token via a refresh token</a></li>
+<li><a href="../../concepts/samples/spa-access-token-auth-code.html">Access token via authorization code flow in a SPA (Single Page Application)</a></li>
+<li><a href="../../concepts/samples/console-app-access-token-auth-code.html">Access token via authorization code flow in a console app</a></li>
+<li><a href="../../concepts/samples/web-app-access-token-auth-code.html">Access token via authorization code flow in a web app</a></li>
+<li><a href="../../concepts/samples/basic-acquire-access-token.html">Basic example of acquiring an access token</a></li>
+<li><a href="../../concepts/samples/basic-exchange-auth-code-access-token.html">Basic example- exchange an auth code for an access token</a></li>
+<li><a href="../../concepts/samples/basic-renew-access-token.html">Basic example- renew an access token via a refresh token</a></li>
 </ul>
 <hr>
 <h2 id="learn-more">Learn More</h2>
@@ -274,7 +274,7 @@ How to secure redirects and apply PKCE correctly.</p>
 <li><p><a href="interactive-apps-refresh-tokens.html"><strong>Refresh Tokens</strong></a><br>
 How to renew tokens without requiring the user to sign in again.</p>
 </li>
-<li><p><a href="../../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+<li><p><a href="../../configuration/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
 Learn how app registrations define access modes, users, and permissions.</p>
 </li>
 <li><p><a href="interactive-apps-errors.html"><strong>Common Errors</strong></a><br>

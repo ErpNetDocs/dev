@@ -99,15 +99,15 @@
 </ul>
 <h2 id="how-it-works">How it works</h2>
 <ol>
-<li>The app authenticates to the ERP.net <strong>Identity Server</strong> with its <code>client_id</code> and <code>client_secret</code>.</li>
-<li>ERP.net Identity Server validates the app against its <strong>Trusted Application</strong> record.</li>
+<li>The app authenticates to the ERP.net <strong>Identity</strong> with its <code>client_id</code> and <code>client_secret</code>.</li>
+<li>ERP.net Identity validates the app against its <strong>Trusted Application</strong> record.</li>
 <li>If allowed, it issues a short-lived <strong>access token</strong> that represents the app's <strong>System User</strong>.</li>
 <li>The app calls ERP.net APIs with the token.</li>
 <li>When the token expires, the app requests a new one.</li>
 </ol>
 <pre><code class="lang-mermaid">sequenceDiagram
     participant App
-    participant IDP as ERP.net Identity Server
+    participant IDP as ERP.net Identity
     participant API as ERP.net APIs
 
     App-&gt;&gt;IDP: POST /connect/token (grant_type=client_credentials, client_id, client_secret, scope)
@@ -145,9 +145,6 @@ Exact parameters, examples, and response fields.</p>
 </li>
 <li><p><a href="service-apps-errors.html"><strong>Common Errors</strong></a><br>
 Quick fixes for invalid_client, invalid_scope, and more.</p>
-</li>
-<li><p><a href="../../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
-Configure System User, scopes, and policies.</p>
 </li>
 <li><p><a href="../choosing-flow.html"><strong>Choosing the Right Flow</strong></a><br>
 When to use Client Credentials vs interactive or hybrid.</p>

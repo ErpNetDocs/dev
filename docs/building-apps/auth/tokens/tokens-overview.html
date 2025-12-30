@@ -92,7 +92,7 @@
 <h2 id="what-are-tokens">What Are Tokens</h2>
 <p>Tokens are cryptographically signed credentials that represent an authenticated user or application.</p>
 <p>Instead of passing around usernames and passwords, tokens allow applications to securely prove their identity and permissions when calling APIs.</p>
-<p>ERP.net follows the <strong>OAuth 2.0</strong> standard for token management, and all tokens are issued by the instance's <strong>Identity Server</strong>.</p>
+<p>ERP.net follows the <strong>OAuth 2.0</strong> standard for token management, and all tokens are issued by the instance's <strong>ERP.net Identity</strong>.</p>
 <h2 id="types-of-tokens">Types of Tokens</h2>
 <ol>
 <li><p><strong>Access Tokens</strong><br>
@@ -110,7 +110,7 @@ Manually issued, long-lived tokens used for integrations, scripts, or automation
 </li>
 </ol>
 <h2 id="how-tokens-work-in-">How Tokens Work in ERP.net</h2>
-<p>Tokens are issued by the ERP.net <strong>Identity Server</strong> after successful authentication.</p>
+<p>Tokens are issued by the ERP.net <strong>Identity</strong> after successful authentication.</p>
 <p>The app then includes the token in API requests using the <code>Authorization: Bearer &lt;token&gt;</code> header.</p>
 <p>Tokens contain:</p>
 <ul>
@@ -132,7 +132,7 @@ Manually issued, long-lived tokens used for integrations, scripts, or automation
 <p>When an external application connects to ERP.net, the flow generally involves:</p>
 <ol>
 <li><strong>Authentication</strong> – The application authenticates via an OAuth 2.0 flow (Authorization Code, Client Credentials, or Hybrid).</li>
-<li><strong>Token Issuance</strong> – ERP.net Identity Server issues the token representing the app or user identity.</li>
+<li><strong>Token Issuance</strong> – ERP.net Identity issues the token representing the app or user identity.</li>
 <li><strong>Accessing APIs</strong> – The app uses the token to authorize API requests.</li>
 <li><strong>Token Expiration</strong> – Tokens expire after a defined period.</li>
 <li><strong>Token Renewal</strong> – The app either uses a refresh token or requests a new access token as needed.</li>
@@ -146,7 +146,7 @@ Learn about how access tokens are issued and used in API requests.</p>
 <li><p><a href="reference-access-tokens.html"><strong>Reference Access Tokens (PAT, SAT)</strong></a><br>
 Understand how long-lived reference tokens enable service or personal access.</p>
 </li>
-<li><p><a href="scopes.html"><strong>Scopes and Permissions</strong></a><br>
+<li><p><a href="../configuration/scopes.html"><strong>Scopes</strong></a><br>
 Learn how scopes define which ERP.net resources a token can access.</p>
 </li>
 <li><p><a href="token-lifetime.html"><strong>Token Lifetime and Renewal</strong></a><br>

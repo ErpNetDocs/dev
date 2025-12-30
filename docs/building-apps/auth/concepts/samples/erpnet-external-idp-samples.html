@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Sign in with ERP.net Identity (Multi-Platform Samples) | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Sign in with ERP.net Identity (Multi-Platform Samples) | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../../favicon.ico">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/concepts/samples/erpnet-external-idp-samples.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="sign-in-with--identity-multi-platform-samples">Sign in with ERP.net Identity (Multi-Platform Samples)</h1>
+
+<p>This page shows how to use <strong>ERP.net Identity</strong> as an OpenID Connect provider from different platforms.</p>
+<p>All samples use the same key parameters:</p>
+<ul>
+<li><strong>Authority</strong>: <code>https://id.erp.net/id</code></li>
+<li><strong>Client ID</strong>: <code>&lt;your-client-id&gt;</code></li>
+<li><strong>Client Secret</strong>: <code>&lt;your-client-secret&gt;</code> (confidential clients only)</li>
+<li><strong>Redirect URI</strong>: <code>&lt;your-redirect-uri&gt;</code></li>
+<li><strong>Scopes</strong>: <code>openid profile</code> (plus <code>offline_access</code> if you need refresh tokens)</li>
+</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>The Client ID and Client Secret must be created in ERP.net Identity for your application.<br>
+They are not public and cannot be reused from another app.</p>
+</div>
+<h2 id="public-vs-confidential-clients">Public vs. Confidential Clients</h2>
+<p>ERP.net supports both <strong>confidential</strong> and <strong>public</strong> OAuth/OIDC clients:</p>
+<h3 id="confidential-clients">Confidential Clients</h3>
+<p>Confidential clients run on a server you control (e.g., backend web apps).<br>
+They can safely store a <strong>Client Secret</strong>.</p>
+<p>Characteristics:</p>
+<ul>
+<li>Use <strong>Client ID + Client Secret</strong></li>
+<li>Typically use the <strong>Authorization Code</strong> or <strong>Hybrid</strong> flow</li>
+<li>Applicable to: server-side web apps, backend services, integrations</li>
+</ul>
+<h3 id="public-clients">Public Clients</h3>
+<p>Public clients run in environments where secrets cannot be kept secure:</p>
+<ul>
+<li>Browsers (SPA apps)</li>
+<li>Mobile applications</li>
+<li>Desktop applications</li>
+</ul>
+<p>Public clients <strong>do not</strong> use a client secret.</p>
+<p>Characteristics:</p>
+<ul>
+<li><strong>No Client Secret</strong></li>
+<li>Must use <strong>Authorization Code Flow with PKCE</strong></li>
+<li>Applicable to: Angular/React/Vue SPAs, mobile apps, desktop apps</li>
+</ul>
+<h3 id="-configuration-requirement">ERP.net Configuration Requirement</h3>
+<p>Whether your application is public or confidential is determined by its <strong>Trusted Application</strong> configuration inside the ERP.net Identity.</p>
+<p>When you request client registration from ERP.net, specify:</p>
+<ul>
+<li>If your app is <strong>public</strong> (no secret) -&gt; SPA/mobile/desktop</li>
+<li>Or <strong>confidential</strong> (with secret) -&gt; backend/server app</li>
+</ul>
+<h3 id="effect-on-the-code-samples">Effect on the Code Samples</h3>
+<p>In the multi-platform samples on this page:</p>
+<ul>
+<li><strong>Backend/server examples</strong> include <code>client_secret</code></li>
+<li><strong>Public-client examples</strong> should:
+<ul>
+<li>Omit <code>client_secret</code></li>
+<li>Use PKCE (code_verifier / code_challenge)</li>
+<li>Ensure the ERP.net application is configured as <code>public</code></li>
+</ul>
+</li>
+</ul>
+<p>The rest of the OIDC parameters (Authority, Redirect URI, Scopes, etc.) are identical for both types.</p>
+<h2 id="spa-javascript-oidc-client-ts">SPA (JavaScript, <code>oidc-client-ts</code>)</h2>
+<p>This is a front-end-only app running in the browser, using <strong>Authorization Code Flow with PKCE</strong> and <strong>no client secret</strong>.</p>
+<pre><code class="lang-bash">npm install oidc-client-ts
+</code></pre>
+<pre><code class="lang-ts">// auth.ts
+import { UserManager, WebStorageStateStore } from 'oidc-client-ts';
+
+const settings = {
+  authority: 'https://id.erp.net/id',
+  client_id: '&lt;your-public-client-id&gt;',      // no secret
+  redirect_uri: 'https://your-spa.com/auth/callback',
+  post_logout_redirect_uri: 'https://your-spa.com/',
+  response_type: 'code id_token',
+  scope: 'openid profile',
+  automaticSilentRenew: true,
+  userStore: new WebStorageStateStore({ store: window.localStorage })
+};
+
+export const userManager = new UserManager(settings);
+
+// Trigger login
+export function login() {
+  return userManager.signinRedirect();
+}
+
+// Callback handler (on /auth/callback)
+export async function handleCallback() {
+  const user = await userManager.signinRedirectCallback();
+  console.log('Logged in user:', user.profile);
+}
+
+// Trigger logout
+export function logout() {
+  return userManager.signoutRedirect();
+}
+</code></pre>
+<h2 id="spa-angular-angular-auth-oidc-client">SPA (Angular, <code>angular-auth-oidc-client</code>)</h2>
+<p>Angular SPA using <code>angular-auth-oidc-client</code> with code + PKCE and no secret.</p>
+<pre><code class="lang-bash">npm install angular-auth-oidc-client
+</code></pre>
+<p><code>app.module.ts</code>:</p>
+<pre><code class="lang-ts">import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    AuthModule.forRoot({
+      config: {
+        authority: 'https://id.erp.net/id',
+        clientId: '&lt;your-public-client-id&gt;', // no secret
+        redirectUrl: 'https://your-angular-app.com',
+        postLogoutRedirectUri: 'https://your-angular-app.com',
+        scope: 'openid profile',
+        responseType: 'code id_token',
+        silentRenew: true,
+        useRefreshToken: true,
+        logLevel: LogLevel.Warn
+      }
+    })
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+</code></pre>
+<p><code>app.component.ts</code>:</p>
+<pre><code class="lang-ts">import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'angular-auth-oidc-client';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    &lt;button *ngIf=&quot;!isAuthenticated&quot; (click)=&quot;login()&quot;&gt;Login with ERP.net&lt;/button&gt;
+    &lt;div *ngIf=&quot;isAuthenticated&quot;&gt;
+      &lt;p&gt;Hello, {{ userName }}&lt;/p&gt;
+      &lt;button (click)=&quot;logout()&quot;&gt;Logout&lt;/button&gt;
+    &lt;/div&gt;
+  `
+})
+export class AppComponent implements OnInit {
+  isAuthenticated = false;
+  userName: string | undefined;
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.checkAuth().subscribe(({ isAuthenticated, userData }) =&gt; {
+      this.isAuthenticated = isAuthenticated;
+      this.userName = userData?.name || userData?.preferred_username;
+    });
+  }
+
+  login() {
+    this.authService.authorize();
+  }
+
+  logout() {
+    this.authService.logoff();
+  }
+}
+</code></pre>
+<h2 id="mobile-react-native-react-native-app-auth">Mobile (React Native, react-native-app-auth)</h2>
+<p>Example using <code>react-native-app-auth</code>, which handles code + PKCE as a <strong>public client</strong> (no secret stored on device).</p>
+<pre><code class="lang-bash">npm install react-native-app-auth
+</code></pre>
+<pre><code class="lang-ts">// auth.ts (React Native)
+import { authorize, refresh, revoke, AuthConfiguration } from 'react-native-app-auth';
+
+const config: AuthConfiguration = {
+  issuer: 'https://id.erp.net/id',
+  clientId: '&lt;your-public-client-id&gt;',   // no secret
+  redirectUrl: 'myapp://auth/callback',  // custom scheme
+  scopes: ['openid', 'profile'],
+  additionalParameters: {},
+  dangerouslyAllowInsecureHttpRequests: false
+};
+
+export async function login() {
+  const result = await authorize(config);
+  // result includes accessToken, idToken, refreshToken (if allowed)
+  return result;
+}
+</code></pre>
+<h2 id="javascript-nodejs--express-using-openid-client">JavaScript (Node.js + Express, using <code>openid-client</code>)</h2>
+<p>Minimal example showing a login endpoint and callback using the <a href="https://github.com/panva/node-openid-client"><code>openid-client</code></a> library.</p>
+<pre><code class="lang-bash">npm install openid-client express express-session
+</code></pre>
+<pre><code class="lang-js">// app.js
+const express = require('express');
+const session = require('express-session');
+const { Issuer, generators } = require('openid-client');
+
+const app = express();
+
+app.use(session({
+  secret: 'replace-with-strong-secret',
+  resave: false,
+  saveUninitialized: false
+}));
+
+let client; // will hold the ERP.net OIDC client
+
+async function initClient() {
+  const erpnetIssuer = await Issuer.discover('https://id.erp.net/id');
+  client = new erpnetIssuer.Client({
+    client_id: '&lt;your-client-id&gt;',
+    client_secret: '&lt;your-client-secret&gt;',
+    redirect_uris: ['https://your-app.com/auth/callback'],
+    response_types: ['code id_token'],
+  });
+}
+initClient().catch(console.error);
+
+// Login endpoint
+app.get('/login', (req, res) =&gt; {
+  const codeVerifier = generators.codeVerifier();
+  const codeChallenge = generators.codeChallenge(codeVerifier);
+
+  req.session.codeVerifier = codeVerifier;
+
+  const authUrl = client.authorizationUrl({
+    scope: 'openid profile',
+    code_challenge: codeChallenge,
+    code_challenge_method: 'S256'
+  });
+
+  res.redirect(authUrl);
+});
+
+// Callback endpoint
+app.get('/auth/callback', async (req, res, next) =&gt; {
+  try {
+    const params = client.callbackParams(req);
+    const tokenSet = await client.callback(
+      'https://your-app.com/auth/callback',
+      params,
+      { code_verifier: req.session.codeVerifier }
+    );
+
+    req.session.user = tokenSet.claims();
+    res.send(`Hello, ${req.session.user.name || req.session.user.sub}`);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.listen(3000, () =&gt; console.log('Listening on http://localhost:3000'));
+</code></pre>
+<h2 id="java-spring-boot-spring-security-oauth2-client">Java (Spring Boot, Spring Security OAuth2 Client)</h2>
+<p>Using Spring Boot's built-in OAuth2 client support.</p>
+<p><code>application.yml</code>:</p>
+<pre><code class="lang-yaml">spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          erpnet:
+            client-id: &lt;your-client-id&gt;
+            client-secret: &lt;your-client-secret&gt;
+            scope: openid,profile,offline_access
+            redirect-uri: &quot;{baseUrl}/login/oauth2/code/erpnet&quot;
+            client-name: ERP.net
+            authorization-grant-type: authorization_code
+        provider:
+          erpnet:
+            issuer-uri: https://id.erp.net/id
+</code></pre>
+<p>Security configuration (Spring Security 5+ lambda style):</p>
+<pre><code class="lang-java">import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(auth -&gt; auth
+                .requestMatchers(&quot;/&quot;, &quot;/public/**&quot;).permitAll()
+                .anyRequest().authenticated()
+            )
+            .oauth2Login(oauth2 -&gt; oauth2
+                .loginPage(&quot;/oauth2/authorization/erpnet&quot;) // optional
+            )
+            .logout(logout -&gt; logout
+                .logoutSuccessUrl(&quot;/&quot;)
+            );
+
+        return http.build();
+    }
+}
+</code></pre>
+<p>Once configured, accessing any protected URL will redirect to ERP.net for login.</p>
+<h2 id="php-using-jumbojettopenid-connect-php">PHP (using jumbojett/openid-connect-php)</h2>
+<p>Install the library:</p>
+<pre><code class="lang-bash">composer require jumbojett/openid-connect-php
+</code></pre>
+<p>Minimal example:</p>
+<pre><code class="lang-php">&lt;?php
+require 'vendor/autoload.php';
+
+use Jumbojett\OpenIDConnectClient;
+
+$oidc = new OpenIDConnectClient(
+    'https://id.erp.net/id',
+    '&lt;your-client-id&gt;',
+    '&lt;your-client-secret&gt;'
+);
+
+$oidc-&gt;setRedirectURL('https://your-app.com/callback');
+$oidc-&gt;addScope(['openid', 'profile']);
+
+// Trigger login (redirect to @@name if not authenticated)
+$oidc-&gt;authenticate();
+
+// Get user info
+$userInfo = $oidc-&gt;requestUserInfo();
+
+echo 'Hello, ' . htmlspecialchars($userInfo-&gt;name ?? $userInfo-&gt;sub);
+</code></pre>
+<p>Configure your web server so <code>/callback points</code> to the same script, or handle it in a dedicated callback file that calls <code>$oidc-&gt;authenticate()</code>.</p>
+<h2 id="go-using-coreosgo-oidc--golangorgxoauth2">Go (using coreos/go-oidc + golang.org/x/oauth2)</h2>
+<p>Minimal example with an auth endpoint and callback:</p>
+<pre><code class="lang-bash">go get github.com/coreos/go-oidc/v3/oidc
+go get golang.org/x/oauth2
+</code></pre>
+<pre><code class="lang-go">package main
+
+import (
+    &quot;context&quot;
+    &quot;fmt&quot;
+    &quot;log&quot;
+    &quot;net/http&quot;
+
+    &quot;github.com/coreos/go-oidc/v3/oidc&quot;
+    &quot;golang.org/x/oauth2&quot;
+)
+
+var (
+    oauth2Config *oauth2.Config
+    verifier     *oidc.IDTokenVerifier
+)
+
+func main() {
+    ctx := context.Background()
+
+    provider, err := oidc.NewProvider(ctx, &quot;https://id.erp.net/id&quot;)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    oauth2Config = &amp;oauth2.Config{
+        ClientID:     &quot;&lt;your-client-id&gt;&quot;,
+        ClientSecret: &quot;&lt;your-client-secret&gt;&quot;,
+        RedirectURL:  &quot;https://your-app.com/callback&quot;,
+        Endpoint:     provider.Endpoint(),
+        Scopes:       []string{oidc.ScopeOpenID, &quot;profile&quot;},
+    }
+
+    verifier = provider.Verifier(&amp;oidc.Config{ClientID: &quot;&lt;your-client-id&gt;&quot;})
+
+    http.HandleFunc(&quot;/login&quot;, handleLogin)
+    http.HandleFunc(&quot;/callback&quot;, handleCallback)
+
+    log.Println(&quot;Listening on :8080&quot;)
+    log.Fatal(http.ListenAndServe(&quot;:8080&quot;, nil))
+}
+
+func handleLogin(w http.ResponseWriter, r *http.Request) {
+    state := &quot;random-state&quot; // generate real random value in production
+    url := oauth2Config.AuthCodeURL(state)
+    http.Redirect(w, r, url, http.StatusFound)
+}
+
+func handleCallback(w http.ResponseWriter, r *http.Request) {
+    ctx := r.Context()
+
+    code := r.URL.Query().Get(&quot;code&quot;)
+    if code == &quot;&quot; {
+        http.Error(w, &quot;missing code&quot;, http.StatusBadRequest)
+        return
+    }
+
+    token, err := oauth2Config.Exchange(ctx, code)
+    if err != nil {
+        http.Error(w, &quot;failed to exchange token: &quot;+err.Error(), http.StatusInternalServerError)
+        return
+    }
+
+    rawIDToken, ok := token.Extra(&quot;id_token&quot;).(string)
+    if !ok {
+        http.Error(w, &quot;no id_token&quot;, http.StatusInternalServerError)
+        return
+    }
+
+    idToken, err := verifier.Verify(ctx, rawIDToken)
+    if err != nil {
+        http.Error(w, &quot;failed to verify id_token: &quot;+err.Error(), http.StatusInternalServerError)
+        return
+    }
+
+    var claims struct {
+        Sub  string `json:&quot;sub&quot;`
+        Name string `json:&quot;name&quot;`
+    }
+    if err := idToken.Claims(&amp;claims); err != nil {
+        http.Error(w, &quot;failed to parse claims: &quot;+err.Error(), http.StatusInternalServerError)
+        return
+    }
+
+    fmt.Fprintf(w, &quot;Hello, %s (%s)&quot;, claims.Name, claims.Sub)
+}
+</code></pre>
+<h2 id="python-flask--authlib">Python (Flask + Authlib)</h2>
+<p>Using <a href="https://docs.authlib.org/en/latest/">Authlib</a> for OIDC.</p>
+<pre><code class="lang-bash">pip install flask authlib
+</code></pre>
+<pre><code class="lang-python">from flask import Flask, redirect, url_for, session, request
+from authlib.integrations.flask_client import OAuth
+
+app = Flask(__name__)
+app.secret_key = 'replace-with-strong-secret'
+
+oauth = OAuth(app)
+
+erpnet = oauth.register(
+    name='erpnet',
+    client_id='&lt;your-client-id&gt;',
+    client_secret='&lt;your-client-secret&gt;',
+    server_metadata_url='https://id.erp.net/id/.well-known/openid-configuration',
+    client_kwargs={
+        'scope': 'openid profile',
+    },
+)
+
+@app.route('/')
+def index():
+    user = session.get('user')
+    if user:
+        return f&quot;Hello, {user.get('name') or user.get('sub')}&quot;
+    return '&lt;a href=&quot;/login&quot;&gt;Login with ERP.net&lt;/a&gt;'
+
+@app.route('/login')
+def login():
+    redirect_uri = url_for('auth', _external=True)
+    return erpnet.authorize_redirect(redirect_uri)
+
+@app.route('/auth/callback')
+def auth():
+    token = erpnet.authorize_access_token()
+    userinfo = erpnet.parse_id_token(token)
+    session['user'] = userinfo
+    return redirect(url_for('index'))
+
+if __name__ == '__main__':
+    app.run(debug=True)
+</code></pre>
+<h2 id="net--blazor-webassembly">.NET / Blazor WebAssembly</h2>
+<p><code>Program.cs</code> (Blazor WebAssembly):</p>
+<pre><code class="lang-csharp">using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using YourApp;
+
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
+builder.RootComponents.Add&lt;App&gt;(&quot;#app&quot;);
+builder.RootComponents.Add&lt;HeadOutlet&gt;(&quot;head::after&quot;);
+
+builder.Services.AddHttpClient(&quot;ServerAPI&quot;, client =&gt;
+    client.BaseAddress = new Uri(&quot;https://your-api/&quot;))
+    .AddHttpMessageHandler&lt;BaseAddressAuthorizationMessageHandler&gt;();
+
+builder.Services.AddScoped(sp =&gt; sp.GetRequiredService&lt;IHttpClientFactory&gt;()
+    .CreateClient(&quot;ServerAPI&quot;));
+
+builder.Services.AddOidcAuthentication(options =&gt;
+{
+    // ERP.net ID configuration
+    options.ProviderOptions.Authority = &quot;https://id.erp.net/id&quot;;
+    options.ProviderOptions.ClientId = &quot;&lt;your-public-client-id&gt;&quot;; // no secret
+    options.ProviderOptions.ResponseType = &quot;code id_token&quot;;                // code + PKCE
+    options.ProviderOptions.DefaultScopes.Add(&quot;openid&quot;);
+    options.ProviderOptions.DefaultScopes.Add(&quot;profile&quot;);
+    // options.ProviderOptions.DefaultScopes.Add(&quot;offline_access&quot;); // if allowed
+
+    // Redirect URI is usually auto-derived as:
+    // https://your-blazor-app.com/authentication/login-callback
+});
+
+await builder.Build().RunAsync();
+</code></pre>
+<p><code>App.razor</code>:</p>
+<pre><code class="lang-html">&lt;CascadingAuthenticationState&gt;
+    &lt;Router AppAssembly=&quot;@typeof(App).Assembly&quot;&gt;
+        &lt;Found Context=&quot;routeData&quot;&gt;
+            &lt;AuthorizeRouteView RouteData=&quot;@routeData&quot; DefaultLayout=&quot;@typeof(MainLayout)&quot;&gt;
+                &lt;NotAuthorized&gt;
+                    &lt;RedirectToLogin /&gt;
+                &lt;/NotAuthorized&gt;
+            &lt;/AuthorizeRouteView&gt;
+        &lt;/Found&gt;
+        &lt;NotFound&gt;
+            &lt;LayoutView Layout=&quot;@typeof(MainLayout)&quot;&gt;
+                &lt;p&gt;Sorry, there's nothing at this address.&lt;/p&gt;
+            &lt;/LayoutView&gt;
+        &lt;/NotFound&gt;
+    &lt;/Router&gt;
+&lt;/CascadingAuthenticationState&gt;
+</code></pre>
+<h2 id="aspnet-core-confidential-web-app">ASP.NET Core (Confidential Web App)</h2>
+<p>ASP.NET Core MVC / Razor Pages applications run on the <strong>server</strong>, so they are <strong>confidential clients</strong>.<br>
+The app can safely store a <strong>Client Secret</strong> and use the standard Authorization Code or Hybrid flow.</p>
+<pre><code class="lang-csharp">using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddAuthentication(options =&gt;
+    {
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = &quot;ErpNet&quot;;
+    })
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddOpenIdConnect(&quot;ErpNet&quot;, options =&gt;
+    {
+        options.Authority = &quot;https://id.erp.net/id&quot;;
+
+        // Must match the confidential client registered in ERP.net ID
+        options.ClientId = &quot;&lt;your-client-id&gt;&quot;;
+        options.ClientSecret = &quot;&lt;your-client-secret&gt;&quot;;
+
+        options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
+        options.CallbackPath = &quot;/signin-erpnet&quot;;
+        options.SignedOutCallbackPath = &quot;/signout-erpnet&quot;;
+
+        options.SaveTokens = true;
+        options.GetClaimsFromUserInfoEndpoint = true;
+
+        options.Scope.Add(&quot;openid&quot;);
+        options.Scope.Add(&quot;profile&quot;);
+        // options.Scope.Add(&quot;offline_access&quot;); // if you need refresh tokens
+    });
+
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapDefaultControllerRoute();
+
+app.Run();
+</code></pre>
+<h2 id="summary">Summary</h2>
+<p>All platforms use the same core OIDC parameters:</p>
+<ul>
+<li>Authority: <code>https://id.erp.net/id</code></li>
+<li>Client ID / Client Secret: from ERP.net</li>
+<li>Redirect URI: your app's callback</li>
+<li>Scopes: openid profile (and others as needed)</li>
+<li>Choose a library for your platform, plug in these values, and you can sign users in with ERP.net Identity.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/auth/concepts/samples/erpnet-external-idp-samples.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

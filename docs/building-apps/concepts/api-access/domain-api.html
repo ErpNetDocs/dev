@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Building Apps with the Domain API | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Building Apps with the Domain API | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/concepts/api-access/domain-api.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="building-apps-with-the-domain-api">Building Apps with the Domain API</h1>
+
+<div class="NOTE">
+<h5>Note</h5>
+<p>Full technical documentation is available here:<br>
+<a href="../../../domain-api/index.html"><strong>Domain API Reference</strong></a></p>
+</div>
+<p>The <strong>Domain API</strong> is the primary interface for integrating with ERP.net business logic.</p>
+<p>It provides structured, object-oriented access to data and operations through the <strong>OData protocol</strong>, ensuring that all business rules, standard validation, permissions, and workflow rules are applied.</p>
+<p>This makes it the ideal API for <strong>applications, integrations, and automation</strong> that need to interact with ERP.net in the same way as the native client does.</p>
+<h2 id="when-to-use-the-domain-api">When to Use the Domain API</h2>
+<p>Use the Domain API when your app needs to:</p>
+<ul>
+<li>Work with <strong>business objects</strong> such as documents, items, customers, or orders.</li>
+<li>Automatically follow <strong>ERP.net business rules</strong>, validations, and relationships.</li>
+<li><strong>Create</strong>, <strong>update</strong>, or <strong>delete</strong> entities securely with full data integrity.</li>
+<li>Build integrations, web apps, or backend services that extend ERP.net behavior.</li>
+</ul>
+<p>It is <strong>not recommended</strong> for large-scale analytics or raw data extraction - use the <a href="table-api.html">Table API</a> instead.</p>
+<h2 id="technical-summary">Technical Summary</h2>
+<ul>
+<li><strong>Protocol:</strong> OData (v4 compliant)</li>
+<li><strong>Base URL:</strong><br>
+<code>https://&lt;instance&gt;.my.erp.net/api/domain/</code></li>
+<li><strong>Authentication:</strong> OAuth 2.0 access token (Bearer)</li>
+<li><strong>Formats:</strong> JSON by default</li>
+<li><strong>Respects:</strong> Business logic, security roles, and license sessions.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The Domain API automatically applies ERP.net's internal rules and triggers.<br>
+This ensures data consistency but may make it slower than raw table access - ideal for transactional integrity.</p>
+</div>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="../../../domain-api/index.html"><strong>Domain API Reference</strong></a><br>
+Complete documentation with samples and query patterns.</p>
+</li>
+<li><p><a href="table-api.html"><strong>Table API</strong></a><br>
+For analytics and high-volume data extraction.</p>
+</li>
+<li><p><a href="../api-best-practices.html"><strong>Best Practices for Calling APIs Securely</strong></a><br>
+Protect tokens, optimize sessions, and handle expiration correctly.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/concepts/api-access/domain-api.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

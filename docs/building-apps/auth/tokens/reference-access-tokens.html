@@ -93,7 +93,7 @@
 <pre><code class="lang-text">enrt_1D41D4694B4F02D3D6A31FFA07E20B73F48248B26C75A0CCCB5F9DBEE41F7960
 </code></pre>
 <h2 id="overview">Overview</h2>
-<p>Reference tokens are <strong>opaque strings</strong> (not JWTs) that reference an internal record stored and validated by the ERP.net Identity Server.</p>
+<p>Reference tokens are <strong>opaque strings</strong> (not JWTs) that reference an internal record stored and validated by the ERP.net Identity.</p>
 <p>They can be revoked instantly and are traceable by administrators.</p>
 <p>Two types of reference tokens exist:</p>
 <table>
@@ -168,7 +168,7 @@ Only administrators can issue <strong>SATs</strong>, since the Instance Manager 
 <li>Are <strong>issued manually</strong> - never automatically by OAuth flows.</li>
 <li>Are <strong>bound</strong> to a specific ERP.net instance.</li>
 <li>Have a <strong>defined expiration time</strong> (for security and compliance).</li>
-<li>Are <strong>stored securely</strong> in the ERP.net Identity Server and <strong>revocable immediately</strong>.</li>
+<li>Are <strong>stored securely</strong> in the ERP.net Identity and <strong>revocable immediately</strong>.</li>
 <li>Can <strong>log last used timestamp</strong> for audit and monitoring.</li>
 <li>Must be <strong>treated as secrets</strong> - never shared or embedded in public code or configuration.</li>
 </ul>
@@ -272,11 +272,8 @@ This ensures consistent permissions, stable identity, and centralized audit cont
 <li><p><a href="access-tokens.html"><strong>Access Tokens</strong></a><br>
 Learn how ERP.net uses short-lived OAuth access tokens for standard app flows.</p>
 </li>
-<li><p><a href="scopes.html"><strong>Scopes and Permissions</strong></a><br>
+<li><p><a href="../configuration/scopes.html"><strong>Scopes</strong></a><br>
 Understand how scopes control what data your tokens can access.</p>
-</li>
-<li><p><a href="../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
-See how trusted apps define system users, modes, and scope policies.</p>
 </li>
 <li><p><a href="token-lifetime.html"><strong>Token Lifetime and Renewal</strong></a><br>
 Learn how expiration and renewal policies affect security.</p>

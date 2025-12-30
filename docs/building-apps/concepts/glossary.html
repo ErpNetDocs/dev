@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Glossary and Key Terms | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Glossary and Key Terms | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/concepts/glossary.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="glossary-and-key-terms">Glossary and Key Terms</h1>
+
+<p>This glossary explains common terms and concepts used throughout the ERP.net developer documentation.</p>
+<hr>
+<h3 id="access-token">Access Token</h3>
+<p>A short-lived token issued by ERP.net Identity that authorizes API requests.<br>
+Used to prove that an app or user has permission to access ERP.net resources.</p>
+<hr>
+<h3 id="refresh-token">Refresh Token</h3>
+<p>A long-lived token used to obtain new access tokens without re-authenticating.<br>
+Typically valid for 30 days.</p>
+<hr>
+<h3 id="reference-access-token">Reference Access Token</h3>
+<p>Also known as a <strong>Personal Access Token (PAT)</strong> or <strong>Service Access Token (SAT)</strong>.<br>
+A manually generated, long-lived token stored on the server and represented by an opaque value (e.g. <code>enrt_...</code>).</p>
+<hr>
+<h3 id="trusted-application">Trusted Application</h3>
+<p>A registered app in ERP.net that defines how it authenticates, which users can issue tokens for it, and what <strong>System User</strong> it runs as.</p>
+<hr>
+<h3 id="system-user">System User</h3>
+<p>A dedicated internal user account used by background or service applications.</p>
+<hr>
+<h3 id="scope">Scope</h3>
+<p>A permission boundary embedded in tokens.<br>
+Determines what operations (e.g. read, update) the token holder can perform.</p>
+<hr>
+<h3 id="session">Session</h3>
+<p>A live connection between a token and an ERP.net instance.<br>
+Sessions consume licenses and are automatically closed after inactivity.</p>
+<hr>
+<h3 id="license-slot">License Slot</h3>
+<p>Represents one concurrent session in ERP.net.<br>
+Each active session consumes a license slot until it ends or times out.</p>
+<hr>
+<h3 id="erpnet-identity">ERP.net Identity</h3>
+<p>The built-in ERP.net authentication authority that handles sign-in, issues tokens, and validates access for all apps.</p>
+<hr>
+<h3 id="oauth-20">OAuth 2.0</h3>
+<p>The industry-standard protocol used for authentication and authorization in ERP.net.<br>
+Defines flows like <strong>Authorization Code</strong> and <strong>Client Credentials</strong>.</p>
+<hr>
+<h3 id="authorization-code-flow">Authorization Code Flow</h3>
+<p>Used by interactive applications (web or desktop) where a user signs in and authorizes the app to act on their behalf.</p>
+<hr>
+<h3 id="client-credentials-flow">Client Credentials Flow</h3>
+<p>Used by service or background applications that act as themselves rather than a user.<br>
+Authenticates via client ID and secret.</p>
+<hr>
+<h3 id="hybrid-app">Hybrid App</h3>
+<p>An application that combines both user-facing and service components.<br>
+Uses both Authorization Code and Client Credentials flows.</p>
+<hr>
+<h3 id="instance-manager">Instance Manager</h3>
+<p>The administrative interface for managing trusted apps, users, and licenses for an ERP.net instance.</p>
+<hr>
+<h3 id="profile-site">Profile Site</h3>
+<p>A self-service web interface where users can manage their profile, passwords, and personal tokens (PATs).</p>
+<hr>
+<h3 id="domain-api">Domain API</h3>
+<p>The main OData-based API for ERP.net business objects - ideal for apps and services that need structured, relational data access.</p>
+<hr>
+<h3 id="table-api">Table API</h3>
+<p>An OData-based, table-oriented API optimized for BI tools and large data extractions.<br>
+Supports <strong>streaming</strong> for efficient large dataset transfers.</p>
+<hr>
+<h3 id="reference">Reference</h3>
+<p>For a deeper understanding of these terms, explore:</p>
+<ul>
+<li><a href="../auth/overview.html">Authentication and Authorization</a></li>
+<li><a href="../auth/tokens/tokens-overview.html">Tokens</a></li>
+<li><a href="../auth/sessions/overview.html">Sessions</a></li>
+<li><a href="api-access/overview.html">API Access</a></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/concepts/glossary.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -90,7 +90,7 @@
 <p>Interactive apps use browser redirects to sign users in and return an authorization code to the app.</p>
 <p>This page explains how <strong>redirect URIs</strong> are validated in ERP.net and how to secure the Authorization Code flow with <strong>PKCE</strong>.</p>
 <h2 id="redirect-uris">Redirect URIs</h2>
-<p>A redirect URI is where the Identity Server sends the user after a successful sign-in (or error).</p>
+<p>A redirect URI is where ERP.net Identity sends the user after a successful sign-in (or error).</p>
 <p>For security, it must match <strong>exactly</strong> one of the URIs registered in the app’s <strong>Trusted Application</strong>.</p>
 <h3 id="rules">Rules</h3>
 <ul>
@@ -102,7 +102,7 @@
 </ul>
 <div class="NOTE">
 <h5>Note</h5>
-<p>If the redirect URI does not match exactly, the Identity Server will reject the request.</p>
+<p>If the redirect URI does not match exactly, ERP.net Identity will reject the request.</p>
 </div>
 <h3 id="common-redirect-uri-patterns">Common redirect URI patterns</h3>
 <table>
@@ -160,7 +160,7 @@
 <li>The app computes <code>code_challenge = BASE64URL(SHA256(code_verifier))</code>.</li>
 <li>The app starts the authorize request with <code>code_challenge</code> and <code>code_challenge_method=S256</code>.</li>
 <li>After sign-in, the app exchanges the returned <code>code</code> at the token endpoint and must present the original <code>code_verifier</code>.</li>
-<li>The Identity Server verifies that <code>SHA256(code_verifier)</code> matches the original <code>code_challenge</code>.</li>
+<li>ERP.net Identity verifies that <code>SHA256(code_verifier)</code> matches the original <code>code_challenge</code>.</li>
 </ol>
 <p>If an attacker steals the <code>code</code> from the redirect, it is useless without the <code>code_verifier</code>.</p>
 <h2 id="build-the-authorize-request">Build the authorize request</h2>
@@ -236,7 +236,7 @@ Renew access without forcing the user to sign in again.</p>
 <li><p><a href="interactive-apps-errors.html"><strong>Common Errors</strong></a><br>
 Troubleshooting invalid redirects, PKCE mismatches, and token issues.</p>
 </li>
-<li><p><a href="../../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+<li><p><a href="../../configuration/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
 How app registrations define allowed redirects, users, and scopes.</p>
 </li>
 </ul>

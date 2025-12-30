@@ -146,7 +146,7 @@ This setup minimizes session usage and isolates data access securely.</p>
 <ul>
 <li><strong>Separation of duties</strong> – users act within their own permissions; backend code runs as a service account.</li>
 <li><strong>Security and compliance</strong> – no sharing of user credentials for automation.</li>
-<li><strong>Consistency</strong> – both components authenticate through the same Identity Server and share configuration via their Trusted Application.</li>
+<li><strong>Consistency</strong> – both components authenticate through the same ERP.net Identity and share configuration via their Trusted Application.</li>
 <li><strong>Efficiency for external users</strong> – external logins establish identity only, while all ERP.net interactions occur under one backend session.</li>
 </ul>
 <h2 id="relationship-to-trusted-applications">Relationship to Trusted Applications</h2>
@@ -201,7 +201,7 @@ For external-facing apps, it also ensures that ERP.net session consumption happe
 <pre><code class="lang-mermaid">flowchart LR
   subgraph Frontend[Frontend App]
     U[User] --&gt;|Signs in| Web[Web App]
-    Web --&gt;|Auth Code Flow| IDP[ERP.net Identity Server]
+    Web --&gt;|Auth Code Flow| IDP[ERP.net Identity]
     IDP --&gt;|User Token| Web
   end
 
@@ -236,7 +236,7 @@ Explore how hybrid apps structure front-end and backend communication.</p>
 <li><p><a href="hybrid-examples.html"><strong>Example Scenarios</strong></a><br>
 See how real hybrid patterns are implemented in practice.</p>
 </li>
-<li><p><a href="../../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+<li><p><a href="../../configuration/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
 Understand how System User and impersonation settings define hybrid access.</p>
 </li>
 </ul>

@@ -99,13 +99,13 @@
 </ul>
 <h2 id="how-it-works">How It Works</h2>
 <p>The Authorization Code flow separates user authentication from API access.</p>
-<p>The app redirects the user to the ERP.net instance's <strong>Identity Server</strong>, where the user signs in.</p>
-<p>After successful authentication, the Identity Server issues a short-lived <strong>authorization code</strong>, which the app exchanges for an <strong>access token</strong> (and optionally a refresh token).</p>
+<p>The app redirects the user to the ERP.net instance's <strong>Identity</strong>, where the user signs in.</p>
+<p>After successful authentication, ERP.net Identity issues a short-lived <strong>authorization code</strong>, which the app exchanges for an <strong>access token</strong> (and optionally a refresh token).</p>
 <p>The app then uses the access token to call ERP.net APIs on behalf of the user.</p>
 <pre><code class="lang-mermaid">sequenceDiagram
     participant User
     participant App
-    participant IDP as ERP.net Identity Server
+    participant IDP as ERP.net Identity
     participant API as ERP.net APIs
 
     User-&gt;&gt;App: Open app and click &quot;Sign In&quot;
@@ -120,7 +120,7 @@
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Tokens are issued by the <strong>Identity Server</strong> of the target ERP.net instance.<br>
+<p>Tokens are issued by <strong>ERP.net Identity</strong> of the target ERP.net instance.<br>
 Each instance validates and authorizes the app through its Trusted Application configuration.</p>
 </div>
 <h2 id="trusted-application-relationship">Trusted Application Relationship</h2>
@@ -133,10 +133,10 @@ The Trusted Application record defines:</p>
 <li>Which <strong>users</strong> can authenticate (internal or community).</li>
 <li>The <strong>scopes</strong> and permissions the app can request.</li>
 </ul>
-<p>During the sign-in process, the Identity Server checks the app's registration, validates the redirect URI, and ensures the scopes requested match the Trusted Application configuration.</p>
+<p>During the sign-in process, ERP.net Identity checks the app's registration, validates the redirect URI, and ensures the scopes requested match the Trusted Application configuration.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>If the app is not registered or its configuration does not match, the Identity Server will reject the authentication request.</p>
+<p>If the app is not registered or its configuration does not match, ERP.net Identity will reject the authentication request.</p>
 </div>
 <h2 id="security-highlights">Security Highlights</h2>
 <ul>
@@ -179,10 +179,10 @@ The Trusted Application record defines:</p>
 <h2 id="typical-sequence-summary">Typical Sequence Summary</h2>
 <ol>
 <li>User opens the app and selects <strong>Sign In</strong>.</li>
-<li>App redirects to ERP.net Identity Server for authentication.</li>
-<li>The Identity Server checks the Trusted Application configuration (redirects, scopes, client type).</li>
+<li>App redirects to ERP.net Identity for authentication.</li>
+<li>ERP.net Identity checks the Trusted Application configuration (redirects, scopes, client type).</li>
 <li>The user signs in and grants consent.</li>
-<li>Identity Server redirects back to the app with an authorization code.</li>
+<li>ERP.net Identity redirects back to the app with an authorization code.</li>
 <li>The app exchanges the code for an access token.</li>
 <li>The app uses the token to call ERP.net APIs.</li>
 <li>If allowed, the app silently renews the token using a refresh token.</li>
@@ -204,7 +204,7 @@ How to secure redirects and apply PKCE correctly.</p>
 <li><p><a href="interactive-apps-refresh-tokens.html"><strong>Refresh Tokens</strong></a><br>
 How to renew tokens without requiring the user to sign in again.</p>
 </li>
-<li><p><a href="../../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+<li><p><a href="../../configuration/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
 Learn how app registrations define access modes, users, and permissions.</p>
 </li>
 <li><p><a href="interactive-apps-errors.html"><strong>Common Errors</strong></a><br>

@@ -93,7 +93,7 @@
 <p>Every app that signs in users or calls ERP.net APIs must be registered as a <strong>Trusted Application</strong> in your ERP.net instance.</p>
 <p>It defines who the app is, what permissions (scopes) it has, and which authentication flows it may use.</p>
 <p>Without this registration, ERP.net Identity will reject all authentication requests.</p>
-<p>See: <a href="how-apps-connect/trusted-apps-access.html">Trusted Applications and Access Control</a></p>
+<p>See: <a href="../configuration/trusted-apps-access.html">Trusted Applications and Access Control</a></p>
 <hr>
 <h2 id="which-authentication-flow-should-i-use">Which authentication flow should I use?</h2>
 <p>It depends on the type of app you're building:</p>
@@ -102,14 +102,14 @@
 <li><strong>Background services or automations:</strong> use <strong>Client Credentials Flow</strong>.</li>
 <li><strong>Apps with both frontend and backend:</strong> use the <strong>Hybrid Flow</strong> (combined).</li>
 </ul>
-<p>See: <a href="flows/choosing-flow.html">Choosing the Right Flow</a></p>
+<p>See: <a href="../flows/choosing-flow.html">Choosing the Right Flow</a></p>
 <hr>
 <h3 id="can-i-call--apis-without-oauth">Can I call ERP.net APIs without OAuth?</h3>
 <p>No.</p>
 <p>Basic authentication and API keys are deprecated.</p>
 <p>All external access must go through the ERP.net Identity using OAuth 2.0.</p>
 <p>The only exception is <strong>reference tokens</strong> (PAT or SAT), which are manually issued and act like long-lived API keys - but even they require proper scope and authorization.</p>
-<p>See: <a href="tokens/reference-access-tokens.html">Reference Access Tokens</a></p>
+<p>See: <a href="../tokens/reference-access-tokens.html">Reference Access Tokens</a></p>
 <hr>
 <h3 id="whats-the-difference-between-a-user-token-and-a-service-token">What's the difference between a user token and a service token?</h3>
 <ul>
@@ -117,7 +117,7 @@
 <li><strong>Service token (Client Credentials Flow):</strong> represents an application identity (system user).</li>
 </ul>
 <p>They are not interchangeable - user tokens have personal access; service tokens have system-level access.</p>
-<p>See: <a href="tokens/tokens-overview.html">Tokens Overview</a></p>
+<p>See: <a href="../tokens/tokens-overview.html">Tokens Overview</a></p>
 <hr>
 <h2 id="my-login-works-but-api-calls-return-401-unauthorized-why">My login works, but API calls return 401 Unauthorized. Why?</h2>
 <p>You are probably sending an expired or missing token in your API request.</p>
@@ -139,8 +139,8 @@
 <p><strong>Fix:</strong></p>
 <p>Check your Trusted Application settings and make sure you use the correct client ID and secret.</p>
 <p>Public (JavaScript) apps must not send a secret at all.</p>
-<p>See: <a href="flows/auth-code/interactive-apps-errors.html">Interactive Apps Common Errors</a>
-See: <a href="flows/client-credentials/service-apps-errors.html">Service Apps Common Errors</a></p>
+<p>See: <a href="../flows/auth-code/interactive-apps-errors.html">Interactive Apps Common Errors</a>
+See: <a href="../flows/client-credentials/service-apps-errors.html">Service Apps Common Errors</a></p>
 <hr>
 <h3 id="i-get-invalid_scope-what-does-that-mean">I get &quot;invalid_scope&quot;. What does that mean?</h3>
 <p>You're asking for permissions your app is not allowed to have.</p>
@@ -150,8 +150,8 @@ See: <a href="flows/client-credentials/service-apps-errors.html">Service Apps Co
 <p>Update the app's allowed scopes, or request only those configured in ERP.net.</p>
 <p>Common valid scopes are:<br>
 <code>read</code>, <code>update</code>, <code>offline_access</code>, <code>profile</code>.</p>
-<p>See: <a href="flows/auth-code/interactive-apps-errors.html">Interactive Apps Common Errors</a>
-See: <a href="flows/client-credentials/service-apps-errors.html">Service Apps Common Errors</a></p>
+<p>See: <a href="../flows/auth-code/interactive-apps-errors.html">Interactive Apps Common Errors</a>
+See: <a href="../flows/client-credentials/service-apps-errors.html">Service Apps Common Errors</a></p>
 <hr>
 <h3 id="my-redirect-uri-is-rejected-as-invalid-why">My redirect URI is rejected as invalid. Why?</h3>
 <p>The <code>redirect_uri</code> you send must exactly match one of the URIs defined in the Trusted Application - including <strong>https</strong>, casing, and trailing slash.</p>
@@ -164,7 +164,7 @@ See: <a href="flows/client-credentials/service-apps-errors.html">Service Apps Co
 <p>No - access tokens are intentionally short-lived (1 hour) for security.</p>
 <p>However, <strong>confidential</strong> apps can use a <strong>refresh token</strong> to get a new one automatically.</p>
 <p>If your app is <strong>public</strong> (for example, runs only in the browser), it must ask the user to sign in again when the token expires.</p>
-<p>See: <a href="tokens/token-lifetime.html">Token Lifetime and Renewal</a></p>
+<p>See: <a href="../tokens/token-lifetime.html">Token Lifetime and Renewal</a></p>
 <hr>
 <h3 id="i-have-a-refresh-token-but-it-stopped-working-why">I have a refresh token, but it stopped working. Why?</h3>
 <p>Refresh tokens can expire or be revoked:</p>
@@ -174,7 +174,7 @@ See: <a href="flows/client-credentials/service-apps-errors.html">Service Apps Co
 <li>If the user logs out or changes their password, old tokens stop working.</li>
 </ul>
 <p>Always be ready to prompt the user to sign in again if refreshing fails.</p>
-<p>See: <a href="tokens/token-lifetime.html">Token Lifetime and Renewal</a></p>
+<p>See: <a href="../tokens/token-lifetime.html">Token Lifetime and Renewal</a></p>
 <hr>
 <h3 id="whats-the-difference-between-a-token-and-a-session">What's the difference between a token and a session?</h3>
 <ul>
@@ -183,7 +183,7 @@ See: <a href="flows/client-credentials/service-apps-errors.html">Service Apps Co
 </ul>
 <p>You can have a valid token but fail to open a session if all licenses are in use.</p>
 <p>Sessions close automatically after inactivity (about 20 minutes).</p>
-<p>See: <a href="sessions/token-session-relationship.html">Tokens and Sessions Relationship</a></p>
+<p>See: <a href="../sessions/token-session-relationship.html">Tokens and Sessions Relationship</a></p>
 <hr>
 <h3 id="can-i-log-out-programmatically">Can I log out programmatically?</h3>
 <p>Yes - for interactive apps, redirect the user to:</p>
@@ -191,7 +191,7 @@ See: <a href="flows/client-credentials/service-apps-errors.html">Service Apps Co
 </code></pre>
 <p>The user will see a confirmation page and, after confirming, their session will close and release the license.</p>
 <p>Service (non-interactive) apps do not use this endpoint - their sessions close automatically after expiration.</p>
-<p>See: <a href="sessions/session-revocation.html">Session Revocation and Logout</a></p>
+<p>See: <a href="../sessions/session-revocation.html">Session Revocation and Logout</a></p>
 <hr>
 <h3 id="why-does--reject-my-request-with-maximumlicensecountexceeded">Why does ERP.net reject my request with &quot;MaximumLicenseCountExceeded&quot;?</h3>
 <p>All licenses are currently in use.</p>
@@ -201,13 +201,13 @@ See: <a href="flows/client-credentials/service-apps-errors.html">Service Apps Co
 <li>Wait a few minutes - inactive sessions release automatically after 20 minutes.</li>
 <li>Plan license capacity based on concurrency.</li>
 </ul>
-<p>See: <a href="sessions/license-slot.html">License Slot Usage</a></p>
+<p>See: <a href="../sessions/license-slot.html">License Slot Usage</a></p>
 <hr>
 <h3 id="can-i-use-one-token-for-multiple-apps">Can I use one token for multiple apps?</h3>
 <p>No - this violates ERP.net's license agreement.</p>
 <p>Each user or service must have their own session and token.</p>
 <p>Parallel requests with the same token share the same session and license.</p>
-<p>See: <a href="sessions/license-compliance.html">License Compliance and Violations</a></p>
+<p>See: <a href="../sessions/license-compliance.html">License Compliance and Violations</a></p>
 <hr>
 <h3 id="how-can-i-safely-test-authentication">How can I safely test authentication?</h3>
 <p>Use a <strong>sandbox instance</strong> or a dedicated test tenant.</p>
@@ -223,9 +223,9 @@ See: <a href="flows/client-credentials/service-apps-errors.html">Service Apps Co
 <h2 id="learn-more">Learn More</h2>
 <ul>
 <li><a href="how-apps-connect/oauth2-overview.html">OAuth 2.0 Overview</a></li>
-<li><a href="how-apps-connect/trusted-apps-access.html">Trusted Applications and Access Control</a></li>
-<li><a href="tokens/token-lifetime.html">Token Lifetime and Renewal</a></li>
-<li><a href="sessions/license-slot.html">License Slot Usage</a></li>
+<li><a href="../configuration/trusted-apps-access.html">Trusted Applications and Access Control</a></li>
+<li><a href="../tokens/token-lifetime.html">Token Lifetime and Renewal</a></li>
+<li><a href="../sessions/license-slot.html">License Slot Usage</a></li>
 </ul>
 
 </article>

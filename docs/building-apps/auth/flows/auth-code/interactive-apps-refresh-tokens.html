@@ -105,14 +105,14 @@ They are <strong>not issued</strong> for the Client Credentials flow or non-inte
 </li>
 <li><p>When the access token expires, the app calls the <strong>token endpoint</strong> again, this time using the refresh token.</p>
 </li>
-<li><p>ERP.net Identity Server validates the refresh token and issues a <strong>new access token</strong> (and possibly a new refresh token).</p>
+<li><p>ERP.net Identity validates the refresh token and issues a <strong>new access token</strong> (and possibly a new refresh token).</p>
 </li>
 <li><p>The app replaces the expired token and continues calling the API without user interaction.</p>
 </li>
 </ol>
 <pre><code class="lang-mermaid">sequenceDiagram
     participant App
-    participant IDP as ERP.net Identity Server
+    participant IDP as ERP.net Identity
     participant API as ERP.net API
 
     App-&gt;&gt;IDP: POST /token (grant_type=authorization_code)
@@ -219,7 +219,7 @@ How interactive apps sign in and obtain tokens.</p>
 <li><p><a href="interactive-apps-redirects-pkce.html"><strong>Redirect URIs and PKCE</strong></a><br>
 Securing redirects and preventing code interception.</p>
 </li>
-<li><p><a href="../../how-apps-connect/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+<li><p><a href="../../configuration/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
 Learn how app configuration affects token issuance.</p>
 </li>
 <li><p><a href="interactive-apps-errors.html"><strong>Common Errors</strong></a><br>
