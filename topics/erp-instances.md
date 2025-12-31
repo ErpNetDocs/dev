@@ -24,10 +24,10 @@ The ERP Instances are provided as a service from the @@erpnet infrastructure and
 Each ERP Instance has a Unique Instance Name (UIN) or simply name.
 For example, the demonstration database is named "demodb".
 
-## Root URL
+## Root (Base) URL
 
 The ERP Instances are accessible through their root URL address.
-The root URL address is
+The root URL (aka Base URL) address is
 
 https://<\<UIN\>>.my.erp.net
 
@@ -45,3 +45,12 @@ The root URL is usually also used as base address for the instance-related web s
 
 > [!NOTE]
 > The web sites can be hosted at custom URL addresses. Using the Root URL is just a default.
+
+## Instance Host/Hostname
+
+In some context, the documentation and/or software, uses the term "Instance Host" or "Instance Hostname".
+The instance host/name is just the host name of the instance, e.g.:
+demodb.my.erp.net
+
+The instance host/name is not a valid URL address.
+It is used usually for brevity and to denote that this is hostname for @@name instance.
