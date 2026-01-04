@@ -42,6 +42,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/concepts/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/concepts/overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "building-apps/auth/concepts/samples/basic-acquire-access-token.md",
       "output": {
         ".html": {
@@ -152,6 +162,16 @@
         },
         ".json": {
           "relative_path": "building-apps/auth/concepts/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/configuration/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/configuration/overview.html"
         }
       },
       "version": ""
@@ -437,6 +457,16 @@
       "output": {
         ".html": {
           "relative_path": "building-apps/auth/getting-started/instance-id-web-portals.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/auth/getting-started/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/auth/getting-started/overview.html"
         }
       },
       "version": ""
@@ -790,6 +820,16 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/concepts/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/concepts/overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Toc",
       "source_relative_path": "building-apps/concepts/toc.yml",
       "output": {
@@ -804,10 +844,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/concepts/what-are-erpnet-apps.md",
+      "source_relative_path": "building-apps/concepts/what-is-erpnet-app.md",
       "output": {
         ".html": {
-          "relative_path": "building-apps/concepts/what-are-erpnet-apps.html"
+          "relative_path": "building-apps/concepts/what-is-erpnet-app.html"
         }
       },
       "version": ""
@@ -823,6 +863,16 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/configuration/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/configuration/overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Toc",
       "source_relative_path": "building-apps/configuration/toc.yml",
       "output": {
@@ -831,6 +881,79 @@
         },
         ".json": {
           "relative_path": "building-apps/configuration/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/getting-started/create-trusted-application.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/getting-started/create-trusted-application.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/getting-started/first-api-call.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/getting-started/first-api-call.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/getting-started/get-access-token.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/getting-started/get-access-token.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/getting-started/next-steps.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/getting-started/next-steps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/getting-started/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/getting-started/overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/getting-started/prerequisites.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/getting-started/prerequisites.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "building-apps/getting-started/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/getting-started/toc.html"
+        },
+        ".json": {
+          "relative_path": "building-apps/getting-started/toc.json"
         }
       },
       "version": ""
