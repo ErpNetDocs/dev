@@ -1,4 +1,4 @@
-- name: Overview
+- name: How apps connect - Overview
   href: overview.md
 - name: OAuth 2.0
   href: oauth2-overview.md  

@@ -3,7 +3,7 @@
 - name: Prerequisites
   href: prerequisites.md
 - name: Create a Trusted Application
-  href: create-trusted-application.md
+  href: ../auth/configuration/trusted-apps-access.md
 - name: Get an access token
   href: get-access-token.md
 - name: Make your first API call
