@@ -887,16 +887,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "building-apps/getting-started/create-trusted-application.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/getting-started/create-trusted-application.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "building-apps/getting-started/first-api-call.md",
       "output": {
         ".html": {
