@@ -768,6 +768,26 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "building-apps/concepts/how-apps-connect/erpnet-as-external-idp.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/concepts/how-apps-connect/erpnet-as-external-idp.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "building-apps/concepts/how-apps-connect/identity-authorities.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/concepts/how-apps-connect/identity-authorities.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "building-apps/concepts/how-apps-connect/identity-server.md",
       "output": {
         ".html": {
@@ -848,39 +868,6 @@
       "output": {
         ".html": {
           "relative_path": "building-apps/concepts/what-is-erpnet-app.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/configuration/erpnet-as-external-idp.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/configuration/erpnet-as-external-idp.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/configuration/overview.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/configuration/overview.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Toc",
-      "source_relative_path": "building-apps/configuration/toc.yml",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/configuration/toc.html"
-        },
-        ".json": {
-          "relative_path": "building-apps/configuration/toc.json"
         }
       },
       "version": ""

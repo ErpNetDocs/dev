@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | ERP.net Developer Docs </title>
+      <title>Prerequisites | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | ERP.net Developer Docs ">
+      <meta name="title" content="Prerequisites | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,7 +85,58 @@
         </div>
 
         <article data-uid="">
+<h1 id="prerequisites">Prerequisites</h1>
 
+<p>This page lists the minimum prerequisites for building an ERP.net integration.</p>
+<h2 id="1-know-your-target-instance">1) Know your target instance</h2>
+<p>You will need the base URL of the ERP.net instance you will connect to, for example:</p>
+<ul>
+<li><code>https://{instance}.my.erp.net</code></li>
+</ul>
+<p>From it, you will derive:</p>
+<ul>
+<li>the <strong>instance Identity Server authority</strong> (see <a href="../concepts/how-apps-connect/identity-server.html">Instance Identity Server</a>)</li>
+<li>the <strong>API endpoints</strong> you will call (see <a href="../concepts/api-access/overview.html">API Access</a>)</li>
+</ul>
+<p>If you are unsure whether you should use the instance identity server or the global ERP.net IdP, read:</p>
+<ul>
+<li><a href="../concepts/how-apps-connect/identity-authorities.html">Identity authorities (instance vs global)</a></li>
+</ul>
+<h2 id="2-choose-your-app-scenario-so-you-pick-the-right-auth-tutorial">2) Choose your app scenario (so you pick the right auth tutorial)</h2>
+<p>Pick the scenario that matches your app:</p>
+<ul>
+<li>interactive apps (users sign in): web app, SPA, portal</li>
+<li>non-interactive integrations: service apps, automations</li>
+</ul>
+<p>Then follow the matching tutorial in:</p>
+<ul>
+<li><a href="../auth/getting-started/overview.html">Getting Started (Authentication)</a></li>
+</ul>
+<h2 id="3-required-access-and-permissions">3) Required access and permissions</h2>
+<p>To proceed, you typically need:</p>
+<ul>
+<li>the ability to register (or request) a <strong>Trusted Application</strong> in the ERP.net instance</li>
+<li>the ability to use (or request) the required <strong>Scopes</strong> for your integration</li>
+</ul>
+<p>See:</p>
+<ul>
+<li><a href="../auth/configuration/trusted-apps-access.html">Trusted Applications</a></li>
+<li><a href="../auth/configuration/scopes.html">Scopes</a></li>
+</ul>
+<h2 id="4-tools">4) Tools</h2>
+<p>Any HTTP client is sufficient to validate the first token + API call:</p>
+<ul>
+<li>curl (CLI)</li>
+<li>Postman (GUI)</li>
+<li>your application code (recommended once the first call is validated)</li>
+</ul>
+<h2 id="5-what-you-should-not-do">5) What you should not do</h2>
+<ul>
+<li>Do not start by guessing endpoints or mixing authorities.</li>
+<li>Do not request broad permissions &quot;just to make it work&quot;.
+Prefer least-privilege via the right scopes and the right app type.</li>
+</ul>
+<p>See: <a href="../auth/concepts/security-best-practices.html">Security Best Practices</a></p>
 
 </article>
 

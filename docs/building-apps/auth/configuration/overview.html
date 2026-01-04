@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | ERP.net Developer Docs </title>
+      <title>Overview | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | ERP.net Developer Docs ">
+      <meta name="title" content="Overview | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../../favicon.ico">
@@ -85,7 +85,30 @@
         </div>
 
         <article data-uid="">
+<h1 id="overview">Overview</h1>
 
+<p>This section explains how ERP.net controls access for external applications through <strong>Trusted Applications</strong> and <strong>Scopes</strong>. These settings define <em>who</em> an app is, <em>what</em> it can access, and <em>how</em> the instance authorizes API requests.</p>
+<p>If you're implementing a concrete auth scenario (SPA, web app, service integration), see the tutorial guides in <a href="../getting-started/overview.html">Getting Started (Authentication)</a>.</p>
+<h2 id="what-is-configured-here">What is configured here</h2>
+<h3 id="trusted-applications">Trusted Applications</h3>
+<p>A <strong>Trusted Application</strong> is the instance-side registration of an external app. It identifies the client (e.g., <code>client_id</code>) and defines the baseline trust and access rules used during authentication and API authorization.</p>
+<p>See: <a href="trusted-apps-access.html">Trusted Applications</a></p>
+<h3 id="scopes">Scopes</h3>
+<p><strong>Scopes</strong> define the permissions your app can request and the instance can grant. Scopes are used to implement least-privilege access by limiting what APIs and operations a token allows.</p>
+<p>See: <a href="scopes.html">Scopes</a></p>
+<h2 id="typical-workflow">Typical workflow</h2>
+<ol>
+<li>Register (or identify) the app as a <strong>Trusted Application</strong> in the ERP.net instance.</li>
+<li>Define or select the required <strong>Scopes</strong> for the integration scenario.</li>
+<li>Use an appropriate OAuth 2.0/OIDC flow to obtain tokens that include the approved scopes.</li>
+<li>Call ERP.net APIs using those tokens.</li>
+</ol>
+<h2 id="related-topics">Related topics</h2>
+<ul>
+<li><a href="../../concepts/how-apps-connect/identity-authorities.html">Identity authorities (instance vs global)</a></li>
+<li><a href="../overview.html">Authentication and Authorization</a></li>
+<li><a href="../tokens/tokens-overview.html">Tokens</a></li>
+</ul>
 
 </article>
 

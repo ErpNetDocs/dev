@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | ERP.net Developer Docs </title>
+      <title>Get an access token | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | ERP.net Developer Docs ">
+      <meta name="title" content="Get an access token | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,7 +85,49 @@
         </div>
 
         <article data-uid="">
+<h1 id="get-an-access-token">Get an access token</h1>
 
+<p>This page helps you choose the correct identity authority and tutorial to obtain your first working access token.</p>
+<h2 id="1-choose-the-correct-authority">1) Choose the correct authority</h2>
+<p>Use the decision guide here:</p>
+<ul>
+<li><a href="../concepts/how-apps-connect/identity-authorities.html">Identity authorities (instance vs global)</a></li>
+</ul>
+<p>In short:</p>
+<ul>
+<li>If you need to call APIs of a specific ERP.net instance, you typically use the <strong>instance Identity Server</strong>.</li>
+<li>If you need ERP.net to act as an <strong>external Identity Provider</strong> for SSO into your app, you use the <strong>global</strong> authority.</li>
+</ul>
+<h2 id="2-ensure-your-trusted-application-is-configured">2) Ensure your Trusted Application is configured</h2>
+<p>Before you can reliably obtain tokens for instance API access, ensure the app is registered and has the correct access configuration:</p>
+<ul>
+<li><a href="../auth/configuration/trusted-apps-access.html">Create / configure a Trusted Application</a></li>
+<li><a href="../auth/configuration/scopes.html">Scopes</a></li>
+</ul>
+<h2 id="3-follow-the-tutorial-that-matches-your-scenario">3) Follow the tutorial that matches your scenario</h2>
+<p>Use the scenario tutorials as the source of truth for the exact steps:</p>
+<ul>
+<li><a href="../auth/getting-started/erpnet-id-web-apps.html">ERP.net ID for Web Applications</a></li>
+<li><a href="../auth/getting-started/instance-id-spa-apps.html">Instance ID for SPA Applications</a></li>
+<li><a href="../auth/getting-started/instance-id-web-apps.html">Instance ID for Web Applications</a></li>
+<li><a href="../auth/getting-started/instance-id-web-portals.html">Instance ID for Web Portals</a></li>
+<li><a href="../auth/getting-started/service-apps.html">Service Applications</a></li>
+<li><a href="../auth/getting-started/automation.html">Automations</a></li>
+</ul>
+<h2 id="4-validate-you-actually-have-a-usable-token">4) Validate you actually have a usable token</h2>
+<p>Regardless of scenario, validate:</p>
+<ul>
+<li>you can obtain a token successfully (no auth error)</li>
+<li>the token is accepted by the target API (first call returns HTTP 200)</li>
+</ul>
+<p>If your first API call returns 401/403, do not guess.
+Check:</p>
+<ul>
+<li>authority (correct issuer)</li>
+<li>trusted app registration</li>
+<li>scopes</li>
+</ul>
+<p>See: <a href="../auth/configuration/overview.html">Configuration overview</a></p>
 
 </article>
 

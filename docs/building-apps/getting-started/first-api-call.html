@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | ERP.net Developer Docs </title>
+      <title>Make your first API call | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | ERP.net Developer Docs ">
+      <meta name="title" content="Make your first API call | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,7 +85,62 @@
         </div>
 
         <article data-uid="">
+<h1 id="make-your-first-api-call">Make your first API call</h1>
 
+<p>This page shows how to validate end-to-end access: token -&gt; API call -&gt; successful response.</p>
+<h2 id="1-choose-which-api-you-will-call-first">1) Choose which API you will call first</h2>
+<p>ERP.net exposes multiple API surfaces. Before you implement anything, decide which one you are targeting:</p>
+<ul>
+<li><a href="../concepts/api-access/overview.html">API Access (Domain API vs Table API)</a></li>
+</ul>
+<p>Pick one API and stick with it for the first validation call.</p>
+<h2 id="2-call-the-api-with-a-bearer-token">2) Call the API with a Bearer token</h2>
+<p>Use the token you obtained in the previous step and call an endpoint that is safe and easy to validate.</p>
+<p>A typical request has this shape:</p>
+<pre><code class="lang-http">GET {api-endpoint}
+Authorization: Bearer {access_token}
+Accept: application/json
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>{access_token}</code> is the token you acquired from the selected identity authority</li>
+<li><code>{api-endpoint}</code> is the endpoint from the API surface you chose (Domain API or Table API)</li>
+</ul>
+<p>Important:</p>
+<ul>
+<li>Use the API URLs from the canonical API documentation pages to avoid mixing base URL variants. See <a href="../concepts/api-access/overview.html">API Access</a>.</li>
+</ul>
+<h2 id="3-what-success-looks-like">3) What success looks like</h2>
+<ul>
+<li>HTTP 200 OK</li>
+<li>JSON response body</li>
+<li>no redirects to login pages</li>
+</ul>
+<h2 id="4-if-it-fails-quick-triage">4) If it fails (quick triage)</h2>
+<ul>
+<li><strong>401 Unauthorized</strong> usually means:
+<ul>
+<li>wrong authority / wrong token type</li>
+<li>token missing/expired</li>
+<li>request missing Authorization: Bearer ...</li>
+</ul>
+</li>
+<li><strong>403 Forbidden</strong> usually means:
+<ul>
+<li>token is valid but lacks required access (trusted app config / scopes / rules)</li>
+</ul>
+</li>
+</ul>
+<p>Start troubleshooting from:</p>
+<ul>
+<li><a href="../auth/configuration/trusted-apps-access.html">Trusted Applications</a></li>
+<li><a href="../auth/configuration/scopes.html">Scopes</a></li>
+<li><a href="../auth/configuration/overview.html">Authentication and Authorization</a></li>
+</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Do not log access tokens in production and do not embed secrets in frontend code. See: <a href="../auth/concepts/security-best-practices.html">Security Best Practices</a></p>
+</div>
 
 </article>
 

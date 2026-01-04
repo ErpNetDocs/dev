@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | ERP.net Developer Docs </title>
+      <title>Overview | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | ERP.net Developer Docs ">
+      <meta name="title" content="Overview | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../../favicon.ico">
@@ -85,7 +85,52 @@
         </div>
 
         <article data-uid="">
+<h1 id="overview">Overview</h1>
 
+<p>This section contains step-by-step guides for implementing authentication in common ERP.net app scenarios. Each guide focuses on a concrete application type and shows the recommended identity authority and integration approach.</p>
+<p>If you're looking for the underlying concepts (authorities, flows, tokens, scopes), see:</p>
+<ul>
+<li><a href="../../concepts/how-apps-connect/identity-authorities.html">Identity authorities (instance vs global)</a></li>
+<li><a href="../overview.html">Authentication and Authorization</a></li>
+</ul>
+<h2 id="choose-your-scenario">Choose your scenario</h2>
+<h3 id="interactive-applications-user-sign-in">Interactive applications (user sign-in)</h3>
+<ul>
+<li><p><a href="erpnet-id-web-apps.html">ERP.net ID for Web Applications</a><br>
+Use ERP.net as an external Identity Provider for user sign-in in your web application.</p>
+</li>
+<li><p><a href="instance-id-spa-apps.html">Instance ID for SPA Applications</a><br>
+Authenticate users in a Single Page Application against a specific ERP.net instance.</p>
+</li>
+<li><p><a href="instance-id-web-apps.html">Instance ID for Web Applications</a><br>
+Authenticate users in a web application against a specific ERP.net instance.</p>
+</li>
+<li><p><a href="instance-id-web-portals.html">Instance ID for Web Portals</a><br>
+Implement authentication for portal-style applications that access a specific ERP.net instance.</p>
+</li>
+</ul>
+<h3 id="non-interactive-applications-no-user-sign-in">Non-interactive applications (no user sign-in)</h3>
+<ul>
+<li><p><a href="service-apps.html">Service Applications</a><br>
+Authenticate service-to-service integrations (background sync, integrations) against an ERP.net instance.</p>
+</li>
+<li><p><a href="automation.html">Automations</a><br>
+Authenticate automated processes that run without direct user interaction and need controlled API access.</p>
+</li>
+</ul>
+<h2 id="what-youll-get-from-each-guide">What you'll get from each guide</h2>
+<p>Each scenario guide provides:</p>
+<ul>
+<li>which identity authority to use</li>
+<li>the recommended flow and token type for the scenario</li>
+<li>required configuration (e.g., trusted application, scopes)</li>
+<li>implementation notes and common pitfalls</li>
+</ul>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li>Start with the guide that matches your app type.</li>
+<li>If you are unsure which authority applies, read <a href="../../concepts/how-apps-connect/identity-authorities.html">Identity authorities (instance vs global)</a> first.</li>
+</ul>
 
 </article>
 

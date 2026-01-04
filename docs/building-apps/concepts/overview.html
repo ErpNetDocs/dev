@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title> | ERP.net Developer Docs </title>
+      <title>Concepts overview | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content=" | ERP.net Developer Docs ">
+      <meta name="title" content="Concepts overview | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -85,7 +85,70 @@
         </div>
 
         <article data-uid="">
+<h1 id="concepts-overview">Concepts overview</h1>
 
+<p>This section explains the core ideas behind building apps and integrations for ERP.net. Use it to understand <em>how the pieces fit together</em> before you dive into implementation details.</p>
+<p>If you want a step-by-step setup, start with <a href="../getting-started/overview.html">Getting Started</a>. For token flows, scopes, and access rules, see <a href="../auth/overview.html">Authentication and Authorization</a>.</p>
+<h2 id="what-youll-learn-here">What you'll learn here</h2>
+<h3 id="what-an--app-is">What an ERP.net App is</h3>
+<p>An <strong>ERP.net App</strong> is any application, integration, or service that connects to an ERP.net instance to extend, customize, or interact with its business data and functionality. Apps operate outside (or alongside) the instance, communicate through the instance's public APIs, and are recognized by the system through a <strong>Trusted Application</strong>. Authentication and authorization are handled through the built-in ERP.net Identity.</p>
+<p>See: <a href="what-is-erpnet-app.html">What is an ERP.net App</a></p>
+<h3 id="application-types">Application types</h3>
+<p>ERP.net supports several <strong>application types</strong>, depending on <strong>where they run</strong>, <strong>who develops them</strong>, and <strong>how they are distributed</strong>. All types follow the same core security/connectivity model (Identity Server + APIs + Trusted Application representation), but differ in deployment and distribution:</p>
+<ul>
+<li><strong>Internal applications</strong> – part of the ERP.net platform (e.g., Web Client, Client Center).</li>
+<li><strong>External applications</strong> – built outside ERP.net (customer/partner/third-party) and registered per instance.</li>
+<li><strong>Marketplace applications</strong> – external apps distributed via ERP.net Marketplace and auto-registered on installation.</li>
+<li><strong>Embedded (in-client) applications</strong> – external web apps displayed inside the Web Client (with special behavior depending on hosting domain and trust).</li>
+</ul>
+<p>See: <a href="app-types.html">Application Types</a></p>
+<h3 id="how-apps-connect">How apps connect</h3>
+<p>Apps connect through standard OAuth 2.0 / OIDC mechanisms and must choose the correct identity authority depending on the scenario (instance API access vs external SSO).</p>
+<p>See:</p>
+<ul>
+<li><a href="how-apps-connect/overview.html">How apps connect - Overview</a></li>
+<li><a href="how-apps-connect/oauth2-overview.html">OAuth 2.0</a></li>
+<li><a href="how-apps-connect/identity-authorities.html">Identity authorities (instance vs global)</a></li>
+<li><a href="how-apps-connect/identity-server.html">Instance Identity Server</a></li>
+<li><a href="how-apps-connect/erpnet-as-external-idp.html">ERP.net as an external Identity Provider</a></li>
+</ul>
+<h3 id="api-access-options">API access options</h3>
+<p>ERP.net provides more than one API surface. The choice affects how you model data, how you query, and what kinds of operations are available.</p>
+<p>See: <a href="api-access/overview.html">API Access (Domain API vs Table API)</a>.</p>
+<h3 id="calling-apis-safely">Calling APIs safely</h3>
+<p>A secure integration is not only about choosing the right OAuth flow-your app must also handle tokens correctly, protect secrets, and apply least-privilege access.</p>
+<p>See: <a href="api-best-practices.html">Best practices for calling APIs securely</a>.</p>
+<h3 id="shared-terminology">Shared terminology</h3>
+<p>This topic uses consistent terms for apps, identities, tokens, API endpoints, and access control. The glossary is the fastest way to align on wording when troubleshooting or reviewing integration designs.</p>
+<p>See: <a href="glossary.html">Glossary</a>.</p>
+<h2 id="suggested-reading-paths">Suggested reading paths</h2>
+<ul>
+<li><p><strong>I'm new to ERP.net integrations</strong></p>
+<ol>
+<li><a href="what-is-erpnet-app.html">What is an ERP.net App</a></li>
+<li><a href="app-types.html">Application Types</a></li>
+<li><a href="how-apps-connect/overview.html">How apps connect - Overview</a></li>
+<li><a href="api-access/overview.html">API Access (Domain API vs Table API)</a></li>
+</ol>
+</li>
+<li><p><strong>I need to decide &quot;which identity authority do I use?&quot;</strong></p>
+<ol>
+<li><a href="how-apps-connect/identity-authorities.html">Identity authorities (instance vs global)</a></li>
+<li><a href="how-apps-connect/identity-server.html">Instance Identity Server</a> or <a href="how-apps-connect/erpnet-as-external-idp.html">ERP.net as an external Identity Provider</a></li>
+</ol>
+</li>
+<li><p><strong>I'm reviewing an integration for security</strong></p>
+<ol>
+<li><a href="api-best-practices.html">Best practices for calling APIs securely</a></li>
+<li><a href="../auth/overview.html">Authentication and Authorization</a></li>
+</ol>
+</li>
+</ul>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="../getting-started/overview.html">Getting Started</a></li>
+<li><a href="../auth/overview.html">Authentication and Authorization</a></li>
+</ul>
 
 </article>
 
