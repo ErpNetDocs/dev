@@ -34,8 +34,11 @@ Your @@name instance must have a trusted application defined with the configurat
 
 Typical values:
 
-- ApplicationUri: `my-service-app-id`
-- SystemUser: `<an-internal-erp-user>`
+- **ApplicationUri**: `my-service-app-id`
+- **SystemUser**: `<an-internal-erp-user>`
+
+> [!NOTE]
+> The application owner must generate a random client secret, compute its **Base64-encoded SHA-256 hash**, and submit the hashed value via an internal ticket to [erp.net](https://support.erp.net/) so the Trusted Application can be registered and the configuration activated.
 
 | Attribute | Value | Comment |
 | --------- | ----- | ------- |
@@ -46,7 +49,8 @@ Typical values:
 | SystemUser | `<an-internal-erp-user>` | The internal user used for service authentication. |
 | ImpersonateAsInternalUserAllowed | true | Allows authentication using an internal user. |
 | ClientType | Confidential | Indicates that the application can securely store a secret. |
-| ApplicationSecretHash | `<base64(sha256(your-secret))>` | The hashed client secret used during authentication. |
+| ApplicationSecretHash | `<base64(sha256(your-client-secret))>` | The hashed client secret used during authentication. |
+| Scope | `read` or `read update` | Use `read` for read-only access; include `update` only if the application must create, modify, or delete data |
 
 All other attributes can keep their default values and are not relevant for this scenario.
 

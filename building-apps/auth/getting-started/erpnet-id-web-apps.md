@@ -24,6 +24,9 @@ Typical values are:
 - **ImpersonateLoginUrl**: a publicly reachable callback endpoint handled by your backend  
   (for example: `https://myapp.myhost.net/signin-callback`)
 
+> [!NOTE]
+> The application owner must generate a random client secret, compute its **Base64-encoded SHA-256 hash**, and submit the hashed value via an internal ticket to [erp.net](https://support.erp.net/) so the Trusted Application can be registered and the configuration activated.
+
 | Attribute | Value | Comment |
 | --------- | ----- | ------- |
 | Name | My trusted app | Used only for user-friendly identification. |
@@ -33,7 +36,8 @@ Typical values are:
 | ImpersonateAsCommunityUserAllowed | true | Allows authentication of external (community) users. |
 | ImpersonateLoginUrl | https://myapp.myhost.net/signin-callback | The callback URL of the external application. This must exactly match the URL where the application listens for the sign-in response. |
 | ClientType | Confidential | Indicates that the external application is a confidential client and can securely store a secret. |
-| ApplicationSecretHash | `<base64(sha256(your-secret))>` | The hashed secret of the external application. |
+| ApplicationSecretHash | `<base64(sha256(your-client-secret))>` | The hashed secret of the external application. |
+| Scope | `<empty>` | No scopes are required to be explicitly configured. |
 
 All other attributes can keep their default values and are not relevant for this scenario.
 
@@ -68,6 +72,9 @@ GET /id/connect/authorize?
   code_challenge_method=S256
 Host: id.erp.net
 ```
+
+> [!NOTE]
+> The openid and profile scopes are requested because this is an OpenID Connect authentication flow that issues an ID token with basic user claims; these scopes are not defined in the Trusted Application because they are protocol-level scopes provided automatically based on the authorization flow.
 
 ### 2. Receive the sign-in response (callback)
 

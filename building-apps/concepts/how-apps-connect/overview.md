@@ -1,91 +1,73 @@
 # How Apps Connect to @@name
 
-Connecting an application to an @@name instance involves three key elements working together:
+@@name integrations are built on a simple contract:
 
-- **@@name Identity**, which authenticates users and services
-- The **OAuth 2.0** framework, which defines how an app is delegated authorization and obtains access tokens from @@name Identity (the token's use and enforcement happen in the APIs).
-- The **Trusted Application**, which defines and enforces each app's relationship with the instance
+1. **The instance knows your app** (via a Trusted Application registration).
+2. **Your app obtains tokens** (via OAuth 2.0 / OIDC from the correct identity authority).
+3. **Your app calls APIs with those tokens**, and the APIs enforce the access rules.
 
-Together, they provide a consistent, secure, and auditable way for apps to communicate with @@name APIs.
+This topic explains the moving parts and how they relate, so you can pick the right authority, flow, and access model.
 
-## The Connection Model
+> **Start here if you feel “which Identity URL do I use?” confusion:**  
+> [Choose an identity authority (instance vs global)](./identity-authorities.md)
 
-Every app that interacts with @@name must first be registered as a **Trusted Application** in the target instance.  
+## The three building blocks
 
-This registration establishes a formal trust relationship and defines how the app can authenticate and what data it can access.
+### 1) Identity (the token issuer)
 
-When an app needs to connect:
+An OAuth 2.0 / OIDC **authority** issues tokens. In @@name there are *different* authorities depending on the scenario:
 
-1. It sends an **authorization request** to the instance's **@@name Identity**.  
-2. @@name Identity validates the app's identity and credentials.  
-3. If successful, it issues a **token** that represents the app or user session.  
-4. The app uses this token to call the instance's APIs within its granted scopes.
+- **Instance Identity Service** (`https://{instance}.my.erp.net/id`) – used for tokens that access a specific instance’s APIs.
+- **@@name global IdP** (`https://id.erp.net/id`) – used when @@name acts as an external identity provider for SSO into your application.
 
-```mermaid
-flowchart LR
-  app[App]
+See:
 
-  subgraph instance["ERP.net Instance"]
-    ta[Trusted Applications Registry]
-    idp[Identity]
-    api[APIs and Data Services]
-  end
+- [Choose an identity authority (instance vs global)](./identity-authorities.md)
+- [Instance Identity Service](./identity-server.md)
+- [@@name as an external Identity Provider](./erpnet-as-external-idp.md)
 
-  %% App interactions
-  app -->|Auth requests| idp
-  idp -->|Issues tokens| app
-  app -->|API calls with token| api
+### 2) OAuth 2.0 / OpenID Connect (OIDC) (the protocol)
 
-  %% Internal relationships
-  ta -->|Client config and scopes| idp
-  ta -->|Access rules| api
-  idp -->|Token validation metadata| api
-```
+OAuth 2.0 defines how access tokens are requested and issued. OpenID Connect extends OAuth 2.0 with user sign-in semantics.
 
-## Core Components in Connection
+This is the protocol layer—**it does not grant access by itself**. Access is granted only when the token is accepted by the target APIs under the configured rules.
 
-### @@name Identity
+See: [OAuth 2.0 and OpenID Connect (OIDC)](./oauth2-overview.md)
 
-**@@name Identity** is the authentication authority inside each @@name instance.  
+### 3) Trusted Applications (the instance-side trust and access definition)
 
-It verifies identities, applies instance-level security policies, and issues OAuth 2.0 tokens used by apps and users.
+A **Trusted Application** is the instance-side registration that tells @@name:
 
-See [@@name Identity](./identity-server.md) for more details.
+- which app is connecting (client identity)
+- which authorization behavior is allowed for that app
+- which scopes/access rules can be granted for API calls
 
-### OAuth 2.0
+Trusted Applications are the *control point* for instance API access.
 
-**OAuth 2.0** defines the industry-standard flows used by @@name for obtaining and managing tokens.
+See: [Trusted Applications and Access Control](../../auth/configuration/trusted-apps-access.md)
 
-It ensures that credentials are never shared directly between apps and services, while still allowing delegated access.
+## End-to-end flow (what happens when an app connects)
 
-See [OAuth 2.0 in @@name](oauth2-overview.md) for an overview of how these flows work in practice.
+1. **Registration (once)**  
+   The app is registered as a Trusted Application in the target instance.
 
-### Trusted Applications
+2. **Token acquisition (when needed)**  
+   The app makes an OAuth 2.0 / OIDC request to the chosen authority and receives a token.
 
-A **Trusted Application** defines how a specific app is recognized by an @@name instance - including its client type, authentication flows, and permissions.
-
-See [Trusted Applications in Authentication](../../auth/configuration/trusted-apps-access.md) to learn more.
-
-## Putting It All Together
-
-When combined, these components form the connection lifecycle:
-
-1. **Registration** - The app is registered as a Trusted Application.  
-2. **Authentication** - The app (or user) authenticates via @@name Identity.  
-3. **Authorization** - The server issues tokens defining what access is allowed.  
-4. **API Interaction** - The app uses these tokens to call @@name APIs.  
-
-Each step is tightly controlled by instance policies, ensuring that every request is authenticated, authorized, and fully traceable.
+3. **API access (for each call)**  
+   The app calls @@name APIs with `Authorization: Bearer <token>`.  
+   The APIs validate the token and enforce:
+   - the configured Trusted Application rules
+   - the granted scopes
+   - any instance security policies
 
 ---
 
-## Learn More
+## How to proceed (recommended reading order)
 
-- [**@@name Identity**](identity-server.md)  
-  Understand the built-in authentication authority in each @@name instance.
-
-- [**OAuth 2.0**](oauth2-overview.md)  
-  Learn how apps use OAuth 2.0 flows to obtain and manage tokens.
-
-- [**Trusted Applications and Access Control**](../../auth/configuration/trusted-apps-access.md)  
-  See how apps are registered and governed inside @@name.
+1. [Choose an identity authority (instance vs global)](./identity-authorities.md)  
+2. [OAuth 2.0 and OpenID Connect (OIDC)](./oauth2-overview.md)  
+3. [Trusted Applications and Access Control](../../auth/configuration/trusted-apps-access.md)  
+4. Deep dive by scenario:
+   - [Instance Identity Service](./identity-server.md)
+   - [@@name as an external Identity Provider](./erpnet-as-external-idp.md)

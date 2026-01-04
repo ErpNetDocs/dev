@@ -45,6 +45,7 @@ Typical values:
 | ImpersonateAsCommunityUserAllowed | false | Disallows authentication by external (community) users. |
 | ImpersonateLoginUrl | https://spa.example.com/signin-callback | The callback URL handled by the SPA after sign-in. |
 | ClientType | Public | Indicates that the application is a public client and cannot keep a secret. |
+| Scope | `read` or `read update` | Use `read` for read-only access; include `update` only if the application must create, modify, or delete data |
 
 All other attributes can keep their default values and are not relevant for this scenario.
 
@@ -75,6 +76,9 @@ GET /id/connect/authorize?
   code_challenge_method=S256
 Host: mycompany.my.erp.net
 ```
+
+> [!NOTE]
+> The openid and profile scopes are requested because this is an OpenID Connect authentication flow that issues an ID token with basic user claims; these scopes are not defined in the Trusted Application because they are protocol-level scopes provided automatically based on the authorization flow.
 
 The requested scopes define the level of access the SPA will have to the instance APIs.
 

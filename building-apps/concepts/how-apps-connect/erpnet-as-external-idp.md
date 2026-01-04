@@ -6,6 +6,11 @@ Integrating with it allows your application to authenticate users using their @@
 
 This guide explains how an application can connect to @@name Identity and use it as an external identity provider.
 
+> [!NOTE]
+> This page describes the **@@name global identity provider** (`https://id.erp.net/id`) used when @@name acts as an **external Identity Provider** (SSO/sign-in) for your application.  
+> It is **not** the mechanism for per-instance API access. To call the APIs of a specific ERP.net instance, use the **Instance Identity Service** (`https://{instance}.my.erp.net/id`) and configure a **Trusted Application** in that instance.  
+> If you’re unsure which authority applies, see [Choose an identity authority (instance vs global)](./identity-authorities.md).
+
 ## When to Use @@name as an External IdP
 
 Use @@name as the Identity Provider when:

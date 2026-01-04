@@ -4,6 +4,11 @@ Every @@name instance includes a built-in **Identity** that acts as its authenti
 
 It handles sign-in, token issuance, and access control for all users, apps, and services that connect to the instance.
 
+> [!NOTE]
+> This page describes the **Instance Identity Service** (`https://{instance}.my.erp.net/id`) used to obtain tokens for accessing a **specific @@name instance's APIs**.  
+> If you're unsure which authority applies, see [Choose an identity authority (instance vs global)](./identity-authorities.md).  
+> If you need @@name to act as an external IdP for SSO into your application, see [@@name as an external Identity Provider](./erpnet-as-external-idp.md).
+
 ## What the @@name Identity does
 
 @@name Identity is responsible for:

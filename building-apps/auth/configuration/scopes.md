@@ -13,8 +13,14 @@ Scopes are requested by the app and granted by the @@name Identity based on the 
 | `read` | Grants **read-only** access to @@name data through APIs. | All trusted apps |
 | `update` | Grants permission to **create, modify, or delete** @@name data. | All trusted apps |
 | `offline_access` | Allows issuing a **refresh token**, enabling apps to renew access tokens without user interaction. | All trusted apps |
+| `openid` | Indicates the request is an **OpenID Connect authentication request**. Required to issue an **ID token** and identify the authenticated subject. | All trusted apps |
 | `profile` | Grants access to **basic user information** (such as name, email, user type). | All trusted apps |
 | `sec` | Grants access to **security namespace APIs** (roles, permissions, etc.). Reserved for @@name internal use only. | Internal only |
+| `DomainApi` | **Legacy scope. Obsolete and must not be used.** | Deprecated |
+
+> [!NOTE]
+> Note on Identity Scopes  
+> The `openid`, `profile`, and `offline_access` values are **protocol-defined scopes**, not application-specific permissions. They do not need to be explicitly configured or allowed in a Trusted Application definition. Their availability is determined by the **authorization flow** being used and the capabilities of the identity system. For example, in the **client credentials** flow, these scopes are not issued because there is no authenticated user and no interactive session.
 
 ## Requesting Scopes
 

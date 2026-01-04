@@ -8,10 +8,10 @@ This page explains **which authority to use**, **where the client is registered*
 
 | You want to… | Use this authority | Client registration / where you configure access |
 |---|---|---|
-| Call the APIs of a **specific @@name instance** (Domain API / Table API) | **Instance Identity Server**: `https://{instance}.my.erp.net/id` | Configure a **Trusted Application** inside that @@name instance (incl. scopes/access rules) |
+| Call the APIs of a **specific @@name instance** (Domain API / Table API) | **Instance Identity Service**: `https://{instance}.my.erp.net/id` | Configure a **Trusted Application** inside that @@name instance (incl. scopes/access rules) |
 | Enable **SSO / sign-in** to your external application using @@name accounts | **@@name global IdP**: `https://id.erp.net/id` | Client registration is managed **centrally** (see the external IdP page for the process/requirements) |
 
-## Instance Identity Server (per @@name instance)
+## Instance Identity Service (per @@name instance)
 
 Use this when your app must access data or operations in a particular @@name instance.
 
@@ -24,7 +24,7 @@ Use this when your app must access data or operations in a particular @@name ins
   - Internal app/portal that needs to call the instance APIs
   - Any scenario where API access must be controlled per instance and per scope
 
-See: [Instance Identity Server](./identity-server.md) and [Trusted Applications](../../auth/configuration/trusted-apps-access.md).
+See: [Instance Identity Service](./identity-server.md) and [Trusted Applications](../../auth/configuration/trusted-apps-access.md).
 
 ## @@name global identity provider (external IdP)
 
@@ -42,18 +42,18 @@ See: [ERP.net as an external Identity Provider](./erpnet-as-external-idp.md).
 ## Common pitfalls (and how to avoid them)
 
 - **Mixing client registrations:**  
-  A client registered as a **Trusted Application** is instance-scoped and applies to the **instance Identity Server**. It is not the same as a client registered for the **global IdP**.
+  A client registered as a **Trusted Application** is instance-scoped and applies to the **instance Identity Service**. It is not the same as a client registered for the **global IdP**.
 - **Using the wrong authority URL:**  
   If you need to call a specific instance API, always start from that instance’s authority (`https://{instance}.my.erp.net/id`), not the global one.
 - **Unclear "@@name Identity" wording:**  
-  In @@name docs, always interpret “Identity” in context:
-  - "Instance Identity Server" -> per-instance API access
-  - "External IdP” (`id.erp.net`) -> SSO/sign-in for external apps
+  In @@name docs, always interpret "Identity" in context:
+  - "Instance Identity Service" -> per-instance API access
+  - "External IdP" (`id.erp.net`) -> SSO/sign-in for external apps
 
 ## See also
 
 - [OAuth 2.0](./oauth2-overview.md)
-- [Instance Identity Server](./identity-server.md)
+- [Instance Identity Service](./identity-server.md)
 - [@@name as an external Identity Provider](./erpnet-as-external-idp.md)
 - [Trusted Applications and Access Control](../../auth/configuration/trusted-apps-access.md)
 - [Scopes](../../auth/configuration/scopes.md)
