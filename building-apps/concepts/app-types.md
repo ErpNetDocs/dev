@@ -117,7 +117,7 @@ Embedded apps behave differently depending on where they are hosted:
 
 ## Learn More
 
-- **[What Are @@name Apps](what-are-erpnet-apps.md)**  
+- **[What Are @@name Apps](what-is-erpnet-app.md)**  
   Understand the core concept of @@name Apps and how they connect to an @@name instance.
 
 - **[Trusted Applications](../auth/configuration/trusted-apps-access.md)**  

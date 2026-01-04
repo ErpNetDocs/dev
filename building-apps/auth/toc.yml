@@ -1,16 +1,22 @@
 - name: Overview
   href: overview.md
-- name: Getting Started
+- name: Getting Started (Authentication)
   href: getting-started/toc.yml
+  topicHref: getting-started/overview.md
 - name: Configuration
   href: configuration/toc.yml
+  topicHref: configuration/overview.md
 - name: Concepts
   href: concepts/toc.yml
+  topicHref: concepts/overview.md
 - name: Auth Flows
   href: flows/toc.yml  
+  topicHref: flows/overview.md
 - name: Tokens
   href: tokens/toc.yml  
+  topicHref: tokens/tokens-overview.md
 - name: Sessions
   href: sessions/toc.yml  
+  topicHref: sessions/overview.md
 - name: Client Libraries
   href: client-libraries.md  

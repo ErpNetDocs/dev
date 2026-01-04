@@ -1,8 +1,14 @@
 - name: Overview
   href: overview.md
+- name: Getting Started
+  href: getting-started/toc.yml  
+  topicHref: getting-started/overview.md  
 - name: Configuration
-  href: configuration/toc.yml
+  href: configuration/toc.yml  
+  topicHref: configuration/overview.md
 - name: Concepts
   href: concepts/toc.yml
+  topicHref: concepts/overview.md
 - name: Authentication and Authorization
   href: auth/toc.yml
+  topicHref: auth/overview.md

@@ -3,12 +3,16 @@ pdfFileName: Dev.pdf
 items:
 - name: General
   href: topics/toc.yml
+  topicHref: topics/index.md
 - name: Building Apps
   href: building-apps/toc.yml
+  topicHref: building-apps/overview.md
 - name: Domain API
   href: domain-api/toc.yml
+  topicHref: domain-api/index.md
 - name: Table API
   href: table-api/toc.yml  
+  topicHref: table-api/index.md
 - name: API Reference
   href: https://docs.erp.net/model/entities/
 - name: "What's New"

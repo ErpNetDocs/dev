@@ -122,7 +122,7 @@ Essential recommendations for keeping your integrations secure, compliant, and m
 
 ## Learn More
 
-- **[What Are @@name Apps](./concepts/what-are-erpnet-apps.md)**  
+- **[What Are @@name Apps](./concepts/what-is-erpnet-app.md)**  
   Understand what @@name Apps are and how they connect to an ERP.net instance.
 
 - **[Application Types](./concepts/app-types.md)**  
