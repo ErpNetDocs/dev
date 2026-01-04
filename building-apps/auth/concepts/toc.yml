@@ -1,5 +1,6 @@
 - name: Samples
   href: samples/toc.yml
+  topicHref: samples/index.md
 - name: Security Best Practices
   href: security-best-practices.md
 - name: Frequently Asked Questions (FAQ)

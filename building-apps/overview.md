@@ -96,20 +96,14 @@ This model allows @@name Apps to be open, extensible, and secure - forming a fle
 
 ## Sections Overview
 
+[**Getting Started**](./getting-started/overview.md)  
+A guided path to your first working integration-prerequisites, registering a Trusted Application, obtaining a token, and making your first API call.
+
+[**Concepts**](./concepts/overview.md)  
+The mental model behind ERP.net Apps-app types, how apps connect, API access options, and the key terms used throughout this topic.
+
 [**Authentication and Authorization**](./auth/overview.md)  
-Learn how apps sign in, request tokens, and interact securely with the @@name Identity using OAuth 2.0.
-
-[**API Access**](./concepts/api-access/overview.md)  
-Discover how to access and manipulate @@name data through the Domain API and Table API, including security and performance best practices.
-
-[**Sessions and Licensing**](./auth/sessions/overview.md)  
-See how sessions are created, how they consume licenses, and how to manage compliance.
-
-[**Samples**](./auth/concepts/samples/index.md)  
-Practical examples showing how to authenticate, get tokens, and call APIs from different app types.
-
-[**Security Best Practices**](./auth/concepts/security-best-practices.md)  
-Essential recommendations for keeping your integrations secure, compliant, and maintainable.
+OAuth 2.0/OIDC in @@name - trusted applications, scopes, flows, tokens, sessions, and security guidance for calling APIs safely.
 
 ## Before You Start
 

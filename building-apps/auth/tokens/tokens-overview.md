@@ -1,4 +1,4 @@
-# Overview
+# Tokens overview
 
 In @@name, **tokens** are used to authenticate and authorize applications and users when interacting with the system's APIs.  
 

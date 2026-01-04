@@ -66,9 +66,6 @@ To integrate your application with @@name Identity, configure an OIDC client wit
 });
 ```
 
-For multi-platform examples (JavaScript, Java, Go, PHP, Python, .NET, mobile, etc.), see the  
-**[External Identity Provider Samples](../auth/concepts/samples/erpnet-external-idp-samples.md)**.
-
 ## Redirect / Callback URLs
 
 Your integration must define:

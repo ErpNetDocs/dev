@@ -1,4 +1,4 @@
-# Overview
+# Sessions overview
 
 Tokens, sessions, and licenses in @@name are related but **not the same thing**.
 
