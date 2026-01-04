@@ -112,9 +112,13 @@
 </div>
 <p>Typical values:</p>
 <ul>
-<li>ApplicationUri: <code>my-service-app-id</code></li>
-<li>SystemUser: <code>&lt;an-internal-erp-user&gt;</code></li>
+<li><strong>ApplicationUri</strong>: <code>my-service-app-id</code></li>
+<li><strong>SystemUser</strong>: <code>&lt;an-internal-erp-user&gt;</code></li>
 </ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The application owner must generate a random client secret, compute its <strong>Base64-encoded SHA-256 hash</strong>, and submit the hashed value via an internal ticket to <a href="https://support.erp.net/">erp.net</a> so the Trusted Application can be registered and the configuration activated.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -161,8 +165,13 @@
 </tr>
 <tr>
 <td>ApplicationSecretHash</td>
-<td><code>&lt;base64(sha256(your-secret))&gt;</code></td>
+<td><code>&lt;base64(sha256(your-client-secret))&gt;</code></td>
 <td>The hashed client secret used during authentication.</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td><code>read</code> or <code>read update</code></td>
+<td>Use <code>read</code> for read-only access; include <code>update</code> only if the application must create, modify, or delete data</td>
 </tr>
 </tbody>
 </table>

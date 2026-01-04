@@ -89,6 +89,12 @@
 
 <p>Every ERP.net instance includes a built-in <strong>Identity</strong> that acts as its authentication and authorization authority.</p>
 <p>It handles sign-in, token issuance, and access control for all users, apps, and services that connect to the instance.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This page describes the <strong>Instance Identity Service</strong> (<code>https://{instance}.my.erp.net/id</code>) used to obtain tokens for accessing a <strong>specific ERP.net instance's APIs</strong>.<br>
+If you're unsure which authority applies, see <a href="identity-authorities.html">Choose an identity authority (instance vs global)</a>.<br>
+If you need ERP.net to act as an external IdP for SSO into your application, see <a href="erpnet-as-external-idp.html">ERP.net as an external Identity Provider</a>.</p>
+</div>
 <h2 id="what-the--identity-does">What the ERP.net Identity does</h2>
 <p>ERP.net Identity is responsible for:</p>
 <ul>

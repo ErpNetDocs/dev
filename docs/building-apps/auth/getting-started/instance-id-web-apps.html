@@ -114,6 +114,10 @@
 <li><strong>ApplicationUri</strong>: <code>backend.example.com</code></li>
 <li><strong>ImpersonateLoginUrl</strong>: <code>https://backend.example.com/signin-callback</code></li>
 </ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The application owner must generate a random client secret, compute its <strong>Base64-encoded SHA-256 hash</strong>, and submit the hashed value via an internal ticket to <a href="https://support.erp.net/">erp.net</a> so the Trusted Application can be registered and the configuration activated.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -160,8 +164,13 @@
 </tr>
 <tr>
 <td>ApplicationSecretHash</td>
-<td><code>&lt;base64(sha256(your-secret))&gt;</code></td>
+<td><code>&lt;base64(sha256(your-client-secret))&gt;</code></td>
 <td>The hashed client secret used during the token request.</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td><code>read</code> or <code>read update</code></td>
+<td>Use <code>read</code> for read-only access; include <code>update</code> only if the application must create, modify, or delete data</td>
 </tr>
 </tbody>
 </table>
@@ -198,6 +207,10 @@ Host: mycompany.my.erp.net
 </ul>
 <p>Request only the scopes required by the application.<br>
 Granting broader scopes than necessary increases the impact of a compromised token.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The openid and profile scopes are requested because this is an OpenID Connect authentication flow that issues an ID token with basic user claims; these scopes are not defined in the Trusted Application because they are protocol-level scopes provided automatically based on the authorization flow.</p>
+</div>
 <p><strong>Result:</strong>
 The user is redirected to the ERP.net login page and signs in.</p>
 <h3 id="2-receive-the-sign-in-response-callback">2. Receive the sign-in response (callback)</h3>

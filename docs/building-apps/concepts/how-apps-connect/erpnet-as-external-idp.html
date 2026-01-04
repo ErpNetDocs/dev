@@ -90,6 +90,12 @@
 <p>ERP.net Identity can act as a fully compliant <strong>OpenID Connect (OIDC)</strong> identity provider for any external application - web, desktop, mobile, or service-based.</p>
 <p>Integrating with it allows your application to authenticate users using their ERP.net accounts and receive industry-standard identity and access tokens (ID token, access token, refresh token).</p>
 <p>This guide explains how an application can connect to ERP.net Identity and use it as an external identity provider.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This page describes the <strong>ERP.net global identity provider</strong> (<code>https://id.erp.net/id</code>) used when ERP.net acts as an <strong>external Identity Provider</strong> (SSO/sign-in) for your application.<br>
+It is <strong>not</strong> the mechanism for per-instance API access. To call the APIs of a specific ERP.net instance, use the <strong>Instance Identity Service</strong> (<code>https://{instance}.my.erp.net/id</code>) and configure a <strong>Trusted Application</strong> in that instance.<br>
+If you’re unsure which authority applies, see <a href="identity-authorities.html">Choose an identity authority (instance vs global)</a>.</p>
+</div>
 <h2 id="when-to-use--as-an-external-idp">When to Use ERP.net as an External IdP</h2>
 <p>Use ERP.net as the Identity Provider when:</p>
 <ul>

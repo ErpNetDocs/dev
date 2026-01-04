@@ -101,7 +101,7 @@
 <tbody>
 <tr>
 <td>Call the APIs of a <strong>specific ERP.net instance</strong> (Domain API / Table API)</td>
-<td><strong>Instance Identity Server</strong>: <code>https://{instance}.my.erp.net/id</code></td>
+<td><strong>Instance Identity Service</strong>: <code>https://{instance}.my.erp.net/id</code></td>
 <td>Configure a <strong>Trusted Application</strong> inside that ERP.net instance (incl. scopes/access rules)</td>
 </tr>
 <tr>
@@ -111,7 +111,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="instance-identity-server-per--instance">Instance Identity Server (per ERP.net instance)</h2>
+<h2 id="instance-identity-service-per--instance">Instance Identity Service (per ERP.net instance)</h2>
 <p>Use this when your app must access data or operations in a particular ERP.net instance.</p>
 <ul>
 <li><strong>Authority (issuer):</strong> <code>https://{instance}.my.erp.net/id</code></li>
@@ -129,7 +129,7 @@
 </ul>
 </li>
 </ul>
-<p>See: <a href="identity-server.html">Instance Identity Server</a> and <a href="../../auth/configuration/trusted-apps-access.html">Trusted Applications</a>.</p>
+<p>See: <a href="identity-server.html">Instance Identity Service</a> and <a href="../../auth/configuration/trusted-apps-access.html">Trusted Applications</a>.</p>
 <h2 id="-global-identity-provider-external-idp">ERP.net global identity provider (external IdP)</h2>
 <p>Use this when ERP.net must act as an <strong>external identity provider</strong> for your application (SSO/sign-in), not when your primary goal is &quot;call a specific instance API&quot;.</p>
 <ul>
@@ -147,21 +147,21 @@
 <h2 id="common-pitfalls-and-how-to-avoid-them">Common pitfalls (and how to avoid them)</h2>
 <ul>
 <li><strong>Mixing client registrations:</strong><br>
-A client registered as a <strong>Trusted Application</strong> is instance-scoped and applies to the <strong>instance Identity Server</strong>. It is not the same as a client registered for the <strong>global IdP</strong>.</li>
+A client registered as a <strong>Trusted Application</strong> is instance-scoped and applies to the <strong>instance Identity Service</strong>. It is not the same as a client registered for the <strong>global IdP</strong>.</li>
 <li><strong>Using the wrong authority URL:</strong><br>
 If you need to call a specific instance API, always start from that instance’s authority (<code>https://{instance}.my.erp.net/id</code>), not the global one.</li>
 <li><strong>Unclear &quot;ERP.net Identity&quot; wording:</strong><br>
-In ERP.net docs, always interpret “Identity” in context:
+In ERP.net docs, always interpret &quot;Identity&quot; in context:
 <ul>
-<li>&quot;Instance Identity Server&quot; -&gt; per-instance API access</li>
-<li>&quot;External IdP” (<code>id.erp.net</code>) -&gt; SSO/sign-in for external apps</li>
+<li>&quot;Instance Identity Service&quot; -&gt; per-instance API access</li>
+<li>&quot;External IdP&quot; (<code>id.erp.net</code>) -&gt; SSO/sign-in for external apps</li>
 </ul>
 </li>
 </ul>
 <h2 id="see-also">See also</h2>
 <ul>
 <li><a href="oauth2-overview.html">OAuth 2.0</a></li>
-<li><a href="identity-server.html">Instance Identity Server</a></li>
+<li><a href="identity-server.html">Instance Identity Service</a></li>
 <li><a href="erpnet-as-external-idp.html">ERP.net as an external Identity Provider</a></li>
 <li><a href="../../auth/configuration/trusted-apps-access.html">Trusted Applications and Access Control</a></li>
 <li><a href="../../auth/configuration/scopes.html">Scopes</a></li>

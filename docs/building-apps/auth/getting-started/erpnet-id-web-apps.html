@@ -109,6 +109,10 @@ They must be replaced with values that match the actual domain and callback endp
 <li><strong>ImpersonateLoginUrl</strong>: a publicly reachable callback endpoint handled by your backend<br>
 (for example: <code>https://myapp.myhost.net/signin-callback</code>)</li>
 </ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The application owner must generate a random client secret, compute its <strong>Base64-encoded SHA-256 hash</strong>, and submit the hashed value via an internal ticket to <a href="https://support.erp.net/">erp.net</a> so the Trusted Application can be registered and the configuration activated.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -155,8 +159,13 @@ They must be replaced with values that match the actual domain and callback endp
 </tr>
 <tr>
 <td>ApplicationSecretHash</td>
-<td><code>&lt;base64(sha256(your-secret))&gt;</code></td>
+<td><code>&lt;base64(sha256(your-client-secret))&gt;</code></td>
 <td>The hashed secret of the external application.</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td><code>&lt;empty&gt;</code></td>
+<td>No scopes are required to be explicitly configured.</td>
 </tr>
 </tbody>
 </table>
@@ -186,6 +195,10 @@ The flow also uses PKCE (Proof Key for Code Exchange).</p>
   code_challenge_method=S256
 Host: id.erp.net
 </code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The openid and profile scopes are requested because this is an OpenID Connect authentication flow that issues an ID token with basic user claims; these scopes are not defined in the Trusted Application because they are protocol-level scopes provided automatically based on the authorization flow.</p>
+</div>
 <h3 id="2-receive-the-sign-in-response-callback">2. Receive the sign-in response (callback)</h3>
 <p>After a successful sign-in, ERP.net Identity redirects the user to the configured callback URL using <code>form_post</code>.</p>
 <p>Example callback request received by the external application:</p>

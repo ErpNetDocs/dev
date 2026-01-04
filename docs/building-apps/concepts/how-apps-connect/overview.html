@@ -87,76 +87,74 @@
         <article data-uid="">
 <h1 id="how-apps-connect-to-">How Apps Connect to ERP.net</h1>
 
-<p>Connecting an application to an ERP.net instance involves three key elements working together:</p>
+<p>ERP.net integrations are built on a simple contract:</p>
+<ol>
+<li><strong>The instance knows your app</strong> (via a Trusted Application registration).</li>
+<li><strong>Your app obtains tokens</strong> (via OAuth 2.0 / OIDC from the correct identity authority).</li>
+<li><strong>Your app calls APIs with those tokens</strong>, and the APIs enforce the access rules.</li>
+</ol>
+<p>This topic explains the moving parts and how they relate, so you can pick the right authority, flow, and access model.</p>
+<blockquote>
+<p><strong>Start here if you feel “which Identity URL do I use?” confusion:</strong><br>
+<a href="identity-authorities.html">Choose an identity authority (instance vs global)</a></p>
+</blockquote>
+<h2 id="the-three-building-blocks">The three building blocks</h2>
+<h3 id="1-identity-the-token-issuer">1) Identity (the token issuer)</h3>
+<p>An OAuth 2.0 / OIDC <strong>authority</strong> issues tokens. In ERP.net there are <em>different</em> authorities depending on the scenario:</p>
 <ul>
-<li><strong>ERP.net Identity</strong>, which authenticates users and services</li>
-<li>The <strong>OAuth 2.0</strong> framework, which defines how an app is delegated authorization and obtains access tokens from ERP.net Identity (the token's use and enforcement happen in the APIs).</li>
-<li>The <strong>Trusted Application</strong>, which defines and enforces each app's relationship with the instance</li>
+<li><strong>Instance Identity Service</strong> (<code>https://{instance}.my.erp.net/id</code>) – used for tokens that access a specific instance’s APIs.</li>
+<li><strong>ERP.net global IdP</strong> (<code>https://id.erp.net/id</code>) – used when ERP.net acts as an external identity provider for SSO into your application.</li>
 </ul>
-<p>Together, they provide a consistent, secure, and auditable way for apps to communicate with ERP.net APIs.</p>
-<h2 id="the-connection-model">The Connection Model</h2>
-<p>Every app that interacts with ERP.net must first be registered as a <strong>Trusted Application</strong> in the target instance.</p>
-<p>This registration establishes a formal trust relationship and defines how the app can authenticate and what data it can access.</p>
-<p>When an app needs to connect:</p>
+<p>See:</p>
+<ul>
+<li><a href="identity-authorities.html">Choose an identity authority (instance vs global)</a></li>
+<li><a href="identity-server.html">Instance Identity Service</a></li>
+<li><a href="erpnet-as-external-idp.html">ERP.net as an external Identity Provider</a></li>
+</ul>
+<h3 id="2-oauth-20--openid-connect-oidc-the-protocol">2) OAuth 2.0 / OpenID Connect (OIDC) (the protocol)</h3>
+<p>OAuth 2.0 defines how access tokens are requested and issued. OpenID Connect extends OAuth 2.0 with user sign-in semantics.</p>
+<p>This is the protocol layer—<strong>it does not grant access by itself</strong>. Access is granted only when the token is accepted by the target APIs under the configured rules.</p>
+<p>See: <a href="oauth2-overview.html">OAuth 2.0 and OpenID Connect (OIDC)</a></p>
+<h3 id="3-trusted-applications-the-instance-side-trust-and-access-definition">3) Trusted Applications (the instance-side trust and access definition)</h3>
+<p>A <strong>Trusted Application</strong> is the instance-side registration that tells ERP.net:</p>
+<ul>
+<li>which app is connecting (client identity)</li>
+<li>which authorization behavior is allowed for that app</li>
+<li>which scopes/access rules can be granted for API calls</li>
+</ul>
+<p>Trusted Applications are the <em>control point</em> for instance API access.</p>
+<p>See: <a href="../../auth/configuration/trusted-apps-access.html">Trusted Applications and Access Control</a></p>
+<h2 id="end-to-end-flow-what-happens-when-an-app-connects">End-to-end flow (what happens when an app connects)</h2>
 <ol>
-<li>It sends an <strong>authorization request</strong> to the instance's <strong>ERP.net Identity</strong>.</li>
-<li>ERP.net Identity validates the app's identity and credentials.</li>
-<li>If successful, it issues a <strong>token</strong> that represents the app or user session.</li>
-<li>The app uses this token to call the instance's APIs within its granted scopes.</li>
+<li><p><strong>Registration (once)</strong><br>
+The app is registered as a Trusted Application in the target instance.</p>
+</li>
+<li><p><strong>Token acquisition (when needed)</strong><br>
+The app makes an OAuth 2.0 / OIDC request to the chosen authority and receives a token.</p>
+</li>
+<li><p><strong>API access (for each call)</strong><br>
+The app calls ERP.net APIs with <code>Authorization: Bearer &lt;token&gt;</code>.<br>
+The APIs validate the token and enforce:</p>
+<ul>
+<li>the configured Trusted Application rules</li>
+<li>the granted scopes</li>
+<li>any instance security policies</li>
+</ul>
+</li>
 </ol>
-<pre><code class="lang-mermaid">flowchart LR
-  app[App]
-
-  subgraph instance[&quot;ERP.net Instance&quot;]
-    ta[Trusted Applications Registry]
-    idp[Identity]
-    api[APIs and Data Services]
-  end
-
-  %% App interactions
-  app --&gt;|Auth requests| idp
-  idp --&gt;|Issues tokens| app
-  app --&gt;|API calls with token| api
-
-  %% Internal relationships
-  ta --&gt;|Client config and scopes| idp
-  ta --&gt;|Access rules| api
-  idp --&gt;|Token validation metadata| api
-</code></pre>
-<h2 id="core-components-in-connection">Core Components in Connection</h2>
-<h3 id="-identity">ERP.net Identity</h3>
-<p><strong>ERP.net Identity</strong> is the authentication authority inside each ERP.net instance.</p>
-<p>It verifies identities, applies instance-level security policies, and issues OAuth 2.0 tokens used by apps and users.</p>
-<p>See <a href="identity-server.html">ERP.net Identity</a> for more details.</p>
-<h3 id="oauth-20">OAuth 2.0</h3>
-<p><strong>OAuth 2.0</strong> defines the industry-standard flows used by ERP.net for obtaining and managing tokens.</p>
-<p>It ensures that credentials are never shared directly between apps and services, while still allowing delegated access.</p>
-<p>See <a href="oauth2-overview.html">OAuth 2.0 in ERP.net</a> for an overview of how these flows work in practice.</p>
-<h3 id="trusted-applications">Trusted Applications</h3>
-<p>A <strong>Trusted Application</strong> defines how a specific app is recognized by an ERP.net instance - including its client type, authentication flows, and permissions.</p>
-<p>See <a href="../../auth/configuration/trusted-apps-access.html">Trusted Applications in Authentication</a> to learn more.</p>
-<h2 id="putting-it-all-together">Putting It All Together</h2>
-<p>When combined, these components form the connection lifecycle:</p>
-<ol>
-<li><strong>Registration</strong> - The app is registered as a Trusted Application.</li>
-<li><strong>Authentication</strong> - The app (or user) authenticates via ERP.net Identity.</li>
-<li><strong>Authorization</strong> - The server issues tokens defining what access is allowed.</li>
-<li><strong>API Interaction</strong> - The app uses these tokens to call ERP.net APIs.</li>
-</ol>
-<p>Each step is tightly controlled by instance policies, ensuring that every request is authenticated, authorized, and fully traceable.</p>
 <hr>
-<h2 id="learn-more">Learn More</h2>
+<h2 id="how-to-proceed-recommended-reading-order">How to proceed (recommended reading order)</h2>
+<ol>
+<li><a href="identity-authorities.html">Choose an identity authority (instance vs global)</a></li>
+<li><a href="oauth2-overview.html">OAuth 2.0 and OpenID Connect (OIDC)</a></li>
+<li><a href="../../auth/configuration/trusted-apps-access.html">Trusted Applications and Access Control</a></li>
+<li>Deep dive by scenario:
 <ul>
-<li><p><a href="identity-server.html"><strong>ERP.net Identity</strong></a><br>
-Understand the built-in authentication authority in each ERP.net instance.</p>
-</li>
-<li><p><a href="oauth2-overview.html"><strong>OAuth 2.0</strong></a><br>
-Learn how apps use OAuth 2.0 flows to obtain and manage tokens.</p>
-</li>
-<li><p><a href="../../auth/configuration/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
-See how apps are registered and governed inside ERP.net.</p>
-</li>
+<li><a href="identity-server.html">Instance Identity Service</a></li>
+<li><a href="erpnet-as-external-idp.html">ERP.net as an external Identity Provider</a></li>
 </ul>
+</li>
+</ol>
 
 </article>
 

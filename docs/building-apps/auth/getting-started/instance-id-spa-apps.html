@@ -158,6 +158,11 @@
 <td>Public</td>
 <td>Indicates that the application is a public client and cannot keep a secret.</td>
 </tr>
+<tr>
+<td>Scope</td>
+<td><code>read</code> or <code>read update</code></td>
+<td>Use <code>read</code> for read-only access; include <code>update</code> only if the application must create, modify, or delete data</td>
+</tr>
 </tbody>
 </table>
 <p>All other attributes can keep their default values and are not relevant for this scenario.</p>
@@ -183,6 +188,10 @@
   code_challenge_method=S256
 Host: mycompany.my.erp.net
 </code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The openid and profile scopes are requested because this is an OpenID Connect authentication flow that issues an ID token with basic user claims; these scopes are not defined in the Trusted Application because they are protocol-level scopes provided automatically based on the authorization flow.</p>
+</div>
 <p>The requested scopes define the level of access the SPA will have to the instance APIs.</p>
 <p>Common resource scopes:</p>
 <ul>

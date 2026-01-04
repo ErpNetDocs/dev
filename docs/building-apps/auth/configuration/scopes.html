@@ -116,6 +116,11 @@
 <td>All trusted apps</td>
 </tr>
 <tr>
+<td><code>openid</code></td>
+<td>Indicates the request is an <strong>OpenID Connect authentication request</strong>. Required to issue an <strong>ID token</strong> and identify the authenticated subject.</td>
+<td>All trusted apps</td>
+</tr>
+<tr>
 <td><code>profile</code></td>
 <td>Grants access to <strong>basic user information</strong> (such as name, email, user type).</td>
 <td>All trusted apps</td>
@@ -125,8 +130,18 @@
 <td>Grants access to <strong>security namespace APIs</strong> (roles, permissions, etc.). Reserved for ERP.net internal use only.</td>
 <td>Internal only</td>
 </tr>
+<tr>
+<td><code>DomainApi</code></td>
+<td><strong>Legacy scope. Obsolete and must not be used.</strong></td>
+<td>Deprecated</td>
+</tr>
 </tbody>
 </table>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Note on Identity Scopes<br>
+The <code>openid</code>, <code>profile</code>, and <code>offline_access</code> values are <strong>protocol-defined scopes</strong>, not application-specific permissions. They do not need to be explicitly configured or allowed in a Trusted Application definition. Their availability is determined by the <strong>authorization flow</strong> being used and the capabilities of the identity system. For example, in the <strong>client credentials</strong> flow, these scopes are not issued because there is no authenticated user and no interactive session.</p>
+</div>
 <h2 id="requesting-scopes">Requesting Scopes</h2>
 <p>Applications request scopes during the <strong>authorization</strong> or <strong>token</strong> request using the <code>scope</code> parameter:</p>
 <pre><code class="lang-http">POST /id/connect/token
