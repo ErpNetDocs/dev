@@ -105,7 +105,7 @@ function sendAuthorizationRequest() {
       "redirect_uri=" . CALLBACK_URI . "&" .
       "response_type=code%20id_token&" .
       "response_mode=form_post&" .
-      "scope=openid%20profile%20offline_access%20DomainApi&" .
+      "scope=openid%20profile%20offline_access%20read&" .
       "nonce=abc&" .
       "state=xyz";
 
@@ -209,7 +209,7 @@ function sendAuthorizationRequest() {
     'redirect_uri=' . CALLBACK_URI . '&' .
     'response_type=code%20id_token&' .
     'response_mode=form_post&' .
-    'scope=openid%20profile%20offline_access%20DomainApi&' .
+    'scope=openid%20profile%20offline_access%20read&' .
     'nonce=abc&' .
     'state=xyz';
   

@@ -44,7 +44,7 @@ Content-Type: application/x-www-form-urlencoded
 client_id=my.trusted.app/first&
 client_secret=<my_plain_app_secret>&
 grant_type=client_credentials&
-scope=DomainApi
+scope=read
 ```
 
 Yes, it's that simple. Here are some clarifications:
@@ -65,7 +65,7 @@ If everything is correct, you'll receive a similar response:
   "access_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IkJEbGhqYjhzOEUySm1tcWg2UDlxZEEiLCJ0eXAiOiJhdCtqd3QifQ.eyJuYmYiOjE2NTQwNzU1MjksImV4cCI6MTY1NDA3OTEyOSwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJEb21haW5BcGkiLCJjbGllbnRfaWQiOiJwayIsImNsaWVudF9zeXN0ZW1fdXNlciI6InAua29zdG92QGVycC5iZyIsImNsaWVudF9kYiI6IkUxX0RFViIsImp0aSI6IlNob3JjNVJ2MTM2ak5POHRCMF9yRHciLCJzY29wZSI6WyJEb21haW5BcGkiLCJzZWMiLCJ1cGRhdGUiXX0.RPzYKl9xPvFcLa0O8yqzJCJtmZUS88iDeWBFa9pyvYdzfQ18E4W8w6CLJPf9whFFiJWhgAsOASVuz98-MIgj9VwTjNtXMdMAPvZC0HYPnMusYUxxYRNejjqtPG7n4V0LVzyWYHu99-YUipFBmzXxCywR8TtaBv374CKfLdS4M1vaMMYShzD22L_R3kKc3uZhQ5Ygpci1tuNC8gC6CoXIv0a9gjthwgshCzmbEmiNhjvJ7WDZ98gnzkvl5_wLANRrDYUcLPvq04OfVRn2uS-dF-NLIeO5dr7Mn905YodY4Mngr4S5WbBvrWAt0hRLO6Oy_X2KCcQdmh0Nq73ELruoBw",
   "expires_in": 3600,
   "token_type": "Bearer",
-  "scope": "DomainApi"
+  "scope": "read"
 }
 ```
 

@@ -159,7 +159,7 @@ var authorizeUriArgs =
     $"redirect_uri={CallbackUri}&" +
     "response_type=code id_token&" +
     "response_mode=form_post&" +
-    "scope=openid profile offline_access DomainApi&" +
+    "scope=openid profile offline_access read&" +
     "nonce=abc&" +
     $"state={authState}";
 ```
@@ -332,7 +332,7 @@ var authorizeUriArgs =
     $"redirect_uri={CallbackUri}&" +
     "response_type=code%20id_token&" +
     "response_mode=form_post&" +
-    "scope=openid%20profile%20offline_access%20DomainApi&" +
+    "scope=openid%20profile%20offline_access%20read&" +
     "nonce=abc&" +
     $"state={authState}";
 

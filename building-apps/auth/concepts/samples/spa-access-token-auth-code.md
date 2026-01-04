@@ -64,7 +64,7 @@ var config = {
     redirect_uri: "https://my.trusted.app/app.html",
     authorization_endpoint: "https://demodb.my.erp.net/id/connect/authorize",
     token_endpoint: "https://demodb.my.erp.net/id/connect/token",
-    requested_scopes: "offline_access DomainApi update"
+    requested_scopes: "offline_access read update"
 };
 ```
 
@@ -199,7 +199,7 @@ Or here's what it does broken into steps:
     redirect_uri: "https://my.trusted.app/app.html",
     authorization_endpoint: "https:///demodb.my.erp.net/id/connect/authorize",
     token_endpoint: "https:///demodb.my.erp.net/id/connect/token",
-    requested_scopes: "offline_access DomainApi update"
+    requested_scopes: "offline_access read update"
   };
 </script>
 
