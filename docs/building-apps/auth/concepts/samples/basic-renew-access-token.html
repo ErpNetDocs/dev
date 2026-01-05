@@ -163,7 +163,7 @@ In flows such as <code>client_credentials</code> refreshing an access token is p
     client_id=my.trusted.app/first&amp;  
     redirect_uri=http://localhost/signin-callback&amp;  
     response_type=code id_token&amp;  
-    scope=openid profile offline_access DomainApi&amp;
+    scope=openid profile offline_access read&amp;
     nonce=abc&amp;  
     state=xyz HTTP/1.1
 Host: demodb.my.erp.net
@@ -200,7 +200,7 @@ redirect_uri=http://localhost/signin-callback
   &quot;access_token&quot;: &quot;eycccGciOiJSUzI1NiIsImtpZCI6IkJEbGhqYjhzOEUySm1tcWg2UDlxZEEiLCJ0eXAiOiJhdCtqd3QifQ.eyJuYmYiOjE2NTUwNTc3MjQsImV4cCI6MTY1NTA2MTMyNCwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJEb21haW5BcGkiLCJjbGllbnRfaWQiOiJwayIsInN1YiI6ImFkbWluIiwiYXV0aF90aW1lIjoxNjU1MDI3NzE5LCJpZHAiOiJsb2NhbCIsImlkIjoiOWRhNjQ4MzktYThkMC00OTFkLWFlYmItNGQxOGZhNDJiMDE0IiwibmFtZSI6IlNQUyIsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJ1c2VyX3R5cGUiOiJJbnRlcm5hbFVzZXIiLCJpc19hZG1pbi1ee6InRydWUiLCJlbWFpbF92ZXJpZmllZCI6ImZhb2NlIiwiZGIiOiJFMV9ERVYiLCJsb2NhbGUiOiJieyIsImp0aSI6Il9sdEJMS3djSlNLbUFhM25mbFpwNFEiLCJzaWQiOiJ1Q3FiZds2898pYMXUzOW40NqRwVjFRIiwic2NvcGUiOlsib3BlbmlkIiwicHJvZmlsZSIsIww1kRvbWFpbkFwaSIsIm9mZmxpbmVfYWNjZXNzIl0sImFtciI6WyJwd2QiXX0.AzHxj_iBM3bfcOtdaSNHNbPUHGCf0JAo7fV1fo9JT-rqCHjc0t8VEa1qO5R2jemvs7vDBf6GARxgul3pAy7YQpmqzzruswoLDkDdUMX1LXzHLgp0ppYoNa1A_M_O4UTXCe7xGBRHSyRRQLGsTTGMkv1pK0E3Xn3rAfOPvo4wfrQ8QabVcdA7mupY4qF01tIHPv_7NGS2SyPfCVdAYcxUy8HpQ-RdoXMaVWVz_JhXgMNZ9_nFTxedPGakZJMDjnvYss_GKjucbeYdZM9jSrqEmXDw6s8A3o1jKOyurzIBzug55Dxee8UBWepcO5S08GPguBFotamUvStMdDY0KkmZYvw&quot;,
   &quot;expires_in&quot;: 3600,
   &quot;refresh_token&quot;: &quot;6-Cv7vQ5ouhYzs0AWg6tsG-YK7O5xP_kb5Qb8wEJMnw&quot;,
-  &quot;scope&quot;: &quot;openid profile DomainApi offline_access&quot;
+  &quot;scope&quot;: &quot;openid profile read offline_access&quot;
 }
 </code></pre>
 <p>As you see, the result contains the following:</p>
@@ -232,7 +232,7 @@ refresh_token=6-Cv7vQ5ouhYzs0AWg6tsG-YK7O5xP_kb5Qb8wEJMnw
   &quot;access_token&quot;: &quot;eyJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE2NTU2NTM3MTYsImV4cCI6MTY1NTY1NzMxNiwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOlsiRG9tYWluQXBpIiwidXBkYXRlIl0sImNsaWVudF9pZCI6InBrIiwiY2xpZW50X2RiIjoiRTFfREVWIiwianRpIjoiT0pycTFjX1owNzBUbHZJVTVoUlhFZyIsInNjb3BlIjpbIkRvbWFpbkFwaSIsInVwZGF0ZSJdfQ.syDIwziTNy1m2XNSSKD_E8wScuuuS2ZENzaxdd9ClOU&quot;,
   &quot;expires_in&quot;: 3600,
   &quot;refresh_token&quot;: &quot;SvQvQ9cxcYzs0AWg6tsGW1-YK7O5xP_k98868wEEMjr&quot;,
-  &quot;scope&quot;: &quot;openid profile DomainApi offline_access&quot;
+  &quot;scope&quot;: &quot;openid profile read offline_access&quot;
 }
 </code></pre>
 <p>A new pair of access and refresh tokens. You should use them now.</p>

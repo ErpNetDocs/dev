@@ -125,6 +125,40 @@ Not every operation and function provided by the OData standard are implemented.
 <h3 id="operator-or-is-not-supported">Operator 'or' is not supported</h3>
 <p>Operator 'or' is not supported.</p>
 <p>However all navigation properties and some properties of enumerable type (e.g. General_Document.State) support the 'in' operator.</p>
+<h3 id="operator-eq">Operator 'eq'</h3>
+<p>The operator 'eq' is used to compare an attribute with value.</p>
+<ul>
+<li>Compare Id:</li>
+</ul>
+<pre><code>General_Products_Products?$filter=Id in 0e8fb111-5b04-4eab-a890-47cfb9cfa4c4
+</code></pre>
+<ul>
+<li>Compare reference</li>
+</ul>
+<pre><code>General_Products_Products?$filter=ProductGroup eq 'General_Products_ProductGroups(0bf6b45c-7ec1-484d-9f84-00072b77fabb)'
+</code></pre>
+<ul>
+<li>Compare integer</li>
+</ul>
+<pre><code>Crm_Sales_SalesOrderLines?$filter=LineNo eq 10
+</code></pre>
+<ul>
+<li>Compare string</li>
+</ul>
+<pre><code>General_Products_Products?$filter=PartNumber eq '1234'
+</code></pre>
+<ul>
+<li>Compare enum</li>
+</ul>
+<p>Similar to string:</p>
+<pre><code>Crm_Sales_SalesOrders?$filter=State eq 'Released'
+</code></pre>
+<ul>
+<li>Compare stored attribute</li>
+</ul>
+<p>Use only the &quot;short&quot; value of the stored attribute:</p>
+<pre><code>General_Products_Products?$filter=CustomProperty_color eq 'blue'
+</code></pre>
 <h3 id="operator-in">Operator 'in'</h3>
 <p>The 'in' operator can be used for minimizing the query round trips.</p>
 <p>Examples:</p>
@@ -144,7 +178,7 @@ Not every operation and function provided by the OData standard are implemented.
 <pre><code>Crm_Sales_SalesOrders?$top=10&amp;$select=DocumentType&amp;$filter=DocumentType in ('General_DocumentTypes(f8a93d3a-8cf3-4a09-9d45-667d664cb98d)', 'General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)')
 </code></pre>
 <ul>
-<li>List of reference values with different object types (the reference is of the base object type):</li>
+<li>List of reference values with different types (polymorphism):</li>
 </ul>
 <pre><code>Crm_Sales_SalesOrders?$top=10&amp;$filter=ToParty in ('General_Contacts_Persons(adb66f3f-e173-4a37-878c-000920f44ff0)', 'General_Contacts_Companies(39148781-d316-4d4d-a392-0002f73710f2)')
 </code></pre>
