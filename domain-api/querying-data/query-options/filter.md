@@ -23,6 +23,48 @@ Operator 'or' is not supported.
 
 However all navigation properties and some properties of enumerable type (e.g. General_Document.State) support the 'in' operator.
 
+### Operator 'eq'
+
+The operator 'eq' is used to compare an attribute with value.
+
+* Compare Id:
+
+```
+General_Products_Products?$filter=Id in 0e8fb111-5b04-4eab-a890-47cfb9cfa4c4
+```
+
+* Compare reference
+
+```
+General_Products_Products?$filter=ProductGroup eq 'General_Products_ProductGroups(0bf6b45c-7ec1-484d-9f84-00072b77fabb)'
+```
+
+* Compare integer
+
+```
+Crm_Sales_SalesOrderLines?$filter=LineNo eq 10
+```
+
+* Compare string
+
+```
+General_Products_Products?$filter=PartNumber eq '1234'
+```
+
+* Compare enum
+
+Similar to string:
+```
+Crm_Sales_SalesOrders?$filter=State eq 'Released'
+```
+
+* Compare stored attribute
+
+Use only the "short" value of the stored attribute:
+```
+General_Products_Products?$filter=CustomProperty_color eq 'blue'
+```
+
 ### Operator 'in'
 
 The 'in' operator can be used for minimizing the query round trips.
@@ -47,7 +89,7 @@ Crm_Sales_SalesOrders?$top=10&$filter=State in ('FirmPlanned', 'Released')&$sele
 Crm_Sales_SalesOrders?$top=10&$select=DocumentType&$filter=DocumentType in ('General_DocumentTypes(f8a93d3a-8cf3-4a09-9d45-667d664cb98d)', 'General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)')
 ```
 
-* List of reference values with different object types (the reference is of the base object type):
+* List of reference values with different types (polymorphism):
 
 ```
 Crm_Sales_SalesOrders?$top=10&$filter=ToParty in ('General_Contacts_Persons(adb66f3f-e173-4a37-878c-000920f44ff0)', 'General_Contacts_Companies(39148781-d316-4d4d-a392-0002f73710f2)')
