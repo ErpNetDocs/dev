@@ -8,7 +8,6 @@ ERP.net enforces **data validation** through a combination of **System Business 
 
 Together, system and user business rules ensure that all data entered or modified in ERP.net adheres to required business logic and organizational policies.
 
-
 # Front-End vs. Back-End Models
 
 ERP.net uses two models to handle entity data and business logic — the **front-end model** and the **back-end model**.  
