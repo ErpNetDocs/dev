@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Data Manipulation | ERP.net Developer Docs </title>
+      <title>ExecuteScript | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Data Manipulation | ERP.net Developer Docs ">
+      <meta name="title" content="ExecuteScript | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/index.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/execute-script.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,52 +85,91 @@
         </div>
 
         <article data-uid="">
-<h1 id="data-manipulation">Data Manipulation</h1>
+<h1 id="executescript">ExecuteScript</h1>
 
+<p>ERP.net Domain API defines an <code>ExecuteScript</code> endpoint which can be used to execute JavaScript code directly in the domain context.</p>
+<p><code>ExecuteScript</code> is an <strong>unbound OData action</strong>, invoked via <strong>HTTP POST</strong>, whose request body contains <strong>raw JavaScript source code</strong>. The script runs server-side in a sandboxed runtime with access to the Domain Model and may query, create, update, or delete domain data.</p>
+<hr>
+<h2 id="endpoint">Endpoint</h2>
+<pre><code class="lang-http">POST /api/domain/odata/ExecuteScript
+</code></pre>
+<h2 id="request-body">Request body</h2>
+<p><strong>Required</strong>.
+The request body must contain <strong>plain JavaScript source code</strong>, encoded as UTF-8 text.</p>
+<div class="WARNING">
+<h5>Warning</h5>
 <ul>
-<li><p><a href="create.html">Create</a><br>
-Create new entity record.</p>
-</li>
-<li><p><a href="update.html">Update</a><br>
-Update  entity.</p>
-</li>
-<li><p><a href="delete.html">Delete</a><br>
-Delete entity.</p>
-</li>
-<li><p><a href="update-order.html">Property Dependencies and Update Order</a><br>
-The order of provided properties is important.</p>
-</li>
-<li><p><a href="data-validation.html">Data Validation and Business Rules</a><br>
-ERP.net uses two models to handle entity data and business logic — the front-end model and the back-end model.
-While both represent the same entities, they differ in the business rules and data validations that are executed.</p>
-</li>
-<li><p><a href="transactions.html">Transactions</a><br>
-ERP.net supports transactions to ensure that multiple operations on entities are processed consistently.
-Transactions allow you to group create, update, or delete operations into a single unit of work that is either committed or rolled back as a whole.</p>
-</li>
-<li><p><a href="erpnet-action.html">Actions</a><br>
-ERP.net uses the <code>@erpnet.action</code> annotation to control how JSON data is processed when creating, updating, or importing entities.<br>
-It provides a flexible way to specify operations such as <code>create</code>, <code>update</code>, <code>delete</code>, <code>find</code>, and <code>merge</code> for top-level or nested objects.</p>
-</li>
-<li><p><a href="import.html">Data Import</a><br>
-ERP.net provides an <strong>Import</strong> endpoint that allows you to insert, update, or delete multiple entities in a single request. This unbound action enables efficient bulk operations, supporting both front-end and back-end models.</p>
-</li>
-<li><p><a href="execute-script.html">Execute Script</a><br>
-ERP.net provides an <strong>ExecuteScript</strong> endpoint that allows you to run <strong>server-side JavaScript</strong> in the Domain Model context. This unbound OData action executes the <strong>raw JavaScript source</strong> from the request body in a sandboxed runtime , with access to domain data and optional global <code>transaction</code> and <code>console</code> objects.</p>
-</li>
-<li><p><a href="../data-sync/index.html">Data Sync</a><br>
-ERP.net provides <strong>Data Synchronization</strong> to efficiently keep client applications up-to-date with system changes.<br>
-Instead of fetching all data repeatedly, Data Sync retrieves only entities that have changed since the last synchronization, ensuring minimal network usage and fast updates.</p>
-</li>
-<li><p><a href="error-handling.html">Error Handling</a><br>
-When an error occurs during a Domain API operation, the service returns an HTTP status code <strong>500 (Internal Server Error)</strong> and a JSON body containing detailed error information.</p>
-</li>
+<li>The body is <strong>not JSON</strong></li>
+<li>There are <strong>no parameters</strong></li>
+<li>The entire request stream is interpreted as JavaScript</li>
+</ul>
+<p>If the body is empty or whitespace, the action fails.</p>
+</div>
+<h2 id="example">Example</h2>
+<pre><code class="lang-http">POST https://&lt;your-instance&gt;.my.erp.net/api/domain/odata/ExecuteScript
+Content-Type: text/plain
+Accept: application/json
+
+console.log('Starting script');
+
+// Example: deactivate all active customers
+var customers = Domain.Crm.Sales.CustomersRepository.query({
+    active: { equals: true }
+});
+
+const customersCount = customers.length;
+for (var i = 0; i &lt; customersCount; i++) {
+    customers[i].Active = false;
+}
+
+console.log(`Processed ${customersCount} customers.`)
+</code></pre>
+<h2 id="transaction-control-from-javascript">Transaction control from JavaScript</h2>
+<p>The script runtime exposes a global <code>Transaction</code> object, which allows the script to explicitly control transaction boundaries. You can start a transaction, commit changes, or roll everything back directly from JavaScript:</p>
+<pre><code class="lang-js">Transaction.begin();
+Transaction.commit();
+Transaction.rollback();
+</code></pre>
+<p>Use <code>Transaction.rollback()</code> to safely discard changes when you detect invalid data or want a &quot;dry run&quot; style execution. Use <code>Transaction.commit()</code> only when you are sure all changes are consistent and should be persisted.</p>
+<h2 id="result">Result</h2>
+<p>On success, the action returns a JSON object with execution metadata and captured console output.</p>
+<p><strong>Example response</strong></p>
+<pre><code class="lang-json">{
+  &quot;ok&quot;: true,
+  &quot;sessionId&quot;: &quot;f3b2c8a7...&quot;,
+  &quot;transactionId&quot;: &quot;9d1a4e2c...&quot;,
+  &quot;durationMs&quot;: 37,
+  &quot;console&quot;: &quot;Starting script\n
+    Processed 128 customers&quot;
+}
+</code></pre>
+<p><strong>Fields</strong></p>
+<ul>
+<li><strong>ok</strong> - Always <code>true</code> on success</li>
+<li><strong>sessionId</strong> - Current session identifier</li>
+<li><strong>transactionId</strong> - Current in-memory transaction identifier, if any</li>
+<li><strong>durationMs</strong> - Script execution time in milliseconds</li>
+<li><strong>console</strong> - Output collected from the global <code>console</code> object, if used</li>
+</ul>
+<h2 id="error-handling">Error handling</h2>
+<p>If script execution fails due to:</p>
+<ul>
+<li>empty request body</li>
+<li>JavaScript runtime error</li>
+<li>exceeded runtime constraints</li>
+</ul>
+<p>the action returns an OData error response and <strong>no changes are committed</strong>.</p>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><a href="https://docs.erp.net/tech/advanced/scripting/index.html">ERP.net Scripting documentation</a></li>
+<li>[Advanced scripting examples](A collection of advanced scripts that showcase powerful automation, integrations, and more.)</li>
 </ul>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/index.md/#L1" class="edit-link">Suggest improvement to this page</a>
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/execute-script.md/#L1" class="edit-link">Suggest improvement to this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

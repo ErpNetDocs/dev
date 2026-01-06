@@ -1176,6 +1176,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "domain-api/data-manipulation/execute-script.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-manipulation/execute-script.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "domain-api/data-manipulation/import.md",
       "output": {
         ".html": {
