@@ -27,14 +27,9 @@
 * [Data Import](./import.md)  
    ERP.net provides an **Import** endpoint that allows you to insert, update, or delete multiple entities in a single request. This unbound action enables efficient bulk operations, supporting both front-end and back-end models.
 
-* [Execute Script](./execute-script.md)  
-  @@name provides an **ExecuteScript** endpoint that allows you to run **server-side JavaScript** in the Domain Model context. This unbound OData action executes the **raw JavaScript source** from the request body in a sandboxed runtime , with access to domain data and optional global `transaction` and `console` objects.
-
 * [Data Sync](../data-sync/index.md)  
    ERP.net provides **Data Synchronization** to efficiently keep client applications up-to-date with system changes.  
    Instead of fetching all data repeatedly, Data Sync retrieves only entities that have changed since the last synchronization, ensuring minimal network usage and fast updates.
 
 * [Error Handling](./error-handling.md)  
    When an error occurs during a Domain API operation, the service returns an HTTP status code **500 (Internal Server Error)** and a JSON body containing detailed error information.
-
-

@@ -78,7 +78,7 @@ This allows `ExecuteScript` to be composed with other Domain API operations as p
 > Calling `Transaction.begin()`, `Transaction.commit()`, or `Transaction.rollback()` from the script will directly affect the external transaction and may interfere with its lifecycle.  
 > This usage is **not recommended**. When a transaction is managed externally, control it only via the Domain API transaction actions.
 
-For more details about transaction lifecycle and management, see the [Domain API Transactions](./transactions.md) documentation.
+For more details about transaction lifecycle and management, see the [Domain API Transactions](./data-manipulation/transactions.md) documentation.
 
 ## Result
 
