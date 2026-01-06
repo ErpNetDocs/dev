@@ -14,7 +14,7 @@ POST /api/domain/odata/ExecuteScript
 
 ## Request body
 
-**Required**.
+**Required.**
 The request body must contain **plain JavaScript source code**, encoded as UTF-8 text.
 
 > [!WARNING]
@@ -58,6 +58,28 @@ Transaction.rollback();
 
 Use `Transaction.rollback()` to safely discard changes when you detect invalid data or want a "dry run" style execution. Use `Transaction.commit()` only when you are sure all changes are consistent and should be persisted.
 
+## External transaction control
+
+`ExecuteScript` can execute **inside an externally managed Domain API transaction**.
+
+If a transaction has been started beforehand using the `BeginTransaction` unbound action and its `TransactionId` is provided in the request headers, the script runs **within that existing transaction**. In this case:
+
+- All changes are applied to the in-memory transaction dataset.
+- The script does not implicitly commit or end the transaction.
+- Final persistence is controlled externally via `EndTransaction` with `commit: true` or `commit: false`.
+
+This allows `ExecuteScript` to be composed with other Domain API operations as part of a larger transactional workflow, where transaction lifecycle (begin, commit, rollback) is managed outside the script.
+
+> [!WARNING]
+> **External transaction interaction**
+>
+> When `ExecuteScript` runs inside a transaction started via `BeginTransaction`, the global `Transaction` object operates on that same transaction.
+>
+> Calling `Transaction.begin()`, `Transaction.commit()`, or `Transaction.rollback()` from the script will directly affect the external transaction and may interfere with its lifecycle.  
+> This usage is **not recommended**. When a transaction is managed externally, control it only via the Domain API transaction actions.
+
+For more details about transaction lifecycle and management, see the [Domain API Transactions](./transactions.md) documentation.
+
 ## Result
 
 On success, the action returns a JSON object with execution metadata and captured console output.
@@ -70,8 +92,7 @@ On success, the action returns a JSON object with execution metadata and capture
   "sessionId": "f3b2c8a7...",
   "transactionId": "9d1a4e2c...",
   "durationMs": 37,
-  "console": "Starting script\n
-    Processed 128 customers"
+  "console": "Starting script\nProcessed 128 customers"
 }
 ```
 
@@ -98,4 +119,4 @@ the action returns an OData error response and **no changes are committed**.
 ## Learn More
 
 - [ERP.net Scripting documentation](https://docs.erp.net/tech/advanced/scripting/index.html)
-- [Advanced scripting examples](A collection of advanced scripts that showcase powerful automation, integrations, and more.)
+- [Advanced scripting examples](https://github.com/erpnet/JavaScriptExamples)
