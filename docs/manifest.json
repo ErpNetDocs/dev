@@ -1176,16 +1176,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "domain-api/data-manipulation/execute-script.md",
-      "output": {
-        ".html": {
-          "relative_path": "domain-api/data-manipulation/execute-script.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "domain-api/data-manipulation/import.md",
       "output": {
         ".html": {
@@ -1296,6 +1286,16 @@
         },
         ".json": {
           "relative_path": "domain-api/data-sync/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/execute-script.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/execute-script.html"
         }
       },
       "version": ""

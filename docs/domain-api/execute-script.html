@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>ExecuteScript | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="ExecuteScript | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/execute-script.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="executescript">ExecuteScript</h1>
+
+<p>ERP.net Domain API defines an <code>ExecuteScript</code> endpoint which can be used to execute JavaScript code directly in the domain context.</p>
+<p><code>ExecuteScript</code> is an <strong>unbound OData action</strong>, invoked via <strong>HTTP POST</strong>, whose request body contains <strong>raw JavaScript source code</strong>. The script runs server-side in a sandboxed runtime with access to the Domain Model and may query, create, update, or delete domain data.</p>
+<hr>
+<h2 id="endpoint">Endpoint</h2>
+<pre><code class="lang-http">POST /api/domain/odata/ExecuteScript
+</code></pre>
+<h2 id="request-body">Request body</h2>
+<p><strong>Required.</strong>
+The request body must contain <strong>plain JavaScript source code</strong>, encoded as UTF-8 text.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<ul>
+<li>The body is <strong>not JSON</strong></li>
+<li>There are <strong>no parameters</strong></li>
+<li>The entire request stream is interpreted as JavaScript</li>
+</ul>
+<p>If the body is empty or whitespace, the action fails.</p>
+</div>
+<h2 id="example">Example</h2>
+<pre><code class="lang-http">POST https://&lt;your-instance&gt;.my.erp.net/api/domain/odata/ExecuteScript
+Content-Type: text/plain
+Accept: application/json
+
+console.log('Starting script');
+
+// Example: deactivate all active customers
+var customers = Domain.Crm.Sales.CustomersRepository.query({
+    active: { equals: true }
+});
+
+const customersCount = customers.length;
+for (var i = 0; i &lt; customersCount; i++) {
+    customers[i].Active = false;
+}
+
+console.log(`Processed ${customersCount} customers.`)
+</code></pre>
+<h2 id="transaction-control-from-javascript">Transaction control from JavaScript</h2>
+<p>The script runtime exposes a global <code>Transaction</code> object, which allows the script to explicitly control transaction boundaries. You can start a transaction, commit changes, or roll everything back directly from JavaScript:</p>
+<pre><code class="lang-js">Transaction.begin();
+Transaction.commit();
+Transaction.rollback();
+</code></pre>
+<p>Use <code>Transaction.rollback()</code> to safely discard changes when you detect invalid data or want a &quot;dry run&quot; style execution. Use <code>Transaction.commit()</code> only when you are sure all changes are consistent and should be persisted.</p>
+<h2 id="external-transaction-control">External transaction control</h2>
+<p><code>ExecuteScript</code> can execute <strong>inside an externally managed Domain API transaction</strong>.</p>
+<p>If a transaction has been started beforehand using the <code>BeginTransaction</code> unbound action and its <code>TransactionId</code> is provided in the request headers, the script runs <strong>within that existing transaction</strong>. In this case:</p>
+<ul>
+<li>All changes are applied to the in-memory transaction dataset.</li>
+<li>The script does not implicitly commit or end the transaction.</li>
+<li>Final persistence is controlled externally via <code>EndTransaction</code> with <code>commit: true</code> or <code>commit: false</code>.</li>
+</ul>
+<p>This allows <code>ExecuteScript</code> to be composed with other Domain API operations as part of a larger transactional workflow, where transaction lifecycle (begin, commit, rollback) is managed outside the script.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><strong>External transaction interaction</strong></p>
+<p>When <code>ExecuteScript</code> runs inside a transaction started via <code>BeginTransaction</code>, the global <code>Transaction</code> object operates on that same transaction.</p>
+<p>Calling <code>Transaction.begin()</code>, <code>Transaction.commit()</code>, or <code>Transaction.rollback()</code> from the script will directly affect the external transaction and may interfere with its lifecycle.<br>
+This usage is <strong>not recommended</strong>. When a transaction is managed externally, control it only via the Domain API transaction actions.</p>
+</div>
+<p>For more details about transaction lifecycle and management, see the <a href="data-manipulation/transactions.html">Domain API Transactions</a> documentation.</p>
+<h2 id="result">Result</h2>
+<p>On success, the action returns a JSON object with execution metadata and captured console output.</p>
+<p><strong>Example response</strong></p>
+<pre><code class="lang-json">{
+  &quot;ok&quot;: true,
+  &quot;sessionId&quot;: &quot;f3b2c8a7...&quot;,
+  &quot;transactionId&quot;: &quot;9d1a4e2c...&quot;,
+  &quot;durationMs&quot;: 37,
+  &quot;console&quot;: &quot;Starting script\nProcessed 128 customers&quot;
+}
+</code></pre>
+<p><strong>Fields</strong></p>
+<ul>
+<li><strong>ok</strong> - Always <code>true</code> on success</li>
+<li><strong>sessionId</strong> - Current session identifier</li>
+<li><strong>transactionId</strong> - Current in-memory transaction identifier, if any</li>
+<li><strong>durationMs</strong> - Script execution time in milliseconds</li>
+<li><strong>console</strong> - Output collected from the global <code>console</code> object, if used</li>
+</ul>
+<h2 id="error-handling">Error handling</h2>
+<p>If script execution fails due to:</p>
+<ul>
+<li>empty request body</li>
+<li>JavaScript runtime error</li>
+<li>exceeded runtime constraints</li>
+</ul>
+<p>the action returns an OData error response and <strong>no changes are committed</strong>.</p>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><a href="https://docs.erp.net/tech/advanced/scripting/index.html">ERP.net Scripting documentation</a></li>
+<li><a href="https://github.com/erpnet/JavaScriptExamples">Advanced scripting examples</a></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/execute-script.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
