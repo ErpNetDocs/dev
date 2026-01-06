@@ -87,9 +87,9 @@ This lifecycle applies equally to internal tools, partner integrations, and mark
 - **[Application Types](app-types.md)**  
   Learn about the different kinds of @@name Apps - internal, external, and marketplace.
 
-- **[Trusted Applications](../auth/configuration/trusted-apps-access.md)**  
+- **[Trusted Applications](../../auth/configuration/trusted-apps-access.md)**  
   Understand how each app is registered and recognized by the ERP.net instance.
 
-- **[Authentication and Authorization](../auth/overview.md)**  
+- **[Authentication and Authorization](../../auth/overview.md)**  
   See how the built-in @@name Identity authenticates and authorizes apps and users.
   

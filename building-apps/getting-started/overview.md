@@ -14,7 +14,7 @@ If you need the mental model first, see [Concepts](../concepts/overview.md), esp
 
 For scenario-specific authentication tutorials (SPA, web app, portals, service apps), see:
 
-- [Getting Started (Authentication)](../auth/getting-started/overview.md)
+- [Getting Started (Authentication)](../../auth/getting-started/overview.md)
 
 ## What you will need
 
@@ -33,7 +33,7 @@ At the end of this guide, you will have:
 ## Start here
 
 1. [Prerequisites](./prerequisites.md)
-2. [Create a Trusted Application](../auth/configuration/trusted-apps-access.md)
+2. [Create a Trusted Application](../../auth/configuration/trusted-apps-access.md)
 3. [Get an access token](./get-access-token.md)
 4. [Make your first API call](./first-api-call.md)
 5. [Next steps](./next-steps.md)

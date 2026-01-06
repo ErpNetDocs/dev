@@ -6,7 +6,7 @@ This page shows how to validate end-to-end access: token -> API call -> successf
 
 @@name exposes multiple API surfaces. Before you implement anything, decide which one you are targeting:
 
-- [API Access (Domain API vs Table API)](../concepts/api-access/overview.md)
+- [Choosing the right API](choosing-the-right-api.md)
 
 Pick one API and stick with it for the first validation call.
 
@@ -27,10 +27,6 @@ Where:
 - `{access_token}` is the token you acquired from the selected identity authority
 - `{api-endpoint}` is the endpoint from the API surface you chose (Domain API or Table API)
 
-Important:
-
-- Use the API URLs from the canonical API documentation pages to avoid mixing base URL variants. See [API Access](../concepts/api-access/overview.md).
-
 ## 3) What success looks like
 
 - HTTP 200 OK
@@ -48,9 +44,9 @@ Important:
 
 Start troubleshooting from:
 
-- [Trusted Applications](../auth/configuration/trusted-apps-access.md)
-- [Scopes](../auth/configuration/scopes.md)
-- [Authentication and Authorization](../auth/configuration/overview.md)
+- [Trusted Applications](../../auth/configuration/trusted-apps-access.md)
+- [Scopes](../../auth/configuration/scopes.md)
+- [Authentication and Authorization](../../auth/configuration/overview.md)
 
 > [!WARNING]
-> Do not log access tokens in production and do not embed secrets in frontend code. See: [Security Best Practices](../auth/concepts/security-best-practices.md)
+> Do not log access tokens in production and do not embed secrets in frontend code. See: [Security Best Practices](../../auth/concepts/security-best-practices.md)

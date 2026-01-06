@@ -120,7 +120,7 @@ Supports **streaming** for efficient large dataset transfers.
 
 For a deeper understanding of these terms, explore:
 
-- [Authentication and Authorization](../auth/overview.md)
-- [Tokens](../auth/tokens/tokens-overview.md)
-- [Sessions](../auth/sessions/overview.md)
-- [API Access](../concepts/api-access/overview.md)
+- [Authentication and Authorization](../../auth/overview.md)
+- [Tokens](../../auth/tokens/tokens-overview.md)
+- [Sessions](../../auth/sessions/overview.md)
+- [Choosing the Right API](../getting-started/choosing-the-right-api.md)

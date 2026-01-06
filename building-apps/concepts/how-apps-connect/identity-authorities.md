@@ -24,7 +24,7 @@ Use this when your app must access data or operations in a particular @@name ins
   - Internal app/portal that needs to call the instance APIs
   - Any scenario where API access must be controlled per instance and per scope
 
-See: [Instance Identity Service](./identity-server.md) and [Trusted Applications](../../auth/configuration/trusted-apps-access.md).
+See: [Instance Identity Service](./identity-server.md) and [Trusted Applications](../../../auth/configuration/trusted-apps-access.md).
 
 ## @@name global identity provider (external IdP)
 
@@ -52,8 +52,8 @@ See: [ERP.net as an external Identity Provider](./erpnet-as-external-idp.md).
 
 ## See also
 
-- [OAuth 2.0](./oauth2-overview.md)
+- [OAuth 2.0](../../../auth/concepts/oauth2-overview.md)
 - [Instance Identity Service](./identity-server.md)
 - [@@name as an external Identity Provider](./erpnet-as-external-idp.md)
-- [Trusted Applications and Access Control](../../auth/configuration/trusted-apps-access.md)
-- [Scopes](../../auth/configuration/scopes.md)
+- [Trusted Applications and Access Control](../../../auth/configuration/trusted-apps-access.md)
+- [Scopes](../../../auth/configuration/scopes.md)

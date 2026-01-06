@@ -19,7 +19,7 @@ All APIs in @@name use the same security model, based on **OAuth 2.0** and **Ope
 Authentication verifies **who** the caller is (user or application).  
 Authorization defines **what** that caller is allowed to do, based on **scopes**, **roles**, and **trusted application** settings.
 
-To learn more, see [Authentication and Authorization](../building-apps/auth/overview.md).
+To learn more, see [Authentication and Authorization](../auth/overview.md).
 
 ## Select API
 

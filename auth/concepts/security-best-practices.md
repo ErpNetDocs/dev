@@ -70,7 +70,7 @@ This page summarizes best practices when working with OAuth 2.0, @@name Identity
 
 ## Learn More
 
-- [**OAuth 2.0 Overview**](../../concepts/how-apps-connect/oauth2-overview.md)  
+- [**OAuth 2.0 Overview**](../../auth/concepts/oauth2-overview.md)  
   Learn how @@name implements standard OAuth flows.
 
 - [**Trusted Applications and Access Control**](../configuration/trusted-apps-access.md)  

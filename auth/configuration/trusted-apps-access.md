@@ -211,10 +211,10 @@ By defining Trusted Applications carefully, administrators can ensure that every
 
 ## Learn More
 
-- [**@@name Identity**](../../concepts/how-apps-connect/identity-server.md)  
+- [**@@name Identity**](../../building-apps/concepts/how-apps-connect/identity-server.md)  
   Learn about the built-in authentication authority in every @@name instance.
 
-- [**OAuth 2.0**](../../concepts/how-apps-connect/oauth2-overview.md)  
+- [**OAuth 2.0**](../../auth/concepts/oauth2-overview.md)  
   Understand how apps obtain tokens and delegate access securely.
 
 - [**Auth Flows**](../flows/overview.md)  

@@ -17,19 +17,19 @@ In short:
 
 Before you can reliably obtain tokens for instance API access, ensure the app is registered and has the correct access configuration:
 
-- [Create / configure a Trusted Application](../auth/configuration/trusted-apps-access.md)
-- [Scopes](../auth/configuration/scopes.md)
+- [Create / configure a Trusted Application](../../auth/configuration/trusted-apps-access.md)
+- [Scopes](../../auth/configuration/scopes.md)
 
 ## 3) Follow the tutorial that matches your scenario
 
 Use the scenario tutorials as the source of truth for the exact steps:
 
-- [@@name ID for Web Applications](../auth/getting-started/erpnet-id-web-apps.md)
-- [Instance ID for SPA Applications](../auth/getting-started/instance-id-spa-apps.md)
-- [Instance ID for Web Applications](../auth/getting-started/instance-id-web-apps.md)
-- [Instance ID for Web Portals](../auth/getting-started/instance-id-web-portals.md)
-- [Service Applications](../auth/getting-started/service-apps.md)
-- [Automations](../auth/getting-started/automation.md)
+- [@@name ID for Web Applications](../../auth/getting-started/erpnet-id-web-apps.md)
+- [Instance ID for SPA Applications](../../auth/getting-started/instance-id-spa-apps.md)
+- [Instance ID for Web Applications](../../auth/getting-started/instance-id-web-apps.md)
+- [Instance ID for Web Portals](../../auth/getting-started/instance-id-web-portals.md)
+- [Service Applications](../../auth/getting-started/service-apps.md)
+- [Automations](../../auth/getting-started/automation.md)
 
 ## 4) Validate you actually have a usable token
 
@@ -45,4 +45,4 @@ Check:
 - trusted app registration
 - scopes
 
-See: [Configuration overview](../auth/configuration/overview.md)
+See: [Configuration overview](../../auth/configuration/overview.md)

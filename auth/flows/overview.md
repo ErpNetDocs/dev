@@ -1,10 +1,10 @@
-# Authentication Flows Overview
+# OAuth 2.0 Authentication Flows Overview
 
-Every app connecting to @@name must follow an **OAuth 2.0 authentication flow** - a specific sequence of steps for obtaining and using tokens securely.  
+Some authentication scenarios in @@name use **OAuth 2.0–based flows** - specific sequences of steps for obtaining and using tokens securely.
 
-Choosing the right flow depends on **how your app interacts with users** and **how it connects to the APIs**.
+Choosing the appropriate OAuth 2.0 flow depends on **how your app interacts with users** and **how it connects to the APIs**.
 
-All flows are handled by @@name **Identity**.
+All OAuth 2.0 flows are handled by @@name **Identity**.
 
 ## Why Flows Matter
 
@@ -25,7 +25,7 @@ To support these patterns securely, @@name provides **two OAuth 2.0 flows** that
 | **Hybrid (combined)** | Both | Mixed | Apps that include both an interactive front end and a service backend |
 
 > [!NOTE]  
-> Hybrid apps combine both flows: the **front end** uses Authorization Code for user access, while the **backend** uses Client Credentials for automation or elevated access.
+> Hybrid apps combine both flows: the **front-end** uses Authorization Code for user access, while the **back-end** uses Client Credentials for automation or elevated access.
 
 ## How It Works
 

@@ -10,10 +10,10 @@ You will need the base URL of the @@name instance you will connect to, for examp
 
 From it, you will derive:
 
-- the **instance Identity Server authority** (see [Instance Identity Server](../concepts/how-apps-connect/identity-server.md))
-- the **API endpoints** you will call (see [API Access](../concepts/api-access/overview.md))
+- the **instance Identity Service authority** (see [Instance Identity Service](../concepts/how-apps-connect/identity-server.md))
+- the **API endpoints** you will call (see [Choosing the right API](../getting-started/choosing-the-right-api.md))
 
-If you are unsure whether you should use the instance identity server or the global @@name IdP, read:
+If you are unsure whether you should use the instance identity service or the global @@name IdP, read:
 
 - [Identity authorities (instance vs global)](../concepts/how-apps-connect/identity-authorities.md)
 
@@ -26,7 +26,7 @@ Pick the scenario that matches your app:
 
 Then follow the matching tutorial in:
 
-- [Getting Started (Authentication)](../auth/getting-started/overview.md)
+- [Getting Started (Authentication)](../../auth/getting-started/overview.md)
 
 ## 3) Required access and permissions
 
@@ -37,8 +37,8 @@ To proceed, you typically need:
 
 See:
 
-- [Trusted Applications](../auth/configuration/trusted-apps-access.md)
-- [Scopes](../auth/configuration/scopes.md)
+- [Trusted Applications](../../auth/configuration/trusted-apps-access.md)
+- [Scopes](../../auth/configuration/scopes.md)
 
 ## 4) Tools
 
@@ -54,4 +54,4 @@ Any HTTP client is sufficient to validate the first token + API call:
 - Do not request broad permissions "just to make it work".
   Prefer least-privilege via the right scopes and the right app type.
 
-See: [Security Best Practices](../auth/concepts/security-best-practices.md)
+See: [Security Best Practices](../../auth/concepts/security-best-practices.md)

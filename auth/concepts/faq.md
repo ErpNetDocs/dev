@@ -226,7 +226,7 @@ This includes URLs for token exchange, authorization, logout, and JSON Web Keys 
 
 ## Learn More
 
-- [OAuth 2.0 Overview](../../concepts/how-apps-connect/oauth2-overview.md)  
+- [OAuth 2.0 Overview](../../auth/concepts/oauth2-overview.md)  
 - [Trusted Applications and Access Control](../configuration/trusted-apps-access.md)  
 - [Token Lifetime and Renewal](../tokens/token-lifetime.md)  
 - [License Slot Usage](../sessions/license-slot.md)

@@ -102,7 +102,7 @@ A guided path to your first working integration-prerequisites, registering a Tru
 [**Concepts**](./concepts/overview.md)  
 The mental model behind ERP.net Apps-app types, how apps connect, API access options, and the key terms used throughout this topic.
 
-[**Authentication and Authorization**](./auth/overview.md)  
+[**Authentication and Authorization**](../auth/overview.md)  
 OAuth 2.0/OIDC in @@name - trusted applications, scopes, flows, tokens, sessions, and security guidance for calling APIs safely.
 
 ## Before You Start
@@ -122,6 +122,6 @@ OAuth 2.0/OIDC in @@name - trusted applications, scopes, flows, tokens, sessions
 - **[Application Types](./concepts/app-types.md)**  
   Explore the different kinds of @@name Apps - internal, external, and marketplace.
 
-- **[Authentication and Authorization](./auth/overview.md)**  
+- **[Authentication and Authorization](../auth/overview.md)**  
   See how the built-in @@name Identity authenticates and authorizes apps and users.
   

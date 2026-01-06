@@ -27,6 +27,6 @@ See: [Scopes](./scopes.md)
 
 ## Related topics
 
-- [Identity authorities (instance vs global)](../../concepts/how-apps-connect/identity-authorities.md)
+- [Identity authorities (instance vs global)](../../building-apps/concepts/how-apps-connect/identity-authorities.md)
 - [Authentication and Authorization](../overview.md)
 - [Tokens](../tokens/tokens-overview.md)

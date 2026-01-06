@@ -1,3 +1,5 @@
+- name: OAuth 2.0
+  href: oauth2-overview.md
 - name: Samples
   href: samples/toc.yml
   topicHref: samples/index.md

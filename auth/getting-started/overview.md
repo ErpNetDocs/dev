@@ -4,7 +4,7 @@ This section contains step-by-step guides for implementing authentication in com
 
 If you're looking for the underlying concepts (authorities, flows, tokens, scopes), see:
 
-- [Identity authorities (instance vs global)](../../concepts/how-apps-connect/identity-authorities.md)
+- [Identity authorities (instance vs global)](../../building-apps/concepts/how-apps-connect/identity-authorities.md)
 - [Authentication and Authorization](../overview.md)
 
 ## Choose your scenario
@@ -43,4 +43,4 @@ Each scenario guide provides:
 ## Next steps
 
 - Start with the guide that matches your app type.
-- If you are unsure which authority applies, read [Identity authorities (instance vs global)](../../concepts/how-apps-connect/identity-authorities.md) first.
+- If you are unsure which authority applies, read [Identity authorities (instance vs global)](../../building-apps/concepts/how-apps-connect/identity-authorities.md) first.

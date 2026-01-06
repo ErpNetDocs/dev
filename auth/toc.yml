@@ -1,6 +1,6 @@
 - name: Overview
   href: overview.md
-- name: Getting Started (Authentication)
+- name: Getting Started
   href: getting-started/toc.yml
   topicHref: getting-started/overview.md
 - name: Configuration
@@ -9,7 +9,7 @@
 - name: Concepts
   href: concepts/toc.yml
   topicHref: concepts/overview.md
-- name: Auth Flows
+- name: OAuth 2.0 Flows
   href: flows/toc.yml  
   topicHref: flows/overview.md
 - name: Tokens

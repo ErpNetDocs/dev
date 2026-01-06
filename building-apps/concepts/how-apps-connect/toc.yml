@@ -1,7 +1,5 @@
-- name: How apps connect - Overview
+- name: Overview
   href: overview.md
-- name: OAuth 2.0
-  href: oauth2-overview.md
 - name: Identity authorities (instance vs global)
   href: identity-authorities.md
 - name: Instance Identity Service (per ERP.net instance)

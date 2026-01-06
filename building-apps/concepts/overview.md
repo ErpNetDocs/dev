@@ -2,7 +2,7 @@
 
 This section explains the core ideas behind building apps and integrations for @@name. Use it to understand *how the pieces fit together* before you dive into implementation details.
 
-If you want a step-by-step setup, start with [Getting Started](../getting-started/overview.md). For token flows, scopes, and access rules, see [Authentication and Authorization](../auth/overview.md).
+If you want a step-by-step setup, start with [Getting Started](../getting-started/overview.md). For token flows, scopes, and access rules, see [Authentication and Authorization](../../auth/overview.md).
 
 ## What you'll learn here
 
@@ -30,7 +30,7 @@ Apps connect through standard OAuth 2.0 / OIDC mechanisms and must choose the co
 See:
 
 - [How apps connect - Overview](./how-apps-connect/overview.md)
-- [OAuth 2.0](./how-apps-connect/oauth2-overview.md)
+- [OAuth 2.0](../../auth/concepts/oauth2-overview.md)
 - [Identity authorities (instance vs global)](./how-apps-connect/identity-authorities.md)
 - [Instance Identity Server](./how-apps-connect/identity-server.md)
 - [@@name as an external Identity Provider](./how-apps-connect/erpnet-as-external-idp.md)
@@ -39,7 +39,7 @@ See:
 
 @@name provides more than one API surface. The choice affects how you model data, how you query, and what kinds of operations are available.
 
-See: [API Access (Domain API vs Table API)](./api-access/overview.md).
+See: [Choosing the right API](../getting-started/choosing-the-right-api.md).
 
 ### Calling APIs safely
 
@@ -59,7 +59,7 @@ See: [Glossary](./glossary.md).
   1. [What is an @@name App](./what-is-erpnet-app.md)
   2. [Application Types](./app-types.md)
   3. [How apps connect - Overview](./how-apps-connect/overview.md)
-  4. [API Access (Domain API vs Table API)](./api-access/overview.md)  
+  4. [Choosing the right API](../getting-started/choosing-the-right-api.md)  
 
 - **I need to decide "which identity authority do I use?"**
   1. [Identity authorities (instance vs global)](./how-apps-connect/identity-authorities.md)
@@ -67,9 +67,9 @@ See: [Glossary](./glossary.md).
 
 - **I'm reviewing an integration for security**
   1. [Best practices for calling APIs securely](./api-best-practices.md)
-  2. [Authentication and Authorization](../auth/overview.md)  
+  2. [Authentication and Authorization](../../auth/overview.md)  
 
 ## See also
 
 - [Getting Started](../getting-started/overview.md)
-- [Authentication and Authorization](../auth/overview.md)
+- [Authentication and Authorization](../../auth/overview.md)

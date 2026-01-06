@@ -32,7 +32,7 @@ OAuth 2.0 defines how access tokens are requested and issued. OpenID Connect ext
 
 This is the protocol layer—**it does not grant access by itself**. Access is granted only when the token is accepted by the target APIs under the configured rules.
 
-See: [OAuth 2.0 and OpenID Connect (OIDC)](./oauth2-overview.md)
+See: [OAuth 2.0 and OpenID Connect (OIDC)](../../../auth/concepts/oauth2-overview.md)
 
 ### 3) Trusted Applications (the instance-side trust and access definition)
 
@@ -44,7 +44,7 @@ A **Trusted Application** is the instance-side registration that tells @@name:
 
 Trusted Applications are the *control point* for instance API access.
 
-See: [Trusted Applications and Access Control](../../auth/configuration/trusted-apps-access.md)
+See: [Trusted Applications and Access Control](../../../auth/configuration/trusted-apps-access.md)
 
 ## End-to-end flow (what happens when an app connects)
 
@@ -66,8 +66,8 @@ See: [Trusted Applications and Access Control](../../auth/configuration/trusted-
 ## How to proceed (recommended reading order)
 
 1. [Choose an identity authority (instance vs global)](./identity-authorities.md)  
-2. [OAuth 2.0 and OpenID Connect (OIDC)](./oauth2-overview.md)  
-3. [Trusted Applications and Access Control](../../auth/configuration/trusted-apps-access.md)  
+2. [OAuth 2.0 and OpenID Connect (OIDC)](../../../auth/concepts/oauth2-overview.md)  
+3. [Trusted Applications and Access Control](../../../auth/configuration/trusted-apps-access.md)  
 4. Deep dive by scenario:
    - [Instance Identity Service](./identity-server.md)
    - [@@name as an external Identity Provider](./erpnet-as-external-idp.md)

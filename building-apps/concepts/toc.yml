@@ -5,9 +5,6 @@
 - name: How apps connect
   href: how-apps-connect/toc.yml
   topicHref: how-apps-connect/overview.md
-- name: API Access (Domain API vs Table API)
-  href: api-access/toc.yml
-  topicHref: api-access/overview.md
 - name: Best practices for calling APIs securely
   href: api-best-practices.md
 - name: Glossary

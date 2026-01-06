@@ -88,8 +88,8 @@ Following these best practices will ensure your @@name integrations are:
 - [**Table API Reference**](../../table-api/index.md)  
   Retrieve high-volume analytical data with streaming support.
 
-- [**Tokens Overview**](../auth/tokens/tokens-overview.md)  
+- [**Tokens Overview**](../../auth/tokens/tokens-overview.md)  
   Understand access tokens, reference tokens, and scopes.
 
-- [**License Slot Usage**](../auth/sessions/license-slot.md)  
+- [**License Slot Usage**](../../auth/sessions/license-slot.md)  
   Learn how API sessions affect license consumption.

@@ -120,8 +120,8 @@ Embedded apps behave differently depending on where they are hosted:
 - **[What Are @@name Apps](what-is-erpnet-app.md)**  
   Understand the core concept of @@name Apps and how they connect to an @@name instance.
 
-- **[Trusted Applications](../auth/configuration/trusted-apps-access.md)**  
+- **[Trusted Applications](../../auth/configuration/trusted-apps-access.md)**  
   Learn how each app is registered, managed, and granted access within @@name.
 
-- **[Authentication and Authorization](../auth/overview.md)**  
+- **[Authentication and Authorization](../../auth/overview.md)**  
   See how the built-in @@name Identity authenticates and authorizes apps and users.

@@ -16,7 +16,7 @@ The Table API supports the following types of authentication:
 > [!CAUTION]
 > Although Basic Authentication is supported, its use is strongly **NOT** recommended due to its significantly lower level of security.
 
-For more information, see [Authentication](../building-apps/auth/overview.md).
+For more information, see [Authentication](../auth/overview.md).
 
 ## Tables
 
