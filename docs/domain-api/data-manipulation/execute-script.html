@@ -94,7 +94,7 @@
 <pre><code class="lang-http">POST /api/domain/odata/ExecuteScript
 </code></pre>
 <h2 id="request-body">Request body</h2>
-<p><strong>Required</strong>.
+<p><strong>Required.</strong>
 The request body must contain <strong>plain JavaScript source code</strong>, encoded as UTF-8 text.</p>
 <div class="WARNING">
 <h5>Warning</h5>
@@ -131,6 +131,23 @@ Transaction.commit();
 Transaction.rollback();
 </code></pre>
 <p>Use <code>Transaction.rollback()</code> to safely discard changes when you detect invalid data or want a &quot;dry run&quot; style execution. Use <code>Transaction.commit()</code> only when you are sure all changes are consistent and should be persisted.</p>
+<h2 id="external-transaction-control">External transaction control</h2>
+<p><code>ExecuteScript</code> can execute <strong>inside an externally managed Domain API transaction</strong>.</p>
+<p>If a transaction has been started beforehand using the <code>BeginTransaction</code> unbound action and its <code>TransactionId</code> is provided in the request headers, the script runs <strong>within that existing transaction</strong>. In this case:</p>
+<ul>
+<li>All changes are applied to the in-memory transaction dataset.</li>
+<li>The script does not implicitly commit or end the transaction.</li>
+<li>Final persistence is controlled externally via <code>EndTransaction</code> with <code>commit: true</code> or <code>commit: false</code>.</li>
+</ul>
+<p>This allows <code>ExecuteScript</code> to be composed with other Domain API operations as part of a larger transactional workflow, where transaction lifecycle (begin, commit, rollback) is managed outside the script.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p><strong>External transaction interaction</strong></p>
+<p>When <code>ExecuteScript</code> runs inside a transaction started via <code>BeginTransaction</code>, the global <code>Transaction</code> object operates on that same transaction.</p>
+<p>Calling <code>Transaction.begin()</code>, <code>Transaction.commit()</code>, or <code>Transaction.rollback()</code> from the script will directly affect the external transaction and may interfere with its lifecycle.<br>
+This usage is <strong>not recommended</strong>. When a transaction is managed externally, control it only via the Domain API transaction actions.</p>
+</div>
+<p>For more details about transaction lifecycle and management, see the <a href="transactions.html">Domain API Transactions</a> documentation.</p>
 <h2 id="result">Result</h2>
 <p>On success, the action returns a JSON object with execution metadata and captured console output.</p>
 <p><strong>Example response</strong></p>
@@ -139,8 +156,7 @@ Transaction.rollback();
   &quot;sessionId&quot;: &quot;f3b2c8a7...&quot;,
   &quot;transactionId&quot;: &quot;9d1a4e2c...&quot;,
   &quot;durationMs&quot;: 37,
-  &quot;console&quot;: &quot;Starting script\n
-    Processed 128 customers&quot;
+  &quot;console&quot;: &quot;Starting script\nProcessed 128 customers&quot;
 }
 </code></pre>
 <p><strong>Fields</strong></p>
@@ -163,7 +179,7 @@ Transaction.rollback();
 <h2 id="learn-more">Learn More</h2>
 <ul>
 <li><a href="https://docs.erp.net/tech/advanced/scripting/index.html">ERP.net Scripting documentation</a></li>
-<li>[Advanced scripting examples](A collection of advanced scripts that showcase powerful automation, integrations, and more.)</li>
+<li><a href="https://github.com/erpnet/JavaScriptExamples">Advanced scripting examples</a></li>
 </ul>
 
 </article>
