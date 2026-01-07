@@ -1,4 +1,4 @@
-- name: Hybrid flow - Overview
+- name: Overview
   href: overview.md
 - name: Typical Architecture
   href: hybrid-architecture.md

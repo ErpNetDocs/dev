@@ -2,9 +2,12 @@
   href: overview.md
 - name: Authorization Code (Interactive Apps)
   href: auth-code/toc.yml
+  topicHref: auth-code/overview.md
 - name: Client Credentials (Service Apps)
   href: client-credentials/toc.yml
+  topicHref: client-credentials/overview.md
 - name: Authorization Code + Client Credentials (Hybrid Apps)
   href: combined/toc.yml
+  topicHref: combined/overview.md
 - name: Choosing the Right Flow
   href: choosing-flow.md
