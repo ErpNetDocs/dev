@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>OAuth 2.0 | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="OAuth 2.0 | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/auth/concepts/oauth2-overview.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="oauth-20">OAuth 2.0</h1>
+
+<p>ERP.net uses a combination of security mechanisms, including OAuth 2.0 authorization flows, to allow applications to access its APIs without directly handling user credentials.</p>
+<p>OAuth 2.0 separates <strong>authentication</strong> from <strong>authorization</strong>, allowing an app to act on behalf of a user or as a service, under explicitly granted permissions.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Internally, ERP.net may use OpenID Connect for user identity. External developers only need standard OAuth 2.0 concepts and flows described here.</p>
+</div>
+<h2 id="why-oauth-20">Why OAuth 2.0</h2>
+<p>Historically, applications asked for usernames and passwords and then called APIs directly.</p>
+<p>This is risky and hard to control. OAuth 2.0 replaces passwords with access tokens issued by a trusted authority, so apps can:</p>
+<ul>
+<li>Authenticate securely via the ERP.net Identity</li>
+<li>Request only the permissions they need</li>
+<li>Call APIs with a verifiable token instead of user credentials</li>
+<li>Be audited and revoked centrally</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>In ERP.net, the <em>trusted authority</em> that issues and validates tokens is the built-in <strong>ERP.net Identity</strong> within each instance.</p>
+</div>
+<h2 id="core-roles">Core Roles</h2>
+<ul>
+<li><strong>Client (App)</strong> - Your application that requests access. In ERP.net it is registered as a <strong>Trusted Application</strong>.</li>
+<li><strong>Resource Owner (User or Organization)</strong> - The entity that owns the data.</li>
+<li><strong>Authorization Server</strong> - The ERP.net <strong>Identity</strong> that issues tokens after successful authentication and authorization.</li>
+<li><strong>Resource Server</strong> - The <strong>ERP.net APIs</strong> that validate tokens and enforce permissions.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>ERP.net Identity also acts as an <strong>authentication server</strong>, verifying user or service credentials before any tokens are issued.</p>
+</div>
+<h2 id="supported-grants-in-">Supported Grants in ERP.net</h2>
+<p>ERP.net supports the standard OAuth 2.0 grants used by modern applications.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>A <strong>grant</strong> in OAuth 2.0 is the method an application uses to obtain an access token.
+Different grant types define <em>how</em> the app proves who it is and whether a user is involved in the process.</p>
+</div>
+<h3 id="authorization-code">Authorization Code</h3>
+<p>Used by interactive apps that act on behalf of a signed-in user.</p>
+<ul>
+<li>Typical clients: web apps, SPAs using a backend, mobile apps with a web view</li>
+<li>Properties:
+<ul>
+<li>User is redirected to the ERP.net Identity to sign in</li>
+<li>App receives an authorization code, then exchanges it for an access token</li>
+<li>Can support refresh tokens for confidential clients</li>
+</ul>
+</li>
+<li>When to use: any app with a user interface and user-specific access</li>
+</ul>
+<pre><code class="lang-mermaid">sequenceDiagram
+    participant User
+    participant App
+    participant IdentityServer as ERP.net Identity
+    participant API as ERP.net API
+
+    User-&gt;&gt;App: Open app and choose &quot;Sign in&quot;
+    App-&gt;&gt;IdentityServer: Redirect to /authorize with client_id and scopes
+    IdentityServer-&gt;&gt;User: Prompt for login and consent
+    User-&gt;&gt;IdentityServer: Enter credentials
+    IdentityServer-&gt;&gt;App: Redirect back with authorization code
+    App-&gt;&gt;IdentityServer: Exchange code for access token
+    IdentityServer-&gt;&gt;App: Return access token
+    App-&gt;&gt;API: Call API using access token
+    API-&gt;&gt;App: Return protected data
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Note: This flow is used by web apps, SPAs, and desktop clients that require user authentication and access on behalf of that user.</p>
+</div>
+<h3 id="client-credentials">Client Credentials</h3>
+<p>Used by service or background apps that act as themselves, not a user.</p>
+<ul>
+<li>Typical clients: integrations, schedulers, background workers</li>
+<li>Properties:
+<ul>
+<li>No user interaction</li>
+<li>App authenticates as a configured service identity in its Trusted Application record</li>
+</ul>
+</li>
+<li>When to use: automation and system-to-system integration</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>In ERP.net, client-credentials access is governed by the app's Trusted Application configuration (e.g., service permissions).
+Refresh tokens are not issued for the client credentials grant; request a new access token when needed.</p>
+</div>
+<pre><code class="lang-mermaid">sequenceDiagram
+    participant App
+    participant IdentityServer as ERP.net Identity
+    participant API as ERP.net API
+
+    App-&gt;&gt;IdentityServer: POST /token (grant_type=client_credentials, client_id, client_secret)
+    IdentityServer--&gt;&gt;App: Access token (service context)
+    App-&gt;&gt;API: Call API with access token (Authorization: Bearer ...)
+    API--&gt;&gt;App: Return authorized response
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>A single app can use both models when appropriate.
+For example, a web app may sign in users via Authorization Code flow, and also perform background synchronization via Client Credentials.</p>
+</div>
+<h2 id="tokens-at-a-glance">Tokens at a Glance</h2>
+<ul>
+<li><strong>Access token</strong> - A signed artifact presented to ERP.net APIs to prove authorization</li>
+<li><strong>Refresh token</strong> - A long-lived token that allows obtaining new access tokens without user interaction</li>
+<li><strong>Reference token (API key)</strong> - An opaque, manually issued token that represents long-lived delegated access (either user-based as a PAT or service-based as a SAT)</li>
+<li><strong>Scopes</strong> - Named permissions that describe what the token allows</li>
+</ul>
+<p>In ERP.net, issuing an access token does not automatically create a session.</p>
+<p>The token itself is only a signed proof of granted access.</p>
+<p>A session is created (or reactivated) only when that token is first used to call an API within the instance.</p>
+<p>See <a href="../sessions/overview.html">Sessions</a> for details about session behavior and licensing.</p>
+<h3 id="refresh-tokens">Refresh tokens</h3>
+<ul>
+<li>Issued only to appropriate interactive confidential clients using Authorization Code flow</li>
+<li>Not issued for Client Credentials flow</li>
+<li>See <a href="../tokens/token-lifetime.html">Token Lifetime and Renewal</a> for renewal behavior and policies</li>
+</ul>
+<h3 id="reference-access-tokens-api-keys">Reference Access Tokens (API Keys)</h3>
+<p><strong>Reference tokens</strong> are opaque, long-lived API keys issued explicitly for an app.</p>
+<p>They are not self-contained JWTs; the instance resolves them to a session at use time.</p>
+<ul>
+<li><strong>Lifetime:</strong> Long-lived, set manually at issuance (until revoked or expired).</li>
+<li><strong>Scopes:</strong> Limited to the permissions granted to the app (and, for PAT, the user).</li>
+<li><strong>Best for:</strong> Scripts, CI/CD, headless integrations where browser sign-in isn't practical.</li>
+<li><strong>Security:</strong> Store securely, rotate regularly, and revoke immediately if exposed.</li>
+</ul>
+<p>Types</p>
+<ul>
+<li><strong>PAT (Personal Access Token):</strong> Tied to a specific user; calls run with that user's permissions.</li>
+<li><strong>SAT (Service Access Token):</strong> Tied to a service identity; calls run with the app's service context.</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Because they are reference (opaque) tokens, the ERP.net instance looks them up on each request and enforces current policies, scopes, and revocations.</p>
+</div>
+<h2 id="scopes-and-permissions">Scopes and Permissions</h2>
+<p>Scopes describe what an issued token is allowed to do.</p>
+<p>They are requested by the app and evaluated by the instance when issuing tokens.</p>
+<p>See <a href="scopes.html">Scopes and Permissions</a> for details and examples.</p>
+<h2 id="high-level-flow">High-level Flow</h2>
+<pre><code class="lang-mermaid">sequenceDiagram
+    participant App
+    participant IdentityServer as ERP.net Identity
+    participant API as ERP.net APIs
+
+    App-&gt;&gt;IdentityServer: Request authorization (Authorization Code or Client Credentials)
+    IdentityServer--&gt;&gt;App: Issue access token (and refresh token if applicable)
+    App-&gt;&gt;API: Call API with access token
+    API--&gt;&gt;App: Return authorized data
+</code></pre>
+<h2 id="how-oauth-20-fits-into-">How OAuth 2.0 Fits into ERP.net</h2>
+<ol>
+<li>Your app is registered as a <strong>Trusted Application</strong> in the target ERP.net instance.</li>
+<li>The app uses an <strong>OAuth 2.0 flow</strong> to authenticate with <strong>ERP.net Identity</strong>.</li>
+<li>ERP.net Identity issues a <strong>token</strong> that encodes the identity and allowed scopes.</li>
+<li>The app calls <strong>ERP.net APIs</strong> with that token, and the APIs enforce permissions.</li>
+</ol>
+<p>This model keeps credentials out of applications, centralizes access control, and makes every call auditable.</p>
+<h2 id="oauth-20-quick-reference">OAuth 2.0 Quick Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Flow</th>
+<th>Who Authenticates</th>
+<th>Interaction Type</th>
+<th>Token Lifetime</th>
+<th>Refresh Token Support</th>
+<th>Typical Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Authorization Code</strong></td>
+<td>User</td>
+<td>Interactive (browser or web view)</td>
+<td>Short-lived access token</td>
+<td>Yes</td>
+<td>Web apps, mobile apps, SPAs with backend</td>
+</tr>
+<tr>
+<td><strong>Client Credentials</strong></td>
+<td>Application (service identity)</td>
+<td>Non-interactive</td>
+<td>Short-lived access token</td>
+<td>No</td>
+<td>Integrations, background jobs, automations</td>
+</tr>
+<tr>
+<td><strong>Authorization Code + Refresh</strong></td>
+<td>User</td>
+<td>Interactive with silent renewal</td>
+<td>Access token + long-lived refresh token</td>
+<td>Yes</td>
+<td>Long-running web or desktop sessions</td>
+</tr>
+<tr>
+<td><strong>Reference Token (API Key)</strong></td>
+<td>User (PAT) or Service (SAT)</td>
+<td>Non-interactive</td>
+<td>Long-lived, manually defined</td>
+<td>No</td>
+<td>CI/CD pipelines, scripts, or integrations without user login</td>
+</tr>
+<tr>
+<td><strong>Basic Authentication</strong> <em>(legacy)</em></td>
+<td>User</td>
+<td>Interactive</td>
+<td>Session-based</td>
+<td>No</td>
+<td>Legacy SDK or direct API integrations <em>(not recommended)</em></td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p>All flows rely on the same ERP.net Identity, which validates credentials, applies policies, and issues signed OAuth 2.0 tokens.</p>
+</div>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="../configuration/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+Register and configure your app inside an ERP.net instance</p>
+</li>
+<li><p><a href="../flows/overview.html"><strong>Auth Flows</strong></a><br>
+Choose and implement the right flow</p>
+</li>
+<li><p><a href="../tokens/tokens-overview.html"><strong>Tokens</strong></a><br>
+Access tokens, scopes, and renewal</p>
+</li>
+<li><p><a href="../sessions/overview.html"><strong>Sessions</strong></a><br>
+How tokens map to sessions and licensing</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/auth/concepts/oauth2-overview.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

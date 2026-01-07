@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Service Applications (Service Access for Confidential Applications) | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Service Applications (Service Access for Confidential Applications) | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/auth/getting-started/service-apps.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="service-applications-service-access-for-confidential-applications">Service Applications (Service Access for Confidential Applications)</h1>
+
+<p>This topic describes how a <strong>confidential external application</strong> with no user interaction integrates with an ERP.net Instance ID to obtain an access token for calling instance APIs using the <strong>Client Credentials</strong> flow.</p>
+<p>The following scenario is covered:</p>
+<ul>
+<li>The external application is a <strong>confidential application</strong></li>
+<li>The application has a <strong>backend component</strong> capable of securely storing a secret</li>
+<li>The application does <strong>not</strong> present a user interface</li>
+<li>The application authenticates as a <strong>service identity</strong></li>
+<li>The application uses the <strong>Client Credentials</strong> authorization flow</li>
+<li>The application obtains an access token to call instance APIs directly</li>
+</ul>
+<p>The <strong>Instance ID</strong> is the identity provider of a specific ERP.net instance. Service applications use it to authenticate and obtain access tokens <strong>without user involvement</strong>, scoped to the permissions configured for the trusted application.</p>
+<p>For example, if your ERP.net instance is located at:</p>
+<pre><code class="lang-text">https://demodb.my.erp.net
+</code></pre>
+<p>then the corresponding Instance ID endpoints are located at:</p>
+<pre><code class="lang-text">https://demodb.my.erp.net/id
+</code></pre>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Your ERP.net instance must have a trusted application defined with the configuration below.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The values shown below are <strong>examples only</strong> and must be replaced with values that match your application.</p>
+</div>
+<p>Typical values:</p>
+<ul>
+<li><strong>ApplicationUri</strong>: <code>my-service-app-id</code></li>
+<li><strong>SystemUser</strong>: <code>&lt;an-internal-erp-user&gt;</code></li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The application owner must generate a random client secret, compute its <strong>Base64-encoded SHA-256 hash</strong>, and submit the hashed value via an internal ticket to <a href="https://support.erp.net/">erp.net</a> so the Trusted Application can be registered and the configuration activated.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>My Service Application</td>
+<td>Used only for user-friendly identification.</td>
+</tr>
+<tr>
+<td>ApplicationUri</td>
+<td>my-service-app-id</td>
+<td>The unique identifier of the application.</td>
+</tr>
+<tr>
+<td>IsEnabled</td>
+<td>true</td>
+<td>Enables the trusted application.</td>
+</tr>
+<tr>
+<td>SystemUserAllowed</td>
+<td>true</td>
+<td>Allows the application to authenticate as a service.</td>
+</tr>
+<tr>
+<td>SystemUser</td>
+<td><code>&lt;an-internal-erp-user&gt;</code></td>
+<td>The internal user used for service authentication.</td>
+</tr>
+<tr>
+<td>ImpersonateAsInternalUserAllowed</td>
+<td>true</td>
+<td>Allows authentication using an internal user.</td>
+</tr>
+<tr>
+<td>ClientType</td>
+<td>Confidential</td>
+<td>Indicates that the application can securely store a secret.</td>
+</tr>
+<tr>
+<td>ApplicationSecretHash</td>
+<td><code>&lt;base64(sha256(your-client-secret))&gt;</code></td>
+<td>The hashed client secret used during authentication.</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td><code>read</code> or <code>read update</code></td>
+<td>Use <code>read</code> for read-only access; include <code>update</code> only if the application must create, modify, or delete data</td>
+</tr>
+</tbody>
+</table>
+<p>All other attributes can keep their default values and are not relevant for this scenario.</p>
+<h2 id="implementation">Implementation</h2>
+<p>This section demonstrates acquiring an access token using the <strong>Client Credentials</strong> flow.</p>
+<h3 id="1-request-an-access-token">1. Request an access token</h3>
+<p>The application sends a direct request to the Instance ID token endpoint.</p>
+<pre><code class="lang-http">POST /id/connect/token HTTP/1.1
+Host: demodb.my.erp.net
+Content-Type: application/x-www-form-urlencoded
+
+client_id=my-service-app-id&amp;
+client_secret=&lt;PLAIN_CLIENT_SECRET&gt;&amp;
+grant_type=client_credentials&amp;
+scope=read%20update
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The <code>client_secret</code> is sent as a <strong>plain (unhashed) value</strong> and must exactly match the secret configured for the trusted application.</p>
+</div>
+<h3 id="2-receive-the-token-response">2. Receive the token response</h3>
+<p>If the request is successful, the Instance ID returns an access token.</p>
+<pre><code class="lang-json">{
+  &quot;access_token&quot;: &quot;eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE3NjY1MDUxNDcsImV4cCI6MTc2NjUwODc0NywiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOlsiRG9tYWluQVBJIiwiVGFibGVBUEkiLCJPTEFQIiwiQXBwU2VydmVyIiwiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQvcmVzb3VyY2VzIl0sImNsaWVudF9pZCI6IlBLIiwiY2xpZW50X3N5c3RlbV91c2VyIjoiYWRtaW4iLCJjbGllbnRfc3lzdGVtX3VzZXJfdHlwZSI6IkludGVybmFsVXNlciIsImNsaWVudF9kYiI6IkUxX0RFVi0xIFRlc3QiLCJqdGkiOiI4RDBCNzA1NTczQTFBOThGREJBREZGMENEN0Y3RUVCNCIsImlhdCI6MTc2NjUwNTE0Nywic2NvcGUiOlsicmVhZCIsInVwZGF0ZSJdfQ.MRvH-EtWu-PWDhjDDn73OVQwH29DZ_RRu6XheFsoRxImyjLQRIU7-S1GuyTnnqPyXEEkGkKTu_s3IEwxGORgY48jLH3l1juJDt8_JvcyJlIdhVZSZNC1Bpft_K1NJswJ6QmJ6bWgev7cqHaxM3p7AEEPjkSmnAjdBCz7ItMV93Yio5kCRBmP9DQUoxtL0webG7zV_f5uOkt8xhbUVHpdU9FQY-XLf_heLJv_81vvpf39kPxD4WTZRly8X_mNdlqi0DxiFXK3TFOnbdoLKxeljke8jV0t-agaHWcZ4B-SMQ77falwtFaxrEzXDY4g-iUg2kl_tABOUxzoqyFkGZm3DA&quot;,
+  &quot;expires_in&quot;: 3600,
+  &quot;token_type&quot;: &quot;Bearer&quot;,
+  &quot;scope&quot;: &quot;read update&quot;
+}
+</code></pre>
+<p>The application can now use the access token to call instance APIs.</p>
+<p>Example (Domain) API request:</p>
+<pre><code class="lang-http">GET /api/domain/odata/Crm_Customers?$top=10 HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE3NjY1MDUxNDcsImV4cCI6MTc2NjUwODc0NywiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOlsiRG9tYWluQVBJIiwiVGFibGVBUEkiLCJPTEFQIiwiQXBwU2VydmVyIiwiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQvcmVzb3VyY2VzIl0sImNsaWVudF9pZCI6IlBLIiwiY2xpZW50X3N5c3RlbV91c2VyIjoiYWRtaW4iLCJjbGllbnRfc3lzdGVtX3VzZXJfdHlwZSI6IkludGVybmFsVXNlciIsImNsaWVudF9kYiI6IkUxX0RFVi0xIFRlc3QiLCJqdGkiOiI4RDBCNzA1NTczQTFBOThGREJBREZGMENEN0Y3RUVCNCIsImlhdCI6MTc2NjUwNTE0Nywic2NvcGUiOlsicmVhZCIsInVwZGF0ZSJdfQ.MRvH-EtWu-PWDhjDDn73OVQwH29DZ_RRu6XheFsoRxImyjLQRIU7-S1GuyTnnqPyXEEkGkKTu_s3IEwxGORgY48jLH3l1juJDt8_JvcyJlIdhVZSZNC1Bpft_K1NJswJ6QmJ6bWgev7cqHaxM3p7AEEPjkSmnAjdBCz7ItMV93Yio5kCRBmP9DQUoxtL0webG7zV_f5uOkt8xhbUVHpdU9FQY-XLf_heLJv_81vvpf39kPxD4WTZRly8X_mNdlqi0DxiFXK3TFOnbdoLKxeljke8jV0t-agaHWcZ4B-SMQ77falwtFaxrEzXDY4g-iUg2kl_tABOUxzoqyFkGZm3DA
+</code></pre>
+<h2 id="security-and-implementation-considerations">Security and implementation considerations</h2>
+<ul>
+<li>This flow is intended for <strong>machine-to-machine communication</strong>.</li>
+<li>No user authentication or interaction occurs.</li>
+<li>The client secret must <strong>never</strong> be exposed outside the backend.</li>
+<li>Tokens are scoped and limited to the permissions configured for the application.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/auth/getting-started/service-apps.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

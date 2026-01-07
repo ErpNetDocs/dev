@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Basic example of acquiring an access token | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Basic example of acquiring an access token | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/auth/samples/basic-acquire-access-token.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="basic-example-of-acquiring-an-access-token">Basic example of acquiring an access token</h1>
+
+<h2 id="objective">Objective</h2>
+<p>Your external application just wants to acquire an access token so can access the Domain API. As short as possible.</p>
+<p>Or,</p>
+<ul>
+<li>Your external app is a service application.</li>
+<li>It will be authenticated and authorized via an internal user.</li>
+<li>Your external app won't provide UI and/or interaction with external users, so it's also a condfidential application.</li>
+<li>There will be no interaction, so your external app will use <a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow">client credentials authorization flow</a>.</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>You have a trusted application, defined as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>My first trusted app</td>
+<td>Frankly, this value doesn't matter much. It's used for user-friendly identification.</td>
+</tr>
+<tr>
+<td>ApplicationUri</td>
+<td>my.trusted.app/first</td>
+<td>This is your trusted app's unique identifier. It's used in the authentication process.</td>
+</tr>
+<tr>
+<td>IsEnabled</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td>SystemUserAllowed</td>
+<td>true</td>
+<td>You need this, because your external app will be logged as a service.</td>
+</tr>
+<tr>
+<td>SystemUser</td>
+<td><code>&lt;an-internal-erp-user&gt;</code></td>
+<td>The user, which will be used when the application logins as a service.</td>
+</tr>
+<tr>
+<td>ImpersonateAsInternalUserAllowed</td>
+<td>true</td>
+<td>The trusted application will allow authentication from internal users.</td>
+</tr>
+<tr>
+<td>ClientType</td>
+<td>Confidential</td>
+<td>Your external app is a service. I.e., it can keep a secret securely.</td>
+</tr>
+<tr>
+<td>ApplicationSecretHash</td>
+<td><code>&lt;base64(sha256(your-secret))&gt;</code></td>
+<td>The external app's secret. It's used in the process of authentication.</td>
+</tr>
+</tbody>
+</table>
+<p>All other attributes can have their default values. They are not covered by this example.</p>
+<h2 id="steps">Steps</h2>
+<p>You just need to call a pretty simple HTTP request.</p>
+<pre><code class="lang-http">POST /id/connect/token HTTP/1.1
+Host: demodb.my.erp.net
+Content-Type: application/x-www-form-urlencoded
+
+client_id=my.trusted.app/first&amp;
+client_secret=&lt;my_plain_app_secret&gt;&amp;
+grant_type=client_credentials&amp;
+scope=read
+</code></pre>
+<p>Yes, it's that simple. Here are some clarifications:</p>
+<ul>
+<li>The POST request is sent to the ERP.net Identity token endpoint directly.</li>
+<li>The body of the request:
+<ul>
+<li>client_id - your trusted app's application uri.</li>
+<li>client_secret - the plain secret phrase of the trusted app.</li>
+<li>grant_type - the way your app will get an access token.</li>
+<li>scope - what's needed to access.</li>
+</ul>
+</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>With the client_credentials flow (i.e., ERP.net service application), the scope argument can be omitted. Then your access token will contain all scopes, defined in the trusted application.</p>
+</div>
+<p>If everything is correct, you'll receive a similar response:</p>
+<pre><code class="lang-json">{
+  &quot;access_token&quot;: &quot;eyJhbGciOiJSUzI1NiIsImtpZCI6IkJEbGhqYjhzOEUySm1tcWg2UDlxZEEiLCJ0eXAiOiJhdCtqd3QifQ.eyJuYmYiOjE2NTQwNzU1MjksImV4cCI6MTY1NDA3OTEyOSwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJEb21haW5BcGkiLCJjbGllbnRfaWQiOiJwayIsImNsaWVudF9zeXN0ZW1fdXNlciI6InAua29zdG92QGVycC5iZyIsImNsaWVudF9kYiI6IkUxX0RFViIsImp0aSI6IlNob3JjNVJ2MTM2ak5POHRCMF9yRHciLCJzY29wZSI6WyJEb21haW5BcGkiLCJzZWMiLCJ1cGRhdGUiXX0.RPzYKl9xPvFcLa0O8yqzJCJtmZUS88iDeWBFa9pyvYdzfQ18E4W8w6CLJPf9whFFiJWhgAsOASVuz98-MIgj9VwTjNtXMdMAPvZC0HYPnMusYUxxYRNejjqtPG7n4V0LVzyWYHu99-YUipFBmzXxCywR8TtaBv374CKfLdS4M1vaMMYShzD22L_R3kKc3uZhQ5Ygpci1tuNC8gC6CoXIv0a9gjthwgshCzmbEmiNhjvJ7WDZ98gnzkvl5_wLANRrDYUcLPvq04OfVRn2uS-dF-NLIeO5dr7Mn905YodY4Mngr4S5WbBvrWAt0hRLO6Oy_X2KCcQdmh0Nq73ELruoBw&quot;,
+  &quot;expires_in&quot;: 3600,
+  &quot;token_type&quot;: &quot;Bearer&quot;,
+  &quot;scope&quot;: &quot;read&quot;
+}
+</code></pre>
+<p>As you can see, you now have an access token (<code>access_token</code>), expiring in an hour (<code>expires_in</code>).</p>
+<p>Now this token could be used for your Domain API requests. E.g,</p>
+<pre><code class="lang-http">GET /api/domain/odata/Crm_Customers?$top=10 HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkJEbGhqYjhzOEUySm1tcWg2UDlxZEEiLCJ0eXAiOiJhdCtqd3QifQ.eyJuYmYiOjE2NTQwNzU1MjksImV4cCI6MTY1NDA3OTEyOSwiaXNzIjoiaHR0cHM6Ly9lMS1kZXYubG9jYWwvaWQiLCJhdWQiOiJEb21haW5BcGkiLCJjbGllbnRfaWQiOiJwayIsImNsaWVudF9zeXN0ZW1fdXNlciI6InAua29zdG92QGVycC5iZyIsImNsaWVudF9kYiI6IkUxX0RFViIsImp0aSI6IlNob3JjNVJ2MTM2ak5POHRCMF9yRHciLCJzY29wZSI6WyJEb21haW5BcGkiLCJzZWMiLCJ1cGRhdGUiXX0.RPzYKl9xPvFcLa0O8yqzJCJtmZUS88iDeWBFa9pyvYdzfQ18E4W8w6CLJPf9whFFiJWhgAsOASVuz98-MIgj9VwTjNtXMdMAPvZC0HYPnMusYUxxYRNejjqtPG7n4V0LVzyWYHu99-YUipFBmzXxCywR8TtaBv374CKfLdS4M1vaMMYShzD22L_R3kKc3uZhQ5Ygpci1tuNC8gC6CoXIv0a9gjthwgshCzmbEmiNhjvJ7WDZ98gnzkvl5_wLANRrDYUcLPvq04OfVRn2uS-dF-NLIeO5dr7Mn905YodY4Mngr4S5WbBvrWAt0hRLO6Oy_X2KCcQdmh0Nq73ELruoBw
+</code></pre>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/auth/samples/basic-acquire-access-token.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Identity authorities (instance vs global) | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Identity authorities (instance vs global) | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/auth/concepts/identity-authorities.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="identity-authorities-instance-vs-global">Identity authorities (instance vs global)</h1>
+
+<p>When building ERP.net apps and integrations, it's important to choose the correct <strong>identity authority</strong> (the OAuth 2.0 / OIDC &quot;issuer&quot;). ERP.net supports two different identity setups, which are used for different goals.</p>
+<p>This page explains <strong>which authority to use</strong>, <strong>where the client is registered</strong>, and <strong>what the issued tokens are meant for</strong>.</p>
+<h2 id="quick-decision">Quick decision</h2>
+<table>
+<thead>
+<tr>
+<th>You want to…</th>
+<th>Use this authority</th>
+<th>Client registration / where you configure access</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Call the APIs of a <strong>specific ERP.net instance</strong> (Domain API / Table API)</td>
+<td><strong>Instance Identity Service</strong>: <code>https://{instance}.my.erp.net/id</code></td>
+<td>Configure a <strong>Trusted Application</strong> inside that ERP.net instance (incl. scopes/access rules)</td>
+</tr>
+<tr>
+<td>Enable <strong>SSO / sign-in</strong> to your external application using ERP.net accounts</td>
+<td><strong>ERP.net global IdP</strong>: <code>https://id.erp.net/id</code></td>
+<td>Client registration is managed <strong>centrally</strong> (see the external IdP page for the process/requirements)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="instance-identity-service-per--instance">Instance Identity Service (per ERP.net instance)</h2>
+<p>Use this when your app must access data or operations in a particular ERP.net instance.</p>
+<ul>
+<li><strong>Authority (issuer):</strong> <code>https://{instance}.my.erp.net/id</code></li>
+<li><strong>Audience:</strong> tokens are intended for that same instance's APIs</li>
+<li><strong>Where the client is registered:</strong> in the <strong>same ERP.net instance</strong>, as a <strong>Trusted Application</strong>
+<ul>
+<li>The <code>client_id</code> corresponds to the Trusted Application identifier (see the Trusted Applications page for the exact rule used in ERP.net).</li>
+</ul>
+</li>
+<li><strong>Typical use cases:</strong>
+<ul>
+<li>Background integration/service (sync, automation, ETL)</li>
+<li>Internal app/portal that needs to call the instance APIs</li>
+<li>Any scenario where API access must be controlled per instance and per scope</li>
+</ul>
+</li>
+</ul>
+<p>See: <a href="identity-server.html">Instance Identity Service</a> and <a href="../configuration/trusted-apps-access.html">Trusted Applications</a>.</p>
+<h2 id="-global-identity-provider-external-idp">ERP.net global identity provider (external IdP)</h2>
+<p>Use this when ERP.net must act as an <strong>external identity provider</strong> for your application (SSO/sign-in), not when your primary goal is &quot;call a specific instance API&quot;.</p>
+<ul>
+<li><strong>Authority (issuer):</strong> <code>https://id.erp.net/id</code></li>
+<li><strong>Primary purpose:</strong> user authentication / SSO for external applications</li>
+<li><strong>Where the client is registered:</strong> centrally (not via instance Trusted Applications)</li>
+<li><strong>Typical use cases:</strong>
+<ul>
+<li>Your application needs users to sign in with their ERP.net identity</li>
+<li>You want OIDC login and user claims issued by ERP.net as an IdP</li>
+</ul>
+</li>
+</ul>
+<p>See: <a href="erpnet-as-external-idp.html">ERP.net as an external Identity Provider</a>.</p>
+<h2 id="common-pitfalls-and-how-to-avoid-them">Common pitfalls (and how to avoid them)</h2>
+<ul>
+<li><strong>Mixing client registrations:</strong><br>
+A client registered as a <strong>Trusted Application</strong> is instance-scoped and applies to the <strong>instance Identity Service</strong>. It is not the same as a client registered for the <strong>global IdP</strong>.</li>
+<li><strong>Using the wrong authority URL:</strong><br>
+If you need to call a specific instance API, always start from that instance’s authority (<code>https://{instance}.my.erp.net/id</code>), not the global one.</li>
+<li><strong>Unclear &quot;ERP.net Identity&quot; wording:</strong><br>
+In ERP.net docs, always interpret &quot;Identity&quot; in context:
+<ul>
+<li>&quot;Instance Identity Service&quot; -&gt; per-instance API access</li>
+<li>&quot;External IdP&quot; (<code>id.erp.net</code>) -&gt; SSO/sign-in for external apps</li>
+</ul>
+</li>
+</ul>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="oauth2-overview.html">OAuth 2.0</a></li>
+<li><a href="identity-server.html">Instance Identity Service</a></li>
+<li><a href="erpnet-as-external-idp.html">ERP.net as an external Identity Provider</a></li>
+<li><a href="../configuration/trusted-apps-access.html">Trusted Applications and Access Control</a></li>
+<li><a href="scopes.html">Scopes</a></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/auth/concepts/identity-authorities.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

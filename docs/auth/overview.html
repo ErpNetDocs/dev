@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Authentication and Authorization Overview | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Authentication and Authorization Overview | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/auth/overview.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="authentication-and-authorization-overview">Authentication and Authorization Overview</h1>
+
+<p>Apps that connect to ERP.net must authenticate securely and operate only within the permissions granted to them.</p>
+<p>The authentication and authorization model in ERP.net ensures that every app and user is properly verified, identified, and restricted according to system policies.</p>
+<p>This process is built on the <strong>OAuth 2.0</strong> standard and implemented through the <strong>ERP.net Identity</strong> and the <strong>Trusted Applications</strong> model.</p>
+<h2 id="why-authentication-and-authorization-matter">Why Authentication and Authorization Matter</h2>
+<p>Whenever an app interacts with an ERP.net instance, two questions must always be answered:</p>
+<ul>
+<li><strong>Who</strong> is making the request - authentication</li>
+<li><strong>What</strong> that entity is allowed to do - authorization</li>
+</ul>
+<p>ERP.net enforces these principles through token-based access.</p>
+<p>Each app receives a secure, time-limited token that defines its identity and permissions.</p>
+<p>This ensures that integrations remain safe, isolated, and fully auditable.</p>
+<h2 id="the-building-blocks">The Building Blocks</h2>
+<p>Authentication in ERP.net is organized around three core components:</p>
+<h3 id="erpnet-identity">ERP.net Identity</h3>
+<p>Each ERP.net instance includes a built-in <strong>Identity</strong> that manages all authentication and token issuance.</p>
+<p>It validates credentials, issues tokens, and applies the access rules configured in the instance.</p>
+<h3 id="oauth-20">OAuth 2.0</h3>
+<p>ERP.net follows the <strong>OAuth 2.0</strong> framework for secure, standardized communication between applications and APIs.</p>
+<p>OAuth 2.0 defines how apps request, use, and renew tokens without ever exposing user credentials.</p>
+<h3 id="trusted-applications">Trusted Applications</h3>
+<p>Before an app can connect, it must be registered as a <strong>Trusted Application</strong> within the target ERP.net instance.</p>
+<p>This registration defines the app's identity, allowed flows, and permissions, forming a trusted relationship between the app and the instance.</p>
+<h2 id="how-it-works">How It Works</h2>
+<p>At a high level, authentication in ERP.net follows this process:</p>
+<ol>
+<li>The app is registered as a <strong>Trusted Application</strong> in the target instance.</li>
+<li>The app requests access through the <strong>ERP.net Identity</strong>, either on behalf of a user or as a background service.</li>
+<li>ERP.net Identity validates the request and issues an <strong>access token</strong>.</li>
+<li>The app uses that token to call the APIs within the scope of its granted permissions.</li>
+</ol>
+<pre><code class="lang-mermaid">sequenceDiagram
+    participant App
+    participant IdentityServer as ERP.net Identity
+    participant API as ERP.net APIs
+
+    App-&gt;&gt;IdentityServer: 1. Request authorization (user or service)
+    IdentityServer--&gt;&gt;App: 2. Issue access token
+    App-&gt;&gt;API: 3. Call API with access token
+    API--&gt;&gt;App: 4. Return authorized data
+</code></pre>
+<h2 id="types-of-access">Types of Access</h2>
+<p>ERP.net supports two main types of access depending on how the app operates:</p>
+<h3 id="interactive-access">Interactive access</h3>
+<p>The app represents a user and requires sign-in through a browser or web view.</p>
+<p>Used by web or mobile applications.</p>
+<p>Implements the <a href="https://oauth.net/2/grant-types/authorization-code/">Authorization Code Flow</a> defined by <a href="https://oauth.net/2/">OAuth 2.0</a>.</p>
+<h3 id="service-access">Service access</h3>
+<p>The app acts as a background service without user interaction.</p>
+<p>Used by automations, integrations, or scheduled tasks.</p>
+<p>Implements the <a href="https://oauth.net/2/grant-types/client-credentials/">Client Credentials Flow</a> defined by <a href="https://oauth.net/2/">OAuth 2.0</a>.</p>
+<p>Both types rely on the same <strong>ERP.net Identity</strong> and token-based authorization model.</p>
+<h2 id="the-result-of-successful-authentication">The Result of Successful Authentication</h2>
+<p>Once authentication and authorization complete successfully:</p>
+<ul>
+<li>The app or user gains a <strong>secure session</strong> within the ERP.net instance</li>
+<li>An <strong>access token</strong> is issued to represent that session</li>
+<li>Access is limited to the <strong>scopes and permissions</strong> granted</li>
+<li>All activity can be traced back to the app and its associated user or service identity</li>
+</ul>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="../building-apps/concepts/overview.html"><strong>Concepts Overview</strong></a><br>
+Understand how the ERP.net Identity Service, OAuth 2.0, and Trusted Applications work together.</p>
+</li>
+<li><p><a href="flows/overview.html"><strong>Auth Flows</strong></a><br>
+Learn about the available OAuth 2.0 flows for different app types.</p>
+</li>
+<li><p><a href="tokens/tokens-overview.html"><strong>Tokens</strong></a><br>
+Understand access tokens, scopes, and permissions.</p>
+</li>
+<li><p><a href="sessions/overview.html"><strong>Sessions</strong></a><br>
+Learn how tokens map to sessions and license slots within ERP.net.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/auth/overview.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

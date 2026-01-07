@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Overview | ERP.net Developer Docs </title>
+      <title>Building Apps Overview | ERP.net Developer Docs </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Overview | ERP.net Developer Docs ">
+      <meta name="title" content="Building Apps Overview | ERP.net Developer Docs ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,101 +85,54 @@
         </div>
 
         <article data-uid="">
-<h1 id="overview">Overview</h1>
+<h1 id="building-apps-overview">Building Apps Overview</h1>
 
-<p>ERP.net Apps allow developers to extend, integrate, and automate ERP.net systems using the ERP.net APIs.</p>
-<p>They make it possible to build new user experiences, connect ERP.net with other software, and streamline business processes.</p>
-<p>Every app - whether internal, external, or marketplace - connects to ERP.net securely through its built-in <strong>ERP.net Identity</strong> and is represented in the system by a <strong>Trusted Application</strong> entity.</p>
-<p>Together, these components ensure that every app is properly identified, authenticated, and authorized with appropriate access.</p>
-<h2 id="what-are--apps">What Are ERP.net Apps</h2>
-<p>An <em>ERP.net App</em> is any application, service, or integration that communicates with an ERP.net instance through its public APIs.</p>
-<p>Apps can range from small automation scripts to complete web or mobile solutions built around ERP.net data and business logic.</p>
-<p>Examples of ERP.net Apps include:</p>
+<p>This section describes how applications integrate with ERP.net at a platform level.</p>
+<p>Any software that connects to an ERP.net instance through its public APIs is treated by the platform as an <strong>ERP.net App</strong>. Apps are external to the core ERP and interact with it through well-defined boundaries.</p>
+<h2 id="what-an--app-is">What an ERP.net App Is</h2>
+<p>In ERP.net, an app is not a specific product or framework.<br>
+It is a role assigned to any application that communicates with an instance through APIs.</p>
+<p>Apps may be implemented as:</p>
 <ul>
-<li>A web store that allows customers to browse products and place orders online</li>
-<li>A background integration that synchronizes stock levels with an online store</li>
-<li>A web portal that allows suppliers to update product information</li>
-<li>An analytics service that extracts and processes ERP data for reporting</li>
+<li>User-facing applications</li>
+<li>Background or service-based integrations</li>
+<li>Automation or synchronization components</li>
+<li>Reporting and analytics solutions</li>
 </ul>
-<p>Apps can be developed by in-house teams, partners, or independent developers and can operate in private environments or be distributed through the <a href="https://marketplace.erp.net/">ERP.net Marketplace</a>.</p>
-<h2 id="building-apps-for-">Building Apps for ERP.net</h2>
-<p>The <strong>Building Apps</strong> section is your complete guide to developing secure, modern, and scalable applications for ERP.net.</p>
-<p>ERP.net provides a unified platform where apps can <strong>connect</strong>, <strong>authenticate</strong>, and <strong>extend</strong> the system safely - whether they are internal extensions, web apps, background services, or external integrations.</p>
-<h2 id="what-you-can-build">What You Can Build</h2>
-<p>You can build:</p>
-<ul>
-<li><strong>Interactive web or desktop apps</strong> – for users who sign in and work with ERP.net data.</li>
-<li><strong>Service or background integrations</strong> – automated jobs that sync or process data.</li>
-<li><strong>Hybrid apps</strong> – combined solutions with both user-facing and background components.</li>
-<li><strong>BI dashboards and connectors</strong> – systems that analyze ERP.net data through APIs.</li>
-</ul>
-<p>Every app connects securely through the ERP.net <strong>Identity</strong> and uses <strong>tokens</strong> to access the <strong>Domain API</strong> or <strong>Table API</strong>.</p>
-<h2 id="why-build-apps">Why Build Apps</h2>
-<p>Apps extend the value of ERP.net beyond its core modules.</p>
-<p>They allow organizations to:</p>
-<ul>
-<li>Tailor ERP.net to their unique business workflows</li>
-<li>Integrate with external platforms and internal systems</li>
-<li>Automate routine operations and data flows</li>
-<li>Deliver focused experiences for specific users or roles</li>
-</ul>
-<p>By connecting securely to an ERP.net instance, apps help organizations innovate without altering the base system.</p>
-<h2 id="how-apps-work-with-an--instance">How Apps Work with an ERP.net Instance</h2>
-<p>Each app communicates with an ERP.net instance through standard APIs that are part of the instance itself.</p>
-<p>Before it can do so, the app must be recognized and granted the right level of access.</p>
-<p>This is handled by two core components of the platform:</p>
-<ul>
-<li>The <strong>ERP.net Identity</strong>, which authenticates users and services and enforces authorization decisions based on instance policies</li>
-<li>The <strong>Trusted Application</strong>, which represents the app's registration and configuration inside the instance</li>
-</ul>
-<p>When an app needs to access data, it initiates authentication with the ERP.net Identity (either interactively through a user or non-interactively as a service).</p>
-<p>After successful authentication and authorization, the app calls the APIs within the instance to read or update ERP.net data in line with its allowed permissions.</p>
+<p>Apps can operate internally, connect external systems, or be distributed through the ERP.net Marketplace.</p>
+<p>Different app designs are formalized as <strong>application types</strong>, which are described in more detail in <a href="concepts/app-types.html">Application Types</a>.</p>
+<h2 id="where-apps-run">Where Apps Run</h2>
+<p>Each ERP.net database is an <strong>instance</strong>.</p>
+<p>Apps always connect to a specific instance and are subject to that instance's configuration, data scope, and access rules.</p>
+<p>For details, see <a href="concepts/erp-instances.html">ERP.net Instances</a>.</p>
+<h2 id="how-apps-are-identified-and-controlled">How Apps Are Identified and Controlled</h2>
+<p>Apps do not access an instance implicitly.</p>
+<p>Each app is explicitly registered inside the instance and represented as a <strong>Trusted Application</strong>. This registration defines how the app is identified and what level of access it is granted.</p>
+<p>Authentication and authorization are enforced by the ERP.net Identity Service and apply uniformly across all APIs.</p>
+<p>Authentication, authorization, and related concepts are covered in detail in <a href="../auth/overview.html">Authentication and Authorization</a>.</p>
+<h2 id="how-apps-interact-with-the-platform">How Apps Interact with the Platform</h2>
+<p>ERP.net exposes APIs that apps use to interact with data and functionality within an instance.</p>
+<p>Different APIs are designed for different integration scenarios, such as application development or high-volume data access. The available API surface and access model depend on the app's design and intended use.</p>
+<p>Guidance on selecting the appropriate API is provided in <a href="getting-started/choose-right-api.html">Choosing the right API</a>.</p>
+<h2 id="high-level-interaction-model">High-Level Interaction Model</h2>
 <pre><code class="lang-mermaid">flowchart LR
   user([User or Service]) --- app([ERP.net App])
 
   subgraph &quot;ERP.net Instance&quot;
     direction TB
-    idp([ERP.net Identity])
+    idp([ERP.net Identity Service])
     api([ERP.net APIs])
     data([ERP.net Data])
     api --&gt; data
   end
 
-  app --&gt;|Auth| idp
+  app --&gt;|Authenticate| idp
   app --&gt;|API Calls| api
 </code></pre>
-<h2 id="apps-as-part-of-the--platform">Apps as Part of the ERP.net Platform</h2>
-<p>ERP.net treats every app as a managed, auditable part of the system.</p>
-<p>Administrators can see which apps are trusted, what they are authorized to access, and how they interact with the instance.</p>
-<p>They can also revoke or adjust access at any time, maintaining full control over integrations.</p>
-<p>This model allows ERP.net Apps to be open, extensible, and secure - forming a flexible ecosystem where developers can build new solutions without compromising platform integrity.</p>
-<h2 id="sections-overview">Sections Overview</h2>
-<p><a href="getting-started/overview.html"><strong>Getting Started</strong></a><br>
-A guided path to your first working integration-prerequisites, registering a Trusted Application, obtaining a token, and making your first API call.</p>
-<p><a href="concepts/overview.html"><strong>Concepts</strong></a><br>
-The mental model behind ERP.net Apps-app types, how apps connect, API access options, and the key terms used throughout this topic.</p>
-<p><a href="auth/overview.html"><strong>Authentication and Authorization</strong></a><br>
-OAuth 2.0/OIDC in ERP.net - trusted applications, scopes, flows, tokens, sessions, and security guidance for calling APIs safely.</p>
-<h2 id="before-you-start">Before You Start</h2>
-<ol>
-<li>Make sure your ERP.net instance is accessible.</li>
-<li>Register your app as a <strong>Trusted Application</strong> in that instance.</li>
-<li>Choose the proper <strong>authentication flow</strong> for your app type.</li>
-<li>Start testing API calls using tools like <strong>Postman</strong> or <strong>curl</strong>.</li>
-</ol>
-<hr>
-<h2 id="learn-more">Learn More</h2>
-<ul>
-<li><p><strong><a href="concepts/what-is-erpnet-app.html">What Are ERP.net Apps</a></strong><br>
-Understand what ERP.net Apps are and how they connect to an ERP.net instance.</p>
-</li>
-<li><p><strong><a href="concepts/app-types.html">Application Types</a></strong><br>
-Explore the different kinds of ERP.net Apps - internal, external, and marketplace.</p>
-</li>
-<li><p><strong><a href="auth/overview.html">Authentication and Authorization</a></strong><br>
-See how the built-in ERP.net Identity authenticates and authorizes apps and users.</p>
-</li>
-</ul>
+<p>This model applies to all ERP.net Apps, regardless of implementation or deployment style.</p>
+<h2 id="how-to-proceed">How to Proceed</h2>
+<p>If you are ready to build an app, continue with <a href="getting-started/overview.html">Getting Started</a>.</p>
+<p>That section walks through the initial setup, app registration, and making your first API calls.</p>
 
 </article>
 

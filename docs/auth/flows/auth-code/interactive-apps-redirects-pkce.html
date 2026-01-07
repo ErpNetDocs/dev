@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Redirect URIs and PKCE | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Redirect URIs and PKCE | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/auth/flows/auth-code/interactive-apps-redirects-pkce.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="redirect-uris-and-pkce">Redirect URIs and PKCE</h1>
+
+<p>Interactive apps use browser redirects to sign users in and return an authorization code to the app.</p>
+<p>This page explains how <strong>redirect URIs</strong> are validated in ERP.net and how to secure the Authorization Code flow with <strong>PKCE</strong>.</p>
+<h2 id="redirect-uris">Redirect URIs</h2>
+<p>A redirect URI is where ERP.net Identity sends the user after a successful sign-in (or error).</p>
+<p>For security, it must match <strong>exactly</strong> one of the URIs registered in the app’s <strong>Trusted Application</strong>.</p>
+<h3 id="rules">Rules</h3>
+<ul>
+<li>Exact, case-sensitive match against the <strong>ImpersonateLoginUrl</strong> list in the Trusted Application.</li>
+<li>Use <strong>HTTPS</strong> for public internet apps.</li>
+<li>You may register multiple URIs (for example, dev, staging, production).</li>
+<li>Query string may be present in the registered value, but matching is exact. Do not rely on wildcard suffixes.</li>
+<li>For native apps, use <strong>loopback</strong> or <strong>custom scheme</strong> redirects (see below).</li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p>If the redirect URI does not match exactly, ERP.net Identity will reject the request.</p>
+</div>
+<h3 id="common-redirect-uri-patterns">Common redirect URI patterns</h3>
+<table>
+<thead>
+<tr>
+<th>App type</th>
+<th>Example redirect URI</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Server-side web app</td>
+<td><code>https://app.example.com/auth/callback</code></td>
+<td>Confidential client; handles code exchange on server</td>
+</tr>
+<tr>
+<td>SPA (browser)</td>
+<td><code>https://spa.example.com/index.html</code></td>
+<td>Public client; must use PKCE</td>
+</tr>
+<tr>
+<td>Native desktop</td>
+<td><code>http://127.0.0.1:53177/callback</code></td>
+<td>Loopback with random port; PKCE required. Can also use embedded browsers such as WebView or Chromium for login and redirect handling.</td>
+</tr>
+<tr>
+<td>Mobile app</td>
+<td><code>myapp://auth/callback</code></td>
+<td>Custom scheme; PKCE required</td>
+</tr>
+<tr>
+<td>Local dev</td>
+<td><code>https://localhost:5001/signin-callback</code></td>
+<td>Use HTTPS with a dev certificate if possible</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Desktop and mobile apps typically use system or embedded browsers to perform the OAuth redirect, such as WebView, Chromium, or OS-provided login components.</p>
+</div>
+<h2 id="pkce-overview">PKCE overview</h2>
+<p><strong>PKCE (Proof Key for Code Exchange)</strong> protects the authorization code from interception.</p>
+<p>It adds a one-time secret to the flow so only the app that started the login can finish the token exchange.</p>
+<p>PKCE is <strong>required</strong> for:</p>
+<ul>
+<li>SPAs and other public clients that cannot keep a client secret.</li>
+<li>Native apps (desktop and mobile).</li>
+</ul>
+<p>PKCE is <strong>recommended</strong> for confidential web apps too.</p>
+<h3 id="how-pkce-works-at-a-glance">How PKCE works (at a glance)</h3>
+<ol>
+<li>The app generates a random <code>code_verifier</code>.</li>
+<li>The app computes <code>code_challenge = BASE64URL(SHA256(code_verifier))</code>.</li>
+<li>The app starts the authorize request with <code>code_challenge</code> and <code>code_challenge_method=S256</code>.</li>
+<li>After sign-in, the app exchanges the returned <code>code</code> at the token endpoint and must present the original <code>code_verifier</code>.</li>
+<li>ERP.net Identity verifies that <code>SHA256(code_verifier)</code> matches the original <code>code_challenge</code>.</li>
+</ol>
+<p>If an attacker steals the <code>code</code> from the redirect, it is useless without the <code>code_verifier</code>.</p>
+<h2 id="build-the-authorize-request">Build the authorize request</h2>
+<p>Minimal parameters for Authorization Code + PKCE:</p>
+<pre><code class="lang-http">GET /id/connect/authorize?
+  response_type=code&amp;
+  client_id=my.trusted.app&amp;
+  redirect_uri=https://spa.example.com/index.html&amp;
+  scope=DomainApi read offline_access&amp;
+  state=kj82F3&amp;
+  code_challenge=2C5h2Bf2yq9e8q8WRzU7Hc8l4o7l5s2fC3VfLbaN9yM&amp;
+  code_challenge_method=S256 HTTP/1.1
+Host: testdb.my.erp.net
+</code></pre>
+<ul>
+<li><code>state</code> is required for CSRF protection. Generate and validate it per request.</li>
+<li>Include <code>offline_access</code> only if you need a refresh token (interactive apps).</li>
+</ul>
+<h2 id="exchange-the-code-with-pkce">Exchange the code with PKCE</h2>
+<p>Token request for a public client (no secret):</p>
+<pre><code class="lang-http">POST /id/connect/token HTTP/1.1
+Host: testdb.my.erp.net
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&amp;
+client_id=my.trusted.app&amp;
+code=K0dE...short...GZmNjV&amp;
+redirect_uri=https://spa.example.com/index.html&amp;
+code_verifier=&lt;the_exact_random_string_used_for_code_challenge&gt;
+</code></pre>
+<p>For confidential server apps, you may use either PKCE or a <code>client_secret</code>:</p>
+<pre><code class="lang-http">POST /id/connect/token HTTP/1.1
+Host: testdb.my.erp.net
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&amp;
+client_id=my.trusted.app/server&amp;
+client_secret=&lt;your_client_secret&gt;&amp;
+code=K0dE...short...GZmNjV&amp;
+redirect_uri=https://app.example.com/auth/callback
+</code></pre>
+<h2 id="generating-pkce-values">Generating PKCE values</h2>
+<p>Example pseudocode:</p>
+<pre><code class="lang-text">code_verifier = base64url(random_bytes(32))        # keep in memory/storage for this login
+code_challenge = base64url(sha256(code_verifier))  # send in authorize request
+</code></pre>
+<p>Guidelines:</p>
+<ul>
+<li><code>code_verifier</code> should be high-entropy (32 to 64 random bytes before Base64URL).</li>
+<li>Use <strong>Base64URL</strong> encoding (no <code>+</code>, <code>/</code>, or padding <code>=</code>).</li>
+<li>Store <code>code_verifier</code> only long enough to finish the exchange, then discard.</li>
+</ul>
+<h2 id="security-checklist">Security checklist</h2>
+<ul>
+<li>Register all <strong>redirect URIs</strong> in the Trusted Application and keep them in sync across environments.</li>
+<li>Use <strong>PKCE</strong> for all public clients (SPA, native, mobile). It is recommended for confidential web apps.</li>
+<li>Validate the <code>state</code> parameter on return to prevent CSRF.</li>
+<li>Do not allow open redirects. Keep redirect URIs fixed and exact.</li>
+<li>Never put access tokens in URLs. Tokens belong in the <code>Authorization</code> header only.</li>
+</ul>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="overview.html"><strong>Interactive Apps (Authorization Code Flow)</strong></a><br>
+Overview of the user-facing flow and when to use it.</p>
+</li>
+<li><p><a href="interactive-apps-step-by-step.html"><strong>Step-by-Step Example</strong></a><br>
+Full walkthrough of authorize, callback, and token exchange.</p>
+</li>
+<li><p><a href="interactive-apps-refresh-tokens.html"><strong>Refresh Tokens</strong></a><br>
+Renew access without forcing the user to sign in again.</p>
+</li>
+<li><p><a href="interactive-apps-errors.html"><strong>Common Errors</strong></a><br>
+Troubleshooting invalid redirects, PKCE mismatches, and token issues.</p>
+</li>
+<li><p><a href="../../configuration/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+How app registrations define allowed redirects, users, and scopes.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/auth/flows/auth-code/interactive-apps-redirects-pkce.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

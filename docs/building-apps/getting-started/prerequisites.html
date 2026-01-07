@@ -87,56 +87,42 @@
         <article data-uid="">
 <h1 id="prerequisites">Prerequisites</h1>
 
-<p>This page lists the minimum prerequisites for building an ERP.net integration.</p>
-<h2 id="1-know-your-target-instance">1) Know your target instance</h2>
-<p>You will need the base URL of the ERP.net instance you will connect to, for example:</p>
+<p>This page lists what you must have in place before starting the <strong>Getting Started</strong> flow.</p>
+<p>If any of these are missing, stop here and resolve them first.</p>
+<h2 id="target--instance">Target ERP.net Instance</h2>
+<p>You need the base URL of the ERP.net instance you will connect to, for example:</p>
 <ul>
 <li><code>https://{instance}.my.erp.net</code></li>
 </ul>
-<p>From it, you will derive:</p>
+<p>All API calls and authentication requests are scoped to a specific instance.</p>
+<h2 id="app-scenario">App Scenario</h2>
+<p>You should know whether your app operates:</p>
 <ul>
-<li>the <strong>instance Identity Server authority</strong> (see <a href="../concepts/how-apps-connect/identity-server.html">Instance Identity Server</a>)</li>
-<li>the <strong>API endpoints</strong> you will call (see <a href="../concepts/api-access/overview.html">API Access</a>)</li>
+<li><strong>Interactively</strong> (users sign in)</li>
+<li><strong>Non-interactively</strong> (service, automation, or background integration)</li>
 </ul>
-<p>If you are unsure whether you should use the instance identity server or the global ERP.net IdP, read:</p>
+<p>This determines how the app authenticates and which setup steps apply later.</p>
+<h2 id="required-access">Required Access</h2>
+<p>To proceed, you must be able to:</p>
 <ul>
-<li><a href="../concepts/how-apps-connect/identity-authorities.html">Identity authorities (instance vs global)</a></li>
+<li>Register (or request registration of) a <strong>Trusted Application</strong> in the target instance</li>
+<li>Use (or request) the required <strong>scopes</strong> for your integration</li>
 </ul>
-<h2 id="2-choose-your-app-scenario-so-you-pick-the-right-auth-tutorial">2) Choose your app scenario (so you pick the right auth tutorial)</h2>
-<p>Pick the scenario that matches your app:</p>
+<p>If you do not have this access, coordinate with the instance administrator before continuing.</p>
+<h2 id="tools">Tools</h2>
+<p>You need a way to send HTTP requests to validate authentication and API access. Any of the following are sufficient:</p>
 <ul>
-<li>interactive apps (users sign in): web app, SPA, portal</li>
-<li>non-interactive integrations: service apps, automations</li>
+<li>curl</li>
+<li>Postman</li>
+<li>Your application code</li>
 </ul>
-<p>Then follow the matching tutorial in:</p>
+<h2 id="common-pitfalls">Common Pitfalls</h2>
+<p>Avoid the following:</p>
 <ul>
-<li><a href="../auth/getting-started/overview.html">Getting Started (Authentication)</a></li>
+<li>Mixing instance-specific and global identity authorities</li>
+<li>Guessing API endpoints instead of using documented ones</li>
+<li>Requesting overly broad permissions instead of the minimum required scopes</li>
 </ul>
-<h2 id="3-required-access-and-permissions">3) Required access and permissions</h2>
-<p>To proceed, you typically need:</p>
-<ul>
-<li>the ability to register (or request) a <strong>Trusted Application</strong> in the ERP.net instance</li>
-<li>the ability to use (or request) the required <strong>Scopes</strong> for your integration</li>
-</ul>
-<p>See:</p>
-<ul>
-<li><a href="../auth/configuration/trusted-apps-access.html">Trusted Applications</a></li>
-<li><a href="../auth/configuration/scopes.html">Scopes</a></li>
-</ul>
-<h2 id="4-tools">4) Tools</h2>
-<p>Any HTTP client is sufficient to validate the first token + API call:</p>
-<ul>
-<li>curl (CLI)</li>
-<li>Postman (GUI)</li>
-<li>your application code (recommended once the first call is validated)</li>
-</ul>
-<h2 id="5-what-you-should-not-do">5) What you should not do</h2>
-<ul>
-<li>Do not start by guessing endpoints or mixing authorities.</li>
-<li>Do not request broad permissions &quot;just to make it work&quot;.
-Prefer least-privilege via the right scopes and the right app type.</li>
-</ul>
-<p>See: <a href="../auth/concepts/security-best-practices.html">Security Best Practices</a></p>
 
 </article>
 

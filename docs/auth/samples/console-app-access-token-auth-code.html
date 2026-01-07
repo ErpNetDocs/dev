@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Access token via authorization code flow in a console app | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Access token via authorization code flow in a console app | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/auth/samples/console-app-access-token-auth-code.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="access-token-via-authorization-code-flow-in-a-console-app">Access token via authorization code flow in a console app</h1>
+
+<h2 id="objective">Objective</h2>
+<p>You have an external application that will be authorized via the ERP.net login form on behalf of an internal user. The application MAY or MAY NOT provide an UI, but there'll be user interaction at least for the initial login.</p>
+<p>Or,</p>
+<ul>
+<li>Your external app is an interactive application.</li>
+<li>It will be authenticated and authorized via the ERP.net login form (on behalf of an ERP.net internal user).</li>
+<li>Your external application will access the ERP.net instance on behalf of the logged user.</li>
+<li>Your external app MAY provide UI.</li>
+<li>It's able to keep a secret, so it's also a condfidential application.</li>
+<li>There'll be user interaction (at least for the internal user to log in), so your external app will use <a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow">authorization code flow</a>.</li>
+</ul>
+<h2 id="the-whole-process-in-a-nutshell">The whole process in a nutshell</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This example uses Windows console application, which is why some points further require a deeper understanding.
+It's highly recommended, if you haven't done so, that you read the following topic first,
+<a href="web-app-access-token-auth-code.html">Access token via authorization code flow in a web app</a></p>
+</div>
+<p>After all, your final goal is to acquire an access token. The process is very similar to this example <a href="basic-acquire-access-token.html">Basic example of acquiring an access token</a>, but here is added another intermediate step - the process of impersonating a user. Here's a summary of how the whole process goes:</p>
+<ol>
+<li>Your external app will open the so called <a href="../concepts/identity-server.html">authorize endpoint</a> with your trusted app details (the trusted app, corresponding to your external app).</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>An important detail is that the authorize endpoint must be opened in a browser (see next point and its note).</p>
+</div>
+<ol start="2">
+<li>If all's OK, the browser will be redirected to the ERP.net login page, where the user will enter their credentials.</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Because of the redirect, initially the step (1) have to be performed in a browser.</p>
+<ul>
+<li>If your external app is web-based, you don't have to do anything (because it will work in a browser anyway).</li>
+<li>If your external app is NOT web-based, you have to handle this process by yourself (the example below is just like that).</li>
+</ul>
+</div>
+<ol start="3">
+<li>If the user logs in successfully, the ERP.net login page (i.e. ERP.net Identity) will be redirect to a uri where <strong>your external app is listening</strong>.</li>
+<li>There you'll receive an authorization code.</li>
+<li>Finally you'll exchange the auth code for an access token at the token endpoint.</li>
+<li>You'll obtain an access token on behalf of the logged user (2).</li>
+</ol>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>You have a trusted application, defined as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>My first trusted app</td>
+<td>This value doesn't matter much. It's used for user-friendly identification.</td>
+</tr>
+<tr>
+<td>ApplicationUri</td>
+<td>my.trusted.app/first</td>
+<td>This is your trusted app's unique identifier. It's used in the authentication process.</td>
+</tr>
+<tr>
+<td>IsEnabled</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td>ImpersonateAsInternalUserAllowed</td>
+<td>true</td>
+<td>The trusted application will allow authentication from internal users.</td>
+</tr>
+<tr>
+<td>ImpersonateLoginUrl</td>
+<td>http://localhost/signin-callback/</td>
+<td>The url where your external app is listening. Redirection to this uri will be performed after the user logs in successfully (see <a href="console-app-access-token-auth-code.html#the-whole-process-in-a-nutshell">step 3 in the section above</a>).</td>
+</tr>
+<tr>
+<td>ClientType</td>
+<td>Confidential</td>
+<td>Your external app &quot;will work&quot; with internal users only, so there'll be no &quot;public&quot; acccess. We can assume that it can keep a secret securely (in fact, it's a must).</td>
+</tr>
+<tr>
+<td>ApplicationSecretHash</td>
+<td><code>&lt;base64(sha256(your-secret))&gt;</code></td>
+<td>The external app's secret.</td>
+</tr>
+</tbody>
+</table>
+<p>All other attributes can have their default values. They are not covered by this example.</p>
+<h2 id="steps">Steps</h2>
+<p>Unlike the <a href="basic-acquire-access-token.html">Basic example of acquiring an access token</a>, where everything is clear enough to describe with simple HTTP requests, here the examples are shown in the context of a simple C# console application (i.e. an external app).</p>
+<h3 id="initialization">Initialization</h3>
+<p>First we'll declare and initialize some constants and variables which we'll use later.</p>
+<pre><code class="lang-cs">const string AuthorizeUri = &quot;https://demodb.my.erp.net/id/connect/authorize&quot;;
+const string TokenUri = &quot;https://demodb.my.erp.net/id/connect/token&quot;;
+const string CallbackUri = &quot;http://localhost/signin-callback/&quot;;
+const string TrustedAppUri = &quot;my.trusted.app/first&quot;;
+const string TrustedAppSecret = &quot;&lt;my_plain_app_secret&gt;&quot;;
+
+const string DomainApiTestUri = &quot;https://demodb.my.erp.net/api/domain/odata/Crm_Customers?$top=10&quot;;
+</code></pre>
+<p>We won't waste time, explaining about the constants, their names are self-explanatory. The next two variables are a little more interesting,</p>
+<pre><code class="lang-cs">string authCode = string.Empty;
+string authState = Guid.NewGuid().ToString();
+ClientAuthData clientData;
+</code></pre>
+<p>The <code>authCode</code> keeps the authorization code you'll receive after the internal user logs in successfully. So, initially will be an empty string.</p>
+<p>The <code>authState</code> is a random string, used for security purpose. You'll pass it to the authorize endpoint and ERP.net Identity will return it back to your <code>CallbackUri</code> uri (as you can guess, you need to compare them- if they differ, it's most likely a malicious attempt).</p>
+<p>The last variable <code>clientData</code> will help us, holding the client (i.e. internal user) auth data such as access token, scopes, access token expiration, etc. Here's what the <code>ClientAuthData</code> type looks like:</p>
+<pre><code class="lang-cs">public struct ClientAuthData
+{
+    [JsonPropertyName(&quot;id_token&quot;)]
+    public string IdToken { get; set; }
+
+    [JsonPropertyName(&quot;access_token&quot;)]
+    public string AccessToken { get; set; }
+
+    [JsonPropertyName(&quot;expires_in&quot;)]
+    public int ExpiresIn { get; set; }
+
+    [JsonPropertyName(&quot;refresh_token&quot;)]
+    public string RefreshToken { get; set; }
+
+    [JsonPropertyName(&quot;scope&quot;)]
+    public string Scope { get; set; }
+}
+</code></pre>
+<p>Because we'll receive this data as a raw json string, the <code>JsonPropertyName</code> attribute will help us deserialize it with a &quot;one-liner&quot;.</p>
+<h3 id="http-server-aka-the-callback-listener">HTTP server (a.k.a. the callback listener)</h3>
+<p>This is also part of the initialization, but it's an essential part of the whole process. That's why we condider it separately.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>If your external application is web-based, you don't need this step, because you already &quot;have&quot; a web server. You just have to handle the <code>CallbackUri</code> as an additional page, route, etc.</p>
+</div>
+<pre><code class="lang-cs">var httpListener = new HttpListener();
+httpListener.Prefixes.Add(CallbackUri);
+
+httpListener.Start();
+</code></pre>
+<p>We're creating an object of type <code>HttpListener</code> (that's the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.httplistener">HttpListener Class</a>, based on <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/httpsys">HTTP.sys</a>).</p>
+<p>After, we are adding our <code>CallbackUri</code> (as a place where we'll &quot;listen&quot;) and we just start the server.</p>
+<p>The server is started, but we have to handle when the <code>CallbackUri</code> is requested. Because we're listening on just one uri, the following code is enough:</p>
+<pre><code class="lang-cs">var signCallbackTask = httpListener
+    .GetContextAsync()
+    .ContinueWith(HandleSignInCallback);
+</code></pre>
+<p><code>GetContextAsync()</code> waits for an incoming request, but as an asynchronous operation.</p>
+<p>After, <code>ContinueWith()</code> will proceed when the task is completed (i.e. an incoming request is made). There our delegate <code>HandleSignInCallback</code> will be passed the completed task. The <code>HandleSignInCallback</code> implementation is below.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>It doesn't matter what the http server is. Here we're using the HTTP.sys implementation only because it's super simple to initialize.</p>
+</div>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>HTTP.sys is Windows based web server. This code won't work on non-win OS. Also the process of &quot;adding a prefix&quot;, requires elevated permissions to work, so you have to start this example as an administrator.</p>
+</div>
+<h3 id="authorize-endpoint">Authorize endpoint</h3>
+<p>Now this is the first step towards the essentials- you'll request an authorize code. This is done by submitting a GET request to the authorize endpoint. Here're the needed request parameters:</p>
+<pre><code class="lang-cs">var authorizeUriArgs =
+    $&quot;client_id={TrustedAppUri}&amp;&quot; +
+    $&quot;redirect_uri={CallbackUri}&amp;&quot; +
+    &quot;response_type=code id_token&amp;&quot; +
+    &quot;response_mode=form_post&amp;&quot; +
+    &quot;scope=openid profile offline_access read&amp;&quot; +
+    &quot;nonce=abc&amp;&quot; +
+    $&quot;state={authState}&quot;;
+</code></pre>
+<p>As you see, you're passing the following:</p>
+<ul>
+<li>The uri of your trusted app <code>TrustedAppUri</code>.</li>
+<li>The <code>CallbackUri</code> - the uri where you're waiting for the callback, when the user signs in.</li>
+<li>The scopes your external app needs.</li>
+<li>The <code>authState</code>, described at the beginning.</li>
+</ul>
+<p>In addition, there are two other important arguments:</p>
+<ul>
+<li><code>response_type=code id_token</code>. This &quot;instructs&quot; ERP.net Identity to send you a <strong>code</strong> (i.e. authorization code) and an identity token (not discussed in this topic).</li>
+<li><code>response_mode=form_post</code>. This &quot;tells&quot; ERP.net Identity that you are expecting the callback request as an HTTP POST request.</li>
+</ul>
+<p>Our request args are prepared, so we just have to execute the GET request (i.e. the authorize endpoint).</p>
+<pre><code class="lang-cs">// Start the authorize endpoint with your default browser.
+// This way you'll be able to enter your credentials.
+var processStartInfo = new ProcessStartInfo(&quot;cmd&quot;, $&quot;/c start {AuthorizeUri}?{authorizeUriArgs.Replace(&quot;&amp;&quot;, &quot;^&amp;&quot;).Replace(&quot; &quot;, &quot;%20&quot;)}&quot;)
+{
+    CreateNoWindow = true
+};
+
+Process.Start(processStartInfo);
+</code></pre>
+<p>This is Windows based code that will open the GET request via the windows command shell.</p>
+<p>This is necessary, because as described above, if the request is successful, a redirect to the ERP.net login page will be made.</p>
+<p>Because our example external app is console application (i.e. we can't easily handle such a redirect, nor can we visualize the login page itself), so we'll just make the request with our default browser. In the meantime we'll wait the signin callback to trigger.</p>
+<pre><code class="lang-cs">// Wait until the redirect is made.
+signCallbackTask.Wait();
+</code></pre>
+<p>In other words, we're blocking our external app here, until the sign in callback is called. More precisely our <code>HandleSignInCallback</code> function completes after the the callback is called.</p>
+<h3 id="sign-in-callback">Sign in callback</h3>
+<p>And here's how we handle the callback:</p>
+<pre><code class="lang-cs">void HandleSignInCallback(Task&lt;HttpListenerContext&gt; httpListenerContextTask)
+{
+    var body = new Dictionary&lt;string, string&gt;();
+    using (var streamReader = new StreamReader(httpContext.Request.InputStream))
+    {
+        body = streamReader.ReadToEnd()
+            .Split('&amp;')
+            .Select(v =&gt; v.Split('='))
+            .ToDictionary(pair =&gt; pair[0], pair =&gt; pair[1]);
+    }
+
+    if (!body.Any())
+        throw new Exception(&quot;empty body :(&quot;);
+
+    if (body[&quot;state&quot;] != authState)
+        throw new Exception(&quot;The returned state differs from the one we've passed.&quot;);
+
+    authCode = body[&quot;code&quot;];
+
+    if (string.IsNullOrEmpty(authCode))
+        throw new Exception(&quot;No or invalid authorization code.&quot;);
+}
+</code></pre>
+<p>Only the essential part of the function's body is shown (the full code is available <a href="console-app-access-token-auth-code.html#everything-together">below</a>)</p>
+<p>In short, you process a simple POST request, in which you're interested in only two parameters, part of its body.</p>
+<ol>
+<li>The <code>state</code> - it must be equal to our <code>authState</code>, passed to the authorize endpoint.</li>
+<li>The <code>code</code> - this is our authorization code.</li>
+</ol>
+<h3 id="token-endpoint">Token endpoint</h3>
+<p>Now when you have an authorization code, you can easily acquire an access token. For this to happen, you need to make a POST request to the token endpoint (i.e. <code>TokenUri</code>).</p>
+<p>But first you need to prepare the body of the POST request. Here's how:</p>
+<pre><code class="lang-cs">var tokenUriBody =
+    $&quot;client_id={TrustedAppUri}&amp;&quot; +
+    $&quot;client_secret={TrustedAppSecret}&amp;&quot; +
+    &quot;grant_type=authorization_code&amp;&quot; +
+    $&quot;code={authCode}&amp;&quot; +
+    $&quot;redirect_uri={CallbackUri}&quot;;
+</code></pre>
+<p>As you can see, it's quite simple. You're passing the following:</p>
+<ul>
+<li>Your trusted app uri and its secret <code>TrustedAppUri</code>, <code>TrustedAppSecret</code>.</li>
+<li>The authorization code you received in the previous step <code>authCode</code>.</li>
+<li>The <code>CallbackUri</code>.</li>
+<li>And the very important one <code>grant_type=authroization_code</code> - this is the moment when you &quot;tell&quot; ERP.net Identity that you'll use the authorization code flow.</li>
+</ul>
+<p>Then just send it and make sure that the returned http status code is a successful one:</p>
+<pre><code class="lang-cs">httpRequest = new HttpRequestMessage()
+{
+    Method = HttpMethod.Post,
+    RequestUri = new Uri(TokenUri),
+    Content = new StringContent(
+        tokenUriBody,
+        Encoding.UTF8,
+        &quot;application/x-www-form-urlencoded&quot;)
+};
+
+httpResponse = httpClient.Send(httpRequest);
+// This will throw if the returned status code is not 2xx.
+httpResponse.EnsureSuccessStatusCode();
+</code></pre>
+<p>Finally, you have our access token. It's in the response:</p>
+<pre><code class="lang-cs">// Deserialize the JSON response as a ClientAuthData struct.
+clientData = JsonSerializer.Deserialize&lt;ClientAuthData&gt;(httpResponse.Content.ReadAsStream());
+
+Console.WriteLine($&quot;Access token: {clientData.AccessToken}&quot;);
+Console.WriteLine($&quot;Refresh token: {clientData.RefreshToken}&quot;);
+</code></pre>
+<h3 id="authorized-domain-api-call">Authorized Domain API call</h3>
+<p>Now you're authorized and you can make a legitimate call to the ERP.net Domain Api. E.g.</p>
+<pre><code class="lang-cs">httpRequest = new HttpRequestMessage()
+{
+    Method = HttpMethod.Get,
+    RequestUri = new Uri(DomainApiTestUri)
+};
+httpRequest.Headers.Add(&quot;Authorization&quot;, $&quot;Bearer {clientData.AccessToken}&quot;);
+
+httpResponse = httpClient.Send(httpRequest);
+</code></pre>
+<p>The response will contain the result of the query.</p>
+<h3 id="everything-together">Everything together</h3>
+<pre><code class="lang-cs">using System.Diagnostics;
+using System.Net;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+const string AuthorizeUri = &quot;https://demodb.my.erp.net/id/connect/authorize&quot;;
+const string TokenUri = &quot;https://demodb.my.erp.net/id/connect/token&quot;;
+const string CallbackUri = &quot;http://localhost/signin-callback/&quot;;
+const string DomainApiTestUri = &quot;https://demodb.my.erp.net/api/domain/odata/Crm_Customers?$top=10&quot;;
+const string TrustedAppUri = &quot;my.trusted.app/first&quot;;
+const string TrustedAppSecret = &quot;&lt;my_plain_app_secret&gt;&quot;;
+
+string authCode = string.Empty;
+string authState = Guid.NewGuid().ToString();
+ClientAuthData clientData;
+
+var httpListener = new HttpListener();
+httpListener.Prefixes.Add(CallbackUri);
+httpListener.Start();
+
+var signCallbackTask = httpListener.GetContextAsync().ContinueWith(HandleSignInCallback);
+
+var authorizeUriArgs =
+    $&quot;client_id={TrustedAppUri}&amp;&quot; +
+    $&quot;redirect_uri={CallbackUri}&amp;&quot; +
+    &quot;response_type=code%20id_token&amp;&quot; +
+    &quot;response_mode=form_post&amp;&quot; +
+    &quot;scope=openid%20profile%20offline_access%20read&amp;&quot; +
+    &quot;nonce=abc&amp;&quot; +
+    $&quot;state={authState}&quot;;
+
+// Start the authorize endpoint with your default browser.
+// This way you'll be able to enter your credentials.
+var processStartInfo = new ProcessStartInfo(&quot;cmd&quot;, $&quot;/c start {AuthorizeUri}?{authorizeUriArgs.Replace(&quot;&amp;&quot;, &quot;^&amp;&quot;).Replace(&quot; &quot;, &quot;%20&quot;)}&quot;)
+{
+    CreateNoWindow = true
+};
+Process.Start(processStartInfo);
+
+// Wait until the redirect is made.
+signCallbackTask.Wait();
+
+try
+{
+    #region Create an http client and request/response message objects.
+
+    var handler = new HttpClientHandler
+    {
+        ClientCertificateOptions = ClientCertificateOption.Manual,
+        ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) =&gt;
+        {
+            return true;
+        }
+    };
+
+    var httpClient = new HttpClient(handler);
+    HttpRequestMessage? httpRequest = null;
+    HttpResponseMessage? httpResponse = null;
+
+    #endregion
+
+    #region Acquire an access token.
+
+    var tokenUriBody =
+        $&quot;client_id={TrustedAppUri}&amp;&quot; +
+        $&quot;client_secret={TrustedAppSecret}&amp;&quot; +
+        &quot;grant_type=authorization_code&amp;&quot; +
+        $&quot;code={authCode}&amp;&quot; +
+        $&quot;redirect_uri={CallbackUri}&quot;;
+
+    httpRequest = new HttpRequestMessage()
+    {
+        Method = HttpMethod.Post,
+        RequestUri = new Uri(TokenUri),
+        Content = new StringContent(
+            tokenUriBody,
+            Encoding.UTF8,
+            &quot;application/x-www-form-urlencoded&quot;)
+    };
+
+    httpResponse = httpClient.Send(httpRequest);
+    // This will throw if the returned status code is not 2xx.
+    httpResponse.EnsureSuccessStatusCode();
+
+    // Deserialize the JSON response as a ClientAuthData struct.
+    clientData = JsonSerializer.Deserialize&lt;ClientAuthData&gt;(httpResponse.Content.ReadAsStream());
+
+    Console.WriteLine($&quot;Access token: {clientData.AccessToken}&quot;);
+    Console.WriteLine($&quot;Refresh token: {clientData.RefreshToken}&quot;);
+
+    #endregion
+
+    #region Domain Api call - select top 10 Crm_Customers
+
+    httpRequest = new HttpRequestMessage()
+    {
+        Method = HttpMethod.Get,
+        RequestUri = new Uri(DomainApiTestUri)
+    };
+    httpRequest.Headers.Add(&quot;Authorization&quot;, $&quot;Bearer {clientData.AccessToken}&quot;);
+
+    httpResponse = httpClient.Send(httpRequest);
+    httpResponse.EnsureSuccessStatusCode();
+
+    Console.WriteLine(&quot;=================&quot;);
+    var domainApiResponse = await httpResponse.Content.ReadAsStringAsync();
+    Console.WriteLine(domainApiResponse);
+
+    #endregion
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
+}
+
+void HandleSignInCallback(Task&lt;HttpListenerContext&gt; httpListenerContextTask)
+{
+    var httpContext = httpListenerContextTask.Result;
+    var logMessage = &quot;Well done, everything is OK.\r\nNow you have an authorization code.&quot;;
+
+    try
+    {
+        #region Request an authorization code.
+
+        var body = new Dictionary&lt;string, string&gt;();
+        using (var streamReader = new StreamReader(httpContext.Request.InputStream))
+        {
+            body = streamReader.ReadToEnd()
+                .Split('&amp;')
+                .Select(v =&gt; v.Split('='))
+                .ToDictionary(pair =&gt; pair[0], pair =&gt; pair[1]);
+        }
+
+        if (!body.Any())
+            throw new Exception(&quot;empty body :(&quot;);
+
+        if (body[&quot;state&quot;] != authState)
+            throw new Exception(&quot;The returned state differs from the one we've passed.&quot;);
+
+        authCode = body[&quot;code&quot;];
+
+        if (string.IsNullOrEmpty(authCode))
+            throw new Exception(&quot;No or invalid authorization code.&quot;);
+
+        #endregion
+    }
+    catch (Exception ex)
+    {
+        logMessage = ex.Message;
+    }
+
+    byte[] buffer = Encoding.UTF8.GetBytes(logMessage);
+    httpContext.Response.ContentLength64 = buffer.Length;
+    using var output = httpContext.Response.OutputStream;
+    output.Write(buffer, 0, buffer.Length);
+}
+
+public struct ClientAuthData
+{
+    [JsonPropertyName(&quot;id_token&quot;)]
+    public string IdToken { get; set; }
+
+    [JsonPropertyName(&quot;access_token&quot;)]
+    public string AccessToken { get; set; }
+
+    [JsonPropertyName(&quot;expires_in&quot;)]
+    public int ExpiresIn { get; set; }
+
+    [JsonPropertyName(&quot;refresh_token&quot;)]
+    public string RefreshToken { get; set; }
+
+    [JsonPropertyName(&quot;scope&quot;)]
+    public string Scope { get; set; }
+}
+</code></pre>
+<h2 id="resources">Resources</h2>
+<p>The sample project in this example can be found here:</p>
+<p><a href="https://github.com/ErpNetDocs/dev/tree/master/domain-api/samples/src/step-by-step/AccessTokenCodeConsole">https://github.com/ErpNetDocs/dev/tree/master/domain-api/samples/src/step-by-step/AccessTokenCodeConsole</a></p>
+<p>--</p>
+<p><a href="https://docs.erp.net/dev/topics/authentication/authentication-flows.html">https://docs.erp.net/dev/topics/authentication/authentication-flows.html</a></p>
+<p><a href="https://docs.erp.net/dev/topics/authentication/trusted-applications.html">https://docs.erp.net/dev/topics/authentication/trusted-applications.html</a></p>
+<p><a href="https://docs.erp.net/dev/domain-api/authentication.html">https://docs.erp.net/dev/domain-api/authentication.html</a></p>
+<p><a href="https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow">https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/auth/samples/console-app-access-token-auth-code.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

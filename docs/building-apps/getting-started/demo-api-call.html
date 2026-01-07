@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Demo API Call (testdb) | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Demo API Call (testdb) | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/getting-started/demo-api-call.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="demo-api-call-testdb">Demo API Call (testdb)</h1>
+
+<p>This topic is an optional <strong>smoke test</strong> that validates:</p>
+<p><strong>request format → connectivity → JSON response</strong></p>
+<p>It is useful if you want to quickly verify that your tooling (curl, Postman, client code) can reach the API and receive data.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>This demo call <strong>does not</strong> confirm that <em>your</em> application is registered, authenticated, or authorized.</p>
+<p>To validate the full integration path (<strong>access token → API request → successful response</strong>) using <strong>your own instance</strong>, follow<br>
+<a href="first-api-call.html">Make Your First API Call</a>.</p>
+</div>
+<h2 id="when-to-use-this">When to Use This</h2>
+<p>Use the demo instance if you:</p>
+<ul>
+<li>Want to test HTTP request formatting</li>
+<li>Want to confirm outbound connectivity to the service</li>
+<li>Want to inspect a real JSON payload quickly</li>
+</ul>
+<p>Do <strong>not</strong> use this demo path for production integrations or real customer data.</p>
+<h2 id="demo-instance-and-reference-token">Demo Instance and Reference Token</h2>
+<p>The public demo instance is:</p>
+<ul>
+<li><strong>Host:</strong> <code>testdb.my.erp.net</code></li>
+</ul>
+<p>You can call it using the company-provided <strong>demo reference token</strong>.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>The demo token is intended only for the public sandbox instance:</p>
+<ul>
+<li>It works only for <code>testdb.my.erp.net</code>.</li>
+<li>It may be rotated or revoked at any time.</li>
+<li>Do not use it for production integrations or real customer data.</li>
+<li>Treat it as a secret (do not publish it in client-side code or logs).</li>
+</ul>
+</div>
+<h2 id="send-the-request">Send the Request</h2>
+<p>Example request:</p>
+<pre><code class="lang-http">GET https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=10
+Authorization: Bearer enrt_C99474338E7E587DA64126E26F138E3E0E2D0E984256073427D122B4B39AC766
+Accept: application/json
+</code></pre>
+<h2 id="verify-success">Verify Success</h2>
+<p>A successful demo call has all of the following:</p>
+<ul>
+<li>HTTP 200 OK</li>
+<li>A JSON response body</li>
+<li>No redirects to a login page</li>
+</ul>
+<p>If this succeeds, basic connectivity and request formatting are confirmed.</p>
+<h2 id="what-this-does-not-validate">What This Does Not Validate</h2>
+<ul>
+<li>This demo call does <strong>not</strong> validate:</li>
+<li>Your app registration</li>
+<li>Token issuance from your identity service</li>
+<li>Authorization and permissions for your tenant</li>
+<li>Access to your instance data</li>
+</ul>
+<h2 id="next-step">Next Step</h2>
+<p>To validate a real end-to-end integration using your own instance, continue with<br>
+<a href="first-api-call.html">Make Your First API Call</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/getting-started/demo-api-call.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

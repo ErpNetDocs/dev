@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Typical Architecture – Hybrid Apps | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Typical Architecture – Hybrid Apps | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/auth/flows/combined/hybrid-architecture.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="typical-architecture--hybrid-apps">Typical Architecture – Hybrid Apps</h1>
+
+<p>Hybrid apps combine interactive frontends and backend services into a single connected solution.</p>
+<p>Each part authenticates separately using its own flow - yet both operate under the same Trusted Application identity.</p>
+<h2 id="layered-architecture">Layered Architecture</h2>
+<p>A typical hybrid app consists of three main layers:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Role</th>
+<th>Authentication Flow</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Frontend</strong></td>
+<td>User interface where people sign in. Handles presentation, lightweight API calls, and UI logic.</td>
+<td>Authorization Code</td>
+</tr>
+<tr>
+<td><strong>Backend Service</strong></td>
+<td>Secure server process performing business logic, ERP.net API calls, background sync, and elevated operations.</td>
+<td>Client Credentials</td>
+</tr>
+<tr>
+<td><strong>ERP.net Instance</strong></td>
+<td>Includes ERP.net Identity for authentication and the ERP.net APIs for data access.</td>
+<td>Both</td>
+</tr>
+</tbody>
+</table>
+<p>The separation ensures clean boundaries between user identity and system identity while allowing shared configuration through a single Trusted Application.</p>
+<h2 id="communication-flow">Communication Flow</h2>
+<pre><code class="lang-mermaid">sequenceDiagram
+  participant User
+  participant WebApp as Frontend App
+  participant Backend as Backend Service
+  participant IDP as ERP.net Identity
+  participant API as ERP.net APIs
+
+  User-&gt;&gt;WebApp: Opens app
+  WebApp-&gt;&gt;IDP: Authorization Code flow (user login)
+  IDP--&gt;&gt;WebApp: User access token
+  WebApp-&gt;&gt;Backend: Send request (user context)
+  Backend-&gt;&gt;IDP: Client Credentials flow (service login)
+  IDP--&gt;&gt;Backend: Service access token
+  Backend-&gt;&gt;API: Calls ERP.net APIs using service token
+  API--&gt;&gt;Backend: Data response
+  Backend--&gt;&gt;WebApp: Returns result to user
+</code></pre>
+<p>In this setup:</p>
+<ul>
+<li>The <strong>frontend</strong> authenticates the user for identity purposes (no direct ERP.net data access).</li>
+<li>The <strong>backend</strong> uses its service token to communicate securely with ERP.net APIs.</li>
+<li>The <strong>frontend</strong> and <strong>backend</strong> communicate over a protected internal channel (e.g., HTTPS REST, gRPC, or GraphQL).</li>
+</ul>
+<hr>
+<h2 id="deployment-models">Deployment Models</h2>
+<p>Hybrid apps can be deployed in different configurations depending on scale and security needs.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Monolithic</strong></td>
+<td>Frontend and backend hosted together (same domain, single deployment).</td>
+<td>Small internal portals or low-traffic partner apps.</td>
+</tr>
+<tr>
+<td><strong>Distributed (2-tier)</strong></td>
+<td>Frontend hosted separately (e.g., SPA in CDN) and backend hosted securely behind firewall or cloud function.</td>
+<td>Common for SaaS portals and external-facing apps.</td>
+</tr>
+<tr>
+<td><strong>Microservice-based</strong></td>
+<td>Backend logic split into independent services sharing the same Trusted Application identity.</td>
+<td>Complex integrations, high scalability, or multiple business domains.</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p>For external-facing scenarios, the backend should reside in a controlled environment - the frontend never holds secrets and communicates through HTTPS to the backend only.</p>
+</div>
+<hr>
+<h2 id="token-boundaries">Token Boundaries</h2>
+<p>Hybrid apps maintain strict token separation:</p>
+<table>
+<thead>
+<tr>
+<th>Token Type</th>
+<th>Used By</th>
+<th>Scope</th>
+<th>Lifetime</th>
+<th>Storage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>User access token</strong></td>
+<td>Frontend</td>
+<td>Identity and UI context only</td>
+<td>Short (1 hour)</td>
+<td>Browser memory or secure storage</td>
+</tr>
+<tr>
+<td><strong>Service access token</strong></td>
+<td>Backend</td>
+<td>ERP.net API access</td>
+<td>Short (1 hour)</td>
+<td>Server memory or cache</td>
+</tr>
+<tr>
+<td><strong>Refresh token</strong></td>
+<td>Frontend (optional)</td>
+<td>Renew user access token</td>
+<td>Long (30 days)</td>
+<td>Secure server-side store</td>
+</tr>
+<tr>
+<td><strong>SystemUser</strong></td>
+<td>Backend (Trusted Application)</td>
+<td>ERP.net service identity</td>
+<td>Static</td>
+<td>Stored in configuration only</td>
+</tr>
+</tbody>
+</table>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Never pass a backend (service) token to the frontend or the client device.</p>
+</div>
+<hr>
+<h2 id="example-external-portal-pattern">Example: External Portal Pattern</h2>
+<p>This pattern is ideal when the app serves <strong>external ERP.net users</strong> (partners, vendors, or customers):</p>
+<ul>
+<li>The frontend authenticates external users only for <em>identity</em> (no ERP.net session is created).</li>
+<li>The backend, using the <strong>Client Credentials flow</strong>, holds a single ERP.net session tied to its <strong>SystemUser</strong>.</li>
+<li>All API operations go through the backend, so ERP.net sees one session - minimal licensing overhead and maximum isolation.</li>
+</ul>
+<pre><code class="lang-mermaid">flowchart LR
+  U[🌐 External User] --&gt;|Login| FE[💻 Frontend]
+  FE --&gt;|API Request| BE[⚙️ Backend Service]
+  BE --&gt;|Service Token| ERP[🧩 ERP.net APIs]
+  ERP --&gt; D[(📊 ERP.net Data)]
+</code></pre>
+<p>This structure:</p>
+<ul>
+<li>Keeps ERP.net sessions centralized (only one service session).</li>
+<li>Maintains external user identity separately for auditing.</li>
+<li>Scales easily - multiple users share the same backend connection.</li>
+</ul>
+<hr>
+<h2 id="best-practices">Best Practices</h2>
+<ul>
+<li>Keep frontend and backend token stores separate.</li>
+<li>Use short token lifetimes; rely on backend caching for reuse.</li>
+<li>Ensure the frontend never handles secrets or client credentials.</li>
+<li>Log all token exchanges and backend operations for auditing.</li>
+<li>Implement HTTPS end-to-end (browser → backend → ERP.net).</li>
+<li>Assign a <strong>least-privilege System User</strong> for backend operations.</li>
+</ul>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="hybrid-examples.html"><strong>Example Scenarios</strong></a><br>
+Practical hybrid implementations for common ERP.net patterns.</p>
+</li>
+<li><p><a href="../../configuration/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+Configure impersonation and SystemUser access for hybrid apps.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/auth/flows/combined/hybrid-architecture.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

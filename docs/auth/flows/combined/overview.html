@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Hybrid Apps Overview | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Hybrid Apps Overview | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../../favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/auth/flows/combined/overview.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="hybrid-apps-overview">Hybrid Apps Overview</h1>
+
+<p>Some applications combine <strong>interactive user access</strong> with <strong>background automation or elevated operations</strong>.</p>
+<p>These are known as <strong>Hybrid Apps</strong>, and they use <em>both</em> OAuth 2.0 flows:</p>
+<ul>
+<li><strong>Authorization Code Flow</strong> for user-facing (interactive) parts.</li>
+<li><strong>Client Credentials Flow</strong> for backend or service components.</li>
+</ul>
+<p>This pattern is ideal for apps that need to securely connect user sessions with backend logic while maintaining proper isolation between the two.</p>
+<h2 id="why-hybrid">Why Hybrid?</h2>
+<p>Hybrid apps let you safely combine user and system contexts in one solution.</p>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Flow</th>
+<th>Who Authenticates</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>User-facing front end</td>
+<td>Authorization Code</td>
+<td>User</td>
+<td>Web portal, dashboard, mobile app</td>
+</tr>
+<tr>
+<td>Background or elevated operations</td>
+<td>Client Credentials</td>
+<td>Application (System User)</td>
+<td>Background sync, import/export, scheduled automation</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Even though both flows may belong to the same logical application, they use <em>separate credentials, tokens, and sessions</em> - ensuring the backend cannot impersonate a user and vice versa.</p>
+</div>
+<h2 id="typical-use-cases">Typical Use Cases</h2>
+<ul>
+<li><p><strong>Web app + background worker</strong><br>
+A user-facing portal (Authorization Code) triggers backend sync jobs (Client Credentials).</p>
+</li>
+<li><p><strong>Mobile app + cloud API service</strong><br>
+The mobile app signs in users; a separate server component manages uploads or scheduled tasks.</p>
+</li>
+<li><p><strong>Enterprise integration</strong><br>
+The web UI uses user tokens for data entry; backend agents run elevated batch updates under a System User.</p>
+</li>
+<li><p><strong>External user portals</strong><br>
+A perfect fit when your frontend targets <strong>external ERP.net users</strong> (for example, partners or customers).<br>
+These users authenticate for identity purposes only - not for creating ERP.net sessions.<br>
+The backend then operates using the <strong>Client Credentials flow</strong>, so all API calls share a <strong>single, stable session</strong> managed by the service identity.<br>
+This setup minimizes session usage and isolates data access securely.</p>
+</li>
+</ul>
+<h2 id="key-benefits">Key Benefits</h2>
+<ul>
+<li><strong>Separation of duties</strong> – users act within their own permissions; backend code runs as a service account.</li>
+<li><strong>Security and compliance</strong> – no sharing of user credentials for automation.</li>
+<li><strong>Consistency</strong> – both components authenticate through the same ERP.net Identity and share configuration via their Trusted Application.</li>
+<li><strong>Efficiency for external users</strong> – external logins establish identity only, while all ERP.net interactions occur under one backend session.</li>
+</ul>
+<h2 id="relationship-to-trusted-applications">Relationship to Trusted Applications</h2>
+<p>A Hybrid App is usually represented by a <strong>single Trusted Application</strong> in ERP.net configured as:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ClientType</code></td>
+<td>Confidential</td>
+<td>Keeps a secret securely on the backend.</td>
+</tr>
+<tr>
+<td><code>ImpersonateAsInternalUserAllowed</code></td>
+<td><code>true</code></td>
+<td>Enables user sign-in for the front end.</td>
+</tr>
+<tr>
+<td><code>ImpersonateAsCommunityUserAllowed</code></td>
+<td><code>true</code></td>
+<td>Enables external users (partners/customers) to authenticate for identity.</td>
+</tr>
+<tr>
+<td><code>SystemUserAllowed</code></td>
+<td><code>true</code></td>
+<td>Enables background or service access.</td>
+</tr>
+<tr>
+<td><code>SystemUser</code></td>
+<td><code>&lt;service_user&gt;</code></td>
+<td>Defines which user identity the backend uses.</td>
+</tr>
+<tr>
+<td><code>Scope</code></td>
+<td><code>read update</code></td>
+<td>Specifies permissions available to both flows.</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This design allows one app identity to handle both interactive and background operations while maintaining strict isolation of tokens and permissions.<br>
+For external-facing apps, it also ensures that ERP.net session consumption happens <strong>only once</strong> - through the service component using Client Credentials.</p>
+</div>
+<h2 id="token-flows-in-action">Token Flows in Action</h2>
+<pre><code class="lang-mermaid">flowchart LR
+  subgraph Frontend[Frontend App]
+    U[User] --&gt;|Signs in| Web[Web App]
+    Web --&gt;|Auth Code Flow| IDP[ERP.net Identity]
+    IDP --&gt;|User Token| Web
+  end
+
+  subgraph Backend[Backend Service]
+    S[Service Component] --&gt;|Client Credentials Flow| IDP
+    IDP --&gt;|Service Token| S
+  end
+
+  Web --&gt;|API Calls with User Token| API[ERP.net APIs]
+  S --&gt;|API Calls with Service Token| API
+  API --&gt; Data[(ERP.net Data)]
+</code></pre>
+<ul>
+<li>The <strong>frontend</strong> uses Authorization Code Flow for user sessions.</li>
+<li>The <strong>backend</strong> uses Client Credentials Flow for automation.</li>
+<li>Both call the same APIs, but under different tokens and permissions.</li>
+</ul>
+<h2 id="best-practices">Best Practices</h2>
+<ul>
+<li>Always <strong>store user and service tokens separately</strong>. Never reuse or mix them.</li>
+<li>Implement <strong>token caching</strong> per flow to avoid unnecessary re-authentication.</li>
+<li>Use <strong>refresh tokens</strong> only for the Authorization Code flow.</li>
+<li>Configure minimal scopes; typically, the backend requires broader permissions than the user front end.</li>
+<li>Audit your Trusted Application and System User regularly.</li>
+</ul>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="hybrid-architecture.html"><strong>Typical Architecture</strong></a><br>
+Explore how hybrid apps structure front-end and backend communication.</p>
+</li>
+<li><p><a href="hybrid-examples.html"><strong>Example Scenarios</strong></a><br>
+See how real hybrid patterns are implemented in practice.</p>
+</li>
+<li><p><a href="../../configuration/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+Understand how System User and impersonation settings define hybrid access.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/auth/flows/combined/overview.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

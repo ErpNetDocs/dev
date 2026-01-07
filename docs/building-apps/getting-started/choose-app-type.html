@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Choose an Application Type | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Choose an Application Type | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/building-apps/getting-started/choose-app-type.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="choose-an-application-type">Choose an Application Type</h1>
+
+<p>Before registering your app, identify the <strong>application type</strong> that matches how your app will authenticate users and access ERP.net APIs.</p>
+<p>The application type describes <strong>how API access is performed</strong>:</p>
+<ul>
+<li>on behalf of a signed-in user</li>
+<li>on behalf of the application itself</li>
+<li>or using long-lived automation tokens</li>
+</ul>
+<p>This choice determines which setup and authentication guidance applies later.</p>
+<h2 id="application-type-overview">Application Type Overview</h2>
+<p>Choose the row that best describes <strong>how your app identifies users and accesses ERP.net APIs</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>App behavior</th>
+<th>User involvement</th>
+<th>How API access is performed</th>
+<th>Application type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Browser-based app with no backend; users sign in</td>
+<td>Internal users</td>
+<td>API access is performed <strong>on behalf of the signed-in user</strong></td>
+<td><strong>SPA Applications</strong></td>
+</tr>
+<tr>
+<td>Web app with backend; users sign in</td>
+<td>Internal users</td>
+<td>API access is performed <strong>on behalf of the signed-in user</strong></td>
+<td><strong>Web (Confidential) Applications</strong></td>
+</tr>
+<tr>
+<td>Web app where users sign in for identification only</td>
+<td>Internal and/or external users</td>
+<td>API access is performed <strong>on behalf of the application</strong></td>
+<td><strong>Web Portals</strong></td>
+</tr>
+<tr>
+<td>No user interaction; background integration or sync</td>
+<td>None</td>
+<td>API access is performed <strong>on behalf of the application</strong></td>
+<td><strong>Service Applications</strong></td>
+</tr>
+<tr>
+<td>Scheduled or scripted jobs using long-lived tokens</td>
+<td>None</td>
+<td>API access is performed <strong>on behalf of the token</strong></td>
+<td><strong>Automation</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Important notes:</strong></p>
+<ul>
+<li>External (community) users are authenticated for <strong>identification only</strong> and never receive direct API access.</li>
+<li>When external users are involved, all API calls are performed on behalf of the application.</li>
+<li>If an app supports multiple user types, choose the application type based on <strong>how API access is performed</strong>, not who signs in.</li>
+</ul>
+<h2 id="what-this-choice-affects">What This Choice Affects</h2>
+<p>The selected application type determines:</p>
+<ul>
+<li>which authentication scenario applies</li>
+<li>whether tokens represent a user, an application, or a reference token</li>
+<li>which setup and implementation guides you should follow</li>
+</ul>
+<p>You do <strong>not</strong> configure anything at this stage.<br>
+This step is only about choosing the correct documentation path.</p>
+<h2 id="reporting-analytics-and-data-export">Reporting, Analytics, and Data Export</h2>
+<p>Reporting, analytics, backups, and bulk exports are <strong>usage patterns</strong>, not separate application types.</p>
+<p>They are typically implemented as:</p>
+<ul>
+<li><strong>Service Applications</strong> for OAuth-based, short-lived access, or</li>
+<li><strong>Automation</strong> for controlled, long-running or scheduled tasks</li>
+</ul>
+<p>API selection (Domain API vs Table API) is handled in the next step.</p>
+<h2 id="detailed-reference">Detailed Reference</h2>
+<p>For a full description of each application type and its expected behavior, see<br>
+<a href="../concepts/app-types.html">Application Types</a>.</p>
+<h2 id="next-step">Next Step</h2>
+<p>Once you have identified the correct application type, continue with<br>
+<a href="choose-right-api.html">Choose the Right API</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/building-apps/getting-started/choose-app-type.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

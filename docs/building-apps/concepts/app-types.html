@@ -87,148 +87,185 @@
         <article data-uid="">
 <h1 id="application-types">Application Types</h1>
 
-<p>ERP.net supports several types of applications, depending on:</p>
+<p>Application types describe <strong>how an application connects to an ERP.net instance</strong>, not what business problem it solves.</p>
+<p>They help you decide:</p>
 <ul>
-<li>where they run</li>
-<li>who develops them</li>
-<li>and how they are distributed</li>
+<li>whether users are involved at all</li>
+<li>whether API access happens <strong>on behalf of a user</strong>, <strong>on behalf of the application</strong>, or via a <strong>reference token</strong></li>
+<li>which <strong>identity authority</strong> is involved</li>
+<li>which <strong>authentication guide</strong> applies</li>
 </ul>
-<p>All ERP.net Apps follow the same security and connectivity model - they communicate with an ERP.net instance through the built-in <strong>ERP.net Identity</strong> and <strong>APIs</strong>, and are represented in the system by a <strong>Trusted Application</strong> entity.</p>
-<h2 id="internal-applications">Internal Applications</h2>
-<p><strong>Internal applications</strong> are part of the ERP.net platform itself.</p>
-<p>They are developed, deployed, and maintained by ERP.net as core components of the system.</p>
-<p>These apps are installed within the ERP.net instance and operate using the same security and authentication infrastructure as external apps.</p>
-<p>Examples include:</p>
-<ul>
-<li><strong><a href="https://docs.erp.net/webclient/">Web Client</a></strong> - the main ERP.net web interface used by end users to access and manage data across all functional modules</li>
-<li><strong><a href="https://docs.erp.net/tech/modules/crm/clientcenter/index.html">Client Center</a></strong> - a portal that allows customers and business partners to view documents, orders, and invoices, and to communicate with the company directly</li>
-<li><strong>Legal</strong> - a built-in app for managing legal entities and compliance information</li>
-</ul>
-<p>Characteristics:</p>
-<ul>
-<li>Deployed as part of the ERP.net instance</li>
-<li>Fully managed and updated with the platform</li>
-<li>Use the same APIs and ERP.net Identity for consistency</li>
-<li><strong>Trusted Application registration:</strong> may be preconfigured by the platform or require manual registration/configuration, depending on the app and deployment</li>
-</ul>
-<h2 id="external-applications">External Applications</h2>
-<p><strong>External applications</strong> are developed outside of the ERP.net platform, by customers, partners, or independent developers.</p>
-<p>They run separately from the ERP.net instance but connect to it securely via ERP.net Identity and APIs.</p>
-<p>External apps can take many forms - mobile clients, integrations, automation tools, or standalone web applications.</p>
-<p>Examples include:</p>
-<ul>
-<li>A logistics dashboard that monitors deliveries and shipment statuses in real time</li>
-<li>A custom production planning tool that retrieves and updates manufacturing data</li>
-<li>A cloud integration that syncs ERP.net data with an accounting or shipping service</li>
-<li>A background service that automates invoice exports</li>
-</ul>
-<p>Characteristics:</p>
-<ul>
-<li>Hosted outside of the ERP.net instance</li>
-<li>Must be registered as <strong>Trusted Applications</strong> in each instance they connect to</li>
-<li>Authenticate and authorize through the built-in ERP.net Identity</li>
-<li>Can use interactive (user) or non-interactive (service) access modes</li>
-</ul>
-<h2 id="marketplace-applications">Marketplace Applications</h2>
-<p><strong>Marketplace applications</strong> are a special category of external apps that are published to the <a href="https://marketplace.erp.net/">ERP.net Marketplace</a>.</p>
-<p>They are developed by ERP.net partners or third parties and made available to multiple tenants for installation or activation.</p>
-<p>When a tenant administrator installs a marketplace app, the ERP.net instance automatically registers it as a Trusted Application.</p>
-<p>Examples include:</p>
-<ul>
-<li><strong>Currency Rates Sync</strong> – Automate your currency updates with fresh ECB rates, daily.</li>
-<li><strong>Retail POS</strong> – A modern, offline-capable POS system designed for retail businesses. Fast, intuitive, and built to work seamlessly with ERP.net.</li>
-<li><strong>Preventive Maintenance Planner</strong> – Transform your maintenance operations with intelligent planning.</li>
-</ul>
-<p>Characteristics:</p>
-<ul>
-<li>Developed externally but distributed through the ERP.net Marketplace</li>
-<li>Automatically registered and authorized during installation</li>
-<li>Can be activated by tenant administrators</li>
-<li>Must comply with platform validation and security requirements</li>
-</ul>
-<h2 id="embedded-in-client-applications">Embedded (In-Client) Applications</h2>
-<p><strong>Embedded (In-Client) applications</strong> are external web apps that can be displayed directly inside the ERP.net Web Client using a <strong>WebView</strong>.</p>
-<p>They allow developers to create specialized web experiences that look and feel like a native part of ERP.net, while being hosted and maintained independently.</p>
-<h3 id="behavior-and-access">Behavior and Access</h3>
-<p>Embedded apps behave differently depending on where they are hosted:</p>
-<ol>
-<li><p><strong>Apps hosted on a trusted domain</strong><br>
-If the app is part of the ERP.net Marketplace or hosted under the official domain <code>https://*.app.erp.net</code>, it can securely access the ERP.net APIs <strong>without performing explicit authorization</strong>.<br>
-In this case, the Web Client shares the user's active session (via cookies), and the app can make API calls on behalf of the logged-in user.</p>
-</li>
-<li><p><strong>Apps hosted elsewhere</strong><br>
-If the app is hosted on any other domain, it cannot access ERP.net data directly.<br>
-The only information it receives is the <strong>URL passed to the WebView</strong> when it is opened from the Web Client.<br>
-To access data, such apps must perform standard authentication through ERP.net Identity using a registered Trusted Application.</p>
-</li>
-</ol>
-<h3 id="typical-use-cases">Typical Use Cases</h3>
-<ul>
-<li>Partner-developed dashboards or widgets integrated into the ERP.net Web Client</li>
-<li>Company-specific extensions that enhance standard UI modules</li>
-<li>Marketplace apps that extend ERP.net visually within the main user experience</li>
-</ul>
-<h3 id="characteristics">Characteristics</h3>
-<ul>
-<li>Hosted externally but embedded in the Web Client through a WebView</li>
-<li>May use the active user session for authentication (if hosted on trusted domain)</li>
-<li>Must follow strict domain and security policies to access ERP.net data</li>
-<li>Can be distributed through the ERP.net Marketplace or deployed privately</li>
-</ul>
-<h2 id="comparing-application-types">Comparing Application Types</h2>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>ERP.net instance APIs are always accessed using tokens issued by the <strong>instance identity service</strong><br>
+(<code>https://&lt;instance&gt;.my.erp.net/id</code>).</p>
+<p>The global ERP.net Identity (<code>id.erp.net</code>) is used <strong>only for user authentication (SSO)</strong> and does <strong>not</strong>
+issue access tokens for instance APIs.</p>
+</div>
+<h2 id="summary">Summary</h2>
 <table>
 <thead>
 <tr>
-<th>Type</th>
-<th>Hosted By</th>
-<th>Registered As Trusted App</th>
-<th>Example</th>
-<th>Typical Use</th>
+<th>Application type</th>
+<th>Typical scenario</th>
+<th>Who signs in</th>
+<th>How API access is performed</th>
+<th>Auth guide</th>
+<th>Typical API</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Internal</strong></td>
-<td>ERP.net Platform</td>
-<td>Preconfigured or manual (varies)</td>
-<td><a href="https://docs.erp.net/webclient/">Web Client</a>, <a href="https://docs.erp.net/tech/modules/crm/clientcenter/index.html">Client Center</a></td>
-<td>Core ERP.net functionality</td>
+<td><strong>SPA Applications</strong></td>
+<td>Browser-only app, no backend</td>
+<td>Internal users</td>
+<td>On behalf of the signed-in user</td>
+<td><a href="../../auth/getting-started/instance-id-spa-apps.html">Instance ID for SPA Applications</a></td>
+<td>Domain API</td>
 </tr>
 <tr>
-<td><strong>External</strong></td>
-<td>Customer or Partner</td>
-<td>Manual</td>
-<td>Custom integration, automation service</td>
-<td>Private or custom solutions</td>
+<td><strong>Web (Confidential) Applications</strong></td>
+<td>Web app with backend</td>
+<td>Internal users</td>
+<td>On behalf of the signed-in user</td>
+<td><a href="../../auth/getting-started/instance-id-web-apps.html">Instance ID for Web Applications</a></td>
+<td>Domain API</td>
 </tr>
 <tr>
-<td><strong>Marketplace</strong></td>
-<td>Partner / Third Party</td>
-<td>Automatic on installation</td>
-<td>Retail POS, Currency Rates Sync, Preventive Maintenance Planner</td>
-<td>Public or commercial apps</td>
+<td><strong>Web Portals</strong></td>
+<td>Customer / partner portals</td>
+<td>Internal and/or external users</td>
+<td>On behalf of the application (service identity)</td>
+<td><a href="../../auth/getting-started/instance-id-web-portals.html">Instance ID for Web Portals</a></td>
+<td>Domain API</td>
 </tr>
 <tr>
-<td><strong>Embedded</strong></td>
-<td>ERP.net Platform / Partner / Third Party</td>
-<td>Depends on hosting domain</td>
-<td>Embedded dashboard, company widget</td>
-<td>Embedded web experiences</td>
+<td><strong>Service Applications</strong></td>
+<td>Background integrations, sync, daemons</td>
+<td>None</td>
+<td>On behalf of the application (service identity)</td>
+<td><a href="../../auth/getting-started/service-apps.html">Service Applications</a></td>
+<td>Domain API</td>
+</tr>
+<tr>
+<td><strong>Automation</strong></td>
+<td>Scripts, scheduled jobs, ops tooling</td>
+<td>None</td>
+<td>On behalf of a reference token</td>
+<td><a href="../../auth/getting-started/automation.html">Automations</a></td>
+<td>Domain or Table API</td>
 </tr>
 </tbody>
 </table>
-<hr>
-<h2 id="learn-more">Learn More</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Business Intelligence, reporting, and backup are <strong>usage patterns</strong>, not standalone application types.
+They are implemented using <strong>Service Applications</strong> or <strong>Automation</strong>, depending on operational needs.</p>
+</div>
+<h2 id="application-type-details">Application Type Details</h2>
+<h3 id="spa-applications">SPA Applications</h3>
+<p>Use this type when your application:</p>
 <ul>
-<li><p><strong><a href="what-is-erpnet-app.html">What Are ERP.net Apps</a></strong><br>
-Understand the core concept of ERP.net Apps and how they connect to an ERP.net instance.</p>
-</li>
-<li><p><strong><a href="../auth/configuration/trusted-apps-access.html">Trusted Applications</a></strong><br>
-Learn how each app is registered, managed, and granted access within ERP.net.</p>
-</li>
-<li><p><strong><a href="../auth/overview.html">Authentication and Authorization</a></strong><br>
-See how the built-in ERP.net Identity authenticates and authorizes apps and users.</p>
-</li>
+<li>runs entirely in the browser</li>
+<li>has no backend component</li>
+<li>cannot keep a client secret</li>
+</ul>
+<p>Characteristics:</p>
+<ul>
+<li>users sign in interactively</li>
+<li>access tokens represent the <strong>signed-in user</strong></li>
+<li>Authorization Code flow with PKCE is mandatory</li>
+</ul>
+<p>See:<br>
+<a href="../../auth/getting-started/instance-id-spa-apps.html">Instance ID for SPA Applications</a></p>
+<hr>
+<h3 id="web-confidential-applications">Web (Confidential) Applications</h3>
+<p>Use this type when your application:</p>
+<ul>
+<li>has a backend capable of storing secrets</li>
+<li>serves internal users</li>
+<li>performs API calls as the signed-in user</li>
+</ul>
+<p>Characteristics:</p>
+<ul>
+<li>users sign in interactively</li>
+<li>access tokens are issued <strong>on behalf of the user</strong></li>
+<li>Authorization Code flow is used</li>
+</ul>
+<p>See:<br>
+<a href="../../auth/getting-started/instance-id-web-apps.html">Instance ID for Web Applications</a></p>
+<hr>
+<h3 id="web-portals">Web Portals</h3>
+<p>Use this type when your application:</p>
+<ul>
+<li>allows users to sign in for identification or session context</li>
+<li>supports internal and/or external users</li>
+<li>performs all API access from the backend</li>
+</ul>
+<p>Characteristics:</p>
+<ul>
+<li>users authenticate for <strong>identity only</strong></li>
+<li>external users never receive API access</li>
+<li>API calls are performed <strong>on behalf of the application</strong></li>
+<li>combines Authorization Code (for users) and Client Credentials (for APIs)</li>
+</ul>
+<p>See:<br>
+<a href="../../auth/getting-started/instance-id-web-portals.html">Instance ID for Web Portals</a></p>
+<hr>
+<h3 id="service-applications">Service Applications</h3>
+<p>Use this type when your integration:</p>
+<ul>
+<li>runs without user interaction</li>
+<li>performs background processing or system integration</li>
+<li>needs controlled, scoped API access</li>
+</ul>
+<p>Characteristics:</p>
+<ul>
+<li>no user sign-in</li>
+<li>Client Credentials flow</li>
+<li>access tokens represent a <strong>service identity</strong></li>
+</ul>
+<p>See:<br>
+<a href="../../auth/getting-started/service-apps.html">Service Applications</a></p>
+<hr>
+<h3 id="automation">Automation</h3>
+<p>Use this type when your integration:</p>
+<ul>
+<li>is script-based or operational</li>
+<li>does not implement OAuth flows</li>
+<li>requires long-lived access</li>
+</ul>
+<p>Characteristics:</p>
+<ul>
+<li>no user interaction</li>
+<li>uses manually issued <strong>reference access tokens</strong></li>
+<li>suited for jobs, tooling, and controlled automation</li>
+</ul>
+<p>See:<br>
+<a href="../../auth/getting-started/automation.html">Automations</a></p>
+<hr>
+<h2 id="bi-reporting-and-backup-scenarios">BI, Reporting, and Backup Scenarios</h2>
+<p>Reporting, analytics, and backup workloads are implemented using:</p>
+<ul>
+<li><strong>Service Applications</strong> for OAuth-based access, or</li>
+<li><strong>Automation</strong> for long-running or scheduled tasks</li>
+</ul>
+<p>In these cases:</p>
+<ul>
+<li>prefer the <strong>Table API</strong> for high-volume, read-only access</li>
+<li>restrict scopes to <code>read</code> only</li>
+</ul>
+<p>See:</p>
+<ul>
+<li><a href="../../table-api/index.html">Table API Overview</a></li>
+<li><a href="../../table-api/usage-guide.html">Power BI Usage Guidelines</a></li>
+</ul>
+<hr>
+<h2 id="related-topics">Related Topics</h2>
+<ul>
+<li><a href="../getting-started/choose-right-api.html">Choosing the Right API</a></li>
+<li><a href="../../auth/configuration/trusted-apps-access.html">Trusted Applications</a></li>
+<li><a href="../../auth/concepts/scopes.html">Scopes</a></li>
 </ul>
 
 </article>

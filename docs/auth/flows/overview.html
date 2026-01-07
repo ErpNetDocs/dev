@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>OAuth 2.0 Authentication Flows Overview | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="OAuth 2.0 Authentication Flows Overview | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/auth/flows/overview.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="oauth-20-authentication-flows-overview">OAuth 2.0 Authentication Flows Overview</h1>
+
+<p>Some authentication scenarios in ERP.net use <strong>OAuth 2.0–based flows</strong> - specific sequences of steps for obtaining and using tokens securely.</p>
+<p>Choosing the appropriate OAuth 2.0 flow depends on <strong>how your app interacts with users</strong> and <strong>how it connects to the APIs</strong>.</p>
+<p>All OAuth 2.0 flows are handled by ERP.net <strong>Identity</strong>.</p>
+<h2 id="why-flows-matter">Why Flows Matter</h2>
+<p>Each app has a different way of connecting:</p>
+<ul>
+<li>Some apps have users who sign in and work interactively.</li>
+<li>Others run in the background or on a schedule with no user present.</li>
+<li>Some do both - a user-facing front end and an automated backend.</li>
+</ul>
+<p>To support these patterns securely, ERP.net provides <strong>two OAuth 2.0 flows</strong> that can be used separately or together.</p>
+<h2 id="supported-authentication-flows">Supported Authentication Flows</h2>
+<table>
+<thead>
+<tr>
+<th>Flow</th>
+<th>Who Authenticates</th>
+<th>Interaction</th>
+<th>Typical Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Authorization Code</strong></td>
+<td>User</td>
+<td>Interactive (via web browser)</td>
+<td>Web apps, SPAs, mobile clients</td>
+</tr>
+<tr>
+<td><strong>Client Credentials</strong></td>
+<td>Application (service identity)</td>
+<td>Non-interactive</td>
+<td>Integrations, background jobs, schedulers</td>
+</tr>
+<tr>
+<td><strong>Hybrid (combined)</strong></td>
+<td>Both</td>
+<td>Mixed</td>
+<td>Apps that include both an interactive front end and a service backend</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Hybrid apps combine both flows: the <strong>front-end</strong> uses Authorization Code for user access, while the <strong>back-end</strong> uses Client Credentials for automation or elevated access.</p>
+</div>
+<h2 id="how-it-works">How It Works</h2>
+<p>All flows follow the same secure pattern, handled by ERP.net Identity:</p>
+<pre><code class="lang-mermaid">flowchart LR
+  subgraph UserSide[Interactive App]
+    U[👤 User] --&gt;|Signs in| App[💻 App]
+    App --&gt;|Auth Request| IDP[🛡️ ERP.net Identity]
+    IDP --&gt;|Access Token| App
+  end
+
+  subgraph ServiceSide[Service or Backend]
+    S[⚙️ Background Service] --&gt;|Token Request| IDP
+    IDP --&gt;|Access Token| S
+  end
+
+  App --&gt;|API Calls| API[🎛️ ERP.net APIs]
+  S --&gt;|API Calls| API
+  API --&gt; D[(📊 ERP.net Data)]
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Every flow leads to the same outcome:<br>
+a <strong>token</strong> issued by ERP.net Identity that defines <em>who</em> or <em>what</em> is calling the APIs, and <em>what it's allowed to do</em>.</p>
+</div>
+<h2 id="choosing-a-flow">Choosing a Flow</h2>
+<p>When selecting a flow, focus on how your app interacts with ERP.net:</p>
+<ul>
+<li>If your app <strong>has a user interface</strong> and acts on behalf of a signed-in user - use <strong>Authorization Code</strong>.</li>
+<li>If your app <strong>runs without user interaction</strong> - use <strong>Client Credentials</strong>.</li>
+<li>If your app <strong>has both a user-facing and a backend component</strong> - use <strong>Hybrid</strong> (combine both flows).</li>
+</ul>
+<p>For detailed decision guidance, see <a href="choosing-flow.html">Choosing the Right Flow</a>.</p>
+<h2 id="key-points-to-remember">Key Points to Remember</h2>
+<ul>
+<li>Every app must be <strong>registered as a Trusted Application</strong> in the target ERP.net instance.</li>
+<li>Tokens are always issued by the instance's <strong>Identity</strong>.</li>
+<li><strong>Sessions</strong> start only when a token is first used, not when issued.</li>
+<li><strong>Refresh tokens</strong> are only for interactive clients.</li>
+<li><strong>Client secrets</strong> must never be exposed in browsers or SPAs.</li>
+<li>One app can safely use both flows - just keep user tokens and service tokens separate.</li>
+</ul>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="auth-code/overview.html"><strong>Interactive Apps (Authorization Code Flow)</strong></a><br>
+Learn how user-facing apps authenticate and obtain tokens.</p>
+</li>
+<li><p><a href="client-credentials/overview.html"><strong>Service and Background Apps (Client Credentials Flow)</strong></a><br>
+Understand how backend and automated apps connect securely.</p>
+</li>
+<li><p><a href="combined/overview.html"><strong>Hybrid Apps</strong></a><br>
+Combine front-end and backend flows in one solution.</p>
+</li>
+<li><p><a href="choosing-flow.html"><strong>Choosing the Right Flow</strong></a><br>
+Decide which flow best fits your app.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/auth/flows/overview.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

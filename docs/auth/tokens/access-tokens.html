@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Access Tokens | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Access Tokens | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/auth/tokens/access-tokens.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="access-tokens">Access Tokens</h1>
+
+<p>An <strong>access token</strong> is the credential that allows your application to call ERP.net APIs on behalf of a user or a service.<br>
+It defines <strong>who</strong> is calling, <strong>what</strong> can be accessed, and <strong>for how long</strong>.</p>
+<p>All ERP.net access tokens are issued by <strong>ERP.net Identity</strong> using the <strong>OAuth 2.0</strong> standard and are formatted as <strong>JWTs (JSON Web Tokens)</strong>.</p>
+<h2 id="access-token-basics">Access Token Basics</h2>
+<p>When an application successfully authenticates (using Authorization Code or Client Credentials flow), ERP.net Identity returns an access token.<br>
+This token is then passed in the <code>Authorization</code> HTTP header with each API request:</p>
+<pre><code class="lang-http">GET /api/domain/odata/Crm_Customers?$top=5 HTTP/1.1
+Host: testdb.my.erp.net
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiYXQrand0In0...
+</code></pre>
+<p>If the token is valid, the ERP.net API processes the request according to the scopes and permissions defined in the token.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Access tokens are short-lived and must be renewed periodically.
+Their lifetime is typically around one hour, but can vary depending on configuration.</p>
+</div>
+<h2 id="jwt-structure">JWT Structure</h2>
+<p>ERP.net access tokens are JWTs - digitally signed, URL-safe strings that contain encoded claims.</p>
+<p>A JWT consists of three parts, separated by dots:</p>
+<pre><code class="lang-css">header.payload.signature
+</code></pre>
+<h3 id="example-token">Example Token</h3>
+<pre><code class="lang-text">eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE3NjIxODU3NjAsImV4cCI6MTc2MjE4OTM2MCwiaXNzIjoiaHR0cHM6Ly9wa29zdG92Lm15LmVycC5uZXQvaWQiLCJhdWQiOlsiRG9tYWluQVBJIiwiVGFibGVBUEkiLCJPTEFQIiwiQXBwU2VydmVyIiwiaHR0cHM6Ly9wa29zdG92Lm15LmVycC5uZXQvaWQvcmVzb3VyY2VzIl0sImNsaWVudF9pZCI6IlBLIiwiY2xpZW50X3N5c3RlbV91c2VyIjoiYWRtaW4iLCJjbGllbnRfc3lzdGVtX3VzZXJfdHlwZSI6IkludGVybmFsVXNlciIsImNsaWVudF9kYiI6IkUxX0RFVi0xIFRlc3QiLCJqdGkiOiIxQjc5QzI0QUIyNUUwRjY3NURGMjIzM0NERTM3MTI0NCIsImlhdCI6MTc2MjE4NTc2MCwic2NvcGUiOlsiRG9tYWluQXBpIiwicmVhZCIsInNlYyIsInVwZGF0ZSJdfQ.QjdrJ_jvbUXIGBgwajwg0dEZO8Y7VjxNW7lUi_9fdh3hliVTh-0WgOEIsClWSROsTvlzUR4Poz0kG0lKKFex9wmQ54X0M5epdeH-p3EJR018SVROp9AJNB7RiKf-dGzOFRXwjB4ueX84j8L-uIubrQL3iwmI1kI8KRGFscaVxEx7sXZFn1FVMIsaZhY8mDEEOhyicvmN9zQQOdNlSjTtP2qL6tpkS-k1kJKAE9oeKdidXbQ1yJbBHX2qUhJM8plzd-RC297m-UFqfzFgZ_Lf04cZN0xdiV8OXiuyrIC9zvfmUSex9n0ROSoIZ4BzwcZ9VM2p1FOx7RFNLdlT0Q8arQ
+</code></pre>
+<h3 id="1-header">1. Header</h3>
+<p>Specifies the algorithm and type of the token.</p>
+<pre><code class="lang-json">{
+  &quot;alg&quot;: &quot;RS256&quot;,
+  &quot;kid&quot;: &quot;5B27920E653DD7AC67D2F64B32A17992&quot;,
+  &quot;typ&quot;: &quot;at+jwt&quot;
+}
+</code></pre>
+<ul>
+<li><strong>alg</strong> - Signing algorithm (always RS256 for ERP.net).</li>
+<li><strong>kid</strong> - Key ID of the signing certificate.</li>
+<li><strong>typ</strong> - Indicates the token type (access token in JWT format).</li>
+</ul>
+<h3 id="2-payload">2. Payload</h3>
+<p>Contains the actual claims - information about the client, permissions, and validity.</p>
+<pre><code class="lang-json">{
+  &quot;nbf&quot;: 1762185760,
+  &quot;exp&quot;: 1762189360,
+  &quot;iss&quot;: &quot;https://pkostov.my.erp.net/id&quot;,
+  &quot;aud&quot;: [&quot;DomainAPI&quot;, &quot;TableAPI&quot;, &quot;OLAP&quot;, &quot;AppServer&quot;],
+  &quot;client_id&quot;: &quot;PK&quot;,
+  &quot;client_system_user&quot;: &quot;admin&quot;,
+  &quot;client_system_user_type&quot;: &quot;InternalUser&quot;,
+  &quot;client_db&quot;: &quot;E1_DEV-1 Test&quot;,
+  &quot;scope&quot;: [&quot;DomainApi&quot;, &quot;read&quot;, &quot;sec&quot;, &quot;update&quot;]
+}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th><strong>Claim</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>nbf</strong></td>
+<td>&quot;Not before&quot; - token is invalid before this time (in Unix timestamp).</td>
+</tr>
+<tr>
+<td><strong>exp</strong></td>
+<td>Expiration time - when the token becomes invalid.</td>
+</tr>
+<tr>
+<td><strong>iss</strong></td>
+<td>Issuer - ERP.net Identity that issued the token.</td>
+</tr>
+<tr>
+<td><strong>aud</strong></td>
+<td>Audience - the ERP.net APIs or resources this token is valid for.</td>
+</tr>
+<tr>
+<td><strong>client_id</strong></td>
+<td>The application that obtained the token (Trusted Application).</td>
+</tr>
+<tr>
+<td><strong>client_system_user</strong></td>
+<td>The system user identity associated with the application.</td>
+</tr>
+<tr>
+<td><strong>client_system_user_type</strong></td>
+<td>Indicates whether it's an internal or service user.</td>
+</tr>
+<tr>
+<td><strong>client_db</strong></td>
+<td>The database (tenant) to which the token applies.</td>
+</tr>
+<tr>
+<td><strong>scope</strong></td>
+<td>The granted permissions and API access levels.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-signature">3. Signature</h3>
+<p>The final part of the token is the digital signature.</p>
+<p>It verifies that the token was issued by ERP.net and has not been tampered with.</p>
+<p>The signature is created using the ERP.net Identity private key, and validated using the public key, available at:</p>
+<pre><code class="lang-http">https://&lt;instance&gt;/id/.well-known/openid-configuration/jwks
+</code></pre>
+<h2 id="validating-access-tokens">Validating Access Tokens</h2>
+<p>You can decode and inspect tokens using standard JWT libraries or tools such as <a href="https://jwt.io">jwt.io</a>.<br>
+To validate a token:</p>
+<ol>
+<li>Verify the <strong>signature</strong> matches ERP.net Identity public key.</li>
+<li>Check the <strong>expiration time (<code>exp</code>)</strong> and <strong>issuer (<code>iss</code>)</strong>.</li>
+<li>Ensure the <strong>audience (<code>aud</code>)</strong> includes the API you are calling.</li>
+<li>Confirm the <strong>scopes</strong> grant the needed access.</li>
+</ol>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>ERP.net APIs automatically perform all these checks on every request.<br>
+Manual validation is only needed when implementing middleware or custom API gateways.</p>
+</div>
+<hr>
+<h2 id="security-notes">Security Notes</h2>
+<ul>
+<li>Always transmit tokens using <strong>HTTPS</strong>.</li>
+<li>Never log or store access tokens in plain text.</li>
+<li>Treat them as <strong>confidential credentials</strong>.</li>
+<li>Access tokens are <strong>short-lived</strong> - design your apps to handle renewal automatically.</li>
+<li>Use <strong>refresh tokens</strong> only in trusted, confidential applications.</li>
+</ul>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="reference-access-tokens.html"><strong>Reference Access Tokens (PAT, SAT)</strong></a><br>
+Learn how long-lived reference tokens provide persistent automation access.</p>
+</li>
+<li><p><a href="../concepts/scopes.html"><strong>Scopes</strong></a><br>
+Understand how scopes define the APIs and actions available to your app.</p>
+</li>
+<li><p><a href="token-lifetime.html"><strong>Token Lifetime and Renewal</strong></a><br>
+See how token expiration works and how refresh tokens extend access.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/auth/tokens/access-tokens.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Overview | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Overview | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/auth/concepts/overview.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="overview">Overview</h1>
+
+<p>This section explains the core concepts behind authentication and authorization in ERP.net: identity authorities, OAuth 2.0, and how permissions are expressed and enforced.</p>
+<p>If you're looking for step-by-step scenario guides (SPA, web apps, service integrations), start with <a href="../getting-started/overview.html">Getting Started</a>. If you need instance-side setup, see <a href="../configuration/overview.html">Configuration</a>.</p>
+<h2 id="what-youll-find-here">What you'll find here</h2>
+<h3 id="oauth-20">OAuth 2.0</h3>
+<p>A conceptual overview of OAuth 2.0 in the ERP.net ecosystem.</p>
+<p>See: <a href="oauth2-overview.html">OAuth 2.0</a></p>
+<h3 id="identity-authorities-instance-vs-global">Identity authorities (instance vs global)</h3>
+<p>How ERP.net chooses the identity authority depending on application type and scenario.</p>
+<p>See: <a href="identity-authorities.html">Identity authorities (instance vs global)</a></p>
+<h3 id="instance-identity-service-per--instance">Instance Identity Service (per ERP.net instance)</h3>
+<p>Concepts for the per-instance identity service used in Instance ID scenarios.</p>
+<p>See: <a href="identity-server.html">Instance Identity Service (per ERP.net instance)</a></p>
+<h3 id="-as-an-external-identity-provider-global">ERP.net as an external Identity Provider (global)</h3>
+<p>Concepts for using ERP.net as a global external identity provider.</p>
+<p>See: <a href="erpnet-as-external-idp.html">ERP.net as an external Identity Provider (global)</a></p>
+<h3 id="scopes">Scopes</h3>
+<p>How scopes define permissions, how they are requested, and how they affect API access.</p>
+<p>See: <a href="scopes.html">Scopes</a></p>
+<h2 id="when-to-use-this-section">When to use this section</h2>
+<ul>
+<li>You need to understand which identity authority applies to your scenario.</li>
+<li>You want a clear mental model before choosing a flow or configuring a trusted app.</li>
+<li>You're troubleshooting authorization issues (for example, missing or invalid scopes).</li>
+</ul>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="../getting-started/overview.html">Quickstarts</a></li>
+<li><a href="../configuration/overview.html">Configuration</a></li>
+<li><a href="../flows/overview.html">OAuth 2.0 Flows</a></li>
+<li><a href="../tokens/tokens-overview.html">Tokens</a></li>
+<li><a href="../sessions/overview.html">Sessions</a></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/auth/concepts/overview.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
