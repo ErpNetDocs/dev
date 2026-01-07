@@ -58,14 +58,10 @@ If you only want to validate the request format and basic connectivity, you can 
 Example request:
 
 ```http
-GET https://testdb.my.erp.net/api/domain/odata/{resource}
+GET https://testdb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=10
 Authorization: Bearer enrt_C99474338E7E587DA64126E26F138E3E0E2D0E984256073427D122B4B39AC766
 Accept: application/json
 ```
-
-Replace:
-
-- {resource} with a read-only resource (for example, Customers)
 
 ## Verify Success
 
