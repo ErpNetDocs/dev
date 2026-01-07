@@ -111,7 +111,7 @@ Used by background services, integration agents, or scheduled jobs that run with
 - `ClientType = Confidential`
 - `ApplicationSecretHash` set to the secret hash.
 - `SystemUserAllowed = true` and `SystemUser` assigned.
-- `ImpersonateAs...Allowed = false`
+- `ImpersonateAsInternalUserAllowed = false`
 - `Scope = read update` or `read` only for data retrieval.
 
 **Use for:**  
