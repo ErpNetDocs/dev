@@ -71,5 +71,5 @@ Reference tokens are manually issued, long-lived credentials designed for persis
 - [**Reference Access Tokens (PAT, SAT)**](reference-access-tokens.md)  
   Learn how to create and manage long-lived manual tokens.
 
-- [**Scopes**](../configuration/scopes.md)  
+- [**Scopes**](../concepts/scopes.md)  
   See how scopes define access levels in all token types.

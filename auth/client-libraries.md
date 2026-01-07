@@ -131,7 +131,7 @@ Use tools like **Postman**, **curl**, or **jwt.io** to:
 - [**OAuth 2.0 Overview**](../auth/concepts/oauth2-overview.md)  
   Understand the core principles behind @@name authentication.
 
-- [**ERP.net Identity**](../building-apps/concepts/how-apps-connect/identity-server.md)  
+- [**ERP.net Identity**](../auth/concepts/identity-server.md)  
   Learn how @@name issues and validates tokens.
 
 - [**Auth Flows Overview**](./flows/overview.md)  

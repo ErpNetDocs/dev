@@ -1,75 +1,38 @@
-# Concepts overview
+# Concepts Overview
 
-This section explains the core ideas behind building apps and integrations for @@name. Use it to understand *how the pieces fit together* before you dive into implementation details.
+This section describes the structural concepts that underpin all @@name integrations.
 
-If you want a step-by-step setup, start with [Getting Started](../getting-started/overview.md). For token flows, scopes, and access rules, see [Authentication and Authorization](../../auth/overview.md).
+It explains how @@name is organized from the perspective of an external application: how systems are segmented into instances, how applications are categorized, where integration endpoints live, and which security assumptions apply when calling APIs.
 
-## What you'll learn here
+The topics here establish shared terminology and boundaries that are used consistently throughout the **Building Apps** documentation.
 
-### What an @@name App is
+## What This Section Covers
 
-An **@@name App** is any application, integration, or service that connects to an @@name instance to extend, customize, or interact with its business data and functionality. Apps operate outside (or alongside) the instance, communicate through the instance's public APIs, and are recognized by the system through a **Trusted Application**. Authentication and authorization are handled through the built-in @@name Identity.
+This section focuses on:
 
-See: [What is an @@name App](./what-is-erpnet-app.md)
+- how an @@name **instance** is defined and why apps are always bound to a specific instance
+- how **application types** describe common integration patterns and expected behavior
+- how apps reach the platform through **application server endpoints**
+- what it means to **call APIs securely** in the context of @@name
+- the terminology used across documentation and configuration screens
 
-### Application types
+## What This Section Does Not Cover
 
-@@name supports several **application types**, depending on **where they run**, **who develops them**, and **how they are distributed**. All types follow the same core security/connectivity model (Identity Server + APIs + Trusted Application representation), but differ in deployment and distribution:
+This section does not provide:
 
-- **Internal applications** – part of the @@name platform (e.g., Web Client, Client Center).
-- **External applications** – built outside @@name (customer/partner/third-party) and registered per instance.
-- **Marketplace applications** – external apps distributed via @@name Marketplace and auto-registered on installation.
-- **Embedded (in-client) applications** – external web apps displayed inside the Web Client (with special behavior depending on hosting domain and trust).
+- step-by-step implementation guidance
+- authentication or token acquisition walkthroughs
+- API usage examples or payload references
 
-See: [Application Types](./app-types.md)
+Those topics are covered in dedicated sections.
 
-### How apps connect
+## How to Use This Section
 
-Apps connect through standard OAuth 2.0 / OIDC mechanisms and must choose the correct identity authority depending on the scenario (instance API access vs external SSO).
+Use this section as a reference when:
 
-See:
+- deciding how an app should be structured
+- interpreting configuration options or documentation language
+- clarifying boundaries between identity, APIs, and instances
 
-- [How apps connect - Overview](./how-apps-connect/overview.md)
-- [OAuth 2.0](../../auth/concepts/oauth2-overview.md)
-- [Identity authorities (instance vs global)](./how-apps-connect/identity-authorities.md)
-- [Instance Identity Server](./how-apps-connect/identity-server.md)
-- [@@name as an external Identity Provider](./how-apps-connect/erpnet-as-external-idp.md)
-
-### API access options
-
-@@name provides more than one API surface. The choice affects how you model data, how you query, and what kinds of operations are available.
-
-See: [Choosing the right API](../getting-started/choosing-the-right-api.md).
-
-### Calling APIs safely
-
-A secure integration is not only about choosing the right OAuth flow-your app must also handle tokens correctly, protect secrets, and apply least-privilege access.
-
-See: [Best practices for calling APIs securely](./api-best-practices.md).
-
-### Shared terminology
-
-This topic uses consistent terms for apps, identities, tokens, API endpoints, and access control. The glossary is the fastest way to align on wording when troubleshooting or reviewing integration designs.
-
-See: [Glossary](./glossary.md).
-
-## Suggested reading paths
-
-- **I'm new to @@name integrations**
-  1. [What is an @@name App](./what-is-erpnet-app.md)
-  2. [Application Types](./app-types.md)
-  3. [How apps connect - Overview](./how-apps-connect/overview.md)
-  4. [Choosing the right API](../getting-started/choosing-the-right-api.md)  
-
-- **I need to decide "which identity authority do I use?"**
-  1. [Identity authorities (instance vs global)](./how-apps-connect/identity-authorities.md)
-  2. [Instance Identity Server](./how-apps-connect/identity-server.md) or [@@name as an external Identity Provider](./how-apps-connect/erpnet-as-external-idp.md)  
-
-- **I'm reviewing an integration for security**
-  1. [Best practices for calling APIs securely](./api-best-practices.md)
-  2. [Authentication and Authorization](../../auth/overview.md)  
-
-## See also
-
-- [Getting Started](../getting-started/overview.md)
-- [Authentication and Authorization](../../auth/overview.md)
+If you want to start building immediately, proceed to [**Getting Started**](../getting-started/overview.md).  
+If something later feels unclear or ambiguous, this section defines the underlying concepts.

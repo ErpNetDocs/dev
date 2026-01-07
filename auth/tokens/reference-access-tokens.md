@@ -166,7 +166,7 @@ This allows administrators to review and audit all reference token activity.
 - [**Access Tokens**](access-tokens.md)  
   Learn how @@name uses short-lived OAuth access tokens for standard app flows.
 
-- [**Scopes**](../configuration/scopes.md)  
+- [**Scopes**](../concepts/scopes.md)  
   Understand how scopes control what data your tokens can access.
 
 - [**Token Lifetime and Renewal**](token-lifetime.md)  

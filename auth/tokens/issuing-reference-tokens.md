@@ -121,7 +121,7 @@ If you lose it, generate a **new token** and **revoke the old one** to stay secu
 - [**Reference Access Tokens (PAT, SAT)**](reference-access-tokens.md)  
   Full documentation on how reference tokens work - their behavior, usage, security model, and integration with sessions.
 
-- [**Scopes and Permissions**](../configuration/scopes.md)  
+- [**Scopes and Permissions**](../concepts/scopes.md)  
   How to choose the right scopes for your token.
 
 - [**Token Lifetime and Renewal**](token-lifetime.md)  

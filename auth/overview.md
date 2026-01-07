@@ -97,8 +97,8 @@ Once authentication and authorization complete successfully:
 
 ## Learn More
 
-- [**How Apps Connect**](../building-apps/concepts/how-apps-connect/overview.md)  
-  Understand how the @@name Identity, OAuth 2.0, and Trusted Applications work together.
+- [**Concepts Overview**](../building-apps/concepts/overview.md)  
+  Understand how the @@name Identity Service, OAuth 2.0, and Trusted Applications work together.
 
 - [**Auth Flows**](./flows/overview.md)  
   Learn about the available OAuth 2.0 flows for different app types.

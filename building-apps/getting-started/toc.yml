@@ -1,14 +1,16 @@
 - name: Overview
   href: overview.md
-- name: Choosing the right API
-  href: choosing-the-right-api.md
 - name: Prerequisites
   href: prerequisites.md
+- name: Choose Application Type
+  href: choose-app-type.md
+- name: Choose the Right API
+  href: choose-right-api.md
 - name: Create a Trusted Application
-  href: ../../auth/configuration/trusted-apps-access.md
-- name: Get an access token
+  href: ./create-trusted-app.md
+- name: Get an Access Token
   href: get-access-token.md
-- name: Make your first API call
+- name: Make Your First API Call
   href: first-api-call.md
-- name: Next steps
+- name: Next Steps
   href: next-steps.md

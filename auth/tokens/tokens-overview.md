@@ -69,7 +69,7 @@ When an external application connects to @@name, the flow generally involves:
 - [**Reference Access Tokens (PAT, SAT)**](reference-access-tokens.md)  
   Understand how long-lived reference tokens enable service or personal access.
 
-- [**Scopes**](../configuration/scopes.md)  
+- [**Scopes**](../concepts/scopes.md)  
   Learn how scopes define which @@name resources a token can access.
 
 - [**Token Lifetime and Renewal**](token-lifetime.md)  

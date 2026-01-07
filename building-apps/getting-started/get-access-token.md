@@ -1,48 +1,68 @@
-# Get an access token
+# Get an Access Token
 
-This page helps you choose the correct identity authority and tutorial to obtain your first working access token.
+In this step, you obtain a **working access token** that your app can use to call @@name APIs.
 
-## 1) Choose the correct authority
+Access tokens for @@name APIs are issued **only by the identity service of a specific @@name instance**.  
+The purpose of this step is to follow the correct authentication flow for your scenario and verify that token issuance works end to end.
 
-Use the decision guide here:
+## Use the Correct Identity Authority
 
-- [Identity authorities (instance vs global)](../concepts/how-apps-connect/identity-authorities.md)
+When calling @@name APIs, your app must authenticate against the **instance identity service**.
 
-In short:
+- The **instance identity service** issues access tokens that are accepted by the instance APIs.
+- The **global @@name authority** is used only for authentication scenarios where @@name acts as an external identity provider.
+  It does **not** issue access tokens for @@name APIs.
 
-- If you need to call APIs of a specific @@name instance, you typically use the **instance Identity Server**.
-- If you need @@name to act as an **external Identity Provider** for SSO into your app, you use the **global** authority.
+If you are unsure which authority applies to your scenario, see:  
+[Identity Authorities (Instance vs Global)](../../auth/concepts/identity-authorities.md).
 
-## 2) Ensure your Trusted Application is configured
+## Verify Trusted Application Configuration
 
-Before you can reliably obtain tokens for instance API access, ensure the app is registered and has the correct access configuration:
+Before requesting a token, ensure that the app is correctly registered in the target instance:
 
-- [Create / configure a Trusted Application](../../auth/configuration/trusted-apps-access.md)
-- [Scopes](../../auth/configuration/scopes.md)
+- A **Trusted Application** exists and is enabled
+- The correct access modes are enabled (interactive and/or service)
+- The required **scopes** are allowed
 
-## 3) Follow the tutorial that matches your scenario
+If this configuration is incorrect, token requests will fail regardless of the authentication flow.
 
-Use the scenario tutorials as the source of truth for the exact steps:
+Reference:
 
-- [@@name ID for Web Applications](../../auth/getting-started/erpnet-id-web-apps.md)
-- [Instance ID for SPA Applications](../../auth/getting-started/instance-id-spa-apps.md)
-- [Instance ID for Web Applications](../../auth/getting-started/instance-id-web-apps.md)
-- [Instance ID for Web Portals](../../auth/getting-started/instance-id-web-portals.md)
-- [Service Applications](../../auth/getting-started/service-apps.md)
-- [Automations](../../auth/getting-started/automation.md)
+- [Trusted Applications](../../auth/configuration/trusted-apps-access.md)
+- [Scopes](../../auth/concepts/scopes.md)
 
-## 4) Validate you actually have a usable token
+## Follow the Tutorial for Your Scenario
 
-Regardless of scenario, validate:
+The exact steps for obtaining a token depend on your application type and authentication model.
 
-- you can obtain a token successfully (no auth error)
-- the token is accepted by the target API (first call returns HTTP 200)
+Use the tutorial that matches your scenario:
 
-If your first API call returns 401/403, do not guess.
-Check:
+- [Web Applications](../../auth/quickstarts/erpnet-id-web-apps.md)
+- [Single Page Applications (SPA)](../../auth/quickstarts/instance-id-spa-apps.md)
+- [Web Portals](../../auth/quickstarts/instance-id-web-portals.md)
+- [Service Applications](../../auth/quickstarts/service-apps.md)
+- [Automations](../../auth/quickstarts/automation.md)
 
-- authority (correct issuer)
-- trusted app registration
-- scopes
+These tutorials are the **source of truth** for request parameters, flows, and examples.
 
-See: [Configuration overview](../../auth/configuration/overview.md)
+---
+
+## Validate the Token
+
+Before continuing, confirm that:
+
+- A token is issued successfully (no authentication error)
+- The token issuer matches the **instance identity service**
+- The token is accepted by the target API
+- Your first API request returns **HTTP 200**
+
+If the API responds with **401** or **403**, verify:
+
+- The identity authority (issuer) is correct
+- The Trusted Application configuration matches your scenario
+- The required scopes are granted
+
+## Next Step
+
+Once you have a valid access token, continue with  
+[Make Your First API Call](./first-api-call.md).

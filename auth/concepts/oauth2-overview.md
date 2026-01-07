@@ -147,7 +147,7 @@ Scopes describe what an issued token is allowed to do.
 
 They are requested by the app and evaluated by the instance when issuing tokens.  
 
-See [Scopes and Permissions](../configuration/scopes.md) for details and examples.
+See [Scopes and Permissions](../concepts/scopes.md) for details and examples.
 
 ## High-level Flow
 

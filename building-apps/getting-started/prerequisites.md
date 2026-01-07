@@ -1,57 +1,47 @@
 # Prerequisites
 
-This page lists the minimum prerequisites for building an @@name integration.
+This page lists what you must have in place before starting the **Getting Started** flow.
 
-## 1) Know your target instance
+If any of these are missing, stop here and resolve them first.
 
-You will need the base URL of the @@name instance you will connect to, for example:
+## Target @@name Instance
+
+You need the base URL of the @@name instance you will connect to, for example:
 
 - `https://{instance}.my.erp.net`
 
-From it, you will derive:
+All API calls and authentication requests are scoped to a specific instance.
 
-- the **instance Identity Service authority** (see [Instance Identity Service](../concepts/how-apps-connect/identity-server.md))
-- the **API endpoints** you will call (see [Choosing the right API](../getting-started/choosing-the-right-api.md))
+## App Scenario
 
-If you are unsure whether you should use the instance identity service or the global @@name IdP, read:
+You should know whether your app operates:
 
-- [Identity authorities (instance vs global)](../concepts/how-apps-connect/identity-authorities.md)
+- **Interactively** (users sign in)
+- **Non-interactively** (service, automation, or background integration)
 
-## 2) Choose your app scenario (so you pick the right auth tutorial)
+This determines how the app authenticates and which setup steps apply later.
 
-Pick the scenario that matches your app:
+## Required Access
 
-- interactive apps (users sign in): web app, SPA, portal
-- non-interactive integrations: service apps, automations
+To proceed, you must be able to:
 
-Then follow the matching tutorial in:
+- Register (or request registration of) a **Trusted Application** in the target instance
+- Use (or request) the required **scopes** for your integration
 
-- [Getting Started (Authentication)](../../auth/getting-started/overview.md)
+If you do not have this access, coordinate with the instance administrator before continuing.
 
-## 3) Required access and permissions
+## Tools
 
-To proceed, you typically need:
+You need a way to send HTTP requests to validate authentication and API access. Any of the following are sufficient:
 
-- the ability to register (or request) a **Trusted Application** in the @@name instance
-- the ability to use (or request) the required **Scopes** for your integration
+- curl
+- Postman
+- Your application code
 
-See:
+## Common Pitfalls
 
-- [Trusted Applications](../../auth/configuration/trusted-apps-access.md)
-- [Scopes](../../auth/configuration/scopes.md)
+Avoid the following:
 
-## 4) Tools
-
-Any HTTP client is sufficient to validate the first token + API call:
-
-- curl (CLI)
-- Postman (GUI)
-- your application code (recommended once the first call is validated)
-
-## 5) What you should not do
-
-- Do not start by guessing endpoints or mixing authorities.
-- Do not request broad permissions "just to make it work".
-  Prefer least-privilege via the right scopes and the right app type.
-
-See: [Security Best Practices](../../auth/concepts/security-best-practices.md)
+- Mixing instance-specific and global identity authorities
+- Guessing API endpoints instead of using documented ones
+- Requesting overly broad permissions instead of the minimum required scopes

@@ -1,14 +1,14 @@
 - name: Overview
   href: overview.md
-- name: Getting Started
-  href: getting-started/toc.yml
-  topicHref: getting-started/overview.md
+- name: Quickstarts
+  href: quickstarts/toc.yml
+  topicHref: quickstarts/overview.md
+- name: Concepts
+  href: concepts/toc.yml
+  topicHref: concepts/overview.md  
 - name: Configuration
   href: configuration/toc.yml
   topicHref: configuration/overview.md
-- name: Concepts
-  href: concepts/toc.yml
-  topicHref: concepts/overview.md
 - name: OAuth 2.0 Flows
   href: flows/toc.yml  
   topicHref: flows/overview.md
@@ -18,5 +18,12 @@
 - name: Sessions
   href: sessions/toc.yml  
   topicHref: sessions/overview.md
+- name: Samples
+  href: samples/toc.yml
+  topicHref: samples/index.md
+- name: Security Best Practices
+  href: security-best-practices.md
 - name: Client Libraries
-  href: client-libraries.md  
+  href: client-libraries.md    
+- name: Frequently Asked Questions (FAQ)
+  href: faq.md  

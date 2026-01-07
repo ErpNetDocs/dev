@@ -22,7 +22,7 @@ Or,
 
 After all, your final goal is to acquire an access token. The process is very similar to this example [Basic example of acquiring an access token](./basic-acquire-access-token.md), but here is added another intermediate step - the process of impersonating a user. Here's a summary of how the whole process goes:
 
-1. Your external app will navigate to the so called [authorize endpoint](../../../building-apps/concepts/how-apps-connect/identity-server.md#2-authorize-endpoint), passing your trusted app details (the trusted app, corresponding to your external app).
+1. Your external app will navigate to the so called [authorize endpoint](../concepts/identity-server.md#2-authorize-endpoint), passing your trusted app details (the trusted app, corresponding to your external app).
 2. If all's OK, the browser where your app is opened will be redirected to the @@erpnet login page, where the user will enter their credentials.
 3. If the user logs in successfully, the @@erpnet login page (i.e. @@erpnet Identity) will be redirect to a uri, back to your external web app.
 4. There you'll receive an authorization code.

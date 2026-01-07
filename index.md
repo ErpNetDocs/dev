@@ -144,8 +144,19 @@ For more information about security, read [Introduction to authentication in ERP
 
 ## Next Steps
 
-See the general topics in [General](topics/index.md).
+Continue with the main documentation sections:
 
-Check the [Domain API documentation](domain-api/index.md).
+- [Building Apps](./building-apps/overview.md)  
+  Learn how to design, configure, and build integrations and applications.
 
-Check the [Domain Model](https://docs.erp.net/model) for reference information about objects, API methods, integrated business rules, and more.
+- [Authentication and Authorization](./auth/overview.md)  
+  Understand identity, tokens, flows, scopes, and security configuration.
+
+For API-specific work, see:
+
+- [Domain API documentation](./domain-api/index.md)  
+  Reference and guides for working with @@name business objects and logic.
+
+- [Domain Model](https://docs.erp.net/model)  
+  Reference information about entities, relationships, business rules, and operations.
+

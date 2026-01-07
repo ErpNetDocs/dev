@@ -1,20 +1,36 @@
-# Make your first API call
+# Make Your First API Call
 
-This page shows how to validate end-to-end access: token -> API call -> successful response.
+This step validates the full integration path:
 
-## 1) Choose which API you will call first
+**access token → API request → successful response**
 
-@@name exposes multiple API surfaces. Before you implement anything, decide which one you are targeting:
+If this step succeeds, your app is correctly registered, authenticated, and authorized.
 
-- [Choosing the right API](choosing-the-right-api.md)
+## Choose a Validation Endpoint
 
-Pick one API and stick with it for the first validation call.
+Use the API you selected earlier and pick an endpoint that is:
 
-## 2) Call the API with a Bearer token
+- Read-only
+- Simple
+- Known to return data
 
-Use the token you obtained in the previous step and call an endpoint that is safe and easy to validate.
+If you have not selected an API yet, return to  
+[Choosing the Right API](./choose-right-api.md).
 
-A typical request has this shape:
+For the first call, avoid complex queries or write operations.
+
+## Send the Request
+
+You can validate your first API call in one of two ways:
+
+- **Option A (recommended): Use your own access token** (from the previous step)
+- **Option B: Use the public demo instance (`testdb`) and a demo reference token** (for a quick smoke test)
+
+### Option A: Use your own access token
+
+Use the access token obtained in the previous step and include it as a **Bearer token**.
+
+A minimal request looks like this:
 
 ```http
 GET {api-endpoint}
@@ -24,29 +40,48 @@ Accept: application/json
 
 Where:
 
-- `{access_token}` is the token you acquired from the selected identity authority
-- `{api-endpoint}` is the endpoint from the API surface you chose (Domain API or Table API)
+- `{access_token}` is the token issued by the instance identity service
+- `{api-endpoint}` belongs to the selected API surface (Domain API or Table API)
 
-## 3) What success looks like
+### Option B: Use the public demo instance (testdb) with a demo reference token
 
-- HTTP 200 OK
-- JSON response body
-- no redirects to login pages
-
-## 4) If it fails (quick triage)
-
-- **401 Unauthorized** usually means:
-  - wrong authority / wrong token type
-  - token missing/expired
-  - request missing Authorization: Bearer ...
-- **403 Forbidden** usually means:
-  - token is valid but lacks required access (trusted app config / scopes / rules)
-
-Start troubleshooting from:
-
-- [Trusted Applications](../../auth/configuration/trusted-apps-access.md)
-- [Scopes](../../auth/configuration/scopes.md)
-- [Authentication and Authorization](../../auth/configuration/overview.md)
+If you only want to validate the request format and basic connectivity, you can call the public demo instance using the company-provided reference token.
 
 > [!WARNING]
-> Do not log access tokens in production and do not embed secrets in frontend code. See: [Security Best Practices](../../auth/concepts/security-best-practices.md)
+> The demo token is intended only for the public sandbox instance:
+>
+> - It works only for `testdb.my.erp.net`.
+> - It may be rotated or revoked at any time.
+> - Do not use it for production integrations or real customer data.
+> - Treat it as a secret (do not publish it in client-side code or logs).
+
+Example request:
+
+```http
+GET https://testdb.my.erp.net/api/domain/odata/{resource}
+Authorization: Bearer enrt_C99474338E7E587DA64126E26F138E3E0E2D0E984256073427D122B4B39AC766
+Accept: application/json
+```
+
+Replace:
+
+- {resource} with a read-only resource (for example, Customers)
+
+## Verify Success
+
+A successful first call has all of the following:
+
+- HTTP 200 OK
+- A JSON response body
+- No redirects to a login page
+
+At this point, end-to-end access is confirmed.
+
+> [!WARNING]
+> Do not log access tokens or embed secrets in client-side code.  
+> See [Security Best Practices](../../auth/security-best-practices.md).  
+
+## Next Step
+
+Once your first API call succeeds, continue with  
+[Next Steps](./next-steps.md).

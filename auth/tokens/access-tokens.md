@@ -127,7 +127,7 @@ To validate a token:
 - [**Reference Access Tokens (PAT, SAT)**](reference-access-tokens.md)  
   Learn how long-lived reference tokens provide persistent automation access.
 
-- [**Scopes**](../configuration/scopes.md)  
+- [**Scopes**](../concepts/scopes.md)  
   Understand how scopes define the APIs and actions available to your app.
 
 - [**Token Lifetime and Renewal**](token-lifetime.md)  

@@ -1,9 +1,6 @@
 pdf: true
 pdfFileName: Dev.pdf
 items:
-- name: General
-  href: topics/toc.yml
-  topicHref: topics/index.md
 - name: Building Apps
   href: building-apps/toc.yml
   topicHref: building-apps/overview.md

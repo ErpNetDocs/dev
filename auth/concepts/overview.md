@@ -1,39 +1,51 @@
 # Overview
 
-This section complements the reference topics in **Authentication and Authorization** with practical guidance: example integrations, security recommendations, and answers to common questions.
+This section explains the core concepts behind authentication and authorization in @@name: identity authorities, OAuth 2.0, and how permissions are expressed and enforced.
 
-If you're looking for step-by-step scenario tutorials (SPA, web apps, service apps), start with [Getting Started (Authentication)](../getting-started/overview.md). If you need the core auth reference (trusted apps, scopes, flows, tokens, sessions), use the other sections in this topic.
+If you're looking for step-by-step scenario guides (SPA, web apps, service integrations), start with [Quickstarts](../quickstarts/overview.md). If you need instance-side setup, see [Configuration](../configuration/overview.md).
 
 ## What you'll find here
 
-### Samples
+### OAuth 2.0
 
-Examples that demonstrate common authentication and API-access patterns for @@name apps.
+A conceptual overview of OAuth 2.0 in the @@name ecosystem.
 
-See: [Samples](./samples/index.md)
+See: [OAuth 2.0](./oauth2-overview.md)
 
-### Security Best Practices
+### Identity authorities (instance vs global)
 
-Guidance for building secure integrations: least privilege, correct token handling, protection of secrets, and common pitfalls.
+How @@name chooses the identity authority depending on application type and scenario.
 
-See: [Security Best Practices](./security-best-practices.md)
+See: [Identity authorities (instance vs global)](./identity-authorities.md)
 
-### Frequently Asked Questions (FAQ)
+### Instance Identity Service (per @@name instance)
 
-Short answers to common implementation questions and recurring issues.
+Concepts for the per-instance identity service used in Instance ID scenarios.
 
-See: [Frequently Asked Questions (FAQ)](./faq.md)
+See: [Instance Identity Service (per @@name instance)](./identity-server.md)
+
+### @@name as an external Identity Provider (global)
+
+Concepts for using @@name as a global external identity provider.
+
+See: [@@name as an external Identity Provider (global)](./erpnet-as-external-idp.md)
+
+### Scopes
+
+How scopes define permissions, how they are requested, and how they affect API access.
+
+See: [Scopes](./scopes.md)
 
 ## When to use this section
 
-- You need a working example to adapt to your scenario.
-- You want to validate your implementation against recommended security practices.
-- You're troubleshooting a known/recurring question and want a quick answer.
+- You need to understand which identity authority applies to your scenario.
+- You want a clear mental model before choosing a flow or configuring a trusted app.
+- You're troubleshooting authorization issues (for example, missing or invalid scopes).
 
 ## See also
 
-- [Getting Started (Authentication)](../getting-started/overview.md)
+- [Quickstarts](../quickstarts/overview.md)
 - [Configuration](../configuration/overview.md)
-- [Auth Flows](../flows/overview.md)
+- [OAuth 2.0 Flows](../flows/overview.md)
 - [Tokens](../tokens/tokens-overview.md)
 - [Sessions](../sessions/overview.md)

@@ -1,11 +1,12 @@
-- name: What is an ERP.net App
-  href: what-is-erpnet-app.md
+- name: Overview
+  href: overview.md
+- name: ERP.net Instances
+  href: erp-instances.md
 - name: Application Types
   href: app-types.md
-- name: How apps connect
-  href: how-apps-connect/toc.yml
-  topicHref: how-apps-connect/overview.md
-- name: Best practices for calling APIs securely
+- name: Application Server Endpoints
+  href: application-server-endpoints.md  
+- name: API security best practices
   href: api-best-practices.md
 - name: Glossary
   href: glossary.md  

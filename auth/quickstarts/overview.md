@@ -1,11 +1,10 @@
 # Overview
 
-This section contains step-by-step guides for implementing authentication in common @@name app scenarios. Each guide focuses on a concrete application type and shows the recommended identity authority and integration approach.
+This section contains standalone, step-by-step quickstarts for implementing authentication in common @@name application scenarios. Each quickstart focuses on one application type and uses the recommended identity authority and integration approach for that scenario.
 
-If you're looking for the underlying concepts (authorities, flows, tokens, scopes), see:
+Choose the quickstart that matches your application type-you don't need to follow them in order.
 
-- [Identity authorities (instance vs global)](../../building-apps/concepts/how-apps-connect/identity-authorities.md)
-- [Authentication and Authorization](../overview.md)
+If you're looking for the underlying concepts (identity authorities, flows, tokens, scopes), see: [Concepts](../concepts/overview.md).
 
 ## Choose your scenario
 
@@ -43,4 +42,4 @@ Each scenario guide provides:
 ## Next steps
 
 - Start with the guide that matches your app type.
-- If you are unsure which authority applies, read [Identity authorities (instance vs global)](../../building-apps/concepts/how-apps-connect/identity-authorities.md) first.
+- If you are unsure which authority applies, read [Identity authorities (instance vs global)](../../auth/concepts/identity-authorities.md) first.

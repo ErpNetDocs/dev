@@ -1,127 +1,154 @@
 # Application Types
 
-@@name supports several types of applications, depending on:
+Application types describe **how an application connects to an @@name instance**, not what business problem it solves.
 
-- where they run
-- who develops them
-- and how they are distributed
+They help you decide:
 
-All @@name Apps follow the same security and connectivity model - they communicate with an @@name instance through the built-in **@@name Identity** and **APIs**, and are represented in the system by a **Trusted Application** entity.
+- whether users are involved at all
+- whether API access happens **on behalf of a user**, **on behalf of the application**, or via a **reference token**
+- which **identity authority** is involved
+- which **authentication guide** applies
 
-## Internal Applications
+> [!IMPORTANT]
+> @@name instance APIs are always accessed using tokens issued by the **instance identity service**  
+> (`https://<instance>.my.erp.net/id`).
+>
+> The global @@name Identity (`id.erp.net`) is used **only for user authentication (SSO)** and does **not**
+> issue access tokens for instance APIs.
 
-**Internal applications** are part of the @@name platform itself.  
+## Summary
 
-They are developed, deployed, and maintained by @@name as core components of the system.
+| Application type | Typical scenario | Who signs in | How API access is performed | Auth guide | Typical API |
+| --- | --- | --- | --- | --- | --- |
+| **SPA Applications** | Browser-only app, no backend | Internal users | On behalf of the signed-in user | [Instance ID for SPA Applications](../../auth/quickstarts/instance-id-spa-apps.md) | Domain API |
+| **Web (Confidential) Applications** | Web app with backend | Internal users | On behalf of the signed-in user | [Instance ID for Web Applications](../../auth/quickstarts/instance-id-web-apps.md) | Domain API |
+| **Web Portals** | Customer / partner portals | Internal and/or external users | On behalf of the application (service identity) | [Instance ID for Web Portals](../../auth/quickstarts/instance-id-web-portals.md) | Domain API |
+| **Service Applications** | Background integrations, sync, daemons | None | On behalf of the application (service identity) | [Service Applications](../../auth/quickstarts/service-apps.md) | Domain API |
+| **Automation** | Scripts, scheduled jobs, ops tooling | None | On behalf of a reference token | [Automations](../../auth/quickstarts/automation.md) | Domain or Table API |
 
-These apps are installed within the @@name instance and operate using the same security and authentication infrastructure as external apps.
+> [!NOTE]
+> Business Intelligence, reporting, and backup are **usage patterns**, not standalone application types.
+> They are implemented using **Service Applications** or **Automation**, depending on operational needs.
 
-Examples include:
+## Application Type Details
 
-- **[Web Client](https://docs.erp.net/webclient/)** - the main @@name web interface used by end users to access and manage data across all functional modules
-- **[Client Center](https://docs.erp.net/tech/modules/crm/clientcenter/index.html)** - a portal that allows customers and business partners to view documents, orders, and invoices, and to communicate with the company directly
-- **Legal** - a built-in app for managing legal entities and compliance information
+### SPA Applications
 
-Characteristics:
+Use this type when your application:
 
-- Deployed as part of the @@name instance  
-- Fully managed and updated with the platform  
-- Use the same APIs and @@name Identity for consistency  
-- **Trusted Application registration:** may be preconfigured by the platform or require manual registration/configuration, depending on the app and deployment
-
-## External Applications
-
-**External applications** are developed outside of the @@name platform, by customers, partners, or independent developers.
-
-They run separately from the @@name instance but connect to it securely via @@name Identity and APIs.
-
-External apps can take many forms - mobile clients, integrations, automation tools, or standalone web applications.
-
-Examples include:
-
-- A logistics dashboard that monitors deliveries and shipment statuses in real time
-- A custom production planning tool that retrieves and updates manufacturing data
-- A cloud integration that syncs @@name data with an accounting or shipping service
-- A background service that automates invoice exports
+- runs entirely in the browser
+- has no backend component
+- cannot keep a client secret
 
 Characteristics:
 
-- Hosted outside of the @@name instance  
-- Must be registered as **Trusted Applications** in each instance they connect to
-- Authenticate and authorize through the built-in @@name Identity
-- Can use interactive (user) or non-interactive (service) access modes
+- users sign in interactively
+- access tokens represent the **signed-in user**
+- Authorization Code flow with PKCE is mandatory
 
-## Marketplace Applications
-
-**Marketplace applications** are a special category of external apps that are published to the [@@name Marketplace](https://marketplace.erp.net/).
-
-They are developed by @@name partners or third parties and made available to multiple tenants for installation or activation.
-
-When a tenant administrator installs a marketplace app, the @@name instance automatically registers it as a Trusted Application.
-
-Examples include:
-
-- **Currency Rates Sync** – Automate your currency updates with fresh ECB rates, daily.  
-- **Retail POS** – A modern, offline-capable POS system designed for retail businesses. Fast, intuitive, and built to work seamlessly with @@name.  
-- **Preventive Maintenance Planner** – Transform your maintenance operations with intelligent planning.  
-
-Characteristics:
-
-- Developed externally but distributed through the @@name Marketplace  
-- Automatically registered and authorized during installation
-- Can be activated by tenant administrators
-- Must comply with platform validation and security requirements
-
-## Embedded (In-Client) Applications
-
-**Embedded (In-Client) applications** are external web apps that can be displayed directly inside the @@name Web Client using a **WebView**.
-
-They allow developers to create specialized web experiences that look and feel like a native part of @@name, while being hosted and maintained independently.
-
-### Behavior and Access
-
-Embedded apps behave differently depending on where they are hosted:
-
-1. **Apps hosted on a trusted domain**  
-   If the app is part of the @@name Marketplace or hosted under the official domain `https://*.app.erp.net`, it can securely access the @@name APIs **without performing explicit authorization**.  
-   In this case, the Web Client shares the user's active session (via cookies), and the app can make API calls on behalf of the logged-in user.
-
-2. **Apps hosted elsewhere**  
-   If the app is hosted on any other domain, it cannot access @@name data directly.  
-   The only information it receives is the **URL passed to the WebView** when it is opened from the Web Client.  
-   To access data, such apps must perform standard authentication through @@name Identity using a registered Trusted Application.
-
-### Typical Use Cases
-
-- Partner-developed dashboards or widgets integrated into the @@name Web Client
-- Company-specific extensions that enhance standard UI modules
-- Marketplace apps that extend @@name visually within the main user experience  
-
-### Characteristics
-
-- Hosted externally but embedded in the Web Client through a WebView
-- May use the active user session for authentication (if hosted on trusted domain)  
-- Must follow strict domain and security policies to access @@name data
-- Can be distributed through the @@name Marketplace or deployed privately
-
-## Comparing Application Types
-
-| Type | Hosted By | Registered As Trusted App | Example | Typical Use |
-|------|------------|----------------------------|----------|--------------|
-| **Internal** | @@name Platform | Preconfigured or manual (varies) | [Web Client](https://docs.erp.net/webclient/), [Client Center](https://docs.erp.net/tech/modules/crm/clientcenter/index.html) | Core @@name functionality |
-| **External** | Customer or Partner | Manual | Custom integration, automation service | Private or custom solutions |
-| **Marketplace** | Partner / Third Party | Automatic on installation | Retail POS, Currency Rates Sync, Preventive Maintenance Planner | Public or commercial apps |
-| **Embedded** | @@name Platform / Partner / Third Party | Depends on hosting domain | Embedded dashboard, company widget | Embedded web experiences |
+See:  
+[Instance ID for SPA Applications](../../auth/quickstarts/instance-id-spa-apps.md)
 
 ---
 
-## Learn More
+### Web (Confidential) Applications
 
-- **[What Are @@name Apps](what-is-erpnet-app.md)**  
-  Understand the core concept of @@name Apps and how they connect to an @@name instance.
+Use this type when your application:
 
-- **[Trusted Applications](../../auth/configuration/trusted-apps-access.md)**  
-  Learn how each app is registered, managed, and granted access within @@name.
+- has a backend capable of storing secrets
+- serves internal users
+- performs API calls as the signed-in user
 
-- **[Authentication and Authorization](../../auth/overview.md)**  
-  See how the built-in @@name Identity authenticates and authorizes apps and users.
+Characteristics:
+
+- users sign in interactively
+- access tokens are issued **on behalf of the user**
+- Authorization Code flow is used
+
+See:  
+[Instance ID for Web Applications](../../auth/quickstarts/instance-id-web-apps.md)
+
+---
+
+### Web Portals
+
+Use this type when your application:
+
+- allows users to sign in for identification or session context
+- supports internal and/or external users
+- performs all API access from the backend
+
+Characteristics:
+
+- users authenticate for **identity only**
+- external users never receive API access
+- API calls are performed **on behalf of the application**
+- combines Authorization Code (for users) and Client Credentials (for APIs)
+
+See:  
+[Instance ID for Web Portals](../../auth/quickstarts/instance-id-web-portals.md)
+
+---
+
+### Service Applications
+
+Use this type when your integration:
+
+- runs without user interaction
+- performs background processing or system integration
+- needs controlled, scoped API access
+
+Characteristics:
+
+- no user sign-in
+- Client Credentials flow
+- access tokens represent a **service identity**
+
+See:  
+[Service Applications](../../auth/quickstarts/service-apps.md)
+
+---
+
+### Automation
+
+Use this type when your integration:
+
+- is script-based or operational
+- does not implement OAuth flows
+- requires long-lived access
+
+Characteristics:
+
+- no user interaction
+- uses manually issued **reference access tokens**
+- suited for jobs, tooling, and controlled automation
+
+See:  
+[Automations](../../auth/quickstarts/automation.md)
+
+---
+
+## BI, Reporting, and Backup Scenarios
+
+Reporting, analytics, and backup workloads are implemented using:
+
+- **Service Applications** for OAuth-based access, or
+- **Automation** for long-running or scheduled tasks
+
+In these cases:
+
+- prefer the **Table API** for high-volume, read-only access
+- restrict scopes to `read` only
+
+See:
+
+- [Table API Overview](../../table-api/index.md)
+- [Power BI Usage Guidelines](../../table-api/usage-guide.md)
+
+---
+
+## Related Topics
+
+- [Choosing the Right API](../getting-started/choose-right-api.md)
+- [Trusted Applications](../../auth/configuration/trusted-apps-access.md)
+- [Scopes](../../auth/concepts/scopes.md)
