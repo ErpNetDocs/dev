@@ -163,9 +163,11 @@ The `AccessTokens` field controls who (if anyone) can issue **reference tokens**
 
 ```text
 ClientType = Confidential
+ApplicationSecretHash = base64(sha256(<client-secret>))
 ImpersonateAsInternalUserAllowed = true
 Scope = read
 SystemUserAllowed = false
+ImpersonateLoginUrl = https://<your-app>/auth/callback
 ```
 
 Used for internal dashboards or web portals where employees log in through the browser and only need to view @@name data.
@@ -174,10 +176,11 @@ Used for internal dashboards or web portals where employees log in through the b
 
 ```text
 ClientType = Confidential
+ApplicationSecretHash = base64(sha256(<client-secret>))
 SystemUserAllowed = true
 SystemUser = <least-privilege user>
 Scope = read update
-ImpersonateAs...Allowed = false
+ImpersonateAsInternalUserAllowed = true
 ```
 
 Used for backend integrations or scheduled jobs that must update data, such as inventory sync or reporting automation.
@@ -186,9 +189,10 @@ Used for backend integrations or scheduled jobs that must update data, such as i
 
 ```text
 ClientType = Public
-ImpersonateAsCommunityUserAllowed = true
+ImpersonateAsInternalUserAllowed = true
 Scope = read
 SystemUserAllowed = false
+ImpersonateLoginUrl = https://<your-app>/auth/callback
 ```
 
 Used for front-end applications (for example, customer portals or mobile apps) that display @@name data to community users but cannot modify it.
@@ -197,10 +201,13 @@ Used for front-end applications (for example, customer portals or mobile apps) t
 
 ```text
 ClientType = Confidential
+ApplicationSecretHash = base64(sha256(<client-secret>))
 ImpersonateAsInternalUserAllowed = true
+ImpersonateAsCommunityUserAllowed = true
 SystemUserAllowed = true
 SystemUser = <least-privilege user>
 Scope = read update
+ImpersonateLoginUrl = https://<your-app>/auth/callback
 ```
 
 Used when the same application has both an interactive UI (user sign-in) and background service features (scheduled sync or automation).
