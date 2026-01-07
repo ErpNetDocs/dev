@@ -2,7 +2,7 @@
 
 This section covers the instance-side configuration required to allow external applications to authenticate and access @@name APIs.
 
-If you're implementing a concrete scenario (SPA, web app, service integration), see the step-by-step guides in [Quickstarts](../quickstarts/overview.md).
+If you're implementing a concrete scenario (SPA, web app, service integration), see the step-by-step guides in [Getting Started](../getting-started/overview.md).
 
 ## What is configured here
 

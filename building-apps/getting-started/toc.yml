@@ -12,5 +12,7 @@
   href: get-access-token.md
 - name: Make Your First API Call
   href: first-api-call.md
+- name: Demo API Call (testdb)
+  href: demo-api-call.md
 - name: Next Steps
   href: next-steps.md

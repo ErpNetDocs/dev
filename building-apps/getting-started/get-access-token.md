@@ -37,11 +37,11 @@ The exact steps for obtaining a token depend on your application type and authen
 
 Use the tutorial that matches your scenario:
 
-- [Web Applications](../../auth/quickstarts/erpnet-id-web-apps.md)
-- [Single Page Applications (SPA)](../../auth/quickstarts/instance-id-spa-apps.md)
-- [Web Portals](../../auth/quickstarts/instance-id-web-portals.md)
-- [Service Applications](../../auth/quickstarts/service-apps.md)
-- [Automations](../../auth/quickstarts/automation.md)
+- [Web Applications](../../auth/getting-started/erpnet-id-web-apps.md)
+- [Single Page Applications (SPA)](../../auth/getting-started/instance-id-spa-apps.md)
+- [Web Portals](../../auth/getting-started/instance-id-web-portals.md)
+- [Service Applications](../../auth/getting-started/service-apps.md)
+- [Automations](../../auth/getting-started/automation.md)
 
 These tutorials are the **source of truth** for request parameters, flows, and examples.
 

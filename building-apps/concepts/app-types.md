@@ -20,11 +20,11 @@ They help you decide:
 
 | Application type | Typical scenario | Who signs in | How API access is performed | Auth guide | Typical API |
 | --- | --- | --- | --- | --- | --- |
-| **SPA Applications** | Browser-only app, no backend | Internal users | On behalf of the signed-in user | [Instance ID for SPA Applications](../../auth/quickstarts/instance-id-spa-apps.md) | Domain API |
-| **Web (Confidential) Applications** | Web app with backend | Internal users | On behalf of the signed-in user | [Instance ID for Web Applications](../../auth/quickstarts/instance-id-web-apps.md) | Domain API |
-| **Web Portals** | Customer / partner portals | Internal and/or external users | On behalf of the application (service identity) | [Instance ID for Web Portals](../../auth/quickstarts/instance-id-web-portals.md) | Domain API |
-| **Service Applications** | Background integrations, sync, daemons | None | On behalf of the application (service identity) | [Service Applications](../../auth/quickstarts/service-apps.md) | Domain API |
-| **Automation** | Scripts, scheduled jobs, ops tooling | None | On behalf of a reference token | [Automations](../../auth/quickstarts/automation.md) | Domain or Table API |
+| **SPA Applications** | Browser-only app, no backend | Internal users | On behalf of the signed-in user | [Instance ID for SPA Applications](../../auth/getting-started/instance-id-spa-apps.md) | Domain API |
+| **Web (Confidential) Applications** | Web app with backend | Internal users | On behalf of the signed-in user | [Instance ID for Web Applications](../../auth/getting-started/instance-id-web-apps.md) | Domain API |
+| **Web Portals** | Customer / partner portals | Internal and/or external users | On behalf of the application (service identity) | [Instance ID for Web Portals](../../auth/getting-started/instance-id-web-portals.md) | Domain API |
+| **Service Applications** | Background integrations, sync, daemons | None | On behalf of the application (service identity) | [Service Applications](../../auth/getting-started/service-apps.md) | Domain API |
+| **Automation** | Scripts, scheduled jobs, ops tooling | None | On behalf of a reference token | [Automations](../../auth/getting-started/automation.md) | Domain or Table API |
 
 > [!NOTE]
 > Business Intelligence, reporting, and backup are **usage patterns**, not standalone application types.
@@ -47,7 +47,7 @@ Characteristics:
 - Authorization Code flow with PKCE is mandatory
 
 See:  
-[Instance ID for SPA Applications](../../auth/quickstarts/instance-id-spa-apps.md)
+[Instance ID for SPA Applications](../../auth/getting-started/instance-id-spa-apps.md)
 
 ---
 
@@ -66,7 +66,7 @@ Characteristics:
 - Authorization Code flow is used
 
 See:  
-[Instance ID for Web Applications](../../auth/quickstarts/instance-id-web-apps.md)
+[Instance ID for Web Applications](../../auth/getting-started/instance-id-web-apps.md)
 
 ---
 
@@ -86,7 +86,7 @@ Characteristics:
 - combines Authorization Code (for users) and Client Credentials (for APIs)
 
 See:  
-[Instance ID for Web Portals](../../auth/quickstarts/instance-id-web-portals.md)
+[Instance ID for Web Portals](../../auth/getting-started/instance-id-web-portals.md)
 
 ---
 
@@ -105,7 +105,7 @@ Characteristics:
 - access tokens represent a **service identity**
 
 See:  
-[Service Applications](../../auth/quickstarts/service-apps.md)
+[Service Applications](../../auth/getting-started/service-apps.md)
 
 ---
 
@@ -124,7 +124,7 @@ Characteristics:
 - suited for jobs, tooling, and controlled automation
 
 See:  
-[Automations](../../auth/quickstarts/automation.md)
+[Automations](../../auth/getting-started/automation.md)
 
 ---
 

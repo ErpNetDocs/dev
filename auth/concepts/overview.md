@@ -2,7 +2,7 @@
 
 This section explains the core concepts behind authentication and authorization in @@name: identity authorities, OAuth 2.0, and how permissions are expressed and enforced.
 
-If you're looking for step-by-step scenario guides (SPA, web apps, service integrations), start with [Quickstarts](../quickstarts/overview.md). If you need instance-side setup, see [Configuration](../configuration/overview.md).
+If you're looking for step-by-step scenario guides (SPA, web apps, service integrations), start with [Getting Started](../getting-started/overview.md). If you need instance-side setup, see [Configuration](../configuration/overview.md).
 
 ## What you'll find here
 
@@ -44,7 +44,7 @@ See: [Scopes](./scopes.md)
 
 ## See also
 
-- [Quickstarts](../quickstarts/overview.md)
+- [Quickstarts](../getting-started/overview.md)
 - [Configuration](../configuration/overview.md)
 - [OAuth 2.0 Flows](../flows/overview.md)
 - [Tokens](../tokens/tokens-overview.md)
