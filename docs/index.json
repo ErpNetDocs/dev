@@ -632,6 +632,6 @@
   "whats-new/v26-2/index.html": {
     "href": "whats-new/v26-2/index.html",
     "title": "Version 26.2 | ERP.net Developer Docs",
-    "summary": "Version 26.2 Reference Access Tokens (PAT, SAT) Now supported for long-lived, manually issued access - ideal for automation, scripts, and service integrations."
+    "summary": "Version 26.2 Reference Access Tokens (PAT, SAT) Now supported for long-lived, manually issued access - ideal for automation, scripts, and service integrations. ExecuteScript (Domain API) Execute raw JavaScript server-side via an unbound OData action, with full access to the Domain Model for querying and modifying data."
   }
 }
