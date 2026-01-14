@@ -6,3 +6,5 @@
   href: object-version.md
 - name: Optimistic locking
   href: optimistic-locking.md
+- name: Incremental pull
+  href: incremental-pull.md
