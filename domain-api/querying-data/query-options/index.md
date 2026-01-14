@@ -17,6 +17,7 @@ $metadata | OData | Returns the data model (which is the structure of all resour
 $orderby | OData | Specifies an expression for determining which values are used to order the collection of records identified by the resource path section of the URI.
 [$select](select.md) | OData | Limits the data to the specified attributes.
 $skip | OData | The $skip query option requests the number of items in the queried collection that are to be skipped and not included in the result.
+$skiptoken | OData | The $skiptoken is an opaque, server-generated identifier used for server-side paging that directs the client to the specific starting point of the next subset of results.
 $top | OData | The $top system query option requests the number of items in the queried collection to be included in the result.
 [$search](search.md) | OData | The $search system query option allows clients to request items within a collection matching a free-text. Each entity implements the searching in a different way.
 [options](options.md) | Extension | List of comma separated options/flags that affect the behavior of the system.

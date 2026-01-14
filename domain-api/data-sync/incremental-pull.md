@@ -18,31 +18,65 @@ To retrieve the value, explicitly select `AggregateLastUpdateTimeUtc`:
 General_Products_Products?$top=10&$select=Id,AggregateLastUpdateTimeUtc,PartNumber
 ```
 
-### 2) Pull updates since a watermark (with overlap)
+### 2) First synchronization run (full initial sync)
 
-A robust incremental sync typically uses a small overlap window to avoid missing changes around the watermark boundary.
+On the first run there is no watermark. If you want a complete local copy, the recommended approach is to do a full initial pull and only then start incremental pulls.
+
+Recommended approach (full initial sync):
+
+1. Perform a full pull (no filter on `AggregateLastUpdateTimeUtc`).
+2. Always use paging (`$top`) and follow `@odata.nextLink` until completion.
+3. Process each item idempotently (upsert).
+4. While processing all pages, track `maxSeenUtc` = the maximum `AggregateLastUpdateTimeUtc` value you have successfully processed.
+5. Persist the watermark only after the whole initial run finishes successfully:
+   - `watermarkUtc = maxSeenUtc`
+
+This ensures that the first incremental run starts from a safe point in time.
+
+Alternative (start “from now”, no history):
+
+If you do not need historical data, you can initialize:
+
+- `watermarkUtc = nowUtc`
+
+and start incremental pulls from `watermarkUtc - overlap`. This starts the sync from “current time”, but it does not load existing/older records.
+
+### 3) Incremental pulls (watermark + overlap)
+
+A robust incremental sync uses a small overlap window to avoid missing changes around the watermark boundary.
 
 - Store `watermarkUtc` (the last successfully processed point in time).
-- Choose an overlap duration (e.g. 2 minutes).
+- Choose an overlap duration.
 - For the next run, request changes from `fromUtc = watermarkUtc - overlap`.
+
+> NOTE
+> Domain API incremental sync uses `$filter=... ge ...`, so using an overlap window and idempotent processing is required.
+> Recommended overlap:
+> - 5 minutes (default)
+> - 30 minutes (heavy workloads / large transactions)
+> - up to 1 hour (worst-case safety window)
+
+> NOTE
+> For synchronization scenarios, use `$top=1000` and do not use a value greater than 1000.
+> If the payload per row is large (many selected fields and/or `$expand`), consider using a smaller `$top`.
 
 Example:
 
 - `watermarkUtc = 2023-06-09T10:00:00.000Z`
-- `overlap = 2 minutes`
-- `fromUtc = 2023-06-09T09:58:00.000Z`
+- `overlap = 5 minutes`
+- `fromUtc = 2023-06-09T09:55:00.000Z`
 
 ```http
 General_Products_Products?
   $count=true&
-  $top=2000&
+  $top=1000&
   $select=Id,AggregateLastUpdateTimeUtc,PartNumber&
-  $filter=AggregateLastUpdateTimeUtc ge 2023-06-09T09:58:00.000Z
+  $filter=AggregateLastUpdateTimeUtc ge 2023-06-09T09:55:00.000Z
 ```
 
 Because the filter intentionally goes a bit back in time, the result may contain duplicates that you have already processed in previous runs (or earlier pages of the same run). Your sync logic must be idempotent (see “Handling duplicates” below).
 
-### 3) Page through results using @odata.nextLink
+### 4) Page through results using @odata.nextLink
 
 When `$top` is provided, Domain API returns `@odata.nextLink`.
 
@@ -51,6 +85,8 @@ Recommended client behavior:
 - Keep requesting it until the server stops returning `@odata.nextLink`.
 
 This paging approach is required for large result sets.
+
+For more details, see [Paging results ($top and @odata.nextLink)](../querying-data/paging.md).
 
 ## Concepts
 
@@ -61,7 +97,7 @@ This paging approach is required for large result sets.
 
 This makes it suitable for incremental pull scenarios where any change in the aggregate tree should be considered an update.
 
-### Using overlap (recommended)
+### Using overlap
 
 Overlap reduces the chance of missing changes around the watermark boundary (latency, clock skew, boundary equality, retries).
 
@@ -70,9 +106,9 @@ Typical approach:
 - Deduplicate and process idempotently
 - Advance watermark only after a successful full run
 
-### Handling duplicates (required when using overlap)
+### Handling duplicates (required)
 
-When you use overlap (and often even without overlap, depending on the chosen boundary operator), duplicates are expected. The sync code should be idempotent.
+Duplicates are expected when using overlap. The sync code should be idempotent.
 
 A practical approach is to store a per-entity checkpoint keyed by `Id`:
 - `lastAppliedUtcById[Id] = last processed AggregateLastUpdateTimeUtc for this entity`
@@ -100,39 +136,35 @@ for each page (following @odata.nextLink):
 watermarkUtc = maxSeenUtc  // advance watermark only after successful commit of the whole run
 ```
 
-### Paging: $skiptoken vs $skip
-
-When a query contains `$top`, Domain API returns `@odata.nextLink`:
-
-- If the query targets an entity set backed by a **table** (not a view) and **no `$orderby` is specified**, `@odata.nextLink` uses:
-
-`$skiptoken={NEXT_ID}`
-
-This is keyset paging (based on `Id`) and avoids the instability of offset paging when inserts/deletes happen between page requests.
-
-Example:
-
-```json
-"@odata.nextLink": "General_Products_Products?$top=10&$select=Id&$count=true&$skiptoken=3f253c9a-5936-e311-81cb-00155d001f00"
-```
-
-- If the query is against a **view** or if **`$orderby` is specified**, `@odata.nextLink` is generated using `$skip` (offset paging).
-
 ## Troubleshooting
 
 ### I don’t see AggregateLastUpdateTimeUtc
 
-The attribute is available only for entities that are aggregate roots. If the entity set you are querying is not an aggregate root, the attribute will not be exposed.
-
-### I don’t get $skiptoken in @odata.nextLink
-
-`$skiptoken` is returned only when:
-- `$top` is specified,
-- no `$orderby` is specified,
-- the entity set is backed by a table (not a view).
-
-If any of these conditions is not met, `@odata.nextLink` uses `$skip`.
+The attribute is available only for entities that are aggregate roots. If the entity set you are querying is not an aggregate root, the attribute will not be exposed. Also make sure that the AggregateLastUpdateTimeUtc is explicitly included in `$select` clause.
 
 ### My incremental sync produces duplicates
 
 This is expected when using overlap (`fromUtc = watermarkUtc - overlap`). Ensure your sync logic is idempotent and deduplicates by (`Id`, `AggregateLastUpdateTimeUtc`) as described above.
+
+### I keep reprocessing the same rows on every run
+
+Common causes:
+
+- The overlap window is too large for the update rate of the dataset.
+- The sync advances the watermark incorrectly (e.g. persisting `watermarkUtc` before the whole run has completed successfully).
+- The watermark is not persisted, so every run starts from an old value.
+
+Recommended approach:
+- Persist `watermarkUtc` only after a successful full run.
+- Consider reducing the overlap window if duplicates are too frequent.
+
+### I suspect that some updates are missing
+
+Common causes:
+
+- Overlap is too small for your worst-case transaction duration / processing delays.
+- The sync persists `watermarkUtc` even when the run fails halfway.
+
+Recommended approach:
+- Increase overlap (e.g. from 5 minutes to 30 minutes, or up to 1 hour for worst-case safety).
+- Persist the watermark only after successful commit of the whole run.

@@ -5,6 +5,8 @@
 - name: Query options
   href: query-options/toc.yml
   topicHref: query-options/index.md
+- name: Paging results
+  href: paging.md
 - name: Query Builder
   href: query-builder.md
 - name: Query Tool

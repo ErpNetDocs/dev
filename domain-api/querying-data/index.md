@@ -18,6 +18,9 @@ ERP.net exposes entities (repositories) through an OData-compliant service. Each
 * [Query Options](query-options/index.md)  
   Explains the URL parameters used for querying data.
 
+* [Paging results](./paging.md)  
+  How to page large result sets using `$top` and `@odata.nextLink` (`$skiptoken` vs `$skip`).
+
 * [Query Builder](./query-builder.md)  
   ERP.net includes a **Visual Query Designer** to simplify query creation
 
