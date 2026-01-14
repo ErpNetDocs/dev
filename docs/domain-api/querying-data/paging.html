@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Paging results ($top and  | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Paging results ($top and  | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/paging.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="paging-results-top-and-">Paging results ($top and @odata.nextLink)</h1>
+
+<h2 id="overview">Overview</h2>
+<p>When retrieving large datasets through the Domain API, clients should page results instead of requesting “everything at once”.</p>
+<p>Paging is enabled by providing <code>$top</code>. When <code>$top</code> is present, the response may include <code>@odata.nextLink</code>, which the client must follow to retrieve the next page.</p>
+<blockquote>
+<p>NOTE
+<code>@odata.nextLink</code> is an opaque (transparent) server-generated URL. Clients must not parse it, modify it, or attempt to “recreate” it. The only correct behavior is to request the URL exactly as returned by the server.</p>
+</blockquote>
+<h2 id="getting-started">Getting started</h2>
+<h3 id="1-pick-a-page-size-recommended-for-synchronizations">1) Pick a page size (recommended for synchronizations)</h3>
+<p>For synchronization / data replication scenarios, a good default is:</p>
+<ul>
+<li><code>$top=1000</code> (recommended)</li>
+<li>do not use a value greater than <code>1000</code></li>
+</ul>
+<p>The goal is to keep each request predictable in duration and payload size, while still being efficient enough for large pulls. If the payload per row is large (many selected fields or expanded references), consider using a smaller <code>$top</code>.</p>
+<blockquote>
+<p>NOTE
+Recommended for synchronizations: use <code>$top=1000</code> and do not use a value greater than 1000.</p>
+</blockquote>
+<p>Example:</p>
+<pre><code class="lang-http">General_Products_Products?$top=1000&amp;$select=Id,PartNumber
+</code></pre>
+<h3 id="2-request-the-first-page-and-follow-">2) Request the first page and follow @odata.nextLink</h3>
+<p>Start with the initial query (including <code>$top</code>). If the server returns <code>@odata.nextLink</code>, request it to get the next page. Continue until <code>@odata.nextLink</code> is no longer returned.</p>
+<p>Recommended client behavior:</p>
+<ul>
+<li>Treat <code>@odata.nextLink</code> as an opaque URL (do not parse or modify it).</li>
+<li>Keep requesting it until the server stops returning <code>@odata.nextLink</code>.</li>
+</ul>
+<h2 id="concepts">Concepts</h2>
+<h3 id="why-top-is-required">Why $top is required</h3>
+<p><code>$top</code> serves two purposes:</p>
+<ol>
+<li>It limits the payload size of a single response.</li>
+<li>It enables server-driven paging via <code>@odata.nextLink</code> so the client can safely fetch the whole result set page-by-page.</li>
+</ol>
+<p>For synchronization workloads, server-driven paging is the recommended approach for pulling large datasets reliably.</p>
+<h3 id="why-top1000-is-a-good-default-for-synchronization">Why $top=1000 is a good default for synchronization</h3>
+<p>In sync scenarios, clients often need to read many rows (sometimes millions) and must balance:</p>
+<ul>
+<li>efficiency (fewer requests),</li>
+<li>stability (avoid very large responses),</li>
+<li>resilience (retries should be cheap),</li>
+<li>consistent throughput over time.</li>
+</ul>
+<p>Using <code>$top=1000</code> is a practical default because it typically provides good throughput without making individual requests too heavy. It also makes retry logic simpler: if a request fails, you retry a relatively small batch.</p>
+<p>If you select many fields, use <code>$expand</code>, or the entity payload is large, using a smaller <code>$top</code> may reduce memory usage and response size per request.</p>
+<blockquote>
+<p>NOTE
+Always page using <code>$top</code> and <code>@odata.nextLink</code> for synchronization. Avoid designs that depend on “single huge response”.</p>
+</blockquote>
+<h3 id="-is-opaque-clients-must-not-analyze-it">@odata.nextLink is opaque (clients must not analyze it)</h3>
+<p>Clients must treat <code>@odata.nextLink</code> as a server-generated continuation link.</p>
+<p>Whether the link contains <code>$skiptoken</code> (keyset paging) or <code>$skip</code> (offset paging) is an internal server decision and does not change the client algorithm: always follow <code>@odata.nextLink</code> exactly as returned.</p>
+<blockquote>
+<p>NOTE
+Do not branch sync logic based on whether the link contains <code>$skiptoken</code> or <code>$skip</code>.</p>
+</blockquote>
+<h3 id="server-behavior-skiptoken-vs-skip-for-reference">Server behavior: $skiptoken vs $skip (for reference)</h3>
+<p>Depending on the query shape, Domain API may generate <code>@odata.nextLink</code> using different paging strategies.</p>
+<ul>
+<li><p>If the query targets an entity set backed by a <strong>table</strong> (not a view) and <strong>does not specify <code>$orderby</code></strong>, <code>@odata.nextLink</code> may contain:</p>
+<ul>
+<li><code>$skiptoken={NEXT_ID}</code></li>
+</ul>
+<p>This is keyset paging based on the default ordering by <code>Id</code>.</p>
+<p>Example:</p>
+<pre><code class="lang-json">&quot;@odata.nextLink&quot;: &quot;General_Products_Products?$top=1000&amp;$select=Id&amp;$count=true&amp;$skiptoken=3f253c9a-5936-e311-81cb-00155d001f00&quot;
+</code></pre>
+</li>
+<li><p>If the query is against a <strong>view</strong> or if <strong><code>$orderby</code> is specified</strong>, <code>@odata.nextLink</code> may be generated using <code>$skip</code> (offset paging), e.g.:</p>
+<ul>
+<li><code>...&amp;$skip={prevSkip + top}</code></li>
+</ul>
+</li>
+</ul>
+<p>This is an implementation detail. Clients must not rely on a specific strategy and must not branch logic based on whether the link contains <code>$skiptoken</code> or <code>$skip</code>.</p>
+<h3 id="implementation-detail-for-expectations">Implementation detail (for expectations)</h3>
+<p>For requests with <code>$top</code>, the server may internally fetch one extra row to determine whether there is a next page and to construct <code>@odata.nextLink</code>.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="i-dont-get-">I don’t get @odata.nextLink</h3>
+<p><code>@odata.nextLink</code> is returned only when <code>$top</code> is specified and there are more results after the current page.</p>
+<h3 id="i-dont-get-skiptoken-i-get-skip-instead">I don’t get $skiptoken (I get $skip instead)</h3>
+<p><code>$skiptoken</code> may be returned only when:</p>
+<ul>
+<li><code>$top</code> is specified,</li>
+<li>no <code>$orderby</code> is specified,</li>
+<li>the entity set is backed by a table (not a view).</li>
+</ul>
+<p>If any of these conditions is not met, <code>@odata.nextLink</code> may use <code>$skip</code>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/querying-data/paging.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

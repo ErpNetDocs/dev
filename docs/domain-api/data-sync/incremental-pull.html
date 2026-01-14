@@ -96,27 +96,63 @@
 <p>To retrieve the value, explicitly select <code>AggregateLastUpdateTimeUtc</code>:</p>
 <pre><code class="lang-http">General_Products_Products?$top=10&amp;$select=Id,AggregateLastUpdateTimeUtc,PartNumber
 </code></pre>
-<h3 id="2-pull-updates-since-a-watermark-with-overlap">2) Pull updates since a watermark (with overlap)</h3>
-<p>A robust incremental sync typically uses a small overlap window to avoid missing changes around the watermark boundary.</p>
+<h3 id="2-first-synchronization-run-full-initial-sync">2) First synchronization run (full initial sync)</h3>
+<p>On the first run there is no watermark. If you want a complete local copy, the recommended approach is to do a full initial pull and only then start incremental pulls.</p>
+<p>Recommended approach (full initial sync):</p>
+<ol>
+<li>Perform a full pull (no filter on <code>AggregateLastUpdateTimeUtc</code>).</li>
+<li>Always use paging (<code>$top</code>) and follow <code>@odata.nextLink</code> until completion.</li>
+<li>Process each item idempotently (upsert).</li>
+<li>While processing all pages, track <code>maxSeenUtc</code> = the maximum <code>AggregateLastUpdateTimeUtc</code> value you have successfully processed.</li>
+<li>Persist the watermark only after the whole initial run finishes successfully:
+<ul>
+<li><code>watermarkUtc = maxSeenUtc</code></li>
+</ul>
+</li>
+</ol>
+<p>This ensures that the first incremental run starts from a safe point in time.</p>
+<p>Alternative (start “from now”, no history):</p>
+<p>If you do not need historical data, you can initialize:</p>
+<ul>
+<li><code>watermarkUtc = nowUtc</code></li>
+</ul>
+<p>and start incremental pulls from <code>watermarkUtc - overlap</code>. This starts the sync from “current time”, but it does not load existing/older records.</p>
+<h3 id="3-incremental-pulls-watermark--overlap">3) Incremental pulls (watermark + overlap)</h3>
+<p>A robust incremental sync uses a small overlap window to avoid missing changes around the watermark boundary.</p>
 <ul>
 <li>Store <code>watermarkUtc</code> (the last successfully processed point in time).</li>
-<li>Choose an overlap duration (e.g. 2 minutes).</li>
+<li>Choose an overlap duration.</li>
 <li>For the next run, request changes from <code>fromUtc = watermarkUtc - overlap</code>.</li>
 </ul>
+<blockquote>
+<p>NOTE
+Domain API incremental sync uses <code>$filter=... ge ...</code>, so using an overlap window and idempotent processing is required.
+Recommended overlap:</p>
+<ul>
+<li>5 minutes (default)</li>
+<li>30 minutes (heavy workloads / large transactions)</li>
+<li>up to 1 hour (worst-case safety window)</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>NOTE
+For synchronization scenarios, use <code>$top=1000</code> and do not use a value greater than 1000.
+If the payload per row is large (many selected fields and/or <code>$expand</code>), consider using a smaller <code>$top</code>.</p>
+</blockquote>
 <p>Example:</p>
 <ul>
 <li><code>watermarkUtc = 2023-06-09T10:00:00.000Z</code></li>
-<li><code>overlap = 2 minutes</code></li>
-<li><code>fromUtc = 2023-06-09T09:58:00.000Z</code></li>
+<li><code>overlap = 5 minutes</code></li>
+<li><code>fromUtc = 2023-06-09T09:55:00.000Z</code></li>
 </ul>
 <pre><code class="lang-http">General_Products_Products?
   $count=true&amp;
-  $top=2000&amp;
+  $top=1000&amp;
   $select=Id,AggregateLastUpdateTimeUtc,PartNumber&amp;
-  $filter=AggregateLastUpdateTimeUtc ge 2023-06-09T09:58:00.000Z
+  $filter=AggregateLastUpdateTimeUtc ge 2023-06-09T09:55:00.000Z
 </code></pre>
 <p>Because the filter intentionally goes a bit back in time, the result may contain duplicates that you have already processed in previous runs (or earlier pages of the same run). Your sync logic must be idempotent (see “Handling duplicates” below).</p>
-<h3 id="3-page-through-results-using-">3) Page through results using @odata.nextLink</h3>
+<h3 id="4-page-through-results-using-">4) Page through results using @odata.nextLink</h3>
 <p>When <code>$top</code> is provided, Domain API returns <code>@odata.nextLink</code>.</p>
 <p>Recommended client behavior:</p>
 <ul>
@@ -124,6 +160,7 @@
 <li>Keep requesting it until the server stops returning <code>@odata.nextLink</code>.</li>
 </ul>
 <p>This paging approach is required for large result sets.</p>
+<p>For more details, see <a href="../querying-data/paging.html">Paging results ($top and @odata.nextLink)</a>.</p>
 <h2 id="concepts">Concepts</h2>
 <h3 id="aggregatelastupdatetimeutc">AggregateLastUpdateTimeUtc</h3>
 <ul>
@@ -131,7 +168,7 @@
 <li>The value is calculated from the Extensible Data Object (EDO) change tracking (i.e. it represents the aggregated “last update moment” for the whole aggregate).</li>
 </ul>
 <p>This makes it suitable for incremental pull scenarios where any change in the aggregate tree should be considered an update.</p>
-<h3 id="using-overlap-recommended">Using overlap (recommended)</h3>
+<h3 id="using-overlap">Using overlap</h3>
 <p>Overlap reduces the chance of missing changes around the watermark boundary (latency, clock skew, boundary equality, retries).</p>
 <p>Typical approach:</p>
 <ul>
@@ -139,8 +176,8 @@
 <li>Deduplicate and process idempotently</li>
 <li>Advance watermark only after a successful full run</li>
 </ul>
-<h3 id="handling-duplicates-required-when-using-overlap">Handling duplicates (required when using overlap)</h3>
-<p>When you use overlap (and often even without overlap, depending on the chosen boundary operator), duplicates are expected. The sync code should be idempotent.</p>
+<h3 id="handling-duplicates-required">Handling duplicates (required)</h3>
+<p>Duplicates are expected when using overlap. The sync code should be idempotent.</p>
 <p>A practical approach is to store a per-entity checkpoint keyed by <code>Id</code>:</p>
 <ul>
 <li><code>lastAppliedUtcById[Id] = last processed AggregateLastUpdateTimeUtc for this entity</code></li>
@@ -166,32 +203,34 @@ for each page (following @odata.nextLink):
 
 watermarkUtc = maxSeenUtc  // advance watermark only after successful commit of the whole run
 </code></pre>
-<h3 id="paging-skiptoken-vs-skip">Paging: $skiptoken vs $skip</h3>
-<p>When a query contains <code>$top</code>, Domain API returns <code>@odata.nextLink</code>:</p>
-<ul>
-<li>If the query targets an entity set backed by a <strong>table</strong> (not a view) and <strong>no <code>$orderby</code> is specified</strong>, <code>@odata.nextLink</code> uses:</li>
-</ul>
-<p><code>$skiptoken={NEXT_ID}</code></p>
-<p>This is keyset paging (based on <code>Id</code>) and avoids the instability of offset paging when inserts/deletes happen between page requests.</p>
-<p>Example:</p>
-<pre><code class="lang-json">&quot;@odata.nextLink&quot;: &quot;General_Products_Products?$top=10&amp;$select=Id&amp;$count=true&amp;$skiptoken=3f253c9a-5936-e311-81cb-00155d001f00&quot;
-</code></pre>
-<ul>
-<li>If the query is against a <strong>view</strong> or if <strong><code>$orderby</code> is specified</strong>, <code>@odata.nextLink</code> is generated using <code>$skip</code> (offset paging).</li>
-</ul>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <h3 id="i-dont-see-aggregatelastupdatetimeutc">I don’t see AggregateLastUpdateTimeUtc</h3>
-<p>The attribute is available only for entities that are aggregate roots. If the entity set you are querying is not an aggregate root, the attribute will not be exposed.</p>
-<h3 id="i-dont-get-skiptoken-in-">I don’t get $skiptoken in @odata.nextLink</h3>
-<p><code>$skiptoken</code> is returned only when:</p>
-<ul>
-<li><code>$top</code> is specified,</li>
-<li>no <code>$orderby</code> is specified,</li>
-<li>the entity set is backed by a table (not a view).</li>
-</ul>
-<p>If any of these conditions is not met, <code>@odata.nextLink</code> uses <code>$skip</code>.</p>
+<p>The attribute is available only for entities that are aggregate roots. If the entity set you are querying is not an aggregate root, the attribute will not be exposed. Also make sure that the AggregateLastUpdateTimeUtc is explicitly included in <code>$select</code> clause.</p>
 <h3 id="my-incremental-sync-produces-duplicates">My incremental sync produces duplicates</h3>
 <p>This is expected when using overlap (<code>fromUtc = watermarkUtc - overlap</code>). Ensure your sync logic is idempotent and deduplicates by (<code>Id</code>, <code>AggregateLastUpdateTimeUtc</code>) as described above.</p>
+<h3 id="i-keep-reprocessing-the-same-rows-on-every-run">I keep reprocessing the same rows on every run</h3>
+<p>Common causes:</p>
+<ul>
+<li>The overlap window is too large for the update rate of the dataset.</li>
+<li>The sync advances the watermark incorrectly (e.g. persisting <code>watermarkUtc</code> before the whole run has completed successfully).</li>
+<li>The watermark is not persisted, so every run starts from an old value.</li>
+</ul>
+<p>Recommended approach:</p>
+<ul>
+<li>Persist <code>watermarkUtc</code> only after a successful full run.</li>
+<li>Consider reducing the overlap window if duplicates are too frequent.</li>
+</ul>
+<h3 id="i-suspect-that-some-updates-are-missing">I suspect that some updates are missing</h3>
+<p>Common causes:</p>
+<ul>
+<li>Overlap is too small for your worst-case transaction duration / processing delays.</li>
+<li>The sync persists <code>watermarkUtc</code> even when the run fails halfway.</li>
+</ul>
+<p>Recommended approach:</p>
+<ul>
+<li>Increase overlap (e.g. from 5 minutes to 30 minutes, or up to 1 hour for worst-case safety).</li>
+<li>Persist the watermark only after successful commit of the whole run.</li>
+</ul>
 
 </article>
 

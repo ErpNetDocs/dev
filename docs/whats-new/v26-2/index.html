@@ -94,6 +94,12 @@ Now supported for long-lived, manually issued access - ideal for automation, scr
 <li><p><a href="../../domain-api/execute-script.html"><strong>ExecuteScript (Domain API)</strong></a><br>
 Execute raw JavaScript server-side via an unbound OData action, with full access to the Domain Model for querying and modifying data.</p>
 </li>
+<li><p><a href="../../domain-api/querying-data/paging.html"><strong>Paging via @odata.nextLink (Domain API)</strong></a><br>
+Queries that include <code>$top</code> now return <code>@odata.nextLink</code> for server-driven paging. Depending on the query shape, the continuation link may use <code>$skiptoken</code> (keyset paging) or <code>$skip</code> (offset paging) - clients should always follow <code>@odata.nextLink</code> as an opaque URL.</p>
+</li>
+<li><p><a href="../../domain-api/data-sync/incremental-pull.html"><strong>AggregateLastUpdateTimeUtc (Domain API)</strong></a><br>
+Aggregate root entities now expose <code>AggregateLastUpdateTimeUtc</code>, enabling incremental pull scenarios by filtering entities updated after a given UTC timestamp.</p>
+</li>
 </ul>
 
 </article>
