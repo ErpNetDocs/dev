@@ -1203,6 +1203,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "domain-api/data-sync/incremental-pull.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-sync/incremental-pull.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "domain-api/data-sync/index.md",
       "output": {
         ".html": {

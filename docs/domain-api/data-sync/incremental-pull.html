@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Incremental pull by last update time | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Incremental pull by last update time | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-sync/incremental-pull.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="incremental-pull-by-last-update-time">Incremental pull by last update time</h1>
+
+<h2 id="overview">Overview</h2>
+<p>Some integrations need to periodically pull only the entities that have changed since the last successful synchronization run (incremental sync).</p>
+<p>Starting from v26.2, aggregate root entities expose a calculated attribute <code>AggregateLastUpdateTimeUtc</code>, which can be used to implement incremental pulls via Domain API.</p>
+<p><code>AggregateLastUpdateTimeUtc</code> is a UTC timestamp.</p>
+<h2 id="getting-started">Getting started</h2>
+<h3 id="1-select-the-last-update-timestamp">1) Select the last update timestamp</h3>
+<p>To retrieve the value, explicitly select <code>AggregateLastUpdateTimeUtc</code>:</p>
+<pre><code class="lang-http">General_Products_Products?$top=10&amp;$select=Id,AggregateLastUpdateTimeUtc,PartNumber
+</code></pre>
+<h3 id="2-pull-updates-since-a-watermark-with-overlap">2) Pull updates since a watermark (with overlap)</h3>
+<p>A robust incremental sync typically uses a small overlap window to avoid missing changes around the watermark boundary.</p>
+<ul>
+<li>Store <code>watermarkUtc</code> (the last successfully processed point in time).</li>
+<li>Choose an overlap duration (e.g. 2 minutes).</li>
+<li>For the next run, request changes from <code>fromUtc = watermarkUtc - overlap</code>.</li>
+</ul>
+<p>Example:</p>
+<ul>
+<li><code>watermarkUtc = 2023-06-09T10:00:00.000Z</code></li>
+<li><code>overlap = 2 minutes</code></li>
+<li><code>fromUtc = 2023-06-09T09:58:00.000Z</code></li>
+</ul>
+<pre><code class="lang-http">General_Products_Products?
+  $count=true&amp;
+  $top=2000&amp;
+  $select=Id,AggregateLastUpdateTimeUtc,PartNumber&amp;
+  $filter=AggregateLastUpdateTimeUtc ge 2023-06-09T09:58:00.000Z
+</code></pre>
+<p>Because the filter intentionally goes a bit back in time, the result may contain duplicates that you have already processed in previous runs (or earlier pages of the same run). Your sync logic must be idempotent (see “Handling duplicates” below).</p>
+<h3 id="3-page-through-results-using-">3) Page through results using @odata.nextLink</h3>
+<p>When <code>$top</code> is provided, Domain API returns <code>@odata.nextLink</code>.</p>
+<p>Recommended client behavior:</p>
+<ul>
+<li>Treat <code>@odata.nextLink</code> as an opaque URL.</li>
+<li>Keep requesting it until the server stops returning <code>@odata.nextLink</code>.</li>
+</ul>
+<p>This paging approach is required for large result sets.</p>
+<h2 id="concepts">Concepts</h2>
+<h3 id="aggregatelastupdatetimeutc">AggregateLastUpdateTimeUtc</h3>
+<ul>
+<li><code>AggregateLastUpdateTimeUtc</code> is available for entities that are <strong>aggregate roots</strong>.</li>
+<li>The value is calculated from the Extensible Data Object (EDO) change tracking (i.e. it represents the aggregated “last update moment” for the whole aggregate).</li>
+</ul>
+<p>This makes it suitable for incremental pull scenarios where any change in the aggregate tree should be considered an update.</p>
+<h3 id="using-overlap-recommended">Using overlap (recommended)</h3>
+<p>Overlap reduces the chance of missing changes around the watermark boundary (latency, clock skew, boundary equality, retries).</p>
+<p>Typical approach:</p>
+<ul>
+<li>Query from <code>watermarkUtc - overlap</code> using <code>ge</code></li>
+<li>Deduplicate and process idempotently</li>
+<li>Advance watermark only after a successful full run</li>
+</ul>
+<h3 id="handling-duplicates-required-when-using-overlap">Handling duplicates (required when using overlap)</h3>
+<p>When you use overlap (and often even without overlap, depending on the chosen boundary operator), duplicates are expected. The sync code should be idempotent.</p>
+<p>A practical approach is to store a per-entity checkpoint keyed by <code>Id</code>:</p>
+<ul>
+<li><code>lastAppliedUtcById[Id] = last processed AggregateLastUpdateTimeUtc for this entity</code></li>
+</ul>
+<p>Then, for every received item:</p>
+<ul>
+<li>If <code>item.AggregateLastUpdateTimeUtc &lt;= lastAppliedUtcById[item.Id]</code> → skip (duplicate/older)</li>
+<li>Else → upsert + update the per-entity checkpoint</li>
+</ul>
+<p>Pseudocode:</p>
+<pre><code class="lang-text">maxSeenUtc = watermarkUtc
+
+for each page (following @odata.nextLink):
+  for each item:
+    lastApplied = lastAppliedUtcById[item.Id] (or null)
+
+    if lastApplied != null and item.AggregateLastUpdateTimeUtc &lt;= lastApplied:
+        continue
+
+    upsert(item)
+    lastAppliedUtcById[item.Id] = item.AggregateLastUpdateTimeUtc
+    maxSeenUtc = max(maxSeenUtc, item.AggregateLastUpdateTimeUtc)
+
+watermarkUtc = maxSeenUtc  // advance watermark only after successful commit of the whole run
+</code></pre>
+<h3 id="paging-skiptoken-vs-skip">Paging: $skiptoken vs $skip</h3>
+<p>When a query contains <code>$top</code>, Domain API returns <code>@odata.nextLink</code>:</p>
+<ul>
+<li>If the query targets an entity set backed by a <strong>table</strong> (not a view) and <strong>no <code>$orderby</code> is specified</strong>, <code>@odata.nextLink</code> uses:</li>
+</ul>
+<p><code>$skiptoken={NEXT_ID}</code></p>
+<p>This is keyset paging (based on <code>Id</code>) and avoids the instability of offset paging when inserts/deletes happen between page requests.</p>
+<p>Example:</p>
+<pre><code class="lang-json">&quot;@odata.nextLink&quot;: &quot;General_Products_Products?$top=10&amp;$select=Id&amp;$count=true&amp;$skiptoken=3f253c9a-5936-e311-81cb-00155d001f00&quot;
+</code></pre>
+<ul>
+<li>If the query is against a <strong>view</strong> or if <strong><code>$orderby</code> is specified</strong>, <code>@odata.nextLink</code> is generated using <code>$skip</code> (offset paging).</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="i-dont-see-aggregatelastupdatetimeutc">I don’t see AggregateLastUpdateTimeUtc</h3>
+<p>The attribute is available only for entities that are aggregate roots. If the entity set you are querying is not an aggregate root, the attribute will not be exposed.</p>
+<h3 id="i-dont-get-skiptoken-in-">I don’t get $skiptoken in @odata.nextLink</h3>
+<p><code>$skiptoken</code> is returned only when:</p>
+<ul>
+<li><code>$top</code> is specified,</li>
+<li>no <code>$orderby</code> is specified,</li>
+<li>the entity set is backed by a table (not a view).</li>
+</ul>
+<p>If any of these conditions is not met, <code>@odata.nextLink</code> uses <code>$skip</code>.</p>
+<h3 id="my-incremental-sync-produces-duplicates">My incremental sync produces duplicates</h3>
+<p>This is expected when using overlap (<code>fromUtc = watermarkUtc - overlap</code>). Ensure your sync logic is idempotent and deduplicates by (<code>Id</code>, <code>AggregateLastUpdateTimeUtc</code>) as described above.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-sync/incremental-pull.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
