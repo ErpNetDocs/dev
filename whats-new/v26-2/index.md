@@ -12,3 +12,6 @@
 - [**AggregateLastUpdateTimeUtc (Domain API)**](../../domain-api/data-sync/incremental-pull.md)  
   Aggregate root entities now expose `AggregateLastUpdateTimeUtc`, enabling incremental pull scenarios by filtering entities updated after a given UTC timestamp.
 
+- [**Import**](../../domain-api/data-manipulation/import.md)
+  ERP.net Domain API defines an Import endpoint which can be used to import multiple entities at once.
+
