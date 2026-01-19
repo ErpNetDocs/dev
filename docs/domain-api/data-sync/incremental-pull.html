@@ -146,7 +146,6 @@ If the payload per row is large (many selected fields and/or <code>$expand</code
 <li><code>fromUtc = 2023-06-09T09:55:00.000Z</code></li>
 </ul>
 <pre><code class="lang-http">General_Products_Products?
-  $count=true&amp;
   $top=1000&amp;
   $select=Id,AggregateLastUpdateTimeUtc,PartNumber&amp;
   $filter=AggregateLastUpdateTimeUtc ge 2023-06-09T09:55:00.000Z
