@@ -68,7 +68,6 @@ Example:
 
 ```http
 General_Products_Products?
-  $count=true&
   $top=1000&
   $select=Id,AggregateLastUpdateTimeUtc,PartNumber&
   $filter=AggregateLastUpdateTimeUtc ge 2023-06-09T09:55:00.000Z
