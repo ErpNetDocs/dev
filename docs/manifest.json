@@ -891,6 +891,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "building-apps/installing-external-applications.md",
+      "output": {
+        ".html": {
+          "relative_path": "building-apps/installing-external-applications.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "building-apps/overview.md",
       "output": {
         ".html": {
