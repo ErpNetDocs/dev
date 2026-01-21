@@ -32,7 +32,7 @@ Send the token in **one** of the supported headers.
 **Option A: Authorization header**
 
 ```http
-GET /api/domain/odata/Customers?$top=10 HTTP/1.1
+GET /api/domain/odata/Crm_Sales_Customers?$top=10 HTTP/1.1
 Host: demodb.my.erp.net
 Authorization: Bearer enrt_445659C00F83CCA2D427BF113EFB355319346865C0B4FE5A3C76C16271B06AFF
 ```
@@ -40,7 +40,7 @@ Authorization: Bearer enrt_445659C00F83CCA2D427BF113EFB355319346865C0B4FE5A3C76C
 **Option B: API key header**
 
 ```http
-GET /api/domain/odata/Customers?$top=10 HTTP/1.1
+GET /api/domain/odata/Crm_Sales_Customers?$top=10 HTTP/1.1
 Host: demodb.my.erp.net
 X-Api-Key: enrt_445659C00F83CCA2D427BF113EFB355319346865C0B4FE5A3C76C16271B06AFF
 ```

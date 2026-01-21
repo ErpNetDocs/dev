@@ -45,7 +45,7 @@ scope=read
 ## 2) Call @@name APIs
 
 ```http
-GET /api/domain/odata/Crm_Customers?$top=10 HTTP/1.1
+GET /api/domain/odata/Crm_Sales_Customers?$top=10 HTTP/1.1
 Host: testdb.my.erp.net
 Authorization: Bearer <access_token>
 ```

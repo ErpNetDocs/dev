@@ -108,7 +108,7 @@ Here, you can find information on how to migrate your Basic Auth workflow to OAu
 For example, we'll update a customer, but in such a way that we get an error back. We'll trigger the [R27159](https://docs.erp.net/model/business-rules/R27159.html) validation business rule.
 
 ```HTTP
-PATCH /api/domain/odata/Crm_Customers(e99186bc-d3bc-4a93-b169-5baec1d45540) HTTP/1.1
+PATCH /api/domain/odata/Crm_Sales_Customers(e99186bc-d3bc-4a93-b169-5baec1d45540) HTTP/1.1
 Host: demodb.my.erp.net
 Content-Type: application/json
 
@@ -131,7 +131,7 @@ Accordingly, the result will be the following error:
 If we change the language (this time as a url parameter), the request will look like this,
 
 ```HTTP
-PATCH /api/domain/odata/Crm_Customers(e99186bc-d3bc-4a93-b169-5baec1d45540)?culture=bg HTTP/1.1
+PATCH /api/domain/odata/Crm_Sales_Customers(e99186bc-d3bc-4a93-b169-5baec1d45540)?culture=bg HTTP/1.1
 Host: demodb.my.erp.net
 Content-Type: application/json
 

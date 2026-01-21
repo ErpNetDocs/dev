@@ -60,7 +60,7 @@ Reference tokens can be used in any request that accepts a standard Bearer token
 ### Option 1: Authorization Header
 
 ```http
-GET /api/domain/odata/Customers HTTP/1.1
+GET /api/domain/odata/Crm_Sales_Customers HTTP/1.1
 Host: testdb.my.erp.net
 Authorization: Bearer enrt_1D41D4694B4F02D3D6A31FFA07E20B73F48248B26C75A0CCCB5F9DBEE41F7960
 ```
@@ -68,7 +68,7 @@ Authorization: Bearer enrt_1D41D4694B4F02D3D6A31FFA07E20B73F48248B26C75A0CCCB5F9
 ### Option 2: API Key Header
 
 ```http
-GET /api/domain/odata/Customers HTTP/1.1
+GET /api/domain/odata/Crm_Sales_Customers HTTP/1.1
 Host: testdb.my.erp.net
 X-Api-Key: enrt_1D41D4694B4F02D3D6A31FFA07E20B73F48248B26C75A0CCCB5F9DBEE41F7960
 ```

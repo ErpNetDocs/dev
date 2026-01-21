@@ -11,7 +11,7 @@ When an application successfully authenticates (using Authorization Code or Clie
 This token is then passed in the `Authorization` HTTP header with each API request:
 
 ```http
-GET /api/domain/odata/Crm_Customers?$top=5 HTTP/1.1
+GET /api/domain/odata/Crm_Sales_Customers?$top=5 HTTP/1.1
 Host: testdb.my.erp.net
 Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiYXQrand0In0...
 ```

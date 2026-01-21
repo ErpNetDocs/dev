@@ -24,7 +24,7 @@ It's possible to create a notification yourself via the Domain API. You simple n
 3. Populate the required notification's attributes such as the target user, the notification class, the notification subject.
 
 ```HTTP
-POST /api/domain/odata/Crm_Customers(79f3f74e-098a-4d91-9714-c4f845c2dc62)/CreateNotification HTTP/1.1
+POST /api/domain/odata/Crm_Sales_Customers(79f3f74e-098a-4d91-9714-c4f845c2dc62)/CreateNotification HTTP/1.1
 Host: demodb.my.erp.net
 Content-Type: application/json
 

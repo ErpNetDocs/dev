@@ -74,7 +74,7 @@ const string CallbackUri = "http://localhost/signin-callback/";
 const string TrustedAppUri = "my.trusted.app/first";
 const string TrustedAppSecret = "<my_plain_app_secret>";
 
-const string DomainApiTestUri = "https://demodb.my.erp.net/api/domain/odata/Crm_Customers?$top=10";
+const string DomainApiTestUri = "https://demodb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=10";
 ```
 
 We won't waste time, explaining about the constants, their names are self-explanatory. The next two variables are a little more interesting,
@@ -313,7 +313,7 @@ using System.Text.Json.Serialization;
 const string AuthorizeUri = "https://demodb.my.erp.net/id/connect/authorize";
 const string TokenUri = "https://demodb.my.erp.net/id/connect/token";
 const string CallbackUri = "http://localhost/signin-callback/";
-const string DomainApiTestUri = "https://demodb.my.erp.net/api/domain/odata/Crm_Customers?$top=10";
+const string DomainApiTestUri = "https://demodb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=10";
 const string TrustedAppUri = "my.trusted.app/first";
 const string TrustedAppSecret = "<my_plain_app_secret>";
 

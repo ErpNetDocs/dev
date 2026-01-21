@@ -65,7 +65,7 @@ const CALLBACK_URI = "https://my.trusted.app/app.php";
 const TRUSTED_APP_URI = "my.trusted.app";
 const TRUSTED_APP_SECRET = "<my_plain_app_secret>";
 
-const DOMAIN_API_TEST_URI = "https://demodb.my.erp.net/api/domain/odata/Crm_Customers?\$top=10";
+const DOMAIN_API_TEST_URI = "https://demodb.my.erp.net/api/domain/odata/Crm_Sales_Customers?\$top=10";
 ```
 
 We won't waste time, explaining about the constants, their names are self-explanatory.
@@ -189,7 +189,7 @@ const CALLBACK_URI = 'https://my.trusted.app/app.php';
 const TRUSTED_APP_URI = 'my.trusted.app';
 const TRUSTED_APP_SECRET = '<my_plain_app_secret>';
 
-const DOMAIN_API_TEST_URI = 'https://demodb.my.erp.net/api/domain/odata/Crm_Customers?$top=10';
+const DOMAIN_API_TEST_URI = 'https://demodb.my.erp.net/api/domain/odata/Crm_Sales_Customers?$top=10';
 
 if (isset($_POST) && isset($_POST['code'])) {
     
