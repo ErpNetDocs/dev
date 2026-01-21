@@ -6,3 +6,5 @@
 - name: Concepts
   href: concepts/toc.yml
   topicHref: concepts/overview.md
+- name: External application lifecycle operations
+  href: installing-external-applications.md
