@@ -172,7 +172,7 @@ Authorization: Basic xxxxx
 <h2 id="other-cases-where-language-change-has-an-effect">Other cases, where language change has an effect</h2>
 <h3 id="error-responses--messages">Error responses / messages</h3>
 <p>For example, we'll update a customer, but in such a way that we get an error back. We'll trigger the <a href="https://docs.erp.net/model/business-rules/R27159.html">R27159</a> validation business rule.</p>
-<pre><code class="lang-HTTP">PATCH /api/domain/odata/Crm_Customers(e99186bc-d3bc-4a93-b169-5baec1d45540) HTTP/1.1
+<pre><code class="lang-HTTP">PATCH /api/domain/odata/Crm_Sales_Customers(e99186bc-d3bc-4a93-b169-5baec1d45540) HTTP/1.1
 Host: demodb.my.erp.net
 Content-Type: application/json
 
@@ -189,7 +189,7 @@ Content-Type: application/json
 }
 </code></pre>
 <p>If we change the language (this time as a url parameter), the request will look like this,</p>
-<pre><code class="lang-HTTP">PATCH /api/domain/odata/Crm_Customers(e99186bc-d3bc-4a93-b169-5baec1d45540)?culture=bg HTTP/1.1
+<pre><code class="lang-HTTP">PATCH /api/domain/odata/Crm_Sales_Customers(e99186bc-d3bc-4a93-b169-5baec1d45540)?culture=bg HTTP/1.1
 Host: demodb.my.erp.net
 Content-Type: application/json
 

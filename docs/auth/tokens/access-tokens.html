@@ -93,7 +93,7 @@ It defines <strong>who</strong> is calling, <strong>what</strong> can be accesse
 <h2 id="access-token-basics">Access Token Basics</h2>
 <p>When an application successfully authenticates (using Authorization Code or Client Credentials flow), ERP.net Identity returns an access token.<br>
 This token is then passed in the <code>Authorization</code> HTTP header with each API request:</p>
-<pre><code class="lang-http">GET /api/domain/odata/Crm_Customers?$top=5 HTTP/1.1
+<pre><code class="lang-http">GET /api/domain/odata/Crm_Sales_Customers?$top=5 HTTP/1.1
 Host: testdb.my.erp.net
 Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjVCMjc5MjBFNjUzREQ3QUM2N0QyRjY0QjMyQTE3OTkyIiwidHlwIjoiYXQrand0In0...
 </code></pre>

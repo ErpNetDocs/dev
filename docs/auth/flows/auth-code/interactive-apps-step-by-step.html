@@ -207,7 +207,7 @@ code_verifier=&lt;original_random_string_used_to_build_code_challenge&gt;
 </code></pre>
 <h2 id="4-call--apis">4) Call ERP.net APIs</h2>
 <p>Use the access token in the Authorization header:</p>
-<pre><code class="lang-http">GET /api/domain/odata/Crm_Customers?$top=10 HTTP/1.1
+<pre><code class="lang-http">GET /api/domain/odata/Crm_Sales_Customers?$top=10 HTTP/1.1
 Host: testdb.my.erp.net
 Authorization: Bearer &lt;access_token&gt;
 </code></pre>
