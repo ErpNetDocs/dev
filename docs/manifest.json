@@ -22,6 +22,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "auth/automating-installation.md",
+      "output": {
+        ".html": {
+          "relative_path": "auth/automating-installation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "auth/client-libraries.md",
       "output": {
         ".html": {
@@ -885,16 +895,6 @@
         },
         ".json": {
           "relative_path": "building-apps/getting-started/toc.json"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "building-apps/installing-external-applications.md",
-      "output": {
-        ".html": {
-          "relative_path": "building-apps/installing-external-applications.html"
         }
       },
       "version": ""
