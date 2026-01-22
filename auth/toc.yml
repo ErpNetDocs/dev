@@ -18,6 +18,8 @@
 - name: Sessions
   href: sessions/toc.yml  
   topicHref: sessions/overview.md
+- name: Automating installation
+  href: automating-installation.md  
 - name: Samples
   href: samples/toc.yml
   topicHref: samples/index.md

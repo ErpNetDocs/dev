@@ -1,4 +1,4 @@
-# External application lifecycle operations
+# Automating installation
 
 ## Overview
 
@@ -13,11 +13,11 @@ After a successful operation, Instance Manager sends an **app lifecycle event** 
 
 Related topics:
 
-- [Trusted Applications (configuration)](../auth/configuration/trusted-apps-access.md)
-- [Scopes](../auth/concepts/scopes.md)
-- [Service Access Tokens](../auth/tokens/reference-access-tokens.md#service-access-tokens-sat)
-- [OAuth2 Client Credentials Flow](../auth/flows/client-credentials/overview.md)
-- [Security Best Practices](../auth/security-best-practices.md)
+- [Trusted Applications (configuration)](./configuration/trusted-apps-access.md)
+- [Scopes](./concepts/scopes.md)
+- [Service Access Tokens](./tokens/reference-access-tokens.md#service-access-tokens-sat)
+- [OAuth2 Client Credentials Flow](./flows/client-credentials/overview.md)
+- [Security Best Practices](./security-best-practices.md)
 
 ## Getting Started
 

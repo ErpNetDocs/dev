@@ -4,7 +4,7 @@ items:
 - name: Building Apps
   href: building-apps/toc.yml
   topicHref: building-apps/overview.md
-- name: Authentication and Authorization
+- name: Authentication
   href: auth/toc.yml
   topicHref: auth/overview.md  
 - name: Domain API
