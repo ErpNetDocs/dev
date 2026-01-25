@@ -76,6 +76,7 @@ https://mycompany.my.erp.net/manage/apps/lifecycle/uninstall
 | `impersonateAsCommunityUserAllowed` | bool | `false` | For `Public` clients: whether impersonation as a **community** user is allowed. |
 | `requestSecret` | bool | `false` | If `true`, Instance Manager will attempt to issue credentials and include them in the lifecycle event payload. |
 | `secretType` | string | `SAT` | Credential kind to issue when `requestSecret=true`. `SAT` = **Service Access Token** (a reference token). `clientCredentials` = a **client secret** that the app uses in the OAuth **Client Credentials** flow to obtain an access token. Supported values: `SAT`, `clientCredentials` (case-insensitive). |
+| `accessTokens` | string | `none` | Defines who is allowed to issue **reference access tokens** for this Trusted Application. Supported values: `none`, `authenticatedUsers`, `administratorsOnly`. |
 
 ### Uninstall URL parameters
 
@@ -99,6 +100,7 @@ https://mycompany.my.erp.net/manage/apps/lifecycle/uninstall
     - `impersonateAsCommunityUserAllowed=true`
 - If `requestSecret=true` for a `Public` client, the request is rejected:
   - Error: `Cannot request credentials for a public client.`
+- If `accessTokens` is not specified, it defaults to `none`.
 
 ### User flow (interactive approval)
 
@@ -219,7 +221,39 @@ Response:
 
 ---
 
-#### 4) Uninstall
+#### 4) Confidential requesting a secret and restricting token issuance to administrators
+
+Request:
+
+```http
+https://mycompany.my.erp.net/manage/apps/lifecycle/install
+  ?applicationUri=MyExternalAppIdentifier
+  &redirectUrl=https://my-external-app.com/callback/
+  &applicationName=My External App
+  &clientType=Confidential
+  &requestSecret=true
+  &secretType=sat
+  &accessTokens=administratorsOnly
+```  
+
+Response:
+
+```json
+{
+  "schema": "erpnet.appLifecycleEvent.v1",
+  "eventId": "3857aa99-881c-4798-b888-7ed72d137691",
+  "event": "installed",
+  "occuredAt": "2026-01-21T14:39:20.6048228Z",
+  "instanceBaseUrl": "mycompany.my.erp.net",
+  "user": "admin",
+  "secret": "enrt_CE17A40CBEBB9F59EECA1EF199F438D64FC42618B1677BE9279E8E4351BA9811",
+  "secretType": "SAT"
+}
+```
+
+---
+
+#### 5) Uninstall
 
 Request:
 
@@ -283,6 +317,22 @@ If the payload contains `secret`, treat it as a password:
 - do not log it
 - store it in a secret manager / vault
 - restrict access (least privilege)
+
+### Access token issuance (`accessTokens`)
+
+The `accessTokens` parameter controls **who is allowed to issue reference access tokens** for the Trusted Application.
+
+Supported values:
+
+- `none`  
+  Reference access tokens cannot be issued.  
+  *(Default)*
+
+- `authenticatedUsers`  
+  Any authenticated (logged-in) user may issue reference access tokens.
+
+- `administratorsOnly`  
+  Only administrators may issue reference access tokens.
 
 ## Troubleshooting
 
