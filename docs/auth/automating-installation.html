@@ -197,6 +197,12 @@
 <td style="text-align: right;"><code>SAT</code></td>
 <td>Credential kind to issue when <code>requestSecret=true</code>. <code>SAT</code> = <strong>Service Access Token</strong> (a reference token). <code>clientCredentials</code> = a <strong>client secret</strong> that the app uses in the OAuth <strong>Client Credentials</strong> flow to obtain an access token. Supported values: <code>SAT</code>, <code>clientCredentials</code> (case-insensitive).</td>
 </tr>
+<tr>
+<td><code>accessTokens</code></td>
+<td style="text-align: right;">string</td>
+<td style="text-align: right;"><code>none</code></td>
+<td>Defines who is allowed to issue <strong>reference access tokens</strong> for this Trusted Application. Supported values: <code>none</code>, <code>authenticatedUsers</code>, <code>administratorsOnly</code>.</td>
+</tr>
 </tbody>
 </table>
 <h3 id="uninstall-url-parameters">Uninstall URL parameters</h3>
@@ -243,6 +249,7 @@
 <li>Error: <code>Cannot request credentials for a public client.</code></li>
 </ul>
 </li>
+<li>If <code>accessTokens</code> is not specified, it defaults to <code>none</code>.</li>
 </ul>
 <h3 id="user-flow-interactive-approval">User flow (interactive approval)</h3>
 <ol>
@@ -390,7 +397,31 @@
 }
 </code></pre>
 <hr>
-<h4 id="4-uninstall">4) Uninstall</h4>
+<h4 id="4-confidential-requesting-a-secret-and-restricting-token-issuance-to-administrators">4) Confidential requesting a secret and restricting token issuance to administrators</h4>
+<p>Request:</p>
+<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/lifecycle/install
+  ?applicationUri=MyExternalAppIdentifier
+  &amp;redirectUrl=https://my-external-app.com/callback/
+  &amp;applicationName=My External App
+  &amp;clientType=Confidential
+  &amp;requestSecret=true
+  &amp;secretType=sat
+  &amp;accessTokens=administratorsOnly
+</code></pre>
+<p>Response:</p>
+<pre><code class="lang-json">{
+  &quot;schema&quot;: &quot;erpnet.appLifecycleEvent.v1&quot;,
+  &quot;eventId&quot;: &quot;3857aa99-881c-4798-b888-7ed72d137691&quot;,
+  &quot;event&quot;: &quot;installed&quot;,
+  &quot;occuredAt&quot;: &quot;2026-01-21T14:39:20.6048228Z&quot;,
+  &quot;instanceBaseUrl&quot;: &quot;mycompany.my.erp.net&quot;,
+  &quot;user&quot;: &quot;admin&quot;,
+  &quot;secret&quot;: &quot;enrt_CE17A40CBEBB9F59EECA1EF199F438D64FC42618B1677BE9279E8E4351BA9811&quot;,
+  &quot;secretType&quot;: &quot;SAT&quot;
+}
+</code></pre>
+<hr>
+<h4 id="5-uninstall">5) Uninstall</h4>
 <p>Request:</p>
 <pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/lifecycle/uninstall
   ?applicationUri=MyExternalAppIdentifier
@@ -451,6 +482,21 @@ Client secret intended for use with the Client Credentials flow.</p>
 <li>do not log it</li>
 <li>store it in a secret manager / vault</li>
 <li>restrict access (least privilege)</li>
+</ul>
+<h3 id="access-token-issuance-accesstokens">Access token issuance (<code>accessTokens</code>)</h3>
+<p>The <code>accessTokens</code> parameter controls <strong>who is allowed to issue reference access tokens</strong> for the Trusted Application.</p>
+<p>Supported values:</p>
+<ul>
+<li><p><code>none</code><br>
+Reference access tokens cannot be issued.<br>
+<em>(Default)</em></p>
+</li>
+<li><p><code>authenticatedUsers</code><br>
+Any authenticated (logged-in) user may issue reference access tokens.</p>
+</li>
+<li><p><code>administratorsOnly</code><br>
+Only administrators may issue reference access tokens.</p>
+</li>
 </ul>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <h3 id="only-administrators-can-perform-this-action">Only administrators can perform this action.</h3>
