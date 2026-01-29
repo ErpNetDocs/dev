@@ -121,10 +121,10 @@
 </div>
 <h3 id="endpoints">Endpoints</h3>
 <h4 id="install-endpoint">Install endpoint</h4>
-<pre><code class="lang-http">GET {instanceBaseUrl}/manage/apps/lifecycle/install
+<pre><code class="lang-http">GET {instanceBaseUrl}/manage/apps/install
 </code></pre>
 <p>Example:</p>
-<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/lifecycle/install
+<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
   &amp;redirectUrl=https://my-external-app.com/callback/
   &amp;applicationName=My External App
@@ -132,10 +132,10 @@
   &amp;requestSecret=true
 </code></pre>
 <h4 id="uninstall-endpoint">Uninstall endpoint</h4>
-<pre><code class="lang-http">GET {instanceBaseUrl}/manage/apps/lifecycle/uninstall
+<pre><code class="lang-http">GET {instanceBaseUrl}/manage/apps/uninstall
 </code></pre>
 <p>Example:</p>
-<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/lifecycle/uninstall
+<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/uninstall
   ?applicationUri=MyExternalAppIdentifier
 </code></pre>
 <h3 id="install-url-parameters">Install URL parameters</h3>
@@ -334,7 +334,7 @@
 <h3 id="examples">Examples</h3>
 <h4 id="1-confidential-without-requesting-a-secret">1) Confidential without requesting a secret</h4>
 <p>Request:</p>
-<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/lifecycle/install
+<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
   &amp;redirectUrl=https://my-external-app.com/callback/
   &amp;applicationName=My External App
@@ -353,7 +353,7 @@
 <hr>
 <h4 id="2-confidential-requesting-a-secret-and-specifying-sat">2) Confidential requesting a secret and specifying SAT</h4>
 <p>Request:</p>
-<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/lifecycle/install
+<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
   &amp;redirectUrl=https://my-external-app.com/callback/
   &amp;applicationName=My External App
@@ -376,7 +376,7 @@
 <hr>
 <h4 id="3-confidential-requesting-a-secret-and-specifying-clientcredentials">3) Confidential requesting a secret and specifying ClientCredentials</h4>
 <p>Request:</p>
-<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/lifecycle/install
+<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
   &amp;redirectUrl=https://my-external-app.com/callback/
   &amp;applicationName=My External App
@@ -399,7 +399,7 @@
 <hr>
 <h4 id="4-confidential-requesting-a-secret-and-restricting-token-issuance-to-administrators">4) Confidential requesting a secret and restricting token issuance to administrators</h4>
 <p>Request:</p>
-<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/lifecycle/install
+<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
   &amp;redirectUrl=https://my-external-app.com/callback/
   &amp;applicationName=My External App
@@ -423,7 +423,7 @@
 <hr>
 <h4 id="5-uninstall">5) Uninstall</h4>
 <p>Request:</p>
-<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/lifecycle/uninstall
+<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/uninstall
   ?applicationUri=MyExternalAppIdentifier
 </code></pre>
 <p>Response:</p>
