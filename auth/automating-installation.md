@@ -37,13 +37,13 @@ Related topics:
 #### Install endpoint
 
 ```http
-GET {instanceBaseUrl}/manage/apps/lifecycle/install
+GET {instanceBaseUrl}/manage/apps/install
 ```
 
 Example:
 
 ```http
-https://mycompany.my.erp.net/manage/apps/lifecycle/install
+https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
   &redirectUrl=https://my-external-app.com/callback/
   &applicationName=My External App
@@ -54,13 +54,13 @@ https://mycompany.my.erp.net/manage/apps/lifecycle/install
 #### Uninstall endpoint
 
 ```http
-GET {instanceBaseUrl}/manage/apps/lifecycle/uninstall
+GET {instanceBaseUrl}/manage/apps/uninstall
 ```
 
 Example:
 
 ```http
-https://mycompany.my.erp.net/manage/apps/lifecycle/uninstall
+https://mycompany.my.erp.net/manage/apps/uninstall
   ?applicationUri=MyExternalAppIdentifier
 ```
 
@@ -137,7 +137,7 @@ https://mycompany.my.erp.net/manage/apps/lifecycle/uninstall
 Request:
 
 ```http
-https://mycompany.my.erp.net/manage/apps/lifecycle/install
+https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
   &redirectUrl=https://my-external-app.com/callback/
   &applicationName=My External App
@@ -164,7 +164,7 @@ Response:
 Request:
 
 ```http
-https://mycompany.my.erp.net/manage/apps/lifecycle/install
+https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
   &redirectUrl=https://my-external-app.com/callback/
   &applicationName=My External App
@@ -195,7 +195,7 @@ Response:
 Request:
 
 ```http
-https://mycompany.my.erp.net/manage/apps/lifecycle/install
+https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
   &redirectUrl=https://my-external-app.com/callback/
   &applicationName=My External App
@@ -226,7 +226,7 @@ Response:
 Request:
 
 ```http
-https://mycompany.my.erp.net/manage/apps/lifecycle/install
+https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
   &redirectUrl=https://my-external-app.com/callback/
   &applicationName=My External App
@@ -258,7 +258,7 @@ Response:
 Request:
 
 ```http
-https://mycompany.my.erp.net/manage/apps/lifecycle/uninstall
+https://mycompany.my.erp.net/manage/apps/uninstall
   ?applicationUri=MyExternalAppIdentifier
 ```
 
