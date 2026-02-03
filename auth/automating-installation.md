@@ -9,7 +9,7 @@ This flow allows an administrator to:
 - **Install** an external application (Instance Manager creates a Trusted Application in the target @@name instance).
 - **Uninstall** an external application (Instance Manager removes the app registration from the instance).
 
-After a successful operation, Instance Manager sends an **app lifecycle event** payload (`schema = erpnet.appLifecycleEvent.v1`) to the external application's `redirectUrl`, so the external application can complete onboarding.
+After a successful operation, Instance Manager sends an **app lifecycle event** payload (`schema = erpnet.appLifecycleEvent.v1`) to the external application's `redirectUri`, so the external application can complete onboarding.
 
 Related topics:
 
@@ -27,10 +27,10 @@ Related topics:
 - You can authenticate to **@@name Instance Manager** with an **administrator** account.
 - Your external application has:
   - a stable `applicationUri` identifier
-  - an HTTPS `redirectUrl` endpoint that can receive an **HTTP POST** with a JSON body and return a successful (2xx) response
+  - an HTTPS `redirectUri` endpoint that can receive an **HTTP POST** with a JSON body and return a successful (2xx) response
 
 > [!NOTE]
-> In production, `redirectUrl` must be an **absolute HTTPS URL**.
+> In production, `redirectUri` must be an **absolute HTTPS URL**.
 
 ### Endpoints
 
@@ -45,7 +45,7 @@ Example:
 ```http
 https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
-  &redirectUrl=https://my-external-app.com/callback/
+  &redirectUri=https://my-external-app.com/callback/
   &applicationName=My External App
   &clientType=Confidential
   &requestSecret=true
@@ -71,7 +71,7 @@ https://mycompany.my.erp.net/manage/apps/uninstall
 | `applicationName` | string | *(none)* | Name of the application. Used to set the Trusted Application name/display name when the registration is created. |
 | `applicationUri` | string | *(none)* | External application identifier used to create its registration in the @@name instance. **Required.** |
 | `clientType` | string | `Public` | Client type of the application. Supported values: `Confidential`, `Public`. |
-| `redirectUrl` | URL | *(none)* | Redirect URL used as the application's sign-in/impersonation callback. @@name Instance Manager also uses this URL to **POST** the lifecycle event payload (JSON) after a successful operation. |
+| `redirectUri` | URL | *(none)* | Redirect URL used as the application's sign-in/impersonation callback. @@name Instance Manager also uses this URL to **POST** the lifecycle event payload (JSON) after a successful operation. |
 | `impersonateAsInternalUserAllowed` | bool | `false` | For `Public` clients: whether impersonation as an **internal** user is allowed. |
 | `impersonateAsCommunityUserAllowed` | bool | `false` | For `Public` clients: whether impersonation as a **community** user is allowed. |
 | `requestSecret` | bool | `false` | If `true`, Instance Manager will attempt to issue credentials and include them in the lifecycle event payload. |
@@ -94,7 +94,7 @@ https://mycompany.my.erp.net/manage/apps/uninstall
 
 **Install-specific**
 - If `clientType=Public`:
-  - `redirectUrl` must be present and valid.
+  - `redirectUri` must be present and valid.
   - At least one impersonation flag must be enabled:
     - `impersonateAsInternalUserAllowed=true` **or**
     - `impersonateAsCommunityUserAllowed=true`
@@ -110,12 +110,12 @@ https://mycompany.my.erp.net/manage/apps/uninstall
 3. Instance Manager displays a confirmation page with the operation details and an Install / Uninstall action button.
 4. When the user clicks the action button:
    - @@name Instance Manager performs the operation in the @@name instance.
-   - @@name Instance Manager sends an **HTTP POST** to `redirectUrl` with a JSON payload describing the lifecycle event.
+   - @@name Instance Manager sends an **HTTP POST** to `redirectUri` with a JSON payload describing the lifecycle event.
    - The callback must return a successful response (2xx). Otherwise, the operation is treated as failed.
 
 ### Lifecycle event payload (onboarding callback)
 
-@@name Instance Manager sends the lifecycle event payload to `redirectUrl` using HTTP POST with JSON.
+@@name Instance Manager sends the lifecycle event payload to `redirectUri` using HTTP POST with JSON.
 
 **Payload fields**
 
@@ -139,7 +139,7 @@ Request:
 ```http
 https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
-  &redirectUrl=https://my-external-app.com/callback/
+  &redirectUri=https://my-external-app.com/callback/
   &applicationName=My External App
   &clientType=Confidential
 ```
@@ -166,7 +166,7 @@ Request:
 ```http
 https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
-  &redirectUrl=https://my-external-app.com/callback/
+  &redirectUri=https://my-external-app.com/callback/
   &applicationName=My External App
   &clientType=Confidential
   &requestSecret=true
@@ -197,7 +197,7 @@ Request:
 ```http
 https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
-  &redirectUrl=https://my-external-app.com/callback/
+  &redirectUri=https://my-external-app.com/callback/
   &applicationName=My External App
   &clientType=Confidential
   &requestSecret=true
@@ -228,7 +228,7 @@ Request:
 ```http
 https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
-  &redirectUrl=https://my-external-app.com/callback/
+  &redirectUri=https://my-external-app.com/callback/
   &applicationName=My External App
   &clientType=Confidential
   &requestSecret=true
@@ -285,7 +285,7 @@ Response:
 
 - `Public`
   - Intended for apps that cannot securely store credentials (e.g. browser-based apps).
-  - Must provide `redirectUrl`.
+  - Must provide `redirectUri`.
   - Must enable impersonation for at least one user type:
     - internal and/or community
   - Cannot request credentials (`requestSecret=true` is not allowed).
@@ -300,15 +300,15 @@ When `requestSecret=true` (for confidential clients), Instance Manager can issue
 - `ClientCredentials`  
   Client secret intended for use with the Client Credentials flow.
 
-### Callback delivery (redirectUrl)
+### Callback delivery (redirectUri)
 
-After the user approves the action, Instance Manager sends the lifecycle event payload to `redirectUrl` via **HTTP POST** (JSON, camelCase). The external application must:
+After the user approves the action, Instance Manager sends the lifecycle event payload to `redirectUri` via **HTTP POST** (JSON, camelCase). The external application must:
 
 - accept the POST request
 - validate and persist the onboarding data as appropriate
 - return a successful HTTP status code (2xx)
 
-In production environments, `redirectUrl` must be an absolute HTTPS URL.
+In production environments, `redirectUri` must be an absolute HTTPS URL.
 
 ### Secret handling
 
@@ -356,15 +356,15 @@ Resolution:
 
 - Provide `applicationUri` in the query string.
 
-### Public clients require a valid redirectUrl.
+### Public clients require a valid redirectUri.
 
 Cause:
 
-- `clientType=Public` but `redirectUrl` is missing or invalid.
+- `clientType=Public` but `redirectUri` is missing or invalid.
 
 Resolution:
 
-- Provide a valid `redirectUrl` (and ensure it meets the HTTPS requirement in production).
+- Provide a valid `redirectUri` (and ensure it meets the HTTPS requirement in production).
 
 ### Public clients must allow impersonation for at least one user type (internal or community).
 
@@ -392,9 +392,9 @@ Resolution:
 
 Cause:
 
-- The external application's `redirectUrl` endpoint returns an error response, or cannot be reached.
+- The external application's `redirectUri` endpoint returns an error response, or cannot be reached.
 
 Resolution:
 
-- Ensure `redirectUrl` is reachable from @@name Instance Manager and returns a successful response (2xx).
-- Ensure `redirectUrl` is absolute HTTPS in production.
+- Ensure `redirectUri` is reachable from @@name Instance Manager and returns a successful response (2xx).
+- Ensure `redirectUri` is absolute HTTPS in production.
