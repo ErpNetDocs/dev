@@ -94,7 +94,7 @@
 <li><strong>Install</strong> an external application (Instance Manager creates a Trusted Application in the target ERP.net instance).</li>
 <li><strong>Uninstall</strong> an external application (Instance Manager removes the app registration from the instance).</li>
 </ul>
-<p>After a successful operation, Instance Manager sends an <strong>app lifecycle event</strong> payload (<code>schema = erpnet.appLifecycleEvent.v1</code>) to the external application's <code>redirectUrl</code>, so the external application can complete onboarding.</p>
+<p>After a successful operation, Instance Manager sends an <strong>app lifecycle event</strong> payload (<code>schema = erpnet.appLifecycleEvent.v1</code>) to the external application's <code>redirectUri</code>, so the external application can complete onboarding.</p>
 <p>Related topics:</p>
 <ul>
 <li><a href="configuration/trusted-apps-access.html">Trusted Applications (configuration)</a></li>
@@ -111,13 +111,13 @@
 <li>Your external application has:
 <ul>
 <li>a stable <code>applicationUri</code> identifier</li>
-<li>an HTTPS <code>redirectUrl</code> endpoint that can receive an <strong>HTTP POST</strong> with a JSON body and return a successful (2xx) response</li>
+<li>an HTTPS <code>redirectUri</code> endpoint that can receive an <strong>HTTP POST</strong> with a JSON body and return a successful (2xx) response</li>
 </ul>
 </li>
 </ul>
 <div class="NOTE">
 <h5>Note</h5>
-<p>In production, <code>redirectUrl</code> must be an <strong>absolute HTTPS URL</strong>.</p>
+<p>In production, <code>redirectUri</code> must be an <strong>absolute HTTPS URL</strong>.</p>
 </div>
 <h3 id="endpoints">Endpoints</h3>
 <h4 id="install-endpoint">Install endpoint</h4>
@@ -126,7 +126,7 @@
 <p>Example:</p>
 <pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
-  &amp;redirectUrl=https://my-external-app.com/callback/
+  &amp;redirectUri=https://my-external-app.com/callback/
   &amp;applicationName=My External App
   &amp;clientType=Confidential
   &amp;requestSecret=true
@@ -168,7 +168,7 @@
 <td>Client type of the application. Supported values: <code>Confidential</code>, <code>Public</code>.</td>
 </tr>
 <tr>
-<td><code>redirectUrl</code></td>
+<td><code>redirectUri</code></td>
 <td style="text-align: right;">URL</td>
 <td style="text-align: right;"><em>(none)</em></td>
 <td>Redirect URL used as the application's sign-in/impersonation callback. ERP.net Instance Manager also uses this URL to <strong>POST</strong> the lifecycle event payload (JSON) after a successful operation.</td>
@@ -235,7 +235,7 @@
 <ul>
 <li>If <code>clientType=Public</code>:
 <ul>
-<li><code>redirectUrl</code> must be present and valid.</li>
+<li><code>redirectUri</code> must be present and valid.</li>
 <li>At least one impersonation flag must be enabled:
 <ul>
 <li><code>impersonateAsInternalUserAllowed=true</code> <strong>or</strong></li>
@@ -263,13 +263,13 @@
 <li>When the user clicks the action button:
 <ul>
 <li>ERP.net Instance Manager performs the operation in the ERP.net instance.</li>
-<li>ERP.net Instance Manager sends an <strong>HTTP POST</strong> to <code>redirectUrl</code> with a JSON payload describing the lifecycle event.</li>
+<li>ERP.net Instance Manager sends an <strong>HTTP POST</strong> to <code>redirectUri</code> with a JSON payload describing the lifecycle event.</li>
 <li>The callback must return a successful response (2xx). Otherwise, the operation is treated as failed.</li>
 </ul>
 </li>
 </ol>
 <h3 id="lifecycle-event-payload-onboarding-callback">Lifecycle event payload (onboarding callback)</h3>
-<p>ERP.net Instance Manager sends the lifecycle event payload to <code>redirectUrl</code> using HTTP POST with JSON.</p>
+<p>ERP.net Instance Manager sends the lifecycle event payload to <code>redirectUri</code> using HTTP POST with JSON.</p>
 <p><strong>Payload fields</strong></p>
 <table>
 <thead>
@@ -336,7 +336,7 @@
 <p>Request:</p>
 <pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
-  &amp;redirectUrl=https://my-external-app.com/callback/
+  &amp;redirectUri=https://my-external-app.com/callback/
   &amp;applicationName=My External App
   &amp;clientType=Confidential
 </code></pre>
@@ -355,7 +355,7 @@
 <p>Request:</p>
 <pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
-  &amp;redirectUrl=https://my-external-app.com/callback/
+  &amp;redirectUri=https://my-external-app.com/callback/
   &amp;applicationName=My External App
   &amp;clientType=Confidential
   &amp;requestSecret=true
@@ -378,7 +378,7 @@
 <p>Request:</p>
 <pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
-  &amp;redirectUrl=https://my-external-app.com/callback/
+  &amp;redirectUri=https://my-external-app.com/callback/
   &amp;applicationName=My External App
   &amp;clientType=Confidential
   &amp;requestSecret=true
@@ -401,7 +401,7 @@
 <p>Request:</p>
 <pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
-  &amp;redirectUrl=https://my-external-app.com/callback/
+  &amp;redirectUri=https://my-external-app.com/callback/
   &amp;applicationName=My External App
   &amp;clientType=Confidential
   &amp;requestSecret=true
@@ -448,7 +448,7 @@
 <li><p><code>Public</code></p>
 <ul>
 <li>Intended for apps that cannot securely store credentials (e.g. browser-based apps).</li>
-<li>Must provide <code>redirectUrl</code>.</li>
+<li>Must provide <code>redirectUri</code>.</li>
 <li>Must enable impersonation for at least one user type:
 <ul>
 <li>internal and/or community</li>
@@ -468,14 +468,14 @@ Service Access Token (reference token). In the current implementation, it is iss
 Client secret intended for use with the Client Credentials flow.</p>
 </li>
 </ul>
-<h3 id="callback-delivery-redirecturl">Callback delivery (redirectUrl)</h3>
-<p>After the user approves the action, Instance Manager sends the lifecycle event payload to <code>redirectUrl</code> via <strong>HTTP POST</strong> (JSON, camelCase). The external application must:</p>
+<h3 id="callback-delivery-redirecturi">Callback delivery (redirectUri)</h3>
+<p>After the user approves the action, Instance Manager sends the lifecycle event payload to <code>redirectUri</code> via <strong>HTTP POST</strong> (JSON, camelCase). The external application must:</p>
 <ul>
 <li>accept the POST request</li>
 <li>validate and persist the onboarding data as appropriate</li>
 <li>return a successful HTTP status code (2xx)</li>
 </ul>
-<p>In production environments, <code>redirectUrl</code> must be an absolute HTTPS URL.</p>
+<p>In production environments, <code>redirectUri</code> must be an absolute HTTPS URL.</p>
 <h3 id="secret-handling">Secret handling</h3>
 <p>If the payload contains <code>secret</code>, treat it as a password:</p>
 <ul>
@@ -517,14 +517,14 @@ Only administrators may issue reference access tokens.</p>
 <ul>
 <li>Provide <code>applicationUri</code> in the query string.</li>
 </ul>
-<h3 id="public-clients-require-a-valid-redirecturl">Public clients require a valid redirectUrl.</h3>
+<h3 id="public-clients-require-a-valid-redirecturi">Public clients require a valid redirectUri.</h3>
 <p>Cause:</p>
 <ul>
-<li><code>clientType=Public</code> but <code>redirectUrl</code> is missing or invalid.</li>
+<li><code>clientType=Public</code> but <code>redirectUri</code> is missing or invalid.</li>
 </ul>
 <p>Resolution:</p>
 <ul>
-<li>Provide a valid <code>redirectUrl</code> (and ensure it meets the HTTPS requirement in production).</li>
+<li>Provide a valid <code>redirectUri</code> (and ensure it meets the HTTPS requirement in production).</li>
 </ul>
 <h3 id="public-clients-must-allow-impersonation-for-at-least-one-user-type-internal-or-community">Public clients must allow impersonation for at least one user type (internal or community).</h3>
 <p>Cause:</p>
@@ -552,12 +552,12 @@ Only administrators may issue reference access tokens.</p>
 <h3 id="callback-fails-non-2xx-response">Callback fails (non-2xx response)</h3>
 <p>Cause:</p>
 <ul>
-<li>The external application's <code>redirectUrl</code> endpoint returns an error response, or cannot be reached.</li>
+<li>The external application's <code>redirectUri</code> endpoint returns an error response, or cannot be reached.</li>
 </ul>
 <p>Resolution:</p>
 <ul>
-<li>Ensure <code>redirectUrl</code> is reachable from ERP.net Instance Manager and returns a successful response (2xx).</li>
-<li>Ensure <code>redirectUrl</code> is absolute HTTPS in production.</li>
+<li>Ensure <code>redirectUri</code> is reachable from ERP.net Instance Manager and returns a successful response (2xx).</li>
+<li>Ensure <code>redirectUri</code> is absolute HTTPS in production.</li>
 </ul>
 
 </article>
