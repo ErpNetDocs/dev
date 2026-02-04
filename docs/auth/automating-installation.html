@@ -103,6 +103,7 @@
 <li><a href="flows/client-credentials/overview.html">OAuth2 Client Credentials Flow</a></li>
 <li><a href="security-best-practices.html">Security Best Practices</a></li>
 </ul>
+<hr>
 <h2 id="getting-started">Getting Started</h2>
 <h3 id="prerequisites">Prerequisites</h3>
 <ul>
@@ -119,8 +120,9 @@
 <h5>Note</h5>
 <p>In production, <code>redirectUri</code> must be an <strong>absolute HTTPS URL</strong>.</p>
 </div>
-<h3 id="endpoints">Endpoints</h3>
-<h4 id="install-endpoint">Install endpoint</h4>
+<hr>
+<h2 id="endpoints">Endpoints</h2>
+<h3 id="install-endpoint">Install endpoint</h3>
 <pre><code class="lang-http">GET {instanceBaseUrl}/manage/apps/install
 </code></pre>
 <p>Example:</p>
@@ -129,131 +131,125 @@
   &amp;redirectUri=https://my-external-app.com/callback/
   &amp;applicationName=My External App
   &amp;clientType=Confidential
-  &amp;requestSecret=true
 </code></pre>
-<h4 id="uninstall-endpoint">Uninstall endpoint</h4>
+<h3 id="uninstall-endpoint">Uninstall endpoint</h3>
 <pre><code class="lang-http">GET {instanceBaseUrl}/manage/apps/uninstall
 </code></pre>
 <p>Example:</p>
 <pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/uninstall
   ?applicationUri=MyExternalAppIdentifier
 </code></pre>
-<h3 id="install-url-parameters">Install URL parameters</h3>
+<hr>
+<h2 id="install-url-parameters">Install URL parameters</h2>
 <table>
 <thead>
 <tr>
 <th>Parameter</th>
-<th style="text-align: right;">Type</th>
-<th style="text-align: right;">Default</th>
+<th>Type</th>
+<th>Default</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>applicationName</code></td>
-<td style="text-align: right;">string</td>
-<td style="text-align: right;"><em>(none)</em></td>
+<td>string</td>
+<td><em>(none)</em></td>
 <td>Name of the application. Used to set the Trusted Application name/display name when the registration is created.</td>
 </tr>
 <tr>
 <td><code>applicationUri</code></td>
-<td style="text-align: right;">string</td>
-<td style="text-align: right;"><em>(none)</em></td>
+<td>string</td>
+<td><em>(none)</em></td>
 <td>External application identifier used to create its registration in the ERP.net instance. <strong>Required.</strong></td>
 </tr>
 <tr>
 <td><code>clientType</code></td>
-<td style="text-align: right;">string</td>
-<td style="text-align: right;"><code>Public</code></td>
+<td>string</td>
+<td><code>Public</code></td>
 <td>Client type of the application. Supported values: <code>Confidential</code>, <code>Public</code>.</td>
 </tr>
 <tr>
 <td><code>redirectUri</code></td>
-<td style="text-align: right;">URL</td>
-<td style="text-align: right;"><em>(none)</em></td>
-<td>Redirect URL used as the application's sign-in/impersonation callback. ERP.net Instance Manager also uses this URL to <strong>POST</strong> the lifecycle event payload (JSON) after a successful operation.</td>
+<td>URL</td>
+<td><em>(none)</em></td>
+<td>Redirect URL used as the application's sign-in/impersonation callback and as the lifecycle event callback endpoint.</td>
 </tr>
 <tr>
-<td><code>impersonateAsInternalUserAllowed</code></td>
-<td style="text-align: right;">bool</td>
-<td style="text-align: right;"><code>false</code></td>
-<td>For <code>Public</code> clients: whether impersonation as an <strong>internal</strong> user is allowed.</td>
-</tr>
-<tr>
-<td><code>impersonateAsCommunityUserAllowed</code></td>
-<td style="text-align: right;">bool</td>
-<td style="text-align: right;"><code>false</code></td>
-<td>For <code>Public</code> clients: whether impersonation as a <strong>community</strong> user is allowed.</td>
+<td><code>impersonate</code></td>
+<td>string</td>
+<td><code>none</code></td>
+<td>Allows interactive sign-in for no users, internal users only, or all users (internal + community). Supported values: <code>none</code>, <code>internal</code>, <code>all</code>.</td>
 </tr>
 <tr>
 <td><code>requestSecret</code></td>
-<td style="text-align: right;">bool</td>
-<td style="text-align: right;"><code>false</code></td>
-<td>If <code>true</code>, Instance Manager will attempt to issue credentials and include them in the lifecycle event payload.</td>
+<td>bool</td>
+<td><code>false</code></td>
+<td>If <code>true</code>, Instance Manager will issue credentials and include them in the lifecycle event payload.</td>
 </tr>
 <tr>
-<td><code>secretType</code></td>
-<td style="text-align: right;">string</td>
-<td style="text-align: right;"><code>SAT</code></td>
-<td>Credential kind to issue when <code>requestSecret=true</code>. <code>SAT</code> = <strong>Service Access Token</strong> (a reference token). <code>clientCredentials</code> = a <strong>client secret</strong> that the app uses in the OAuth <strong>Client Credentials</strong> flow to obtain an access token. Supported values: <code>SAT</code>, <code>clientCredentials</code> (case-insensitive).</td>
+<td><code>serviceAccess</code></td>
+<td>string</td>
+<td><code>none</code></td>
+<td>Credential type to issue when <code>requestSecret=true</code>. Supported values: <code>none</code>, <code>clientCredentials</code>, <code>referenceToken</code>.</td>
 </tr>
 <tr>
 <td><code>accessTokens</code></td>
-<td style="text-align: right;">string</td>
-<td style="text-align: right;"><code>none</code></td>
-<td>Defines who is allowed to issue <strong>reference access tokens</strong> for this Trusted Application. Supported values: <code>none</code>, <code>authenticatedUsers</code>, <code>administratorsOnly</code>.</td>
+<td>string</td>
+<td><code>none</code></td>
+<td>Defines who is allowed to issue reference access tokens. Supported values: <code>none</code>, <code>authenticatedUsers</code>, <code>administratorsOnly</code>.</td>
+</tr>
+<tr>
+<td><code>scope</code></td>
+<td>string</td>
+<td><em>(empty)</em></td>
+<td>Space-delimited list of scopes associated with issued tokens.</td>
 </tr>
 </tbody>
 </table>
-<h3 id="uninstall-url-parameters">Uninstall URL parameters</h3>
+<hr>
+<h2 id="uninstall-url-parameters">Uninstall URL parameters</h2>
 <table>
 <thead>
 <tr>
 <th>Parameter</th>
-<th style="text-align: right;">Type</th>
-<th style="text-align: right;">Default</th>
+<th>Type</th>
+<th>Default</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>applicationUri</code></td>
-<td style="text-align: right;">string</td>
-<td style="text-align: right;"><em>(none)</em></td>
+<td>string</td>
+<td><em>(none)</em></td>
 <td>External application identifier to uninstall. <strong>Required.</strong></td>
 </tr>
 </tbody>
 </table>
-<h3 id="validation-rules">Validation rules</h3>
-<p>ERP.net Instance Manager validates the request before allowing the user to proceed:</p>
-<p><strong>Generic</strong></p>
+<hr>
+<h2 id="validation-rules">Validation rules</h2>
+<p>ERP.net Instance Manager validates the request before allowing the user to proceed.</p>
+<h3 id="generic">Generic</h3>
 <ul>
-<li>Only ERP.net instance <strong>administrators</strong> can perform install/uninstall.</li>
+<li>Only ERP.net instance <strong>administrators</strong> can perform install or uninstall actions.</li>
 <li><code>applicationUri</code> is required.</li>
 </ul>
-<p><strong>Install-specific</strong></p>
+<h3 id="install-specific">Install-specific</h3>
 <ul>
 <li>If <code>clientType=Public</code>:
 <ul>
 <li><code>redirectUri</code> must be present and valid.</li>
-<li>At least one impersonation flag must be enabled:
-<ul>
-<li><code>impersonateAsInternalUserAllowed=true</code> <strong>or</strong></li>
-<li><code>impersonateAsCommunityUserAllowed=true</code></li>
+<li><code>impersonate</code> must not be <code>none</code> (must be <code>internal</code> or <code>all</code>).</li>
 </ul>
 </li>
-</ul>
-</li>
-<li>If <code>requestSecret=true</code> for a <code>Public</code> client, the request is rejected:
-<ul>
-<li>Error: <code>Cannot request credentials for a public client.</code></li>
-</ul>
-</li>
+<li>If <code>clientType=Public</code>, <code>requestSecret=true</code> is not allowed.</li>
 <li>If <code>accessTokens</code> is not specified, it defaults to <code>none</code>.</li>
 </ul>
-<h3 id="user-flow-interactive-approval">User flow (interactive approval)</h3>
+<hr>
+<h2 id="user-flow-interactive-approval">User flow (interactive approval)</h2>
 <ol>
-<li>Your external application initiates a <strong>browser</strong> request to the install/uninstall endpoint.</li>
+<li>Your external application initiates a <strong>browser</strong> request to the install or uninstall endpoint.</li>
 <li>ERP.net Instance Manager opens.
 <ul>
 <li>If the user is not authenticated, Instance Manager requires login.</li>
@@ -268,9 +264,10 @@
 </ul>
 </li>
 </ol>
-<h3 id="lifecycle-event-payload-onboarding-callback">Lifecycle event payload (onboarding callback)</h3>
-<p>ERP.net Instance Manager sends the lifecycle event payload to <code>redirectUri</code> using HTTP POST with JSON.</p>
-<p><strong>Payload fields</strong></p>
+<hr>
+<h2 id="lifecycle-event-payload-onboarding-callback">Lifecycle event payload (onboarding callback)</h2>
+<p>ERP.net Instance Manager sends the lifecycle event payload to <code>redirectUri</code> using HTTP POST with JSON (camelCase).</p>
+<h3 id="payload-fields">Payload fields</h3>
 <table>
 <thead>
 <tr>
@@ -309,7 +306,7 @@
 <td><code>instanceBaseUrl</code></td>
 <td>string</td>
 <td>always</td>
-<td>Instance host/base URL (example: <code>mycompany.my.erp.net</code>).</td>
+<td>Instance base URL (example: <code>https://mycompany.my.erp.net</code>).</td>
 </tr>
 <tr>
 <td><code>user</code></td>
@@ -318,40 +315,120 @@
 <td>The approving user (example: <code>admin</code>).</td>
 </tr>
 <tr>
-<td><code>secret</code></td>
+<td><code>clientSecret</code></td>
 <td>string</td>
-<td>only when credentials are issued</td>
-<td>Issued credential value (sensitive).</td>
+<td>when <code>serviceAccess=clientCredentials</code></td>
+<td>Issued client secret (sensitive).</td>
 </tr>
 <tr>
-<td><code>secretType</code></td>
+<td><code>referenceToken</code></td>
 <td>string</td>
-<td>only when credentials are issued</td>
-<td>Credential type (<code>SAT</code> or <code>ClientCredentials</code>).</td>
+<td>when <code>serviceAccess=referenceToken</code></td>
+<td>Issued service access token (reference token, sensitive).</td>
+</tr>
+<tr>
+<td><code>request</code></td>
+<td>object</td>
+<td>always</td>
+<td>Echo of the original install request parameters.</td>
 </tr>
 </tbody>
 </table>
-<h3 id="examples">Examples</h3>
-<h4 id="1-confidential-without-requesting-a-secret">1) Confidential without requesting a secret</h4>
+<h3 id="request-object-fields"><code>request</code> object fields</h3>
+<p>The <code>request</code> object echoes the original install request (normalized and serialized in camelCase), including <code>requestSecret=true</code> when credentials are successfully issued.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>applicationName</code></td>
+<td>string</td>
+<td>Application display name.</td>
+</tr>
+<tr>
+<td><code>applicationUri</code></td>
+<td>string</td>
+<td>External application identifier.</td>
+</tr>
+<tr>
+<td><code>clientType</code></td>
+<td>string</td>
+<td>Client type (<code>confidential</code> or <code>public</code>).</td>
+</tr>
+<tr>
+<td><code>redirectUri</code></td>
+<td>string</td>
+<td>Redirect/callback URL provided during install.</td>
+</tr>
+<tr>
+<td><code>impersonate</code></td>
+<td>string</td>
+<td>Impersonation scope (<code>none</code>, <code>internal</code>, <code>all</code>).</td>
+</tr>
+<tr>
+<td><code>requestSecret</code></td>
+<td>bool</td>
+<td>Whether credentials were requested.</td>
+</tr>
+<tr>
+<td><code>serviceAccess</code></td>
+<td>string</td>
+<td>Service access mode (<code>none</code>, <code>clientCredentials</code>, <code>referenceToken</code>).</td>
+</tr>
+<tr>
+<td><code>accessTokens</code></td>
+<td>string</td>
+<td>Who can issue reference access tokens (<code>none</code>, <code>authenticatedUsers</code>, <code>administratorsOnly</code>).</td>
+</tr>
+<tr>
+<td><code>scope</code></td>
+<td>string</td>
+<td>Space-delimited scope string.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="examples">Examples</h2>
+<h3 id="1-confidential-requesting-credentials">1) Confidential requesting credentials</h3>
 <p>Request:</p>
 <pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
   &amp;redirectUri=https://my-external-app.com/callback/
   &amp;applicationName=My External App
-  &amp;clientType=Confidential
+  &amp;impersonate=internal
+  &amp;requestSecret=true
+  &amp;serviceAccess=clientCredentials
+  &amp;scope=read%20update
 </code></pre>
 <p>Response:</p>
 <pre><code class="lang-json">{
   &quot;schema&quot;: &quot;erpnet.appLifecycleEvent.v1&quot;,
   &quot;eventId&quot;: &quot;0799261b-6a1a-4a7a-afc6-6a9b7fcb8a8c&quot;,
   &quot;event&quot;: &quot;installed&quot;,
-  &quot;occuredAt&quot;: &quot;2026-01-21T14:34:09.6573137Z&quot;,
-  &quot;instanceBaseUrl&quot;: &quot;mycompany.my.erp.net&quot;,
-  &quot;user&quot;: &quot;admin&quot;
+  &quot;occurredAt&quot;: &quot;2026-01-21T14:34:09.6573137Z&quot;,
+  &quot;instanceBaseUrl&quot;: &quot;https://mycompany.my.erp.net&quot;,
+  &quot;user&quot;: &quot;admin&quot;,
+  &quot;clientSecret&quot;: &quot;dTscMD5yK7eMSw3jUKCKGgc1&quot;,
+  &quot;request&quot;: {
+    &quot;applicationName&quot;: &quot;My External App&quot;,
+    &quot;applicationUri&quot;: &quot;MyExternalAppIdentifier&quot;,
+    &quot;clientType&quot;: &quot;confidential&quot;,
+    &quot;redirectUri&quot;: &quot;https://my-external-app.com/callback/&quot;,
+    &quot;impersonate&quot;: &quot;internal&quot;,
+    &quot;requestSecret&quot;: true,
+    &quot;serviceAccess&quot;: &quot;clientCredentials&quot;,
+    &quot;accessTokens&quot;: &quot;none&quot;,
+    &quot;scope&quot;: &quot;read update&quot;
+  }
 }
 </code></pre>
 <hr>
-<h4 id="2-confidential-requesting-a-secret-and-specifying-sat">2) Confidential requesting a secret and specifying SAT</h4>
+<h3 id="2-confidential-requesting-a-client-secret-and-a-reference-token">2) Confidential requesting a client secret and a reference token</h3>
 <p>Request:</p>
 <pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
@@ -359,69 +436,66 @@
   &amp;applicationName=My External App
   &amp;clientType=Confidential
   &amp;requestSecret=true
-  &amp;secretType=sat
+  &amp;serviceAccess=referenceToken
+  &amp;scope=read
 </code></pre>
 <p>Response:</p>
 <pre><code class="lang-json">{
   &quot;schema&quot;: &quot;erpnet.appLifecycleEvent.v1&quot;,
   &quot;eventId&quot;: &quot;3857aa99-881c-4798-b888-7ed72d137691&quot;,
   &quot;event&quot;: &quot;installed&quot;,
-  &quot;occuredAt&quot;: &quot;2026-01-21T14:39:20.6048228Z&quot;,
-  &quot;instanceBaseUrl&quot;: &quot;mycompany.my.erp.net&quot;,
+  &quot;occurredAt&quot;: &quot;2026-01-21T14:39:20.6048228Z&quot;,
+  &quot;instanceBaseUrl&quot;: &quot;https://mycompany.my.erp.net&quot;,
   &quot;user&quot;: &quot;admin&quot;,
-  &quot;secret&quot;: &quot;enrt_CE17A40CBEBB9F59EECA1EF199F438D64FC42618B1677BE9279E8E4351BA9811&quot;,
-  &quot;secretType&quot;: &quot;SAT&quot;
+  &quot;clientSecret&quot;: &quot;XXXXXXXXXXXXXXXXXXXXXXXX&quot;,
+  &quot;referenceToken&quot;: &quot;enrt_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;,
+  &quot;request&quot;: {
+    &quot;applicationName&quot;: &quot;My External App&quot;,
+    &quot;applicationUri&quot;: &quot;MyExternalAppIdentifier&quot;,
+    &quot;clientType&quot;: &quot;confidential&quot;,
+    &quot;redirectUri&quot;: &quot;https://my-external-app.com/callback/&quot;,
+    &quot;impersonate&quot;: &quot;none&quot;,
+    &quot;requestSecret&quot;: true,
+    &quot;serviceAccess&quot;: &quot;referenceToken&quot;,
+    &quot;accessTokens&quot;: &quot;none&quot;,
+    &quot;scope&quot;: &quot;read&quot;
+  }
 }
 </code></pre>
 <hr>
-<h4 id="3-confidential-requesting-a-secret-and-specifying-clientcredentials">3) Confidential requesting a secret and specifying ClientCredentials</h4>
+<h3 id="3-public-with-interactive-sign-in--all">3) Public with interactive sign-in = all</h3>
 <p>Request:</p>
 <pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
   &amp;redirectUri=https://my-external-app.com/callback/
   &amp;applicationName=My External App
-  &amp;clientType=Confidential
-  &amp;requestSecret=true
-  &amp;secretType=clientCredentials
+  &amp;clientType=Public
+  &amp;impersonate=all
+  &amp;requestSecret=false
 </code></pre>
 <p>Response:</p>
 <pre><code class="lang-json">{
   &quot;schema&quot;: &quot;erpnet.appLifecycleEvent.v1&quot;,
-  &quot;eventId&quot;: &quot;148709ff-c9a2-49dc-96bc-88ee90fda10a&quot;,
+  &quot;eventId&quot;: &quot;0799261b-6a1a-4a7a-afc6-6a9b7fcb8a8c&quot;,
   &quot;event&quot;: &quot;installed&quot;,
-  &quot;occuredAt&quot;: &quot;2026-01-21T14:40:05.024675Z&quot;,
-  &quot;instanceBaseUrl&quot;: &quot;mycompany.my.erp.net&quot;,
+  &quot;occurredAt&quot;: &quot;2026-01-21T14:34:09.6573137Z&quot;,
+  &quot;instanceBaseUrl&quot;: &quot;https://mycompany.my.erp.net&quot;,
   &quot;user&quot;: &quot;admin&quot;,
-  &quot;secret&quot;: &quot;dTscMD5yK7eMSw3jUKCKGgc1&quot;,
-  &quot;secretType&quot;: &quot;ClientCredentials&quot;
+  &quot;request&quot;: {
+    &quot;applicationName&quot;: &quot;My External App&quot;,
+    &quot;applicationUri&quot;: &quot;MyExternalAppIdentifier&quot;,
+    &quot;clientType&quot;: &quot;public&quot;,
+    &quot;redirectUri&quot;: &quot;https://my-external-app.com/callback/&quot;,
+    &quot;impersonate&quot;: &quot;all&quot;,
+    &quot;requestSecret&quot;: false,
+    &quot;serviceAccess&quot;: &quot;none&quot;,
+    &quot;accessTokens&quot;: &quot;none&quot;,
+    &quot;scope&quot;: &quot;&quot;
+  }
 }
 </code></pre>
 <hr>
-<h4 id="4-confidential-requesting-a-secret-and-restricting-token-issuance-to-administrators">4) Confidential requesting a secret and restricting token issuance to administrators</h4>
-<p>Request:</p>
-<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
-  ?applicationUri=MyExternalAppIdentifier
-  &amp;redirectUri=https://my-external-app.com/callback/
-  &amp;applicationName=My External App
-  &amp;clientType=Confidential
-  &amp;requestSecret=true
-  &amp;secretType=sat
-  &amp;accessTokens=administratorsOnly
-</code></pre>
-<p>Response:</p>
-<pre><code class="lang-json">{
-  &quot;schema&quot;: &quot;erpnet.appLifecycleEvent.v1&quot;,
-  &quot;eventId&quot;: &quot;3857aa99-881c-4798-b888-7ed72d137691&quot;,
-  &quot;event&quot;: &quot;installed&quot;,
-  &quot;occuredAt&quot;: &quot;2026-01-21T14:39:20.6048228Z&quot;,
-  &quot;instanceBaseUrl&quot;: &quot;mycompany.my.erp.net&quot;,
-  &quot;user&quot;: &quot;admin&quot;,
-  &quot;secret&quot;: &quot;enrt_CE17A40CBEBB9F59EECA1EF199F438D64FC42618B1677BE9279E8E4351BA9811&quot;,
-  &quot;secretType&quot;: &quot;SAT&quot;
-}
-</code></pre>
-<hr>
-<h4 id="5-uninstall">5) Uninstall</h4>
+<h3 id="4-uninstall">4) Uninstall</h3>
 <p>Request:</p>
 <pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/uninstall
   ?applicationUri=MyExternalAppIdentifier
@@ -431,11 +505,12 @@
   &quot;schema&quot;: &quot;erpnet.appLifecycleEvent.v1&quot;,
   &quot;eventId&quot;: &quot;0e3bf686-4abc-4230-9ca0-47c4efa12b09&quot;,
   &quot;event&quot;: &quot;uninstalled&quot;,
-  &quot;occuredAt&quot;: &quot;2026-01-21T14:42:23.1597831Z&quot;,
-  &quot;instanceBaseUrl&quot;: &quot;mycompany.my.erp.net&quot;,
+  &quot;occurredAt&quot;: &quot;2026-01-21T14:42:23.1597831Z&quot;,
+  &quot;instanceBaseUrl&quot;: &quot;https://mycompany.my.erp.net&quot;,
   &quot;user&quot;: &quot;admin&quot;
 }
 </code></pre>
+<hr>
 <h2 id="concepts">Concepts</h2>
 <h3 id="client-types">Client types</h3>
 <ul>
@@ -447,59 +522,42 @@
 </li>
 <li><p><code>Public</code></p>
 <ul>
-<li>Intended for apps that cannot securely store credentials (e.g. browser-based apps).</li>
+<li>Intended for apps that cannot securely store credentials.</li>
 <li>Must provide <code>redirectUri</code>.</li>
-<li>Must enable impersonation for at least one user type:
+<li>Must enable impersonation for at least one user type.</li>
+<li>Cannot request credentials.</li>
+</ul>
+</li>
+</ul>
+<h3 id="service-access-types">Service access types</h3>
 <ul>
-<li>internal and/or community</li>
-</ul>
+<li><p><code>referenceToken</code><br>
+Issues a service access token (reference token).</p>
 </li>
-<li>Cannot request credentials (<code>requestSecret=true</code> is not allowed).</li>
-</ul>
-</li>
-</ul>
-<h3 id="credential-types">Credential types</h3>
-<p>When <code>requestSecret=true</code> (for confidential clients), Instance Manager can issue credentials:</p>
-<ul>
-<li><p><code>SAT</code><br>
-Service Access Token (reference token). In the current implementation, it is issued with a long validity window (example: 10 years).</p>
-</li>
-<li><p><code>ClientCredentials</code><br>
-Client secret intended for use with the Client Credentials flow.</p>
+<li><p><code>clientCredentials</code><br>
+Issues a client secret intended for use with the OAuth 2.0 Client Credentials flow.</p>
 </li>
 </ul>
-<h3 id="callback-delivery-redirecturi">Callback delivery (redirectUri)</h3>
-<p>After the user approves the action, Instance Manager sends the lifecycle event payload to <code>redirectUri</code> via <strong>HTTP POST</strong> (JSON, camelCase). The external application must:</p>
-<ul>
-<li>accept the POST request</li>
-<li>validate and persist the onboarding data as appropriate</li>
-<li>return a successful HTTP status code (2xx)</li>
-</ul>
-<p>In production environments, <code>redirectUri</code> must be an absolute HTTPS URL.</p>
-<h3 id="secret-handling">Secret handling</h3>
-<p>If the payload contains <code>secret</code>, treat it as a password:</p>
+<hr>
+<h2 id="secret-handling">Secret handling</h2>
+<p>If the payload contains <code>clientSecret</code> or <code>referenceToken</code>, treat it as a password:</p>
 <ul>
 <li>do not log it</li>
-<li>store it in a secret manager / vault</li>
+<li>store it in a secret manager or vault</li>
 <li>restrict access (least privilege)</li>
 </ul>
-<h3 id="access-token-issuance-accesstokens">Access token issuance (<code>accessTokens</code>)</h3>
-<p>The <code>accessTokens</code> parameter controls <strong>who is allowed to issue reference access tokens</strong> for the Trusted Application.</p>
+<hr>
+<h2 id="access-token-issuance-accesstokens">Access token issuance (<code>accessTokens</code>)</h2>
+<p>Controls who may issue reference access tokens.</p>
 <p>Supported values:</p>
 <ul>
-<li><p><code>none</code><br>
-Reference access tokens cannot be issued.<br>
-<em>(Default)</em></p>
-</li>
-<li><p><code>authenticatedUsers</code><br>
-Any authenticated (logged-in) user may issue reference access tokens.</p>
-</li>
-<li><p><code>administratorsOnly</code><br>
-Only administrators may issue reference access tokens.</p>
-</li>
+<li><code>none</code></li>
+<li><code>authenticatedUsers</code></li>
+<li><code>administratorsOnly</code></li>
 </ul>
+<hr>
 <h2 id="troubleshooting">Troubleshooting</h2>
-<h3 id="only-administrators-can-perform-this-action">Only administrators can perform this action.</h3>
+<h3 id="only-administrators-can-perform-this-action">Only administrators can perform this action</h3>
 <p>Cause:</p>
 <ul>
 <li>The user is not an administrator.</li>
@@ -508,56 +566,42 @@ Only administrators may issue reference access tokens.</p>
 <ul>
 <li>Sign in with an administrator account in ERP.net Instance Manager.</li>
 </ul>
-<h3 id="missing-required-parameter-applicationuri">Missing required parameter: applicationUri.</h3>
+<h3 id="missing-required-parameter-applicationuri">Missing required parameter: applicationUri</h3>
 <p>Cause:</p>
 <ul>
-<li>The install/uninstall URL does not include <code>applicationUri</code>.</li>
+<li>The install or uninstall URL does not include <code>applicationUri</code>.</li>
 </ul>
 <p>Resolution:</p>
 <ul>
 <li>Provide <code>applicationUri</code> in the query string.</li>
 </ul>
-<h3 id="public-clients-require-a-valid-redirecturi">Public clients require a valid redirectUri.</h3>
+<h3 id="public-clients-require-a-valid-redirecturi">Public clients require a valid redirectUri</h3>
 <p>Cause:</p>
 <ul>
 <li><code>clientType=Public</code> but <code>redirectUri</code> is missing or invalid.</li>
 </ul>
 <p>Resolution:</p>
 <ul>
-<li>Provide a valid <code>redirectUri</code> (and ensure it meets the HTTPS requirement in production).</li>
+<li>Provide a valid HTTPS <code>redirectUri</code>.</li>
 </ul>
-<h3 id="public-clients-must-allow-impersonation-for-at-least-one-user-type-internal-or-community">Public clients must allow impersonation for at least one user type (internal or community).</h3>
-<p>Cause:</p>
-<ul>
-<li><code>clientType=Public</code> and both impersonation flags are <code>false</code>.</li>
-</ul>
-<p>Resolution:</p>
-<ul>
-<li>Set at least one of:
-<ul>
-<li><code>impersonateAsInternalUserAllowed=true</code></li>
-<li><code>impersonateAsCommunityUserAllowed=true</code></li>
-</ul>
-</li>
-</ul>
-<h3 id="cannot-request-credentials-for-a-public-client">Cannot request credentials for a public client.</h3>
+<h3 id="public-clients-cannot-request-credentials">Public clients cannot request credentials</h3>
 <p>Cause:</p>
 <ul>
 <li><code>clientType=Public</code> with <code>requestSecret=true</code>.</li>
 </ul>
 <p>Resolution:</p>
 <ul>
-<li>Use <code>clientType=Confidential</code> if you need credentials issued, or set <code>requestSecret=false</code> for public clients.</li>
+<li>Use <code>clientType=Confidential</code> or set <code>requestSecret=false</code>.</li>
 </ul>
 <h3 id="callback-fails-non-2xx-response">Callback fails (non-2xx response)</h3>
 <p>Cause:</p>
 <ul>
-<li>The external application's <code>redirectUri</code> endpoint returns an error response, or cannot be reached.</li>
+<li>The external application's <code>redirectUri</code> endpoint returns an error or is unreachable.</li>
 </ul>
 <p>Resolution:</p>
 <ul>
-<li>Ensure <code>redirectUri</code> is reachable from ERP.net Instance Manager and returns a successful response (2xx).</li>
-<li>Ensure <code>redirectUri</code> is absolute HTTPS in production.</li>
+<li>Ensure the endpoint is reachable and returns a successful (2xx) response.</li>
+<li>Ensure <code>redirectUri</code> is an absolute HTTPS URL in production.</li>
 </ul>
 
 </article>
