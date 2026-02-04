@@ -19,6 +19,8 @@ Related topics:
 - [OAuth2 Client Credentials Flow](./flows/client-credentials/overview.md)
 - [Security Best Practices](./security-best-practices.md)
 
+---
+
 ## Getting Started
 
 ### Prerequisites
@@ -32,9 +34,11 @@ Related topics:
 > [!NOTE]
 > In production, `redirectUri` must be an **absolute HTTPS URL**.
 
-### Endpoints
+---
 
-#### Install endpoint
+## Endpoints
+
+### Install endpoint
 
 ```http
 GET {instanceBaseUrl}/manage/apps/install
@@ -48,10 +52,9 @@ https://mycompany.my.erp.net/manage/apps/install
   &redirectUri=https://my-external-app.com/callback/
   &applicationName=My External App
   &clientType=Confidential
-  &requestSecret=true
 ```
 
-#### Uninstall endpoint
+### Uninstall endpoint
 
 ```http
 GET {instanceBaseUrl}/manage/apps/uninstall
@@ -64,47 +67,54 @@ https://mycompany.my.erp.net/manage/apps/uninstall
   ?applicationUri=MyExternalAppIdentifier
 ```
 
-### Install URL parameters
+---
+
+## Install URL parameters
 
 | Parameter | Type | Default | Description |
-|---|---:|---:|---|
+|---|---|---|---|
 | `applicationName` | string | *(none)* | Name of the application. Used to set the Trusted Application name/display name when the registration is created. |
 | `applicationUri` | string | *(none)* | External application identifier used to create its registration in the @@name instance. **Required.** |
 | `clientType` | string | `Public` | Client type of the application. Supported values: `Confidential`, `Public`. |
-| `redirectUri` | URL | *(none)* | Redirect URL used as the application's sign-in/impersonation callback. @@name Instance Manager also uses this URL to **POST** the lifecycle event payload (JSON) after a successful operation. |
-| `impersonateAsInternalUserAllowed` | bool | `false` | For `Public` clients: whether impersonation as an **internal** user is allowed. |
-| `impersonateAsCommunityUserAllowed` | bool | `false` | For `Public` clients: whether impersonation as a **community** user is allowed. |
-| `requestSecret` | bool | `false` | If `true`, Instance Manager will attempt to issue credentials and include them in the lifecycle event payload. |
-| `secretType` | string | `SAT` | Credential kind to issue when `requestSecret=true`. `SAT` = **Service Access Token** (a reference token). `clientCredentials` = a **client secret** that the app uses in the OAuth **Client Credentials** flow to obtain an access token. Supported values: `SAT`, `clientCredentials` (case-insensitive). |
-| `accessTokens` | string | `none` | Defines who is allowed to issue **reference access tokens** for this Trusted Application. Supported values: `none`, `authenticatedUsers`, `administratorsOnly`. |
+| `redirectUri` | URL | *(none)* | Redirect URL used as the application's sign-in/impersonation callback and as the lifecycle event callback endpoint. |
+| `impersonate` | string | `none` | Allows interactive sign-in for no users, internal users only, or all users (internal + community). Supported values: `none`, `internal`, `all`. |
+| `requestSecret` | bool | `false` | If `true`, Instance Manager will issue credentials and include them in the lifecycle event payload. |
+| `serviceAccess` | string | `none` | Credential type to issue when `requestSecret=true`. Supported values: `none`, `clientCredentials`, `referenceToken`. |
+| `accessTokens` | string | `none` | Defines who is allowed to issue reference access tokens. Supported values: `none`, `authenticatedUsers`, `administratorsOnly`. |
+| `scope` | string | *(empty)* | Space-delimited list of scopes associated with issued tokens. |
 
-### Uninstall URL parameters
+---
+
+## Uninstall URL parameters
 
 | Parameter | Type | Default | Description |
-|---|---:|---:|---|
+|---|---|---|---|
 | `applicationUri` | string | *(none)* | External application identifier to uninstall. **Required.** |
 
-### Validation rules
+---
 
-@@name Instance Manager validates the request before allowing the user to proceed:
+## Validation rules
 
-**Generic**
-- Only @@name instance **administrators** can perform install/uninstall.
+@@name Instance Manager validates the request before allowing the user to proceed.
+
+### Generic
+
+- Only @@name instance **administrators** can perform install or uninstall actions.
 - `applicationUri` is required.
 
-**Install-specific**
+### Install-specific
+
 - If `clientType=Public`:
   - `redirectUri` must be present and valid.
-  - At least one impersonation flag must be enabled:
-    - `impersonateAsInternalUserAllowed=true` **or**
-    - `impersonateAsCommunityUserAllowed=true`
-- If `requestSecret=true` for a `Public` client, the request is rejected:
-  - Error: `Cannot request credentials for a public client.`
+  - `impersonate` must not be `none` (must be `internal` or `all`).
+- If `clientType=Public`, `requestSecret=true` is not allowed.
 - If `accessTokens` is not specified, it defaults to `none`.
 
-### User flow (interactive approval)
+---
 
-1. Your external application initiates a **browser** request to the install/uninstall endpoint.
+## User flow (interactive approval)
+
+1. Your external application initiates a **browser** request to the install or uninstall endpoint.
 2. @@name Instance Manager opens.
    - If the user is not authenticated, Instance Manager requires login.
 3. Instance Manager displays a confirmation page with the operation details and an Install / Uninstall action button.
@@ -113,11 +123,13 @@ https://mycompany.my.erp.net/manage/apps/uninstall
    - @@name Instance Manager sends an **HTTP POST** to `redirectUri` with a JSON payload describing the lifecycle event.
    - The callback must return a successful response (2xx). Otherwise, the operation is treated as failed.
 
-### Lifecycle event payload (onboarding callback)
+---
 
-@@name Instance Manager sends the lifecycle event payload to `redirectUri` using HTTP POST with JSON.
+## Lifecycle event payload (onboarding callback)
 
-**Payload fields**
+@@name Instance Manager sends the lifecycle event payload to `redirectUri` using HTTP POST with JSON (camelCase).
+
+### Payload fields
 
 | Field | Type | Present | Description |
 |---|---|---|---|
@@ -125,14 +137,33 @@ https://mycompany.my.erp.net/manage/apps/uninstall
 | `eventId` | string (GUID) | always | Unique event identifier. |
 | `event` | string | always | Event type, e.g. `installed`, `uninstalled`. |
 | `occurredAt` | string (UTC timestamp) | always | When the event occurred (UTC). |
-| `instanceBaseUrl` | string | always | Instance host/base URL (example: `mycompany.my.erp.net`). |
+| `instanceBaseUrl` | string | always | Instance base URL (example: `https://mycompany.my.erp.net`). |
 | `user` | string | always | The approving user (example: `admin`). |
-| `secret` | string | only when credentials are issued | Issued credential value (sensitive). |
-| `secretType` | string | only when credentials are issued | Credential type (`SAT` or `ClientCredentials`). |
+| `clientSecret` | string | when `serviceAccess=clientCredentials` | Issued client secret (sensitive). |
+| `referenceToken` | string | when `serviceAccess=referenceToken` | Issued service access token (reference token, sensitive). |
+| `request` | object | always | Echo of the original install request parameters. |
 
-### Examples
+### `request` object fields
 
-#### 1) Confidential without requesting a secret
+The `request` object echoes the original install request (normalized and serialized in camelCase), including `requestSecret=true` when credentials are successfully issued.
+
+| Field | Type | Description |
+|---|---|---|
+| `applicationName` | string | Application display name. |
+| `applicationUri` | string | External application identifier. |
+| `clientType` | string | Client type (`confidential` or `public`). |
+| `redirectUri` | string | Redirect/callback URL provided during install. |
+| `impersonate` | string | Impersonation scope (`none`, `internal`, `all`). |
+| `requestSecret` | bool | Whether credentials were requested. |
+| `serviceAccess` | string | Service access mode (`none`, `clientCredentials`, `referenceToken`). |
+| `accessTokens` | string | Who can issue reference access tokens (`none`, `authenticatedUsers`, `administratorsOnly`). |
+| `scope` | string | Space-delimited scope string.
+
+---
+
+## Examples
+
+### 1) Confidential without requesting credentials
 
 Request:
 
@@ -151,15 +182,26 @@ Response:
   "schema": "erpnet.appLifecycleEvent.v1",
   "eventId": "0799261b-6a1a-4a7a-afc6-6a9b7fcb8a8c",
   "event": "installed",
-  "occuredAt": "2026-01-21T14:34:09.6573137Z",
-  "instanceBaseUrl": "mycompany.my.erp.net",
-  "user": "admin"
+  "occurredAt": "2026-01-21T14:34:09.6573137Z",
+  "instanceBaseUrl": "https://mycompany.my.erp.net",
+  "user": "admin",
+  "request": {
+    "applicationName": "My External App",
+    "applicationUri": "MyExternalAppIdentifier",
+    "clientType": "confidential",
+    "redirectUri": "https://my-external-app.com/callback/",
+    "impersonate": "none",
+    "requestSecret": false,
+    "serviceAccess": "none",
+    "accessTokens": "none",
+    "scope": ""
+  }
 }
 ```
 
 ---
 
-#### 2) Confidential requesting a secret and specifying SAT
+### 2) Confidential requesting a reference token
 
 Request:
 
@@ -170,7 +212,7 @@ https://mycompany.my.erp.net/manage/apps/install
   &applicationName=My External App
   &clientType=Confidential
   &requestSecret=true
-  &secretType=sat
+  &serviceAccess=referenceToken
 ```
 
 Response:
@@ -180,17 +222,27 @@ Response:
   "schema": "erpnet.appLifecycleEvent.v1",
   "eventId": "3857aa99-881c-4798-b888-7ed72d137691",
   "event": "installed",
-  "occuredAt": "2026-01-21T14:39:20.6048228Z",
-  "instanceBaseUrl": "mycompany.my.erp.net",
+  "occurredAt": "2026-01-21T14:39:20.6048228Z",
+  "instanceBaseUrl": "https://mycompany.my.erp.net",
   "user": "admin",
-  "secret": "enrt_CE17A40CBEBB9F59EECA1EF199F438D64FC42618B1677BE9279E8E4351BA9811",
-  "secretType": "SAT"
+  "referenceToken": "enrt_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "request": {
+    "applicationName": "My External App",
+    "applicationUri": "MyExternalAppIdentifier",
+    "clientType": "confidential",
+    "redirectUri": "https://my-external-app.com/callback/",
+    "impersonate": "none",
+    "requestSecret": true,
+    "serviceAccess": "referenceToken",
+    "accessTokens": "none",
+    "scope": ""
+  }
 }
 ```
 
 ---
 
-#### 3) Confidential requesting a secret and specifying ClientCredentials
+### 3) Confidential requesting client credentials
 
 Request:
 
@@ -201,7 +253,7 @@ https://mycompany.my.erp.net/manage/apps/install
   &applicationName=My External App
   &clientType=Confidential
   &requestSecret=true
-  &secretType=clientCredentials
+  &serviceAccess=clientCredentials
 ```
 
 Response:
@@ -211,49 +263,27 @@ Response:
   "schema": "erpnet.appLifecycleEvent.v1",
   "eventId": "148709ff-c9a2-49dc-96bc-88ee90fda10a",
   "event": "installed",
-  "occuredAt": "2026-01-21T14:40:05.024675Z",
-  "instanceBaseUrl": "mycompany.my.erp.net",
+  "occurredAt": "2026-01-21T14:40:05.024675Z",
+  "instanceBaseUrl": "https://mycompany.my.erp.net",
   "user": "admin",
-  "secret": "dTscMD5yK7eMSw3jUKCKGgc1",
-  "secretType": "ClientCredentials"
+  "clientSecret": "XXXXXXXXXXXXXXXXXXXXXXXX",
+  "request": {
+    "applicationName": "My External App",
+    "applicationUri": "MyExternalAppIdentifier",
+    "clientType": "confidential",
+    "redirectUri": "https://my-external-app.com/callback/",
+    "impersonate": "none",
+    "requestSecret": true,
+    "serviceAccess": "clientCredentials",
+    "accessTokens": "none",
+    "scope": ""
+  }
 }
 ```
 
 ---
 
-#### 4) Confidential requesting a secret and restricting token issuance to administrators
-
-Request:
-
-```http
-https://mycompany.my.erp.net/manage/apps/install
-  ?applicationUri=MyExternalAppIdentifier
-  &redirectUri=https://my-external-app.com/callback/
-  &applicationName=My External App
-  &clientType=Confidential
-  &requestSecret=true
-  &secretType=sat
-  &accessTokens=administratorsOnly
-```  
-
-Response:
-
-```json
-{
-  "schema": "erpnet.appLifecycleEvent.v1",
-  "eventId": "3857aa99-881c-4798-b888-7ed72d137691",
-  "event": "installed",
-  "occuredAt": "2026-01-21T14:39:20.6048228Z",
-  "instanceBaseUrl": "mycompany.my.erp.net",
-  "user": "admin",
-  "secret": "enrt_CE17A40CBEBB9F59EECA1EF199F438D64FC42618B1677BE9279E8E4351BA9811",
-  "secretType": "SAT"
-}
-```
-
----
-
-#### 5) Uninstall
+### 4) Uninstall
 
 Request:
 
@@ -269,11 +299,13 @@ Response:
   "schema": "erpnet.appLifecycleEvent.v1",
   "eventId": "0e3bf686-4abc-4230-9ca0-47c4efa12b09",
   "event": "uninstalled",
-  "occuredAt": "2026-01-21T14:42:23.1597831Z",
-  "instanceBaseUrl": "mycompany.my.erp.net",
+  "occurredAt": "2026-01-21T14:42:23.1597831Z",
+  "instanceBaseUrl": "https://mycompany.my.erp.net",
   "user": "admin"
 }
 ```
+
+---
 
 ## Concepts
 
@@ -284,117 +316,82 @@ Response:
   - May request credentials via `requestSecret=true`.
 
 - `Public`
-  - Intended for apps that cannot securely store credentials (e.g. browser-based apps).
+  - Intended for apps that cannot securely store credentials.
   - Must provide `redirectUri`.
-  - Must enable impersonation for at least one user type:
-    - internal and/or community
-  - Cannot request credentials (`requestSecret=true` is not allowed).
+  - Must enable impersonation for at least one user type.
+  - Cannot request credentials.
 
-### Credential types
+### Service access types
 
-When `requestSecret=true` (for confidential clients), Instance Manager can issue credentials:
+- `referenceToken`  
+  Issues a service access token (reference token).
 
-- `SAT`  
-  Service Access Token (reference token). In the current implementation, it is issued with a long validity window (example: 10 years).
+- `clientCredentials`  
+  Issues a client secret intended for use with the OAuth 2.0 Client Credentials flow.
 
-- `ClientCredentials`  
-  Client secret intended for use with the Client Credentials flow.
+---
 
-### Callback delivery (redirectUri)
+## Secret handling
 
-After the user approves the action, Instance Manager sends the lifecycle event payload to `redirectUri` via **HTTP POST** (JSON, camelCase). The external application must:
-
-- accept the POST request
-- validate and persist the onboarding data as appropriate
-- return a successful HTTP status code (2xx)
-
-In production environments, `redirectUri` must be an absolute HTTPS URL.
-
-### Secret handling
-
-If the payload contains `secret`, treat it as a password:
+If the payload contains `clientSecret` or `referenceToken`, treat it as a password:
 
 - do not log it
-- store it in a secret manager / vault
+- store it in a secret manager or vault
 - restrict access (least privilege)
 
-### Access token issuance (`accessTokens`)
+---
 
-The `accessTokens` parameter controls **who is allowed to issue reference access tokens** for the Trusted Application.
+## Access token issuance (`accessTokens`)
+
+Controls who may issue reference access tokens.
 
 Supported values:
 
-- `none`  
-  Reference access tokens cannot be issued.  
-  *(Default)*
+- `none`
+- `authenticatedUsers`
+- `administratorsOnly`
 
-- `authenticatedUsers`  
-  Any authenticated (logged-in) user may issue reference access tokens.
-
-- `administratorsOnly`  
-  Only administrators may issue reference access tokens.
+---
 
 ## Troubleshooting
 
-### Only administrators can perform this action.
+### Only administrators can perform this action
 
 Cause:
-
 - The user is not an administrator.
 
 Resolution:
-
 - Sign in with an administrator account in @@name Instance Manager.
 
-### Missing required parameter: applicationUri.
+### Missing required parameter: applicationUri
 
 Cause:
-
-- The install/uninstall URL does not include `applicationUri`.
+- The install or uninstall URL does not include `applicationUri`.
 
 Resolution:
-
 - Provide `applicationUri` in the query string.
 
-### Public clients require a valid redirectUri.
+### Public clients require a valid redirectUri
 
 Cause:
-
 - `clientType=Public` but `redirectUri` is missing or invalid.
 
 Resolution:
+- Provide a valid HTTPS `redirectUri`.
 
-- Provide a valid `redirectUri` (and ensure it meets the HTTPS requirement in production).
-
-### Public clients must allow impersonation for at least one user type (internal or community).
-
-Cause:
-
-- `clientType=Public` and both impersonation flags are `false`.
-
-Resolution:
-
-- Set at least one of:
-  - `impersonateAsInternalUserAllowed=true`
-  - `impersonateAsCommunityUserAllowed=true`
-
-### Cannot request credentials for a public client.
+### Public clients cannot request credentials
 
 Cause:
-
 - `clientType=Public` with `requestSecret=true`.
 
 Resolution:
-
-- Use `clientType=Confidential` if you need credentials issued, or set `requestSecret=false` for public clients.
+- Use `clientType=Confidential` or set `requestSecret=false`.
 
 ### Callback fails (non-2xx response)
 
 Cause:
-
-- The external application's `redirectUri` endpoint returns an error response, or cannot be reached.
+- The external application's `redirectUri` endpoint returns an error or is unreachable.
 
 Resolution:
-
-- Ensure `redirectUri` is reachable from @@name Instance Manager and returns a successful response (2xx).
-- Ensure `redirectUri` is absolute HTTPS in production.
+- Ensure the endpoint is reachable and returns a successful (2xx) response.
+- Ensure `redirectUri` is an absolute HTTPS URL in production.
