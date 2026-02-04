@@ -163,7 +163,49 @@ The `request` object echoes the original install request (normalized and seriali
 
 ## Examples
 
-### 1) Confidential without requesting credentials
+### 1) Confidential requesting credentials
+
+Request:
+
+```http
+https://mycompany.my.erp.net/manage/apps/install
+  ?applicationUri=MyExternalAppIdentifier
+  &redirectUri=https://my-external-app.com/callback/
+  &applicationName=My External App
+  &impersonate=internal
+  &requestSecret=true
+  &serviceAccess=clientCredentials
+  &scope=read%20update
+```
+
+Response:
+
+```json
+{
+  "schema": "erpnet.appLifecycleEvent.v1",
+  "eventId": "0799261b-6a1a-4a7a-afc6-6a9b7fcb8a8c",
+  "event": "installed",
+  "occurredAt": "2026-01-21T14:34:09.6573137Z",
+  "instanceBaseUrl": "https://mycompany.my.erp.net",
+  "user": "admin",
+  "clientSecret": "dTscMD5yK7eMSw3jUKCKGgc1",
+  "request": {
+    "applicationName": "My External App",
+    "applicationUri": "MyExternalAppIdentifier",
+    "clientType": "confidential",
+    "redirectUri": "https://my-external-app.com/callback/",
+    "impersonate": "internal",
+    "requestSecret": true,
+    "serviceAccess": "clientCredentials",
+    "accessTokens": "none",
+    "scope": "read update"
+  }
+}
+```
+
+---
+
+### 2) Confidential requesting a client secret and a reference token
 
 Request:
 
@@ -173,6 +215,51 @@ https://mycompany.my.erp.net/manage/apps/install
   &redirectUri=https://my-external-app.com/callback/
   &applicationName=My External App
   &clientType=Confidential
+  &requestSecret=true
+  &serviceAccess=referenceToken
+  &scope=read
+```
+
+Response:
+
+```json
+{
+  "schema": "erpnet.appLifecycleEvent.v1",
+  "eventId": "3857aa99-881c-4798-b888-7ed72d137691",
+  "event": "installed",
+  "occurredAt": "2026-01-21T14:39:20.6048228Z",
+  "instanceBaseUrl": "https://mycompany.my.erp.net",
+  "user": "admin",
+  "clientSecret": "XXXXXXXXXXXXXXXXXXXXXXXX",
+  "referenceToken": "enrt_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "request": {
+    "applicationName": "My External App",
+    "applicationUri": "MyExternalAppIdentifier",
+    "clientType": "confidential",
+    "redirectUri": "https://my-external-app.com/callback/",
+    "impersonate": "none",
+    "requestSecret": true,
+    "serviceAccess": "referenceToken",
+    "accessTokens": "none",
+    "scope": "read"
+  }
+}
+```
+
+---
+
+### 3) Public with interactive sign-in = all
+
+Request:
+
+```http
+https://mycompany.my.erp.net/manage/apps/install
+  ?applicationUri=MyExternalAppIdentifier
+  &redirectUri=https://my-external-app.com/callback/
+  &applicationName=My External App
+  &clientType=Public
+  &impersonate=all
+  &requestSecret=false
 ```
 
 Response:
@@ -188,93 +275,11 @@ Response:
   "request": {
     "applicationName": "My External App",
     "applicationUri": "MyExternalAppIdentifier",
-    "clientType": "confidential",
+    "clientType": "public",
     "redirectUri": "https://my-external-app.com/callback/",
-    "impersonate": "none",
+    "impersonate": "all",
     "requestSecret": false,
     "serviceAccess": "none",
-    "accessTokens": "none",
-    "scope": ""
-  }
-}
-```
-
----
-
-### 2) Confidential requesting a reference token
-
-Request:
-
-```http
-https://mycompany.my.erp.net/manage/apps/install
-  ?applicationUri=MyExternalAppIdentifier
-  &redirectUri=https://my-external-app.com/callback/
-  &applicationName=My External App
-  &clientType=Confidential
-  &requestSecret=true
-  &serviceAccess=referenceToken
-```
-
-Response:
-
-```json
-{
-  "schema": "erpnet.appLifecycleEvent.v1",
-  "eventId": "3857aa99-881c-4798-b888-7ed72d137691",
-  "event": "installed",
-  "occurredAt": "2026-01-21T14:39:20.6048228Z",
-  "instanceBaseUrl": "https://mycompany.my.erp.net",
-  "user": "admin",
-  "referenceToken": "enrt_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-  "request": {
-    "applicationName": "My External App",
-    "applicationUri": "MyExternalAppIdentifier",
-    "clientType": "confidential",
-    "redirectUri": "https://my-external-app.com/callback/",
-    "impersonate": "none",
-    "requestSecret": true,
-    "serviceAccess": "referenceToken",
-    "accessTokens": "none",
-    "scope": ""
-  }
-}
-```
-
----
-
-### 3) Confidential requesting client credentials
-
-Request:
-
-```http
-https://mycompany.my.erp.net/manage/apps/install
-  ?applicationUri=MyExternalAppIdentifier
-  &redirectUri=https://my-external-app.com/callback/
-  &applicationName=My External App
-  &clientType=Confidential
-  &requestSecret=true
-  &serviceAccess=clientCredentials
-```
-
-Response:
-
-```json
-{
-  "schema": "erpnet.appLifecycleEvent.v1",
-  "eventId": "148709ff-c9a2-49dc-96bc-88ee90fda10a",
-  "event": "installed",
-  "occurredAt": "2026-01-21T14:40:05.024675Z",
-  "instanceBaseUrl": "https://mycompany.my.erp.net",
-  "user": "admin",
-  "clientSecret": "XXXXXXXXXXXXXXXXXXXXXXXX",
-  "request": {
-    "applicationName": "My External App",
-    "applicationUri": "MyExternalAppIdentifier",
-    "clientType": "confidential",
-    "redirectUri": "https://my-external-app.com/callback/",
-    "impersonate": "none",
-    "requestSecret": true,
-    "serviceAccess": "clientCredentials",
     "accessTokens": "none",
     "scope": ""
   }
