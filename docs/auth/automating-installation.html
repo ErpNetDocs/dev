@@ -141,6 +141,9 @@
 </code></pre>
 <hr>
 <h2 id="install-url-parameters">Install URL parameters</h2>
+<p>These parameters define a <strong>Trusted Application registration</strong> in the ERP.net instance.
+The registration establishes how the application is identified, how users authenticate through it,
+and what access the application may request when tokens are later issued during authentication flows.</p>
 <table>
 <thead>
 <tr>
@@ -155,55 +158,88 @@
 <td><code>applicationName</code></td>
 <td>string</td>
 <td><em>(none)</em></td>
-<td>Name of the application. Used to set the Trusted Application name/display name when the registration is created.</td>
+<td>Display name of the Trusted Application created during registration.</td>
 </tr>
 <tr>
 <td><code>applicationUri</code></td>
 <td>string</td>
 <td><em>(none)</em></td>
-<td>External application identifier used to create its registration in the ERP.net instance. <strong>Required.</strong></td>
+<td>External identifier for the application. Used as the primary key for its Trusted Application registration. <strong>Required.</strong></td>
 </tr>
 <tr>
 <td><code>clientType</code></td>
 <td>string</td>
 <td><code>Public</code></td>
-<td>Client type of the application. Supported values: <code>Confidential</code>, <code>Public</code>.</td>
+<td>Client type assigned to the Trusted Application. Supported values: <code>Confidential</code>, <code>Public</code>.</td>
 </tr>
 <tr>
 <td><code>redirectUri</code></td>
 <td>URL</td>
 <td><em>(none)</em></td>
-<td>Redirect URL used as the application's sign-in/impersonation callback and as the lifecycle event callback endpoint.</td>
+<td>Callback URL used during authentication flows and for lifecycle event notifications.</td>
 </tr>
 <tr>
 <td><code>impersonate</code></td>
 <td>string</td>
 <td><code>none</code></td>
-<td>Allows interactive sign-in for no users, internal users only, or all users (internal + community). Supported values: <code>none</code>, <code>internal</code>, <code>all</code>.</td>
+<td>Controls which users may authenticate through this Trusted Application. Supported values: <code>none</code>, <code>internal</code>, <code>all</code>.</td>
 </tr>
 <tr>
 <td><code>requestSecret</code></td>
 <td>bool</td>
 <td><code>false</code></td>
-<td>If <code>true</code>, Instance Manager will issue credentials and include them in the lifecycle event payload.</td>
+<td>If <code>true</code>, credentials are generated for the Trusted Application and delivered in the response payload.</td>
 </tr>
 <tr>
 <td><code>serviceAccess</code></td>
 <td>string</td>
 <td><code>none</code></td>
-<td>Credential type to issue when <code>requestSecret=true</code>. Supported values: <code>none</code>, <code>clientCredentials</code>, <code>referenceToken</code>.</td>
+<td>Service credential type associated with the Trusted Application. Supported values: <code>none</code>, <code>clientCredentials</code>, <code>referenceToken</code>.</td>
 </tr>
 <tr>
 <td><code>accessTokens</code></td>
 <td>string</td>
 <td><code>none</code></td>
-<td>Defines who is allowed to issue reference access tokens. Supported values: <code>none</code>, <code>authenticatedUsers</code>, <code>administratorsOnly</code>.</td>
+<td>Defines which principals may obtain reference access tokens through this Trusted Application. Supported values: <code>none</code>, <code>authenticatedUsers</code>, <code>administratorsOnly</code>.</td>
 </tr>
 <tr>
 <td><code>scope</code></td>
 <td>string</td>
 <td><em>(empty)</em></td>
-<td>Space-delimited list of scopes associated with issued tokens.</td>
+<td>Space-delimited list of scopes the Trusted Application is allowed to request during authentication. These scopes determine the capabilities of tokens issued later. Supported values: <code>openid</code>, <code>profile</code>, <code>read</code>, <code>update</code>, <code>offline_access</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="scope-descriptions">Scope Descriptions</h3>
+<p>Scopes define the maximum permissions this Trusted Application may request during authentication.
+They do not issue tokens themselves, but constrain the contents and capabilities of tokens issued later.</p>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>openid</code></td>
+<td>Allows the application to perform OpenID Connect authentication and receive a stable user identifier.</td>
+</tr>
+<tr>
+<td><code>profile</code></td>
+<td>Allows access to basic user profile attributes during authentication.</td>
+</tr>
+<tr>
+<td><code>read</code></td>
+<td>Allows tokens issued via this application to read protected resources.</td>
+</tr>
+<tr>
+<td><code>update</code></td>
+<td>Allows tokens issued via this application to modify protected resources.</td>
+</tr>
+<tr>
+<td><code>offline_access</code></td>
+<td>Allows the application to request refresh tokens for continued access without user interaction.</td>
 </tr>
 </tbody>
 </table>
@@ -317,7 +353,7 @@
 <tr>
 <td><code>clientSecret</code></td>
 <td>string</td>
-<td>when <code>serviceAccess=clientCredentials</code></td>
+<td>when <code>requestSecret=true</code></td>
 <td>Issued client secret (sensitive).</td>
 </tr>
 <tr>
@@ -472,6 +508,7 @@
   &amp;clientType=Public
   &amp;impersonate=all
   &amp;requestSecret=false
+  &amp;scope=openid%20profile
 </code></pre>
 <p>Response:</p>
 <pre><code class="lang-json">{
@@ -490,7 +527,7 @@
     &quot;requestSecret&quot;: false,
     &quot;serviceAccess&quot;: &quot;none&quot;,
     &quot;accessTokens&quot;: &quot;none&quot;,
-    &quot;scope&quot;: &quot;&quot;
+    &quot;scope&quot;: &quot;openid profile&quot;
   }
 }
 </code></pre>
