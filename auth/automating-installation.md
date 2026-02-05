@@ -71,17 +71,34 @@ https://mycompany.my.erp.net/manage/apps/uninstall
 
 ## Install URL parameters
 
+These parameters define a **Trusted Application registration** in the @@name instance.
+The registration establishes how the application is identified, how users authenticate through it,
+and what access the application may request when tokens are later issued during authentication flows.
+
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `applicationName` | string | *(none)* | Name of the application. Used to set the Trusted Application name/display name when the registration is created. |
-| `applicationUri` | string | *(none)* | External application identifier used to create its registration in the @@name instance. **Required.** |
-| `clientType` | string | `Public` | Client type of the application. Supported values: `Confidential`, `Public`. |
-| `redirectUri` | URL | *(none)* | Redirect URL used as the application's sign-in/impersonation callback and as the lifecycle event callback endpoint. |
-| `impersonate` | string | `none` | Allows interactive sign-in for no users, internal users only, or all users (internal + community). Supported values: `none`, `internal`, `all`. |
-| `requestSecret` | bool | `false` | If `true`, Instance Manager will issue credentials and include them in the lifecycle event payload. |
-| `serviceAccess` | string | `none` | Credential type to issue when `requestSecret=true`. Supported values: `none`, `clientCredentials`, `referenceToken`. |
-| `accessTokens` | string | `none` | Defines who is allowed to issue reference access tokens. Supported values: `none`, `authenticatedUsers`, `administratorsOnly`. |
-| `scope` | string | *(empty)* | Space-delimited list of scopes associated with issued tokens. |
+| `applicationName` | string | *(none)* | Display name of the Trusted Application created during registration. |
+| `applicationUri` | string | *(none)* | External identifier for the application. Used as the primary key for its Trusted Application registration. **Required.** |
+| `clientType` | string | `Public` | Client type assigned to the Trusted Application. Supported values: `Confidential`, `Public`. |
+| `redirectUri` | URL | *(none)* | Callback URL used during authentication flows and for lifecycle event notifications. |
+| `impersonate` | string | `none` | Controls which users may authenticate through this Trusted Application. Supported values: `none`, `internal`, `all`. |
+| `requestSecret` | bool | `false` | If `true`, credentials are generated for the Trusted Application and delivered in the response payload. |
+| `serviceAccess` | string | `none` | Service credential type associated with the Trusted Application. Supported values: `none`, `clientCredentials`, `referenceToken`. |
+| `accessTokens` | string | `none` | Defines which principals may obtain reference access tokens through this Trusted Application. Supported values: `none`, `authenticatedUsers`, `administratorsOnly`. |
+| `scope` | string | *(empty)* | Space-delimited list of scopes the Trusted Application is allowed to request during authentication. These scopes determine the capabilities of tokens issued later. Supported values: `openid`, `profile`, `read`, `update`, `offline_access`. |
+
+### Scope Descriptions
+
+Scopes define the maximum permissions this Trusted Application may request during authentication.
+They do not issue tokens themselves, but constrain the contents and capabilities of tokens issued later.
+
+| Scope | Description |
+|------|-------------|
+| `openid` | Allows the application to perform OpenID Connect authentication and receive a stable user identifier. |
+| `profile` | Allows access to basic user profile attributes during authentication. |
+| `read` | Allows tokens issued via this application to read protected resources. |
+| `update` | Allows tokens issued via this application to modify protected resources. |
+| `offline_access` | Allows the application to request refresh tokens for continued access without user interaction. |
 
 ---
 
@@ -139,7 +156,7 @@ https://mycompany.my.erp.net/manage/apps/uninstall
 | `occurredAt` | string (UTC timestamp) | always | When the event occurred (UTC). |
 | `instanceBaseUrl` | string | always | Instance base URL (example: `https://mycompany.my.erp.net`). |
 | `user` | string | always | The approving user (example: `admin`). |
-| `clientSecret` | string | when `serviceAccess=clientCredentials` | Issued client secret (sensitive). |
+| `clientSecret` | string | when `requestSecret=true` | Issued client secret (sensitive). |
 | `referenceToken` | string | when `serviceAccess=referenceToken` | Issued service access token (reference token, sensitive). |
 | `request` | object | always | Echo of the original install request parameters. |
 
@@ -260,6 +277,7 @@ https://mycompany.my.erp.net/manage/apps/install
   &clientType=Public
   &impersonate=all
   &requestSecret=false
+  &scope=openid%20profile
 ```
 
 Response:
@@ -281,7 +299,7 @@ Response:
     "requestSecret": false,
     "serviceAccess": "none",
     "accessTokens": "none",
-    "scope": ""
+    "scope": "openid profile"
   }
 }
 ```
