@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Registering Extensions | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Registering Extensions | ERP.net Developer Docs ">
+      
+      <meta name="description" content="How to register extensions for ERP.net WebClient and how WebClient consumes them.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/web-client/registering-extensions.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="registering-extensions">Registering Extensions</h1>
+
+<h2 id="overview">Overview</h2>
+<p>An <strong>extension</strong> is a registration record that allows an application to extend the behavior of a <strong>main application</strong> at a predefined extension point.</p>
+<p>Currently, WebClient supports registering additional applications in its <strong>Main menu</strong> through the extension point described in this article.</p>
+<h2 id="webclient-main-menu-extension-point">WebClient main menu extension point</h2>
+<h3 id="extensionpath-constant">ExtensionPath (constant)</h3>
+<p>For WebClient main menu apps, the extension point is identified by a <strong>constant</strong>:</p>
+<ul>
+<li><code>ExtensionPath = &quot;/mainmenu/apps&quot;</code></li>
+</ul>
+<p>WebClient resolves main menu extensions by looking up records with <strong>exact match</strong> on <code>ExtensionPath</code>.</p>
+<h3 id="extensiondata-json-for-main-menu-apps">ExtensionData (JSON) for main menu apps</h3>
+<p>For <code>ExtensionPath=&quot;/mainmenu/apps&quot;</code>, WebClient expects <code>ExtensionData</code> to be a JSON object with the following shape:</p>
+<pre><code class="lang-json">{
+  &quot;category&quot;: &quot;Forms_Crm&quot;,
+  &quot;uri&quot;: &quot;some-app-uri?{interpolated-string}&quot;,
+  &quot;slug&quot;: &quot;my-extension&quot;,
+  &quot;icon&quot;: &quot;globe&quot;
+}
+</code></pre>
+<h4 id="json-fields">JSON fields</h4>
+<ul>
+<li><p><code>category</code> (required)<br>
+The WebClient main menu category key. Must be one of:</p>
+<ul>
+<li><code>My</code></li>
+<li><code>Forms_Crm</code></li>
+<li><code>Forms_Finance</code></li>
+<li><code>Forms_General</code></li>
+<li><code>Forms_Logistics</code></li>
+<li><code>Forms_Production</code></li>
+<li><code>Forms_Projects</code></li>
+<li><code>Forms_HumanResources</code></li>
+<li><code>Forms_Regulatory</code></li>
+<li><code>Forms_Applications</code></li>
+<li><code>Forms_Systems</code></li>
+</ul>
+</li>
+<li><p><code>uri</code> (required)<br>
+Required string field in the JSON payload. If missing or empty, WebClient rejects the extension registration.</p>
+<p><code>uri</code> may contain <strong>interpolated string parameters</strong> (see <a href="#standard-interpolation-parameters">Standard interpolation parameters</a>).</p>
+</li>
+<li><p><code>slug</code> (required)<br>
+Identifies the extension application target.</p>
+<p><strong>Validation rules:</strong></p>
+<ul>
+<li>must start with a lowercase letter or digit</li>
+<li>must end with a lowercase letter or digit</li>
+<li>allowed characters: lowercase letters (<code>a-z</code>), digits (<code>0-9</code>), hyphen (<code>-</code>), underscore (<code>_</code>)</li>
+</ul>
+<p>Regex:</p>
+<ul>
+<li><code>^[a-z0-9]([a-z0-9_-]*[a-z0-9])?$</code></li>
+</ul>
+</li>
+<li><p><code>icon</code> (optional)<br>
+Font Awesome icon <strong>name without the <code>fa-</code> prefix</strong>.</p>
+<p>If missing, WebClient uses the system default icon:</p>
+<ul>
+<li><code>puzzle-piece</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="uri-interpolation">URI interpolation</h2>
+<p><code>uri</code> can include placeholders which WebClient replaces at runtime using the current user/context.</p>
+<p>Example:</p>
+<pre><code class="lang-json">{
+  &quot;category&quot;: &quot;Forms_Crm&quot;,
+  &quot;uri&quot;: &quot;https://example.app/?ec={$enterprisecompany}&amp;ecl={$enterprisecompanylocation}&amp;u={$user}&amp;ru={$rooturl}&quot;,
+  &quot;slug&quot;: &quot;example-extension&quot;,
+  &quot;icon&quot;: &quot;puzzle-piece&quot;
+}
+</code></pre>
+<h3 id="standard-interpolation-parameters">Standard interpolation parameters</h3>
+<p>The following parameters are available for interpolation inside <code>uri</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$enterprisecompany</code></td>
+<td>The enterprise company in the current (transaction) context.</td>
+</tr>
+<tr>
+<td><code>$enterprisecompanylocation</code></td>
+<td>The enterprise company location in the current (transaction) context.</td>
+</tr>
+<tr>
+<td><code>$instance</code></td>
+<td>Current database instance (equals <code>$rooturl</code>, but without the scheme prefix).</td>
+</tr>
+<tr>
+<td><code>$newguid</code></td>
+<td>Serialized random GUID.</td>
+</tr>
+<tr>
+<td><code>$role</code></td>
+<td>Role instance of the current user’s role.</td>
+</tr>
+<tr>
+<td><code>$rooturl</code></td>
+<td>Current database URL.</td>
+</tr>
+<tr>
+<td><code>$time</code></td>
+<td>Server system time.</td>
+</tr>
+<tr>
+<td><code>$user</code></td>
+<td>User instance of the current user.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Note<br>
+Use these parameters only where appropriate for your application. For example, pass enterprise context only if the extension app needs it.</p>
+</blockquote>
+<h2 id="how-webclient-resolves-and-renders-main-menu-extensions">How WebClient resolves and renders main menu extensions</h2>
+<p>When the user opens WebClient main menu, WebClient:</p>
+<ol>
+<li>Loads extension registrations where <code>ExtensionPath = &quot;/mainmenu/apps&quot;</code></li>
+<li>Parses <code>ExtensionData</code> JSON</li>
+<li>Filters records by <code>ExtensionData.category</code> equal to the currently opened main menu category</li>
+<li>Renders the matching extensions as additional apps in the menu</li>
+</ol>
+<h2 id="reloading-registered-apps">Reloading registered apps</h2>
+<p>WebClient provides an endpoint that forces a refresh/reload of the registered WebClient apps:</p>
+<ul>
+<li><code>/cl/api/webclient/apps/reload</code></li>
+</ul>
+<p>Use this endpoint after adding/updating extension registrations when you need WebClient to reload the apps list without waiting for a natural refresh cycle (10 mins).</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="symptom-extension-does-not-appear-in-the-menu">Symptom: Extension does not appear in the menu</h3>
+<p><strong>Checklist:</strong></p>
+<ul>
+<li>The registration record is active (<code>IsActive = true</code>)</li>
+<li><code>ExtensionPath</code> is exactly <code>/mainmenu/apps</code></li>
+<li><code>ExtensionData</code> is valid JSON</li>
+<li><code>ExtensionData.category</code> is one of the supported category keys</li>
+<li><code>ExtensionData.uri</code> is present and non-empty (and interpolation placeholders are well-formed)</li>
+<li><code>ExtensionData.slug</code> matches the validation rules</li>
+</ul>
+<h3 id="validation-errors-logged-in-info-messages-exact-strings">Validation errors logged in Info Messages (exact strings)</h3>
+<p>When WebClient detects an invalid extension registration for <code>ExtensionPath=&quot;/mainmenu/apps&quot;</code>, it logs an error entry in <strong>Info Messages</strong>.</p>
+<p>Each error is logged as a multi-line block in the following format:</p>
+<ul>
+<li>First line: the <strong>error message</strong> (see the exact strings below)</li>
+<li>Then context fields:
+<ul>
+<li><code>ExtensionId:{Id}</code></li>
+<li><code>ExtensionUri:{ExtensionUri}</code></li>
+<li><code>Name:{Name}</code></li>
+<li><code>Path:{ExtensionPath}</code></li>
+<li><code>ExtensionData:</code> followed by the raw JSON payload</li>
+</ul>
+</li>
+<li>If the failure is caused by an exception (e.g. JSON parsing), the log entry also contains:
+<ul>
+<li><code>Error:</code> followed by the exception details (stack trace)</li>
+</ul>
+</li>
+</ul>
+<h4 id="exact-error-messages">Exact error messages</h4>
+<ul>
+<li><p><code>Failed to deserialize extension data.</code></p>
+<ul>
+<li>Logged when <code>ExtensionData</code> cannot be parsed/deserialized.</li>
+<li>The log entry includes an <code>Error:</code> section with the exception details.</li>
+</ul>
+</li>
+<li><p><code>Extension does not privide &quot;uri&quot;.</code></p>
+<ul>
+<li>Logged when the JSON payload does not contain a non-empty string field <code>uri</code>.</li>
+</ul>
+</li>
+<li><p><code>Extension does not privide &quot;slug&quot;.</code></p>
+<ul>
+<li>Logged when the JSON payload does not contain a non-empty string field <code>slug</code>.</li>
+</ul>
+</li>
+<li><p><code>Invalid slug &quot;{slug}&quot;. Use only lowercase letters, numbers, hyphens, or underscores (must start/end with a letter or number).</code></p>
+<ul>
+<li>Logged when <code>slug</code> fails validation.</li>
+<li>Validation regex: <code>^[a-z0-9]([a-z0-9_-]*[a-z0-9])?$</code></li>
+</ul>
+</li>
+<li><p><code>Invalid category &quot;{category}&quot;. The provided category is not found among Web Client main menu categories.</code></p>
+<ul>
+<li>Logged when <code>category</code> does not match any of the available WebClient main menu categories.</li>
+</ul>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/web-client/registering-extensions.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

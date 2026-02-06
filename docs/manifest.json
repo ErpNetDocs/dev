@@ -1804,6 +1804,39 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "web-client/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "web-client/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "web-client/registering-extensions.md",
+      "output": {
+        ".html": {
+          "relative_path": "web-client/registering-extensions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "web-client/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "web-client/toc.html"
+        },
+        ".json": {
+          "relative_path": "web-client/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "whats-new/index.md",
       "output": {
         ".html": {
