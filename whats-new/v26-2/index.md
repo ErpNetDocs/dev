@@ -15,3 +15,4 @@
 - [**Import**](../../domain-api/data-manipulation/import.md)
   ERP.net Domain API defines an Import endpoint which can be used to import multiple entities at once.
 
+- **WebClient**: Main menu extensions registry. See [Registering Extensions](../../web-client/registering-extensions.md).

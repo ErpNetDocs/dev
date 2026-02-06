@@ -15,6 +15,9 @@ items:
   topicHref: table-api/index.md
 - name: API Reference
   href: https://docs.erp.net/model/entities/
+- name: Developing for WebClient
+  href: web-client/toc.yml
+  topicHref: web-client/index.md
 - name: "What's New"
   href: whats-new/toc.yml
   topicHref: whats-new/index.md
