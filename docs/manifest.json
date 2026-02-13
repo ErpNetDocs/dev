@@ -1003,6 +1003,16 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/common-tasks/storred-attributes.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/common-tasks/storred-attributes.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Toc",
       "source_relative_path": "domain-api/common-tasks/toc.yml",
       "output": {
@@ -1154,6 +1164,16 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/data-manipulation/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/data-manipulation/operations.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-manipulation/operations.html"
         }
       },
       "version": ""

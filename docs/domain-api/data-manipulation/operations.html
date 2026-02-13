@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Operations (actions and functions) | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Operations (actions and functions) | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/operations.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="operations-actions-and-functions">Operations (actions and functions)</h1>
+
+<p>In OData, an <strong>operation</strong> is either an <strong>action</strong> or a <strong>function</strong>:</p>
+<ul>
+<li><strong>Action</strong>: invoked with <strong>HTTP POST</strong>. Actions may have side effects (create/update/delete data).</li>
+<li><strong>Function</strong>: invoked with <strong>HTTP GET</strong>. Functions should not have side effects and return data.</li>
+</ul>
+<p>Operations can be:</p>
+<ul>
+<li><strong>Unbound</strong>: not tied to a specific entity instance (called on the service root).</li>
+<li><strong>Bound</strong>: tied to a specific entity instance (called on <code>/EntitySet(key)/OperationName</code>).</li>
+</ul>
+<div class="TIP">
+<h5>Tip</h5>
+<p>For a complete list of operations supported by a given ERP.net instance, inspect the instance EDM model at <code>.../api/domain/odata/$metadata</code>.</p>
+</div>
+<hr>
+<h2 id="unbound-operations-service-root">Unbound operations (service root)</h2>
+<p>Unbound operations are invoked directly under:</p>
+<p><code>/api/domain/odata/&lt;OperationName&gt;</code></p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Kind</th>
+<th style="text-align: right;">HTTP</th>
+<th>Description</th>
+<th>See</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BeginTransaction</code></td>
+<td>Action</td>
+<td style="text-align: right;">POST</td>
+<td>Starts a server-side API transaction and returns <code>TransactionId</code>.</td>
+<td><a href="transactions.html">Transactions</a></td>
+</tr>
+<tr>
+<td><code>EndTransaction</code></td>
+<td>Action</td>
+<td style="text-align: right;">POST</td>
+<td>Ends an API transaction (commit or rollback).</td>
+<td><a href="transactions.html">Transactions</a></td>
+</tr>
+<tr>
+<td><code>GetChanges</code></td>
+<td>Function</td>
+<td style="text-align: right;">GET</td>
+<td>Returns collected changes for a front-end transaction (requires <code>trackChanges=true</code>).</td>
+<td><a href="transactions.html">Transactions</a></td>
+</tr>
+<tr>
+<td><code>WaitForChanges</code></td>
+<td>Function</td>
+<td style="text-align: right;">GET</td>
+<td>Like <code>GetChanges</code>, but blocks until changes occur or timeout.</td>
+<td><a href="transactions.html">Transactions</a></td>
+</tr>
+<tr>
+<td><code>Import</code></td>
+<td>Action</td>
+<td style="text-align: right;">POST</td>
+<td>Bulk insert/update/delete multiple objects in a single request.</td>
+<td><a href="import.html">Import Data</a></td>
+</tr>
+<tr>
+<td><code>ExecuteScript</code></td>
+<td>Action</td>
+<td style="text-align: right;">POST</td>
+<td>Executes raw JavaScript in the domain context.</td>
+<td><a href="../execute-script.html">ExecuteScript</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="bound-operations-available-on-all-entities">Bound operations (available on all entities)</h2>
+<p>ERP.net exposes a set of operations declared on the base <strong>EntityObject</strong> type.
+They can be invoked for any entity instance:</p>
+<p><code>/api/domain/odata/&lt;EntitySet&gt;(&lt;id&gt;)/&lt;OperationName&gt;</code></p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Kind</th>
+<th style="text-align: right;">HTTP</th>
+<th>Purpose</th>
+<th>Notes / reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CreateNotification</code></td>
+<td>Action</td>
+<td style="text-align: right;">POST</td>
+<td>Creates a notification for a user (and sends a real-time event).</td>
+<td><a href="../common-tasks/create-notification.html">Create notification</a></td>
+</tr>
+<tr>
+<td><code>GetAllowedCustomPropertyValues</code></td>
+<td>Function</td>
+<td style="text-align: right;">GET</td>
+<td>Returns the allowed values for a stored attribute (custom property) for the current entity instance.</td>
+<td>See the <em>API Methods</em> section in the model docs (e.g. <a href="https://docs.erp.net/model/entities/General.Products.Products.html">General.Products.Products</a>).</td>
+</tr>
+<tr>
+<td><code>CreateCopy</code></td>
+<td>Action</td>
+<td style="text-align: right;">POST</td>
+<td>Duplicates the object and its child objects within the same aggregate.</td>
+<td>See the <em>API Methods</em> section in the model docs (e.g. <a href="https://docs.erp.net/model/entities/General.Products.Products.html">General.Products.Products</a>).</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The exact invocation syntax (parameter passing for functions) follows OData v4 rules and is described in the service <code>$metadata</code>.</p>
+</div>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="transactions.html">Transactions</a></li>
+<li><a href="import.html">Import Data</a></li>
+<li><a href="../execute-script.html">ExecuteScript</a></li>
+<li><a href="../common-tasks/stored-attributes.md">Stored attributes (custom properties)</a></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/operations.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

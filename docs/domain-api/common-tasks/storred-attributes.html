@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Stored attributes (custom properties) | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Stored attributes (custom properties) | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/storred-attributes.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="stored-attributes-custom-properties">Stored attributes (custom properties)</h1>
+
+<p>Stored attributes (also known as <strong>custom properties</strong> or <strong>custom attributes</strong>) are user-defined fields that extend the ERP.net data model on a per-instance basis.</p>
+<p>In the Domain API, stored attributes appear as additional properties in the OData EDM model (<code>$metadata</code>) of the instance.</p>
+<hr>
+<h2 id="where-stored-attributes-are-defined">Where stored attributes are defined</h2>
+<p>Stored attribute definitions are maintained in the <code>Systems.Bpm.CustomProperties</code> repository:</p>
+<ul>
+<li>Model reference: <a href="https://docs.erp.net/model/entities/Systems.Bpm.CustomProperties.html">Systems.Bpm.CustomProperties</a></li>
+</ul>
+<p>Key definition settings (high level):</p>
+<ul>
+<li><code>EntityName</code>: which entity type the property applies to (e.g. <code>Crm_Customers</code>, <code>General_Products_Products</code>, etc.)</li>
+<li><code>Code</code>: the property code (used in API property naming)</li>
+<li><code>PropertyType</code>: Text / Number / Date / Picture</li>
+<li><code>LimitToAllowedValues</code>: whether the value is free text or constrained</li>
+<li><code>AllowedValuesEntityName</code> / <code>AllowedValuesFilterXML</code>: allowed values coming from another entity</li>
+<li><code>AllowedValuesProperty</code> / <code>AllowedValuesParent</code>: inheritance / filtering of allowed values</li>
+</ul>
+<hr>
+<h2 id="how-stored-attributes-appear-in-the-domain-api">How stored attributes appear in the Domain API</h2>
+<h3 id="property-name">Property name</h3>
+<p>In OData responses and requests, a stored attribute is represented as a property named:</p>
+<p><code>CustomProperty_&lt;Code&gt;</code></p>
+<p>Example:</p>
+<ul>
+<li>Code = <code>color</code></li>
+<li>API property = <code>CustomProperty_color</code></li>
+</ul>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>How <code>CustomProperty.Code</code> becomes an OData property name</strong></p>
+<p>In Domain API, a stored attribute is exposed as:</p>
+<p><code>CustomProperty_&lt;escapedCode&gt;</code></p>
+<p>where <code>&lt;escapedCode&gt;</code> is produced by the same logic as <code>EscapePropertyCode(code)</code>:</p>
+<ul>
+<li>Characters that are <strong>letters</strong>, <strong>digits</strong>, or the underscore (<code>_</code>) are kept <strong>as-is</strong>.</li>
+<li>Any other character (space, dot, dash, parentheses, etc.) is replaced with:
+<ul>
+<li>the prefix <strong><code>_u</code></strong>, followed by</li>
+<li>the <strong>UTF-8 bytes</strong> of the character written as <strong>uppercase hex</strong></li>
+<li><strong>If the character encodes to a single UTF‑8 byte</strong>, the hex is left‑padded with <code>00</code> so the escape becomes 4 hex digits (e.g. <code>.</code> → <code>_u002E</code>).</li>
+</ul>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<ul>
+<li><code>Code = color</code> → <code>CustomProperty_color</code></li>
+<li><code>Code = color.name</code> → <code>CustomProperty_color_u002Ename</code>  (dot <code>.</code> → <code>_u002E</code>)</li>
+<li><code>Code = size (cm)</code> → <code>CustomProperty_size_u0020_u0028cm_u0029</code><br>
+(space → <code>_u0020</code>, <code>(</code> → <code>_u0028</code>, <code>)</code> → <code>_u0029</code>)</li>
+</ul>
+<p><strong>Important limitation (as implemented)</strong></p>
+<p>The provided <code>UnescapePropertyCode()</code> recognizes only patterns of the form <code>_uXXXX</code> (exactly <strong>4</strong> hex digits). Escapes that produce <strong>more than 4 hex digits</strong> (i.e., characters whose UTF‑8 encoding is 3+ bytes) will <strong>not</strong> be unescaped by that method.</p>
+</div>
+<h3 id="property-type-custompropertyvalue">Property type (CustomPropertyValue)</h3>
+<p>The value is represented using the <code>CustomPropertyValue</code> complex type:</p>
+<ul>
+<li><a href="../complex-types/custom-property-value.html">Custom Property Value</a></li>
+</ul>
+<p>Typical JSON shape:</p>
+<pre><code class="lang-json">{
+  &quot;CustomProperty_color&quot;: {
+    &quot;Value&quot;: &quot;apple&quot;,
+    &quot;ValueId&quot;: &quot;5263a2d3-88b0-41db-adae-31c76135719e&quot;,
+    &quot;Description&quot;: { &quot;EN&quot;: &quot;The Apple.&quot; }
+  }
+}
+</code></pre>
+<hr>
+<h2 id="refreshing-the-edm-model-when-new-properties-do-not-appear">Refreshing the EDM model (when new properties do not appear)</h2>
+<p>When a new stored attribute is created in an ERP.net instance, it may not be visible immediately in Domain API because repositories and attributes are cached.
+To refresh the cache, call the <code>/api/domain/reset</code> endpoint (authenticated).</p>
+<p>See: <a href="../complex-types/custom-property-value.html">Custom Property Value</a></p>
+<hr>
+<h2 id="getting-allowed-values-getallowedcustompropertyvalues">Getting allowed values (GetAllowedCustomPropertyValues)</h2>
+<p>When a stored attribute is configured to have allowed values, you can retrieve the allowed values for a specific entity instance via the bound function:</p>
+<p><code>GetAllowedCustomPropertyValues</code> (Domain API request: <strong>GET</strong>)</p>
+<p>This method is declared on the base <code>EntityObject</code> type and is documented in the model API methods (for example):
+<a href="https://docs.erp.net/model/entities/General.Products.Products.html#getallowedcustompropertyvalues">General.Products.Products → API Methods</a></p>
+<p>The metnod returns the allowed values for the specified custom property for this entity object. If supported the result is ordered by property value. Some property value sources do not support ordering - in that case the result is not ordered.
+Return Type: Collection Of <a href="../complex-types/custom-property-value.html">CustomPropertyValue</a></p>
+<h3 id="parameters-as-documented-in-the-model">Parameters (as documented in the model)</h3>
+<ul>
+<li><code>customPropertyCode</code> (required): the stored attribute code</li>
+<li><code>search</code> (optional): search text by value/description, supports <code>%</code></li>
+<li><code>exactMatch</code> (optional, default <code>false</code>)</li>
+<li><code>orderByDescription</code> (optional, default <code>false</code>)</li>
+<li><code>top</code> (optional, default <code>10</code>)</li>
+<li><code>skip</code> (optional, default <code>0</code>)</li>
+</ul>
+<h3 id="example-typical-odata-function-invocation">Example (typical OData function invocation)</h3>
+<pre><code class="lang-http">GET /api/domain/odata/Crm_Sales_Customers(79f3f74e-098a-4d91-9714-c4f845c2dc62)/GetAllowedCustomPropertyValues(customPropertyCode='color',search='app',top=10)
+Accept: application/json
+</code></pre>
+<p>The result is a collection of <code>CustomPropertyValue</code> items.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The exact URL template depends on the EDM model; always treat <code>$metadata</code> as the source of truth for the function signature and invocation syntax.</p>
+</div>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="../complex-types/custom-property-value.html">Custom Property Value</a></li>
+<li><a href="../data-manipulation/operations.html">Operations (actions and functions)</a></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/storred-attributes.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
