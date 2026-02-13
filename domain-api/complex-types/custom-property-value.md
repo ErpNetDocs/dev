@@ -1,65 +1,78 @@
 # Custom Property Value
 
-Custom Properties (also called Custom Attributes in the domain terminology) are user-defined attributes, which can supplement the predefined system attributes.
+Stored attributes (also known as **custom properties** / **custom attributes**) are user-defined attributes that extend the ERP.net data model per instance.
 
-## Definition of а Custom Property 
+In the Domain API, stored attributes are exposed as properties named `CustomProperty_<code>`, whose value is represented by the `CustomPropertyValue` complex type.
 
-For reference information about the definition of the custom properties, see @General.CustomProperties.
+See also: [Stored attributes (custom properties)](../common-tasks/stored-attributes.md)
 
-Here are some highlights for the definition record:
+## Definition of a stored attribute (custom property)
 
-- *EntityName* contains the name of the entity, for which the property is defined.
-You can find the entity name for each entity in the model documentation.
-For example, the entity name for @Crm.Customers is "Crm_Customers" (check it out in the link - see the tag line under the entity name).
+Stored attribute definitions are maintained in:
 
-- *LimitToAllowedValues* - this defines whether the property is free text or is limited to a list of allowed values.
+- Model reference: [Systems.Bpm.CustomProperties](https://docs.erp.net/model/entities/Systems.Bpm.CustomProperties.html)
 
-- *AllowedValuesEntityName* -  specifies that the allowed values are retrieved from the specified entity.
-When this is NULL, the allowed values are retrieved from @General.CustomPropertyAllowedValues .
+Highlights from the definition record:
 
-## Data type and values
+- `EntityName` contains the name of the entity for which the property is defined.
+- `LimitToAllowedValues` defines whether the property is free text or limited to allowed values.
+- `AllowedValuesEntityName` specifies that the allowed values are retrieved from another entity.
+  If this is null, allowed values can be maintained in:
+  [Systems.Bpm.CustomPropertyAllowedValues](https://docs.erp.net/model/entities/Systems.Bpm.CustomPropertyAllowedValues.html)
 
-In the Domain API, the custom properties are properties of type General_CustomPropertyValue.
-The API name of the custom property starts with 'CustomProperty_' followed by the user defined property code.
+## API property name (OData-compliant)
+
+The API name of the stored attribute starts with `CustomProperty_` followed by the (possibly escaped) user-defined property code.
 
 > [!note]
-> Properties with Code, which does not conform to the specification for identifier name, might not be accessible through the API.
-> See [Identifier Name Specification](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/identifier-names).
+> **How `CustomProperty.Code` is converted to an OData-compliant property name**
+>
+> Domain API uses an escaping algorithm equivalent to:
+> `CustomProperty_ + EscapePropertyCode(CustomProperty.Code)`.
+>
+> - Letters (`A-Z`, `a-z`), digits (`0-9`), and `_` are kept as-is.
+> - Any other character is replaced with `_u` followed by the UTF-8 bytes of the character encoded as **uppercase hex**.
+>   - If the character encodes to a **single UTF‑8 byte**, the hex is left-padded with `00` so the escape is 4 hex digits (e.g. `.` → `_u002E`).
+>
+> Examples:
+>
+> - `Code = color` → `CustomProperty_color`
+> - `Code = color.name` → `CustomProperty_color_u002Ename`
+> - `Code = size (cm)` → `CustomProperty_size_u0020_u0028cm_u0029`
 
-Each database contains different custom properties and that is why each database have different EDM model ($metadata).
+Each ERP.net instance can have different stored attributes, therefore each instance has its own EDM model (`$metadata`).
 
-## Reset
+## Reset (refreshing the EDM model)
 
-If a user creates new custom property in the database, this custom property is not exposed in the Domain API in real time.
-This is because the Domain API caches all repositories and their attributes until next restart.
-To refresh the cached attributes you must call the ~/domain/reset endpoint.  
+If a user creates a new stored attribute in the database, it may not be exposed in the Domain API in real time.
+Domain API caches repositories and their attributes until the next restart.
+
+To refresh the cached attributes, call the `/api/domain/reset` endpoint (authenticated).
 
 Example:
 <https://demodb.my.erp.net/api/domain/reset>
 
-> [!note]
-> Executing /reset requires authenticated user connection.
-
 ## Composition of the CustomPropertyValue type
 
 | Name | Type | Description |
-| ---- | ---- | --- |
-| Value	| String | The short value. This is the actual value of the custom property. | 
-| Description	| MultilanguageString	| This is long, descriptive, multi-language value of the custom property. Can be null. | 
-| ValueId	| Guid	| The Id of the entry represented by the property value. It's the id of the allowed value. Can be null. | 
+|---|---|---|
+| `Value` | String | The short value (the actual value). |
+| `Description` | MultilanguageString | A long descriptive multi-language value. Can be null. |
+| `ValueId` | Guid | The Id of the allowed value entry. Can be null. |
 
 ## Example
 
-```
+```json
 "CustomProperty_color": {
-    "Value": "аpple",
-    "ValueId": "5263a2d3-88b0-41db-adae-31c76135719e",
-    "Description": {
-        "EN": "The Apple.",
-        "DE": "Die Apfel."
-    }
+  "Value": "apple",
+  "ValueId": "5263a2d3-88b0-41db-adae-31c76135719e",
+  "Description": {
+    "EN": "The Apple.",
+    "DE": "Der Apfel."
+  }
 }
 ```
-> [!note]  
-> To filter by Custom Property you must use only the short value (only eq is supported):  
-> General_Products_Products?$top=10&$select=CustomProperty_color&$filter=CustomProperty_color eq 'apple'
+
+> [!note]
+> To filter by a stored attribute you must use only the short value (`Value`) and only `eq` is supported:
+> `General_Products_Products?$top=10&$select=CustomProperty_color&$filter=CustomProperty_color eq 'apple'`

@@ -6,6 +6,8 @@
   href: retrieve-products.md
 - name: Working with documents
   href: working-with-documents.md
+- name: Stored attributes (custom properties)
+  href: stored-attributes.md
 - name: Master/Detail attributes
   href: master-detail-attributes.md
 - name: Change the response language
