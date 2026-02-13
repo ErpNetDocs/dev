@@ -87,117 +87,40 @@
         <article data-uid="">
 <h1 id="common-tasks">Common tasks</h1>
 
-<p>This section includes examples of common tasks performed with the Domain API.</p>
+<p>This section contains task-oriented guides and examples for working with the ERP.net Domain API.</p>
+<p>If you are looking for query syntax reference (e.g. <code>$filter</code>, <code>$select</code>, <code>$expand</code>), see:
+<a href="../querying-data/index.html">Querying data</a>.</p>
+<h2 id="setup">Setup</h2>
 <ul>
-<li><a href="change-language.html">Change the response language</a></li>
-<li><a href="context-parameters.html">Context parameters</a></li>
-<li><a href="create-notification.html">Create notification</a></li>
-<li><a href="handling-renames.html">Handling entity type renames</a></li>
-<li><a href="master-detail-attributes.html">Master/Detail Attributes</a></li>
-<li><a href="register-trusted-app.html">Register Trusted Application</a></li>
-<li><a href="retrieve-products.html">Retrieve Products</a></li>
-<li><a href="stored-attributes.html">Stored attributes (custom properties)</a></li>
+<li><a href="register-trusted-app.html">Register Trusted App</a></li>
+</ul>
+<h2 id="documents">Documents</h2>
+<ul>
 <li><a href="working-with-documents.html">Working with documents</a></li>
 </ul>
-<h2 id="contains">CONTAINS</h2>
-<p>Using <em>contains</em> filter function for string attribute:</p>
-<pre><code>General_Contacts_Parties?$top=5&amp;$filter=contains(PartyCode,'30')
-</code></pre>
-<p><a href="https://testdb.my.erp.net/api/domain/query?GET+General_Contacts_Parties?$top=5&amp;$filter=contains(PartyCode,%2730%27)">Try it Yourself</a></p>
-<p>Using <em>contains</em> filter function for multi-language attribute:</p>
-<pre><code>General_Contacts_Parties?$top=5&amp;$filter=contains(PartyName,'Ivan')
-</code></pre>
-<p><a href="https://testdb.my.erp.net/api/domain/query?GET+General_Contacts_Parties?$top=5&amp;$filter=contains(PartyName,%27Ivan%27)">Try it Yourself</a></p>
-<h2 id="in-operator">IN OPERATOR</h2>
-<p>Not every attribute in ERP.net supports <strong>in</strong> filter operator. Generally all navigation properties support <em>in</em>, some <em>enum</em> attributes and occasionaly some other attributes. This information you can find in the <a href="https://docs.erp.net/model/entities/">Domain Model Reference</a>.</p>
-<p>Using <em>in</em> for Id attribute:</p>
-<pre><code>General_Products_Products?$top=10&amp;$filter=Id in (edf2bd2a-7e4d-e111-a06c-00155d00050a, cf728601-1fd5-4853-ab23-01deeee7d038)
-</code></pre>
-<p><a href="https://testdb.my.erp.net/api/domain/query?GET+General_Products_Products?$top=10&amp;$filter=Id+in+(edf2bd2a-7e4d-e111-a06c-00155d00050a,+cf728601-1fd5-4853-ab23-01deeee7d038)">Try it Yourself</a></p>
-<p>Using <em>in</em> for Document State attribute:</p>
-<pre><code>Crm_Sales_SalesOrders?$top=10&amp;$filter=State in ('FirmPlanned', 'Released')&amp;$select=State
-</code></pre>
-<p><a href="https://testdb.my.erp.net/api/domain/query?GET+Crm_Sales_SalesOrders?$top=10&amp;$filter=State+in+(%27FirmPlanned%27,+%27Released%27)&amp;$select=State">Try it Yourself</a></p>
-<p>Using <em>in</em> for DocumentType navigation property:</p>
-<pre><code>Crm_Sales_SalesOrders?$top=10&amp;$select=DocumentType&amp;$filter=DocumentType in ('General_DocumentTypes(de4913f3-962a-4289-a0f3-01bc2c1da21d)', 'General_DocumentTypes(a8b99412-3348-4c12-abdf-1a6a15ab5449)')
-</code></pre>
-<p><a href="https://testdb.my.erp.net/api/domain/query?GET+General_DocumentTypes?$filter=EntityName+eq+%27Crm_Sales_Orders%27">Try it Yourself</a></p>
-<p>Passing inherited entity uri-s (Document.ToParty is of type General_Contacts_Party. The types General_Contacts_Company and General_Contacts_Person are inherited by General_Contacts_Party):</p>
-<pre><code>Crm_Sales_SalesOrders?$top=10&amp;$filter=ToParty in ('General_Contacts_Persons(2e97f255-f410-4925-8c51-211c8eaa18b8)', 'General_Contacts_Companies(bc60d0bc-2804-4e3c-b355-04184aef5505)')
-</code></pre>
-<p>Note: if you pass uri-s to General_Contacts_Party entity the query can be optimized and will be faster than specifying inherited entity uri-s.
-<a href="https://testdb.my.erp.net/api/domain/query?GET+Crm_Sales_SalesOrders?$top=10&amp;$filter=ToParty+in+(%27General_Contacts_Persons(2e97f255-f410-4925-8c51-211c8eaa18b8)%27,+%27General_Contacts_Companies(bc60d0bc-2804-4e3c-b355-04184aef5505)%27)">Try it Yourself</a></p>
-<h2 id="cast">CAST</h2>
-<p>The following uri returns the parent document of a specified sales order cast as Crm_Presales_Offer.</p>
-<p>Note: The type must be specified with the namespace which for all entities is Erp.</p>
-<pre><code>Crm_Sales_SalesOrders(11217345-3659-43be-a85d-005eaaa3aaac)/Parent/Erp.Crm_Presales_Offer
-</code></pre>
-<h2 id="select-default">SELECT DEFAULT</h2>
-<p>By default only system attributes are present in the JSON result. The Id attribute, custom properties and calculated attributes are not present. Use the keyword default in $select clause to include all default attributes. To include custom properties and calculated attributes they must be specified explicitly in $select clause.</p>
-<pre><code>General_Products_Products?$top=1&amp;$select=default,CalculatedAttribute_name
-</code></pre>
-<h2 id="nested-expand">NESTED EXPAND</h2>
-<pre><code>Crm_Sales_SalesOrders(59098bcf-f331-478f-91c2-f5520590f534)?$expand=Lines($expand=Product($select=Codes,Name,PartNumber;$expand=Codes($select=Code)))
-</code></pre>
-<h2 id="expand-ref---returns-the-items-as-links">EXPAND $ref - returns the items as links</h2>
-<pre><code>Crm_Sales_SalesOrders(59098bcf-f331-478f-91c2-f5520590f534)?&amp;$expand=Lines/$ref
-</code></pre>
-<h2 id="filter-by-date">FILTER BY DATE</h2>
-<pre><code>Crm_Sales_SalesOrders?$top=2&amp;$filter=DocumentDate eq 2012-01-01T00:00:00Z
-</code></pre>
-<h2 id="filter-by-custom-property">FILTER BY Custom Property</h2>
-<pre><code>General_Products_Products?$top=10&amp;$select=CustomProperty_color&amp;$filter=CustomProperty_color eq 'blue'
-</code></pre>
-<h2 id="filter-by-quantity-and-amount">FILTER BY Quantity and Amount</h2>
-<pre><code>Crm_Sales_SalesOrderLines?$top=10&amp;$filter=QuantityValue ge 3 and QuantityValue le 5 and LineAmountValue ge 15.45&amp;$select=Quantity
-</code></pre>
-<h2 id="request-count-applying-filter">Request COUNT applying filter</h2>
-<pre><code>Crm_Invoicing_Invoices/$count?$filter=DocumentDate eq 2020-03-23T00:00:00Z
-</code></pre>
-<p>This request returns the number of invoices for the specified date. See <a href="http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part2-url-conventions.html#_Toc31361043">http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part2-url-conventions.html#_Toc31361043</a></p>
-<pre><code>Crm_Sales_SalesOrderLines/$count?$filter=SalesOrder/Void eq false and SalesOrder/State ge 'Released' and Product eq 'General_Products_Products(35d5bcb9-0881-4bc8-bfe4-84fb874d4626)'
-</code></pre>
-<p>This request returns the number of released sales order lines for a given product.</p>
-<h2 id="using-top-skip-and-count">Using $top, $skip and $count</h2>
-<pre><code>Crm_Sales_SalesOrderLines?$filter=SalesOrder/Void eq false and SalesOrder/State ge 'Released'&amp;$top=10&amp;$skip=120&amp;$count=true
-</code></pre>
-<p>The $count=true query option specifies that the total number of rows for the specified filter will be included in the result along with the data.</p>
-<h2 id="update-product">UPDATE PRODUCT</h2>
-<pre><code>PATCH ~/General_Products_Products(59098bcf-f331-478f-91c2-f5520590f534)
-
-{
-&quot;@odata.type&quot;: &quot;#Erp.General_Products_Product&quot;,
-&quot;ABCClass&quot;: &quot;A&quot;,
-&quot;StandardLotSizeBase&quot;: {
-&quot;Value&quot;: 3.45,
-&quot;Unit&quot;: &quot;бр&quot;
-},
-&quot;MeasurementUnit@odata.bind&quot;: &quot;https://mycompany.com/api/domain/odata/General_MeasurementUnits(5c5e77ce-60bb-4338-abd0-3a2acb27ff93)&quot;
-}
-</code></pre>
-<h2 id="filter-by-document-state">FILTER BY DOCUMENT STATE</h2>
-<pre><code>Crm_Sales_SalesOrders?$top=1&amp;$filter=State ge Erp.General_DocumentState'Released'
-</code></pre>
-<h2 id="filter-by-multiple-document-types">FILTER BY MULTIPLE DOCUMENT TYPES</h2>
-<pre><code>Crm_Sales_SalesOrders?$top=2&amp;$filter=DocumentType eq 'General_DocumentTypes(f8a93d3a-8cf3-4a09-9d45-667d664cb98d)' and DocumentType eq 'General_DocumentTypes(f8a93d3a-8cf3-4a09-9d45-667d664cb98e)' and DocumentType eq 'General_DocumentTypes(f8a93d3a-8cf3-4a09-9d45-667d664cb98f)'
-</code></pre>
-<h2 id="filter-by-masterdocument-with-sales-order-uri">FILTER BY MasterDocument with Sales Order URI</h2>
-<pre><code>Crm_Sales_SalesOrders?$top=2&amp;$filter=MasterDocument eq 'Crm_Sales_SalesOrders(70ef9b04-d843-df11-a1e1-0018f3790817)'
-</code></pre>
-<h2 id="change-document-state">CHANGE DOCUMENT STATE</h2>
-<pre><code>POST ~/Crm_Sales_SalesOrders(59098bcf-f331-478f-91c2-f5520590f534)/ChangeState
-{
-&quot;newState&quot; : &quot;FirmPlanned&quot;,
-&quot;userStatus&quot;: {&quot;@odata.id&quot;: &quot;General_DocumentTypeUserStatuses(1ee1249e-4ef5-46b4-8409-26b2130d09c7)&quot;}
-}
-</code></pre>
-<h2 id="make-document-void">MAKE DOCUMENT VOID</h2>
-<pre><code>POST ~/Crm_Sales_SalesOrders(11217345-3659-43be-a85d-005eaaa3aaac)/MakeVoid
-{
-&quot;reason&quot; : &quot;test api method&quot;,
-&quot;voidType&quot;: &quot;VoidDocument&quot;
-}
-</code></pre>
+<h2 id="extensibility">Extensibility</h2>
+<ul>
+<li><a href="stored-attributes.html">Stored attributes (custom properties)</a></li>
+<li><a href="master-detail-attributes.html">Master/Detail attributes</a></li>
+</ul>
+<h2 id="context--localization">Context &amp; localization</h2>
+<ul>
+<li><a href="context-parameters.html">Providing context parameters</a></li>
+<li><a href="change-language.html">Change the response language</a></li>
+</ul>
+<h2 id="collaboration">Collaboration</h2>
+<ul>
+<li><a href="create-notification.html">Create notification</a></li>
+</ul>
+<h2 id="compatibility">Compatibility</h2>
+<ul>
+<li><a href="handling-renames.html">Handling renames</a></li>
+</ul>
+<h2 id="examples">Examples</h2>
+<ul>
+<li><a href="retrieve-products.html">Retrieve Products</a></li>
+<li><a href="query-examples.html">Query examples</a></li>
+</ul>
 
 </article>
 

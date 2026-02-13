@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Query examples | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Query examples | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/query-examples.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="query-examples">Query examples</h1>
+
+<p>This page contains practical examples of common OData query patterns used with ERP.net Domain API.</p>
+<p>For query syntax reference and supported operators, see:
+<a href="../querying-data/index.html">Querying data</a>.</p>
+<h2 id="contains">CONTAINS</h2>
+<p>Using <code>contains</code> for a string attribute:</p>
+<pre><code>General_Contacts_Parties?$top=5&amp;$filter=contains(PartyCode,'30')
+</code></pre>
+<p><a href="https://testdb.my.erp.net/api/domain/query?GET+General_Contacts_Parties?$top=5&amp;$filter=contains(PartyCode,%2730%27)">Try it Yourself</a></p>
+<p>Using <code>contains</code> for a multi-language string attribute:</p>
+<pre><code>General_Contacts_Parties?$top=5&amp;$filter=contains(PartyName,'Ivan')
+</code></pre>
+<p><a href="https://testdb.my.erp.net/api/domain/query?GET+General_Contacts_Parties?$top=5&amp;$filter=contains(PartyName,%27Ivan%27)">Try it Yourself</a></p>
+<h2 id="in-operator">IN operator</h2>
+<p>Not every attribute supports the <code>in</code> operator. In general, navigation properties support <code>in</code>, some enum attributes support it, and some additional attributes may support it as well. Check the entity attribute metadata in the <a href="https://docs.erp.net/model/entities/">Domain Model Reference</a>.</p>
+<p>Using <code>in</code> for <code>Id</code>:</p>
+<pre><code>General_Products_Products?$top=10&amp;$filter=Id in (edf2bd2a-7e4d-e111-a06c-00155d00050a, cf728601-1fd5-4853-ab23-01deeee7d038)
+</code></pre>
+<p><a href="https://testdb.my.erp.net/api/domain/query?GET+General_Products_Products?$top=10&amp;$filter=Id+in+(edf2bd2a-7e4d-e111-a06c-00155d00050a,+cf728601-1fd5-4853-ab23-01deeee7d038)">Try it Yourself</a></p>
+<p>Using <code>in</code> for document state:</p>
+<pre><code>Crm_Sales_SalesOrders?$top=10&amp;$filter=State in ('FirmPlanned', 'Released')&amp;$select=State
+</code></pre>
+<p><a href="https://testdb.my.erp.net/api/domain/query?GET+Crm_Sales_SalesOrders?$top=10&amp;$filter=State+in+(%27FirmPlanned%27,+%27Released%27)&amp;$select=State">Try it Yourself</a></p>
+<p>Using <code>in</code> for a navigation property:</p>
+<pre><code>Crm_Sales_SalesOrders?$top=10&amp;$select=DocumentType&amp;$filter=DocumentType in ('General_DocumentTypes(de4913f3-962a-4289-a0f3-01bc2c1da21d)', 'General_DocumentTypes(a8b99412-3348-4c12-abdf-1a6a15ab5449)')
+</code></pre>
+<p>Passing inherited entity URI-s (e.g. <code>ToParty</code> is of base type <code>General_Contacts_Party</code> and may refer to <code>General_Contacts_Companies</code> or <code>General_Contacts_Persons</code>):</p>
+<pre><code>Crm_Sales_SalesOrders?$top=10&amp;$filter=ToParty in ('General_Contacts_Persons(2e97f255-f410-4925-8c51-211c8eaa18b8)', 'General_Contacts_Companies(bc60d0bc-2804-4e3c-b355-04184aef5505)')
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>If you pass URI-s to the base <code>General_Contacts_Parties</code> entity (when applicable), the query can often be optimized and be faster than specifying inherited entity URI-s.</p>
+</div>
+<h2 id="cast">CAST</h2>
+<p>The following URI returns the parent document of a specified sales order cast as <code>Crm_Presales_Offer</code>.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The type must be specified with the namespace which for all entities is <code>Erp</code>.</p>
+</div>
+<pre><code>Crm_Sales_SalesOrders(11217345-3659-43be-a85d-005eaaa3aaac)/Parent/Erp.Crm_Presales_Offer
+</code></pre>
+<h2 id="selectdefault">$select=default</h2>
+<p>By default, only system attributes are present in the JSON result. The <code>Id</code> attribute, custom properties and calculated attributes are not present. Use the keyword <code>default</code> in the <code>$select</code> clause to include all default attributes. Custom properties and calculated attributes must be specified explicitly.</p>
+<pre><code>General_Products_Products?$top=1&amp;$select=default,CalculatedAttribute_name
+</code></pre>
+<h2 id="nested-expand">Nested $expand</h2>
+<pre><code>Crm_Sales_SalesOrders(59098bcf-f331-478f-91c2-f5520590f534)?$expand=Lines($expand=Product($select=Codes,Name,PartNumber;$expand=Codes($select=Code)))
+</code></pre>
+<h2 id="expand-ref-returns-items-as-links">$expand $ref (returns items as links)</h2>
+<pre><code>Crm_Sales_SalesOrders(59098bcf-f331-478f-91c2-f5520590f534)?$expand=Lines/$ref
+</code></pre>
+<h2 id="filter-by-date">Filter by date</h2>
+<pre><code>Crm_Sales_SalesOrders?$top=2&amp;$filter=DocumentDate eq 2012-01-01T00:00:00Z
+</code></pre>
+<h2 id="filter-by-stored-attribute-custom-property">Filter by stored attribute (custom property)</h2>
+<pre><code>General_Products_Products?$top=10&amp;$select=CustomProperty_color&amp;$filter=CustomProperty_color eq 'blue'
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>For stored attributes, filtering is supported by the short value (<code>Value</code>) and only <code>eq</code> is supported.</p>
+</div>
+<h2 id="filter-by-quantity-and-amount">Filter by quantity and amount</h2>
+<pre><code>Crm_Sales_SalesOrderLines?$top=10&amp;$filter=QuantityValue ge 3 and QuantityValue le 5 and LineAmountValue ge 15.45&amp;$select=Quantity
+</code></pre>
+<h2 id="count-with-filter">$count with filter</h2>
+<pre><code>Crm_Invoicing_Invoices/$count?$filter=DocumentDate eq 2020-03-23T00:00:00Z
+</code></pre>
+<pre><code>Crm_Sales_SalesOrderLines/$count?$filter=SalesOrder/Void eq false and SalesOrder/State ge 'Released' and Product eq 'General_Products_Products(35d5bcb9-0881-4bc8-bfe4-84fb874d4626)'
+</code></pre>
+<p>See OData URL conventions:
+<a href="http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part2-url-conventions.html">http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part2-url-conventions.html</a></p>
+<h2 id="top-skip-and-counttrue">$top, $skip and $count=true</h2>
+<pre><code>Crm_Sales_SalesOrderLines?$filter=SalesOrder/Void eq false and SalesOrder/State ge 'Released'&amp;$top=10&amp;$skip=120&amp;$count=true
+</code></pre>
+<p>The <code>$count=true</code> query option specifies that the total number of rows for the specified filter will be included in the result along with the data.</p>
+<h2 id="filter-by-document-state">Filter by document state</h2>
+<pre><code>Crm_Sales_SalesOrders?$top=1&amp;$filter=State ge Erp.General_DocumentState'Released'
+</code></pre>
+<h2 id="filter-by-masterdocument-using-sales-order-uri">Filter by MasterDocument (using Sales Order URI)</h2>
+<pre><code>Crm_Sales_SalesOrders?$top=2&amp;$filter=MasterDocument eq 'Crm_Sales_SalesOrders(70ef9b04-d843-df11-a1e1-0018f3790817)'
+</code></pre>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/query-examples.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
