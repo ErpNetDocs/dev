@@ -23,6 +23,25 @@ Content-Type: application/json
 }
 ```
 
+**Example:** Updating a product (including dependent complex fields):
+
+```
+PATCH https://testdb.my.erp.net/api/domain/odata/General_Products_...1-478f-91c2-f5520590f534) 
+Content-Type: application/json
+
+{ 
+    "ABCClass": "A", 
+    "MeasurementUnit@odata.bind": "https://testdb.my.erp.net/api/domain/odata/General_Measureme...b-4338-abd0-3a2acb27ff93)",
+    "StandardLotSizeBase": { "Value": 3.45, "Unit": "pcs" }
+}
+```
+
+> [!note]
+> When updating complex fields (e.g. `Quantity`, `Amount`) ensure dependent properties are provided consistently, and in the correct order when required by business rules. In general the measurement unit/currency must be set before the quantity/amount.
+
+
+
+
 **Required Considerations:**
 
 - If updating fields involved in calculations or triggers, ensure dependent properties are included in the correct order.  

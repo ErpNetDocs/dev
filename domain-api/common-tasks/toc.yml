@@ -4,6 +4,8 @@
   href: register-trusted-app.md
 - name: Retrieve Products
   href: retrieve-products.md
+- name: Query examples
+  href: query-examples.md
 - name: Working with documents
   href: working-with-documents.md
 - name: Stored attributes (custom properties)
