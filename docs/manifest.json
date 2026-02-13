@@ -1004,10 +1004,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "domain-api/common-tasks/storred-attributes.md",
+      "source_relative_path": "domain-api/common-tasks/stored-attributes.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/common-tasks/storred-attributes.html"
+          "relative_path": "domain-api/common-tasks/stored-attributes.html"
         }
       },
       "version": ""
