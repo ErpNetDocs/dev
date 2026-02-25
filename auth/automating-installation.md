@@ -108,6 +108,22 @@ They do not issue tokens themselves, but constrain the contents and capabilities
 |---|---|---|---|
 | `applicationUri` | string | *(none)* | External application identifier to uninstall. **Required.** |
 
+## Trusted Application setup algorithm
+
+During the installation process, the system reads incoming URL parameters to automatically configure the new Trusted Application's core attributes. The following table details the mapping logic between these external installation parameters and the resulting internal system properties.
+
+| Install URL Parameter | Trusted App Attribute | Mapping Logic / Effect |
+|---|---|---|
+| `applicationName` | **Name** | Sets the display name of the application. If left blank, it defaults to `"(unnamed)"`. |
+| `applicationUri` | **ApplicationUri** | Used as the unique identifier (`client_id`) for the trusted app. |
+| `clientType` | **ClientType** | `Public` or `Confidential`. |
+| `redirectUri` | **ImpersonateLoginUrl** | Used as the allowed login redirect URI during authentication. |
+| `impersonate` | **ImpersonateAsInternalUserAllowed**<br>**ImpersonateAsCommunityUserAllowed** | • `internal`: Internal = `true`, Community = `false`<br>• `all`: Internal = `true`, Community = `true`<br>• `none`: Both = `false` |
+| `requestSecret` | **ApplicationSecretHash** | If set to `true`, a random 24-character string (the secret) is generated, its SHA-256 hash is computed, and the resulting Base64 string is stored in this attribute. |
+| `serviceAccess` | **SystemUserAllowed**<br>**SystemUser** | If `serviceAccess` is anything other than `none`, **SystemUserAllowed** is set to `true`. Consequently, it attempts to pre-populate the **SystemUser** attribute with `SYSTEM_APPLICATION_USER`. |
+| `accessTokens` | **AccessTokens** | `None` or `AuthenticatedUsers` or `AdministratorsOnly`. |
+| `scope` | **Scope** | Stores the space-delimited list of allowed scopes. |
+
 ---
 
 ## Validation rules
@@ -159,6 +175,9 @@ They do not issue tokens themselves, but constrain the contents and capabilities
 | `clientSecret` | string | when `requestSecret=true` | Issued client secret (sensitive). |
 | `referenceToken` | string | when `serviceAccess=referenceToken` | Issued service access token (reference token, sensitive). |
 | `request` | object | always | Echo of the original install request parameters. |
+
+> [!NOTE]
+> If the `requestSecret` install parameter is omitted or set to `false`, the `clientSecret` and `referenceToken` will not be included in the response payload, regardless of the `serviceAccess` value.
 
 ### `request` object fields
 
