@@ -263,6 +263,64 @@ They do not issue tokens themselves, but constrain the contents and capabilities
 </tr>
 </tbody>
 </table>
+<h2 id="trusted-application-setup-algorithm">Trusted Application setup algorithm</h2>
+<p>During the installation process, the system reads incoming URL parameters to automatically configure the new Trusted Application's core attributes. The following table details the mapping logic between these external installation parameters and the resulting internal system properties.</p>
+<table>
+<thead>
+<tr>
+<th>Install URL Parameter</th>
+<th>Trusted App Attribute</th>
+<th>Mapping Logic / Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>applicationName</code></td>
+<td><strong>Name</strong></td>
+<td>Sets the display name of the application. If left blank, it defaults to <code>&quot;(unnamed)&quot;</code>.</td>
+</tr>
+<tr>
+<td><code>applicationUri</code></td>
+<td><strong>ApplicationUri</strong></td>
+<td>Used as the unique identifier (<code>client_id</code>) for the trusted app.</td>
+</tr>
+<tr>
+<td><code>clientType</code></td>
+<td><strong>ClientType</strong></td>
+<td><code>Public</code> or <code>Confidential</code>.</td>
+</tr>
+<tr>
+<td><code>redirectUri</code></td>
+<td><strong>ImpersonateLoginUrl</strong></td>
+<td>Used as the allowed login redirect URI during authentication.</td>
+</tr>
+<tr>
+<td><code>impersonate</code></td>
+<td><strong>ImpersonateAsInternalUserAllowed</strong><br><strong>ImpersonateAsCommunityUserAllowed</strong></td>
+<td>• <code>internal</code>: Internal = <code>true</code>, Community = <code>false</code><br>• <code>all</code>: Internal = <code>true</code>, Community = <code>true</code><br>• <code>none</code>: Both = <code>false</code></td>
+</tr>
+<tr>
+<td><code>requestSecret</code></td>
+<td><strong>ApplicationSecretHash</strong></td>
+<td>If set to <code>true</code>, a random 24-character string (the secret) is generated, its SHA-256 hash is computed, and the resulting Base64 string is stored in this attribute.</td>
+</tr>
+<tr>
+<td><code>serviceAccess</code></td>
+<td><strong>SystemUserAllowed</strong><br><strong>SystemUser</strong></td>
+<td>If <code>serviceAccess</code> is anything other than <code>none</code>, <strong>SystemUserAllowed</strong> is set to <code>true</code>. Consequently, it attempts to pre-populate the <strong>SystemUser</strong> attribute with <code>SYSTEM_APPLICATION_USER</code>.</td>
+</tr>
+<tr>
+<td><code>accessTokens</code></td>
+<td><strong>AccessTokens</strong></td>
+<td><code>None</code> or <code>AuthenticatedUsers</code> or <code>AdministratorsOnly</code>.</td>
+</tr>
+<tr>
+<td><code>scope</code></td>
+<td><strong>Scope</strong></td>
+<td>Stores the space-delimited list of allowed scopes.</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <h2 id="validation-rules">Validation rules</h2>
 <p>ERP.net Instance Manager validates the request before allowing the user to proceed.</p>
@@ -370,6 +428,10 @@ They do not issue tokens themselves, but constrain the contents and capabilities
 </tr>
 </tbody>
 </table>
+<div class="NOTE">
+<h5>Note</h5>
+<p>If the <code>requestSecret</code> install parameter is omitted or set to <code>false</code>, the <code>clientSecret</code> and <code>referenceToken</code> will not be included in the response payload, regardless of the <code>serviceAccess</code> value.</p>
+</div>
 <h3 id="request-object-fields"><code>request</code> object fields</h3>
 <p>The <code>request</code> object echoes the original install request (normalized and serialized in camelCase), including <code>requestSecret=true</code> when credentials are successfully issued.</p>
 <table>
