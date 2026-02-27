@@ -84,7 +84,7 @@ and what access the application may request when tokens are later issued during 
 | `impersonate` | string | `none` | Controls which users may authenticate through this Trusted Application. Supported values: `none`, `internal`, `all`. |
 | `requestSecret` | bool | `false` | If `true`, credentials are generated for the Trusted Application and delivered in the response payload. |
 | `serviceAccess` | string | `none` | Service credential type associated with the Trusted Application. Supported values: `none`, `clientCredentials`, `referenceToken`. |
-| `accessTokens` | string | `none` | Defines which principals may obtain reference access tokens through this Trusted Application. Supported values: `none`, `authenticatedUsers`, `administratorsOnly`. |
+| `referenceTokens` | string | `none` | Defines which principals may obtain reference access tokens through this Trusted Application. Supported values: `none`, `authenticatedUsers`, `administratorsOnly`. |
 | `scope` | string | *(empty)* | Space-delimited list of scopes the Trusted Application is allowed to request during authentication. These scopes determine the capabilities of tokens issued later. Supported values: `openid`, `profile`, `read`, `update`, `offline_access`. |
 
 ### Scope Descriptions
@@ -112,17 +112,19 @@ They do not issue tokens themselves, but constrain the contents and capabilities
 
 During the installation process, the system reads incoming URL parameters to automatically configure the new Trusted Application's core attributes. The following table details the mapping logic between these external installation parameters and the resulting internal system properties.
 
-| Install URL Parameter | Trusted App Attribute | Mapping Logic / Effect |
-|---|---|---|
-| `applicationName` | **Name** | Sets the display name of the application. If left blank, it defaults to `"(unnamed)"`. |
-| `applicationUri` | **ApplicationUri** | Used as the unique identifier (`client_id`) for the trusted app. |
-| `clientType` | **ClientType** | `Public` or `Confidential`. |
-| `redirectUri` | **ImpersonateLoginUrl** | Used as the allowed login redirect URI during authentication. |
-| `impersonate` | **ImpersonateAsInternalUserAllowed**<br>**ImpersonateAsCommunityUserAllowed** | • `internal`: Internal = `true`, Community = `false`<br>• `all`: Internal = `true`, Community = `true`<br>• `none`: Both = `false` |
-| `requestSecret` | **ApplicationSecretHash** | If set to `true`, a random 24-character string (the secret) is generated, its SHA-256 hash is computed, and the resulting Base64 string is stored in this attribute. |
-| `serviceAccess` | **SystemUserAllowed**<br>**SystemUser** | If `serviceAccess` is anything other than `none`, **SystemUserAllowed** is set to `true`. Consequently, it attempts to pre-populate the **SystemUser** attribute with `SYSTEM_APPLICATION_USER`. |
-| `accessTokens` | **AccessTokens** | `None` or `AuthenticatedUsers` or `AdministratorsOnly`. |
-| `scope` | **Scope** | Stores the space-delimited list of allowed scopes. |
+| Trusted App Attribute | Mapping Logic & Effect |
+|---|---|
+| **Name** | Reads the `applicationName` URL parameter to set the application's display name. Defaults to `"(unnamed)"` if left blank. |
+| **ApplicationUri** | Uses the `applicationUri` URL parameter as the unique identifier (`client_id`) for the trusted app. |
+| **ClientType** | Maps the `clientType` URL parameter to set the client as either `Public` or `Confidential`. |
+| **ImpersonateLoginUrl** | Uses the `redirectUri` URL parameter to define the allowed login redirect URI during authentication. |
+| **ImpersonateAsInternalUserAllowed** | Evaluates the `impersonate` URL parameter. Set to `true` if the value is `internal` or `all`. Set to `false` if the value is `none` or omitted. |
+| **ImpersonateAsCommunityUserAllowed** | Evaluates the `impersonate` URL parameter. Set to `true` if the value is `all`. Set to `false` if the value is `internal`, `none`, or omitted. |
+| **ApplicationSecretHash** | Evaluates the `requestSecret` URL parameter. If `true`, the system generates a random 24-character secret, computes its SHA-256 hash, and stores the resulting Base64 string. If `false` or omitted, no secret is generated or stored. Additionally, if `false`, no secret or reference token is returned in the response payload, regardless of the `serviceAccess` parameter value. |
+| **SystemUserAllowed** | Evaluates the `serviceAccess` URL parameter. Set to `true` if the value is anything other than `none`. Set to `false` if the value is exactly `none` or omitted. |
+| **SystemUser** | Evaluates the `serviceAccess` URL parameter. Pre-populates with `SYSTEM_APPLICATION_USER` if the value is anything other than `none`. Remains unassigned (or null) if the value is exactly `none` or omitted. |
+| **ReferenceTokens** | Maps the `referenceTokens` URL parameter to internal enum values: `None`, `AuthenticatedUsers`, or `AdministratorsOnly`. |
+| **Scope** | Stores the space-delimited list of allowed scopes provided by the `scope` URL parameter. |
 
 ---
 
@@ -141,7 +143,7 @@ During the installation process, the system reads incoming URL parameters to aut
   - `redirectUri` must be present and valid.
   - `impersonate` must not be `none` (must be `internal` or `all`).
 - If `clientType=Public`, `requestSecret=true` is not allowed.
-- If `accessTokens` is not specified, it defaults to `none`.
+- If `referenceTokens` is not specified, it defaults to `none`.
 
 ---
 
@@ -192,8 +194,8 @@ The `request` object echoes the original install request (normalized and seriali
 | `impersonate` | string | Impersonation scope (`none`, `internal`, `all`). |
 | `requestSecret` | bool | Whether credentials were requested. |
 | `serviceAccess` | string | Service access mode (`none`, `clientCredentials`, `referenceToken`). |
-| `accessTokens` | string | Who can issue reference access tokens (`none`, `authenticatedUsers`, `administratorsOnly`). |
-| `scope` | string | Space-delimited scope string.
+| `referenceTokens` | string | Who can issue reference access tokens (`none`, `authenticatedUsers`, `administratorsOnly`). |
+| `scope` | string | Space-delimited scope string. |
 
 ---
 
@@ -233,7 +235,7 @@ Response:
     "impersonate": "internal",
     "requestSecret": true,
     "serviceAccess": "clientCredentials",
-    "accessTokens": "none",
+    "referenceTokens": "none",
     "scope": "read update"
   }
 }
@@ -276,7 +278,7 @@ Response:
     "impersonate": "none",
     "requestSecret": true,
     "serviceAccess": "referenceToken",
-    "accessTokens": "none",
+    "referenceTokens": "none",
     "scope": "read"
   }
 }
@@ -317,7 +319,7 @@ Response:
     "impersonate": "all",
     "requestSecret": false,
     "serviceAccess": "none",
-    "accessTokens": "none",
+    "referenceTokens": "none",
     "scope": "openid profile"
   }
 }
@@ -383,7 +385,7 @@ If the payload contains `clientSecret` or `referenceToken`, treat it as a passwo
 
 ---
 
-## Access token issuance (`accessTokens`)
+## Reference access token issuance (`referenceTokens`)
 
 Controls who may issue reference access tokens.
 
