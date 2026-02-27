@@ -43,7 +43,7 @@ Typical values:
 | IsEnabled | true | Enables the trusted application. |
 | ImpersonateAsInternalUserAllowed | true | Allows authentication by internal users. |
 | ImpersonateAsCommunityUserAllowed | false | Disallows authentication by external (community) users. |
-| ImpersonateLoginUrl | https://spa.example.com/signin-callback | The callback URL handled by the SPA after sign-in. |
+| ImpersonateLoginUrl | https://spa.example.com/auth/callback | The callback URL handled by the SPA after sign-in. |
 | ClientType | Public | Indicates that the application is a public client and cannot keep a secret. |
 | Scope | `read` or `read update` | Use `read` for read-only access; include `update` only if the application must create, modify, or delete data |
 
