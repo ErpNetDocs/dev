@@ -197,7 +197,7 @@ and what access the application may request when tokens are later issued during 
 <td>Service credential type associated with the Trusted Application. Supported values: <code>none</code>, <code>clientCredentials</code>, <code>referenceToken</code>.</td>
 </tr>
 <tr>
-<td><code>accessTokens</code></td>
+<td><code>referenceTokens</code></td>
 <td>string</td>
 <td><code>none</code></td>
 <td>Defines which principals may obtain reference access tokens through this Trusted Application. Supported values: <code>none</code>, <code>authenticatedUsers</code>, <code>administratorsOnly</code>.</td>
@@ -268,56 +268,54 @@ They do not issue tokens themselves, but constrain the contents and capabilities
 <table>
 <thead>
 <tr>
-<th>Install URL Parameter</th>
 <th>Trusted App Attribute</th>
-<th>Mapping Logic / Effect</th>
+<th>Mapping Logic &amp; Effect</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>applicationName</code></td>
 <td><strong>Name</strong></td>
-<td>Sets the display name of the application. If left blank, it defaults to <code>&quot;(unnamed)&quot;</code>.</td>
+<td>Reads the <code>applicationName</code> URL parameter to set the application's display name. Defaults to <code>&quot;(unnamed)&quot;</code> if left blank.</td>
 </tr>
 <tr>
-<td><code>applicationUri</code></td>
 <td><strong>ApplicationUri</strong></td>
-<td>Used as the unique identifier (<code>client_id</code>) for the trusted app.</td>
+<td>Uses the <code>applicationUri</code> URL parameter as the unique identifier (<code>client_id</code>) for the trusted app.</td>
 </tr>
 <tr>
-<td><code>clientType</code></td>
 <td><strong>ClientType</strong></td>
-<td><code>Public</code> or <code>Confidential</code>.</td>
+<td>Maps the <code>clientType</code> URL parameter to set the client as either <code>Public</code> or <code>Confidential</code>.</td>
 </tr>
 <tr>
-<td><code>redirectUri</code></td>
 <td><strong>ImpersonateLoginUrl</strong></td>
-<td>Used as the allowed login redirect URI during authentication.</td>
+<td>Uses the <code>redirectUri</code> URL parameter to define the allowed login redirect URI during authentication.</td>
 </tr>
 <tr>
-<td><code>impersonate</code></td>
-<td><strong>ImpersonateAsInternalUserAllowed</strong><br><strong>ImpersonateAsCommunityUserAllowed</strong></td>
-<td>• <code>internal</code>: Internal = <code>true</code>, Community = <code>false</code><br>• <code>all</code>: Internal = <code>true</code>, Community = <code>true</code><br>• <code>none</code>: Both = <code>false</code></td>
+<td><strong>ImpersonateAsInternalUserAllowed</strong></td>
+<td>Evaluates the <code>impersonate</code> URL parameter. Set to <code>true</code> if the value is <code>internal</code> or <code>all</code>. Set to <code>false</code> if the value is <code>none</code> or omitted.</td>
 </tr>
 <tr>
-<td><code>requestSecret</code></td>
+<td><strong>ImpersonateAsCommunityUserAllowed</strong></td>
+<td>Evaluates the <code>impersonate</code> URL parameter. Set to <code>true</code> if the value is <code>all</code>. Set to <code>false</code> if the value is <code>internal</code>, <code>none</code>, or omitted.</td>
+</tr>
+<tr>
 <td><strong>ApplicationSecretHash</strong></td>
-<td>If set to <code>true</code>, a random 24-character string (the secret) is generated, its SHA-256 hash is computed, and the resulting Base64 string is stored in this attribute.</td>
+<td>Evaluates the <code>requestSecret</code> URL parameter. If <code>true</code>, the system generates a random 24-character secret, computes its SHA-256 hash, and stores the resulting Base64 string. If <code>false</code> or omitted, no secret is generated or stored. Additionally, if <code>false</code>, no secret or reference token is returned in the response payload, regardless of the <code>serviceAccess</code> parameter value.</td>
 </tr>
 <tr>
-<td><code>serviceAccess</code></td>
-<td><strong>SystemUserAllowed</strong><br><strong>SystemUser</strong></td>
-<td>If <code>serviceAccess</code> is anything other than <code>none</code>, <strong>SystemUserAllowed</strong> is set to <code>true</code>. Consequently, it attempts to pre-populate the <strong>SystemUser</strong> attribute with <code>SYSTEM_APPLICATION_USER</code>.</td>
+<td><strong>SystemUserAllowed</strong></td>
+<td>Evaluates the <code>serviceAccess</code> URL parameter. Set to <code>true</code> if the value is anything other than <code>none</code>. Set to <code>false</code> if the value is exactly <code>none</code> or omitted.</td>
 </tr>
 <tr>
-<td><code>accessTokens</code></td>
-<td><strong>AccessTokens</strong></td>
-<td><code>None</code> or <code>AuthenticatedUsers</code> or <code>AdministratorsOnly</code>.</td>
+<td><strong>SystemUser</strong></td>
+<td>Evaluates the <code>serviceAccess</code> URL parameter. Pre-populates with <code>SYSTEM_APPLICATION_USER</code> if the value is anything other than <code>none</code>. Remains unassigned (or null) if the value is exactly <code>none</code> or omitted.</td>
 </tr>
 <tr>
-<td><code>scope</code></td>
+<td><strong>ReferenceTokens</strong></td>
+<td>Maps the <code>referenceTokens</code> URL parameter to internal enum values: <code>None</code>, <code>AuthenticatedUsers</code>, or <code>AdministratorsOnly</code>.</td>
+</tr>
+<tr>
 <td><strong>Scope</strong></td>
-<td>Stores the space-delimited list of allowed scopes.</td>
+<td>Stores the space-delimited list of allowed scopes provided by the <code>scope</code> URL parameter.</td>
 </tr>
 </tbody>
 </table>
@@ -338,7 +336,7 @@ They do not issue tokens themselves, but constrain the contents and capabilities
 </ul>
 </li>
 <li>If <code>clientType=Public</code>, <code>requestSecret=true</code> is not allowed.</li>
-<li>If <code>accessTokens</code> is not specified, it defaults to <code>none</code>.</li>
+<li>If <code>referenceTokens</code> is not specified, it defaults to <code>none</code>.</li>
 </ul>
 <hr>
 <h2 id="user-flow-interactive-approval">User flow (interactive approval)</h2>
@@ -479,7 +477,7 @@ They do not issue tokens themselves, but constrain the contents and capabilities
 <td>Service access mode (<code>none</code>, <code>clientCredentials</code>, <code>referenceToken</code>).</td>
 </tr>
 <tr>
-<td><code>accessTokens</code></td>
+<td><code>referenceTokens</code></td>
 <td>string</td>
 <td>Who can issue reference access tokens (<code>none</code>, <code>authenticatedUsers</code>, <code>administratorsOnly</code>).</td>
 </tr>
@@ -520,7 +518,7 @@ They do not issue tokens themselves, but constrain the contents and capabilities
     &quot;impersonate&quot;: &quot;internal&quot;,
     &quot;requestSecret&quot;: true,
     &quot;serviceAccess&quot;: &quot;clientCredentials&quot;,
-    &quot;accessTokens&quot;: &quot;none&quot;,
+    &quot;referenceTokens&quot;: &quot;none&quot;,
     &quot;scope&quot;: &quot;read update&quot;
   }
 }
@@ -555,7 +553,7 @@ They do not issue tokens themselves, but constrain the contents and capabilities
     &quot;impersonate&quot;: &quot;none&quot;,
     &quot;requestSecret&quot;: true,
     &quot;serviceAccess&quot;: &quot;referenceToken&quot;,
-    &quot;accessTokens&quot;: &quot;none&quot;,
+    &quot;referenceTokens&quot;: &quot;none&quot;,
     &quot;scope&quot;: &quot;read&quot;
   }
 }
@@ -588,7 +586,7 @@ They do not issue tokens themselves, but constrain the contents and capabilities
     &quot;impersonate&quot;: &quot;all&quot;,
     &quot;requestSecret&quot;: false,
     &quot;serviceAccess&quot;: &quot;none&quot;,
-    &quot;accessTokens&quot;: &quot;none&quot;,
+    &quot;referenceTokens&quot;: &quot;none&quot;,
     &quot;scope&quot;: &quot;openid profile&quot;
   }
 }
@@ -646,7 +644,7 @@ Issues a client secret intended for use with the OAuth 2.0 Client Credentials fl
 <li>restrict access (least privilege)</li>
 </ul>
 <hr>
-<h2 id="access-token-issuance-accesstokens">Access token issuance (<code>accessTokens</code>)</h2>
+<h2 id="reference-access-token-issuance-referencetokens">Reference access token issuance (<code>referenceTokens</code>)</h2>
 <p>Controls who may issue reference access tokens.</p>
 <p>Supported values:</p>
 <ul>
