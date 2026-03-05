@@ -59,9 +59,9 @@ The install link is a standard web URL pointing to the `/manage/apps/install` pa
 **Example:**
 
 ```http
-[https://mycompany.my.erp.net/manage/apps/install](https://mycompany.my.erp.net/manage/apps/install)
+https://mycompany.my.erp.net/manage/apps/install
   ?applicationUri=MyExternalAppIdentifier
-  &redirectUri=[https://my-external-app.com/callback/](https://my-external-app.com/callback/)
+  &redirectUri=https://my-external-app.com/callback/
   &applicationName=My%20External%20App
   &clientType=Confidential
 ```  
