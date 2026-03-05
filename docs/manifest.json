@@ -1647,6 +1647,16 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "marketplace/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "marketplace/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Resource",
       "source_relative_path": "query-builder.png",
       "output": {
