@@ -4,15 +4,24 @@
 
 @@name supports a browser-initiated lifecycle flow for external applications via **@@name Instance Manager**.
 
-This flow allows an administrator to:
+This flow allows an administrator to quickly configure your application by opening a specially crafted installation link in their web browser.
 
-- **Install** an external application (Instance Manager creates a Trusted Application in the target @@name instance).
+Using these links, an administrator can:
+
+- **Install** an external application (Instance Manager automatically creates a Trusted Application registration in the target @@name instance based on your predefined parameters).
 - **Uninstall** an external application (Instance Manager removes the app registration from the instance).
 
-After a successful operation, Instance Manager sends an **app lifecycle event** payload (`schema = erpnet.appLifecycleEvent.v1`) to the external application's `redirectUri`, so the external application can complete onboarding.
+> [!NOTE]
+> **Onboarding Callbacks**
+> If your application is installed via the **@@name Marketplace**, a secure, cryptographically signed **app lifecycle event** payload (`schema = erpnet.appLifecycleEvent.v2`) is sent to your `redirectUri` to complete onboarding.
+>
+> Handling this callback is optional.
+> However, if you need to acknowledge deployment or securely receive dynamically generated credentials (like a `clientSecret`), you should implement a webhook listener.
+> For details on handling the secure payload, see [Developing for @@name Marketplace](../marketplace/index.md).
 
 Related topics:
 
+- [Developing for @@name Marketplace](../marketplace/index.md)
 - [Trusted Applications (configuration)](./configuration/trusted-apps-access.md)
 - [Scopes](./concepts/scopes.md)
 - [Service Access Tokens](./tokens/reference-access-tokens.md#service-access-tokens-sat)
@@ -25,42 +34,46 @@ Related topics:
 
 ### Prerequisites
 
-- You have an @@name instance base URL (for example: `https://mycompany.my.erp.net`).
-- You can authenticate to **@@name Instance Manager** with an **administrator** account.
-- Your external application has:
-  - a stable `applicationUri` identifier
-  - an HTTPS `redirectUri` endpoint that can receive an **HTTP POST** with a JSON body and return a successful (2xx) response
+To construct an installation link and complete the flow, you need the following:
 
-> [!NOTE]
-> In production, `redirectUri` must be an **absolute HTTPS URL**.
+- An @@name instance base URL (for example: `https://mycompany.my.erp.net`).
+- An @@name **administrator** account to authenticate to **@@name Instance Manager**.
+- Your external application must have a stable `applicationUri` (this acts as your unique identifier).
+- If your app requires user login (Public client) or supports Marketplace onboarding, you must provide an absolute HTTPS `redirectUri`.
 
 ---
 
-## Endpoints
+## Constructing Installation Links
 
-### Install endpoint
+To initiate an installation or uninstallation, your application must construct a specific URL and redirect the user's browser to it.
+
+If the user is not currently authenticated, @@name Instance Manager will automatically prompt them to log in before proceeding.
+
+### Install link format
+
+The install link is a standard web URL pointing to the `/manage/apps/install` path on the target instance, appended with your configuration parameters.
+
+**Format:**
+`{instanceBaseUrl}/manage/apps/install?args...`
+
+**Example:**
 
 ```http
-GET {instanceBaseUrl}/manage/apps/install
-```
-
-Example:
-
-```http
-https://mycompany.my.erp.net/manage/apps/install
+[https://mycompany.my.erp.net/manage/apps/install](https://mycompany.my.erp.net/manage/apps/install)
   ?applicationUri=MyExternalAppIdentifier
-  &redirectUri=https://my-external-app.com/callback/
-  &applicationName=My External App
+  &redirectUri=[https://my-external-app.com/callback/](https://my-external-app.com/callback/)
+  &applicationName=My%20External%20App
   &clientType=Confidential
-```
+```  
 
-### Uninstall endpoint
+### Uninstall link format
 
-```http
-GET {instanceBaseUrl}/manage/apps/uninstall
-```
+The uninstall link targets the `/manage/apps/uninstall` path and only requires your application identifier.
 
-Example:
+**Format:**
+`{instanceBaseUrl}/manage/apps/uninstall?applicationUri={yourAppId}`
+
+**Example:**
 
 ```http
 https://mycompany.my.erp.net/manage/apps/uninstall
@@ -72,20 +85,20 @@ https://mycompany.my.erp.net/manage/apps/uninstall
 ## Install URL parameters
 
 These parameters define a **Trusted Application registration** in the @@name instance.
-The registration establishes how the application is identified, how users authenticate through it,
-and what access the application may request when tokens are later issued during authentication flows.
+
+The registration establishes how the application is identified, how users authenticate through it, and what access the application may request when tokens are later issued during authentication flows.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `applicationName` | string | *(none)* | Display name of the Trusted Application created during registration. |
 | `applicationUri` | string | *(none)* | External identifier for the application. Used as the primary key for its Trusted Application registration. **Required.** |
-| `clientType` | string | `Public` | Client type assigned to the Trusted Application. Supported values: `Confidential`, `Public`. |
-| `redirectUri` | URL | *(none)* | Callback URL used during authentication flows and for lifecycle event notifications. |
+| `clientType` | string | `None` | Client type assigned to the Trusted Application. Supported values: `Confidential`, `Public`, `None`. |
+| `redirectUri` | URL | *(none)* | Callback URL used during user authentication flows and for receiving lifecycle event notifications (via Marketplace). |
 | `impersonate` | string | `none` | Controls which users may authenticate through this Trusted Application. Supported values: `none`, `internal`, `all`. |
-| `requestSecret` | bool | `false` | If `true`, credentials are generated for the Trusted Application and delivered in the response payload. |
+| `requestSecret` | bool | `false` | If `true`, credentials are generated and delivered in the onboarding callback payload. *(Note: Only sent if initiated via Marketplace).* |
 | `serviceAccess` | string | `none` | Service credential type associated with the Trusted Application. Supported values: `none`, `clientCredentials`, `referenceToken`. |
-| `referenceTokens` | string | `none` | Defines which principals may obtain reference access tokens through this Trusted Application. Supported values: `none`, `authenticatedUsers`, `administratorsOnly`. |
-| `scope` | string | *(empty)* | Space-delimited list of scopes the Trusted Application is allowed to request during authentication. These scopes determine the capabilities of tokens issued later. Supported values: `openid`, `profile`, `read`, `update`, `offline_access`. |
+| `referenceTokens` | string | `none` | Defines which principals may obtain reference access tokens. Supported values: `none`, `authenticatedUsers`, `administratorsOnly`. |
+| `scope` | string | *(empty)* | Space-delimited list of scopes the Trusted Application is allowed to request during authentication. Supported values: `openid`, `profile`, `read`, `update`, `offline_access`. |
 
 ### Scope Descriptions
 
@@ -118,11 +131,11 @@ During the installation process, the system reads incoming URL parameters to aut
 | **ApplicationUri** | Uses the `applicationUri` URL parameter as the unique identifier (`client_id`) for the trusted app. |
 | **ClientType** | Maps the `clientType` URL parameter to set the client as either `Public` or `Confidential`. |
 | **ImpersonateLoginUrl** | Uses the `redirectUri` URL parameter to define the allowed login redirect URI during authentication. |
-| **ImpersonateAsInternalUserAllowed** | Evaluates the `impersonate` URL parameter. Set to `true` if the value is `internal` or `all`. Set to `false` if the value is `none` or omitted. |
-| **ImpersonateAsCommunityUserAllowed** | Evaluates the `impersonate` URL parameter. Set to `true` if the value is `all`. Set to `false` if the value is `internal`, `none`, or omitted. |
-| **ApplicationSecretHash** | Evaluates the `requestSecret` URL parameter. If `true`, the system generates a random 24-character secret, computes its SHA-256 hash, and stores the resulting Base64 string. If `false` or omitted, no secret is generated or stored. Additionally, if `false`, no secret or reference token is returned in the response payload, regardless of the `serviceAccess` parameter value. |
-| **SystemUserAllowed** | Evaluates the `serviceAccess` URL parameter. Set to `true` if the value is anything other than `none`. Set to `false` if the value is exactly `none` or omitted. |
-| **SystemUser** | Evaluates the `serviceAccess` URL parameter. Pre-populates with `SYSTEM_APPLICATION_USER` if the value is anything other than `none`. Remains unassigned (or null) if the value is exactly `none` or omitted. |
+| **ImpersonateAsInternalUserAllowed** | Evaluates the `impersonate` URL parameter. Set to `true` if the value is `internal` or `all`. |
+| **ImpersonateAsCommunityUserAllowed** | Evaluates the `impersonate` URL parameter. Set to `true` if the value is `all`. |
+| **ApplicationSecretHash** | Evaluates the `requestSecret` URL parameter. If `true`, the system generates a random 24-character secret and stores its SHA-256 hash. Note that secrets are only delivered in the onboarding callback if the flow is initiated via the Marketplace. |
+| **SystemUserAllowed** | Evaluates the `serviceAccess` URL parameter. Set to `true` if the value is anything other than `none`. |
+| **SystemUser** | Pre-populates with `SYSTEM_APPLICATION_USER` if `serviceAccess` is anything other than `none`. |
 | **ReferenceTokens** | Maps the `referenceTokens` URL parameter to internal enum values: `None`, `AuthenticatedUsers`, or `AdministratorsOnly`. |
 | **Scope** | Stores the space-delimited list of allowed scopes provided by the `scope` URL parameter. |
 
@@ -155,199 +168,8 @@ During the installation process, the system reads incoming URL parameters to aut
 3. Instance Manager displays a confirmation page with the operation details and an Install / Uninstall action button.
 4. When the user clicks the action button:
    - @@name Instance Manager performs the operation in the @@name instance.
-   - @@name Instance Manager sends an **HTTP POST** to `redirectUri` with a JSON payload describing the lifecycle event.
-   - The callback must return a successful response (2xx). Otherwise, the operation is treated as failed.
-
----
-
-## Lifecycle event payload (onboarding callback)
-
-@@name Instance Manager sends the lifecycle event payload to `redirectUri` using HTTP POST with JSON (camelCase).
-
-### Payload fields
-
-| Field | Type | Present | Description |
-|---|---|---|---|
-| `schema` | string | always | Always `erpnet.appLifecycleEvent.v1`. |
-| `eventId` | string (GUID) | always | Unique event identifier. |
-| `event` | string | always | Event type, e.g. `installed`, `uninstalled`. |
-| `occurredAt` | string (UTC timestamp) | always | When the event occurred (UTC). |
-| `instanceBaseUrl` | string | always | Instance base URL (example: `https://mycompany.my.erp.net`). |
-| `user` | string | always | The approving user (example: `admin`). |
-| `clientSecret` | string | when `requestSecret=true` | Issued client secret (sensitive). |
-| `referenceToken` | string | when `serviceAccess=referenceToken` | Issued service access token (reference token, sensitive). |
-| `request` | object | always | Echo of the original install request parameters. |
-
-> [!NOTE]
-> If the `requestSecret` install parameter is omitted or set to `false`, the `clientSecret` and `referenceToken` will not be included in the response payload, regardless of the `serviceAccess` value.
-
-### `request` object fields
-
-The `request` object echoes the original install request (normalized and serialized in camelCase), including `requestSecret=true` when credentials are successfully issued.
-
-| Field | Type | Description |
-|---|---|---|
-| `applicationName` | string | Application display name. |
-| `applicationUri` | string | External application identifier. |
-| `clientType` | string | Client type (`confidential` or `public`). |
-| `redirectUri` | string | Redirect/callback URL provided during install. |
-| `impersonate` | string | Impersonation scope (`none`, `internal`, `all`). |
-| `requestSecret` | bool | Whether credentials were requested. |
-| `serviceAccess` | string | Service access mode (`none`, `clientCredentials`, `referenceToken`). |
-| `referenceTokens` | string | Who can issue reference access tokens (`none`, `authenticatedUsers`, `administratorsOnly`). |
-| `scope` | string | Space-delimited scope string. |
-
----
-
-## Examples
-
-### 1) Confidential requesting credentials
-
-Request:
-
-```http
-https://mycompany.my.erp.net/manage/apps/install
-  ?applicationUri=MyExternalAppIdentifier
-  &redirectUri=https://my-external-app.com/callback/
-  &applicationName=My External App
-  &impersonate=internal
-  &requestSecret=true
-  &serviceAccess=clientCredentials
-  &scope=read%20update
-```
-
-Response:
-
-```json
-{
-  "schema": "erpnet.appLifecycleEvent.v1",
-  "eventId": "0799261b-6a1a-4a7a-afc6-6a9b7fcb8a8c",
-  "event": "installed",
-  "occurredAt": "2026-01-21T14:34:09.6573137Z",
-  "instanceBaseUrl": "https://mycompany.my.erp.net",
-  "user": "admin",
-  "clientSecret": "dTscMD5yK7eMSw3jUKCKGgc1",
-  "request": {
-    "applicationName": "My External App",
-    "applicationUri": "MyExternalAppIdentifier",
-    "clientType": "confidential",
-    "redirectUri": "https://my-external-app.com/callback/",
-    "impersonate": "internal",
-    "requestSecret": true,
-    "serviceAccess": "clientCredentials",
-    "referenceTokens": "none",
-    "scope": "read update"
-  }
-}
-```
-
----
-
-### 2) Confidential requesting a client secret and a reference token
-
-Request:
-
-```http
-https://mycompany.my.erp.net/manage/apps/install
-  ?applicationUri=MyExternalAppIdentifier
-  &redirectUri=https://my-external-app.com/callback/
-  &applicationName=My External App
-  &clientType=Confidential
-  &requestSecret=true
-  &serviceAccess=referenceToken
-  &scope=read
-```
-
-Response:
-
-```json
-{
-  "schema": "erpnet.appLifecycleEvent.v1",
-  "eventId": "3857aa99-881c-4798-b888-7ed72d137691",
-  "event": "installed",
-  "occurredAt": "2026-01-21T14:39:20.6048228Z",
-  "instanceBaseUrl": "https://mycompany.my.erp.net",
-  "user": "admin",
-  "clientSecret": "XXXXXXXXXXXXXXXXXXXXXXXX",
-  "referenceToken": "enrt_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-  "request": {
-    "applicationName": "My External App",
-    "applicationUri": "MyExternalAppIdentifier",
-    "clientType": "confidential",
-    "redirectUri": "https://my-external-app.com/callback/",
-    "impersonate": "none",
-    "requestSecret": true,
-    "serviceAccess": "referenceToken",
-    "referenceTokens": "none",
-    "scope": "read"
-  }
-}
-```
-
----
-
-### 3) Public with interactive sign-in = all
-
-Request:
-
-```http
-https://mycompany.my.erp.net/manage/apps/install
-  ?applicationUri=MyExternalAppIdentifier
-  &redirectUri=https://my-external-app.com/callback/
-  &applicationName=My External App
-  &clientType=Public
-  &impersonate=all
-  &requestSecret=false
-  &scope=openid%20profile
-```
-
-Response:
-
-```json
-{
-  "schema": "erpnet.appLifecycleEvent.v1",
-  "eventId": "0799261b-6a1a-4a7a-afc6-6a9b7fcb8a8c",
-  "event": "installed",
-  "occurredAt": "2026-01-21T14:34:09.6573137Z",
-  "instanceBaseUrl": "https://mycompany.my.erp.net",
-  "user": "admin",
-  "request": {
-    "applicationName": "My External App",
-    "applicationUri": "MyExternalAppIdentifier",
-    "clientType": "public",
-    "redirectUri": "https://my-external-app.com/callback/",
-    "impersonate": "all",
-    "requestSecret": false,
-    "serviceAccess": "none",
-    "referenceTokens": "none",
-    "scope": "openid profile"
-  }
-}
-```
-
----
-
-### 4) Uninstall
-
-Request:
-
-```http
-https://mycompany.my.erp.net/manage/apps/uninstall
-  ?applicationUri=MyExternalAppIdentifier
-```
-
-Response:
-
-```json
-{
-  "schema": "erpnet.appLifecycleEvent.v1",
-  "eventId": "0e3bf686-4abc-4230-9ca0-47c4efa12b09",
-  "event": "uninstalled",
-  "occurredAt": "2026-01-21T14:42:23.1597831Z",
-  "instanceBaseUrl": "https://mycompany.my.erp.net",
-  "user": "admin"
-}
-```
+   - **If the installation was initiated directly:** The process ends here. No HTTP POST or webhook is triggered.
+   - **If the installation was initiated via the @@name Marketplace:** An **HTTP POST** is sent to your `redirectUri` containing the lifecycle event payload. Your application can optionally handle this onboarding callback. For more information on this payload and how to process it, read [Developing for @@name Marketplace](../marketplace/index.md).
 
 ---
 
@@ -364,6 +186,10 @@ Response:
   - Must provide `redirectUri`.
   - Must enable impersonation for at least one user type.
   - Cannot request credentials.
+
+- `None`
+  - Intended for standalone applications that do not require authentication with the @@name instance.
+  - Serves primarily as a registration "note" or placeholder indicating the app is installed.  
 
 ### Service access types
 
@@ -401,41 +227,41 @@ Supported values:
 
 ### Only administrators can perform this action
 
-Cause:
+**Cause**:
 - The user is not an administrator.
 
-Resolution:
+**Resolution**:
 - Sign in with an administrator account in @@name Instance Manager.
 
 ### Missing required parameter: applicationUri
 
-Cause:
+**Cause**:
 - The install or uninstall URL does not include `applicationUri`.
 
-Resolution:
+**Resolution**:
 - Provide `applicationUri` in the query string.
 
 ### Public clients require a valid redirectUri
 
-Cause:
+**Cause**:
 - `clientType=Public` but `redirectUri` is missing or invalid.
 
-Resolution:
+**Resolution**:
 - Provide a valid HTTPS `redirectUri`.
 
 ### Public clients cannot request credentials
 
-Cause:
+**Cause**:
 - `clientType=Public` with `requestSecret=true`.
 
-Resolution:
+**Resolution**:
 - Use `clientType=Confidential` or set `requestSecret=false`.
 
 ### Callback fails (non-2xx response)
 
-Cause:
+**Cause**:
 - The external application's `redirectUri` endpoint returns an error or is unreachable.
 
-Resolution:
+**Resolution**:
 - Ensure the endpoint is reachable and returns a successful (2xx) response.
 - Ensure `redirectUri` is an absolute HTTPS URL in production.

@@ -16,3 +16,7 @@
   ERP.net Domain API defines an Import endpoint which can be used to import multiple entities at once.
 
 - **WebClient**: Main menu extensions registry. See [Registering Extensions](../../web-client/registering-extensions.md).
+
+- [**ERP.net Marketplace onboarding webhooks**](../../marketplace/index.md)
+  Applications installed via the @@name Marketplace can now optionally receive a secure `HTTP POST` callback to automate onboarding. The lifecycle event is delivered in a cryptographically signed envelope.
+  
