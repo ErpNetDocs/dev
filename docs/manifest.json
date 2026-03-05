@@ -1648,10 +1648,33 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "marketplace/app-lifecycle-events.md",
+      "output": {
+        ".html": {
+          "relative_path": "marketplace/app-lifecycle-events.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "marketplace/index.md",
       "output": {
         ".html": {
           "relative_path": "marketplace/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "marketplace/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "marketplace/toc.html"
+        },
+        ".json": {
+          "relative_path": "marketplace/toc.json"
         }
       },
       "version": ""
