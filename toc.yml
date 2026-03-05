@@ -18,8 +18,8 @@ items:
 - name: Developing for WebClient
   href: web-client/toc.yml
   topicHref: web-client/index.md
-- name: Developing for ERP.net Marketplace
-  href: marketplace/index.md
+- name: Developing for Marketplace
+  href: marketplace/toc.yml
   topicHref: marketplace/index.md
 - name: "What's New"
   href: whats-new/toc.yml
