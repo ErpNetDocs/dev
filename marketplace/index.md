@@ -1,9 +1,9 @@
 ---
-title: Developing for Marketplace
+title: Developing for the Marketplace
 description: Guidance for building and integrating applications with ERP.net Marketplace.
 ---
 
-# Developing for Marketplace
+# Developing for the Marketplace
 
 ## Overview
 

@@ -18,7 +18,7 @@ items:
 - name: Developing for WebClient
   href: web-client/toc.yml
   topicHref: web-client/index.md
-- name: Developing for Marketplace
+- name: Developing for the Marketplace
   href: marketplace/toc.yml
   topicHref: marketplace/index.md
 - name: "What's New"
