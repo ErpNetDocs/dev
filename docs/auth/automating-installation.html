@@ -89,14 +89,23 @@
 
 <h2 id="overview">Overview</h2>
 <p>ERP.net supports a browser-initiated lifecycle flow for external applications via <strong>ERP.net Instance Manager</strong>.</p>
-<p>This flow allows an administrator to:</p>
+<p>This flow allows an administrator to quickly configure your application by opening a specially crafted installation link in their web browser.</p>
+<p>Using these links, an administrator can:</p>
 <ul>
-<li><strong>Install</strong> an external application (Instance Manager creates a Trusted Application in the target ERP.net instance).</li>
+<li><strong>Install</strong> an external application (Instance Manager automatically creates a Trusted Application registration in the target ERP.net instance based on your predefined parameters).</li>
 <li><strong>Uninstall</strong> an external application (Instance Manager removes the app registration from the instance).</li>
 </ul>
-<p>After a successful operation, Instance Manager sends an <strong>app lifecycle event</strong> payload (<code>schema = erpnet.appLifecycleEvent.v1</code>) to the external application's <code>redirectUri</code>, so the external application can complete onboarding.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p><strong>Onboarding Callbacks</strong>
+If your application is installed via the <strong>ERP.net Marketplace</strong>, a secure, cryptographically signed <strong>app lifecycle event</strong> payload (<code>schema = erpnet.appLifecycleEvent.v2</code>) is sent to your <code>redirectUri</code> to complete onboarding.</p>
+<p>Handling this callback is optional.
+However, if you need to acknowledge deployment or securely receive dynamically generated credentials (like a <code>clientSecret</code>), you should implement a webhook listener.
+For details on handling the secure payload, see <a href="../marketplace/index.html">Developing for ERP.net Marketplace</a>.</p>
+</div>
 <p>Related topics:</p>
 <ul>
+<li><a href="../marketplace/index.html">Developing for ERP.net Marketplace</a></li>
 <li><a href="configuration/trusted-apps-access.html">Trusted Applications (configuration)</a></li>
 <li><a href="concepts/scopes.html">Scopes</a></li>
 <li><a href="tokens/reference-access-tokens.html#service-access-tokens-sat">Service Access Tokens</a></li>
@@ -106,44 +115,40 @@
 <hr>
 <h2 id="getting-started">Getting Started</h2>
 <h3 id="prerequisites">Prerequisites</h3>
+<p>To construct an installation link and complete the flow, you need the following:</p>
 <ul>
-<li>You have an ERP.net instance base URL (for example: <code>https://mycompany.my.erp.net</code>).</li>
-<li>You can authenticate to <strong>ERP.net Instance Manager</strong> with an <strong>administrator</strong> account.</li>
-<li>Your external application has:
-<ul>
-<li>a stable <code>applicationUri</code> identifier</li>
-<li>an HTTPS <code>redirectUri</code> endpoint that can receive an <strong>HTTP POST</strong> with a JSON body and return a successful (2xx) response</li>
+<li>An ERP.net instance base URL (for example: <code>https://mycompany.my.erp.net</code>).</li>
+<li>An ERP.net <strong>administrator</strong> account to authenticate to <strong>ERP.net Instance Manager</strong>.</li>
+<li>Your external application must have a stable <code>applicationUri</code> (this acts as your unique identifier).</li>
+<li>If your app requires user login (Public client) or supports Marketplace onboarding, you must provide an absolute HTTPS <code>redirectUri</code>.</li>
 </ul>
-</li>
-</ul>
-<div class="NOTE">
-<h5>Note</h5>
-<p>In production, <code>redirectUri</code> must be an <strong>absolute HTTPS URL</strong>.</p>
-</div>
 <hr>
-<h2 id="endpoints">Endpoints</h2>
-<h3 id="install-endpoint">Install endpoint</h3>
-<pre><code class="lang-http">GET {instanceBaseUrl}/manage/apps/install
-</code></pre>
-<p>Example:</p>
-<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
+<h2 id="constructing-installation-links">Constructing Installation Links</h2>
+<p>To initiate an installation or uninstallation, your application must construct a specific URL and redirect the user's browser to it.</p>
+<p>If the user is not currently authenticated, ERP.net Instance Manager will automatically prompt them to log in before proceeding.</p>
+<h3 id="install-link-format">Install link format</h3>
+<p>The install link is a standard web URL pointing to the <code>/manage/apps/install</code> path on the target instance, appended with your configuration parameters.</p>
+<p><strong>Format:</strong>
+<code>{instanceBaseUrl}/manage/apps/install?args...</code></p>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-http">[https://mycompany.my.erp.net/manage/apps/install](https://mycompany.my.erp.net/manage/apps/install)
   ?applicationUri=MyExternalAppIdentifier
-  &amp;redirectUri=https://my-external-app.com/callback/
-  &amp;applicationName=My External App
+  &amp;redirectUri=[https://my-external-app.com/callback/](https://my-external-app.com/callback/)
+  &amp;applicationName=My%20External%20App
   &amp;clientType=Confidential
 </code></pre>
-<h3 id="uninstall-endpoint">Uninstall endpoint</h3>
-<pre><code class="lang-http">GET {instanceBaseUrl}/manage/apps/uninstall
-</code></pre>
-<p>Example:</p>
+<h3 id="uninstall-link-format">Uninstall link format</h3>
+<p>The uninstall link targets the <code>/manage/apps/uninstall</code> path and only requires your application identifier.</p>
+<p><strong>Format:</strong>
+<code>{instanceBaseUrl}/manage/apps/uninstall?applicationUri={yourAppId}</code></p>
+<p><strong>Example:</strong></p>
 <pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/uninstall
   ?applicationUri=MyExternalAppIdentifier
 </code></pre>
 <hr>
 <h2 id="install-url-parameters">Install URL parameters</h2>
-<p>These parameters define a <strong>Trusted Application registration</strong> in the ERP.net instance.
-The registration establishes how the application is identified, how users authenticate through it,
-and what access the application may request when tokens are later issued during authentication flows.</p>
+<p>These parameters define a <strong>Trusted Application registration</strong> in the ERP.net instance.</p>
+<p>The registration establishes how the application is identified, how users authenticate through it, and what access the application may request when tokens are later issued during authentication flows.</p>
 <table>
 <thead>
 <tr>
@@ -169,14 +174,14 @@ and what access the application may request when tokens are later issued during 
 <tr>
 <td><code>clientType</code></td>
 <td>string</td>
-<td><code>Public</code></td>
-<td>Client type assigned to the Trusted Application. Supported values: <code>Confidential</code>, <code>Public</code>.</td>
+<td><code>None</code></td>
+<td>Client type assigned to the Trusted Application. Supported values: <code>Confidential</code>, <code>Public</code>, <code>None</code>.</td>
 </tr>
 <tr>
 <td><code>redirectUri</code></td>
 <td>URL</td>
 <td><em>(none)</em></td>
-<td>Callback URL used during authentication flows and for lifecycle event notifications.</td>
+<td>Callback URL used during user authentication flows and for receiving lifecycle event notifications (via Marketplace).</td>
 </tr>
 <tr>
 <td><code>impersonate</code></td>
@@ -188,7 +193,7 @@ and what access the application may request when tokens are later issued during 
 <td><code>requestSecret</code></td>
 <td>bool</td>
 <td><code>false</code></td>
-<td>If <code>true</code>, credentials are generated for the Trusted Application and delivered in the response payload.</td>
+<td>If <code>true</code>, credentials are generated and delivered in the onboarding callback payload. <em>(Note: Only sent if initiated via Marketplace).</em></td>
 </tr>
 <tr>
 <td><code>serviceAccess</code></td>
@@ -200,13 +205,13 @@ and what access the application may request when tokens are later issued during 
 <td><code>referenceTokens</code></td>
 <td>string</td>
 <td><code>none</code></td>
-<td>Defines which principals may obtain reference access tokens through this Trusted Application. Supported values: <code>none</code>, <code>authenticatedUsers</code>, <code>administratorsOnly</code>.</td>
+<td>Defines which principals may obtain reference access tokens. Supported values: <code>none</code>, <code>authenticatedUsers</code>, <code>administratorsOnly</code>.</td>
 </tr>
 <tr>
 <td><code>scope</code></td>
 <td>string</td>
 <td><em>(empty)</em></td>
-<td>Space-delimited list of scopes the Trusted Application is allowed to request during authentication. These scopes determine the capabilities of tokens issued later. Supported values: <code>openid</code>, <code>profile</code>, <code>read</code>, <code>update</code>, <code>offline_access</code>.</td>
+<td>Space-delimited list of scopes the Trusted Application is allowed to request during authentication. Supported values: <code>openid</code>, <code>profile</code>, <code>read</code>, <code>update</code>, <code>offline_access</code>.</td>
 </tr>
 </tbody>
 </table>
@@ -291,23 +296,23 @@ They do not issue tokens themselves, but constrain the contents and capabilities
 </tr>
 <tr>
 <td><strong>ImpersonateAsInternalUserAllowed</strong></td>
-<td>Evaluates the <code>impersonate</code> URL parameter. Set to <code>true</code> if the value is <code>internal</code> or <code>all</code>. Set to <code>false</code> if the value is <code>none</code> or omitted.</td>
+<td>Evaluates the <code>impersonate</code> URL parameter. Set to <code>true</code> if the value is <code>internal</code> or <code>all</code>.</td>
 </tr>
 <tr>
 <td><strong>ImpersonateAsCommunityUserAllowed</strong></td>
-<td>Evaluates the <code>impersonate</code> URL parameter. Set to <code>true</code> if the value is <code>all</code>. Set to <code>false</code> if the value is <code>internal</code>, <code>none</code>, or omitted.</td>
+<td>Evaluates the <code>impersonate</code> URL parameter. Set to <code>true</code> if the value is <code>all</code>.</td>
 </tr>
 <tr>
 <td><strong>ApplicationSecretHash</strong></td>
-<td>Evaluates the <code>requestSecret</code> URL parameter. If <code>true</code>, the system generates a random 24-character secret, computes its SHA-256 hash, and stores the resulting Base64 string. If <code>false</code> or omitted, no secret is generated or stored. Additionally, if <code>false</code>, no secret or reference token is returned in the response payload, regardless of the <code>serviceAccess</code> parameter value.</td>
+<td>Evaluates the <code>requestSecret</code> URL parameter. If <code>true</code>, the system generates a random 24-character secret and stores its SHA-256 hash. Note that secrets are only delivered in the onboarding callback if the flow is initiated via the Marketplace.</td>
 </tr>
 <tr>
 <td><strong>SystemUserAllowed</strong></td>
-<td>Evaluates the <code>serviceAccess</code> URL parameter. Set to <code>true</code> if the value is anything other than <code>none</code>. Set to <code>false</code> if the value is exactly <code>none</code> or omitted.</td>
+<td>Evaluates the <code>serviceAccess</code> URL parameter. Set to <code>true</code> if the value is anything other than <code>none</code>.</td>
 </tr>
 <tr>
 <td><strong>SystemUser</strong></td>
-<td>Evaluates the <code>serviceAccess</code> URL parameter. Pre-populates with <code>SYSTEM_APPLICATION_USER</code> if the value is anything other than <code>none</code>. Remains unassigned (or null) if the value is exactly <code>none</code> or omitted.</td>
+<td>Pre-populates with <code>SYSTEM_APPLICATION_USER</code> if <code>serviceAccess</code> is anything other than <code>none</code>.</td>
 </tr>
 <tr>
 <td><strong>ReferenceTokens</strong></td>
@@ -351,262 +356,11 @@ They do not issue tokens themselves, but constrain the contents and capabilities
 <li>When the user clicks the action button:
 <ul>
 <li>ERP.net Instance Manager performs the operation in the ERP.net instance.</li>
-<li>ERP.net Instance Manager sends an <strong>HTTP POST</strong> to <code>redirectUri</code> with a JSON payload describing the lifecycle event.</li>
-<li>The callback must return a successful response (2xx). Otherwise, the operation is treated as failed.</li>
+<li><strong>If the installation was initiated directly:</strong> The process ends here. No HTTP POST or webhook is triggered.</li>
+<li><strong>If the installation was initiated via the ERP.net Marketplace:</strong> An <strong>HTTP POST</strong> is sent to your <code>redirectUri</code> containing the lifecycle event payload. Your application can optionally handle this onboarding callback. For more information on this payload and how to process it, read <a href="../marketplace/index.html">Developing for ERP.net Marketplace</a>.</li>
 </ul>
 </li>
 </ol>
-<hr>
-<h2 id="lifecycle-event-payload-onboarding-callback">Lifecycle event payload (onboarding callback)</h2>
-<p>ERP.net Instance Manager sends the lifecycle event payload to <code>redirectUri</code> using HTTP POST with JSON (camelCase).</p>
-<h3 id="payload-fields">Payload fields</h3>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Present</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>schema</code></td>
-<td>string</td>
-<td>always</td>
-<td>Always <code>erpnet.appLifecycleEvent.v1</code>.</td>
-</tr>
-<tr>
-<td><code>eventId</code></td>
-<td>string (GUID)</td>
-<td>always</td>
-<td>Unique event identifier.</td>
-</tr>
-<tr>
-<td><code>event</code></td>
-<td>string</td>
-<td>always</td>
-<td>Event type, e.g. <code>installed</code>, <code>uninstalled</code>.</td>
-</tr>
-<tr>
-<td><code>occurredAt</code></td>
-<td>string (UTC timestamp)</td>
-<td>always</td>
-<td>When the event occurred (UTC).</td>
-</tr>
-<tr>
-<td><code>instanceBaseUrl</code></td>
-<td>string</td>
-<td>always</td>
-<td>Instance base URL (example: <code>https://mycompany.my.erp.net</code>).</td>
-</tr>
-<tr>
-<td><code>user</code></td>
-<td>string</td>
-<td>always</td>
-<td>The approving user (example: <code>admin</code>).</td>
-</tr>
-<tr>
-<td><code>clientSecret</code></td>
-<td>string</td>
-<td>when <code>requestSecret=true</code></td>
-<td>Issued client secret (sensitive).</td>
-</tr>
-<tr>
-<td><code>referenceToken</code></td>
-<td>string</td>
-<td>when <code>serviceAccess=referenceToken</code></td>
-<td>Issued service access token (reference token, sensitive).</td>
-</tr>
-<tr>
-<td><code>request</code></td>
-<td>object</td>
-<td>always</td>
-<td>Echo of the original install request parameters.</td>
-</tr>
-</tbody>
-</table>
-<div class="NOTE">
-<h5>Note</h5>
-<p>If the <code>requestSecret</code> install parameter is omitted or set to <code>false</code>, the <code>clientSecret</code> and <code>referenceToken</code> will not be included in the response payload, regardless of the <code>serviceAccess</code> value.</p>
-</div>
-<h3 id="request-object-fields"><code>request</code> object fields</h3>
-<p>The <code>request</code> object echoes the original install request (normalized and serialized in camelCase), including <code>requestSecret=true</code> when credentials are successfully issued.</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>applicationName</code></td>
-<td>string</td>
-<td>Application display name.</td>
-</tr>
-<tr>
-<td><code>applicationUri</code></td>
-<td>string</td>
-<td>External application identifier.</td>
-</tr>
-<tr>
-<td><code>clientType</code></td>
-<td>string</td>
-<td>Client type (<code>confidential</code> or <code>public</code>).</td>
-</tr>
-<tr>
-<td><code>redirectUri</code></td>
-<td>string</td>
-<td>Redirect/callback URL provided during install.</td>
-</tr>
-<tr>
-<td><code>impersonate</code></td>
-<td>string</td>
-<td>Impersonation scope (<code>none</code>, <code>internal</code>, <code>all</code>).</td>
-</tr>
-<tr>
-<td><code>requestSecret</code></td>
-<td>bool</td>
-<td>Whether credentials were requested.</td>
-</tr>
-<tr>
-<td><code>serviceAccess</code></td>
-<td>string</td>
-<td>Service access mode (<code>none</code>, <code>clientCredentials</code>, <code>referenceToken</code>).</td>
-</tr>
-<tr>
-<td><code>referenceTokens</code></td>
-<td>string</td>
-<td>Who can issue reference access tokens (<code>none</code>, <code>authenticatedUsers</code>, <code>administratorsOnly</code>).</td>
-</tr>
-<tr>
-<td><code>scope</code></td>
-<td>string</td>
-<td>Space-delimited scope string.</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="examples">Examples</h2>
-<h3 id="1-confidential-requesting-credentials">1) Confidential requesting credentials</h3>
-<p>Request:</p>
-<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
-  ?applicationUri=MyExternalAppIdentifier
-  &amp;redirectUri=https://my-external-app.com/callback/
-  &amp;applicationName=My External App
-  &amp;impersonate=internal
-  &amp;requestSecret=true
-  &amp;serviceAccess=clientCredentials
-  &amp;scope=read%20update
-</code></pre>
-<p>Response:</p>
-<pre><code class="lang-json">{
-  &quot;schema&quot;: &quot;erpnet.appLifecycleEvent.v1&quot;,
-  &quot;eventId&quot;: &quot;0799261b-6a1a-4a7a-afc6-6a9b7fcb8a8c&quot;,
-  &quot;event&quot;: &quot;installed&quot;,
-  &quot;occurredAt&quot;: &quot;2026-01-21T14:34:09.6573137Z&quot;,
-  &quot;instanceBaseUrl&quot;: &quot;https://mycompany.my.erp.net&quot;,
-  &quot;user&quot;: &quot;admin&quot;,
-  &quot;clientSecret&quot;: &quot;dTscMD5yK7eMSw3jUKCKGgc1&quot;,
-  &quot;request&quot;: {
-    &quot;applicationName&quot;: &quot;My External App&quot;,
-    &quot;applicationUri&quot;: &quot;MyExternalAppIdentifier&quot;,
-    &quot;clientType&quot;: &quot;confidential&quot;,
-    &quot;redirectUri&quot;: &quot;https://my-external-app.com/callback/&quot;,
-    &quot;impersonate&quot;: &quot;internal&quot;,
-    &quot;requestSecret&quot;: true,
-    &quot;serviceAccess&quot;: &quot;clientCredentials&quot;,
-    &quot;referenceTokens&quot;: &quot;none&quot;,
-    &quot;scope&quot;: &quot;read update&quot;
-  }
-}
-</code></pre>
-<hr>
-<h3 id="2-confidential-requesting-a-client-secret-and-a-reference-token">2) Confidential requesting a client secret and a reference token</h3>
-<p>Request:</p>
-<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
-  ?applicationUri=MyExternalAppIdentifier
-  &amp;redirectUri=https://my-external-app.com/callback/
-  &amp;applicationName=My External App
-  &amp;clientType=Confidential
-  &amp;requestSecret=true
-  &amp;serviceAccess=referenceToken
-  &amp;scope=read
-</code></pre>
-<p>Response:</p>
-<pre><code class="lang-json">{
-  &quot;schema&quot;: &quot;erpnet.appLifecycleEvent.v1&quot;,
-  &quot;eventId&quot;: &quot;3857aa99-881c-4798-b888-7ed72d137691&quot;,
-  &quot;event&quot;: &quot;installed&quot;,
-  &quot;occurredAt&quot;: &quot;2026-01-21T14:39:20.6048228Z&quot;,
-  &quot;instanceBaseUrl&quot;: &quot;https://mycompany.my.erp.net&quot;,
-  &quot;user&quot;: &quot;admin&quot;,
-  &quot;clientSecret&quot;: &quot;XXXXXXXXXXXXXXXXXXXXXXXX&quot;,
-  &quot;referenceToken&quot;: &quot;enrt_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;,
-  &quot;request&quot;: {
-    &quot;applicationName&quot;: &quot;My External App&quot;,
-    &quot;applicationUri&quot;: &quot;MyExternalAppIdentifier&quot;,
-    &quot;clientType&quot;: &quot;confidential&quot;,
-    &quot;redirectUri&quot;: &quot;https://my-external-app.com/callback/&quot;,
-    &quot;impersonate&quot;: &quot;none&quot;,
-    &quot;requestSecret&quot;: true,
-    &quot;serviceAccess&quot;: &quot;referenceToken&quot;,
-    &quot;referenceTokens&quot;: &quot;none&quot;,
-    &quot;scope&quot;: &quot;read&quot;
-  }
-}
-</code></pre>
-<hr>
-<h3 id="3-public-with-interactive-sign-in--all">3) Public with interactive sign-in = all</h3>
-<p>Request:</p>
-<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/install
-  ?applicationUri=MyExternalAppIdentifier
-  &amp;redirectUri=https://my-external-app.com/callback/
-  &amp;applicationName=My External App
-  &amp;clientType=Public
-  &amp;impersonate=all
-  &amp;requestSecret=false
-  &amp;scope=openid%20profile
-</code></pre>
-<p>Response:</p>
-<pre><code class="lang-json">{
-  &quot;schema&quot;: &quot;erpnet.appLifecycleEvent.v1&quot;,
-  &quot;eventId&quot;: &quot;0799261b-6a1a-4a7a-afc6-6a9b7fcb8a8c&quot;,
-  &quot;event&quot;: &quot;installed&quot;,
-  &quot;occurredAt&quot;: &quot;2026-01-21T14:34:09.6573137Z&quot;,
-  &quot;instanceBaseUrl&quot;: &quot;https://mycompany.my.erp.net&quot;,
-  &quot;user&quot;: &quot;admin&quot;,
-  &quot;request&quot;: {
-    &quot;applicationName&quot;: &quot;My External App&quot;,
-    &quot;applicationUri&quot;: &quot;MyExternalAppIdentifier&quot;,
-    &quot;clientType&quot;: &quot;public&quot;,
-    &quot;redirectUri&quot;: &quot;https://my-external-app.com/callback/&quot;,
-    &quot;impersonate&quot;: &quot;all&quot;,
-    &quot;requestSecret&quot;: false,
-    &quot;serviceAccess&quot;: &quot;none&quot;,
-    &quot;referenceTokens&quot;: &quot;none&quot;,
-    &quot;scope&quot;: &quot;openid profile&quot;
-  }
-}
-</code></pre>
-<hr>
-<h3 id="4-uninstall">4) Uninstall</h3>
-<p>Request:</p>
-<pre><code class="lang-http">https://mycompany.my.erp.net/manage/apps/uninstall
-  ?applicationUri=MyExternalAppIdentifier
-</code></pre>
-<p>Response:</p>
-<pre><code class="lang-json">{
-  &quot;schema&quot;: &quot;erpnet.appLifecycleEvent.v1&quot;,
-  &quot;eventId&quot;: &quot;0e3bf686-4abc-4230-9ca0-47c4efa12b09&quot;,
-  &quot;event&quot;: &quot;uninstalled&quot;,
-  &quot;occurredAt&quot;: &quot;2026-01-21T14:42:23.1597831Z&quot;,
-  &quot;instanceBaseUrl&quot;: &quot;https://mycompany.my.erp.net&quot;,
-  &quot;user&quot;: &quot;admin&quot;
-}
-</code></pre>
 <hr>
 <h2 id="concepts">Concepts</h2>
 <h3 id="client-types">Client types</h3>
@@ -623,6 +377,12 @@ They do not issue tokens themselves, but constrain the contents and capabilities
 <li>Must provide <code>redirectUri</code>.</li>
 <li>Must enable impersonation for at least one user type.</li>
 <li>Cannot request credentials.</li>
+</ul>
+</li>
+<li><p><code>None</code></p>
+<ul>
+<li>Intended for standalone applications that do not require authentication with the ERP.net instance.</li>
+<li>Serves primarily as a registration &quot;note&quot; or placeholder indicating the app is installed.</li>
 </ul>
 </li>
 </ul>
@@ -655,47 +415,47 @@ Issues a client secret intended for use with the OAuth 2.0 Client Credentials fl
 <hr>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <h3 id="only-administrators-can-perform-this-action">Only administrators can perform this action</h3>
-<p>Cause:</p>
+<p><strong>Cause</strong>:</p>
 <ul>
 <li>The user is not an administrator.</li>
 </ul>
-<p>Resolution:</p>
+<p><strong>Resolution</strong>:</p>
 <ul>
 <li>Sign in with an administrator account in ERP.net Instance Manager.</li>
 </ul>
 <h3 id="missing-required-parameter-applicationuri">Missing required parameter: applicationUri</h3>
-<p>Cause:</p>
+<p><strong>Cause</strong>:</p>
 <ul>
 <li>The install or uninstall URL does not include <code>applicationUri</code>.</li>
 </ul>
-<p>Resolution:</p>
+<p><strong>Resolution</strong>:</p>
 <ul>
 <li>Provide <code>applicationUri</code> in the query string.</li>
 </ul>
 <h3 id="public-clients-require-a-valid-redirecturi">Public clients require a valid redirectUri</h3>
-<p>Cause:</p>
+<p><strong>Cause</strong>:</p>
 <ul>
 <li><code>clientType=Public</code> but <code>redirectUri</code> is missing or invalid.</li>
 </ul>
-<p>Resolution:</p>
+<p><strong>Resolution</strong>:</p>
 <ul>
 <li>Provide a valid HTTPS <code>redirectUri</code>.</li>
 </ul>
 <h3 id="public-clients-cannot-request-credentials">Public clients cannot request credentials</h3>
-<p>Cause:</p>
+<p><strong>Cause</strong>:</p>
 <ul>
 <li><code>clientType=Public</code> with <code>requestSecret=true</code>.</li>
 </ul>
-<p>Resolution:</p>
+<p><strong>Resolution</strong>:</p>
 <ul>
 <li>Use <code>clientType=Confidential</code> or set <code>requestSecret=false</code>.</li>
 </ul>
 <h3 id="callback-fails-non-2xx-response">Callback fails (non-2xx response)</h3>
-<p>Cause:</p>
+<p><strong>Cause</strong>:</p>
 <ul>
 <li>The external application's <code>redirectUri</code> endpoint returns an error or is unreachable.</li>
 </ul>
-<p>Resolution:</p>
+<p><strong>Resolution</strong>:</p>
 <ul>
 <li>Ensure the endpoint is reachable and returns a successful (2xx) response.</li>
 <li>Ensure <code>redirectUri</code> is an absolute HTTPS URL in production.</li>
