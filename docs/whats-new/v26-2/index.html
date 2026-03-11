@@ -108,6 +108,11 @@ ERP.net Domain API defines an Import endpoint which can be used to import multip
 <li><p><a href="../../marketplace/index.html"><strong>ERP.net Marketplace onboarding webhooks</strong></a>
 Applications installed via the ERP.net Marketplace can now optionally receive a secure <code>HTTP POST</code> callback to automate onboarding. The lifecycle event is delivered in a cryptographically signed envelope.</p>
 </li>
+<li><p><strong>Default track changes levels</strong> - In <strong>v26.2</strong>, all entities have a minimum default tracking level of <strong>Level 1</strong>. Entities with higher predefined tracking levels keep their existing behavior.
+Related topics: <a href="https://docs.erp.net/tech/advanced/data-objects/track-changes.html">Track Changes</a>, <a href="https://docs.erp.net/tech/advanced/data-objects/default-tracking-levels.html">Default Tracking Levels</a></p>
+</li>
+<li><p><strong>DocumentVersioningSystem configuration option</strong> - In <strong>v26.2</strong>, the <a href="https://docs.erp.net/tech/reference/config-options-reference.html#42-documentversioningsystem-obsolete-as-of-v262">DocumentVersioningSystem</a> configuration option becomes obsolete. The system now always uses <strong>Track Changes</strong>, and the legacy <strong>VH</strong> document versioning system is discontinued.</p>
+</li>
 </ul>
 
 </article>
