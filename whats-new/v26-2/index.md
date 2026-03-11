@@ -19,4 +19,8 @@
 
 - [**ERP.net Marketplace onboarding webhooks**](../../marketplace/index.md)
   Applications installed via the @@name Marketplace can now optionally receive a secure `HTTP POST` callback to automate onboarding. The lifecycle event is delivered in a cryptographically signed envelope.
-  
+
+- **Default track changes levels** - In **v26.2**, all entities have a minimum default tracking level of **Level 1**. Entities with higher predefined tracking levels keep their existing behavior.
+  Related topics: [Track Changes](https://docs.erp.net/tech/advanced/data-objects/track-changes.html), [Default Tracking Levels](https://docs.erp.net/tech/advanced/data-objects/default-tracking-levels.html)
+
+- **DocumentVersioningSystem configuration option** - In **v26.2**, the [DocumentVersioningSystem](https://docs.erp.net/tech/reference/config-options-reference.html#42-documentversioningsystem-obsolete-as-of-v262) configuration option becomes obsolete. The system now always uses **Track Changes**, and the legacy **VH** document versioning system is discontinued.
