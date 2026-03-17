@@ -130,7 +130,7 @@ They are <strong>not issued</strong> for the Client Credentials flow or non-inte
     client_id=my.trusted.app&amp;
     redirect_uri=https://localhost/signin-callback&amp;
     response_type=code&amp;
-    scope=openid profile offline_access DomainApi&amp;
+    scope=openid profile offline_access read&amp;
     state=xyz
 </code></pre>
 <p>The <code>offline_access</code> scope signals that the app wants permission to act on behalf of the user even when they are not actively signed in.</p>
@@ -150,7 +150,7 @@ refresh_token=&lt;your_refresh_token&gt;
   &quot;access_token&quot;: &quot;eyJhbGciOiJSUzI1NiIs...&quot;,
   &quot;expires_in&quot;: 3600,
   &quot;refresh_token&quot;: &quot;SvQvQ9cxcYzs0AWg6tsGW1-YK7O5xP...&quot;,
-  &quot;scope&quot;: &quot;openid profile DomainApi offline_access&quot;
+  &quot;scope&quot;: &quot;openid profile read offline_access&quot;
 }
 </code></pre>
 <p>Use the new access token for subsequent API calls.</p>
