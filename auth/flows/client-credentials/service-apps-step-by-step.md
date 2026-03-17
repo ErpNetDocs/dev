@@ -13,7 +13,7 @@ Register a **Trusted Application** with:
 | ApplicationSecretHash | base64(sha256(your-secret)) | Store only the hash |
 | SystemUserAllowed | true | Enables service access |
 | SystemUser | svc.integration | Least-privilege account |
-| Scope | read DomainApi | Request only what you need |
+| Scope | read | Request only what you need |
 | IsEnabled | true | App is active |
 
 ## 1) Request an access token

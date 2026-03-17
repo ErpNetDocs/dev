@@ -17,7 +17,7 @@ Service apps use this to obtain short-lived access tokens that represent the app
 | `grant_type` | Yes | `client_credentials` | Must be exactly `client_credentials`. |
 | `client_id` | Yes | `my.trusted.app/service` | Your Trusted Application `ApplicationUri`. |
 | `client_secret` | Yes | `<your_plain_client_secret>` | Confidential clients only. Keep secret server-side. |
-| `scope` | Recommended | `DomainApi read` | Space-delimited scopes your service needs. Request only what you need. |
+| `scope` | Recommended | `read` | Space-delimited scopes your service needs. Request only what you need. |
 
 ## HTTP example
 

@@ -18,7 +18,7 @@ Minimum required settings for a confidential web app:
 | ImpersonateAsInternalUserAllowed | true | Or community users if needed |
 | ImpersonateLoginUrl | https://your-app.example.com/signin-callback | Exact HTTPS redirect URI |
 | IsEnabled | true | App is active |
-| Scope | read update DomainApi offline_access | Request only what you need |
+| Scope | read update offline_access | Request only what you need |
 
 > [!WARNING]
 > For a public SPA, set `ClientType = Public` and omit the secret. PKCE is required.

@@ -68,7 +68,7 @@ Contains the actual claims - information about the client, permissions, and vali
   "client_system_user": "admin",
   "client_system_user_type": "InternalUser",
   "client_db": "E1_DEV-1 Test",
-  "scope": ["DomainApi", "read", "sec", "update"]
+  "scope": ["read", "sec", "update"]
 }
 ```
 

@@ -66,7 +66,7 @@ GET /id/connect/authorize?
   response_type=code&
   client_id=my.trusted.app&
   redirect_uri=https://spa.example.com/index.html&
-  scope=DomainApi read offline_access&
+  scope=read offline_access&
   state=kj82F3&
   code_challenge=2C5h2Bf2yq9e8q8WRzU7Hc8l4o7l5s2fC3VfLbaN9yM&
   code_challenge_method=S256 HTTP/1.1

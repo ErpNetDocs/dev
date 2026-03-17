@@ -47,7 +47,7 @@ GET /id/connect/authorize?
     client_id=my.trusted.app&
     redirect_uri=https://localhost/signin-callback&
     response_type=code&
-    scope=openid profile offline_access DomainApi&
+    scope=openid profile offline_access read&
     state=xyz
 ```
 
@@ -75,7 +75,7 @@ refresh_token=<your_refresh_token>
   "access_token": "eyJhbGciOiJSUzI1NiIs...",
   "expires_in": 3600,
   "refresh_token": "SvQvQ9cxcYzs0AWg6tsGW1-YK7O5xP...",
-  "scope": "openid profile DomainApi offline_access"
+  "scope": "openid profile read offline_access"
 }
 ```
 
