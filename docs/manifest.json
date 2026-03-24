@@ -1316,10 +1316,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "domain-api/operations.md",
+      "source_relative_path": "domain-api/operations/execute-script.md",
       "output": {
         ".html": {
-          "relative_path": "domain-api/operations.html"
+          "relative_path": "domain-api/operations/execute-script.html"
         }
       },
       "version": ""
@@ -1330,6 +1330,29 @@
       "output": {
         ".html": {
           "relative_path": "domain-api/operations/get-repository-events.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "domain-api/operations/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/operations/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "domain-api/operations/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/operations/toc.html"
+        },
+        ".json": {
+          "relative_path": "domain-api/operations/toc.json"
         }
       },
       "version": ""
