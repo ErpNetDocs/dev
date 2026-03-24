@@ -30,7 +30,6 @@ Unbound operations are invoked directly under:
 | `Import` | Action | POST | Bulk insert/update/delete multiple objects in a single request. | [Import Data](data-manipulation/import.md) |
 | `ExecuteScript` | Action | POST | Executes raw JavaScript in the domain context. | [ExecuteScript](execute-script.md) |
 | `GetRepositoryEvents` | Function | GET | Gets the supported events by the specified repository. | [GetRepositoryEvents](operations/get-repository-events.md) |
-https://docs.erp.net/tech/advanced/user-business-rules/index.html
 
 ---
 
