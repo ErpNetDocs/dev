@@ -23,12 +23,14 @@ Unbound operations are invoked directly under:
 
 | Operation | Kind | HTTP | Description | See |
 |---|---|---:|---|---|
-| `BeginTransaction` | Action | POST | Starts a server-side API transaction and returns `TransactionId`. | [Transactions](transactions.md) |
-| `EndTransaction` | Action | POST | Ends an API transaction (commit or rollback). | [Transactions](transactions.md) |
-| `GetChanges` | Function | GET | Returns collected changes for a front-end transaction (requires `trackChanges=true`). | [Transactions](transactions.md) |
-| `WaitForChanges` | Function | GET | Like `GetChanges`, but blocks until changes occur or timeout. | [Transactions](transactions.md) |
-| `Import` | Action | POST | Bulk insert/update/delete multiple objects in a single request. | [Import Data](import.md) |
-| `ExecuteScript` | Action | POST | Executes raw JavaScript in the domain context. | [ExecuteScript](../execute-script.md) |
+| `BeginTransaction` | Action | POST | Starts a server-side API transaction and returns `TransactionId`. | [Transactions](data-manipulation/transactions.md) |
+| `EndTransaction` | Action | POST | Ends an API transaction (commit or rollback). | [Transactions](data-manipulation/transactions.md) |
+| `GetChanges` | Function | GET | Returns collected changes for a front-end transaction (requires `trackChanges=true`). | [Transactions](data-manipulation/transactions.md) |
+| `WaitForChanges` | Function | GET | Like `GetChanges`, but blocks until changes occur or timeout. | [Transactions](data-manipulation/transactions.md) |
+| `Import` | Action | POST | Bulk insert/update/delete multiple objects in a single request. | [Import Data](data-manipulation/import.md) |
+| `ExecuteScript` | Action | POST | Executes raw JavaScript in the domain context. | [ExecuteScript](execute-script.md) |
+| `GetRepositoryEvents` | Function | GET | Gets the supported events by the specified repository. | [GetRepositoryEvents](operations/get-repository-events.md) |
+https://docs.erp.net/tech/advanced/user-business-rules/index.html
 
 ---
 
@@ -41,7 +43,7 @@ They can be invoked for any entity instance:
 
 | Operation | Kind | HTTP | Purpose | Notes / reference |
 |---|---|---:|---|---|
-| `CreateNotification` | Action | POST | Creates a notification for a user (and sends a real-time event). | [Create notification](../common-tasks/create-notification.md) |
+| `CreateNotification` | Action | POST | Creates a notification for a user (and sends a real-time event). | [Create notification](common-tasks/create-notification.md) |
 | `GetAllowedCustomPropertyValues` | Function | GET | Returns the allowed values for a stored attribute (custom property) for the current entity instance. | See the *API Methods* section in the model docs (e.g. [General.Products.Products](https://docs.erp.net/model/entities/General.Products.Products.html)). |
 | `CreateCopy` | Action | POST | Duplicates the object and its child objects within the same aggregate. | See the *API Methods* section in the model docs (e.g. [General.Products.Products](https://docs.erp.net/model/entities/General.Products.Products.html)). |
 
@@ -52,5 +54,5 @@ They can be invoked for any entity instance:
 
 - [Transactions](transactions.md)
 - [Import Data](import.md)
-- [ExecuteScript](../execute-script.md)
-- [Stored attributes (custom properties)](../common-tasks/stored-attributes.md)
+- [ExecuteScript](execute-script.md)
+- [Stored attributes (custom properties)](common-tasks/stored-attributes.md)

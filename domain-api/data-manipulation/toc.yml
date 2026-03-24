@@ -12,8 +12,6 @@
   href: data-validation.md
 - name: Transactions
   href: transactions.md
-- name: Operations (actions & functions)
-  href: operations.md
 - name: ERP.net Actions
   href: erpnet-action.md
 - name: Import Data
