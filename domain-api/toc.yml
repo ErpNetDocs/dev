@@ -7,7 +7,7 @@
   href: data-manipulation/toc.yml
   topicHref: data-manipulation/index.md
 - name: Operations (actions & functions)
-  href: operations/index.md
+  href: operations/toc.yml
   topicHref: operations/index.md
 - name: Complex types
   href: complex-types/toc.yml
