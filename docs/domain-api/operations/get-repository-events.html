@@ -96,13 +96,13 @@
 <li>inspect the layer on which the event is available</li>
 <li>retrieve the event-specific attributes exposed by the platform</li>
 </ul>
-<p>This is especially useful when building integrations, tools, or UI that create or validate user business rules dynamically.</p>
+<p>This is especially useful when building integrations, tools, UI, or documentation related to user business rules.</p>
 <p>For general information about Domain API operations, see <a href="https://docs.erp.net/dev/domain-api/data-manipulation/operations.html">Operations (actions and functions)</a>.</p>
 <p>For business usage of these events, see <a href="https://docs.erp.net/tech/advanced/user-business-rules/index.html">User business rules</a>.</p>
 <h2 id="getting-started">Getting started</h2>
 <p><code>GetRepositoryEvents</code> is a <strong>function</strong>, so it is invoked with an HTTP <code>GET</code> request.</p>
 <h3 id="request-syntax">Request syntax</h3>
-<pre><code class="lang-http">GET ~/GetRepositoryEvents(repositoryName='Crm.Sales.SalesOrders')
+<pre><code class="lang-http">GET https://testdb.my.erp.net/api/domain/odata/GetRepositoryEvents(repositoryName='Crm.Sales.SalesOrders')
 </code></pre>
 <h3 id="parameters">Parameters</h3>
 <table>
@@ -125,7 +125,7 @@
 </table>
 <h3 id="example">Example</h3>
 <h4 id="request">Request</h4>
-<pre><code class="lang-http">GET ~/GetRepositoryEvents(repositoryName='Crm.Sales.SalesOrders')
+<pre><code class="lang-http">GET https://testdb.my.erp.net/api/domain/odata/GetRepositoryEvents(repositoryName='Crm.Sales.SalesOrders')
 </code></pre>
 <h4 id="response">Response</h4>
 <pre><code class="lang-json">{
@@ -229,7 +229,7 @@
 <tr>
 <td><code>EventAttributes</code></td>
 <td><code>array</code> or <code>null</code></td>
-<td>Additional attributes exposed by the event.</td>
+<td>Additional runtime attributes exposed by the event.</td>
 </tr>
 </tbody>
 </table>
@@ -241,8 +241,10 @@
 <li><code>ATTRIBUTECHANGING</code> and <code>ATTRIBUTECHANGED</code> require an attribute name</li>
 </ul>
 <p>When <code>RequiresEventParameter</code> is <code>true</code>, the <code>EventParameterDescription</code> property explains the expected value format.</p>
+<p>This makes <code>GetRepositoryEvents</code> useful as metadata for tools and documentation that generate or validate user business rule definitions.</p>
 <h3 id="event-attributes">Event attributes</h3>
 <p>Some events expose additional contextual attributes through <code>EventAttributes</code>.</p>
+<p>These are <strong>runtime-only system attributes</strong> that are available while the event handler is being executed. They are not regular persisted repository fields and they are not part of the repository schema returned by <code>$metadata</code>.</p>
 <p>Each event attribute contains:</p>
 <table>
 <thead>
@@ -256,23 +258,54 @@
 <tr>
 <td><code>Name</code></td>
 <td><code>string</code></td>
-<td>The attribute name.</td>
+<td>The attribute name that can be used in the event handler logic.</td>
 </tr>
 <tr>
 <td><code>Description</code></td>
 <td><code>string</code></td>
-<td>Description of the attribute.</td>
+<td>Description of the runtime attribute.</td>
 </tr>
 </tbody>
 </table>
-<p>For example, state change events may expose attributes such as:</p>
+<p><code>EventAttributes</code> are useful when the event handler logic needs information that is not represented directly by the current persisted repository state.</p>
+<p>Typical uses include:</p>
+<ul>
+<li>rule <strong>conditions</strong>, by setting <code>AttributeName</code> to the event attribute name</li>
+<li>rule logic that must inspect the target state or target user status of a transition</li>
+<li>rule logic that must validate a <strong>pending new value</strong> before it is applied</li>
+</ul>
+<p>For example, the <code>STATECHANGING</code> event for <code>Crm.Sales.SalesOrders</code> may expose:</p>
 <ul>
 <li><code>$FromState</code></li>
 <li><code>$ToState</code></li>
 <li><code>$FromUserStatusId</code></li>
 <li><code>$ToUserStatusId</code></li>
 </ul>
-<p>These attributes provide additional context about the event being triggered.</p>
+<p>These attributes allow the rule logic to distinguish not only that a state change is happening, but also:</p>
+<ul>
+<li>from which system state the document is moving</li>
+<li>to which system state it is moving</li>
+<li>which user status is being left</li>
+<li>which user status is being entered</li>
+</ul>
+<p>For attribute-related events, event attributes can expose the pending value being validated. For example, <code>ATTRIBUTECHANGING</code> can expose <code>$NewValue</code>.</p>
+<p>Important notes:</p>
+<ul>
+<li><code>EventAttributes</code> are <strong>event-specific</strong></li>
+<li><code>EventAttributes</code> are often also <strong>repository-specific</strong></li>
+<li>if <code>EventAttributes</code> is <code>null</code>, the event does not expose additional runtime attributes</li>
+<li>the names returned by <code>GetRepositoryEvents</code> should be treated as the source of truth for the event handler context</li>
+</ul>
+<h3 id="using-eventattributes-in-user-business-rules">Using <code>EventAttributes</code> in user business rules</h3>
+<p><code>GetRepositoryEvents</code> is primarily a metadata and documentation operation.</p>
+<p>Its purpose is to describe:</p>
+<ul>
+<li>which events a repository supports</li>
+<li>whether an event requires a parameter</li>
+<li>which runtime attributes are available in the event handler context</li>
+</ul>
+<p>This metadata is useful when designing integrations, generators, examples, or reusable templates for <a href="https://docs.erp.net/model/entities/Systems.Bpm.UserBusinessRules.html">Systems.Bpm.UserBusinessRules</a>.</p>
+<p>In practice, once the supported events and event attributes for a repository are known, they can be used directly when authoring business rules. There is no need to call <code>GetRepositoryEvents</code> before every individual rule creation.</p>
 <h3 id="repository-specific-behavior">Repository-specific behavior</h3>
 <p>The returned events depend on the repository passed in <code>repositoryName</code>.</p>
 <p>For example, document repositories may return document lifecycle events such as:</p>
@@ -286,12 +319,133 @@
 <li><code>ATTRIBUTECHANGING</code></li>
 <li><code>ATTRIBUTECHANGED</code></li>
 </ul>
+<p>Document header repositories and document line repositories do not necessarily support the same events.</p>
+<p>For example:</p>
+<ul>
+<li><code>Crm.Sales.SalesOrders</code> supports document state events because it is a document header repository</li>
+<li><code>Crm.Sales.SalesOrderLines</code> can support attribute-related events such as <code>ATTRIBUTECHANGING</code>, but it does not represent the document state itself</li>
+</ul>
+<p>Because of this, integrations and documentation should inspect <code>GetRepositoryEvents</code> for the exact target repository instead of assuming that related repositories support the same event set.</p>
+<h2 id="examples">Examples</h2>
+<p>The examples below show how the metadata returned by <code>GetRepositoryEvents</code> can be applied when creating user business rules through Domain API.</p>
+<h3 id="example-create-a-statechanging-validation-rule-for-sales-orders">Example: create a <code>STATECHANGING</code> validation rule for sales orders</h3>
+<p>The example below creates a <a href="https://docs.erp.net/model/entities/Systems.Bpm.UserBusinessRules.html">Systems.Bpm.UserBusinessRules</a> record for <code>Crm.Sales.SalesOrders</code>.</p>
+<p>Business scenario:</p>
+<ul>
+<li>a sales order is being moved to a specific <strong>user status</strong></li>
+<li>for that target user status, a custom property named <code>@ExportReason</code> must have a value</li>
+<li>if the custom property has no value, the state change is cancelled with an error</li>
+</ul>
+<p>This is a realistic example for export-controlled or compliance-sensitive order processing.</p>
+<pre><code class="lang-http">POST https://testdb.my.erp.net/api/domain/odata/Systems_Bpm_UserBusinessRules
+Content-Type: application/json
+</code></pre>
+<pre><code class="lang-json">{
+  &quot;Code&quot;: &quot;SO001&quot;,
+  &quot;Name&quot;: {
+    &quot;EN&quot;: &quot;Sales order target user status requires export reason&quot;
+  },
+  &quot;RepositoryName&quot;: &quot;Crm.Sales.SalesOrders&quot;,
+  &quot;Layer&quot;: &quot;BackEnd&quot;,
+  &quot;IsActive&quot;: true,
+  &quot;Events&quot;: [
+    {
+      &quot;EventType&quot;: &quot;STATECHANGING&quot;,
+      &quot;EventParameter&quot;: &quot;RELEASED&quot;,
+      &quot;ExecutionPriority&quot;: &quot;Normal&quot;,
+      &quot;Layer&quot;: &quot;BackEnd&quot;
+    }
+  ],
+  &quot;Conditions&quot;: [
+    {
+      &quot;ConditionNo&quot;: 10,
+      &quot;AttributeName&quot;: &quot;$ToUserStatusId&quot;,
+      &quot;ComparisonType&quot;: &quot;Equals&quot;,
+      &quot;Value&quot;: &quot;afcade19-c6f7-45c3-b4f5-2bab1546a168&quot;
+    },
+    {
+      &quot;ConditionNo&quot;: 20,
+      &quot;AttributeName&quot;: &quot;@ExportReason&quot;,
+      &quot;ComparisonType&quot;: &quot;IsNull&quot;
+    }
+  ],
+  &quot;Actions&quot;: [
+    {
+      &quot;ActionNo&quot;: 10,
+      &quot;ActionType&quot;: &quot;FAIL&quot;,
+      &quot;Parameter1Type&quot;: &quot;Constant&quot;,
+      &quot;Parameter1Value&quot;: &quot;The sales order cannot be released to this user status because custom property @ExportReason has no value.&quot;
+    }
+  ]
+}
+</code></pre>
+<p>This single request creates:</p>
+<ul>
+<li>one root record in <a href="https://docs.erp.net/model/entities/Systems.Bpm.UserBusinessRules.html">Systems.Bpm.UserBusinessRules</a></li>
+<li>one child record in <code>Systems.Bpm.UserBusinessRuleEvents</code></li>
+<li>two child records in <code>Systems.Bpm.UserBusinessRuleConditions</code></li>
+<li>one child record in <code>Systems.Bpm.UserBusinessRuleActions</code></li>
+</ul>
+<p>Notes:</p>
+<ul>
+<li>Replace <code>afcade19-c6f7-45c3-b4f5-2bab1546a168</code> with the actual target user status identifier.</li>
+<li>Replace <code>@ExportReason</code> with the actual custom property code used in the target ERP.net instance.</li>
+<li>The rule is scoped both by the <code>STATECHANGING</code> event and by the <code>$ToUserStatusId</code> event attribute.</li>
+</ul>
+<h3 id="example-create-an-attributechanging-validation-rule-for-sales-order-lines">Example: create an <code>ATTRIBUTECHANGING</code> validation rule for sales order lines</h3>
+<p>The example below creates a <a href="https://docs.erp.net/model/entities/Systems.Bpm.UserBusinessRules.html">Systems.Bpm.UserBusinessRules</a> record for <code>Crm.Sales.SalesOrderLines</code>.</p>
+<p>Business scenario:</p>
+<ul>
+<li>a user edits <code>LineCustomDiscountPercent</code></li>
+<li>a manual discount above <code>25%</code> is not allowed</li>
+<li>the invalid value must be rejected before the change is applied</li>
+</ul>
+<p>This example uses the <code>$NewValue</code> event attribute.</p>
+<pre><code class="lang-http">POST https://testdb.my.erp.net/api/domain/odata/Systems_Bpm_UserBusinessRules
+Content-Type: application/json
+</code></pre>
+<pre><code class="lang-json">{
+  &quot;Code&quot;: &quot;SO002&quot;,
+  &quot;Name&quot;: {
+    &quot;EN&quot;: &quot;Prevent manual line discount above 25 percent&quot;
+  },
+  &quot;RepositoryName&quot;: &quot;Crm.Sales.SalesOrderLines&quot;,
+  &quot;Layer&quot;: &quot;FrontEnd&quot;,
+  &quot;IsActive&quot;: true,
+  &quot;Events&quot;: [
+    {
+      &quot;EventType&quot;: &quot;ATTRIBUTECHANGING&quot;,
+      &quot;EventParameter&quot;: &quot;LineCustomDiscountPercent&quot;,
+      &quot;ExecutionPriority&quot;: &quot;Normal&quot;,
+      &quot;Layer&quot;: &quot;FrontEnd&quot;
+    }
+  ],
+  &quot;Conditions&quot;: [
+    {
+      &quot;ConditionNo&quot;: 10,
+      &quot;AttributeName&quot;: &quot;$NewValue&quot;,
+      &quot;ComparisonType&quot;: &quot;Greater_Than&quot;,
+      &quot;Value&quot;: &quot;0.25&quot;
+    }
+  ],
+  &quot;Actions&quot;: [
+    {
+      &quot;ActionNo&quot;: 10,
+      &quot;ActionType&quot;: &quot;FAIL&quot;,
+      &quot;Parameter1Type&quot;: &quot;Constant&quot;,
+      &quot;Parameter1Value&quot;: &quot;Manual line discount above 25% is not allowed.&quot;
+    }
+  ]
+}
+</code></pre>
+<p>This example is important because the repository attribute may still contain the <strong>old</strong> value when <code>ATTRIBUTECHANGING</code> is fired. The <code>$NewValue</code> event attribute provides access to the pending value that is being validated.</p>
 <h2 id="see-also">See also</h2>
 <ul>
 <li><a href="https://docs.erp.net/dev/domain-api/data-manipulation/operations.html">Operations (actions and functions)</a></li>
 <li><a href="https://docs.erp.net/dev/domain-api/index.html">Domain API</a></li>
 <li><a href="https://docs.erp.net/tech/advanced/user-business-rules/index.html">User business rules</a></li>
 <li><a href="https://docs.erp.net/tech/advanced/user-business-rules/events/index.html">Events</a></li>
+<li><a href="https://docs.erp.net/model/entities/Systems.Bpm.UserBusinessRules.html">Systems.Bpm.UserBusinessRules</a></li>
 </ul>
 
 </article>
