@@ -24,3 +24,5 @@
   Related topics: [Track Changes](https://docs.erp.net/tech/advanced/data-objects/track-changes.html), [Default Tracking Levels](https://docs.erp.net/tech/advanced/data-objects/default-tracking-levels.html)
 
 - **DocumentVersioningSystem configuration option** - In **v26.2**, the [DocumentVersioningSystem](https://docs.erp.net/tech/reference/config-options-reference.html#42-documentversioningsystem-obsolete-as-of-v262) configuration option becomes obsolete. The system now always uses **Track Changes**, and the legacy **VH** document versioning system is discontinued.
+
+- **New Visual Import Tool** - The Domain API site  provides a **Visual Import Tool** at the `/api/domain/import` endpoint, for example: `https://testdb.my.erp.net/api/domain/import`. The tool allows you to work with import payloads interactively in the browser. You can type, paste, edit, and execute import JSON directly in the page.
