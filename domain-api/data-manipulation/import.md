@@ -8,6 +8,7 @@ Specification with example:
 {
   "transaction": "all-objects" | "per-object" (default),
   "model": "frontend" (default) | "backend",
+  "loggingLevel": 0 | 1 | 2 (default),
   "objects":
   [
     {
@@ -24,12 +25,25 @@ Specification with example:
 - **model:** - allowed values are `common` or `frontend`. This parameter indicates the data model used for the import. Front-end data model uses front-end business rules. For example front-end logic is when Quantity of a SalesOrderLine is changed the corresponding QuantityBase is calculated by a dedicated front-end business rule. Common model defines minimal business logic applicable in all cases - front-end or back-end. The default is `frontend`.
 - **transaction:** - `all-objects` or `per-object`. This parameter defines when the changes will be commited to the database. If `all-objects` is specified all changes are committed at once at the end of the import. If `per-object` is specified every object is saved when it is ready. The default is `per-object`.
 - **objects** - an array of entity objects for import.
+- **loggingLevel** - The logging level of the import. 0 - Does not log the operation; 1 - Creates Systems.Exchange.DataExchanges object with details about the import operation, but without listing specific objects; 2 - Also creates DataExchangeObjects for all aggregate root objects.  
 
 ### Properties of the objects element
 - **"@odata.type"** - Each object must specify valid entity type. The entity type is the singular form of the entity set and can be found in the documentation for each entity. The @odata.type always starts with the default namespace `Erp.` - Example [Erp.General_Products_Product](https://docs.erp.net/model/entities/General.Products.Products.html)
 - **"@erpnet.action"** - This is an optional annotation for the desired import action. For top-level objects the default action is `create`. [For more information see this article](./erpnet-action.md).
 - **"@erpnet.findBy"** - This is an optional annotation that specifies the search criteria for the find action. [For more information see this article](./erpnet-action.md).
 - Any data property of the imported object.
+
+### Logging levels
+
+The `loggingLevel` parameter controls whether the import operation is logged in the exchange subsystem and how much detail is recorded.
+
+Supported values are `0`, `1`, and `2`. The default value is `2`.
+
+| Level | Name | Behavior |
+|---|---|---|
+| `0` | No logging | Does not log the import operation. |
+| `1` | Minimal logging | Creates a `Systems.Exchange.DataExchanges` record with details about the import operation, but without listing specific imported objects. |
+| `2` | Normal logging | Creates a `Systems.Exchange.DataExchanges` record and `Systems.Exchange.DataExchangeObjects` records for all root objects. |
 
 
 ## Return value
@@ -46,7 +60,8 @@ Specification with example
       "@erpnet.state": "Added" | "Modified" | "Deleted" | "Unchanged"
     },
     ...
-  ]
+  ],
+  "data-exchange": "Systems_Exchange_DataExchanges(<guid>)"
 }
 ```
 
@@ -60,6 +75,29 @@ Specification with example
 - **"@erpnet.message"** - the error message.
 - **"@erpnet.state"** -  the status of the imported object. One of "Added" | "Modified" | "Deleted" | "Unchanged". Indicates the operation performed for the object.
 Only the "@odata.id" is included in the result - no other properties.
+- **"data-exchange"** - the odata id of the created DataExchange object. Not present if the loggingLevel is 0.
+
+
+## Visual Import Tool
+
+The Domain API site also provides a **Visual Import Tool** at the `/api/domain/import` endpoint.
+
+Try it here: https://testdb.my.erp.net/api/domain/import
+
+The tool allows you to work with import payloads interactively in the browser. You can type, paste, edit, and execute import JSON directly in the page.
+
+
+The tool includes a text editor where you can type, paste, edit, and execute import JSON.
+
+It supports full code completion and validation for the import payload. 
+
+The tool also supports uploading import input from files. Supported file formats are:
+
+- text files - `.txt`, `.json`
+- `.zip` files
+
+This is useful when you want to compose import payloads visually, validate their structure with schema-based assistance, or test imports without sending requests programmatically.
+
 
 ## Examples
 
