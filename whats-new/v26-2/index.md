@@ -9,7 +9,7 @@
 - [**Paging via @odata.nextLink (Domain API)**](../../domain-api/querying-data/paging.md)  
   Queries that include `$top` now return `@odata.nextLink` for server-driven paging. Depending on the query shape, the continuation link may use `$skiptoken` (keyset paging) or `$skip` (offset paging) - clients should always follow `@odata.nextLink` as an opaque URL.
 
-- [**AggregateLastUpdateTimeUtc (Domain API)**](../../domain-api/data-sync/incremental-pull.md)  
+- [**Incremental pull synchronization**](../../domain-api/data-sync/incremental-pull.md)  
   Aggregate root entities now expose `AggregateLastUpdateTimeUtc`, enabling incremental pull scenarios by filtering entities updated after a given UTC timestamp.
 
 - [**Import**](../../domain-api/data-manipulation/import.md)
