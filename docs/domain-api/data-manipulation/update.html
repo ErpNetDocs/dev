@@ -93,7 +93,7 @@ Only the fields included in the request are modified; all other properties remai
 <ul>
 <li>Use <strong>PATCH</strong> to modify one or more fields of an existing entity.</li>
 <li>You do <strong>not</strong> need to send the entire entity.</li>
-<li>Always consider <strong>property dependencies</strong> — some fields must be set in a specific order (e.g., <code>QuantityUnit</code> before <code>Quantity</code>, <code>Currency</code> before <code>Amount</code>).</li>
+<li>Always consider <strong>property dependencies</strong> when updating complex fields such as <code>Quantity</code> and <code>Amount</code>. Depending on the entity structure, the unit or currency code inside the complex value may either resolve the dependent reference automatically or be required to match an already effective reference. See <a href="update-order.html">Property Dependencies and Update Order</a>.</li>
 <li>Business rules and validations defined in the front-end or back-end models will be applied depending on how the data is processed.</li>
 <li>ERP.net supports <strong>optimistic locking</strong> to prevent conflicts during concurrent updates. Learn more in <a href="https://docs.erp.net/dev/domain-api/data-sync/optimistic-locking.html">Optimistic Locking</a>.</li>
 </ul>
@@ -117,7 +117,7 @@ Content-Type: application/json
 </code></pre>
 <div class="NOTE">
 <h5>Note</h5>
-<p>When updating complex fields (e.g. <code>Quantity</code>, <code>Amount</code>) ensure dependent properties are provided consistently, and in the correct order when required by business rules. In general the measurement unit/currency must be set before the quantity/amount.</p>
+<p>When updating complex fields such as <code>Quantity</code> and <code>Amount</code>, the behavior depends on where the dependent measurement unit or currency is stored. If it is stored in the same entity, ERP.net can resolve and assign it automatically from the code in the complex value. If it is stored outside the entity, the code in the complex value must match the already effective reference. See <a href="update-order.html">Property Dependencies and Update Order</a>.</p>
 </div>
 <p><strong>Required Considerations:</strong></p>
 <ul>

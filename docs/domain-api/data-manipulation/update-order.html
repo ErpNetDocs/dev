@@ -87,20 +87,164 @@
         <article data-uid="">
 <h1 id="property-dependencies-and-update-order">Property Dependencies and Update Order</h1>
 
-<p>In ERP.net, setting a property may trigger internal <strong>events</strong> that automatically update other dependent properties. Because of this, the <strong>order in which properties are set is important</strong> when creating or updating entities through the API.</p>
-<p>For example, the <code>Quantity</code> field is a complex type that depends on the <code>QuantityUnit</code> reference.<br>
-If you set the <code>Quantity</code> before assigning the correct <code>QuantityUnit</code>, the system may interpret the value using an outdated or incorrect unit, leading to validation or conversion errors.</p>
-<p>To ensure correct behavior, always set the unit <strong>before</strong> the quantity value.</p>
-<p><strong>Example:</strong></p>
-<pre><code>{`
-    &quot;QuantityUnit&quot;: { &quot;@odata.id&quot;: &quot;General_MeasurementUnits(6f7cbe0e-9a2a-4e3b-9b64-4f86d8c9e7f0)&quot; },
-    &quot;Quantity&quot;: { &quot;Value&quot;: 1.00, &quot;Unit&quot;: &quot;PCE&quot; }
+<p>In ERP.net, setting a property may trigger internal <strong>events</strong> that automatically update other dependent properties. Because of this, the <strong>order in which properties are set can be important</strong> when creating or updating entities through the API.</p>
+<p>For complex values such as <code>Quantity</code> and <code>Amount</code>, the behavior depends on where the dependent measurement unit or currency is stored.</p>
+<h2 id="same-entity-dependent-references">Same-entity dependent references</h2>
+<p>If the dependent reference is stored in the <strong>same entity</strong>, ERP.net can resolve the code passed in the complex value and assign the corresponding reference automatically.</p>
+<p>For quantities, ERP.net searches for a measurement unit whose code matches <code>Quantity.Unit</code>.</p>
+<p>Example:</p>
+<pre><code class="lang-json">{
+  &quot;Quantity&quot;: { &quot;Value&quot;: 1.00, &quot;Unit&quot;: &quot;PCE&quot; }
 }
 </code></pre>
-<p>This ensures that the system knows which measurement unit applies before processing the quantity, preventing inconsistencies when working with values in different units.</p>
-<blockquote>
-<p><strong>NOTE:</strong> The same rule applies to other dependent fields such as <code>Amount</code> and <code>Currency</code> — always set the currency reference before specifying the amount value.</p>
-</blockquote>
+<p>If the entity stores the corresponding measurement unit reference in the same row, ERP.net assigns that reference automatically.</p>
+<p>The same applies to amounts. If the entity stores the corresponding currency reference in the same row, ERP.net searches for a currency whose code matches Amount.Currency and assigns it automatically.</p>
+<p>Example:</p>
+<pre><code class="lang-json">{
+  &quot;LineAmount&quot;: { &quot;Value&quot;: 100.00, &quot;Currency&quot;: &quot;EUR&quot; }
+}
+</code></pre>
+<h2 id="external-dependent-references">External dependent references</h2>
+<p>If the dependent measurement unit or currency is not stored in the same entity, the complex value does not update that external reference.</p>
+<p>For example, in sales order lines, the line quantity and its measurement unit are stored in the line, so Quantity.Unit can update the line's measurement unit.</p>
+<p>However, the document currency is stored in the sales order header, while amounts such as UnitPrice are stored in the line. Because of this, sending:</p>
+<pre><code class="lang-json">{
+  &quot;UnitPrice&quot;: { &quot;Value&quot;: 200, &quot;Currency&quot;: &quot;EUR&quot; }
+}
+</code></pre>
+<p>does not change the currency in the sales order header.</p>
+<p>In such cases, the code passed in the complex value must match the already effective measurement unit or currency.</p>
+<h2 id="consistency-rules">Consistency rules</h2>
+<p>When both the dependent reference and the complex value are sent explicitly, they must remain consistent with each other and with the business rules applied by the model.</p>
+<p>For example, if both QuantityUnit and Quantity.Unit are provided, they must refer to the same measurement unit. Likewise, if both a currency reference and Amount.Currency are provided in the same entity, they must refer to the same currency.</p>
+<h2 id="practical-guidance">Practical guidance</h2>
+<ul>
+<li>Use the code inside Quantity.Unit or Amount.Currency when you want ERP.net to resolve the reference automatically.</li>
+<li>Do not expect Quantity or Amount to update references stored in another entity.</li>
+<li>When working with documents, pay special attention to header/line separation of dependent fields.</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-quantityunit-and-amountcurrency-resolve-dependent-references-stored-in-the-same-entity">Example 1: <code>Quantity.Unit</code> and <code>Amount.Currency</code> resolve dependent references stored in the same entity</h3>
+<p>In <code>Crm_Pricing_ProductPrices</code>, both dependent references are stored in the same entity:</p>
+<ul>
+<li><code>PriceQuantity</code> depends on <code>PriceQuantityMeasurementUnit</code></li>
+<li><code>Price</code> depends on <code>Currency</code></li>
+</ul>
+<p>Because both dependencies are local to the same row, ERP.net can resolve the codes in the complex values and assign the corresponding references automatically.</p>
+<pre><code class="lang-http">POST https://testdb.my.erp.net/api/domain/odata/Crm_Pricing_ProductPrices
+Content-Type: application/json
+
+{
+  &quot;Product&quot;: {
+    &quot;@odata.id&quot;: &quot;General_Products_Products(81d38b50-fd06-e611-8292-b31071e2ee7f)&quot;
+  },
+  &quot;PriceQuantity&quot;: {
+    &quot;Value&quot;: 1,
+    &quot;Unit&quot;: &quot;pcs&quot;
+  },
+  &quot;Price&quot;: {
+    &quot;Value&quot;: 25,
+    &quot;Currency&quot;: &quot;BGN&quot;
+  },
+  &quot;Notes&quot;: &quot;update-order same-entity example&quot;
+}
+</code></pre>
+<p>In this request:</p>
+<ul>
+<li><code>PriceQuantity.Unit = &quot;pcs&quot;</code> can resolve and assign <code>PriceQuantityMeasurementUnit</code></li>
+<li><code>Price.Currency = &quot;BGN&quot;</code> can resolve and assign <code>Currency</code></li>
+</ul>
+<p>This works because both dependent references are stored in <code>Crm_Pricing_ProductPrices</code>.</p>
+<h3 id="example-2-quantityunit-can-update-a-line-local-unit-but-unitpricecurrency-cannot-update-the-document-header-currency">Example 2: <code>Quantity.Unit</code> can update a line-local unit, but <code>UnitPrice.Currency</code> cannot update the document header currency</h3>
+<p>In <code>Crm_Sales_SalesOrderLines</code>:</p>
+<ul>
+<li><code>Quantity</code> depends on <code>QuantityUnit</code>, which is stored in the same line</li>
+<li><code>UnitPrice</code> depends on <code>SalesOrder.DocumentCurrency</code>, which is stored in the sales order header</li>
+</ul>
+<p>Because of this, <code>Quantity.Unit</code> can resolve the line measurement unit, but <code>UnitPrice.Currency</code> cannot change the document currency in the header.</p>
+<pre><code class="lang-http">POST https://testdb.my.erp.net/api/domain/odata/Crm_Sales_SalesOrders
+Content-Type: application/json
+
+{
+  &quot;DocumentType&quot;: {
+    &quot;@odata.id&quot;: &quot;Systems_Documents_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)&quot;
+  },
+  &quot;EnterpriseCompany&quot;: {
+    &quot;@odata.id&quot;: &quot;General_EnterpriseCompanies(b0e80577-fbbe-4c9b-811e-20b6c6dd465f)&quot;
+  },
+  &quot;Customer&quot;: {
+    &quot;@odata.id&quot;: &quot;Crm_Sales_Customers(15f2640f-f374-4017-ae2d-d2a41535f054)&quot;
+  },
+  &quot;DocumentCurrency&quot;: {
+    &quot;@odata.id&quot;: &quot;General_Currencies_Currencies(3187833a-d3c1-4804-bfc0-e17e6aee3069)&quot;
+  },
+  &quot;Lines&quot;: [
+    {
+      &quot;Product&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Products_Products(81d38b50-fd06-e611-8292-b31071e2ee7f)&quot;
+      },
+      &quot;Quantity&quot;: {
+        &quot;Value&quot;: 2,
+        &quot;Unit&quot;: &quot;pcs&quot;
+      },
+      &quot;UnitPrice&quot;: {
+        &quot;Value&quot;: 20,
+        &quot;Currency&quot;: &quot;BGN&quot;
+      }
+    }
+  ]
+}
+</code></pre>
+<p>In this request:</p>
+<ul>
+<li><code>Quantity.Unit = &quot;pcs&quot;</code> can resolve and assign <code>QuantityUnit</code></li>
+<li><code>UnitPrice.Currency = &quot;BGN&quot;</code> does <strong>not</strong> update <code>DocumentCurrency</code></li>
+</ul>
+<p><code>UnitPrice.Currency</code> must match the currency already effective for the sales order header.</p>
+<h3 id="example-3-patch-uses-the-same-rule-during-update">Example 3: <code>PATCH</code> uses the same rule during update</h3>
+<p>The same behavior applies when updating an existing entity.</p>
+<p>In the following example, <code>Quantity.Unit</code> is evaluated against the line-local dependency, while <code>UnitPrice.Currency</code> is validated against the already effective sales order currency.</p>
+<pre><code class="lang-http">PATCH https://testdb.my.erp.net/api/domain/odata/Crm_Sales_SalesOrderLines(34217345-3659-43be-a85d-005eaaa3aaac)
+Content-Type: application/json
+
+{
+  &quot;Quantity&quot;: {
+    &quot;Value&quot;: 5,
+    &quot;Unit&quot;: &quot;pcs&quot;
+  },
+  &quot;UnitPrice&quot;: {
+    &quot;Value&quot;: 22,
+    &quot;Currency&quot;: &quot;BGN&quot;
+  }
+}
+</code></pre>
+<p>In this request:</p>
+<ul>
+<li><code>Quantity.Unit = &quot;pcs&quot;</code> can resolve the dependent <code>QuantityUnit</code> reference in the same entity</li>
+<li><code>UnitPrice.Currency = &quot;BGN&quot;</code> does <strong>not</strong> update <code>SalesOrder.DocumentCurrency</code></li>
+</ul>
+<p>The amount value must remain consistent with the currency already effective for the parent sales order.</p>
+<h3 id="example-4-explicitly-sending-both-the-dependent-reference-and-the-complex-value">Example 4: explicitly sending both the dependent reference and the complex value</h3>
+<p>If both the dependent reference and the complex value are provided explicitly, they must remain consistent.</p>
+<pre><code class="lang-http">PATCH https://testdb.my.erp.net/api/domain/odata/Crm_Sales_SalesOrderLines(34217345-3659-43be-a85d-005eaaa3aaac)
+Content-Type: application/json
+
+{
+  &quot;QuantityUnit&quot;: {
+    &quot;@odata.id&quot;: &quot;General_Products_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
+  },
+  &quot;Quantity&quot;: {
+    &quot;Value&quot;: 3,
+    &quot;Unit&quot;: &quot;pcs&quot;
+  }
+}
+</code></pre>
+<p>In this request:</p>
+<ul>
+<li><code>QuantityUnit</code> is set explicitly</li>
+<li><code>Quantity.Unit</code> is also provided explicitly</li>
+</ul>
+<p>Both values must refer to the same effective measurement unit. If they do not match, the request is inconsistent.</p>
 
 </article>
 

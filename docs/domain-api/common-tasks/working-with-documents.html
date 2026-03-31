@@ -96,41 +96,50 @@
 <p>Document can be created only by specifying the required properties. Other properties will be filled by it's constant default value or it's LateDefault expression.</p>
 <p>If Front-End model is used in <a href="../data-manipulation/transactions.html">API Transaction</a> dependent property values are recalculated upon property change.  For example in SalesOrderLine line.ProductDescription is set to line.Product.Name when line.Product changes.</p>
 <p>In the example bellow a new SalesOrder is created with one SalesOrderLine.</p>
-<p>Note that measurement units and currencies are specified before passing <a href="../complex-types/quantity.html">Quantity</a> or <a href="../complex-types/amount.html">Amount</a> values. This is required because the quantity or amount contains the code of the measurement unit or currency.</p>
+<p>For complex values such as <a href="../complex-types/quantity.html">Quantity</a> and <a href="../complex-types/amount.html">Amount</a>, the behavior depends on where the dependent measurement unit or currency is stored.</p>
+<p>If the dependent reference is stored in the same entity, ERP.net can resolve the code passed in the complex value and assign the corresponding reference automatically.</p>
+<p>If the dependent reference is stored outside the current entity, the complex value does not update it, and the code in the complex value must match the already effective unit or currency.</p>
+<p>For more details, see <a href="../data-manipulation/update-order.html">Property Dependencies and Update Order</a>.</p>
 <pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders
 {
-  &quot;DocumentType&quot;: {
-    &quot;@odata.id&quot;: &quot;General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)&quot;
-  },
-  &quot;EnterpriseCompany&quot;: {
-    &quot;@odata.id&quot;: &quot;General_EnterpriseCompanies(b0e80577-fbbe-4c9b-811e-20b6c6dd465f)&quot;
-  },
-  &quot;Customer&quot;: {
-    &quot;@odata.id&quot;: &quot;Crm_Customers(15f2640f-f374-4017-ae2d-d2a41535f054)&quot;
-  },
-  &quot;DocumentCurrency&quot;: {
-    &quot;@odata.id&quot;: &quot;General_Currencies(3187833a-d3c1-4804-bfc0-e17e6aee3069)&quot;
-  },
-  &quot;Lines&quot;: [
-    {
-      &quot;Product&quot;: {
-        &quot;@odata.id&quot;: &quot;General_Products_Products(81d38b50-fd06-e611-8292-b31071e2ee7f)&quot;
-      },
-      &quot;QuantityUnit&quot;: {
-        &quot;@odata.id&quot;: &quot;General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)&quot;
-      },
-      &quot;Quantity&quot;: {
-        &quot;Value&quot;: 1,
-        &quot;Unit&quot;: &quot;pcs&quot;
-      },
-      &quot;UnitPrice&quot;: {
-        &quot;Value&quot;: 20,
-        &quot;Currency&quot;: &quot;BGN&quot;
-      }
-    }
-  ]
+    &quot;DocumentType&quot;: {
+        &quot;@odata.id&quot;: &quot;Systems_Documents_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)&quot;
+    },
+    &quot;EnterpriseCompany&quot;: {
+        &quot;@odata.id&quot;: &quot;General_EnterpriseCompanies(2115c294-33e9-41bd-bc0d-0cd0b7ee1735)&quot;
+    },
+    &quot;EnterpriseCompanyLocation&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Contacts_CompanyLocations(8e1829a8-8769-4422-8155-9cee69002f9f)&quot;
+    },
+    &quot;Customer&quot;: {
+        &quot;@odata.id&quot;: &quot;Crm_Sales_Customers(10f76803-4130-40f8-bf73-a4e2b004417b)&quot;
+    },
+    &quot;DocumentCurrency&quot;: {
+        &quot;@odata.id&quot;: &quot;General_Currencies_Currencies(3187833a-d3c1-4804-bfc0-e17e6aee3069)&quot;
+    },
+    &quot;Lines&quot;: [
+        {
+            &quot;Product&quot;: {
+                &quot;@odata.id&quot;: &quot;General_Products_Products(4eeb8054-f7d9-479f-a239-ed07d8145075)&quot;
+            },
+            &quot;Quantity&quot;: {
+                &quot;Value&quot;: 1,
+                &quot;Unit&quot;: &quot;pcs&quot;
+            },
+            &quot;UnitPrice&quot;: {
+                &quot;Value&quot;: 20,
+                &quot;Currency&quot;: &quot;BGN&quot;
+            }
+        }
+    ]
 }
 </code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>In a sales order line, <code>Quantity.Unit</code> can assign the line measurement unit, because that reference is stored in the same line.</p>
+<p><code>UnitPrice.Currency</code> does not change <code>DocumentCurrency</code>, because the document currency is stored in the sales order header, not in the line. Therefore the currency code in <code>UnitPrice</code> must match the already effective document currency.</p>
+<p>For details, see <a href="../data-manipulation/update-order.html">Property Dependencies and Update Order</a>.</p>
+</div>
 <h2 id="change-document-state">Change document state</h2>
 <p>HTTP C#</p>
 <pre><code class="lang-json">POST ~/Crm_Sales_SalesOrders(59098bcf-f331-478f-91c2-f5520590f534)/ChangeState

@@ -119,6 +119,11 @@
   }
 }
 </code></pre>
+<h2 id="update-behavior">Update behavior</h2>
+<p>When an <code>Amount</code> value is submitted through the Domain API, ERP.net evaluates the <code>Currency</code> code in the context of the current entity.</p>
+<p>If the dependent currency reference is stored in the same entity, ERP.net searches for a currency whose code matches <code>Amount.Currency</code> and assigns that reference automatically.</p>
+<p>If the currency reference is not stored in the same entity, <code>Amount.Currency</code> does not update it. In that case, the code in <code>Amount.Currency</code> must match the already effective currency.</p>
+<p>For more details, see <a href="../data-manipulation/update-order.html">Property Dependencies and Update Order</a>.</p>
 <div class="NOTE">
 <h5>Note</h5>
 <p>Because <em>Amount</em> is odata complex object it can not participate in uri $filter query parameter. To filter by Amount or Quantity properties you can use the following:</p>

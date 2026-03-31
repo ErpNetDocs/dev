@@ -102,7 +102,7 @@
 <tr>
 <td>Unit</td>
 <td>String</td>
-<td>TThe measurement unit of the quantity represented by it's code.</td>
+<td>The measurement unit of the quantity represented by it's code.</td>
 </tr>
 <tr>
 <td>Value</td>
@@ -119,6 +119,11 @@
   }
 }
 </code></pre>
+<h2 id="update-behavior">Update behavior</h2>
+<p>When a <code>Quantity</code> value is submitted through the Domain API, ERP.net evaluates the <code>Unit</code> code in the context of the current entity.</p>
+<p>If the dependent measurement unit reference is stored in the same entity, ERP.net searches for a measurement unit whose code matches <code>Quantity.Unit</code> and assigns that reference automatically.</p>
+<p>If the measurement unit reference is not stored in the same entity, <code>Quantity.Unit</code> does not update it. In that case, the code in <code>Quantity.Unit</code> must match the already effective measurement unit.</p>
+<p>For more details, see <a href="../data-manipulation/update-order.html">Property Dependencies and Update Order</a>.</p>
 <div class="NOTE">
 <h5>Note</h5>
 <p>Because <em>Quantity</em> is odata complex object it can not participate in uri $filter query parameter. To filter by Amount or Quantity properties you can use the following:</p>
