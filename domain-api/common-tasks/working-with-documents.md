@@ -18,43 +18,56 @@ If Front-End model is used in [API Transaction](../data-manipulation/transaction
 
 In the example bellow a new SalesOrder is created with one SalesOrderLine.
 
-Note that measurement units and currencies are specified before passing [Quantity](../complex-types/quantity.md) or [Amount](../complex-types/amount.md) values. This is required because the quantity or amount contains the code of the measurement unit or currency.
+For complex values such as [Quantity](../complex-types/quantity.md) and [Amount](../complex-types/amount.md), the behavior depends on where the dependent measurement unit or currency is stored.
+
+If the dependent reference is stored in the same entity, ERP.net can resolve the code passed in the complex value and assign the corresponding reference automatically.
+
+If the dependent reference is stored outside the current entity, the complex value does not update it, and the code in the complex value must match the already effective unit or currency.
+
+For more details, see [Property Dependencies and Update Order](../data-manipulation/update-order.md).
 
 ```json
 POST ~/Crm_Sales_SalesOrders
 {
-  "DocumentType": {
-    "@odata.id": "General_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)"
-  },
-  "EnterpriseCompany": {
-    "@odata.id": "General_EnterpriseCompanies(b0e80577-fbbe-4c9b-811e-20b6c6dd465f)"
-  },
-  "Customer": {
-    "@odata.id": "Crm_Customers(15f2640f-f374-4017-ae2d-d2a41535f054)"
-  },
-  "DocumentCurrency": {
-    "@odata.id": "General_Currencies(3187833a-d3c1-4804-bfc0-e17e6aee3069)"
-  },
-  "Lines": [
-    {
-      "Product": {
-        "@odata.id": "General_Products_Products(81d38b50-fd06-e611-8292-b31071e2ee7f)"
-      },
-      "QuantityUnit": {
-        "@odata.id": "General_MeasurementUnits(7dbe6d6a-22ef-4c2f-a798-054bc2d13c8b)"
-      },
-      "Quantity": {
-        "Value": 1,
-        "Unit": "pcs"
-      },
-      "UnitPrice": {
-        "Value": 20,
-        "Currency": "BGN"
-      }
-    }
-  ]
+    "DocumentType": {
+        "@odata.id": "Systems_Documents_DocumentTypes(469b67b1-8b4b-4fb4-9d97-20c96105a85a)"
+    },
+    "EnterpriseCompany": {
+        "@odata.id": "General_EnterpriseCompanies(2115c294-33e9-41bd-bc0d-0cd0b7ee1735)"
+    },
+    "EnterpriseCompanyLocation": {
+        "@odata.id": "General_Contacts_CompanyLocations(8e1829a8-8769-4422-8155-9cee69002f9f)"
+    },
+    "Customer": {
+        "@odata.id": "Crm_Sales_Customers(10f76803-4130-40f8-bf73-a4e2b004417b)"
+    },
+    "DocumentCurrency": {
+        "@odata.id": "General_Currencies_Currencies(3187833a-d3c1-4804-bfc0-e17e6aee3069)"
+    },
+    "Lines": [
+        {
+            "Product": {
+                "@odata.id": "General_Products_Products(4eeb8054-f7d9-479f-a239-ed07d8145075)"
+            },
+            "Quantity": {
+                "Value": 1,
+                "Unit": "pcs"
+            },
+            "UnitPrice": {
+                "Value": 20,
+                "Currency": "BGN"
+            }
+        }
+    ]
 }
 ```
+
+> [!note]
+> In a sales order line, `Quantity.Unit` can assign the line measurement unit, because that reference is stored in the same line.
+>
+> `UnitPrice.Currency` does not change `DocumentCurrency`, because the document currency is stored in the sales order header, not in the line. Therefore the currency code in `UnitPrice` must match the already effective document currency.
+>
+> For details, see [Property Dependencies and Update Order](../data-manipulation/update-order.md).
 
 ## Change document state
 

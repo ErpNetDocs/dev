@@ -7,7 +7,7 @@ Only the fields included in the request are modified; all other properties remai
 
 - Use **PATCH** to modify one or more fields of an existing entity.  
 - You do **not** need to send the entire entity.  
-- Always consider **property dependencies** — some fields must be set in a specific order (e.g., `QuantityUnit` before `Quantity`, `Currency` before `Amount`).  
+- Always consider **property dependencies** when updating complex fields such as `Quantity` and `Amount`. Depending on the entity structure, the unit or currency code inside the complex value may either resolve the dependent reference automatically or be required to match an already effective reference. See [Property Dependencies and Update Order](update-order.md).
 - Business rules and validations defined in the front-end or back-end models will be applied depending on how the data is processed.
 - ERP.net supports **optimistic locking** to prevent conflicts during concurrent updates. Learn more in [Optimistic Locking](https://docs.erp.net/dev/domain-api/data-sync/optimistic-locking.html).
 
@@ -37,7 +37,7 @@ Content-Type: application/json
 ```
 
 > [!note]
-> When updating complex fields (e.g. `Quantity`, `Amount`) ensure dependent properties are provided consistently, and in the correct order when required by business rules. In general the measurement unit/currency must be set before the quantity/amount.
+> When updating complex fields such as `Quantity` and `Amount`, the behavior depends on where the dependent measurement unit or currency is stored. If it is stored in the same entity, ERP.net can resolve and assign it automatically from the code in the complex value. If it is stored outside the entity, the code in the complex value must match the already effective reference. See [Property Dependencies and Update Order](update-order.md).
 
 
 
