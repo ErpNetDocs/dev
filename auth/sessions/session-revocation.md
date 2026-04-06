@@ -21,8 +21,6 @@ A session can end in several ways:
 
 Interactive applications utilizing the **Authorization Code Flow** must end the user's identity and resource sessions by invoking the @@name Identity `endsession` endpoint.
 
-Interactive applications using the **Authorization Code Flow** can explicitly end the user session via @@name Identity logout endpoint.
-
 ```http
 GET https://<instance>.my.erp.net/id/connect/endsession?id_token_hint=<id_token>&post_logout_redirect_uri=<your_callback_uri>
 ```
