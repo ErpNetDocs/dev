@@ -88,51 +88,56 @@
 <h1 id="session-revocation-and-logout">Session Revocation and Logout</h1>
 
 <p>Sessions in ERP.net represent active, licensed connections between an authenticated user or app and the ERP.net instance.</p>
-<p>When a session ends, its license slot is immediately released and can be used by another user or integration.</p>
+<p>When a session ends, its allocated license slot is immediately released and returned to the pool, becoming available for other users or integrations.</p>
 <h2 id="how-sessions-end">How Sessions End</h2>
 <p>A session can end in several ways:</p>
 <ul>
-<li><strong>User logout</strong> – The user explicitly signs out via ERP.net Identity.</li>
-<li><strong>Inactivity timeout</strong> – After 20 minutes of inactivity, the session closes automatically.</li>
-<li><strong>Absolute timeout</strong> – Service sessions (Client Credentials Flow) expire after 1 hour, even if active.</li>
-<li><strong>Server restart</strong> – All sessions are cleared when the application server restarts.</li>
+<li><strong>Interactive User Logout:</strong> The user explicitly signs out via the ERP.net Identity provider.</li>
+<li><strong>Inactivity Timeout:</strong> The session closes automatically if no API requests are made for <strong>20 minutes</strong>.</li>
+<li><strong>Absolute Expiration:</strong> Service sessions (Client Credentials Flow) enforce a hard limit and expire after <strong>1 hour</strong>, regardless of activity.</li>
+<li><strong>Server Restart:</strong> All active sessions are cleared if the application server is restarted.</li>
 </ul>
 <div class="NOTE">
 <h5>Note</h5>
-<p>Session lifetime and license usage are completely independent of token validity.<br>
-A token may still be valid even after its session is closed - a new session will be created automatically when it's used again.</p>
+<p><strong>Tokens vs. Sessions:</strong> Session lifetime and license usage are conceptually independent of Access Token validity.
+A token may still be cryptographically valid even after its associated ERP.net session is closed. If a valid token is used again, the system will automatically allocate a new session.</p>
 </div>
 <h2 id="logging-out-interactive-apps">Logging Out (Interactive Apps)</h2>
-<p>Interactive applications using the <strong>Authorization Code Flow</strong> can explicitly end the user session via ERP.net Identity logout endpoint.</p>
-<pre><code class="lang-http">GET https://&lt;instance&gt;.my.erp.net/id/connect/endsession
+<p>Interactive applications utilizing the <strong>Authorization Code Flow</strong> must end the user's identity and resource sessions by invoking the ERP.net Identity <code>endsession</code> endpoint.</p>
+<pre><code class="lang-http">GET https://&lt;instance&gt;.my.erp.net/id/connect/endsession?id_token_hint=&lt;id_token&gt;&amp;post_logout_redirect_uri=&lt;your_callback_uri&gt;
 </code></pre>
-<p>When this endpoint is called:</p>
-<ul>
-<li>The user is redirected to a logout confirmation page.</li>
-<li>After confirmation, ERP.net Identity terminates the session.</li>
-<li>The session license is released immediately.</li>
-<li>The user can safely close the browser or sign in again.</li>
-</ul>
+<p><strong>Execution Flow:</strong></p>
+<ol>
+<li>The user's browser is redirected to the Identity provider.</li>
+<li>The Identity provider destroys the local authentication cookie (Identity Session).</li>
+<li>ERP.net terminates the backend connection and immediately releases the license slot (ERP.net Session).</li>
+<li>The user is redirected back to the client application (if <code>post_logout_redirect_uri</code> is provided).</li>
+</ol>
 <div class="WARNING">
 <h5>Warning</h5>
-<p>This logout flow only applies to <strong>interactive sessions</strong> where a user is present.<br>
-<strong>Service applications</strong> (using Client Credentials) do not use this mechanism.</p>
+<p>This endpoint is strictly for <strong>interactive flows</strong> where a human user is present in a browser.
+<strong>Service applications</strong> using the Client Credentials flow cannot and should not invoke this mechanism.</p>
 </div>
 <h2 id="service-sessions">Service Sessions</h2>
-<p>Service (non-interactive) applications cannot log out interactively.</p>
-<p>Their sessions end automatically when:</p>
+<p>Service (non-interactive) applications do not have a logout endpoint. Their license lifecycle is governed entirely by automated timeouts:</p>
 <ul>
-<li>The 1-hour absolute expiration time passes, or</li>
-<li>The application becomes inactive for 20 minutes.</li>
+<li><strong>Inactivity</strong>: The session ends automatically after 20 minutes of no API calls.</li>
+<li><strong>Absolute Limit</strong>: The session is force-closed exactly 1 hour after it was created.</li>
 </ul>
-<p>Once the session ends, the license slot is released automatically.</p>
-<h2 id="after-revocation">After Revocation</h2>
-<p>When a session closes - either due to logout, timeout, or inactivity:</p>
+<p>Once either threshold is reached, the license slot is released automatically without requiring client intervention.</p>
+<h2 id="after-revocation-the-re-activation-behavior">After Revocation: The Re-Activation Behavior</h2>
+<p>Because Access Tokens are stateless, closing a session (via logout or timeout) does not invalidate the token itself.</p>
+<p>If a client application makes a new API call using an unexpired Access Token after the session has ended:</p>
 <ul>
-<li>The license slot becomes available for other users or services.</li>
-<li>If the <strong>token is still valid</strong>, the <strong>next API call with the same token</strong> will <strong>reopen (reactivate) the same session</strong>, and a license will be allocated again if one is available.</li>
-<li>A <code>401 Unauthorized</code> occurs only if the token itself is <strong>expired</strong> or <strong>invalid</strong> (not simply because the previous session ended).</li>
+<li>The system will <strong>reactivate</strong> the connection and attempt to allocate a new license slot.</li>
+<li>The request will succeed if a license is available in the pool.</li>
+<li>A <code>401 Unauthorized</code> error will only be returned if the token itself has naturally expired or its cryptographic signature is invalid.</li>
 </ul>
+<div class="CAUTION">
+<h5>Caution</h5>
+<p><strong>Licensing Compliance</strong>: Programmatically forcing a logout and immediately reusing the token to cycle sessions is considered <strong>License Multiplexing</strong>.
+Relying on this re-activation behavior to artificially reduce concurrent license counts is a direct violation of ERP.net licensing terms.</p>
+</div>
 <hr>
 <h2 id="learn-more">Learn More</h2>
 <ul>
