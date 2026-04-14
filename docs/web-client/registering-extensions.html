@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Registering Extensions | ERP.net Developer Docs ">
       
-      <meta name="description" content="How to register extensions for ERP.net WebClient and how WebClient consumes them.">
+      <meta name="description" content="How to register extensions for ERP.net WebClient main menu and how to fill the extension registration record.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
@@ -90,42 +90,224 @@
 <h2 id="overview">Overview</h2>
 <p>An <strong>extension</strong> is a registration record that allows an application to extend the behavior of a <strong>main application</strong> at a predefined extension point.</p>
 <p>Currently, WebClient supports registering additional applications in its <strong>Main menu</strong> through the extension point described in this article.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>To register an application in the WebClient main menu, create a record in <a href="https://docs.erp.net/model/entities/Systems.Core.Extensions.html"><code>Systems.Core.Extensions</code></a>.</p>
+<p>For WebClient main menu extensions, fill the registration record as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Name</code></td>
+<td>Internal name of the registration. Use a stable, descriptive value.</td>
+</tr>
+<tr>
+<td><code>ApplicationUri</code></td>
+<td><code>internal.erp.net/webclient</code></td>
+</tr>
+<tr>
+<td><code>ExtensionPath</code></td>
+<td><code>/mainmenu/apps</code></td>
+</tr>
+<tr>
+<td><code>ExtensionUri</code></td>
+<td>URI of the extension application</td>
+</tr>
+<tr>
+<td><code>ExtensionData</code></td>
+<td>JSON payload described below</td>
+</tr>
+<tr>
+<td><code>IsActive</code></td>
+<td><code>true</code></td>
+</tr>
+</tbody>
+</table>
+<p>You can also optionally fill:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Title</code></td>
+<td>Multi-language title used for UI display</td>
+</tr>
+<tr>
+<td><code>Hint</code></td>
+<td>Multi-language hint used for UI display</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example-registration-record">Example registration record</h3>
+<pre><code class="lang-text">Name: WebClient Extension Test
+ApplicationUri: internal.erp.net/webclient
+ExtensionPath: /mainmenu/apps
+ExtensionUri: test-extension-app
+IsActive: true
+ExtensionData:
+{
+  &quot;category&quot;: &quot;Crm&quot;,
+  &quot;uri&quot;: &quot;https://bing.com?q={$enterprisecompany}%20{$enterprisecompanylocation}&quot;,
+  &quot;slug&quot;: &quot;test-extension&quot;,
+  &quot;icon&quot;: &quot;globe&quot;
+}
+</code></pre>
+<p>This example opens a Bing search for the current enterprise company and enterprise company location.</p>
+<h3 id="what-each-field-means">What each field means</h3>
+<ul>
+<li><p><code>ApplicationUri</code> identifies the <strong>main application being extended</strong>.<br>
+For WebClient main menu extensions, use <code>internal.erp.net/webclient</code>.</p>
+</li>
+<li><p><code>ExtensionPath</code> identifies the <strong>extension point inside WebClient</strong>.<br>
+For main menu applications, use <code>/mainmenu/apps</code>.</p>
+</li>
+<li><p><code>ExtensionUri</code> identifies the <strong>extension application</strong>.</p>
+</li>
+<li><p><code>ExtensionData</code> contains the <strong>main-menu-specific configuration</strong> for the extension.</p>
+</li>
+</ul>
+<h3 id="creating-the-record-through-domain-api">Creating the record through Domain API</h3>
+<p>You can create the extension registration through the Domain API by sending a <code>POST</code> request to the <code>Systems_Core_Extensions</code> collection of <a href="https://docs.erp.net/model/entities/Systems.Core.Extensions.html"><code>Systems.Core.Extensions</code></a>.</p>
+<p>Example request:</p>
+<pre><code class="lang-http">POST /api/domain/odata/Systems_Core_Extensions HTTP/1.1
+Host: &lt;instance-url&gt;
+Authorization: Bearer &lt;access-token&gt;
+Content-Type: application/json
+</code></pre>
+<p>Request body:</p>
+<pre><code class="lang-json">{
+  &quot;ApplicationUri&quot;: &quot;internal.erp.net/webclient&quot;,
+  &quot;ExtensionData&quot;: &quot;{\n\&quot;category\&quot;: \&quot;Crm\&quot;,\n\&quot;slug\&quot;: \&quot;test-extension\&quot;,\n\&quot;uri\&quot;:\&quot;https://bing.com?q={$enterprisecompany}%20{$enterprisecompanylocation}\&quot;,\n\&quot;icon\&quot;: \&quot;globe\&quot;\n}&quot;,
+  &quot;Name&quot;: &quot;WebClient Extension Test&quot;,
+  &quot;ExtensionPath&quot;: &quot;/mainmenu/apps&quot;,
+  &quot;ExtensionUri&quot;: &quot;test-extension-app&quot;,
+  &quot;Hint&quot;: &quot;Test extension for ERP.net Web Client&quot;,
+  &quot;IsActive&quot;: true,
+  &quot;Title&quot;: &quot;Extension Test&quot;
+}
+</code></pre>
+<blockquote>
+<p>Note<br>
+<code>ExtensionData</code> is stored as a <strong>string</strong>, whose content must be a valid JSON object.</p>
+</blockquote>
+<p>Example created record:</p>
+<pre><code class="lang-json">{
+  &quot;@odata.id&quot;: &quot;Systems_Core_Extensions(b0558cb4-3ab3-4f73-adf7-c4ff222cd705)&quot;,
+  &quot;Id&quot;: &quot;b0558cb4-3ab3-4f73-adf7-c4ff222cd705&quot;,
+  &quot;ApplicationUri&quot;: &quot;internal.erp.net/webclient&quot;,
+  &quot;ExtensionData&quot;: &quot;{\n\&quot;category\&quot;: \&quot;Crm\&quot;,\n\&quot;slug\&quot;: \&quot;test-extension\&quot;,\n\&quot;uri\&quot;:\&quot;https://bing.com?q={$enterprisecompany}%20{$enterprisecompanylocation}\&quot;,\n\&quot;icon\&quot;: \&quot;globe\&quot;\n}&quot;,
+  &quot;Name&quot;: &quot;WebClient Extension Test&quot;,
+  &quot;ExtensionPath&quot;: &quot;/mainmenu/apps&quot;,
+  &quot;ExtensionUri&quot;: &quot;test-extension-app&quot;,
+  &quot;Hint&quot;: &quot;Test extension for ERP.net Web Client&quot;,
+  &quot;IsActive&quot;: true,
+  &quot;Title&quot;: &quot;Extension Test&quot;
+}
+</code></pre>
+<h2 id="configuration">Configuration</h2>
 <h2 id="webclient-main-menu-extension-point">WebClient main menu extension point</h2>
-<h3 id="extensionpath-constant">ExtensionPath (constant)</h3>
-<p>For WebClient main menu apps, the extension point is identified by a <strong>constant</strong>:</p>
+<h3 id="extensionpath">ExtensionPath</h3>
+<p>For WebClient main menu apps, the extension point is identified by the constant:</p>
 <ul>
 <li><code>ExtensionPath = &quot;/mainmenu/apps&quot;</code></li>
 </ul>
 <p>WebClient resolves main menu extensions by looking up records with <strong>exact match</strong> on <code>ExtensionPath</code>.</p>
-<h3 id="extensiondata-json-for-main-menu-apps">ExtensionData (JSON) for main menu apps</h3>
+<h3 id="extensiondata-for-main-menu-apps">ExtensionData for main menu apps</h3>
 <p>For <code>ExtensionPath=&quot;/mainmenu/apps&quot;</code>, WebClient expects <code>ExtensionData</code> to be a JSON object with the following shape:</p>
 <pre><code class="lang-json">{
-  &quot;category&quot;: &quot;Forms_Crm&quot;,
+  &quot;category&quot;: &quot;Crm&quot;,
   &quot;uri&quot;: &quot;some-app-uri?{interpolated-string}&quot;,
   &quot;slug&quot;: &quot;my-extension&quot;,
   &quot;icon&quot;: &quot;globe&quot;
 }
 </code></pre>
-<h4 id="json-fields">JSON fields</h4>
+<h3 id="main-menu-categories">Main menu categories</h3>
+<p>The <code>category</code> field determines in which <strong>top-level WebClient main menu category</strong> the extension app is shown.</p>
+<p>The value written in <code>category</code> is the <strong>internal category key</strong>, not the visible label shown in the menu.</p>
+<p>For example, to place the extension under the visible <strong>CRM</strong> category, use:</p>
+<ul>
+<li><code>Crm</code></li>
+</ul>
+<p>not:</p>
+<ul>
+<li><code>CRM</code></li>
+</ul>
+<h3 id="internal-category-keys-vs-visible-menu-labels">Internal category keys vs. visible menu labels</h3>
+<p>Use the <strong>internal category key</strong> from the left column in <code>ExtensionData.category</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Internal category key</th>
+<th>Visible menu label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>My</code></td>
+<td><code>My</code></td>
+</tr>
+<tr>
+<td><code>Crm</code></td>
+<td><code>CRM</code></td>
+</tr>
+<tr>
+<td><code>Finance</code></td>
+<td><code>Finance</code></td>
+</tr>
+<tr>
+<td><code>Logistics</code></td>
+<td><code>Logistics</code></td>
+</tr>
+<tr>
+<td><code>Production</code></td>
+<td><code>Production</code></td>
+</tr>
+<tr>
+<td><code>Projects</code></td>
+<td><code>Work Management</code></td>
+</tr>
+<tr>
+<td><code>Applications</code></td>
+<td><code>Business Apps</code></td>
+</tr>
+<tr>
+<td><code>Systems</code></td>
+<td><code>System</code></td>
+</tr>
+<tr>
+<td><code>General</code></td>
+<td><code>Foundation</code></td>
+</tr>
+<tr>
+<td><code>Regulatory</code></td>
+<td><code>Regulatory</code></td>
+</tr>
+<tr>
+<td><code>HumanResources</code></td>
+<td><code>Human Resources</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Note<br>
+Category matching is <strong>case-sensitive</strong>.</p>
+</blockquote>
+<h3 id="json-fields">JSON fields</h3>
 <ul>
 <li><p><code>category</code> (required)<br>
-The WebClient main menu category key. Must be one of:</p>
-<ul>
-<li><code>My</code></li>
-<li><code>Forms_Crm</code></li>
-<li><code>Forms_Finance</code></li>
-<li><code>Forms_General</code></li>
-<li><code>Forms_Logistics</code></li>
-<li><code>Forms_Production</code></li>
-<li><code>Forms_Projects</code></li>
-<li><code>Forms_HumanResources</code></li>
-<li><code>Forms_Regulatory</code></li>
-<li><code>Forms_Applications</code></li>
-<li><code>Forms_Systems</code></li>
-</ul>
+The internal WebClient main menu category key. The value must exactly match the internal category name, including correct letter casing.</p>
 </li>
 <li><p><code>uri</code> (required)<br>
-Required string field in the JSON payload. If missing or empty, WebClient rejects the extension registration.</p>
+The URL/URI that WebClient opens for the extension application.</p>
+<p>If missing or empty, WebClient rejects the extension registration.</p>
 <p><code>uri</code> may contain <strong>interpolated string parameters</strong> (see <a href="#standard-interpolation-parameters">Standard interpolation parameters</a>).</p>
 </li>
 <li><p><code>slug</code> (required)<br>
@@ -149,11 +331,21 @@ Font Awesome icon <strong>name without the <code>fa-</code> prefix</strong>.</p>
 </ul>
 </li>
 </ul>
-<h2 id="uri-interpolation">URI interpolation</h2>
+<h2 id="concepts">Concepts</h2>
+<h3 id="applicationuri">ApplicationUri</h3>
+<p>For WebClient main menu extensions, set:</p>
+<ul>
+<li><code>ApplicationUri = &quot;internal.erp.net/webclient&quot;</code></li>
+</ul>
+<p>This tells ERP.net that the extended application is the <strong>WebClient</strong>.</p>
+<h3 id="extensionuri">ExtensionUri</h3>
+<p><code>ExtensionUri</code> is the URI of the extension application.</p>
+<p>For WebClient main menu extensions, this field is part of the registration record in <a href="https://docs.erp.net/model/entities/Systems.Core.Extensions.html"><code>Systems.Core.Extensions</code></a> and should identify the extension app being registered.</p>
+<h3 id="uri-interpolation">URI interpolation</h3>
 <p><code>uri</code> can include placeholders which WebClient replaces at runtime using the current user/context.</p>
 <p>Example:</p>
 <pre><code class="lang-json">{
-  &quot;category&quot;: &quot;Forms_Crm&quot;,
+  &quot;category&quot;: &quot;Crm&quot;,
   &quot;uri&quot;: &quot;https://example.app/?ec={$enterprisecompany}&amp;ecl={$enterprisecompanylocation}&amp;u={$user}&amp;ru={$rooturl}&quot;,
   &quot;slug&quot;: &quot;example-extension&quot;,
   &quot;icon&quot;: &quot;puzzle-piece&quot;
@@ -169,6 +361,10 @@ Font Awesome icon <strong>name without the <code>fa-</code> prefix</strong>.</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><code>$dbname</code></td>
+<td>Current database name.</td>
+</tr>
 <tr>
 <td><code>$enterprisecompany</code></td>
 <td>The enterprise company in the current (transaction) context.</td>
@@ -187,7 +383,7 @@ Font Awesome icon <strong>name without the <code>fa-</code> prefix</strong>.</p>
 </tr>
 <tr>
 <td><code>$role</code></td>
-<td>Role instance of the current user’s role.</td>
+<td>Role instance of the current user's role.</td>
 </tr>
 <tr>
 <td><code>$rooturl</code></td>
@@ -205,10 +401,11 @@ Font Awesome icon <strong>name without the <code>fa-</code> prefix</strong>.</p>
 </table>
 <blockquote>
 <p>Note<br>
-Use these parameters only where appropriate for your application. For example, pass enterprise context only if the extension app needs it.</p>
+Use these parameters only where appropriate for your application.<br>
+For example, pass enterprise context only if the extension app needs it.</p>
 </blockquote>
-<h2 id="how-webclient-resolves-and-renders-main-menu-extensions">How WebClient resolves and renders main menu extensions</h2>
-<p>When the user opens WebClient main menu, WebClient:</p>
+<h3 id="how-webclient-resolves-and-renders-main-menu-extensions">How WebClient resolves and renders main menu extensions</h3>
+<p>When the user opens the WebClient main menu, WebClient:</p>
 <ol>
 <li>Loads extension registrations where <code>ExtensionPath = &quot;/mainmenu/apps&quot;</code></li>
 <li>Parses <code>ExtensionData</code> JSON</li>
@@ -220,20 +417,33 @@ Use these parameters only where appropriate for your application. For example, p
 <ul>
 <li><code>/cl/api/webclient/apps/reload</code></li>
 </ul>
-<p>Use this endpoint after adding/updating extension registrations when you need WebClient to reload the apps list without waiting for a natural refresh cycle (10 mins).</p>
+<p>Use this endpoint after adding or updating extension registrations when you need WebClient to reload the apps list without waiting for the natural refresh cycle (10 mins).</p>
+<blockquote>
+<p>Note<br>
+Calling <code>/cl/api/webclient/apps/reload</code> reloads the registered extension apps on the server side, so the extension becomes available in the list of apps for the specified category.<br>
+However, it may still not be visible in the menu on screen.</p>
+<p>If the extension is not shown, a user with permission to manage the menu layout must enable it from the main menu settings (the <strong>gear</strong> button).</p>
+<p>Also, the browser page running WebClient must be refreshed after the reload. This is required because the Blazor Server application initializes the menu when the page is loaded, so menu changes do not appear in an already loaded page automatically.</p>
+</blockquote>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <h3 id="symptom-extension-does-not-appear-in-the-menu">Symptom: Extension does not appear in the menu</h3>
 <p><strong>Checklist:</strong></p>
 <ul>
+<li>The registration record exists in <a href="https://docs.erp.net/model/entities/Systems.Core.Extensions.html"><code>Systems.Core.Extensions</code></a></li>
 <li>The registration record is active (<code>IsActive = true</code>)</li>
+<li><code>ApplicationUri</code> is exactly <code>internal.erp.net/webclient</code></li>
 <li><code>ExtensionPath</code> is exactly <code>/mainmenu/apps</code></li>
 <li><code>ExtensionData</code> is valid JSON</li>
-<li><code>ExtensionData.category</code> is one of the supported category keys</li>
-<li><code>ExtensionData.uri</code> is present and non-empty (and interpolation placeholders are well-formed)</li>
+<li><code>ExtensionData.category</code> matches an existing internal WebClient main menu category key</li>
+<li><code>ExtensionData.category</code> uses the correct letter casing</li>
+<li><code>ExtensionData.category</code> uses the internal key, not the visible menu label</li>
+<li><code>ExtensionData.uri</code> is present and non-empty</li>
+<li>Interpolation placeholders in <code>ExtensionData.uri</code> are well-formed</li>
 <li><code>ExtensionData.slug</code> matches the validation rules</li>
+<li><code>ExtensionData.slug</code> is not already used by another registered extension</li>
 </ul>
-<h3 id="validation-errors-logged-in-info-messages-exact-strings">Validation errors logged in Info Messages (exact strings)</h3>
-<p>When WebClient detects an invalid extension registration for <code>ExtensionPath=&quot;/mainmenu/apps&quot;</code>, it logs an error entry in <strong>Info Messages</strong>.</p>
+<h3 id="validation-errors-logged-in-info-messages">Validation errors logged in Info Messages</h3>
+<p>When WebClient detects an invalid extension registration for <code>ExtensionPath=&quot;/mainmenu/apps&quot;</code>, it logs an error entry in <a href="https://docs.erp.net/model/entities/Systems.Monitoring.InformationMessages.html"><strong>Info Messages</strong></a>.</p>
 <p>Each error is logged as a multi-line block in the following format:</p>
 <ul>
 <li>First line: the <strong>error message</strong> (see the exact strings below)</li>
@@ -246,13 +456,13 @@ Use these parameters only where appropriate for your application. For example, p
 <li><code>ExtensionData:</code> followed by the raw JSON payload</li>
 </ul>
 </li>
-<li>If the failure is caused by an exception (e.g. JSON parsing), the log entry also contains:
+<li>If the failure is caused by an exception (for example JSON parsing), the log entry also contains:
 <ul>
 <li><code>Error:</code> followed by the exception details (stack trace)</li>
 </ul>
 </li>
 </ul>
-<h4 id="exact-error-messages">Exact error messages</h4>
+<h3 id="exact-error-messages">Exact error messages</h3>
 <ul>
 <li><p><code>Failed to deserialize extension data.</code></p>
 <ul>
@@ -276,9 +486,15 @@ Use these parameters only where appropriate for your application. For example, p
 <li>Validation regex: <code>^[a-z0-9]([a-z0-9_-]*[a-z0-9])?$</code></li>
 </ul>
 </li>
+<li><p><code>Duplicate slug &quot;{slug}&quot;. Another extension with the same slug has already been registered.</code></p>
+<ul>
+<li>Logged when another extension with the same <code>slug</code> is already registered.</li>
+</ul>
+</li>
 <li><p><code>Invalid category &quot;{category}&quot;. The provided category is not found among Web Client main menu categories.</code></p>
 <ul>
 <li>Logged when <code>category</code> does not match any of the available WebClient main menu categories.</li>
+<li>This also happens when the category name is written with incorrect casing or when a visible menu label is used instead of the internal category key.</li>
 </ul>
 </li>
 </ul>
