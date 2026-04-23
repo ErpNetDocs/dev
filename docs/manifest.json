@@ -1110,6 +1110,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "domain-api/data-manipulation/batch.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/data-manipulation/batch.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "domain-api/data-manipulation/create.md",
       "output": {
         ".html": {

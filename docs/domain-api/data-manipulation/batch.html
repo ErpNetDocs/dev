@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>OData $batch | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="OData $batch | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/batch.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="odata-batch">OData $batch</h1>
+
+<h2 id="overview">Overview</h2>
+<p>OData <code>$batch</code> allows multiple Domain API requests to be sent in a single HTTP request.</p>
+<p>Use <code>$batch</code> when you want to:</p>
+<ul>
+<li>execute several read requests together</li>
+<li>group related write operations</li>
+<li>create a resource and continue working with it in the same request</li>
+</ul>
+<p>For the OData protocol definition, see <a href="https://docs.oasis-open.org/odata/odata/v4.01/csprd02/part1-protocol/odata-v4.01-csprd02-part1-protocol.html#sec_BatchRequests">OData Version 4.01 Part 1: Protocol - Batch Requests</a>.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>Use the Domain API batch endpoint:</p>
+<p><code>POST /api/domain/odata/$batch</code></p>
+<p>The following example is executable in <code>testdb.my.erp.net</code>.</p>
+<p><a href="https://testdb.my.erp.net/api/domain/query?POST+$batch&amp;payload=LS1iYXRjaF8xMjMKQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9odHRwIApDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOmJpbmFyeQoKR0VUIEdlbmVyYWxfUHJvZHVjdHNfUHJvZHVjdHM/JHRvcD0yJiRzZWxlY3Q9UGFydE51bWJlcixOYW1lIEhUVFAvMS4xCgotLWJhdGNoXzEyMwpDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL2h0dHAgCkNvbnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6YmluYXJ5CgpHRVQgR2VuZXJhbF9Qcm9kdWN0c19Qcm9kdWN0R3JvdXBzPyR0b3A9MiYkc2VsZWN0PU5hbWUsQ29kZSBIVFRQLzEuMQoKLS1iYXRjaF8xMjMKQ29udGVudC1UeXBlOiBtdWx0aXBhcnQvbWl4ZWQ7IGJvdW5kYXJ5PWNoYW5nZXNldF8xCgotLWNoYW5nZXNldF8xCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vaHR0cCAKQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogYmluYXJ5CkNvbnRlbnQtSUQ6IDEKClBPU1QgR2VuZXJhbF9Qcm9kdWN0c19Qcm9kdWN0cyBIVFRQLzEuMQoKewogICJQYXJ0TnVtYmVyIjogIlBSRC0wMDUiLAogICJOYW1lIjogewogICAgIkVOIjogIlBSRC0wMDUiCiAgfSwKICJCYXNlTWVhc3VyZW1lbnRDYXRlZ29yeSI6IHsKICAgICJAZXJwbmV0LmFjdGlvbiI6ICJmaW5kIiwKICAgICJAZXJwbmV0LmZpbmRCeSI6ICB7TmFtZTogIlBpZWNlcyJ9CiAgfSwKICAiTWVhc3VyZW1lbnRVbml0IjogewogICAgIkNvZGUiOiAicGNzIgogIH0sCiAgIlByb2R1Y3RHcm91cCI6IHsKICAgICJDb2RlIjogIjQ1MCIKICB9LAogICJDb3N0aW5nQ3VycmVuY3kiOiB7ICJDdXJyZW5jeVNpZ24iOiAiRVVSIiB9Cn0KCi0tY2hhbmdlc2V0XzEKQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9odHRwIApDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiBiaW5hcnkKQ29udGVudC1JRDogMgoKUEFUQ0ggJDEgSFRUUC8xLjEKCnsKICJTdGFuZGFyZENvc3RQZXJMb3QiOiB7CiAgICAiVmFsdWUiOiAxMCwKICAgICJDdXJyZW5jeSI6ICJFVVIiCiAgfQp9CgotLWNoYW5nZXNldF8xCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vaHR0cCAKQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogYmluYXJ5CkNvbnRlbnQtSUQ6IDMKClBPU1QgJDEvUHJpY2VzIEhUVFAvMS4xCgp7CiAiUHJpY2UiOiB7CiAgICAiVmFsdWUiOiAxMiwKICAgICJDdXJyZW5jeSI6ICJFVVIiCiAgfSwKICAiUHJpY2VRdWFudGl0eSI6ewogICAgIlZhbHVlIjogMSwKICAgICJVbml0IjogInBjcyIKICB9Cn0KLS1jaGFuZ2VzZXRfMS0tCi0tYmF0Y2hfMTIzLS0=">Run in Query Tool</a></p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The example creates product <code>PRD-005</code>. If the product already exists, change the <code>PartNumber</code> before running the batch again.</p>
+</div>
+<p>The following batch request contains two read operations and one changeset with three write operations.</p>
+<pre><code class="lang-http">POST /api/domain/odata/$batch HTTP/1.1
+Content-Type: multipart/mixed; boundary=batch_123
+
+--batch_123
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+GET General_Products_Products?$top=2&amp;$select=PartNumber,Name HTTP/1.1
+
+--batch_123
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+GET General_Products_ProductGroups?$top=2&amp;$select=Name,Code HTTP/1.1
+
+--batch_123
+Content-Type: multipart/mixed; boundary=changeset_1
+
+--changeset_1
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+Content-ID: 1
+
+POST General_Products_Products HTTP/1.1
+Content-Type: application/json
+
+{
+  &quot;PartNumber&quot;: &quot;PRD-005&quot;,
+  &quot;Name&quot;: {
+    &quot;EN&quot;: &quot;PRD-005&quot;
+  },
+  &quot;BaseMeasurementCategory&quot;: {
+    &quot;@erpnet.action&quot;: &quot;find&quot;,
+    &quot;@erpnet.findBy&quot;: {
+      &quot;Name&quot;: &quot;Pieces&quot;
+    }
+  },
+  &quot;MeasurementUnit&quot;: {
+    &quot;Code&quot;: &quot;pcs&quot;
+  },
+  &quot;ProductGroup&quot;: {
+    &quot;Code&quot;: &quot;450&quot;
+  },
+  &quot;CostingCurrency&quot;: {
+    &quot;CurrencySign&quot;: &quot;EUR&quot;
+  }
+}
+
+--changeset_1
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+Content-ID: 2
+
+PATCH $1 HTTP/1.1
+Content-Type: application/json
+
+{
+  &quot;StandardCostPerLot&quot;: {
+    &quot;Value&quot;: 10,
+    &quot;Currency&quot;: &quot;EUR&quot;
+  }
+}
+
+--changeset_1
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+Content-ID: 3
+
+POST $1/Prices HTTP/1.1
+Content-Type: application/json
+
+{
+  &quot;Price&quot;: {
+    &quot;Value&quot;: 12,
+    &quot;Currency&quot;: &quot;EUR&quot;
+  },
+  &quot;PriceQuantity&quot;: {
+    &quot;Value&quot;: 1,
+    &quot;Unit&quot;: &quot;pcs&quot;
+  }
+}
+
+--changeset_1--
+--batch_123--
+</code></pre>
+<p>This batch performs the following operations:</p>
+<ol>
+<li><p><code>GET General_Products_Products...</code><br>
+Returns up to two products with <code>PartNumber</code> and <code>Name</code>.</p>
+</li>
+<li><p><code>GET General_Products_ProductGroups...</code><br>
+Returns up to two product groups with <code>Name</code> and <code>Code</code>.</p>
+</li>
+<li><p><code>POST General_Products_Products</code><br>
+Creates a new product.<br>
+<code>BaseMeasurementCategory</code> uses <code>@erpnet.action: &quot;find&quot;</code> to resolve an existing record by <code>Name</code>.</p>
+<p>The nested resources <code>MeasurementUnit</code>, <code>ProductGroup</code>, and <code>CostingCurrency</code> do not specify <code>@erpnet.action</code>. In <code>POST</code> processing, ERP.net uses the implicit <strong><code>merge</code></strong> action for such nested resources. This means the system tries to match an existing record by the supplied key fields and bind it to the new product.</p>
+</li>
+<li><p><code>PATCH $1</code><br>
+Updates the product created by request <code>1</code>.<br>
+<code>$1</code> is a Content-ID reference to the resource created earlier in the same changeset.</p>
+</li>
+<li><p><code>POST $1/Prices</code><br>
+Creates a new record in the <code>Prices</code> child collection of the product created by request <code>1</code>.</p>
+</li>
+</ol>
+<h2 id="concepts">Concepts</h2>
+<h3 id="batch-structure">Batch structure</h3>
+<p>A batch request uses <code>multipart/mixed</code>.</p>
+<p>The outer batch can contain:</p>
+<ul>
+<li>individual read requests</li>
+<li>one or more changesets</li>
+</ul>
+<p>A changeset contains write operations such as <code>POST</code>, <code>PATCH</code>, and <code>DELETE</code>.</p>
+<h3 id="changeset-transaction">Changeset transaction</h3>
+<p>A changeset is an <strong>atomic transaction</strong>.</p>
+<p>All operations in the changeset either succeed together or fail together. If one write operation in the changeset fails, all changes made by that changeset are rolled back and the whole changeset fails.</p>
+<h3 id="content-id-references">Content-ID references</h3>
+<p>A request inside a changeset can define a <code>Content-ID</code>:</p>
+<pre><code class="lang-http">Content-ID: 1
+</code></pre>
+<p>Later requests in the same changeset can reference the created resource through <code>$1</code>:</p>
+<pre><code class="lang-http">PATCH $1 HTTP/1.1
+POST $1/Prices HTTP/1.1
+</code></pre>
+<p>This allows dependent operations to be executed in one batch.</p>
+<h3 id="erpnetaction-and-nested-resource-processing"><code>@erpnet.action</code> and nested resource processing</h3>
+<p>ERP.net extends standard OData updates with <code>@erpnet.action</code>.</p>
+<p>In this example:</p>
+<ul>
+<li><code>@erpnet.action: &quot;find&quot;</code> tells ERP.net to locate an existing related record by the fields in <code>@erpnet.findBy</code></li>
+<li>nested resources in a <code>POST</code> request without explicit <code>@erpnet.action</code> are processed with implicit <strong><code>merge</code></strong></li>
+</ul>
+<p>This is useful when creating a resource that references existing related records without providing their full resource URLs.</p>
+<h3 id="batch-response">Batch response</h3>
+<p>The batch response is also <code>multipart/mixed</code>. Each top-level request in the batch returns a corresponding response part in the same order.</p>
+<p>In the example response from <code>testdb.my.erp.net</code>:</p>
+<ul>
+<li>the first <code>GET</code> returns <code>200 OK</code></li>
+<li>the second <code>GET</code> returns <code>200 OK</code></li>
+<li>the changeset returns an error for <code>Content-ID: 1</code></li>
+</ul>
+<p>The response of our $batch request is</p>
+<pre><code class="lang-http">--batchresponse_cd29f967-a9ef-43db-ad37-7d815c56fdf3
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+HTTP/1.1 200 OK
+Content-Type: application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false;charset=utf-8
+OData-Version: 4.0
+
+{&quot;@odata.context&quot;:&quot;https://testdb.my.erp.net/api/domain/odata/$metadata#General_Products_Products&quot;,&quot;@odata.nextLink&quot;:&quot;https://testdb.my.erp.net/api/domain/odata/General_Products_Products?%24top=2&amp;%24select=PartNumber%2cName&amp;%24skiptoken=d8372f13-a7f5-484f-bc20-00b929a00283&quot;,&quot;value&quot;:[{&quot;@odata.id&quot;:&quot;General_Products_Products(edf2bd2a-7e4d-e111-a06c-00155d00050a)&quot;,&quot;PartNumber&quot;:&quot;90002&quot;,&quot;Name&quot;:{&quot;EN&quot;:&quot;Customs Duties&quot;,&quot;BG&quot;:&quot;\u041c\u0438\u0442\u043e&quot;}},{&quot;@odata.id&quot;:&quot;General_Products_Products(7d05ca48-e51a-4672-b187-002a1beef969)&quot;,&quot;PartNumber&quot;:&quot;5100000003&quot;,&quot;Name&quot;:{&quot;EN&quot;:&quot;Suspension Arm - Rear Left&quot;,&quot;BG&quot;:&quot;\u041d\u043e\u0441\u0430\u0447 - \u0437\u0430\u0434\u0435\u043d \u043b\u044f\u0432&quot;}}]}
+--batchresponse_cd29f967-a9ef-43db-ad37-7d815c56fdf3
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+
+HTTP/1.1 200 OK
+Content-Type: application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false;charset=utf-8
+OData-Version: 4.0
+
+{&quot;@odata.context&quot;:&quot;https://testdb.my.erp.net/api/domain/odata/$metadata#General_Products_ProductGroups&quot;,&quot;@odata.nextLink&quot;:&quot;https://testdb.my.erp.net/api/domain/odata/General_Products_ProductGroups?%24top=2&amp;%24select=Name%2cCode&amp;%24skiptoken=f00170b0-528c-4481-8f14-09eab18d3c37&quot;,&quot;value&quot;:[{&quot;@odata.id&quot;:&quot;General_Products_ProductGroups(d189cd37-1301-e011-9c1f-0030488d5648)&quot;,&quot;Code&quot;:&quot;2&quot;,&quot;Name&quot;:{&quot;EN&quot;:&quot;Goods&quot;,&quot;BG&quot;:&quot;\u0421\u0442\u043e\u043a\u0438&quot;}},{&quot;@odata.id&quot;:&quot;General_Products_ProductGroups(7174e93a-a85e-43b8-9f77-042e2ac89b5a)&quot;,&quot;Code&quot;:&quot;20102&quot;,&quot;Name&quot;:{&quot;EN&quot;:&quot;Coffee Maker&quot;,&quot;BG&quot;:&quot;\u041a\u0430\u0444\u0435 \u043c\u0430\u0448\u0438\u043d\u0438&quot;}}]}
+--batchresponse_cd29f967-a9ef-43db-ad37-7d815c56fdf3
+Content-Type: multipart/mixed; boundary=changesetresponse_98300da1-9dd2-4da8-868b-2393d65b2715
+
+--changesetresponse_98300da1-9dd2-4da8-868b-2393d65b2715
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+Content-ID: 1
+
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json
+
+{&quot;error&quot;:{&quot;message&quot;:&quot;An error occurred while saving data to the database\r\nThe validation R17342: ProductAndProductGroupEnterpriseCompanyAreDifferent failed for event Commit: \r\n\r\nCannot save product with code \u0027PRD-005\u0027, because it has an invalid entry for Enterprise Company.\r\n\r\nWhen an enterprise company is specified for a product group, the products within this group should have the same enterprise company. (Constraint R17342)&quot;,&quot;code&quot;:2029,&quot;type&quot;:&quot;Aloe.EnterpriseOne.Server.ServerAPI.Exceptions.EnterpriseOneServerException&quot;,&quot;info&quot;:&quot;...skipped&quot;,&quot;messageFormat&quot;:null,&quot;parameters&quot;:null}}
+--changesetresponse_98300da1-9dd2-4da8-868b-2393d65b2715--
+--batchresponse_cd29f967-a9ef-43db-ad37-7d815c56fdf3--
+</code></pre>
+<p>The failed write operation returns <code>500 Internal Server Error</code> with validation error <code>R17342</code>. Because the changeset is atomic, the remaining write operations are not applied and the whole changeset fails.</p>
+<h2 id="related-topics">Related topics</h2>
+<ul>
+<li><a href="create.html">Create</a></li>
+<li><a href="update.html">Update</a></li>
+<li><a href="delete.html">Delete</a></li>
+<li><a href="transactions.html">Transactions</a></li>
+<li><a href="erpnet-action.html">ERP.net Actions</a></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/data-manipulation/batch.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
