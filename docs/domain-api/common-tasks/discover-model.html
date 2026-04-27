@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Discover the domain model | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Discover the domain model | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/discover-model.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="discover-the-domain-model">Discover the domain model</h1>
+
+<h2 id="overview">Overview</h2>
+<p>ERP.net exposes JSON endpoints that allow applications and developers to discover the Domain API model without querying business data directly.</p>
+<p>These endpoints are useful when you need to:</p>
+<ul>
+<li>inspect the available repositories</li>
+<li>compare the standard product model with the current instance model</li>
+<li>generate integrations, clients, or metadata-driven UI</li>
+<li>discover repository members such as attributes, references, child collections, and bound methods</li>
+</ul>
+<p>This topic covers these endpoints:</p>
+<ul>
+<li><code>/api/domain/standardmodel</code></li>
+<li><code>/api/domain/standardmodel/{entitySet}</code></li>
+<li><code>/api/domain/currentmodel</code></li>
+<li><code>/api/domain/currentmodel/{entitySet}</code></li>
+</ul>
+<p>The <code>standardmodel</code> endpoints expose the default ERP.net model without instance-specific extensions.</p>
+<p>The <code>currentmodel</code> endpoints expose the live model of the current ERP.net instance, including instance-specific extensions such as custom and calculated attributes.</p>
+<h2 id="getting-started">Getting started</h2>
+<h3 id="get-the-standard-model">Get the standard model</h3>
+<p>Use the standard model when you need the baseline ERP.net model, independent of a specific instance customization.</p>
+<pre><code class="lang-http">GET /api/domain/standardmodel
+</code></pre>
+<p>This returns a JSON array of repositories in compact form.</p>
+<p>The <code>standardmodel</code> endpoint allows anonymous access.</p>
+<h3 id="get-the-current-instance-model">Get the current instance model</h3>
+<p>Use the current model when your application must reflect the actual structure of a specific ERP.net instance.</p>
+<pre><code class="lang-http">GET /api/domain/currentmodel
+</code></pre>
+<p>This returns a JSON array of repositories from the current instance model.</p>
+<p>The <code>currentmodel</code> endpoint requires authentication.</p>
+<h3 id="get-one-repository">Get one repository</h3>
+<p>To retrieve one repository in detail, append the entity set name to the URL.</p>
+<pre><code class="lang-http">GET /api/domain/currentmodel/Crm_Sales_SalesOrders
+GET /api/domain/standardmodel/Crm_Sales_SalesOrders
+</code></pre>
+<p>The <code>{entitySet}</code> segment uses underscores (<code>_</code>) instead of dots (<code>.</code>).</p>
+<p>For example:</p>
+<ul>
+<li><code>Crm_Sales_SalesOrders</code> in the URL corresponds to repository <code>Crm.Sales.SalesOrders</code></li>
+</ul>
+<p>When a single repository is requested, the response is always detailed, even if the <code>details</code> query parameter is not provided.</p>
+<h3 id="get-the-full-detailed-model">Get the full detailed model</h3>
+<p>Both collection endpoints support the optional query parameter <code>details=true</code>.</p>
+<pre><code class="lang-http">GET /api/domain/standardmodel?details=true
+GET /api/domain/currentmodel?details=true
+</code></pre>
+<p>When <code>details=true</code> is specified, the response for every repository includes:</p>
+<ul>
+<li><code>Attributes</code></li>
+<li><code>References</code></li>
+<li><code>ChildCollections</code></li>
+<li><code>Methods</code></li>
+</ul>
+<p>This allows applications to retrieve the entire model structure in a single request.</p>
+<p>However, <code>details=true</code> produces a significantly larger payload. Prefer the compact form for repository discovery, and use <code>details=true</code> only when your application really needs the full model structure at once.</p>
+<h2 id="concepts">Concepts</h2>
+<h3 id="standard-model-vs-current-model">Standard model vs. current model</h3>
+<p>Use <code>/api/domain/standardmodel</code> when you need the default ERP.net product model.</p>
+<p>Use <code>/api/domain/currentmodel</code> when you need the live model of a specific ERP.net instance.</p>
+<p>The current model may contain instance-specific extensions that do not exist in the standard model, such as:</p>
+<ul>
+<li>custom properties</li>
+<li>calculated attributes</li>
+</ul>
+<h3 id="compact-vs-detailed-responses">Compact vs. detailed responses</h3>
+<p>The collection endpoints support two response modes:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>How to request it</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compact</td>
+<td><code>/standardmodel</code> or <code>/currentmodel</code></td>
+<td>Discover repositories quickly</td>
+</tr>
+<tr>
+<td>Detailed</td>
+<td><code>/standardmodel?details=true</code> or <code>/currentmodel?details=true</code></td>
+<td>Load the full repository structure for all repositories</td>
+</tr>
+</tbody>
+</table>
+<p>In compact mode, member-level collections such as <code>Attributes</code>, <code>References</code>, <code>ChildCollections</code>, and <code>Methods</code> are omitted.</p>
+<p>In detailed mode, those collections are included for every repository.</p>
+<p>For a single repository request such as <code>/currentmodel/{entitySet}</code>, the response is always detailed.</p>
+<h3 id="url-entity-set-format">URL entity set format</h3>
+<p>The single-repository endpoints use the entity set name in underscore form.</p>
+<table>
+<thead>
+<tr>
+<th>URL segment</th>
+<th>Repository name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Crm_Sales_SalesOrders</code></td>
+<td><code>Crm.Sales.SalesOrders</code></td>
+</tr>
+<tr>
+<td><code>General_Documents_DocumentTypes</code></td>
+<td><code>General.Documents.DocumentTypes</code></td>
+</tr>
+</tbody>
+</table>
+<p>Internally, the endpoint converts underscores to dots before resolving the repository.</p>
+<h3 id="serialization-behavior">Serialization behavior</h3>
+<p>The responses are serialized as JSON and enum values are returned as strings.</p>
+<p>For collection responses:</p>
+<ul>
+<li>in compact mode, null-valued properties are omitted from the JSON</li>
+<li>in detailed mode, null-valued properties are preserved in the JSON</li>
+</ul>
+<p>This matters if your client distinguishes between a missing property and a property explicitly returned as <code>null</code>.</p>
+<h3 id="top-level-repository-structure">Top-level repository structure</h3>
+<p>Each repository object contains the following top-level fields.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Name</code></td>
+<td>Repository name in underscore form, suitable for URL usage</td>
+</tr>
+<tr>
+<td><code>TableName</code></td>
+<td>Primary database table name, when applicable</td>
+</tr>
+<tr>
+<td><code>RepositoryName</code></td>
+<td>Repository name in dotted form</td>
+</tr>
+<tr>
+<td><code>LocalizedName</code></td>
+<td>Localized display name</td>
+</tr>
+<tr>
+<td><code>LocalizedDescription</code></td>
+<td>Localized description</td>
+</tr>
+<tr>
+<td><code>IsAggregateRoot</code></td>
+<td>Indicates whether the repository is an aggregate root</td>
+</tr>
+<tr>
+<td><code>AggregateParent</code></td>
+<td>Aggregate parent repository, in underscore form</td>
+</tr>
+<tr>
+<td><code>AggregateRoot</code></td>
+<td>Aggregate root repository, in underscore form</td>
+</tr>
+<tr>
+<td><code>ObjectType</code></td>
+<td>Full EDM object type name</td>
+</tr>
+<tr>
+<td><code>Category</code></td>
+<td>Repository category</td>
+</tr>
+<tr>
+<td><code>UIVisibility</code></td>
+<td>UI visibility classification</td>
+</tr>
+<tr>
+<td><code>Attributes</code></td>
+<td>Included only in detailed responses</td>
+</tr>
+<tr>
+<td><code>References</code></td>
+<td>Included only in detailed responses</td>
+</tr>
+<tr>
+<td><code>ChildCollections</code></td>
+<td>Included only in detailed responses</td>
+</tr>
+<tr>
+<td><code>Methods</code></td>
+<td>Included only in detailed responses</td>
+</tr>
+</tbody>
+</table>
+<h3 id="attribute-structure">Attribute structure</h3>
+<p>When detailed information is included, each item in <code>Attributes</code> contains metadata for a repository attribute.</p>
+<p>Internal attributes are excluded from the <code>Attributes</code> collection.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Name</code></td>
+<td>Attribute name as exposed in the API model</td>
+</tr>
+<tr>
+<td><code>ColumnName</code></td>
+<td>Physical column name, when applicable</td>
+</tr>
+<tr>
+<td><code>Type</code></td>
+<td>EDM type name</td>
+</tr>
+<tr>
+<td><code>LocalizedName</code></td>
+<td>Localized display name</td>
+</tr>
+<tr>
+<td><code>LocalizedDescription</code></td>
+<td>Localized description</td>
+</tr>
+<tr>
+<td><code>IsCustomProperty</code></td>
+<td>Indicates whether the attribute is a custom property</td>
+</tr>
+<tr>
+<td><code>IsCalculatedDataAttribute</code></td>
+<td>Indicates whether the attribute is calculated</td>
+</tr>
+<tr>
+<td><code>SupportsAllowedValues</code></td>
+<td>Indicates whether the attribute has an allowed values provider</td>
+</tr>
+<tr>
+<td><code>LimitToAllowedValues</code></td>
+<td>Indicates whether values are restricted to the allowed values set</td>
+</tr>
+<tr>
+<td><code>CategoryId</code></td>
+<td>Attribute category identifier</td>
+</tr>
+<tr>
+<td><code>CategoryLocalizedName</code></td>
+<td>Localized attribute category name</td>
+</tr>
+<tr>
+<td><code>IsBlob</code></td>
+<td>Indicates whether the attribute stores binary content</td>
+</tr>
+<tr>
+<td><code>SupportsSet</code></td>
+<td>Indicates whether the attribute can be set</td>
+</tr>
+<tr>
+<td><code>ReadOnly</code></td>
+<td>Indicates whether the attribute is read-only</td>
+</tr>
+<tr>
+<td><code>IsPersistent</code></td>
+<td>Indicates whether the attribute is persisted</td>
+</tr>
+<tr>
+<td><code>BaseInfo</code></td>
+<td>Low-level metadata object for the attribute</td>
+</tr>
+<tr>
+<td><code>enumValues</code></td>
+<td>Present for enum attributes; lists allowed enum values with localization</td>
+</tr>
+</tbody>
+</table>
+<h3 id="enum-attribute-values">Enum attribute values</h3>
+<p>For enum attributes, the <code>enumValues</code> collection contains:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Value</code></td>
+<td>The raw enum value</td>
+</tr>
+<tr>
+<td><code>Name</code></td>
+<td>The enum member name</td>
+</tr>
+<tr>
+<td><code>LocalizedName</code></td>
+<td>Localized enum value name</td>
+</tr>
+<tr>
+<td><code>LocalizedDescription</code></td>
+<td>Localized enum value description</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reference-structure">Reference structure</h3>
+<p>When detailed information is included, each item in <code>References</code> describes a repository reference.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Name</code></td>
+<td>Reference name as exposed in the API model</td>
+</tr>
+<tr>
+<td><code>ColumnName</code></td>
+<td>Backing column name, when applicable</td>
+</tr>
+<tr>
+<td><code>Type</code></td>
+<td>EDM type name</td>
+</tr>
+<tr>
+<td><code>LocalizedName</code></td>
+<td>Localized display name</td>
+</tr>
+<tr>
+<td><code>LocalizedDescription</code></td>
+<td>Localized description</td>
+</tr>
+<tr>
+<td><code>ReferencedEntitySet</code></td>
+<td>Target entity set name</td>
+</tr>
+<tr>
+<td><code>ReferencedType</code></td>
+<td>Full target EDM type name</td>
+</tr>
+<tr>
+<td><code>CategoryId</code></td>
+<td>Category identifier, when available</td>
+</tr>
+<tr>
+<td><code>CategoryLocalizedName</code></td>
+<td>Localized category name, when available</td>
+</tr>
+<tr>
+<td><code>ReadOnly</code></td>
+<td>Indicates whether the reference is read-only</td>
+</tr>
+<tr>
+<td><code>IsOwnership</code></td>
+<td>Indicates whether the reference is an ownership relation</td>
+</tr>
+<tr>
+<td><code>IsFilterable</code></td>
+<td>Indicates whether the reference is filterable</td>
+</tr>
+<tr>
+<td><code>IsAggregateParent</code></td>
+<td>Indicates whether the reference points to the aggregate parent</td>
+</tr>
+<tr>
+<td><code>BaseInfo</code></td>
+<td>Low-level metadata object, when the reference is backed by an attribute</td>
+</tr>
+</tbody>
+</table>
+<h3 id="child-collection-structure">Child collection structure</h3>
+<p>When detailed information is included, each item in <code>ChildCollections</code> describes a child collection of an enterprise repository.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Name</code></td>
+<td>Child collection name</td>
+</tr>
+<tr>
+<td><code>LocalizedName</code></td>
+<td>Localized display name</td>
+</tr>
+<tr>
+<td><code>LocalizedDescription</code></td>
+<td>Localized description</td>
+</tr>
+<tr>
+<td><code>ReadOnly</code></td>
+<td>Indicates whether the collection is read-only</td>
+</tr>
+<tr>
+<td><code>DefaultVisibleIndex</code></td>
+<td>Default visibility order index</td>
+</tr>
+<tr>
+<td><code>ChildObjectType</code></td>
+<td>Full EDM type name of the child object</td>
+</tr>
+<tr>
+<td><code>ChildEntitySet</code></td>
+<td>Child entity set name</td>
+</tr>
+</tbody>
+</table>
+<p><code>ChildCollections</code> are available only for repositories that expose them.</p>
+<h3 id="method-structure">Method structure</h3>
+<p>When detailed information is included, each item in <code>Methods</code> describes a bound operation for the repository type.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Name</code></td>
+<td>Operation name</td>
+</tr>
+<tr>
+<td><code>Namespace</code></td>
+<td>Operation namespace</td>
+</tr>
+<tr>
+<td><code>EntitySetPath</code></td>
+<td>Entity set path</td>
+</tr>
+<tr>
+<td><code>ReturnType</code></td>
+<td>Return type, or <code>void</code> when there is no return value</td>
+</tr>
+<tr>
+<td><code>IsAction</code></td>
+<td>Indicates whether the operation is an action</td>
+</tr>
+<tr>
+<td><code>Parameters</code></td>
+<td>Operation parameters</td>
+</tr>
+</tbody>
+</table>
+<p>Each method parameter contains:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Name</code></td>
+<td>Parameter name</td>
+</tr>
+<tr>
+<td><code>Type</code></td>
+<td>Full EDM type name</td>
+</tr>
+</tbody>
+</table>
+<h3 id="baseinfo-structure"><code>BaseInfo</code> structure</h3>
+<p>In detailed responses, the <code>BaseInfo</code> property exposes low-level metadata for an attribute.</p>
+<p>The JSON object returned in <code>BaseInfo</code> is based on the <code>BaseAttributeInfo</code> class.</p>
+<p><code>BaseInfo</code> is included:</p>
+<ul>
+<li>for items in <code>Attributes</code></li>
+<li>for items in <code>References</code>, when the reference is backed by an attribute</li>
+</ul>
+<p>Use <code>BaseInfo</code> when your application needs implementation-oriented metadata such as filter support, storage details, nullability, ordering, display hints, subtype classification, or Open Exchange behavior.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RepositoryName</code></td>
+<td><code>string</code></td>
+<td>Full repository name of the attribute, when available</td>
+</tr>
+<tr>
+<td><code>LogicalOrder</code></td>
+<td><code>int</code></td>
+<td>Logical order used when displaying, creating, cloning, or importing objects</td>
+</tr>
+<tr>
+<td><code>Internal</code></td>
+<td><code>bool</code></td>
+<td>Indicates whether the attribute is intended for internal use</td>
+</tr>
+<tr>
+<td><code>Nullable</code></td>
+<td><code>bool?</code></td>
+<td>Indicates whether the attribute allows null values</td>
+</tr>
+<tr>
+<td><code>IsDelayLoading</code></td>
+<td><code>bool</code></td>
+<td>Indicates whether the attribute uses delayed loading</td>
+</tr>
+<tr>
+<td><code>Orderable</code></td>
+<td><code>bool?</code></td>
+<td>Indicates whether the attribute can participate in ordering</td>
+</tr>
+<tr>
+<td><code>Indexed</code></td>
+<td><code>bool</code></td>
+<td>Indicates whether the attribute participates in a table index as first column</td>
+</tr>
+<tr>
+<td><code>MaxLength</code></td>
+<td><code>int</code></td>
+<td>Maximum length for text values</td>
+</tr>
+<tr>
+<td><code>Precision</code></td>
+<td><code>int</code></td>
+<td>Total number of decimal digits for numeric values</td>
+</tr>
+<tr>
+<td><code>Scale</code></td>
+<td><code>int</code></td>
+<td>Number of digits after the decimal separator for decimal values</td>
+</tr>
+<tr>
+<td><code>DateTimeStorageType</code></td>
+<td><code>string</code></td>
+<td>Storage mode for <code>DateTime</code> values</td>
+</tr>
+<tr>
+<td><code>DateTimeUtc</code></td>
+<td><code>bool</code></td>
+<td>Indicates whether date-time values are stored in UTC</td>
+</tr>
+<tr>
+<td><code>SupportedFilters</code></td>
+<td><code>string</code></td>
+<td>Supported filter capabilities for the attribute</td>
+</tr>
+<tr>
+<td><code>IsFilterableReference</code></td>
+<td><code>bool</code></td>
+<td>Indicates whether the attribute represents a reference that can be filtered through fields of the referenced entity</td>
+</tr>
+<tr>
+<td><code>SecurityCrucial</code></td>
+<td><code>bool</code></td>
+<td>Indicates whether referenced-object security should be applied to the referencing object</td>
+</tr>
+<tr>
+<td><code>AllowTrackChanges</code></td>
+<td><code>bool</code></td>
+<td>Indicates whether changes to the attribute create tracking change sets</td>
+</tr>
+<tr>
+<td><code>DefaultValueType</code></td>
+<td><code>string</code></td>
+<td>Default value behavior for the attribute</td>
+</tr>
+<tr>
+<td><code>BaseTableName</code></td>
+<td><code>string</code></td>
+<td>Data-access base table from which the attribute is inherited</td>
+</tr>
+<tr>
+<td><code>BaseColumnName</code></td>
+<td><code>string</code></td>
+<td>Data-access base column from which the attribute is inherited</td>
+</tr>
+<tr>
+<td><code>Description</code></td>
+<td><code>string</code></td>
+<td>Description shown alongside the attribute</td>
+</tr>
+<tr>
+<td><code>DisplayType</code></td>
+<td><code>string</code></td>
+<td>Preferred display type in the presentation layer</td>
+</tr>
+<tr>
+<td><code>SummaryType</code></td>
+<td><code>string</code></td>
+<td>Default summary type in the presentation layer</td>
+</tr>
+<tr>
+<td><code>WidthType</code></td>
+<td><code>string</code></td>
+<td>Preferred width in the presentation layer</td>
+</tr>
+<tr>
+<td><code>RequiresUserInput</code></td>
+<td><code>bool</code></td>
+<td>Indicates that the attribute requires user input and does not support a null value without a late system default</td>
+</tr>
+<tr>
+<td><code>Obsolete</code></td>
+<td><code>bool</code></td>
+<td>Indicates whether the attribute is obsolete</td>
+</tr>
+<tr>
+<td><code>DefaultFormat</code></td>
+<td><code>string</code></td>
+<td>Default format string</td>
+</tr>
+<tr>
+<td><code>UIVisibility</code></td>
+<td><code>string</code></td>
+<td>User interface visibility classification</td>
+</tr>
+<tr>
+<td><code>Options</code></td>
+<td><code>string</code></td>
+<td>Bit-flag options describing specific presentation or behavior traits</td>
+</tr>
+<tr>
+<td><code>Subtype</code></td>
+<td><code>string</code></td>
+<td>Specific subtype classification for the attribute</td>
+</tr>
+<tr>
+<td><code>UnitExpression</code></td>
+<td><code>string</code></td>
+<td>Expression that returns the measurement unit or currency for quantity or amount attributes</td>
+</tr>
+<tr>
+<td><code>OpenExchangeAttributeName</code></td>
+<td><code>string</code></td>
+<td>Attribute name to use in Open Exchange format, when different from the standard name</td>
+</tr>
+<tr>
+<td><code>ExportInOpenExchange</code></td>
+<td><code>bool</code></td>
+<td>Indicates whether the attribute participates in Open Exchange export</td>
+</tr>
+</tbody>
+</table>
+<h3 id="baseinfosupportedfilters"><code>BaseInfo.SupportedFilters</code></h3>
+<p><code>SupportedFilters</code> is a flags enum.</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NotFilterable</code></td>
+<td>No filtering is supported</td>
+</tr>
+<tr>
+<td><code>Equals</code></td>
+<td>Equality filtering is supported</td>
+</tr>
+<tr>
+<td><code>GreaterThanOrLessThan</code></td>
+<td>Range-style comparison filtering is supported</td>
+</tr>
+<tr>
+<td><code>Like</code></td>
+<td>Pattern matching is supported</td>
+</tr>
+<tr>
+<td><code>EqualsIn</code></td>
+<td>Set-based equality filtering is supported</td>
+</tr>
+</tbody>
+</table>
+<h3 id="baseinfodefaultvaluetype"><code>BaseInfo.DefaultValueType</code></h3>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>None</code></td>
+<td>No default value</td>
+</tr>
+<tr>
+<td><code>Constant</code></td>
+<td>Constant default value</td>
+</tr>
+<tr>
+<td><code>NewGuid</code></td>
+<td>New GUID is generated by default</td>
+</tr>
+<tr>
+<td><code>CurrentDate</code></td>
+<td>Current date is used by default</td>
+</tr>
+<tr>
+<td><code>CurrentDateTime</code></td>
+<td>Current date and time are used by default</td>
+</tr>
+<tr>
+<td><code>CurrentDateTimeUtc</code></td>
+<td>Current UTC date and time are used by default</td>
+</tr>
+</tbody>
+</table>
+<h3 id="baseinfodisplaytype"><code>BaseInfo.DisplayType</code></h3>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Inline</code></td>
+<td>Single-line inline display</td>
+</tr>
+<tr>
+<td><code>InlineBlock</code></td>
+<td>Multiline inline-block display</td>
+</tr>
+<tr>
+<td><code>InlineDropDown</code></td>
+<td>Single-line display with a dropdown multiline editor</td>
+</tr>
+<tr>
+<td><code>ExternalPanel</code></td>
+<td>External panel with multiline editor</td>
+</tr>
+</tbody>
+</table>
+<h3 id="baseinfowidthtype"><code>BaseInfo.WidthType</code></h3>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Default</code></td>
+<td>Default width</td>
+</tr>
+<tr>
+<td><code>Short</code></td>
+<td>Short width</td>
+</tr>
+<tr>
+<td><code>Long</code></td>
+<td>Long width</td>
+</tr>
+</tbody>
+</table>
+<h3 id="baseinfosummarytype"><code>BaseInfo.SummaryType</code></h3>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>None</code></td>
+<td>No summary</td>
+</tr>
+<tr>
+<td><code>Count</code></td>
+<td>Count summary</td>
+</tr>
+<tr>
+<td><code>Sum</code></td>
+<td>Sum summary</td>
+</tr>
+<tr>
+<td><code>Average</code></td>
+<td>Average summary</td>
+</tr>
+<tr>
+<td><code>Min</code></td>
+<td>Minimum summary</td>
+</tr>
+<tr>
+<td><code>Max</code></td>
+<td>Maximum summary</td>
+</tr>
+<tr>
+<td><code>StandardDeviation</code></td>
+<td>Standard deviation summary</td>
+</tr>
+<tr>
+<td><code>StandardDeviationPercent</code></td>
+<td>Standard deviation percentage summary</td>
+</tr>
+</tbody>
+</table>
+<h3 id="baseinfooptions"><code>BaseInfo.Options</code></h3>
+<p><code>Options</code> is a flags enum.</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>None</code></td>
+<td>No special option is set</td>
+</tr>
+<tr>
+<td><code>InterpolatedString</code></td>
+<td>The attribute may contain string interpolation expressions</td>
+</tr>
+<tr>
+<td><code>SecuritySensitiveString</code></td>
+<td>The attribute contains sensitive string data such as passwords, secrets, or API keys</td>
+</tr>
+</tbody>
+</table>
+<h3 id="baseinfosubtype"><code>BaseInfo.Subtype</code></h3>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NonSpecific</code></td>
+<td>No specific subtype</td>
+</tr>
+<tr>
+<td><code>Binary_Picture</code></td>
+<td>Binary picture content</td>
+</tr>
+<tr>
+<td><code>DateTime_Utc</code></td>
+<td>UTC date-time value</td>
+</tr>
+<tr>
+<td><code>Decimal_Amount</code></td>
+<td>Amount value</td>
+</tr>
+<tr>
+<td><code>Decimal_Percent</code></td>
+<td>Percent value</td>
+</tr>
+<tr>
+<td><code>Decimal_Quantity</code></td>
+<td>Quantity value</td>
+</tr>
+<tr>
+<td><code>Int_AutoNumber</code></td>
+<td>Auto-number integer value</td>
+</tr>
+<tr>
+<td><code>String_Code</code></td>
+<td>Code string</td>
+</tr>
+<tr>
+<td><code>String_DataFilter</code></td>
+<td>Data filter XML</td>
+</tr>
+<tr>
+<td><code>String_EntityName</code></td>
+<td>Entity or table name</td>
+</tr>
+<tr>
+<td><code>String_Html</code></td>
+<td>HTML content</td>
+</tr>
+<tr>
+<td><code>String_Identifier</code></td>
+<td>Identifier string</td>
+</tr>
+<tr>
+<td><code>String_MultilanguageString</code></td>
+<td>Encoded multilanguage string</td>
+</tr>
+<tr>
+<td><code>String_Rtf</code></td>
+<td>RTF content</td>
+</tr>
+<tr>
+<td><code>String_UserLogin</code></td>
+<td>User login value</td>
+</tr>
+<tr>
+<td><code>String_StrictCode</code></td>
+<td>Strict code string</td>
+</tr>
+<tr>
+<td><code>String_Password</code></td>
+<td>Secret password string</td>
+</tr>
+<tr>
+<td><code>String_Interpolated</code></td>
+<td>Interpolated string content</td>
+</tr>
+<tr>
+<td><code>String_Repository</code></td>
+<td>Repository name</td>
+</tr>
+<tr>
+<td><code>String_Markdown</code></td>
+<td>Markdown content</td>
+</tr>
+<tr>
+<td><code>String_FileName</code></td>
+<td>File name</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example">Example</h3>
+<pre><code class="lang-json">{
+  &quot;Name&quot;: &quot;DocumentNo&quot;,
+  &quot;Type&quot;: &quot;Edm.String&quot;,
+  &quot;LocalizedName&quot;: &quot;Document No&quot;,
+  &quot;ReadOnly&quot;: false,
+  &quot;BaseInfo&quot;: {
+    &quot;RepositoryName&quot;: &quot;General.Documents.DocumentNo&quot;,
+    &quot;LogicalOrder&quot;: 120,
+    &quot;Internal&quot;: false,
+    &quot;Nullable&quot;: false,
+    &quot;IsDelayLoading&quot;: false,
+    &quot;Orderable&quot;: true,
+    &quot;Indexed&quot;: true,
+    &quot;MaxLength&quot;: 20,
+    &quot;Precision&quot;: 0,
+    &quot;Scale&quot;: 0,
+    &quot;DateTimeStorageType&quot;: &quot;None&quot;,
+    &quot;DateTimeUtc&quot;: false,
+    &quot;SupportedFilters&quot;: &quot;Equals&quot;,
+    &quot;IsFilterableReference&quot;: false,
+    &quot;SecurityCrucial&quot;: true,
+    &quot;AllowTrackChanges&quot;: true,
+    &quot;DefaultValueType&quot;: &quot;None&quot;,
+    &quot;BaseTableName&quot;: &quot;Gen_Documents&quot;,
+    &quot;BaseColumnName&quot;: &quot;Document_No&quot;,
+    &quot;Description&quot;: &quot;User-visible document number.&quot;,
+    &quot;DisplayType&quot;: &quot;Inline&quot;,
+    &quot;SummaryType&quot;: &quot;None&quot;,
+    &quot;WidthType&quot;: &quot;Default&quot;,
+    &quot;RequiresUserInput&quot;: false,
+    &quot;Obsolete&quot;: false,
+    &quot;DefaultFormat&quot;: null,
+    &quot;UIVisibility&quot;: &quot;ShownByDefault&quot;,
+    &quot;Options&quot;: &quot;None&quot;,
+    &quot;Subtype&quot;: &quot;String_Code&quot;,
+    &quot;UnitExpression&quot;: null,
+    &quot;OpenExchangeAttributeName&quot;: null,
+    &quot;ExportInOpenExchange&quot;: true
+  }
+}
+</code></pre>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="../index.html">Domain API</a></li>
+<li><a href="../querying-data/index.html">Querying data</a></li>
+<li><a href="https://docs.erp.net/model/entities/">API Reference</a></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/domain-api/common-tasks/discover-model.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

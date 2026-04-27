@@ -954,6 +954,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "domain-api/common-tasks/discover-model.md",
+      "output": {
+        ".html": {
+          "relative_path": "domain-api/common-tasks/discover-model.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "domain-api/common-tasks/handling-renames.md",
       "output": {
         ".html": {
