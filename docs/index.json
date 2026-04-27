@@ -372,7 +372,7 @@
   "domain-api/common-tasks/index.html": {
     "href": "domain-api/common-tasks/index.html",
     "title": "Common tasks | ERP.net Developer Docs",
-    "summary": "Common tasks This section contains task-oriented guides and examples for working with the ERP.net Domain API. If you are looking for query syntax reference (e.g. $filter, $select, $expand), see: Querying data. Setup Register Trusted App Documents Working with documents Extensibility Stored attributes (custom properties) Master/Detail attributes Context & localization Providing context parameters Change the response language Collaboration Create notification Compatibility Handling renames Examples Retrieve Products Query examples"
+    "summary": "Common tasks This section contains task-oriented guides and examples for working with the ERP.net Domain API. If you are looking for query syntax reference (e.g. $filter, $select, $expand), see: Querying data. Setup Discover Domain Model Register Trusted App Documents Working with documents Extensibility Stored attributes (custom properties) Master/Detail attributes Context & localization Providing context parameters Change the response language Collaboration Create notification Compatibility Handling renames Examples Retrieve Products Query examples"
   },
   "domain-api/common-tasks/master-detail-attributes.html": {
     "href": "domain-api/common-tasks/master-detail-attributes.html",
