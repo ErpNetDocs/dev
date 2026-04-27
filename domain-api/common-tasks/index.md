@@ -7,6 +7,7 @@ If you are looking for query syntax reference (e.g. `$filter`, `$select`, `$expa
 
 ## Setup
 
+- [Discover Domain Model](discover-model.md)
 - [Register Trusted App](register-trusted-app.md)
 
 ## Documents

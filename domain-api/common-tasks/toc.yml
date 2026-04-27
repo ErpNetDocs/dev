@@ -1,5 +1,7 @@
 - name: Overview
   href: index.md
+- name: Discover Domain Model
+  href: discover-model.md
 - name: Register Trusted App
   href: register-trusted-app.md
 - name: Retrieve Products
