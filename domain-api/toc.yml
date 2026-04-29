@@ -18,8 +18,6 @@
 - name: Data sync
   href: data-sync/toc.yml
   topicHref: data-sync/index.md
-- name: Execute Script (JS)
-  href: ./execute-script.md
 - name: Libraries
   href: libraries.md
 - name: Example apps
