@@ -62,27 +62,44 @@ Contains the actual claims - information about the client, permissions, and vali
 {
   "nbf": 1762185760,
   "exp": 1762189360,
-  "iss": "https://pkostov.my.erp.net/id",
+  "iss": "https://acme.my.erp.net/id",
   "aud": ["DomainAPI", "TableAPI", "OLAP", "AppServer"],
-  "client_id": "PK",
+  "client_id": "myapp.myhost.net",
   "client_system_user": "admin",
   "client_system_user_type": "InternalUser",
-  "client_db": "E1_DEV-1 Test",
+  "client_db": "E1_TESTDB",
   "scope": ["read", "sec", "update"]
 }
 ```
 
-| **Claim** | **Description** |
-|------------|-----------------|
-| **nbf** | "Not before" - token is invalid before this time (in Unix timestamp). |
-| **exp** | Expiration time - when the token becomes invalid. |
-| **iss** | Issuer - @@name Identity that issued the token. |
-| **aud** | Audience - the @@name APIs or resources this token is valid for. |
-| **client_id** | The application that obtained the token (Trusted Application). |
-| **client_system_user** | The system user identity associated with the application. |
-| **client_system_user_type** | Indicates whether it's an internal or service user. |
-| **client_db** | The database (tenant) to which the token applies. |
-| **scope** | The granted permissions and API access levels. |
+The table below lists every claim @@name Identity may issue. Not all claims appear in every token: the **Auth Code** and **Client Credentials** columns indicate when each claim is included.
+
+| Claim | Description | Example | Auth Code | Client Credentials |
+|---|---|---|---|---|
+| `iss` | Identifies the issuer. Clients reject tokens whose `iss` does not match the configured authority. | `"https://acme.my.erp.net/id"` | yes | yes |
+| `aud` | Which @@name APIs will accept the token. Each API verifies it appears in this list. | `["DomainAPI", "TableAPI","OLAP","AppServer"]` | yes | yes |
+| `iat` | Unix timestamp of when the token was issued. | `1762185760` | yes | yes |
+| `nbf` | "Not before". The token is invalid before this instant. | `1762185760` | yes | yes |
+| `exp` | Expiration. The token is invalid after this instant (typically `iat` + ~1 hour). | `1762189360` | yes | yes |
+| `jti` | Unique token id. Enables per-token revocation and lets clients deduplicate. | `"1B79C24AB25E0F675DF2233CDE371244"` | yes | yes |
+| `sub` | The acting user's login (`Sec_Users.Login`). Absent in service-to-service tokens. | `"john.doe"` | yes | no |
+| `sub_id` | Internal `Sec_Users.Id`. Stable across renames, unlike `sub`. | `"4587"` | yes | no |
+| `auth_time` | When the user actually authenticated (ID token only). Lets relying parties enforce `max_age` and re-authentication policies. | `1762185700` | yes | n/a |
+| `sid` | Session id. Used by the application server as the license-slot key and for single sign-out. | `"E4D2A57B3F1C..."` | yes | no |
+| `scope` | The granted scopes. What the token is authorized to do. APIs gate operations against these. | `["read","sec","update"]` | yes | yes |
+| `client_id` | The trusted application that obtained the token. Used for audit, per-client throttling, and audience checks. | `"myapp.myhost.net"` | yes | yes |
+| `name` | Display name shown in UIs. | `"John Doe"` | yes | no |
+| `email` | The user's email. Used by downstream apps for notifications and lookups. | `"john.doe@example.com"` | yes | no |
+| `email_verified` | Whether the email was confirmed. Apps gate flows such as password reset on this. | `true` | yes | no |
+| `locale` | The user's preferred culture. Servers use it to localize messages, dates, and numbers. | `"en-US"` | yes | no |
+| `user_type` | User classification (`InternalUser`, `ExternalCommunityUser`, `SystemUserNoLogin`). Trusted apps validate that the type is allowed before issuing tokens. | `"InternalUser"` | yes | no |
+| `is_admin` | Admin flag. Short-circuits authorization for administrative operations. | `true` | yes | no |
+| `db` / `client_db` | Which @@name database (tenant) the token is bound to. APIs use this to route the request. The user-flow name is `db`; the service-flow name is `client_db`. | `"E1_TESTDB"` | yes (`db`) | yes (`client_db`) |
+| `system_user` / `client_system_user` | Service-account login used for non-impersonated actions (background jobs, system writes). | `"admin"` | no | yes (`client_system_user`) |
+| `system_user_type` / `client_system_user_type` | User type of the service account. Same allow-list checks as `user_type`. | `"InternalUser"` | no | yes (`client_system_user_type`) |
+| `system_user_id` / `client_system_user_id` | Internal id of the service account, when needed for foreign-key references. | `"1"` | no | yes (when set) |
+| `idp` | Which identity provider authenticated this session. Apps can branch behavior for federated users. | `"google"` or a provider GUID | yes (external IdP only) | no |
+| `tid` | External tenant id (typically Azure AD `tid`). Used for tenant-scoped authorization on the @@name side. | `"72f988bf-86f1-41af-91ab-2d7cd011db47"` | yes (external IdP only) | no |
 
 ### 3. Signature
 
