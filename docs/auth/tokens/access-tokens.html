@@ -129,58 +129,194 @@ Their lifetime is typically around one hour, but can vary depending on configura
 <pre><code class="lang-json">{
   &quot;nbf&quot;: 1762185760,
   &quot;exp&quot;: 1762189360,
-  &quot;iss&quot;: &quot;https://pkostov.my.erp.net/id&quot;,
+  &quot;iss&quot;: &quot;https://acme.my.erp.net/id&quot;,
   &quot;aud&quot;: [&quot;DomainAPI&quot;, &quot;TableAPI&quot;, &quot;OLAP&quot;, &quot;AppServer&quot;],
-  &quot;client_id&quot;: &quot;PK&quot;,
+  &quot;client_id&quot;: &quot;myapp.myhost.net&quot;,
   &quot;client_system_user&quot;: &quot;admin&quot;,
   &quot;client_system_user_type&quot;: &quot;InternalUser&quot;,
-  &quot;client_db&quot;: &quot;E1_DEV-1 Test&quot;,
+  &quot;client_db&quot;: &quot;E1_TESTDB&quot;,
   &quot;scope&quot;: [&quot;read&quot;, &quot;sec&quot;, &quot;update&quot;]
 }
 </code></pre>
+<p>The table below lists every claim ERP.net Identity may issue. Not all claims appear in every token: the <strong>Auth Code</strong> and <strong>Client Credentials</strong> columns indicate when each claim is included.</p>
 <table>
 <thead>
 <tr>
-<th><strong>Claim</strong></th>
-<th><strong>Description</strong></th>
+<th>Claim</th>
+<th>Description</th>
+<th>Example</th>
+<th>Auth Code</th>
+<th>Client Credentials</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>nbf</strong></td>
-<td>&quot;Not before&quot; - token is invalid before this time (in Unix timestamp).</td>
+<td><code>iss</code></td>
+<td>Identifies the issuer. Clients reject tokens whose <code>iss</code> does not match the configured authority.</td>
+<td><code>&quot;https://acme.my.erp.net/id&quot;</code></td>
+<td>yes</td>
+<td>yes</td>
 </tr>
 <tr>
-<td><strong>exp</strong></td>
-<td>Expiration time - when the token becomes invalid.</td>
+<td><code>aud</code></td>
+<td>Which ERP.net APIs will accept the token. Each API verifies it appears in this list.</td>
+<td><code>[&quot;DomainAPI&quot;, &quot;TableAPI&quot;,&quot;OLAP&quot;,&quot;AppServer&quot;]</code></td>
+<td>yes</td>
+<td>yes</td>
 </tr>
 <tr>
-<td><strong>iss</strong></td>
-<td>Issuer - ERP.net Identity that issued the token.</td>
+<td><code>iat</code></td>
+<td>Unix timestamp of when the token was issued.</td>
+<td><code>1762185760</code></td>
+<td>yes</td>
+<td>yes</td>
 </tr>
 <tr>
-<td><strong>aud</strong></td>
-<td>Audience - the ERP.net APIs or resources this token is valid for.</td>
+<td><code>nbf</code></td>
+<td>&quot;Not before&quot;. The token is invalid before this instant.</td>
+<td><code>1762185760</code></td>
+<td>yes</td>
+<td>yes</td>
 </tr>
 <tr>
-<td><strong>client_id</strong></td>
-<td>The application that obtained the token (Trusted Application).</td>
+<td><code>exp</code></td>
+<td>Expiration. The token is invalid after this instant (typically <code>iat</code> + ~1 hour).</td>
+<td><code>1762189360</code></td>
+<td>yes</td>
+<td>yes</td>
 </tr>
 <tr>
-<td><strong>client_system_user</strong></td>
-<td>The system user identity associated with the application.</td>
+<td><code>jti</code></td>
+<td>Unique token id. Enables per-token revocation and lets clients deduplicate.</td>
+<td><code>&quot;1B79C24AB25E0F675DF2233CDE371244&quot;</code></td>
+<td>yes</td>
+<td>yes</td>
 </tr>
 <tr>
-<td><strong>client_system_user_type</strong></td>
-<td>Indicates whether it's an internal or service user.</td>
+<td><code>sub</code></td>
+<td>The acting user's login (<code>Sec_Users.Login</code>). Absent in service-to-service tokens.</td>
+<td><code>&quot;john.doe&quot;</code></td>
+<td>yes</td>
+<td>no</td>
 </tr>
 <tr>
-<td><strong>client_db</strong></td>
-<td>The database (tenant) to which the token applies.</td>
+<td><code>sub_id</code></td>
+<td>Internal <code>Sec_Users.Id</code>. Stable across renames, unlike <code>sub</code>.</td>
+<td><code>&quot;4587&quot;</code></td>
+<td>yes</td>
+<td>no</td>
 </tr>
 <tr>
-<td><strong>scope</strong></td>
-<td>The granted permissions and API access levels.</td>
+<td><code>auth_time</code></td>
+<td>When the user actually authenticated (ID token only). Lets relying parties enforce <code>max_age</code> and re-authentication policies.</td>
+<td><code>1762185700</code></td>
+<td>yes</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td><code>sid</code></td>
+<td>Session id. Used by the application server as the license-slot key and for single sign-out.</td>
+<td><code>&quot;E4D2A57B3F1C...&quot;</code></td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>scope</code></td>
+<td>The granted scopes. What the token is authorized to do. APIs gate operations against these.</td>
+<td><code>[&quot;read&quot;,&quot;sec&quot;,&quot;update&quot;]</code></td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>client_id</code></td>
+<td>The trusted application that obtained the token. Used for audit, per-client throttling, and audience checks.</td>
+<td><code>&quot;myapp.myhost.net&quot;</code></td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>Display name shown in UIs.</td>
+<td><code>&quot;John Doe&quot;</code></td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td>The user's email. Used by downstream apps for notifications and lookups.</td>
+<td><code>&quot;john.doe@example.com&quot;</code></td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>email_verified</code></td>
+<td>Whether the email was confirmed. Apps gate flows such as password reset on this.</td>
+<td><code>true</code></td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>locale</code></td>
+<td>The user's preferred culture. Servers use it to localize messages, dates, and numbers.</td>
+<td><code>&quot;en-US&quot;</code></td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>user_type</code></td>
+<td>User classification (<code>InternalUser</code>, <code>ExternalCommunityUser</code>, <code>SystemUserNoLogin</code>). Trusted apps validate that the type is allowed before issuing tokens.</td>
+<td><code>&quot;InternalUser&quot;</code></td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>is_admin</code></td>
+<td>Admin flag. Short-circuits authorization for administrative operations.</td>
+<td><code>true</code></td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>db</code> / <code>client_db</code></td>
+<td>Which ERP.net database (tenant) the token is bound to. APIs use this to route the request. The user-flow name is <code>db</code>; the service-flow name is <code>client_db</code>.</td>
+<td><code>&quot;E1_TESTDB&quot;</code></td>
+<td>yes (<code>db</code>)</td>
+<td>yes (<code>client_db</code>)</td>
+</tr>
+<tr>
+<td><code>system_user</code> / <code>client_system_user</code></td>
+<td>Service-account login used for non-impersonated actions (background jobs, system writes).</td>
+<td><code>&quot;admin&quot;</code></td>
+<td>no</td>
+<td>yes (<code>client_system_user</code>)</td>
+</tr>
+<tr>
+<td><code>system_user_type</code> / <code>client_system_user_type</code></td>
+<td>User type of the service account. Same allow-list checks as <code>user_type</code>.</td>
+<td><code>&quot;InternalUser&quot;</code></td>
+<td>no</td>
+<td>yes (<code>client_system_user_type</code>)</td>
+</tr>
+<tr>
+<td><code>system_user_id</code> / <code>client_system_user_id</code></td>
+<td>Internal id of the service account, when needed for foreign-key references.</td>
+<td><code>&quot;1&quot;</code></td>
+<td>no</td>
+<td>yes (when set)</td>
+</tr>
+<tr>
+<td><code>idp</code></td>
+<td>Which identity provider authenticated this session. Apps can branch behavior for federated users.</td>
+<td><code>&quot;google&quot;</code> or a provider GUID</td>
+<td>yes (external IdP only)</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>tid</code></td>
+<td>External tenant id (typically Azure AD <code>tid</code>). Used for tenant-scoped authorization on the ERP.net side.</td>
+<td><code>&quot;72f988bf-86f1-41af-91ab-2d7cd011db47&quot;</code></td>
+<td>yes (external IdP only)</td>
+<td>no</td>
 </tr>
 </tbody>
 </table>
