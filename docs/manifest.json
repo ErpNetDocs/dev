@@ -168,6 +168,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "auth/flows/auth-code/interactive-apps-prompts.md",
+      "output": {
+        ".html": {
+          "relative_path": "auth/flows/auth-code/interactive-apps-prompts.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "auth/flows/auth-code/interactive-apps-redirects-pkce.md",
       "output": {
         ".html": {
