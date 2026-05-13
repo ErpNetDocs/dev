@@ -176,6 +176,9 @@ sequenceDiagram
 - [**Redirect URIs and PKCE**](interactive-apps-redirects-pkce.md)  
   How to secure redirects and apply PKCE correctly.
 
+- [**Forcing Sign-In with prompt=login**](interactive-apps-prompts.md)  
+  Require the user to sign in again, even when they already have a session from another app.
+
 - [**Refresh Tokens**](interactive-apps-refresh-tokens.md)  
   How to renew tokens without requiring the user to sign in again.
 
