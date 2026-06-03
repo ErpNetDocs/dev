@@ -419,16 +419,16 @@ Authorization: Bearer &lt;access_token&gt;
 <li>Basic and ErpLogin maintain their own per-host caches. Token-based clients are validated through ERP.net Identity and do not depend on that cache, which is one of the reasons OAuth scales better across server farms.</li>
 </ul>
 <h2 id="migration-checklist">Migration checklist</h2>
-<ul>
-<li>[ ] Trusted Application registered with <code>ApplicationUri</code>, secret, and <code>Scope</code> set correctly.</li>
-<li>[ ] For Client Credentials and SAT: <code>SystemUserAllowed = true</code> and a least-privilege <code>SystemUser</code> configured.</li>
-<li>[ ] Integration code calls <code>/id/connect/token</code> (Client Credentials) or uses an issued <code>enrt_</code> token (PAT or SAT).</li>
-<li>[ ] Access tokens cached in process and reused until close to expiry.</li>
-<li>[ ] All authenticated requests send <code>Authorization: Bearer &lt;token&gt;</code>.</li>
-<li>[ ] Legacy credentials removed from configuration; service account password rotated.</li>
-<li>[ ] Token expiry path tested. Renewal verified end to end.</li>
-<li>[ ] Revocation path tested. PAT from the Profile site; Client Credentials by rotating the secret.</li>
-</ul>
+<ol>
+<li>☐ Trusted Application registered with <code>ApplicationUri</code>, secret, and <code>Scope</code> set correctly.</li>
+<li>☐ For Client Credentials and SAT: <code>SystemUserAllowed = true</code> and a least-privilege <code>SystemUser</code> configured.</li>
+<li>☐ Integration code calls <code>/id/connect/token</code> (Client Credentials) or uses an issued <code>enrt_</code> token (PAT or SAT).</li>
+<li>☐ Access tokens cached in process and reused until close to expiry.</li>
+<li>☐ All authenticated requests send <code>Authorization: Bearer &lt;token&gt;</code>.</li>
+<li>☐ Legacy credentials removed from configuration; service account password rotated.</li>
+<li>☐ Token expiry path tested. Renewal verified end to end.</li>
+<li>☐ Revocation path tested. PAT from the Profile site; Client Credentials by rotating the secret.</li>
+</ol>
 <hr>
 <h2 id="learn-more">Learn More</h2>
 <ul>
