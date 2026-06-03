@@ -443,6 +443,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "auth/migrating-from-legacy-auth.md",
+      "output": {
+        ".html": {
+          "relative_path": "auth/migrating-from-legacy-auth.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "auth/overview.md",
       "output": {
         ".html": {

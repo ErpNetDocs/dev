@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Migrating from Legacy Authentication | ERP.net Developer Docs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Migrating from Legacy Authentication | ERP.net Developer Docs ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/ErpNetDocs/dev/blob/master/auth/migrating-from-legacy-auth.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="migrating-from-legacy-authentication">Migrating from Legacy Authentication</h1>
+
+<p>ERP.net still accepts two legacy authentication schemes: <strong>HTTP Basic</strong> and <strong>ErpLogin</strong> (the <code>POST /domain/login</code> endpoint that returns an <code>Authorization: ErpSession &lt;id&gt;</code> header).</p>
+<p>Both schemes continue to be accepted for backward compatibility. They are expected to be retired in a future release. All new integrations - and any integration you actively maintain - should move to one of the supported OAuth 2.0 paths described below.</p>
+<p>This topic explains what to migrate to, and how.</p>
+<h2 id="what-is-being-phased-out">What is being phased out</h2>
+<table>
+<thead>
+<tr>
+<th>Legacy scheme</th>
+<th>What the integration sends</th>
+<th>What is wrong with it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HTTP Basic</strong></td>
+<td><code>Authorization: Basic base64(user:password)</code> on every request.</td>
+<td>Sends a user password on every call. No application identity. No scopes. No revocation other than rotating the password. Cannot use 2FA.</td>
+</tr>
+<tr>
+<td><strong>ErpLogin</strong></td>
+<td><code>POST /domain/login</code> with <code>{ &quot;user&quot;, &quot;pass&quot;, &quot;app&quot;, &quot;lang&quot; }</code>, then <code>Authorization: ErpSession &lt;id&gt;</code> on subsequent calls.</td>
+<td>Looks like OAuth client_credentials but is not: it takes a user password, returns an opaque session id with no <code>expires_in</code>, no <code>scope</code>, no refresh, and is not discoverable via the standard OAuth metadata.</td>
+</tr>
+</tbody>
+</table>
+<p>Both schemes share the same root problem: they couple authentication to a <strong>user's password</strong> rather than to an <strong>application identity</strong> registered as a Trusted Application.</p>
+<h2 id="what-to-migrate-to">What to migrate to</h2>
+<p>Pick a target based on what the integration represents:</p>
+<table>
+<thead>
+<tr>
+<th>Your integration is...</th>
+<th>Migrate to</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A server-side daemon, scheduled job, or backend-to-backend integration that should act <strong>as itself</strong> (no human user).</td>
+<td><strong>Client Credentials Flow</strong> (short-lived bearer tokens) or <strong>SAT</strong> (long-lived Service Access Token).</td>
+<td>The token represents the application via its configured <strong>System User</strong>. No user password is involved.</td>
+</tr>
+<tr>
+<td>A backend that should act <strong>on behalf of a specific named user</strong> (for example, a per-user automation the user explicitly authorised).</td>
+<td><strong>PAT</strong> (Personal Access Token).</td>
+<td>The token carries the user's identity and claims. The user can revoke individual tokens from the Profile site without changing their password.</td>
+</tr>
+<tr>
+<td>An interactive UI that logs users in.</td>
+<td><strong>Authorization Code Flow with PKCE</strong>.</td>
+<td>Standard interactive OAuth. Not the focus of this topic, but the right answer if your &quot;Basic&quot; usage today is actually just &quot;I prompted the user for credentials and forwarded them&quot;.</td>
+</tr>
+</tbody>
+</table>
+<p>Client Credentials access tokens, PATs, and SATs are all sent as standard <code>Authorization: Bearer &lt;token&gt;</code> and accepted across ERP.net endpoints and external integrations (for example custom services, reporting tools, or BI connectors). Once the token is in hand, the consumer does not need to know which kind it is.</p>
+<p>For background, see:</p>
+<ul>
+<li><a href="flows/client-credentials/overview.html">Service and Background Apps (Client Credentials Flow)</a></li>
+<li><a href="tokens/reference-access-tokens.html">Reference Access Tokens (PAT, SAT)</a></li>
+<li><a href="flows/choosing-flow.html">Choosing the Right Flow</a></li>
+</ul>
+<h2 id="prerequisite-register-a-trusted-application">Prerequisite: register a Trusted Application</h2>
+<p>Every non-interactive integration must be registered as a <strong>Trusted Application</strong> in the target instance. The registration controls which flows are allowed and what identity the resulting token carries.</p>
+<p>Set the following on the Trusted Application before migrating. The required values depend on which target you are moving to.</p>
+<h3 id="for-client-credentials">For Client Credentials</h3>
+<p>Client Credentials issues short-lived OAuth access tokens through <code>/id/connect/token</code>. Reference token (PAT/SAT) issuance is not used, so <code>AccessTokens</code> can be set to <code>None</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ApplicationUri</code> (used as OAuth <code>client_id</code>)</td>
+<td>A stable URI for the app, for example <code>my.trusted.app/integration</code></td>
+</tr>
+<tr>
+<td><code>ClientType</code></td>
+<td><code>Confidential</code></td>
+</tr>
+<tr>
+<td><code>ApplicationSecretHash</code></td>
+<td>Hash of a strong secret. Rotate periodically.</td>
+</tr>
+<tr>
+<td><code>Scope</code></td>
+<td>The scopes the integration needs (for example <code>read</code>, <code>update</code>)</td>
+</tr>
+<tr>
+<td><code>SystemUserAllowed</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>SystemUser</code></td>
+<td>The least-privilege ERP user the integration acts as (for example <code>svc.integration</code>)</td>
+</tr>
+<tr>
+<td><code>AccessTokens</code></td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>IsEnabled</code></td>
+<td><code>true</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="for-sat">For SAT</h3>
+<p>SAT shares the Client Credentials configuration, with one difference: reference token issuance must be enabled. Administrators issue SATs from the Instance Manager site.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ApplicationUri</code> (used as OAuth <code>client_id</code>)</td>
+<td>A stable URI for the app, for example <code>my.trusted.app/integration</code></td>
+</tr>
+<tr>
+<td><code>ClientType</code></td>
+<td><code>Confidential</code></td>
+</tr>
+<tr>
+<td><code>ApplicationSecretHash</code></td>
+<td>Hash of a strong secret. Rotate periodically.</td>
+</tr>
+<tr>
+<td><code>Scope</code></td>
+<td>Scopes the issued SATs may carry, for example <code>read</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><code>SystemUserAllowed</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>SystemUser</code></td>
+<td>The least-privilege ERP user the SAT acts as</td>
+</tr>
+<tr>
+<td><code>AccessTokens</code></td>
+<td><code>AdministratorsOnly</code></td>
+</tr>
+<tr>
+<td><code>IsEnabled</code></td>
+<td><code>true</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="for-pat">For PAT</h3>
+<p>PATs are minted by the end user from the Profile site against an existing Trusted Application. The user's own interactive sign-in authorises the issuance call, so the app does not need a client secret and <code>ClientType</code> is not validated at issuance time.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ApplicationUri</code> (used as OAuth <code>client_id</code>)</td>
+<td>A stable URI for the app, for example <code>my.trusted.app/integration</code></td>
+</tr>
+<tr>
+<td><code>Scope</code></td>
+<td>Scopes a PAT may carry, for example <code>read</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><code>AccessTokens</code></td>
+<td><code>AuthenticatedUsers</code> (any signed-in user can mint a PAT) or <code>AdministratorsOnly</code> (admins mint PATs on behalf of users)</td>
+</tr>
+<tr>
+<td><code>IsEnabled</code></td>
+<td><code>true</code></td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="configuration/trusted-apps-access.html">Trusted Applications and Access Control</a> for the full reference.</p>
+<h2 id="migrating-from-basic-to-client-credentials">Migrating from Basic to Client Credentials</h2>
+<p>This is the most common path: a backend that today authenticates with <code>Authorization: Basic ...</code>.</p>
+<h3 id="before">Before</h3>
+<pre><code class="lang-http">GET /api/domain/odata/Crm_Sales_Customers?$top=10 HTTP/1.1
+Host: testdb.my.erp.net
+Authorization: Basic base64(svc.integration:hunter2)
+</code></pre>
+<h3 id="after">After</h3>
+<ol>
+<li><p>Register a Trusted Application as in the prerequisite section, with <code>SystemUserAllowed = true</code> and <code>SystemUser = svc.integration</code> (or whichever user the integration should act as).</p>
+</li>
+<li><p>Exchange the client secret for an access token at the standard token endpoint:</p>
+<pre><code class="lang-http">POST /id/connect/token HTTP/1.1
+Host: testdb.my.erp.net
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&amp;
+client_id=my.trusted.app/integration&amp;
+client_secret=&lt;your_plain_client_secret&gt;&amp;
+scope=read
+</code></pre>
+<p>Response:</p>
+<pre><code class="lang-json">{
+  &quot;access_token&quot;: &quot;&lt;access_token&gt;&quot;,
+  &quot;expires_in&quot;: 3600,
+  &quot;token_type&quot;: &quot;Bearer&quot;,
+  &quot;scope&quot;: &quot;read&quot;
+}
+</code></pre>
+</li>
+<li><p>Send the access token on subsequent calls:</p>
+<pre><code class="lang-http">GET /api/domain/odata/Crm_Sales_Customers?$top=10 HTTP/1.1
+Host: testdb.my.erp.net
+Authorization: Bearer &lt;access_token&gt;
+</code></pre>
+</li>
+<li><p>Cache the token in process until it is close to expiry, then request a fresh one. Do <strong>not</strong> call <code>/id/connect/token</code> per request.</p>
+</li>
+<li><p>Decommission the Basic credentials:</p>
+<ul>
+<li>Remove the user password from the integration's configuration.</li>
+<li>Rotate the password on the original ERP user so any lingering Basic clients fail loudly.</li>
+<li>Disable interactive login for the dedicated System User configured on the Trusted Application.</li>
+</ul>
+</li>
+</ol>
+<p>For a fuller walkthrough, see <a href="flows/client-credentials/service-apps-step-by-step.html">Step-by-Step: Client Credentials Flow</a>.</p>
+<h2 id="migrating-from-basic-to-pat">Migrating from Basic to PAT</h2>
+<p>Use this when the integration must act as a specific person and you cannot move to Client Credentials.</p>
+<h3 id="before-1">Before</h3>
+<pre><code class="lang-http">GET /api/domain/odata/Crm_Sales_Customers HTTP/1.1
+Host: testdb.my.erp.net
+Authorization: Basic base64(alice:hunter2)
+</code></pre>
+<h3 id="after-1">After</h3>
+<ol>
+<li><p>Make sure the target Trusted Application has <code>AccessTokens = AuthenticatedUsers</code> (or <code>AdministratorsOnly</code> if an admin will mint the token for the user).</p>
+</li>
+<li><p>The user mints a PAT from the Profile site. The token returned starts with <code>enrt_</code>, for example:</p>
+<pre><code class="lang-text">enrt_1D41D4694B4F02D3D6A31FFA07E20B73F48248B26C75A0CCCB5F9DBEE41F7960
+</code></pre>
+<p>See <a href="tokens/issuing-reference-tokens.html">Issuing Reference Tokens</a> for the issuance UI and request shape.</p>
+</li>
+<li><p>Use the PAT in subsequent calls:</p>
+<pre><code class="lang-http">GET /api/domain/odata/Crm_Sales_Customers HTTP/1.1
+Host: testdb.my.erp.net
+Authorization: Bearer enrt_1D41D4694B4F02D3D6A31FFA07E20B73F48248B26C75A0CCCB5F9DBEE41F7960
+</code></pre>
+</li>
+<li><p>Decommission the Basic credentials as in the previous section. The user's password is no longer used by the integration.</p>
+</li>
+</ol>
+<div class="NOTE">
+<h5>Note</h5>
+<p>A PAT inherits the issuing user's permissions. Restrict scopes and expiration to the minimum needed.</p>
+</div>
+<h2 id="migrating-from-erplogin-to-client-credentials">Migrating from ErpLogin to Client Credentials</h2>
+<p>The shape change is straightforward: instead of trading a username and password for an opaque <code>ErpSession</code> id, you trade a <code>client_id</code> and <code>client_secret</code> for a standard OAuth access token.</p>
+<h3 id="before-2">Before</h3>
+<pre><code class="lang-http">POST /api/domain/login HTTP/1.1
+Host: testdb.my.erp.net
+Content-Type: application/json
+
+{
+  &quot;user&quot;: &quot;svc.integration&quot;,
+  &quot;pass&quot;: &quot;hunter2&quot;,
+  &quot;app&quot;:  &quot;my-integration&quot;,
+  &quot;lang&quot;: &quot;en&quot;
+}
+</code></pre>
+<pre><code class="lang-http">GET /api/domain/odata/Crm_Sales_Customers HTTP/1.1
+Host: testdb.my.erp.net
+Authorization: ErpSession 4f9c0c7c-...-9c1f
+</code></pre>
+<h3 id="after-2">After</h3>
+<pre><code class="lang-http">POST /id/connect/token HTTP/1.1
+Host: testdb.my.erp.net
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&amp;
+client_id=my.trusted.app/integration&amp;
+client_secret=&lt;your_plain_client_secret&gt;&amp;
+scope=read
+</code></pre>
+<pre><code class="lang-http">GET /api/domain/odata/Crm_Sales_Customers HTTP/1.1
+Host: testdb.my.erp.net
+Authorization: Bearer &lt;access_token&gt;
+</code></pre>
+<p>Field mapping:</p>
+<table>
+<thead>
+<tr>
+<th>ErpLogin field</th>
+<th>OAuth equivalent</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>user</code> + <code>pass</code></td>
+<td><code>client_id</code> + <code>client_secret</code> of a Trusted Application</td>
+<td>The user password is gone. The integration authenticates as an app, and runs as the Trusted Application's System User.</td>
+</tr>
+<tr>
+<td><code>app</code></td>
+<td><code>client_id</code></td>
+<td>Use the Trusted Application's <code>ApplicationUri</code> as <code>client_id</code>.</td>
+</tr>
+<tr>
+<td><code>lang</code></td>
+<td>No OAuth equivalent</td>
+<td>Pass language out of band, for example via the <code>?lang=</code> query string where the consumer supports it.</td>
+</tr>
+</tbody>
+</table>
+<p>Other differences to plan for:</p>
+<ul>
+<li><strong>Token expiry.</strong> OAuth access tokens are short-lived (see <code>expires_in</code>). Cache them and re-request when needed. ErpLogin returned a session id with no built-in expiry.</li>
+<li><strong>No refresh tokens.</strong> Client Credentials does not issue refresh tokens. Just request a fresh token. See <a href="tokens/token-lifetime.html">Token Lifetime and Renewal</a>.</li>
+<li><strong>Logout.</strong> ErpLogin's <code>POST /domain/logout</code> has no direct analogue here. Either let the access token expire, or revoke through the identity site if immediate invalidation is required. See <a href="sessions/session-revocation.html">Session Revocation</a>.</li>
+</ul>
+<h2 id="migrating-from-erplogin-to-pat">Migrating from ErpLogin to PAT</h2>
+<p>When you specifically need a human identity in the token (per-user audit, per-user permissions), follow <a href="#migrating-from-basic-to-pat">Migrating from Basic to PAT</a> instead. The mint endpoint is different (Profile site, <code>enrt_</code> token returned), and the lifetime is much longer than a Client Credentials access token.</p>
+<h2 id="coexistence-period">Coexistence period</h2>
+<p>Until the legacy schemes are removed:</p>
+<ul>
+<li>Basic, ErpLogin, and Bearer (Client Credentials access tokens, PATs, SATs) all keep working in parallel. The server prefers OAuth schemes and falls back to the legacy ones.</li>
+<li>Send only <strong>one</strong> authorization scheme per request. Mixing <code>Basic</code> and <code>Bearer</code> in the same call is undefined.</li>
+<li>Basic and ErpLogin maintain their own per-host caches. Token-based clients are validated through ERP.net Identity and do not depend on that cache, which is one of the reasons OAuth scales better across server farms.</li>
+</ul>
+<h2 id="migration-checklist">Migration checklist</h2>
+<ul>
+<li>[ ] Trusted Application registered with <code>ApplicationUri</code>, secret, and <code>Scope</code> set correctly.</li>
+<li>[ ] For Client Credentials and SAT: <code>SystemUserAllowed = true</code> and a least-privilege <code>SystemUser</code> configured.</li>
+<li>[ ] Integration code calls <code>/id/connect/token</code> (Client Credentials) or uses an issued <code>enrt_</code> token (PAT or SAT).</li>
+<li>[ ] Access tokens cached in process and reused until close to expiry.</li>
+<li>[ ] All authenticated requests send <code>Authorization: Bearer &lt;token&gt;</code>.</li>
+<li>[ ] Legacy credentials removed from configuration; service account password rotated.</li>
+<li>[ ] Token expiry path tested. Renewal verified end to end.</li>
+<li>[ ] Revocation path tested. PAT from the Profile site; Client Credentials by rotating the secret.</li>
+</ul>
+<hr>
+<h2 id="learn-more">Learn More</h2>
+<ul>
+<li><p><a href="flows/choosing-flow.html"><strong>Choosing the Right Flow</strong></a><br>
+Decision guide for picking between Authorization Code, Client Credentials, and reference tokens.</p>
+</li>
+<li><p><a href="flows/client-credentials/overview.html"><strong>Service and Background Apps (Client Credentials Flow)</strong></a><br>
+Full walkthrough for the most common migration target.</p>
+</li>
+<li><p><a href="tokens/reference-access-tokens.html"><strong>Reference Access Tokens (PAT, SAT)</strong></a><br>
+When to use long-lived reference tokens and how they are issued.</p>
+</li>
+<li><p><a href="configuration/trusted-apps-access.html"><strong>Trusted Applications and Access Control</strong></a><br>
+System User, scopes, and access policies.</p>
+</li>
+<li><p><a href="security-best-practices.html"><strong>Security Best Practices</strong></a><br>
+Secret handling, rotation, and audit guidance for production integrations.</p>
+</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/ErpNetDocs/dev/blob/master/auth/migrating-from-legacy-auth.md/#L1" class="edit-link">Suggest improvement to this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
