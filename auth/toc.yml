@@ -20,8 +20,6 @@
   topicHref: sessions/overview.md
 - name: Automating installation
   href: automating-installation.md
-- name: Migrating from Legacy Authentication
-  href: migrating-from-legacy-auth.md
 - name: Samples
   href: samples/toc.yml
   topicHref: samples/index.md

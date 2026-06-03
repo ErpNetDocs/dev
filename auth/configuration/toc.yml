@@ -2,3 +2,5 @@
   href: overview.md
 - name: Trusted Applications
   href: trusted-apps-access.md
+- name: Migrating from Legacy Authentication
+  href: migrating-from-legacy-auth.md

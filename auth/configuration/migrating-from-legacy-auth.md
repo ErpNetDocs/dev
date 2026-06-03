@@ -29,9 +29,9 @@ Client Credentials access tokens, PATs, and SATs are all sent as standard `Autho
 
 For background, see:
 
-- [Service and Background Apps (Client Credentials Flow)](./flows/client-credentials/overview.md)
-- [Reference Access Tokens (PAT, SAT)](./tokens/reference-access-tokens.md)
-- [Choosing the Right Flow](./flows/choosing-flow.md)
+- [Service and Background Apps (Client Credentials Flow)](../flows/client-credentials/overview.md)
+- [Reference Access Tokens (PAT, SAT)](../tokens/reference-access-tokens.md)
+- [Choosing the Right Flow](../flows/choosing-flow.md)
 
 ## Prerequisite: register a Trusted Application
 
@@ -80,7 +80,7 @@ PATs are minted by the end user from the Profile site against an existing Truste
 | `AccessTokens` | `AuthenticatedUsers` (any signed-in user can mint a PAT) or `AdministratorsOnly` (admins mint PATs on behalf of users) |
 | `IsEnabled` | `true` |
 
-See [Trusted Applications and Access Control](./configuration/trusted-apps-access.md) for the full reference.
+See [Trusted Applications and Access Control](./trusted-apps-access.md) for the full reference.
 
 ## Migrating from Basic to Client Credentials
 
@@ -137,7 +137,7 @@ Authorization: Basic base64(svc.integration:hunter2)
    - Rotate the password on the original ERP user so any lingering Basic clients fail loudly.
    - Disable interactive login for the dedicated System User configured on the Trusted Application.
 
-For a fuller walkthrough, see [Step-by-Step: Client Credentials Flow](./flows/client-credentials/service-apps-step-by-step.md).
+For a fuller walkthrough, see [Step-by-Step: Client Credentials Flow](../flows/client-credentials/service-apps-step-by-step.md).
 
 ## Migrating from Basic to PAT
 
@@ -161,7 +161,7 @@ Authorization: Basic base64(alice:hunter2)
    enrt_1D41D4694B4F02D3D6A31FFA07E20B73F48248B26C75A0CCCB5F9DBEE41F7960
    ```
 
-   See [Issuing Reference Tokens](./tokens/issuing-reference-tokens.md) for the issuance UI and request shape.
+   See [Issuing Reference Tokens](../tokens/issuing-reference-tokens.md) for the issuance UI and request shape.
 
 3. Use the PAT in subsequent calls:
 
@@ -231,8 +231,8 @@ Field mapping:
 Other differences to plan for:
 
 - **Token expiry.** OAuth access tokens are short-lived (see `expires_in`). Cache them and re-request when needed. ErpLogin returned a session id with no built-in expiry.
-- **No refresh tokens.** Client Credentials does not issue refresh tokens. Just request a fresh token. See [Token Lifetime and Renewal](./tokens/token-lifetime.md).
-- **Logout.** ErpLogin's `POST /domain/logout` has no direct analogue here. Either let the access token expire, or revoke through the identity site if immediate invalidation is required. See [Session Revocation](./sessions/session-revocation.md).
+- **No refresh tokens.** Client Credentials does not issue refresh tokens. Just request a fresh token. See [Token Lifetime and Renewal](../tokens/token-lifetime.md).
+- **Logout.** ErpLogin's `POST /domain/logout` has no direct analogue here. Either let the access token expire, or revoke through the identity site if immediate invalidation is required. See [Session Revocation](../sessions/session-revocation.md).
 
 ## Migrating from ErpLogin to PAT
 
@@ -261,17 +261,17 @@ Until the legacy schemes are removed:
 
 ## Learn More
 
-- [**Choosing the Right Flow**](./flows/choosing-flow.md)  
+- [**Choosing the Right Flow**](../flows/choosing-flow.md)  
   Decision guide for picking between Authorization Code, Client Credentials, and reference tokens.
 
-- [**Service and Background Apps (Client Credentials Flow)**](./flows/client-credentials/overview.md)  
+- [**Service and Background Apps (Client Credentials Flow)**](../flows/client-credentials/overview.md)  
   Full walkthrough for the most common migration target.
 
-- [**Reference Access Tokens (PAT, SAT)**](./tokens/reference-access-tokens.md)  
+- [**Reference Access Tokens (PAT, SAT)**](../tokens/reference-access-tokens.md)  
   When to use long-lived reference tokens and how they are issued.
 
-- [**Trusted Applications and Access Control**](./configuration/trusted-apps-access.md)  
+- [**Trusted Applications and Access Control**](./trusted-apps-access.md)  
   System User, scopes, and access policies.
 
-- [**Security Best Practices**](./security-best-practices.md)  
+- [**Security Best Practices**](../security-best-practices.md)  
   Secret handling, rotation, and audit guidance for production integrations.
