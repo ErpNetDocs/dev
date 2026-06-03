@@ -248,14 +248,14 @@ Until the legacy schemes are removed:
 
 ## Migration checklist
 
-- [ ] Trusted Application registered with `ApplicationUri`, secret, and `Scope` set correctly.
-- [ ] For Client Credentials and SAT: `SystemUserAllowed = true` and a least-privilege `SystemUser` configured.
-- [ ] Integration code calls `/id/connect/token` (Client Credentials) or uses an issued `enrt_` token (PAT or SAT).
-- [ ] Access tokens cached in process and reused until close to expiry.
-- [ ] All authenticated requests send `Authorization: Bearer <token>`.
-- [ ] Legacy credentials removed from configuration; service account password rotated.
-- [ ] Token expiry path tested. Renewal verified end to end.
-- [ ] Revocation path tested. PAT from the Profile site; Client Credentials by rotating the secret.
+1. ☐ Trusted Application registered with `ApplicationUri`, secret, and `Scope` set correctly.
+2. ☐ For Client Credentials and SAT: `SystemUserAllowed = true` and a least-privilege `SystemUser` configured.
+3. ☐ Integration code calls `/id/connect/token` (Client Credentials) or uses an issued `enrt_` token (PAT or SAT).
+4. ☐ Access tokens cached in process and reused until close to expiry.
+5. ☐ All authenticated requests send `Authorization: Bearer <token>`.
+6. ☐ Legacy credentials removed from configuration; service account password rotated.
+7. ☐ Token expiry path tested. Renewal verified end to end.
+8. ☐ Revocation path tested. PAT from the Profile site; Client Credentials by rotating the secret.
 
 ---
 
