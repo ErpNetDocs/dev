@@ -200,9 +200,9 @@ Their lifetime is typically around one hour, but can vary depending on configura
 <td>no</td>
 </tr>
 <tr>
-<td><code>sub_id</code></td>
-<td>Internal <code>Sec_Users.Id</code>. Stable across renames, unlike <code>sub</code>.</td>
-<td><code>&quot;4587&quot;</code></td>
+<td><code>id</code></td>
+<td>Internal <code>Sec_Users.Id</code> (GUID). Stable across renames, unlike <code>sub</code>.</td>
+<td><code>&quot;a3f1c9e0-7b42-4d18-9c6e-2f8b1a5d3e07&quot;</code></td>
 <td>yes</td>
 <td>no</td>
 </tr>
@@ -299,8 +299,8 @@ Their lifetime is typically around one hour, but can vary depending on configura
 </tr>
 <tr>
 <td><code>system_user_id</code> / <code>client_system_user_id</code></td>
-<td>Internal id of the service account, when needed for foreign-key references.</td>
-<td><code>&quot;1&quot;</code></td>
+<td>Internal id of the service account (<code>Sec_Users.Id</code>, GUID), when needed for foreign-key references.</td>
+<td><code>&quot;b7e4d2a1-5f63-4c89-a012-3d6f8b9c1e45&quot;</code></td>
 <td>no</td>
 <td>yes (when set)</td>
 </tr>
