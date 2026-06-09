@@ -83,7 +83,7 @@ The table below lists every claim @@name Identity may issue. Not all claims appe
 | `exp` | Expiration. The token is invalid after this instant (typically `iat` + ~1 hour). | `1762189360` | yes | yes |
 | `jti` | Unique token id. Enables per-token revocation and lets clients deduplicate. | `"1B79C24AB25E0F675DF2233CDE371244"` | yes | yes |
 | `sub` | The acting user's login (`Sec_Users.Login`). Absent in service-to-service tokens. | `"john.doe"` | yes | no |
-| `sub_id` | Internal `Sec_Users.Id`. Stable across renames, unlike `sub`. | `"4587"` | yes | no |
+| `id` | Internal `Sec_Users.Id` (GUID). Stable across renames, unlike `sub`. | `"a3f1c9e0-7b42-4d18-9c6e-2f8b1a5d3e07"` | yes | no |
 | `auth_time` | When the user actually authenticated (ID token only). Lets relying parties enforce `max_age` and re-authentication policies. | `1762185700` | yes | n/a |
 | `sid` | Session id. Used by the application server as the license-slot key and for single sign-out. | `"E4D2A57B3F1C..."` | yes | no |
 | `scope` | The granted scopes. What the token is authorized to do. APIs gate operations against these. | `["read","sec","update"]` | yes | yes |
@@ -97,7 +97,7 @@ The table below lists every claim @@name Identity may issue. Not all claims appe
 | `db` / `client_db` | Which @@name database (tenant) the token is bound to. APIs use this to route the request. The user-flow name is `db`; the service-flow name is `client_db`. | `"E1_TESTDB"` | yes (`db`) | yes (`client_db`) |
 | `system_user` / `client_system_user` | Service-account login used for non-impersonated actions (background jobs, system writes). | `"admin"` | no | yes (`client_system_user`) |
 | `system_user_type` / `client_system_user_type` | User type of the service account. Same allow-list checks as `user_type`. | `"InternalUser"` | no | yes (`client_system_user_type`) |
-| `system_user_id` / `client_system_user_id` | Internal id of the service account, when needed for foreign-key references. | `"1"` | no | yes (when set) |
+| `system_user_id` / `client_system_user_id` | Internal id of the service account (`Sec_Users.Id`, GUID), when needed for foreign-key references. | `"b7e4d2a1-5f63-4c89-a012-3d6f8b9c1e45"` | no | yes (when set) |
 | `idp` | Which identity provider authenticated this session. Apps can branch behavior for federated users. | `"google"` or a provider GUID | yes (external IdP only) | no |
 | `tid` | External tenant id (typically Azure AD `tid`). Used for tenant-scoped authorization on the @@name side. | `"72f988bf-86f1-41af-91ab-2d7cd011db47"` | yes (external IdP only) | no |
 
