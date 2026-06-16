@@ -39,5 +39,5 @@ If you are looking for query syntax reference (e.g. `$filter`, `$select`, `$expa
 
 ## Internal Formats
 
-- [Filter XML](filter-xml.html) - Internal XML format used in condition fields such as customer and distribution channel filters.
+- [Filter XML](filter-xml.md) - Internal XML format used in condition fields such as customer and distribution channel filters.
 
