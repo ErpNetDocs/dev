@@ -37,3 +37,7 @@ If you are looking for query syntax reference (e.g. `$filter`, `$select`, `$expa
 - [Retrieve Products](retrieve-products.md)
 - [Query examples](query-examples.md)
 
+## Internal Formats
+
+- [Filter XML](filter-xml.html) - Internal XML format used in condition fields such as customer and distribution channel filters.
+
