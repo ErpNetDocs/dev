@@ -11,7 +11,7 @@ For a great introduction to query options, read the [OData query data tutorial](
 Query Option | Origin | Description
 -------------|--------|------------
 [$apply](grouping.md) | OData | Enables grouped and aggregated results with `$apply=groupby(...)`.
-[expandgroup](grouping.md#expandgroup) | Extension | Expands reference-valued grouped keys in grouped results.
+[expandgroup](grouping.html#expandgroup) | Extension | Expands reference-valued grouped keys in grouped results.
 $count | OData | The $count system query option allows clients to request a count of the matching resources included with the resources in the response. The $count query option has a Boolean value of true or false.
 $expand | OData | The $expand system query option specifies the related resources or media streams to be included in line with retrieved resources.
 [$filter](filter.md) | OData | The $filter system query option allows clients to filter a collection of resources that are addressed by a request URL.
