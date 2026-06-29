@@ -7,6 +7,8 @@
   topicHref: query-options/index.md
 - name: Paging results
   href: paging.md
+- name: Grouping and aggregation
+  href: grouping.md
 - name: Query Builder
   href: query-builder.md
 - name: Query Tool

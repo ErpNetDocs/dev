@@ -21,6 +21,9 @@ ERP.net exposes entities (repositories) through an OData-compliant service. Each
 * [Paging results](./paging.md)  
   How to page large result sets using `$top` and `@odata.nextLink` (`$skiptoken` vs `$skip`).
 
+* [Grouping and aggregation](./grouping.md)  
+  How to use `$apply=groupby((Product),aggregate($count as Count))` to obtain summarized data.
+
 * [Query Builder](./query-builder.md)  
   ERP.net includes a **Visual Query Designer** to simplify query creation
 
