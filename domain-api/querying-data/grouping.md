@@ -6,10 +6,11 @@ OData grouping and aggregation allows Domain API clients to request summary data
 
 Use it when the client needs business summaries such as sales amount by customer, sold quantity by product, or document totals from document lines. The service evaluates the matching records, groups them, and returns one result object per group.
 
-ERP.net supports the standard OData aggregation syntax where possible and adds two convenience extensions for Domain API usage:
+ERP.net supports the standard OData aggregation syntax where possible and adds several convenience extensions for Domain API usage:
 
 - grouping by reference-valued properties, such as `Product` or `SalesOrder/Customer`;
-- `expandgroup`, which expands grouped reference keys in the returned open-object result.
+- `expandgroup`, which expands grouped reference keys in the returned open-object result;
+- `yearmonth(...)`, which groups date values by calendar year and month.
 
 ## Getting Started
 
@@ -170,7 +171,8 @@ Supported grouping inputs:
 - reference properties of the source entity, such as `Product`;
 - reference id paths, such as `Customer/Id`;
 - dimension properties through supported references, such as `SalesOrder/DocumentNo`;
-- reference properties through supported references, such as `SalesOrder/Customer`.
+- reference properties through supported references, such as `SalesOrder/Customer`;
+- computed interval keys declared with `compute(... as Alias)`, such as `yearmonth(DocumentDate) as YearMonth`.
 
 A supported reference path can follow only ownership references and filterable references. This rule applies to every reference segment, including the first segment from the source entity. Ordinary references that are not marked as ownership or filterable cannot be used in grouped keys.
 
@@ -194,6 +196,143 @@ Supported aggregate functions:
 - `Property with min as Alias` (measure properties only);
 - `Property with max as Alias` (measure properties only);
 - `Property with countdistinct as Alias`.
+
+Each source property can appear only once in `groupby(...)` and only once in `aggregate(...)`.
+
+### Direct aggregation
+
+Use `aggregate(...)` without `groupby(...)` when the client needs totals over the filtered source rows and no explicit group keys.
+
+```http
+GET /domain/odata/Crm_Sales_SalesOrderLines?$apply=aggregate(LineAmount with sum as TotalAmount)
+```
+
+Example result:
+
+```json
+{
+  "value": [
+    {
+      "TotalAmount": {
+        "Value": 98770.82,
+        "Currency": "EUR"
+      }
+    },
+    {
+      "TotalAmount": {
+        "Value": 3904225639.96,
+        "Currency": "BGN"
+      }
+    }
+  ]
+}
+```
+
+The result is still returned as a collection of open objects. For plain scalar aggregates, it normally contains one object. For Amount and Quantity aggregates, the service still separates results by measure. This means a direct amount aggregate returns one row per currency, and a direct quantity aggregate returns one row per measurement unit.
+
+Normal `$filter` is evaluated before the aggregate.
+
+```http
+GET /domain/odata/Crm_Sales_SalesOrderLines?$filter=RequiredDeliveryDate ge 2026-01-01&$apply=aggregate(LineAmount with sum as TotalAmount,$count as Count)
+```
+
+`expandgroup` is not used with direct aggregation because there are no grouped reference keys to expand.
+
+### Group intervals
+
+Use `compute` before `groupby` when the grouped key should be a date or string interval instead of the exact source value.
+
+```http
+$apply=compute(IntervalExpression as Alias)/groupby((Alias),aggregate(Expression with Function as AggregateAlias))
+```
+
+Example result:
+
+```json
+{
+  "value": [
+    {
+      "Alias": "2026-01",
+      "AggregateAlias": 42
+    }
+  ]
+}
+```
+
+Supported interval expressions:
+
+| Expression | Source value | Grouped value |
+| --- | --- | --- |
+| `year(DateProperty)` | date or date-time | calendar year, such as `2026` |
+| `yearmonth(DateProperty)` | date or date-time | calendar year and month, such as `2026-01` |
+| `date(DateProperty)` | date or date-time | calendar date, such as `2026-01-31` |
+| `substring(StringProperty,0,1)` | string | first character of the string |
+
+`yearmonth` is an ERP.net extension. It should be used when the client needs monthly grouping by year and month. The standard `month(...)` function is not supported for grouped interval keys because it does not include the year.
+
+The interval alias becomes the grouped key in the result. Interval keys are returned as strings.
+
+Example: sales amount by document month.
+
+```http
+GET /domain/odata/Crm_Sales_SalesAnalytics?$apply=compute(yearmonth(DocumentDate) as YearMonth)/groupby((YearMonth),aggregate(LineAmount with sum as TotalAmount))
+```
+
+Example result:
+
+```json
+{
+  "value": [
+    {
+      "YearMonth": "2026-01",
+      "TotalAmount": {
+        "Value": 12948.77,
+        "Currency": "BGN"
+      }
+    }
+  ]
+}
+```
+
+Example: line count by delivery date.
+
+```http
+GET /domain/odata/Crm_Sales_SalesOrderLines?$apply=compute(date(RequiredDeliveryDate) as DeliveryDate)/groupby((DeliveryDate),aggregate($count as Count))
+```
+
+Example result:
+
+```json
+{
+  "value": [
+    {
+      "DeliveryDate": "2026-01-31",
+      "Count": 18
+    }
+  ]
+}
+```
+
+Example: customers by first character of their number.
+
+```http
+GET /domain/odata/Crm_Sales_Customers?$apply=compute(substring(Number,0,1) as NumberInitial)/groupby((NumberInitial),aggregate($count as Count))
+```
+
+Example result:
+
+```json
+{
+  "value": [
+    {
+      "NumberInitial": "A",
+      "Count": 128
+    }
+  ]
+}
+```
+
+Interval expressions are supported only as computed keys for `groupby`. They cannot be used as aggregate expressions or as general-purpose computed output values in grouped results.
 
 ### `expandgroup`
 
@@ -474,6 +613,40 @@ Common supported combinations:
 | `min`, `max` | measures only |
 | `countdistinct` | supported dimensions and measures |
 
+#### One use per source property
+
+A source property can be used only once in `groupby(...)` and only once in `aggregate(...)`.
+
+This means that the same property cannot be grouped more than once with different intervals, and the same property cannot be aggregated more than once with different functions or aliases.
+
+Interval group keys follow the same rule. For example, do not group by both `year(DocumentDate)` and `yearmonth(DocumentDate)` in the same grouped query.
+
+Supported:
+
+```http
+$apply=groupby((Product),aggregate(LineAmount with sum as TotalAmount))
+```
+
+Not supported:
+
+```http
+$apply=groupby((DocumentDate,DocumentDate),aggregate($count as Count))
+```
+
+Not supported:
+
+```http
+$apply=compute(year(DocumentDate) as Year,yearmonth(DocumentDate) as YearMonth)/groupby((Year,YearMonth),aggregate($count as Count))
+```
+
+Not supported:
+
+```http
+$apply=groupby((Product),aggregate(LineAmount with sum as TotalAmount,LineAmount with max as MaxAmount))
+```
+
+If several aggregate values are needed from the same source value, execute separate grouped queries.
+
 Example grouping by dimensions and aggregating a measure:
 
 ```http
@@ -612,9 +785,13 @@ Example error:
 
 Standard OData syntax used by this feature:
 
+- `$apply=aggregate(...)`;
 - `$apply=groupby(...)`;
 - `aggregate(... with sum as Alias)`;
 - `aggregate($count as Alias)`;
+- `compute(date(Property) as Alias)/groupby((Alias),...)`;
+- `compute(year(Property) as Alias)/groupby((Alias),...)`;
+- `compute(substring(Property,0,1) as Alias)/groupby((Alias),...)`;
 - path group keys such as `SalesOrder/Customer`.
 
 ERP.net-specific behavior:
@@ -623,7 +800,8 @@ ERP.net-specific behavior:
 - expanding grouped reference keys with `expandgroup`;
 - returning measured aggregate values as complex Amount or Quantity objects;
 - returning separate grouped rows for different currencies or measurement units;
-- allowing only reference paths supported by the Domain API model.
+- allowing only reference paths supported by the Domain API model;
+- `yearmonth(Property)` for calendar month grouping by year and month.
 
 ## Troubleshooting
 
@@ -702,6 +880,79 @@ Example result:
 ```
 
 Prevention: group by the reference itself when the entity key is needed, and group by the public id property when only the identity value is needed.
+
+### Month grouping does not work as expected
+
+Symptom: the client needs monthly grouping by document date, but `month(DocumentDate)` is rejected or would not distinguish the same month in different years.
+
+Cause: grouped interval keys support the ERP.net `yearmonth(...)` function for monthly grouping. It returns both year and month.
+
+Fix: use `yearmonth(DateProperty)` in a `compute` transformation before `groupby`.
+
+```http
+GET /domain/odata/Crm_Sales_SalesAnalytics?$apply=compute(yearmonth(DocumentDate) as YearMonth)/groupby((YearMonth),aggregate(LineAmount with sum as TotalAmount))
+```
+
+Example result:
+
+```json
+{
+  "value": [
+    {
+      "YearMonth": "2026-01",
+      "TotalAmount": {
+        "Value": 12948.77,
+        "Currency": "BGN"
+      }
+    }
+  ]
+}
+```
+
+Prevention: use `yearmonth(...)` for month summaries and `year(...)` only for year summaries.
+
+### Amount or quantity results contain more rows than expected
+
+Symptom: the query groups by one key, such as `Product`, but the result contains more than one row for the same key.
+
+Cause: Amount and Quantity aggregates are automatically separated by their measure. Amounts with different currencies and quantities with different measurement units are returned as separate grouped rows, even when currency or unit is not listed in `groupby(...)`.
+
+Verification: compare the `Currency` value of the amount aggregate or the `Unit` value of the quantity aggregate in the repeated rows.
+
+```http
+GET /domain/odata/Crm_Sales_SalesOrderLines?$apply=groupby((Product),aggregate(LineAmount with sum as TotalAmount))
+```
+
+Example result:
+
+```json
+{
+  "value": [
+    {
+      "Product": {
+        "Id": "4452392f-9ec6-4724-92e4-00004f6ef7ec"
+      },
+      "TotalAmount": {
+        "Value": 12948.77,
+        "Currency": "BGN"
+      }
+    },
+    {
+      "Product": {
+        "Id": "4452392f-9ec6-4724-92e4-00004f6ef7ec"
+      },
+      "TotalAmount": {
+        "Value": 420.00,
+        "Currency": "EUR"
+      }
+    }
+  ]
+}
+```
+
+Fix: treat the measure as part of the grouped result. If a single value is required, filter the source records to one currency or unit, or convert the values to a common measure before aggregating them.
+
+Prevention: when aggregating Amount or Quantity values, design the client result grid or chart as if currency or unit is part of the grouping key.
 
 ### `$top` does not return the largest groups
 
