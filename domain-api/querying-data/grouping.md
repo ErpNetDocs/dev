@@ -141,7 +141,7 @@ Expected outcome:
 
 Type annotations such as `@odata.type` may appear depending on the requested OData metadata level. They are omitted from most examples for readability.
 
-## Configuration
+## Concepts
 
 ### `$apply`
 
@@ -416,8 +416,6 @@ Example result:
 Grouped results have no guaranteed business order. Because `$orderby` is not supported together with `$apply=groupby(...)`, `$top` and `$skip` must not be used as semantic paging over a user-visible ordered result.
 
 Do not interpret `$top=10` as "top 10 by amount", "top 10 by count", or any other ranked result. Use it only to retrieve the grouped result in chunks. If a specific user-visible order is required, materialize the grouped result and order it on the client.
-
-## Concepts
 
 ### Result shape
 
