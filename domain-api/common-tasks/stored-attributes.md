@@ -128,4 +128,4 @@ The result is a collection of `CustomPropertyValue` items.
 ## See also
 
 - [Custom Property Value](../complex-types/custom-property-value.md)
-- [Operations (actions and functions)](../data-manipulation/operations.md)
+- [Operations (actions and functions)](../operations/index.md)

@@ -22,3 +22,5 @@
   href: context-parameters.md
 - name: Handling renames
   href: handling-renames.md
+- name: ErpLogin Authentication (Legacy)
+  href: login-sessions.md

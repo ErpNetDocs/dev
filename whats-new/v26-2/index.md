@@ -27,4 +27,4 @@
 
 - **New Visual Import Tool** - The Domain API site  provides a **Visual Import Tool** at the `/api/domain/import` endpoint, for example: `https://testdb.my.erp.net/api/domain/import`. The tool allows you to work with import payloads interactively in the browser. You can type, paste, edit, and execute import JSON directly in the page.
 
-- **Domain API**: `Quantity` and `Amount` can now be set without first providing the corresponding measurement unit or currency, as long as the dependent reference is stored in the same entity. For details, see [Property Dependencies and Update Order](../domain-api/data-manipulation/update-order.md).
+- **Domain API**: `Quantity` and `Amount` can now be set without first providing the corresponding measurement unit or currency, as long as the dependent reference is stored in the same entity. For details, see [Property Dependencies and Update Order](../../domain-api/data-manipulation/update-order.md).
