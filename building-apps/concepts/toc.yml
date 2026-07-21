@@ -6,6 +6,8 @@
   href: app-types.md
 - name: Application Server Endpoints
   href: application-server-endpoints.md  
+- name: Profile Site Endpoints
+  href: profile-site-endpoints.md
 - name: API security best practices
   href: api-best-practices.md
 - name: Glossary
