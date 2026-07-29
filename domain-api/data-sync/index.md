@@ -14,6 +14,8 @@ For more information, select from the topics below:
 * [Object version](object-version.md)
 * [Optimistic locking](optimistic-locking.md)
 * [Incremental pull](incremental-pull.md)
+* [External identifiers](external-identifiers.md)
+* [Additional Data JSON](additional-data-json.md)
 
 >> [!note]
 >> The data sync support is first available in @@name v.2022.1.

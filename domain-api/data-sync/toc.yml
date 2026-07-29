@@ -8,3 +8,7 @@
   href: optimistic-locking.md
 - name: Incremental pull
   href: incremental-pull.md
+- name: External identifiers
+  href: external-identifiers.md
+- name: Additional Data JSON
+  href: additional-data-json.md
