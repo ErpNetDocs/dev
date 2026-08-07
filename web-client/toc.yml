@@ -1,5 +1,19 @@
 items:
-- name: Overview
+- name: Developing for Web Client
   href: index.md
-- name: Registering Extensions
-  href: registering-extensions.md
+- name: Web Client foundation
+  items:
+  - name: Web Client concepts
+    href: web-client-concepts.md
+  - name: Registered panels
+    href: registered-panels.md
+- name: Form layout management
+  items:
+  - name: Layout properties
+    href: layout-properties.md
+  - name: Layout API
+    href: layout-api.md
+- name: Client extensions
+  items:
+  - name: Registering extensions
+    href: registering-extensions.md
