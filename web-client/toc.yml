@@ -1,19 +1,17 @@
 items:
 - name: Developing for Web Client
   href: index.md
-- name: Web Client foundation
+- name: Web Client concepts
+  href: web-client-concepts.md
+- name: Manage form layouts
   items:
-  - name: Web Client concepts
-    href: web-client-concepts.md
-  - name: Registered panels
-    href: registered-panels.md
-- name: Form layout management
-  items:
-  - name: Layout properties
-    href: layout-properties.md
   - name: Layout API
     href: layout-api.md
-- name: Client extensions
+  - name: Registered panels
+    href: registered-panels.md
+  - name: Layout properties
+    href: layout-properties.md
+- name: Extend Web Client
   items:
   - name: Registering extensions
     href: registering-extensions.md

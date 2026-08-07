@@ -2,7 +2,7 @@
 
 ## Overview
 
-Web Client forms are composed of main panels and side panels. A panel is a named area that displays a list, a record, a related collection, or a supporting feature. The available panels depend on the form, repository, view mode, permissions, and enabled features.
+Web Client forms are composed of main panels and side panels. A panel is a named area that displays a list, a record, a related collection, or a supporting feature. The available panels depend on the form, repository, view mode, permissions, and enabled features. A form can display multiple main panels in its main area, but only one side panel at a time. Users can change the visible side panel through the form’s context menu, and the selection is persisted in the form layout.
 
 This topic helps external developers and layout managers identify panel names for Layout API requests. Captions are localized; panel names are the stable identifiers. Use the names returned by `get-layout-schema`.
 
@@ -11,7 +11,7 @@ This topic helps external developers and layout managers identify panel names fo
 The form schema exposes the panels available for the current request:
 
 - `Form.VisiblePanels` contains main-panel names.
-- `Form.VisibleSidePanel` contains side-panel names.
+- `Form.VisibleSidePanel` contains the currently visible side-panel name.
 
 The schema is authoritative for the selected repository, category, and view mode. A panel can be available in the schema even when it is not currently open in the user interface.
 
@@ -21,7 +21,10 @@ Navigator forms display a repository list and navigation panels for filters, chi
 
 ### Repository list panels
 
-The standard list/grid panel is:
+`NavigatorPanel` is the primary repository list panel. It displays objects from the
+navigator form's repository, usually in a data grid, and uses the form filter and
+ordering. It is normally a main panel and is the panel affected when the user opens
+the navigator list.
 
 ```text
 NavigatorPanel
@@ -34,7 +37,11 @@ PivotPanel
 KanbanPanel
 ```
 
-Availability depends on the selected view mode and repository capabilities.
+`PivotPanel` displays repository data as an analytical pivot view. `KanbanPanel`
+displays repository objects as cards arranged by configured grouping fields. These
+panels use the navigator form's repository and filter context but have their own
+panel-specific layout sections. Availability depends on the selected view mode and
+repository capabilities.
 
 ### Filter side panels
 
@@ -44,9 +51,17 @@ The standard filter panel is:
 Filter
 ```
 
-It is a side panel used to edit the repository filter.
+It is a side panel used to edit the navigator form's repository filter. Changes made
+through this panel change the list displayed by the main repository panel; the filter
+panel does not display the repository records itself.
 
-### Hierarchy panels
+### Hierarchy side panels
+
+A hierarchy side panel filters a navigator form based on the currently selected hierarchy node, which represents a reference value.
+
+For example, the `General.Products.Products` navigator can display a
+`Hierarchy.ProductGroup` hierarchy panel. It displays the ProductGroups hierarchy;
+selecting a product group filters the navigator to products assigned to that group.
 
 Hierarchy panels use the hierarchy reference name:
 
@@ -55,11 +70,15 @@ Hierarchy.Parent
 Hierarchy.Category
 ```
 
-Only applicable hierarchy references are registered for a repository.
+Only hierarchy references applicable to the repository are registered as panels.
+
 
 ### Child-collection side panels
 
-Aggregate child collections use the `CC.` prefix and the model collection name:
+Aggregate child collections use the `CC.` prefix and the model collection name. The
+panel displays child objects belonging to the currently selected navigator object,
+when the repository supports that relationship. It is a side panel and normally
+depends on the current object selection in the main list.
 
 ```text
 CC.Lines
@@ -74,7 +93,9 @@ Entity forms commonly contain a record header, child collections, related record
 
 ### Entity header panels
 
-The main object panel uses the repository-qualified `Header` name:
+The main object panel displays the current entity object and its primary fields. It
+is the main form area for editing or viewing the entity and uses the repository-
+qualified `Header` name:
 
 ```text
 Crm.Sales.SalesOrders.Header
@@ -83,7 +104,9 @@ General.Products.Products.Header
 
 ### Child-collection panels
 
-Child collections use the owner repository followed by the collection name:
+Child-collection panels display objects owned by the current entity, such as document
+lines, tasks, payments, or files. They use the owner repository followed by the
+collection name:
 
 ```text
 Crm.Sales.SalesOrders.Lines
@@ -99,7 +122,11 @@ Projects.Agile.Cases.Tasks.Comments
 
 ### Referenced-object panels
 
-Some entity forms include panels for important references, such as a customer, company, or payment term. The form creates a panel for the referenced object itself and can also expose that object's child collections.
+Some entity forms include panels for important references, such as a customer, company,
+or payment term. A referenced-object panel displays the single object reached through
+the reference from the current entity. The form can also expose child collections of
+that referenced object, so the user can inspect related details without leaving the
+current entity form.
 
 The reference path determines which object is displayed, but it is not appended to the panel name. The name is formed from the referenced repository:
 
@@ -127,7 +154,12 @@ The exact set of important references is defined by the repository and can vary 
 
 ### Related-data navigator panels
 
-Entity forms can contain navigator panels for records in other repositories that point to the current entity. These panels are registered from reverse references, including multi-step paths through filterable references. The panel is opened with a filter that selects records related to the current entity.
+Entity forms can contain navigator panels for records in other repositories that point
+to the current entity. These panels display a filtered list from the related
+repository, not the current entity and not a single referenced object. They are
+registered from reverse references, including multi-step paths through filterable
+references, and are opened with a filter that selects records related to the current
+entity.
 
 The name is formed as:
 
@@ -150,7 +182,10 @@ If the relation is reached through two references, the name contains both data-m
 
 ### Pivot panels
 
-Related pivot panels are registered from the same reverse-reference paths as entity-form related-data navigator panels. They use a `pivot.` prefix followed by the related repository and reference path:
+Related pivot panels are registered from the same reverse-reference paths as
+entity-form related-data navigator panels. They display aggregated or grouped data
+from the related repository instead of a row-by-row list. They use a `pivot.` prefix
+followed by the related repository and reference path:
 
 ```text
 pivot.Crm.Sales.SalesOrders.Customer
@@ -161,7 +196,10 @@ For example, `pivot.Crm.Sales.SalesOrders.Customer` is the analytical counterpar
 
 ### System panels
 
-System panels provide supporting features when the repository and site support them. Examples include:
+System panels provide supporting features rather than repository data. Depending on
+the form and enabled features, they can display extensible properties, system
+metadata, notifications, tasks, collaboration information, or print-related content.
+Examples include:
 
 ```text
 Crm.Sales.SalesOrders.ExtensibleDataObject

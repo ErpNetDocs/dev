@@ -7,35 +7,27 @@ description: Concepts and procedures for extending ERP.net Web Client and managi
 
 ## Overview
 
-This topic is the entry point for developers and implementation specialists who extend ERP.net Web Client or manage its form layouts.
+This topic is for developers and implementation specialists who extend ERP.net Web Client or manage its form layouts.
 
-The Web Client is a domain-model-oriented client. It presents repository data through applications, forms, and panels. You can extend the client by registering applications at supported extension points, or manage form layouts through the Layout API.
+The Web Client presents domain data through applications, forms, and panels. Its two main developer features are:
 
-## Choose a starting point
+- **Layout API** - inspect, validate, and apply form layouts through HTTP requests.
+- **Extensions** - register additional applications and supported extension points.
 
-Read the topics in this order when you are new to Web Client development:
+Read [Web Client concepts](./web-client-concepts.md) first if you are new to the client model.
 
-1. [Web Client concepts](./web-client-concepts.md) introduces applications, forms, panels, roles, categories, and the domain-model relationship.
-2. [Web Client registered panels](./registered-panels.md) explains how navigator and entity-form panel names are formed when you need to configure a particular panel.
-3. [Web Client layout properties](./layout-properties.md) describes the properties available for forms, panels, repository panels, data grids, side panels, and main-menu forms.
-4. [Manage Web Client form layouts through the Layout API](./layout-api.md) explains the HTTP operations and provides copy-ready procedures and examples.
-5. [Registering Web Client extensions](./registering-extensions.md) explains how to add applications and other supported extensions through the extensions registry.
+## Manage form layouts
 
-## Topics
+Start with [Manage Web Client form layouts through the Layout API](./layout-api.md). It is the primary reference for HTTP layout operations and examples.
 
-### Web Client foundation
+Use the following topics as additional reference when constructing a layout request:
 
-- [Web Client concepts](./web-client-concepts.md)
 - [Web Client registered panels](./registered-panels.md)
-
-### Form layout management
-
 - [Web Client layout properties](./layout-properties.md)
-- [Manage Web Client form layouts through the Layout API](./layout-api.md)
 
-### Client extensions
+## Extend Web Client
 
-- [Registering Web Client extensions](./registering-extensions.md)
+[Registering Web Client extensions](./registering-extensions.md) explains how to add applications and use the supported extensions registry.
 
 ## Related resources
 
