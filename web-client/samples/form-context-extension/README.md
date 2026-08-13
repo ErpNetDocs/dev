@@ -8,12 +8,12 @@ Register it through the Web Client `/forms/panels` extension point.
 {
   "forms": [{ "kind": "form", "sidePanel": true }],
   "uri": "https://example.com/form-context-extension/?instance={$instance}",
-  "message": "formKind={$formKind}&namespace={$namespace}&repository={$repository}&id={$id}&selectedids={$selectedids}&filter={$filter}&viewMode={$viewMode}&editMode={$editMode}",
+  "message": "formKind={$formKind}&namespace={$namespace}&repository={$repository}&id={$id}&selectedids={$selectedids}&filter={$filter}&viewMode={$viewMode}&editMode={$editMode}&saveCounter={$saveCounter}",
   "icon": "puzzle-piece"
 }
 ```
 
-The Web Client URL-encodes every interpolated variable value before evaluating both the URI and the message. The message uses standard URL parameters separated by `&`, and the app parses it with `URLSearchParams`. Values such as `$filter` remain safe even when they contain spaces, quotes, ampersands, or other reserved characters.
+The Web Client URL-encodes every interpolated variable value before evaluating both the URI and the message. The message uses standard URL parameters separated by `&`, and the app parses it with `URLSearchParams`. Values such as `$filter` remain safe even when they contain spaces, quotes, ampersands, or other reserved characters. The `$saveCounter` value changes after each successful save and allows the app to react to saved data through `postMessage` without reloading the iframe.
 
 The app deduplicates unchanged messages, aborts stale requests, uses short-lived in-memory caching, logs errors, supports retry, and uses the local PKCE-enabled `erpnet-client.js` included in this folder. It requires `instance` in the URL and has no fallback instance.
 
