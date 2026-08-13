@@ -8,7 +8,15 @@
     ],
     "resource": [
       {
-        "files": [ "images/**", "**.svg", "**.png", "favicon.ico" ],
+        "files": [
+          "images/**",
+          "**.svg",
+          "**.png",
+          "favicon.ico",
+          "**/samples/**/*.js",
+          "**/samples/**/*.html",
+          "**/samples/**/*.css"
+        ],
         "exclude": [ "docs/**/*.*" ]
       }
     ],

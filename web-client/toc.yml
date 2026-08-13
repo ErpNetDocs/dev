@@ -13,5 +13,11 @@ items:
     href: layout-properties.md
 - name: Extend Web Client
   items:
-  - name: Registering extensions
+  - name: Registering Web Client extensions
     href: registering-extensions.md
+  - name: Registering main-menu extensions
+    href: registering-mainmenu-extensions.md
+  - name: Registering extension panels
+    href: registering-extension-panels.md
+  - name: Reloading Web Client extensions
+    href: reloading-extensions.md

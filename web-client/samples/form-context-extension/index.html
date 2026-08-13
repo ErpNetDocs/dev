@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ERP.net extension panel form-context demonstration.">
+  <title>ERP.net form context</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="card" aria-live="polite">
+    <p class="eyebrow">ERP.net extension panel</p>
+    <h1>Form context</h1>
+    <p id="status" class="status">Waiting for a form context message.</p>
+    <section id="setup" class="setup" hidden>
+      <h2>Instance required</h2>
+      <p>Open this app with the ERP.net instance in the <code>instance</code> query parameter.</p>
+      <code id="setup-url" class="url"></code>
+    </section>
+    <button id="sign-in" type="button" hidden>Sign in to ERP.net</button>
+    <button id="retry" type="button" hidden>Retry</button>
+    <section id="context" hidden>
+      <h2>Received form arguments</h2>
+      <dl id="arguments" class="arguments"></dl>
+    </section>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
