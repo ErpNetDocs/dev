@@ -151,7 +151,7 @@ For local development, register the corresponding localhost URL as a separate re
 
 ## Example application
 
-The complete runnable example is available in the [form-context-extension sample folder](https://github.com/nnikolov-erp-bg/experiments/tree/main/form-context-extension). The same source is copied into this documentation repository under `web-client/samples/form-context-extension/` for reference.
+The complete runnable example is available in the [form-context-extension sample](https://github.com/ErpNetDocs/dev/tree/master/web-client/samples/form-context-extension). 
 
 The sample demonstrates:
 
