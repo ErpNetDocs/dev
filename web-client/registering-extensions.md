@@ -40,7 +40,3 @@ All extension types use the following common registration fields:
 - Browser applications should use the ERP.net authorization code flow with PKCE and be registered as public trusted applications.
 - The exact redirect URL must be registered in the ERP.net instance, including any query parameters required by the application.
 - When a registration is saved through the Web Client, it is reloaded automatically after the transaction commits. For registrations changed through another client or directly in the database, use [Reloading Web Client extensions](reloading-extensions.md).
-
-## Related topic
-
-See [Reloading Web Client extensions](reloading-extensions.md) to refresh registrations and inspect registration results.
