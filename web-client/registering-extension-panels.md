@@ -34,7 +34,7 @@ Create a record in [`Systems.Core.Extensions`](https://docs.erp.net/model/entiti
     }
   ],
   "uri": "https://example.com/form-context-extension/?instance={$instance}",
-  "message": "formKind={$formKind}&namespace={$namespace}&repository={$repository}&id={$id}&selectedids={$selectedids}&filter={$filter}&viewMode={$viewMode}&editMode={$editMode}",
+  "message": "formKind={$formKind}&namespace={$namespace}&repository={$repository}&id={$id}&selectedids={$selectedids}&filter={$filter}&viewMode={$viewMode}&editMode={$editMode}&saveCounter={$saveCounter}",
   "icon": "puzzle-piece"
 }
 ```
@@ -67,11 +67,45 @@ The same external application can provide multiple `forms` entries when it needs
 
 The `repository` registration kind is a scope, not a runtime form type. For example, a registration with `kind: "repository"` can match repository-backed forms while `$formKind` reports the concrete runtime form kind.
 
+## Passing form context to the panel
+
+The panel can receive the current form context in two complementary ways:
+
+- **`uri`** — the evaluated value becomes the iframe `src`. Use it for values that the application needs when it starts, such as the ERP.net instance or an initial object identifier. When the evaluated URI changes, the Web Client assigns the new value to the iframe and the external application is loaded again.
+- **`message`** — the evaluated value is sent to the iframe with `window.postMessage`. Use it for context changes that the running application can handle without being loaded again, such as a focused object, selected objects, a filter, or a view-mode change.
+
+The two mechanisms can be used together. A common pattern is to put only the instance in `uri` and put the changing form context in `message`:
+
+```json
+{
+  "uri": "https://example.com/form-context-extension/?instance={$instance}",
+  "message": "formKind={$formKind}&repository={$repository}&id={$id}&selectedids={$selectedids}&filter={$filter}"
+}
+```
+
+The Web Client reevaluates the URI and message whenever the form context changes. If the evaluated URI is unchanged, the iframe remains loaded. If only the evaluated message changes, the Web Client sends the new message to the existing iframe. The external application decides which message changes require a state update and can ignore messages whose data is unchanged.
+
+The first message is sent after the panel iframe is initially rendered. A message is also sent after relevant form events and when the user chooses **Reload** from the panel menu. If `message` is not registered, the Web Client does not send `postMessage` events.
+
+The application should listen for the agreed message type and parse the payload as URL parameters:
+
+```javascript
+window.addEventListener("message", (event) => {
+  if (event.data?.type !== "erpnet.extension.message")
+    return;
+
+  const context = new URLSearchParams(String(event.data.data ?? ""));
+  const repository = context.get("repository") ?? "";
+  const id = context.get("id") ?? "";
+  // Update the application state as needed.
+});
+```
+
+The Web Client URL-encodes every interpolated variable value before inserting it into either `uri` or `message`. This is especially important for `$filter`, which can contain spaces, quotes, ampersands, and other reserved characters. Always use URL parsing APIs such as `URL` and `URLSearchParams`; do not split or decode interpolated values manually.
+
 ## Interpolated variables
 
-Web Client evaluates the `uri` and `message` against the current form context whenever the form context changes. The iframe URL changes only when the evaluated URI changes. If only the message changes, the existing iframe remains loaded and receives the new message.
-
-Variable values are URL-encoded before they are inserted into both the URI and message. The application should parse message values as URL parameters rather than splitting or decoding them manually.
+Web Client evaluates the `uri` and `message` against the current form context whenever the form context changes.
 
 | Variable | Available value |
 |---|---|
@@ -84,6 +118,7 @@ Variable values are URL-encoded before they are inserted into both the URI and m
 | `$filter` | Current navigator OData filter. |
 | `$viewMode` | Current view mode. |
 | `$editMode` | `true` or `false`. |
+| `$saveCounter` | Number of successfully completed saves in an editable data form. It starts at `0` and increases after each successful commit. |
 
 The variables available in a particular form depend on its current context. An omitted value is represented as an empty value.
 
@@ -92,12 +127,12 @@ The variables available in a particular form depend on its current context. An o
 The message is a standard URL-parameter string. Use `&` between parameters and parse the received value with `URLSearchParams`:
 
 ```text
-formKind={$formKind}&repository={$repository}&id={$id}&filter={$filter}
+formKind={$formKind}&repository={$repository}&id={$id}&filter={$filter}&saveCounter={$saveCounter}
 ```
 
-The Web Client URL-encodes each interpolated variable value before constructing the message. Therefore, a value such as `$filter` may contain encoded spaces, quotes, ampersands, and other reserved characters without creating additional message parameters. The external application receives a browser `postMessage` event with the message payload and should parse it with `URLSearchParams`; it should not split or decode values manually. The application decides whether a particular change requires a state update and should ignore repeated messages whose evaluated data has not changed.
+The message payload is URL-encoded as described in [Passing form context to the panel](#passing-form-context-to-the-panel).
 
-If the panel has a message registration, Web Client sends the current message when the panel is first rendered, after relevant form events, and when the user chooses **Reload** from the panel menu. If no `message` is registered, Web Client does not call `postMessage`.
+When `$saveCounter` is included in `message`, the message value changes after a successful save and the running iframe receives a new `postMessage`. The iframe is not reloaded unless a variable used in `uri` also changes. `$saveCounter` is available only for forms derived from `EditableDataForm`.
 
 ## Authentication
 
