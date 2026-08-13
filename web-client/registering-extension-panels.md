@@ -136,3 +136,7 @@ For reloading registrations and inspecting per-extension results, see [Reloading
 - Verify `visibleInViewModes` contains valid view modes and does not contain `edit`.
 - Verify the trusted application contains the exact callback URL, including `instance` and `auth=callback`.
 - Verify the external application can reach the instance Domain API and that the instance permits the browser origin.
+
+## Related topic
+
+See [Reloading Web Client extensions](reloading-extensions.md) to refresh registrations and inspect registration results.
