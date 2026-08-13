@@ -1,3 +1,12 @@
+Exit code: 0
+Wall time: 1.2 seconds
+Output:
+Exit code: 0
+Wall time: 1.1 seconds
+Output:
+Exit code: 0
+Wall time: 1.1 seconds
+Output:
 ---
 title: Registering main-menu extensions
 description: How to register external applications in the ERP.net Web Client main menu.
@@ -321,9 +330,6 @@ Each error is logged as a multi-line block in the following format:
   - Logged when `category` does not match any of the available WebClient main menu categories.
   - This also happens when the category name is written with incorrect casing or when a visible menu label is used instead of the internal category key.
 
-## Related topic
-
-See [Reloading Web Client extensions](reloading-extensions.md) to refresh registrations and inspect registration results.
 
 
 
