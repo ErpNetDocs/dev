@@ -9,28 +9,40 @@ Wall time: 1.1 seconds
 Output:
 ---
 title: Registering main-menu extensions
-description: How to register external applications in the ERP.net Web Client main menu.
+description: How to register external applications in the ERP.net Web Client main menu and Forms namespace navigation.
 ---
 
 # Registering main-menu extensions
 
 ## Overview
 
-An **extension** is a registration record that allows an application to extend the behavior of a **main application** at a predefined extension point.
+An extension is a record in [`Systems.Core.Extensions`](https://docs.erp.net/model/entities/Systems.Core.Extensions.html) that adds an external application to a Web Client navigation location. The `ExtensionPath` selects both the location and the behavior of the registration.
 
-This article describes registering additional applications in the Web Client **Main menu**.
+There are two menu locations for external applications:
 
-## Getting Started
+| Location | Extension path | What the user sees and opens |
+|---|---|---|
+| Global Web Client Main menu | `/mainmenu/apps` | A standalone application link under a top-level category such as **CRM** or **Finance**. Clicking it opens the external application in the Web Client's main application area. |
+| Forms namespace navigation menu | `/mainmenu/navigation/apps` | A link in the navigation menu of a particular Forms module, such as **CRM → Sales**. Clicking it opens an extension form in that module's main form area; the external application is hosted inside the form. |
 
-To register an application in the WebClient main menu, create a record in [`Systems.Core.Extensions`](https://docs.erp.net/model/entities/Systems.Core.Extensions.html).
+The second registration is not a global Web Client application. It belongs to one Forms namespace, does not appear in the global applications menu, and uses `namespace` instead of `category`.
 
-For WebClient main menu extensions, fill the registration record as follows:
+Choose the extension path according to where the link must be visible:
+
+- Use `/mainmenu/apps` for a standalone application in a global main-menu category.
+- Use `/mainmenu/navigation/apps` for an application form inside a Forms namespace menu.
+
+## Registration record
+
+Create one active record in [`Systems.Core.Extensions`](https://docs.erp.net/model/entities/Systems.Core.Extensions.html) for each menu link.
+
+The common registration fields are:
 
 | Field | Value |
 |---|---|
 | `Name` | Internal name of the registration. Use a stable, descriptive value. |
 | `ApplicationUri` | `internal.erp.net/webclient` |
-| `ExtensionPath` | `/mainmenu/apps` |
+| `ExtensionPath` | `/mainmenu/apps` or `/mainmenu/navigation/apps` |
 | `ExtensionUri` | URI of the extension application |
 | `ExtensionData` | JSON payload described below |
 | `IsActive` | `true` |
@@ -42,7 +54,7 @@ You can also optionally fill:
 | `Title` | Multi-language title used for UI display |
 | `Hint` | Multi-language hint used for UI display |
 
-### Example registration record
+### Global main-menu example
 
 ```text
 Name: WebClient Extension Test
@@ -121,9 +133,7 @@ Example created record:
 }
 ```
 
-## Configuration
-
-## WebClient main menu extension point
+## Global main-menu applications
 
 ### ExtensionPath
 
@@ -212,7 +222,60 @@ Use the **internal category key** from the left column in `ExtensionData.categor
 
   - `puzzle-piece`
 
-## Concepts
+## Forms namespace navigation apps
+
+A Forms namespace navigation app is an external application opened as a form inside an existing Forms application. It is displayed as a link in that module's navigation menu. It is not a separate global `ClientApplication` and does not appear in the global applications menu.
+
+### Extension path
+
+Use the exact path:
+
+```text
+/mainmenu/navigation/apps
+```
+
+The Web Client resolves the registration against the Forms application whose namespace matches `ExtensionData.namespace`.
+
+### Extension data
+
+For this extension path, `ExtensionData` must contain:
+
+```json
+{
+  "namespace": "Crm.Sales",
+  "slug": "customer-dashboard",
+  "uri": "https://example.com/customer-dashboard/?instance={$instance}&ns={$namespace}",
+  "icon": "chart-line"
+}
+```
+
+| Property | Required | Description |
+|---|---:|---|
+| `namespace` | yes | Technical Forms namespace, for example `Crm.Sales`. |
+| `slug` | yes | Lowercase route identifier. The navigation link uses `extension-{slug}`. |
+| `uri` | yes | External application URL. Interpolated values are URL-encoded. |
+| `icon` | no | Font Awesome icon name without the `fa-` prefix. |
+
+The link is available under the Forms application URL:
+
+```text
+/cl/Crm_Sales/extension-customer-dashboard
+```
+
+The external application is hosted by an `ExtensionForm` inside the Forms application and is initialized through the interpolated `uri`. Its interpolated values are URL-encoded.
+
+### Navigation app validation
+
+The Web Client validates that:
+
+- `namespace` matches an existing Forms application;
+- `slug` contains only lowercase letters, digits, hyphens, and underscores, and starts and ends with a letter or digit;
+- `uri` is an absolute HTTP or HTTPS URL;
+- the slug is not duplicated inside the target namespace.
+
+The registration is reported individually on the Extensions screen and by the reload endpoint. A failed navigation registration does not create a global application.
+
+## Common registration details
 
 ### ApplicationUri
 
