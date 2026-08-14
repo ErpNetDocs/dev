@@ -115,6 +115,8 @@ For local development, register the corresponding localhost URL as a separate re
 
 The complete runnable example is available in the [form-context-extension sample folder](./samples/form-context-extension).
 
+The source code can be found [here](https://github.com/ErpNetDocs/dev/tree/master/web-client/samples/form-context-extension).
+
 The sample demonstrates:
 
 - a universal `form` registration;
