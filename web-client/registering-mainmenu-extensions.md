@@ -1,12 +1,3 @@
-Exit code: 0
-Wall time: 1.2 seconds
-Output:
-Exit code: 0
-Wall time: 1.1 seconds
-Output:
-Exit code: 0
-Wall time: 1.1 seconds
-Output:
 ---
 title: Registering main-menu extensions
 description: How to register external applications in the ERP.net Web Client main menu and Forms namespace navigation.
