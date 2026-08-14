@@ -38,6 +38,7 @@ The response contains the active extensions found and the result of registering 
   "reloadedAt": "2026-08-13T10:30:00Z",
   "extensionsFound": 2,
   "applicationsRegistered": 1,
+  "navigationAppsRegistered": 1,
   "panelsRegistered": 1,
   "extensions": [
     {
@@ -47,7 +48,11 @@ The response contains the active extensions found and the result of registering 
       "hint": "Shows customer information",
       "extensionUri": "erpnet.demo-extension.3e1",
       "extensionPath": "/forms/panels",
-      "extensionData": "{\"forms\":[{\"kind\":\"form\",\"sidePanel\":true}]}",
+      "data": {
+        "forms": [
+          { "kind": "form", "sidePanel": true }
+        ]
+      },
       "success": true,
       "errors": []
     }
@@ -64,8 +69,8 @@ The response contains the active extensions found and the result of registering 
 | `title` | Optional display title. |
 | `hint` | Optional display hint. |
 | `extensionUri` | External extension application identifier. |
-| `extensionPath` | Extension point, such as `/mainmenu/apps` or `/forms/panels`. |
-| `extensionData` | Raw extension-point-specific JSON configuration. |
+| `extensionPath` | Extension point, such as `/mainmenu/apps`, `/mainmenu/navigation/apps`, or `/forms/panels`. |
+| `data` | Deserialized extension-point-specific configuration. The concrete shape is selected by `extensionPath`. |
 | `success` | `true` when the registration was processed successfully. |
 | `errors` | Errors specific to this registration. Empty when `success` is `true`. |
 
@@ -73,6 +78,7 @@ The response also contains these values. `reloadedAt` is the UTC timestamp of th
 
 - `extensionsFound` — active extension records loaded from `Systems.Core.Extensions`.
 - `applicationsRegistered` — successfully registered main-menu applications.
+- `navigationAppsRegistered` — successfully registered Forms namespace navigation apps.
 - `panelsRegistered` — successfully registered form panels.
 
 ## Web Client extensions screen
@@ -82,9 +88,9 @@ Authenticated users can inspect the same registration result from the Web Client
 The screen displays:
 
 - the time of the last reload;
-- counts of discovered extensions, registered applications, registered panels, and failed registrations;
+- counts of panel apps, menu apps, navigation apps, and failed registrations;
 - every active extension, including its name, title, hint, extension URI, and extension path;
-- the raw `ExtensionData` configuration;
+- the deserialized extension data;
 - registration-specific errors;
 - a **Registered** or **Not registered** status and an error count when validation or registration fails.
 
@@ -108,6 +114,6 @@ If an entry has `success: false`, inspect its `errors` array and verify the regi
 - an invalid main-menu slug or category;
 - an incorrect `ExtensionPath`.
 
-Every active registration is validated against the supported Web Client extension paths. The current supported values are `/mainmenu/apps` and `/forms/panels`. A record with another path is shown as **Not registered** and includes a path-validation error.
+Every active registration is validated against the supported Web Client extension paths. The current supported values are `/mainmenu/apps`, `/mainmenu/navigation/apps`, and `/forms/panels`. A record with another path is shown as **Not registered** and includes a path-validation error.
 
 The endpoint is intended for reloading registration state. It does not validate the external application's trusted-app configuration or test whether its URL is reachable from the browser.

@@ -14,6 +14,7 @@ All Web Client extensions are stored in [`Systems.Core.Extensions`](https://docs
 | Extension type | Extension path | Purpose |
 |---|---|---|
 | Main-menu application | `/mainmenu/apps` | Adds an external application to a Web Client main-menu category. |
+| Forms navigation app | `/mainmenu/navigation/apps` | Adds an external form link to the navigation menu of a Forms namespace application. |
 | Form panel | `/forms/panels` | Displays an external application inside a Web Client form as a main or side panel. |
 
 All extension types use the following common registration fields:
@@ -31,7 +32,7 @@ All extension types use the following common registration fields:
 
 ## Choose a topic
 
-- [Registering main-menu extensions](registering-mainmenu-extensions.md) — add external applications to Web Client main-menu categories.
+- [Registering main-menu extensions](registering-mainmenu-extensions.md) — add standalone applications to global menu categories or links to Forms namespace navigation menus.
 - [Registering extension panels](registering-extension-panels.md) — display external applications inside navigator, entity, namespace, repository, or universal form contexts.
 
 ## Common considerations
