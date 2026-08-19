@@ -10,9 +10,9 @@ For the underlying concept, see [Extensible Data Objects](https://docs.erp.net/t
 
 ## Purpose and limitations
 
-The field is similar to a small, per-record **NoSQL-like payload slot**. An integration can use it to store a JSON object with arbitrary keys and nested values without changing the @@name relational data model.
+The field is similar to a small, per-record **NoSQL-like JSON document slot**. An integration can use it to store a JSON object with arbitrary keys and nested values without changing the @@name relational data model.
 
-For example, an external product catalog can retain synchronization metadata that has no corresponding standard Product attribute:
+For example, an external product catalog can persist synchronization metadata that has no corresponding standard Product attribute:
 
 ```json
 {
@@ -40,26 +40,46 @@ It can also be used without an external identity. For example, an internal autom
 }
 ```
 
-@@name persists `AdditionalDataJson` as a plain string. It does not parse, validate, query, index, or partially update its contents. The field name does not guarantee that a value is valid JSON or even a JSON object. Clients must treat the received value as untrusted text and parse it defensively.
+The system does not provide JSON-path queries, filtering, sorting, grouping, indexing, or partial updates and merges of individual JSON properties.
 
-The system does not provide:
+Use `AdditionalDataJson` for data owned and interpreted by an integration. When the data needs to be modeled, visible to users, or used in filters and reports, define [stored attributes (custom properties)](../common-tasks/stored-attributes.md) instead.
 
-- a declared schema or data types for its JSON properties;
-- JSON-path queries, filtering, sorting, grouping, or indexing;
-- server-side validation of the JSON structure; or
-- partial updates or merges of individual JSON properties.
+## Integration ownership convention
 
-Use `AdditionalDataJson` for data owned and interpreted by an integration. When the data needs to be modeled, typed, validated, visible to users, or used in filters and reports, define [stored attributes (custom properties)](../common-tasks/stored-attributes.md) instead.
+`AdditionalDataJson` is shared by all applications and services that work with the same record. Store a JSON root object and give each application or service its own top-level object within it. Name the object after the external application or service, or after the functional domain that owns the data. Use a stable logical identifier that clearly identifies its owner.
+
+```json
+{
+  "erpnet-retail-pos": {
+    "listingId": "P-1042",
+    "status": "approved"
+  },
+  "calendarSync": {
+    "lastSynchronizedUtc": "2026-08-19T10:15:00Z"
+  }
+}
+```
+
+In this example, ERP.net Retail POS owns only the `erpnet-retail-pos` object and the calendar synchronization service owns only the `calendarSync` object. An application must not use or overwrite another application's object unless the integrations explicitly agree to share it.
+
+Because `PATCH` replaces the complete `AdditionalDataJson` value, update it using read-modify-write:
+
+1. Read the current value.
+2. Parse the JSON root object.
+3. Add, replace, or remove only the application-owned top-level object.
+4. Serialize and PATCH the complete value, preserving the objects owned by other applications.
+
+For automated clients and coding agents: do not infer ownership from the contents of an object. Use its top-level name, and preserve unknown top-level objects exactly as received.
 
 ## Choose the right mechanism
 
 | Requirement | Use |
 | --- | --- |
-| Persist an integration-owned, per-record payload (often JSON) | `AdditionalDataJson` |
+| Persist an integration-owned, per-record JSON document | `AdditionalDataJson` |
 | Add a business field that users configure or edit | [Stored attributes (custom properties)](../common-tasks/stored-attributes.md) |
-| Filter, sort, group, report on, validate, or relate the value | A modeled attribute, a custom property, or a dedicated entity |
+| Filter, sort, group, report on, or relate the value | A modeled attribute, a custom property, or a dedicated entity |
 
-For automated clients and coding agents: do not infer a schema from existing JSON values. Treat the JSON document as integration-owned, preserve unknown properties when updating it, and coordinate schema changes with the owner of that integration.
+For automated clients and coding agents: do not infer a schema from existing JSON values. Treat each top-level object as owned by its named integration, preserve unknown objects when updating the document, and coordinate schema changes with that integration's owner.
 
 ## Read the value
 
@@ -69,7 +89,7 @@ For automated clients and coding agents: do not infer a schema from existing JSO
 GET /api/domain/odata/General_Products_Products?$top=10&$select=Id,PartNumber,AdditionalDataJson HTTP/1.1
 ```
 
-The value is an OData `string`. When its stored content is JSON, it is returned as a JSON-escaped string:
+The value is an OData `string`, so the JSON document is returned as a JSON-escaped string:
 
 ```json
 {
@@ -79,11 +99,11 @@ The value is an OData `string`. When its stored content is JSON, it is returned 
 }
 ```
 
-If the integration expects JSON, parse the string with error handling and validate the expected structure before using it. Do not include `AdditionalDataJson` in broad list queries unless the consumer needs it; retrieving it performs a separate secured read for each requested entity.
+Parse the string as JSON after receiving it. Do not include `AdditionalDataJson` in broad list queries unless the consumer needs it; retrieving it performs a separate secured read for each requested entity.
 
 ## Update the value
 
-Use `PATCH` to replace the complete value. When storing JSON, JSON-encode the object as the value of the OData string property:
+Use `PATCH` to replace the complete value. JSON-encode the object as the value of the OData string property:
 
 ```http
 PATCH /api/domain/odata/General_Products_Products(00000000-0000-0000-0000-000000000000) HTTP/1.1
@@ -107,8 +127,8 @@ The server validates the value on client commit. Its length must not exceed **32
 ## Design guidance
 
 - `AdditionalDataJson` is optional. Omit it or send `null` when no integration data is needed.
-- Treat the value as integration-owned. A PATCH replaces the whole value; it does not merge individual JSON properties when the value contains JSON.
-- If the integration stores JSON, keep a stable schema and version it inside the JSON when it may evolve.
+- Treat the JSON document as integration-owned. A PATCH replaces the whole value; it does not merge individual JSON properties.
+- Keep a stable schema and version it inside the JSON when it may evolve.
 - Do not use this field for lookup, filtering, sorting, reporting, or relationship data. Use modeled attributes, [stored attributes (custom properties)](../common-tasks/stored-attributes.md), or dedicated entities for those purposes.
 - Do not store secrets or credentials. The value is entity data and is available to callers with permission to read the entity.
 
