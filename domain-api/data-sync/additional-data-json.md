@@ -114,19 +114,21 @@ Content-Type: application/json
 }
 ```
 
-To clear the data, send `null`:
+To clear the data, send an empty value:
 
 ```json
 {
-  "AdditionalDataJson": null
+  "AdditionalDataJson": ""
 }
 ```
 
-The server validates the value on client commit. Its length must not exceed **32,000 characters**; otherwise the request fails with [R101790](https://docs.erp.net/model/business-rules/R101790.html), *Additional Data JSON Maximum Length*.
+Sending `null` does not clear the value. `AdditionalDataJson` is delay-loaded, so `null` means that no value has been supplied by the request and the stored value is kept.
+
+The server validates the value on client commit. Its length must not exceed **32,000 characters**; otherwise the request fails with [R101790](https://docs.erp.net/model/business-rules/R101790.html), *Additional Data JSON Maximum Length*. The value must also be a valid JSON object; otherwise the request fails with [R101839-1](https://docs.erp.net/model/business-rules/R101839-1.html), *Additional Data JSON Validation*.
 
 ## Design guidance
 
-- `AdditionalDataJson` is optional. Omit it or send `null` when no integration data is needed.
+- `AdditionalDataJson` is optional. Omit it when no integration data is needed; sending `null` leaves the stored value unchanged.
 - Treat the JSON document as integration-owned. A PATCH replaces the whole value; it does not merge individual JSON properties.
 - Keep a stable schema and version it inside the JSON when it may evolve.
 - Do not use this field for lookup, filtering, sorting, reporting, or relationship data. Use modeled attributes, [stored attributes (custom properties)](../common-tasks/stored-attributes.md), or dedicated entities for those purposes.
