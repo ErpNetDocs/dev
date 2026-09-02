@@ -1,5 +1,20 @@
 # Version 27.1
 
+- [**User-defined references**](../../domain-api/common-tasks/custom-property-references.md)  
+  Stored attributes can now be configured as references to aggregate-root entities and used as normal Domain API navigation properties, including `$expand` and direct `@odata.id` filtering.
+
+- [**Web Client panel extensions**](../../web-client/registering-extension-panels.md)  
+  Register extension panels that are displayed inside entity object forms and receive the current form context.
+
+- [**Document Layout API**](../../web-client/layout-api.md)  
+  Inspect and manage Web Client form layouts programmatically, including panels, fields, columns, categories and view modes.
+
+- [**External Identifiers**](../../domain-api/data-sync/external-identifiers.md)  
+  Use stable, application-owned identifiers to address ERP.net objects across integrations.
+
+- [**Profile Site Endpoints**](../../building-apps/concepts/profile-site-endpoints.md)  
+  Use profile endpoints to retrieve information about the authenticated ERP.net user and related API context.
+
 - [**Faster saves on records with attachments and JSON payloads**](../../domain-api/data-sync/additional-data-json.md)  
   Updating metadata costs the same on a record with a 50 MB attachment as on an empty one. Delay-loaded attributes - `AdditionalDataJson`, `EmbeddedFileContents`, `EmbeddedThumbnailContents` - are skipped unless the request sets them, cutting the traffic, the memory and the database work of every such save.
 
