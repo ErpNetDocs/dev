@@ -74,5 +74,7 @@ Example:
 ```
 
 > [!note]
-> To filter by a stored attribute you must use only the short value (`Value`) and only `eq` is supported:
+> For ordinary stored attributes, filtering uses the short value (`Value`) and `eq`:
 > `General_Products_Products?$top=10&$select=CustomProperty_color&$filter=CustomProperty_color eq 'apple'`
+>
+> Reference properties are also exposed as `CustomReference_<code>` navigation properties. Filter them directly by the referenced object's `@odata.id`; do not use `/Id`. See [User-defined references](../common-tasks/custom-property-references.md).
