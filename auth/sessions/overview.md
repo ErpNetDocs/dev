@@ -6,7 +6,7 @@ An access token only represents **authorization** - proof that a user or applica
 
 A session, on the other hand, represents **an active connection** between @@name and that user or app.  
 
-Each session consumes a **license slot** while active.
+Sessions consume a **license slot** while active. The slot belongs to one user on one device, so the same user's sessions from the same browser share it.
 
 Understanding how these three elements interact helps ensure your integrations are efficient, compliant, and predictable.
 
@@ -16,14 +16,14 @@ Understanding how these three elements interact helps ensure your integrations a
 |----------|--------------|
 | **Access Token** | A signed credential proving that the caller (user or app) is authorized. Obtaining a token does **not** reserve a license. |
 | **Session** | Created automatically on the first API request using a valid token. Each session represents an active logical connection to the @@name server. |
-| **License Slot** | A limited resource consumed by an open session. Each session occupies exactly one license slot. When the session closes, the slot is released. |
+| **License Slot** | A limited resource consumed by open sessions. One slot covers all the sessions of one user on one device; a session without a device occupies a slot of its own. When the last session holding a slot closes, the slot is released. |
 
 ## Typical Lifecycle
 
 1. **App obtains an access token** from @@name Identity.  
    No license or session is created yet.
 2. **First API call** using the token.  
-   @@name opens a session and reserves a license slot.
+   @@name opens a session. It reserves a license slot, unless the user already holds one from the same device.
 3. **Subsequent API calls** reuse the same session.  
    Session lifetime is extended automatically.
 4. **Inactivity or explicit logout** closes the session.  
@@ -50,7 +50,7 @@ These timers control **session lifetime**, not token validity.
 
 ## Summary
 
-- Access tokens authorize - sessions consume licenses.  
+- Access tokens authorize - sessions consume licenses, one per user and device.  
 - A token can be used **only within the same @@name instance** where it was issued.  
 - Sessions automatically close after inactivity or absolute expiration.  
 - Revoking a token does **not** immediately free a license - only closing the session does.

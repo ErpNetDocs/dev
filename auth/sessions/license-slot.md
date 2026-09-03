@@ -1,19 +1,35 @@
 # License Slot Usage
 
-Each active session in @@name occupies one **license slot**.  
+A **license slot** is occupied by **one user on one device**.  
+
+All sessions that the same user opens from the same device share that single slot. A browser with several tabs, an embedded application inside the Web Client, and another @@name application signed in from the same browser cost **one** license between them.
+
+A session that has **no device** occupies a slot of its own. Service sessions obtained with Client Credentials are always in this group, so integrations never share a slot with each other or with a user.
 
 Licenses are consumed and released automatically based on session activity - not on token lifetime.
 
 ## How Licensing Works
 
 - A license is used only when a **session** is opened.  
-- A license is freed when that session **closes** (due to inactivity, timeout, or logout).  
+- A license is freed when the **last** session holding it closes (due to inactivity, timeout, or logout).  
 - **Tokens do not consume licenses** on their own - they are only credentials used to start a session.  
-- The number of concurrent sessions determines the total license usage in the system.
+- The number of distinct user-and-device pairs, plus the sessions without a device, determines the total license usage in the system.
 
 > [!NOTE]  
 > A valid token does not guarantee license availability.  
 > If all licenses are in use, opening a new session will fail.
+
+## How a Device Is Identified
+
+@@name Identity issues a device identifier to every browser that signs in, and carries it on the tokens it mints as the `erpnet_device_id` claim. See [Access Tokens](../tokens/access-tokens.md).
+
+- Every application authenticates through @@name Identity, so **one browser has one identifier**, no matter which application asked for the login.
+- The identifier survives token renewal and re-login, so a user returning later keeps the same device.
+- Separate browsers, separate machines, and private browsing windows are **separate devices**, and each takes its own license.
+- Tokens issued without a user, such as Client Credentials tokens, carry no device identifier.
+
+> [!NOTE]  
+> The device identifier is not a hardware fingerprint. It identifies the browser profile that performed the sign-in.
 
 ## License Duration
 
@@ -35,7 +51,7 @@ This architecture allows thousands of external users to interact through one lic
 
 ## Licensing Compliance
 
-- One @@name session = one license slot.  
+- One user on one device = one license slot.  
 - Each internal user must have their own license.  
 - Background services must use dedicated system users.  
 - Multiplexing (sharing one license among multiple users) is not allowed.  
@@ -50,7 +66,9 @@ These reservations are defined by administrators.
 ### How It Works
 
 - A list of usernames can be assigned as **reserved accounts**.  
-- Each reserved account is guaranteed at least one available license slot.  
+- A reserved account is guaranteed as many license slots as the number of times it is listed.  
+- The guarantee is counted in **licenses, not sessions**: the reserved user's sessions from one device take one slot between them, so opening a second window does not consume the guarantee.  
+- Beyond its guarantee, a reserved account competes for the remaining licenses like everyone else.  
 - Other users share the remaining unreserved licenses on a first-come, first-served basis.  
 - If all unreserved licenses are in use, additional users will be denied access until a slot is freed.
 
@@ -60,7 +78,8 @@ If a company has 10 total licenses and 2 reserved for specific users:
 
 - Those 2 users can always log in.  
 - The remaining 8 licenses are available to everyone else.  
-- If all 8 are in use, new sessions from non-reserved users will fail until a license becomes free.
+- If all 8 are in use, new sessions from non-reserved users will fail until a license becomes free.  
+- If one of the reserved users opens a second window on the same computer, it still costs that user only the one reserved slot.
 
 ### Best Practices
 

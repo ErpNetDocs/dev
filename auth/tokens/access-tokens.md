@@ -85,7 +85,8 @@ The table below lists every claim @@name Identity may issue. Not all claims appe
 | `sub` | The acting user's login (`Sec_Users.Login`). Absent in service-to-service tokens. | `"john.doe"` | yes | no |
 | `id` | Internal `Sec_Users.Id` (GUID). Stable across renames, unlike `sub`. | `"a3f1c9e0-7b42-4d18-9c6e-2f8b1a5d3e07"` | yes | no |
 | `auth_time` | When the user actually authenticated (ID token only). Lets relying parties enforce `max_age` and re-authentication policies. | `1762185700` | yes | n/a |
-| `sid` | Session id. Used by the application server as the license-slot key and for single sign-out. | `"E4D2A57B3F1C..."` | yes | no |
+| `sid` | Session id. Identifies the single sign-on session and is used for single sign-out. | `"E4D2A57B3F1C..."` | yes | no |
+| `erpnet_device_id` | The browser the session was signed in from. The application server occupies one license per user and device, so all the sessions carrying the same value share a license slot. Issued only when a user signs in; see [License Slot Usage](../sessions/license-slot.md). | `"9f2c41a7b83d4e15a0c6..."` | yes | no |
 | `scope` | The granted scopes. What the token is authorized to do. APIs gate operations against these. | `["read","sec","update"]` | yes | yes |
 | `client_id` | The trusted application that obtained the token. Used for audit, per-client throttling, and audience checks. | `"myapp.myhost.net"` | yes | yes |
 | `name` | Display name shown in UIs. | `"John Doe"` | yes | no |

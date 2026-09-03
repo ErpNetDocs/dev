@@ -1,16 +1,22 @@
 # License Compliance and Violations
 
-@@name uses a strict **one session = one license** model.  
+@@name uses a strict **one user on one device = one license** model.  
 
-Each active session consumes a concurrent license slot, and every session must represent a single user or service identity.  
+Every session must represent a single user or service identity. Sessions of the same user from the same device share one concurrent license slot; every other session consumes a slot of its own.  
 
 Improper token or session usage can lead to **license violations**.
+
+## What Is Allowed
+
+- One user working in **several windows, tabs, or applications on the same device**. These share a single license, which is why an embedded application inside the Web Client costs nothing extra.  
+- One user signed in on a **second device**, such as a phone next to a workstation. This takes a second license, because each device is licensed separately.
 
 ## Common Violations
 
 - **Token sharing**  
   Using the same access token for multiple users, machines, or processes.  
-  Access tokens are tied to a single identity and session context - sharing them spreads one license across multiple users.
+  Access tokens are tied to a single identity and session context - sharing them spreads one license across multiple users.  
+  The device is fixed when the user signs in and travels with the token, so sessions started from a shared token all report the same device and collapse into a single license. That is exactly the multiplexing these rules forbid.
 
 - **Session multiplexing**  
   Sending parallel or concurrent API requests with the same token to perform actions for different users or clients.  

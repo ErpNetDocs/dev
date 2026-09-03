@@ -52,6 +52,7 @@ Efficient API design improves performance, reduces server load, and minimizes li
 
 - Handle `401 Unauthorized` by reauthenticating or refreshing the token.  
 - Handle `429 Too Many Requests` by applying **exponential backoff** or retry delays.  
+- Handle `503 Service Unavailable` by waiting for the period in the `Retry-After` header and repeating the request. It means no license was available, not that the request was wrong.  
 - Validate all API responses before processing.  
 - Log errors with sufficient context (endpoint, status code, token type).  
 - Design idempotent operations - repeatable without side effects.
