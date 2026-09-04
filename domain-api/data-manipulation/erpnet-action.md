@@ -59,6 +59,14 @@ If only properties defining the search criteria are provided (either @erpnet.fin
 Otherwise
 → @erpnet.action: **merge**
 
+**For elements of child collections** (for example `Codes` of a product or `Lines` of a document):
+
+Elements without identity (no `Id`, `@odata.id`, `@erpnet.findBy` and no explicit `@erpnet.action`)
+are always created. They belong to the parent object and cannot exist before it.
+
+Elements with identity or with an explicit `@erpnet.action` are looked up only among the children
+of the parent object. An `Id` of a child of another parent is rejected.
+
 
 # `@erpnet.findBy` Annotation
 
