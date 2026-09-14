@@ -11,11 +11,11 @@ All Web Client extensions are stored in [`Systems.Core.Extensions`](https://docs
 
 ## Extension types
 
-| Extension type | Extension path | Purpose |
-|---|---|---|
-| Main-menu application | `/mainmenu/apps` | Adds an external application to a Web Client main-menu category. |
-| Forms navigation app | `/mainmenu/navigation/apps` | Adds an external form link to the navigation menu of a Forms namespace application. |
-| Form panel | `/forms/panels` | Displays an external application inside a Web Client form as a main or side panel. |
+| Extension type | Extension path | Purpose | Introduced Version |
+|---|---|---|---|
+| Main-menu application | `/mainmenu/apps` | Adds an external application to a Web Client main-menu category. | 27.1.0.40 |
+| Forms navigation app | `/mainmenu/navigation/apps` | Adds an external form link to the navigation menu of a Forms namespace application. | 27.1.1.9 |
+| Form panel | `/forms/panels` | Displays an external application inside a Web Client form as a main or side panel. | 27.1.1.9 |
 
 All extension types use the following common registration fields:
 

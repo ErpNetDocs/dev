@@ -8,6 +8,8 @@ Use this API when an integration, administration tool, or AI agent must manage W
 
 The API is repository-oriented. Identify a repository form with `kind` and `repository`, or identify a Forms-namespace main-menu form with `kind` and `namespace`.
 
+> **Introduced in version:** `27.1.1.2`
+
 ## Prerequisites
 
 - An ERP.net Web Client site with the Layout API enabled.
