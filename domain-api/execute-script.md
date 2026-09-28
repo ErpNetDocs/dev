@@ -2,4 +2,4 @@
 
 
 > [!Note]
-> The topic is moved (here)[./operations/execute-script.md]
+> The topic has moved to [ExecuteScript](./operations/execute-script.md).

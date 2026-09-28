@@ -1,0 +1,40 @@
+- name: Overview
+  href: index.md
+- name: Getting Started
+  href: getting-started/toc.yml
+  topicHref: getting-started/overview.md
+- name: Concepts
+  href: concepts/toc.yml
+  topicHref: concepts/overview.md
+- name: Configuration
+  href: configuration/toc.yml
+  topicHref: configuration/overview.md
+- name: Scripting APIs
+  href: apis.md
+  items:
+  - name: Domain Model
+    href: domain-model/index.md
+    items:
+    - name: Entity operations
+      href: domain-model/entity-operations.md
+    - name: Queries and filters
+      href: domain-model/queries.md
+    - name: Special types
+      href: domain-model/special-types.md
+  - name: Action object
+    href: action/index.md
+    items:
+    - name: API reference
+      href: action/api-reference.md
+  - name: Files SDK
+    href: files/index.md
+    items:
+    - name: XLSX workbooks
+      href: files/xlsx.md
+    - name: PDF documents
+      href: files/pdf.md
+- name: Examples
+  href: examples/toc.yml
+  topicHref: examples/overview.md
+- name: Limitations and best practices
+  href: best-practices.md

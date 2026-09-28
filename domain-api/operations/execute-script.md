@@ -2,7 +2,11 @@
 
 @@name Domain API defines an `ExecuteScript` endpoint which can be used to execute JavaScript code directly in the domain context.
 
-`ExecuteScript` is an **unbound OData action**, invoked via **HTTP POST**, whose request body contains **raw JavaScript source code**. The script runs server-side in a sandboxed runtime with access to the Domain Model and may query, create, update, or delete domain data.
+`ExecuteScript` is an **unbound OData action**, invoked via **HTTP POST**, whose request body contains **raw JavaScript source code**. The JavaScript runs in the current Domain transaction, with access to the Domain Model and the scripting APIs exposed by the application. It can read and modify domain data, subject to the caller's permissions. A standalone call does not implicitly commit changes.
+
+This is one-off execution, not a stored script definition. To run an active `Systems.Core.Script` with declared JSON arguments and a result, use [Execute a managed script](execute-managed-script.md) instead.
+
+The calling application needs the OAuth [`exec` scope](../../auth/concepts/scopes.md), and the instance needs the X21 Advanced BPM license. The same scope allows both freeform and managed-script execution; request it only for applications that need this capability.
 
 ---
 
@@ -30,33 +34,32 @@ The request body must contain **plain JavaScript source code**, encoded as UTF-8
 POST https://<your-instance>.my.erp.net/api/domain/odata/ExecuteScript
 Content-Type: text/plain
 Accept: application/json
+Authorization: Bearer <access-token-with-exec-scope>
 
 console.log('Starting script');
 
-// Example: deactivate all active customers
-var customers = Domain.Crm.Sales.CustomersRepository.query({
+// Read at most ten active customers.
+const customers = Domain.Crm.Sales.CustomersRepository.query({
     active: { equals: true }
-});
+}, { fetch: 10 });
 
-const customersCount = customers.length;
-for (var i = 0; i < customersCount; i++) {
-    customers[i].Active = false;
-}
-
-console.log(`Processed ${customersCount} customers.`)
+console.log(`Fetched ${customers.Count} active customers.`);
 ```
 
 ## Transaction control from JavaScript
 
-The script runtime exposes a global `Transaction` object, which allows the script to explicitly control transaction boundaries. You can start a transaction, commit changes, or roll everything back directly from JavaScript:
+The script runtime exposes a global `Transaction` object for the current Domain transaction. In a standalone `ExecuteScript` call, pending Domain changes are **not committed automatically**. Call `Transaction.commit()` in the script if they should persist, or `Transaction.rollback()` to discard them. For example:
 
 ```js
-Transaction.begin();
+const customer = Domain.Crm.Sales.CustomersRepository.getById("<customer-id>");
+if (customer === null)
+    throw new Error("Customer not found.");
+
+customer.Active = false;
 Transaction.commit();
-Transaction.rollback();
 ```
 
-Use `Transaction.rollback()` to safely discard changes when you detect invalid data or want a "dry run" style execution. Use `Transaction.commit()` only when you are sure all changes are consistent and should be persisted.
+Replace `<customer-id>` with an actual customer GUID. `Transaction.begin()` resets the current transaction by rolling it back; it does not open an independent nested transaction. Use these operations deliberately: a later rollback cannot undo changes already committed. Do not call them from a script running in an [externally managed transaction](#external-transaction-control).
 
 ## External transaction control
 
@@ -112,11 +115,12 @@ If script execution fails due to:
 - JavaScript runtime error
 - exceeded runtime constraints
 
-the action returns an OData error response and **no changes are committed**.
+the action returns an OData error response and does not automatically commit pending Domain changes. An earlier explicit `Transaction.commit()` or external side effect cannot be undone by a later script error.
 
 ---
 
 ## Learn More
 
-- [ERP.net Scripting documentation](https://docs.erp.net/tech/advanced/scripting/index.html)
+- [Developer scripting guide](../../scripting/index.md)
+- [Scripting product overview](https://docs.erp.net/tech/advanced/scripting/index.html)
 - [Advanced scripting examples](https://github.com/erpnet/JavaScriptExamples)

@@ -7,6 +7,9 @@ items:
 - name: Authentication
   href: auth/toc.yml
   topicHref: auth/overview.md  
+- name: Scripting
+  href: scripting/toc.yml
+  topicHref: scripting/index.md
 - name: Domain API
   href: domain-api/toc.yml
   topicHref: domain-api/index.md

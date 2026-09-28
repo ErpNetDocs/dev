@@ -12,6 +12,7 @@ Scopes are requested by the app and granted by the @@name Identity based on the 
 |------------|------------------|------------------|
 | `read` | Grants **read-only** access to @@name data through APIs. | All trusted apps |
 | `update` | Grants permission to **create, modify, or delete** @@name data. | All trusted apps |
+| `exec` | Allows both managed-script execution and freeform Domain API `ExecuteScript`. | Trusted apps explicitly allowed this capability |
 | `offline_access` | Allows issuing a **refresh token**, enabling apps to renew access tokens without user interaction. | All trusted apps |
 | `openid` | Indicates the request is an **OpenID Connect authentication request**. Required to issue an **ID token** and identify the authenticated subject. | All trusted apps |
 | `profile` | Grants access to **basic user information** (such as name, email, user type). | All trusted apps |
@@ -64,6 +65,7 @@ The resulting access token will contain the allowed scopes as part of its payloa
 ## Security Considerations
 
 - Only grant `update` to apps that must modify data.  
+- Grant `exec` only to applications trusted to run both stored and caller-supplied scripts. See the [scripting security guide](../../scripting/security.md).
 - Avoid combining user and system scopes in the same token.  
 - Regularly audit trusted apps and their allowed scopes.  
 

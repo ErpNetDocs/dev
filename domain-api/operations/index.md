@@ -28,7 +28,7 @@ Unbound operations are invoked directly under:
 | `GetChanges` | Function | GET | Returns collected changes for a front-end transaction (requires `trackChanges=true`). | [Transactions](../data-manipulation/transactions.md) |
 | `WaitForChanges` | Function | GET | Like `GetChanges`, but blocks until changes occur or timeout. | [Transactions](../data-manipulation/transactions.md) |
 | `Import` | Action | POST | Bulk insert/update/delete multiple objects in a single request. | [Import Data](../data-manipulation/import.md) |
-| `ExecuteScript` | Action | POST | Executes raw JavaScript in the domain context. | [ExecuteScript](./execute-script.md) |
+| `ExecuteScript` | Action | POST | Executes raw JavaScript in the domain context; this is not a stored script. | [ExecuteScript](./execute-script.md) |
 | `GetRepositoryEvents` | Function | GET | Gets the supported events by the specified repository. | [GetRepositoryEvents](./get-repository-events.md) |
 
 ---
@@ -49,9 +49,18 @@ They can be invoked for any entity instance:
 > [!note]
 > The exact invocation syntax (parameter passing for functions) follows OData v4 rules and is described in the service `$metadata`.
 
+## Bound operation on managed scripts
+
+`Systems.Core.Script` has an `Execute` action. It runs the selected active, stored script with a JSON argument object and returns its output parameters and return value. This operation is distinct from the unbound, freeform `ExecuteScript` action.
+
+| Operation | Kind | HTTP | Purpose | Reference |
+| --- | --- | ---: | --- | --- |
+| `Systems_Core_Scripts(<id>)/Execute` | Action | POST | Run one managed script. | [Execute a managed script](./execute-managed-script.md) |
+
 ## See also
 
 - [Transactions](../data-manipulation/transactions.md)
 - [Import Data](../data-manipulation/import.md)
 - [ExecuteScript](./execute-script.md)
+- [Execute a managed script](./execute-managed-script.md)
 - [Stored attributes (custom properties)](../common-tasks/stored-attributes.md)

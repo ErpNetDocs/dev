@@ -2,5 +2,7 @@
   href: index.md
 - name: Execute Script
   href: execute-script.md
+- name: Execute a managed script
+  href: execute-managed-script.md
 - name: Get Repository Events
   href: get-repository-events.md
