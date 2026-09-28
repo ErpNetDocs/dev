@@ -23,3 +23,5 @@
 - name: Example apps
   href: samples/toc.yml
   topicHref: samples/index.md
+- name: Custom entities
+  href: custom-entities.md

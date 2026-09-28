@@ -25,6 +25,7 @@ For a quick introduction to OData, check the beginners tutorial at the OData sit
 
 To learn more about the @@name Domain API, read below:
 
+1. [Custom entities](custom-entities.md) - Work with instance-specific entity types through the Domain API.
 1. [Querying data](querying-data/index.md) - Introduction to data querying.
 1. [Data manipulation](data-manipulation/index.md) - Introduction to data manipulation.
 1. [Common tasks](common-tasks/index.md) - Useful examples. 
