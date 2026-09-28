@@ -20,7 +20,7 @@ const userName = Action.user.name;
 const sessionId = Action.session.id;
 ```
 
-These values may be `null` when the execution context has no corresponding user or session. They describe the current invocation; they are not an authorization substitute. See [Security and permissions](../security.md).
+These values may be `null` when the execution context has no corresponding user or session. They describe the current invocation; they are not an authorization substitute. See [Security and permissions](../concepts/security.md).
 
 ## Notifications
 

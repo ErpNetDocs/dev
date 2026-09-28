@@ -14,6 +14,6 @@ const customers = Domain.Crm.Sales.CustomersRepository.query(
 console.log("Found " + customers.Count + " customers.");
 ```
 
-The action returns execution metadata and captured console output, not a managed-script `returnValue` envelope. There is no automatic `subject` or declared `args` object. A standalone call does not implicitly commit Domain changes. The calling application needs the `exec` scope, and the instance needs the X21 Advanced BPM license.
+The script's `console.log` message appears in the response's `console` field, alongside execution metadata. This action does not return a managed-script `parameters`/`returnValue` envelope: the request contains code, not a stored definition with declared inputs. There is no automatic `subject` or `args` object. A standalone call does not implicitly commit Domain changes. The calling application needs the `exec` scope, and the instance needs the X21 Advanced BPM license.
 
 See the [ExecuteScript operation reference](../../domain-api/operations/execute-script.md) for transaction handling and the complete response. More requests are in [ExecuteScript examples](../examples/execute-script.md).

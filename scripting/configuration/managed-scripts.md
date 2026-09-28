@@ -1,6 +1,6 @@
 # Managed scripts
 
-A managed script is a reusable `Systems.Core.Script` definition stored in `Sys_Scripts`. It is separate from a user business rule, a calculated attribute, and the freeform Domain API [`ExecuteScript`](../domain-api/operations/execute-script.md) action.
+A managed script is a reusable `Systems.Core.Script` record. The caller identifies the record and supplies JSON inputs; the script reads them from `args` and returns JSON output. It is separate from a user business rule, a calculated attribute, and the freeform Domain API [`ExecuteScript`](../../domain-api/operations/execute-script.md) action. If you are new to this feature, follow [Your first managed script](../getting-started/managed-scripts.md) before using this page as a field reference.
 
 ## Define a script
 
@@ -41,7 +41,7 @@ Set `ParametersSchema` to:
 }
 ```
 
-After saving and activating the script, call its [bound Domain API action](../domain-api/operations/execute-managed-script.md):
+After saving and activating the script, call its [bound Domain API action](../../domain-api/operations/execute-managed-script.md):
 
 ```http
 POST /api/domain/odata/Systems_Core_Scripts(<script-id>)/Execute
@@ -62,14 +62,14 @@ The relevant response fields are:
 
 The actual OData response also contains OData metadata. `Input` values are not repeated in `parameters`; it contains only `Output` and `InputOutput` values. See [Parameters and results](parameters.md) for defaults, missing arguments, and validation.
 
-For more complete managed-script examples, including file editing and document creation, see [Managed script examples](examples.md).
+For more examples, see [inputs and results](../examples/managed-scripts/inputs-and-results.md), [Domain data](../examples/managed-scripts/domain-data.md), and [files and documents](../examples/managed-scripts/files-and-documents.md).
 
 ## Execution behavior
 
 - An inactive script, an empty body, or an unsupported language cannot run.
 - Each invocation gets its own argument values. Changing `args` in one call does not change a later call.
-- Script changes are picked up by preparation caching; a modified in-memory script runs its current source. Cache implementation details are not part of the API contract.
+- Changes to a script's text are used on subsequent executions.
 - Script settings can only tighten [platform execution limits](execution-settings.md).
 - Circular calls and excessive managed-script nesting are rejected.
 
-Execution requires the [X21 Advanced BPM license and `exec` scope](security.md) for a caller-scoped transaction.
+Execution requires the [X21 Advanced BPM license and `exec` scope](../concepts/security.md) for a caller-scoped transaction.

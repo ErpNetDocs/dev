@@ -1,12 +1,9 @@
-- name: Overview
-  href: overview.md
-- name: Common patterns
-  href: common-patterns.md
-  items:
-  - name: Basic Domain examples
-    href: basic-domain.md
-  - name: Advanced Domain examples
-    href: advanced-domain.md
+- name: Shared patterns
+  href: shared-patterns.md
+- name: Basic Domain examples
+  href: basic-domain.md
+- name: Advanced Domain examples
+  href: advanced-domain.md
 - name: User business rules
   href: user-business-rules.md
 - name: Calculated attributes
@@ -14,4 +11,11 @@
 - name: ExecuteScript
   href: execute-script.md
 - name: Managed scripts
-  href: ../examples.md
+  href: managed-scripts/index.md
+  items:
+  - name: Inputs and results
+    href: managed-scripts/inputs-and-results.md
+  - name: Domain data
+    href: managed-scripts/domain-data.md
+  - name: Files and documents
+    href: managed-scripts/files-and-documents.md

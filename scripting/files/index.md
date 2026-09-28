@@ -29,7 +29,7 @@ do {
 } while (page.hasMore);
 ```
 
-Replace the sample `folderId` with one obtained from the current script context. In a managed script, it could be declared in the [parameter schema](../parameters.md); in a business rule, it could come from `subject`. Query results are ordered by name and ID for stable paging; if files change while paging, repeat the search when a stable snapshot is needed.
+Replace the sample `folderId` with one obtained from the current script context. In a managed script, it could be declared in the [parameter schema](../configuration/parameters.md); in a business rule, it could come from `subject`. Query results are ordered by name and ID for stable paging; if files change while paging, repeat the search when a stable snapshot is needed.
 
 To find files across accessible owners, or narrow a search to one entity:
 
@@ -74,6 +74,6 @@ In a user business rule whose `subject` is an aggregate-root entity, an attachme
 
 `file.readText()` and `file.writeText(text)` use UTF-8. `readBytes()` and `writeBytes(bytes)` work with binary content; JavaScript byte arrays such as `[0, 1, 255]` are accepted on write. Files also support `rename(name)`, `moveTo(folderId)`, and `delete()`. Folders support `rename(name)`, `moveTo(parentFolderId)`, and `delete()`. `createFolder({ name, parentFolderId })` creates a root folder when the parent is omitted.
 
-Content operations support **embedded files**. A linked file may appear in metadata results, but reading or writing its content through this SDK is not supported. Reads and writes obey the effective file-size limit; managed scripts may tighten it through [execution settings](../execution-settings.md). Changes belong to the current Domain transaction; a script does not commit them by calling `writeText()` or `createFile()`.
+Content operations support **embedded files**. A linked file may appear in metadata results, but reading or writing its content through this SDK is not supported. Reads and writes obey the effective file-size limit; managed scripts may tighten it through [execution settings](../configuration/execution-settings.md). Changes belong to the current Domain transaction; a script does not commit them by calling `writeText()` or `createFile()`. For a managed script invoked through the Domain API, the caller must [commit the transaction](../concepts/transactions-and-persistence.md#commit-a-managed-script-call) to persist those changes.
 
 For native document processing, continue with [XLSX workbooks](xlsx.md) and [PDF documents](pdf.md).

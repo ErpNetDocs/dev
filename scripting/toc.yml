@@ -2,13 +2,13 @@
   href: index.md
 - name: Getting Started
   href: getting-started/toc.yml
-  topicHref: getting-started/overview.md
+  topicHref: getting-started/index.md
 - name: Concepts
   href: concepts/toc.yml
-  topicHref: concepts/overview.md
+  topicHref: concepts/execution-context-and-results.md
 - name: Configuration
   href: configuration/toc.yml
-  topicHref: configuration/overview.md
+  topicHref: configuration/index.md
 - name: Scripting APIs
   href: apis.md
   items:
@@ -35,6 +35,6 @@
       href: files/pdf.md
 - name: Examples
   href: examples/toc.yml
-  topicHref: examples/overview.md
+  topicHref: examples/index.md
 - name: Limitations and best practices
   href: best-practices.md

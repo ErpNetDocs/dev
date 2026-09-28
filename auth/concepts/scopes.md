@@ -65,7 +65,7 @@ The resulting access token will contain the allowed scopes as part of its payloa
 ## Security Considerations
 
 - Only grant `update` to apps that must modify data.  
-- Grant `exec` only to applications trusted to run both stored and caller-supplied scripts. See the [scripting security guide](../../scripting/security.md).
+- Grant `exec` only to applications trusted to run both stored and caller-supplied scripts. See the [scripting security guide](../../scripting/concepts/security.md).
 - Avoid combining user and system scopes in the same token.  
 - Regularly audit trusted apps and their allowed scopes.  
 

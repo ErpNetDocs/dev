@@ -1,6 +1,6 @@
 # Entity operations
 
-Use a repository on the global `Domain` object to access an entity. Repository names follow the [Domain Model entity reference](https://docs.erp.net/model/entities/index.html). The examples use `Crm.Sales.CustomersRepository`; replace it with the repository for your entity. These are API fragments: `customerId`, `number`, and `personId` below stand for values obtained from the script's own [execution context](../execution-context.md), not universal globals.
+Use a repository on the global `Domain` object to access an entity. Repository names follow the [Domain Model entity reference](https://docs.erp.net/model/entities/index.html). The examples use `Crm.Sales.CustomersRepository`; replace it with the repository for your entity. These are API fragments: `customerId`, `number`, and `personId` below stand for values obtained from the script's own [execution context](../concepts/execution-context-and-results.md), not universal globals.
 
 ## Retrieve by ID
 
@@ -12,7 +12,7 @@ if (customer === null)
 const customerNumber = customer.Number;
 ```
 
-`getById` accepts a GUID string and returns `null` when the entity cannot be found. A managed script can declare `customerId` as an input; its [complete example](../examples.md#read-a-customer-by-id) includes a schema and API request.
+`getById` accepts a GUID string and returns `null` when the entity cannot be found. A managed script can declare `customerId` as an input; its [complete example](../examples/managed-scripts/domain-data.md#read-a-customer-by-id) includes a schema and API request.
 
 To retrieve several entities, `getByIdList` accepts a comma-separated string or an array of GUID strings:
 
@@ -61,7 +61,7 @@ if (customer === null)
 customer.Active = false;
 ```
 
-In a user business rule, the triggering entity can instead be available as `subject`. That is specific to its [execution context](../execution-context.md). See [Change a customer's active state](../examples.md#change-a-customers-active-state) for a complete managed-script example.
+In a user business rule, the triggering entity can instead be available as `subject`. That is specific to its [execution context](../concepts/execution-context-and-results.md). See [Change a customer's active state](../examples/managed-scripts/domain-data.md#change-a-customers-active-state) for a complete managed-script example.
 
 ## Delete
 

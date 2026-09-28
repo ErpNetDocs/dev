@@ -1,6 +1,6 @@
 # Query Domain entities
 
-Use a repository's `query(filter, options)` method for bounded searches. A filter object names attributes or references; `fetch` limits the number of returned entities. Without `fetch`, the scripting query path currently caps results at 1,000. Prefer a specific filter and a smaller limit for interactive calls. The sample filter values below are literals; a real script can obtain them from its own [execution context](../execution-context.md).
+Use a repository's `query(filter, options)` method for bounded searches. A filter object names attributes or references; `fetch` limits the number of returned entities. Without `fetch`, the scripting query path currently caps results at 1,000. Prefer a specific filter and a smaller limit for interactive calls. The sample filter values below are literals; a real script can obtain them from its own [execution context](../concepts/execution-context-and-results.md).
 
 ```js
 const customers = Domain.Crm.Sales.CustomersRepository.query(
@@ -8,7 +8,7 @@ const customers = Domain.Crm.Sales.CustomersRepository.query(
     { fetch: 10 });
 ```
 
-The query returns Domain entities. For a managed script's result, select plain values rather than returning entity objects; see [Find customers by number prefix](../examples.md#find-customers-by-number-prefix).
+The query returns Domain entities. For a managed script's result, select plain values rather than returning entity objects; see [Find customers by number prefix](../examples/managed-scripts/domain-data.md#find-customers-by-number-prefix).
 
 ## Filter forms
 

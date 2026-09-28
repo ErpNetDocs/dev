@@ -40,7 +40,7 @@ pdf.page(1).drawImage(image.readBytes(), 40, 120, 100, 60);
 pdf.save();
 ```
 
-`save()` writes the file and closes the document; `close()` discards unsaved edits. Creating a PDF already stores a valid initial one-page file. Opened files must be embedded `.pdf` files, and password-protected PDFs are not supported. Processed content is subject to the effective file-size limit. A managed script can tighten it through [execution settings](../execution-settings.md) and use declared IDs; see the [complete example](../examples.md#create-a-pdf-report).
+`save()` writes the file in the current transaction and closes the document; it does not commit the transaction. `close()` discards unsaved edits. Creating a PDF already stores a valid initial one-page file in that transaction. Opened files must be embedded `.pdf` files, and password-protected PDFs are not supported. Processed content is subject to the effective file-size limit. A managed script can tighten it through [execution settings](../configuration/execution-settings.md) and use declared IDs; see the [complete example](../examples/managed-scripts/files-and-documents.md#create-a-pdf-report) and [commit sequence](../concepts/transactions-and-persistence.md#commit-a-managed-script-call).
 
 ## Fonts and Unicode
 

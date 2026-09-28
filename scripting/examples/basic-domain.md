@@ -2,7 +2,7 @@
 
 These examples cover retrieval, creation, updates, and deletion. They are JavaScript fragments for the scripting `Domain` API, not complete managed scripts. Replace sample IDs and values with records from your instance. The [Domain Model reference](https://docs.erp.net/model/entities/index.html) lists available repositories and attributes.
 
-Only an entity-triggered script receives `subject`. In a managed script, read declared inputs from `args` and retrieve the entity yourself. A freeform `ExecuteScript` request has no automatic `subject` or `args`. See [execution context](../execution-context.md).
+Only an entity-triggered script receives `subject`. In a managed script, read declared inputs from `args` and retrieve the entity yourself. A freeform `ExecuteScript` request has no automatic `subject` or `args`. See [execution context](../concepts/execution-context-and-results.md).
 
 ## Retrieve
 

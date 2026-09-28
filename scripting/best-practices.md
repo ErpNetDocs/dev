@@ -2,9 +2,9 @@
 
 ## Execution limits and access
 
-Scripts run with the current invocation's Domain transaction and permissions, not unrestricted host access. They can use only the objects and host actions exposed to the scripting runtime. Do not confuse the `subject` of a business rule or calculated attribute with a managed script's `args`; see [Execution context](execution-context.md).
+Scripts run with the current invocation's Domain transaction and permissions, not unrestricted host access. They can use only the objects and host actions exposed to the scripting runtime. Do not confuse the `subject` of a business rule or calculated attribute with a managed script's `args`; see [Execution context](concepts/execution-context-and-results.md).
 
-Execution limits depend on the feature and its host. A managed script may tighten platform limits for time, memory, source, input/output, and processed files with [execution settings](execution-settings.md), but cannot relax them. Large loops, unbounded queries, and oversized files may fail even when the script source is valid.
+Execution limits depend on the feature and its host. A managed script may tighten platform limits for time, memory, source, input/output, and processed files with [execution settings](configuration/execution-settings.md), but cannot relax them. Large loops, unbounded queries, and oversized files may fail even when the script source is valid.
 
 ## Data and transactions
 
@@ -17,7 +17,7 @@ Execution limits depend on the feature and its host. A managed script may tighte
 
 - Use `Action.log()` and `Action.error()` for useful operational diagnostics, but do not log tokens, credentials, or sensitive file contents.
 - Use `Action.cancel()` when a rule must stop the operation. For a managed script, choose whether to throw an error or return a declared result; do not silently turn failures into success.
-- Keep `exec` access limited to clients that genuinely need arbitrary script execution. A valid scope does not bypass ordinary Domain permissions; see [Security and permissions](security.md).
+- Keep `exec` access limited to clients that genuinely need arbitrary script execution. A valid scope does not bypass ordinary Domain permissions; see [Security and permissions](concepts/security.md).
 - Do not assume a script can access a host file system, import a package, or use a particular font. Use [Files SDK](files/index.md) for managed content and check document-layer requirements.
 
 JavaScript is the only supported language for managed scripts. Other entry points can have legacy C# behavior; consult the specific entry point's documentation rather than copying a managed-script example into it unchanged.

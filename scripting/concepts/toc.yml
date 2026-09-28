@@ -1,8 +1,6 @@
-- name: Overview
-  href: overview.md
-- name: Execution context
-  href: ../execution-context.md
-- name: Transactions and results
-  href: transactions-and-results.md
+- name: Execution context and results
+  href: execution-context-and-results.md
+- name: Transactions and persistence
+  href: transactions-and-persistence.md
 - name: Security and permissions
-  href: ../security.md
+  href: security.md

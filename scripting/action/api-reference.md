@@ -1,6 +1,6 @@
 # Action API reference
 
-The global `Action` object is available to JavaScript scripts. Methods use lower-case JavaScript names. The available behavior depends on the script's [execution context](../execution-context.md).
+The global `Action` object is available to JavaScript scripts. Methods use lower-case JavaScript names. The available behavior depends on the script's [execution context](../concepts/execution-context-and-results.md).
 
 | Member | Purpose | Context note |
 | --- | --- | --- |

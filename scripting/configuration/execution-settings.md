@@ -50,6 +50,6 @@ To bound a small calculation without overriding the platform's other limits:
 
 If the platform timeout is already one second, this does **not** grant two seconds. The effective timeout remains one second. Conversely, if the platform permits more time, this script is restricted to two seconds.
 
-An output-size limit applies to the complete JSON result, not only to `returnValue`. A file-size limit applies when a script reads or writes embedded file content; listing file metadata does not load the file contents. See the [Files SDK](files/index.md) for file operations.
+An output-size limit applies to the complete JSON result, not only to `returnValue`. A file-size limit applies when a script reads or writes embedded file content; listing file metadata does not load the file contents. See the [Files SDK](../files/index.md) for file operations.
 
 Limits are enforcement boundaries, not performance targets. Keep queries and result sets small even when their serialized JSON fits within a configured limit. Scripts cannot override the platform's statement limit or enable additional runtime features through this JSON object.

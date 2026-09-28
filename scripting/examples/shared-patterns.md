@@ -1,8 +1,8 @@
-# Common patterns
+# Shared patterns
 
 The examples in this section use the JavaScript `Domain` and `Action` APIs shared by the scripting features. Start with [basic Domain operations](basic-domain.md) for retrieval and CRUD, then use [advanced Domain queries](advanced-domain.md) for filter syntax, references, null handling, and object initializers. The [Domain API reference](../domain-model/index.md) explains the underlying operations.
 
-These are reusable fragments, not complete scripts. A user business rule or calculated attribute can receive `subject`; a managed script receives declared values through `args`; a freeform `ExecuteScript` request receives neither automatically. Obtain IDs and Domain objects from the relevant [execution context](../execution-context.md). Modifications participate in the current transaction and take effect only if it commits.
+These are reusable fragments, not complete scripts. A user business rule or calculated attribute can receive `subject`; a managed script receives declared values through `args`; a freeform `ExecuteScript` request receives neither automatically. Obtain IDs and Domain objects from the relevant [execution context](../concepts/execution-context-and-results.md). Modifications participate in the current transaction and take effect only if it commits.
 
 ## Special Domain types
 

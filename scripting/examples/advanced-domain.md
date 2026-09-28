@@ -1,6 +1,6 @@
 # Advanced Domain examples
 
-These JavaScript fragments extend the [basic Domain examples](basic-domain.md) with object initializers and the full set of currently supported scripting query comparisons. Obtain placeholder objects such as `customerType` and `person` from the relevant [execution context](../execution-context.md) or retrieve them by ID before using them. Each `fetch` value is deliberately small; adjust it only after checking the expected result set.
+These JavaScript fragments extend the [basic Domain examples](basic-domain.md) with object initializers and the full set of currently supported scripting query comparisons. Obtain placeholder objects such as `customerType` and `person` from the relevant [execution context](../concepts/execution-context-and-results.md) or retrieve them by ID before using them. Each `fetch` value is deliberately small; adjust it only after checking the expected result set.
 
 The query filter names refer to Domain attributes or references, not arbitrary JavaScript properties. An unrecognized field name is currently ignored and can broaden a query. Verify names against the [Domain Model reference](https://docs.erp.net/model/entities/index.html), especially before an update or deletion.
 

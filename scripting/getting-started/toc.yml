@@ -1,5 +1,3 @@
-- name: Overview
-  href: overview.md
 - name: User business rules
   href: user-business-rules.md
 - name: Calculated attributes
