@@ -42,7 +42,7 @@ It can also be used without an external identity. For example, an internal autom
 
 The system does not provide JSON-path queries, filtering, sorting, grouping, indexing, or partial updates and merges of individual JSON properties.
 
-Use `AdditionalDataJson` for data owned and interpreted by an integration. When the data needs to be modeled, visible to users, or used in filters and reports, define [stored attributes (custom properties)](../common-tasks/stored-attributes.md) instead.
+Use `AdditionalDataJson` for data owned and interpreted by an integration. The complete JSON document can be viewed and edited through the client JSON editor. For individual business fields that need their own controls, filtering, grouping, or reporting, define [stored attributes (custom properties)](../common-tasks/stored-attributes.md) or a dedicated entity instead.
 
 ## Integration ownership convention
 
@@ -65,7 +65,7 @@ In this example, ERP.net Retail POS owns only the `erpnet-retail-pos` object and
 Because `PATCH` replaces the complete `AdditionalDataJson` value, update it using read-modify-write:
 
 1. Read the current value.
-2. Parse the JSON root object.
+2. Parse the JSON root object, or start with an empty object if the current value is blank.
 3. Add, replace, or remove only the application-owned top-level object.
 4. Serialize and PATCH the complete value, preserving the objects owned by other applications.
 
@@ -76,7 +76,7 @@ For automated clients and coding agents: do not infer ownership from the content
 | Requirement | Use |
 | --- | --- |
 | Persist an integration-owned, per-record JSON document | `AdditionalDataJson` |
-| Add a business field that users configure or edit | [Stored attributes (custom properties)](../common-tasks/stored-attributes.md) |
+| Add an individual business field with its own control | [Stored attributes (custom properties)](../common-tasks/stored-attributes.md) |
 | Filter, sort, group, report on, or relate the value | A modeled attribute, a custom property, or a dedicated entity |
 
 For automated clients and coding agents: do not infer a schema from existing JSON values. Treat each top-level object as owned by its named integration, preserve unknown objects when updating the document, and coordinate schema changes with that integration's owner.
@@ -99,7 +99,7 @@ The value is an OData `string`, so the JSON document is returned as a JSON-escap
 }
 ```
 
-Parse the string as JSON after receiving it. Do not include `AdditionalDataJson` in broad list queries unless the consumer needs it; retrieving it performs a separate secured read for each requested entity.
+Parse a nonblank string as JSON after receiving it. Treat a null, empty, or whitespace-only value as no additional data. Do not include `AdditionalDataJson` in broad list queries unless the consumer needs it; retrieving it performs a separate secured read for each requested entity.
 
 ## Update the value
 
@@ -114,21 +114,21 @@ Content-Type: application/json
 }
 ```
 
-To clear the data, send an empty value:
+To clear the complete value, explicitly set `AdditionalDataJson` to `null` or an empty string:
 
 ```json
 {
-  "AdditionalDataJson": ""
+  "AdditionalDataJson": null
 }
 ```
 
-Sending `null` does not clear the value. `AdditionalDataJson` is delay-loaded, so `null` means that no value has been supplied by the request and the stored value is kept.
+Omitting the property from a PATCH request leaves the stored value unchanged. Sending `"{}"` stores an empty JSON object. When the document contains data owned by other applications, remove only your application's top-level object and preserve the rest of the document.
 
-The server validates the value on client commit. Its length must not exceed **32,000 characters**; otherwise the request fails with [R101790](https://docs.erp.net/model/business-rules/R101790.html), *Additional Data JSON Maximum Length*. The value must also be a valid JSON object; otherwise the request fails with [R101839-1](https://docs.erp.net/model/business-rules/R101839-1.html), *Additional Data JSON Validation*.
+The server validates the value on client commit. Its length must not exceed **32,000 characters**; otherwise the request fails with [R101790](https://docs.erp.net/model/business-rules/R101790.html), *Additional Data JSON Maximum Length*. Empty values are allowed. Nonblank values must contain a valid JSON object; otherwise the request fails with [R101839-1](https://docs.erp.net/model/business-rules/R101839-1.html), *Additional Data JSON Validation*.
 
 ## Design guidance
 
-- `AdditionalDataJson` is optional. Omit it when no integration data is needed; sending `null` leaves the stored value unchanged.
+- `AdditionalDataJson` is optional. Omit it from a PATCH request to keep the stored value; explicitly send `null` or an empty string to clear it.
 - Treat the JSON document as integration-owned. A PATCH replaces the whole value; it does not merge individual JSON properties.
 - Keep a stable schema and version it inside the JSON when it may evolve.
 - Do not use this field for lookup, filtering, sorting, reporting, or relationship data. Use modeled attributes, [stored attributes (custom properties)](../common-tasks/stored-attributes.md), or dedicated entities for those purposes.
