@@ -17,7 +17,7 @@ Key definition settings (high level):
 
 - `EntityName`: which entity type the property applies to (e.g. `Crm_Customers`, `General_Products_Products`, etc.)
 - `Code`: the property code (used in API property naming)
-- `PropertyType`: Text / Number / Date / Picture
+- `PropertyType`: Text / Number / Date / Picture / Reference
 - `LimitToAllowedValues`: whether the value is free text or constrained
 - `AllowedValuesEntityName` / `AllowedValuesFilterXML`: allowed values coming from another entity
 - `AllowedValuesProperty` / `AllowedValuesParent`: inheritance / filtering of allowed values
