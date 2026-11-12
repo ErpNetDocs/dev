@@ -55,6 +55,29 @@ To commit the changes made in the memory transaction to the database you should 
 >
 > Through Front-End Transaction, GetChanges or WaitForChanges we can synchronize our UI passing only the user actions to the server - such as update of an attribute, creating new object or deleting existing object.
 
+## Concurrent open transactions
+
+`SessionConcurrentTransactions` limits the number of transactions a session can keep open between `BeginTransaction` and `EndTransaction` calls.
+
+| ERP.net version | Default open transactions per session |
+| --- | ---: |
+| Before **27.1.1.96** | 1 |
+| **27.1.1.96** and later | 10 |
+
+The limit is configurable in both version ranges. An explicit `RateLimits.SessionConcurrentTransactions` value in the Domain API website's settings JSON overrides the default and continues to apply after an upgrade. For example, this configuration allows up to 10 open transactions per session, including on versions before 27.1.1.96:
+
+```json
+{
+  "RateLimits": {
+    "SessionConcurrentTransactions": 10
+  }
+}
+```
+
+Use a positive integer and restart the website after changing its settings. See [Configuring rate limits](https://docs.erp.net/tech/advanced/web-sites/rate-limits.html#configuring-rate-limits).
+
+When the open-transaction limit is reached, another `BeginTransaction` call returns **429 (Too Many Requests)** with the message "Maximum allowed transactions for this session have been reached." Close an existing transaction with `EndTransaction` before retrying. Open transactions count toward the limit even between HTTP requests; `SessionConcurrentRequests` independently controls the number of simultaneous HTTP requests.
+
 ## Transaction Lifespan and Management
 
 Each transaction has a defined lifespan.

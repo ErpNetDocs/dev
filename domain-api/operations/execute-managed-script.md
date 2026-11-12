@@ -1,5 +1,7 @@
 # Execute a managed script
 
+> **Introduced in version:** `27.1.1.96`
+
 `Systems.Core.Script.Execute` is a **bound OData action** that runs one stored, active [managed script](../../scripting/configuration/managed-scripts.md). Unlike the unbound [`ExecuteScript`](execute-script.md) action, it does not accept JavaScript source in the request body. Its source and optional [parameter schema](../../scripting/configuration/parameters.md) come from the selected `Systems.Core.Script` record.
 
 ## Request
@@ -7,7 +9,7 @@
 ```http
 POST /api/domain/odata/Systems_Core_Scripts(<script-id>)/Execute
 Content-Type: application/json
-Authorization: Bearer <access-token-with-exec-scope>
+Authorization: Bearer <access-token>
 
 { "arguments": { "quantity": 3, "unitPrice": 12.5 } }
 ```
@@ -45,6 +47,6 @@ OData also includes its usual response metadata. `parameters` contains only decl
 
 ## Authorization and failures
 
-The calling application needs the OAuth [`exec` scope](../../scripting/concepts/security.md) and the instance needs the X21 Advanced BPM license. `exec` also authorizes the freeform `ExecuteScript` action, so grant it only to applications that are trusted with that broader capability.
+The calling application must authenticate to the Domain API, and the instance needs the [X21 Advanced BPM license](../../scripting/concepts/security.md). Use the normal OAuth scopes needed for the script's data operations. Script execution does not require an additional OAuth scope.
 
 Execution fails for an inactive script, empty source, unsupported managed-script language, invalid arguments, invalid outputs, or exceeded [execution limits](../../scripting/configuration/execution-settings.md). The action does not change a script's definition. Ordinary Domain permissions and transaction behavior still apply to data accessed by the script.

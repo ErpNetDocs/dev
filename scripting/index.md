@@ -9,6 +9,9 @@ ERP.net runs JavaScript in several product features. The feature determines **wh
 | [ExecuteScript](getting-started/execute-script.md) | JavaScript source in a Domain API request | When the action is called | There is no stored definition or declared `args` schema. |
 | [Managed script](getting-started/managed-scripts.md) | In a `Systems.Core.Script` record | When its `Execute` action is called | Declared inputs are in `args`; outputs and a return value are returned to the caller. |
 
+> [!NOTE]
+> Managed scripts (`Systems.Core.Script`) and direct Domain API `ExecuteScript` execution are available starting with ERP.net version **27.1.1.96**.
+
 The similarly named API actions accept different requests: `ExecuteScript` receives JavaScript source, while `Systems.Core.Script/Execute` receives a script record ID and JSON arguments. Neither action is how a user business rule or calculated attribute is triggered.
 
 In every case, the script can use the [Domain Model](domain-model/index.md) to work with ERP.net entities and the [`Action` object](action/index.md) for supported host operations. What differs is the context provided by the feature: `subject` is available to business rules and calculated attributes, while a managed script reads declared inputs from `args`. A freeform `ExecuteScript` call provides neither automatically.

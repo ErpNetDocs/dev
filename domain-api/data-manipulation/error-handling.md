@@ -8,7 +8,7 @@ The status code tells the caller what to do with it:
 |---|---|---|
 | **500** Internal Server Error | The operation failed. | Read the body, fix the request or the data. Retrying the same request will fail the same way. |
 | **503** Service Unavailable | No license is available for the request. | Wait and retry. The response carries a `Retry-After` header with the suggested delay in seconds. |
-| **429** Too Many Requests | A [rate limit](https://docs.erp.net/tech/advanced/web-sites/rate-limits.html) was exceeded. | Back off and retry. |
+| **429** Too Many Requests | A [request rate limit](https://docs.erp.net/tech/advanced/web-sites/rate-limits.html) or the [open-transaction limit](transactions.md#concurrent-open-transactions) was exceeded. | Back off for request limits; close an existing transaction before retrying `BeginTransaction` when the open-transaction limit is reached. |
 
 The JSON response provides:
 - A user-readable message (`message`)  

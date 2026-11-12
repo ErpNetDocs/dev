@@ -1,5 +1,7 @@
 # Your first managed script
 
+> **Introduced in version:** `27.1.1.96`
+
 A managed script is a stored `Systems.Core.Script` record. The record holds the code and the definition of its inputs and outputs. A caller invokes that record's `Execute` action, supplies input values, and receives the result. This walkthrough doubles a number so you can see each part of that exchange.
 
 ## 1. Define the code
@@ -38,12 +40,12 @@ Call `Execute` using the **record ID**, not its `Code`:
 ```http
 POST /api/domain/odata/Systems_Core_Scripts(<script-id>)/Execute
 Content-Type: application/json
-Authorization: Bearer <access-token-with-exec-scope>
+Authorization: Bearer <access-token>
 
 { "arguments": { "inputValue": 21 } }
 ```
 
-The JSON `arguments` object becomes the script's `args` object. Here, `args.inputValue` is `21`. Do not send the JavaScript source or an escaped JSON string in this request. The caller needs the [`exec` scope](../concepts/security.md), and execution requires the X21 Advanced BPM license.
+The JSON `arguments` object becomes the script's `args` object. Here, `args.inputValue` is `21`. Do not send the JavaScript source or an escaped JSON string in this request. Execution requires the [X21 Advanced BPM license](../concepts/security.md), and normal Domain permissions apply.
 
 ## 4. Read the result
 

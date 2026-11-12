@@ -1,12 +1,14 @@
 # ExecuteScript
 
+> **Introduced in version:** `27.1.1.96`
+
 @@name Domain API defines an `ExecuteScript` endpoint which can be used to execute JavaScript code directly in the domain context.
 
 `ExecuteScript` is an **unbound OData action**, invoked via **HTTP POST**, whose request body contains **raw JavaScript source code**. The JavaScript runs in the current Domain transaction, with access to the Domain Model and the scripting APIs exposed by the application. It can read and modify domain data, subject to the caller's permissions. A standalone call does not implicitly commit changes.
 
 This is one-off execution, not a stored script definition. To run an active `Systems.Core.Script` with declared JSON arguments and a result, use [Execute a managed script](execute-managed-script.md) instead.
 
-The calling application needs the OAuth [`exec` scope](../../auth/concepts/scopes.md), and the instance needs the X21 Advanced BPM license. The same scope allows both freeform and managed-script execution; request it only for applications that need this capability.
+The calling application must authenticate to the Domain API, and the instance needs the [X21 Advanced BPM license](../../scripting/concepts/security.md). Use the normal OAuth scopes needed for the script's data operations. Script execution does not require an additional OAuth scope.
 
 ---
 
@@ -34,7 +36,7 @@ The request body must contain **plain JavaScript source code**, encoded as UTF-8
 POST https://<your-instance>.my.erp.net/api/domain/odata/ExecuteScript
 Content-Type: text/plain
 Accept: application/json
-Authorization: Bearer <access-token-with-exec-scope>
+Authorization: Bearer <access-token>
 
 console.log('Starting script');
 

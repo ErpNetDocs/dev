@@ -1,13 +1,15 @@
 # ExecuteScript examples
 
-These are complete requests for the freeform Domain API [`ExecuteScript` action](../../domain-api/operations/execute-script.md). The HTTP body is JavaScript source, not JSON. No `Systems.Core.Script` record, `subject`, `args`, or parameter schema is involved. The access token needs the `exec` scope, and the instance needs the X21 Advanced BPM license.
+> **Introduced in version:** `27.1.1.96`
+
+These are complete requests for the freeform Domain API [`ExecuteScript` action](../../domain-api/operations/execute-script.md). The HTTP body is JavaScript source, not JSON. No `Systems.Core.Script` record, `subject`, `args`, or parameter schema is involved. The instance needs the [X21 Advanced BPM license](../concepts/security.md), and normal Domain permissions apply.
 
 ## Read and log a bounded result
 
 ```http
 POST /api/domain/odata/ExecuteScript
 Content-Type: text/plain
-Authorization: Bearer <access-token-with-exec-scope>
+Authorization: Bearer <access-token>
 
 const customers = Domain.Crm.Sales.CustomersRepository.query(
     { active: true }, { fetch: 10 });
@@ -23,7 +25,7 @@ Replace the sample GUID with an existing customer ID. This example changes data,
 ```http
 POST /api/domain/odata/ExecuteScript
 Content-Type: text/plain
-Authorization: Bearer <access-token-with-exec-scope>
+Authorization: Bearer <access-token>
 
 const customer = Domain.Crm.Sales.CustomersRepository.getById(
     "11111111-1111-4111-8111-111111111111");

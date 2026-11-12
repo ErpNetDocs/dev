@@ -1,5 +1,7 @@
 # Managed scripts
 
+> **Introduced in version:** `27.1.1.96`
+
 A managed script is a reusable `Systems.Core.Script` record. The caller identifies the record and supplies JSON inputs; the script reads them from `args` and returns JSON output. It is separate from a user business rule, a calculated attribute, and the freeform Domain API [`ExecuteScript`](../../domain-api/operations/execute-script.md) action. If you are new to this feature, follow [Your first managed script](../getting-started/managed-scripts.md) before using this page as a field reference.
 
 ## Define a script
@@ -72,4 +74,4 @@ For more examples, see [inputs and results](../examples/managed-scripts/inputs-a
 - Script settings can only tighten [platform execution limits](execution-settings.md).
 - Circular calls and excessive managed-script nesting are rejected.
 
-Execution requires the [X21 Advanced BPM license and `exec` scope](../concepts/security.md) for a caller-scoped transaction.
+Execution requires the [X21 Advanced BPM license](../concepts/security.md), and normal Domain permissions apply.
