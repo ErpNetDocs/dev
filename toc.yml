@@ -7,6 +7,8 @@ items:
 - name: Authentication
   href: auth/toc.yml
   topicHref: auth/overview.md  
+- name: Docs for agents
+  href: agents/index.md
 - name: Scripting
   href: scripting/toc.yml
   topicHref: scripting/index.md

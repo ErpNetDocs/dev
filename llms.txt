@@ -1,0 +1,40 @@
+﻿# ERP.net Developer Docs
+
+> Guides and API references for building ERP.net apps and integrations.
+
+Choose the authentication flow for the identity your API calls need. Use the target instance's OData metadata for exact entity names and operation signatures.
+
+## Getting started
+
+- [Docs for agents](https://docs.erp.net/dev/agents/index.md): How to find and read the Developer Docs.
+- [Building Apps](https://docs.erp.net/dev/building-apps/overview.md): App types, setup, and integration architecture.
+- [Site discovery](https://docs.erp.net/dev/building-apps/concepts/application-server-endpoints.md): Find the sites and API endpoints available on an instance.
+
+## Authentication
+
+- [Authentication overview](https://docs.erp.net/dev/auth/overview.md): OAuth flows, Trusted Applications, and scopes.
+- [Identity discovery](https://docs.erp.net/dev/auth/concepts/identity-server.md#1-discovery-endpoint): Find the instance's `token_endpoint` URL.
+- [Client Credentials setup](https://docs.erp.net/dev/auth/flows/client-credentials/service-apps-step-by-step.md#prerequisites): Configure the Trusted Application and its System User for a background integration.
+- [Client Credentials token request](https://docs.erp.net/dev/auth/flows/client-credentials/service-apps-token.md): Request an access token using `grant_type=client_credentials` and use it in an API call.
+- [Token Exchange](https://docs.erp.net/dev/auth/flows/token-exchange.md): Exchange a subject token for an API access token.
+- [Supported Token Exchange use cases](https://docs.erp.net/dev/auth/flows/token-exchange-use-cases.md): Agent impersonation and its supported JWT claims.
+- [Agent token exchange sample](https://docs.erp.net/dev/auth/samples/token-exchange-agent-example.md): A complete HTTP token request, response, and Domain API call.
+- [Authorization Code walkthrough](https://docs.erp.net/dev/auth/flows/auth-code/interactive-apps-step-by-step.md): Sign in interactively and redeem an authorization code for tokens.
+- [API scopes](https://docs.erp.net/dev/auth/concepts/scopes.md): Choose the permissions to request when obtaining an access token.
+
+## Domain API
+
+- [Domain API](https://docs.erp.net/dev/domain-api/index.md): OData access to ERP.net business objects.
+- [OData request URLs](https://docs.erp.net/dev/domain-api/querying-data/url-components.md): Combine the discovered service root, resource path, and query string.
+- [Supported OData query options](https://docs.erp.net/dev/domain-api/querying-data/query-options/index.md): Use the options and ERP.net extensions supported by the Domain API.
+- [Supported filter operators](https://docs.erp.net/dev/domain-api/querying-data/query-options/filter.md): Build `$filter` expressions using ERP.net's supported operators and value syntax.
+- [Paging results](https://docs.erp.net/dev/domain-api/querying-data/paging.md): Set `$top` and follow the returned `@odata.nextLink` for multi-page reads.
+- [Operations and instance metadata](https://docs.erp.net/dev/domain-api/operations/index.md): Confirm action and function signatures in `$metadata` and choose the correct HTTP method.
+- [Domain Model](https://docs.erp.net/model/entities/): Standard entities, fields, and relationships.
+
+## Other APIs and extensions
+
+- [Table API](https://docs.erp.net/dev/table-api/index.md): Table data access for reporting and integrations.
+- [Scripting](https://docs.erp.net/dev/scripting/index.md): ERP.net scripts and examples.
+- [Developing for WebClient](https://docs.erp.net/dev/web-client/index.md): Extend the ERP.net web client.
+- [Developing for the Marketplace](https://docs.erp.net/dev/marketplace/index.md): Build apps for the ERP.net Marketplace.

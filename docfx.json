@@ -13,11 +13,17 @@
           "**.svg",
           "**.png",
           "favicon.ico",
+          "llms.txt",
           "**/samples/**/*.js",
           "**/samples/**/*.html",
           "**/samples/**/*.css"
         ],
         "exclude": [ "docs/**/*.*" ]
+      },
+      {
+        "files": [ "**.md" ],
+        "exclude": [ "docs/**/*.*" ],
+        "group": "markdown-source"
       }
     ],
     "xref": [
@@ -37,7 +43,8 @@
     "template": [
       "default",
       "modern",
-      "templates/material"
+      "templates/material",
+      "templates/agent-docs"
     ],
     "postProcessors": ["ExtractSearchIndex"],
     "markdownEngineName": "markdig",

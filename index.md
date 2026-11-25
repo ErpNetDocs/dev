@@ -146,6 +146,8 @@ For more information about security, read [Introduction to authentication in ERP
 
 Continue with the main documentation sections:
 
+- [**Docs for agents**](agents/index.md) explains how to use the Developer Docs with a coding agent.
+
 - [Building Apps](./building-apps/overview.md)  
   Learn how to design, configure, and build integrations and applications.
 
