@@ -6,7 +6,7 @@ Choose the authentication flow for the identity your API calls need. Use the tar
 
 ## Getting started
 
-- [Docs for agents](https://docs.erp.net/dev/agents/index.md): How to find and read the Developer Docs.
+- [Docs for agents](https://docs.erp.net/dev/agents/index.md): How to share these guides with a coding agent.
 - [Building Apps](https://docs.erp.net/dev/building-apps/overview.md): App types, setup, and integration architecture.
 - [Site discovery](https://docs.erp.net/dev/building-apps/concepts/application-server-endpoints.md): Find the sites and API endpoints available on an instance.
 
