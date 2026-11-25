@@ -24,9 +24,9 @@ Unbound operations are invoked directly under:
 | Operation | Kind | HTTP | Description | See |
 |---|---|---:|---|---|
 | `BeginTransaction` | Action | POST | Starts a server-side API transaction and returns `TransactionId`. | [Transactions](../data-manipulation/transactions.md) |
-| `EndTransaction` | Action | POST | Ends an API transaction (commit or rollback). | [Transactions](../data-manipulation/transactions.md) |
-| `GetChanges` | Function | GET | Returns collected changes for a front-end transaction (requires `trackChanges=true`). | [Transactions](../data-manipulation/transactions.md) |
-| `WaitForChanges` | Function | GET | Like `GetChanges`, but blocks until changes occur or timeout. | [Transactions](../data-manipulation/transactions.md) |
+| `EndTransaction` | Action | POST | Ends an API transaction. Set `commit` explicitly to save or discard changes. | [EndTransaction](../data-manipulation/transactions.md#endtransaction) |
+| `GetChanges` | Function | GET | Returns and clears collected changes for a transaction started with `trackChanges=true`. | [GetChanges](../data-manipulation/transactions.md#getchanges) |
+| `WaitForChanges` | Function | GET | Defined as a long poll for tracked changes. | [WaitForChanges](../data-manipulation/transactions.md#waitforchanges) |
 | `Import` | Action | POST | Bulk insert/update/delete multiple objects in a single request. | [Import Data](../data-manipulation/import.md) |
 | `ExecuteScript` | Action | POST | Executes raw JavaScript in the domain context; this is not a stored script. | [ExecuteScript](./execute-script.md) |
 | `GetRepositoryEvents` | Function | GET | Gets the supported events by the specified repository. | [GetRepositoryEvents](./get-repository-events.md) |

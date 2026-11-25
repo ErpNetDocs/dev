@@ -18,6 +18,7 @@ If you are looking for query syntax reference (e.g. `$filter`, `$select`, `$expa
 
 - [Stored attributes (custom properties)](stored-attributes.md)
 - [User-defined references](custom-property-references.md)
+- [Calculated attributes](calculated-attributes.md)
 - [Master/Detail attributes](master-detail-attributes.md)
 
 ## Context & localization

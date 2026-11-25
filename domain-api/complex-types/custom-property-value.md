@@ -1,80 +1,84 @@
 # Custom Property Value
 
-Stored attributes (also known as **custom properties** / **custom attributes**) are user-defined attributes that extend the ERP.net data model per instance.
-
-In the Domain API, stored attributes are exposed as properties named `CustomProperty_<code>`, whose value is represented by the `CustomPropertyValue` complex type.
-
-See also: [Stored attributes (custom properties)](../common-tasks/stored-attributes.md)
-
-## Definition of a stored attribute (custom property)
-
-Stored attribute definitions are maintained in:
-
-- Model reference: [Systems.Bpm.CustomProperties](https://docs.erp.net/model/entities/Systems.Bpm.CustomProperties.html)
-
-Highlights from the definition record:
-
-- `EntityName` contains the name of the entity for which the property is defined.
-- `LimitToAllowedValues` defines whether the property is free text or limited to allowed values.
-- `AllowedValuesEntityName` specifies that the allowed values are retrieved from another entity.
-  If this is null, allowed values can be maintained in:
-  [Systems.Bpm.CustomPropertyAllowedValues](https://docs.erp.net/model/entities/Systems.Bpm.CustomPropertyAllowedValues.html)
-
-## API property name (OData-compliant)
-
-The API name of the stored attribute starts with `CustomProperty_` followed by the (possibly escaped) user-defined property code.
-
-> [!note]
-> **How `CustomProperty.Code` is converted to an OData-compliant property name**
->
-> Domain API uses an escaping algorithm equivalent to:
-> `CustomProperty_ + EscapePropertyCode(CustomProperty.Code)`.
->
-> - Letters (`A-Z`, `a-z`), digits (`0-9`), and `_` are kept as-is.
-> - Any other character is replaced with `_u` followed by the UTF-8 bytes of the character encoded as **uppercase hex**.
->   - If the character encodes to a **single UTF‑8 byte**, the hex is left-padded with `00` so the escape is 4 hex digits (e.g. `.` → `_u002E`).
->
-> Examples:
->
-> - `Code = color` → `CustomProperty_color`
-> - `Code = color.name` → `CustomProperty_color_u002Ename`
-> - `Code = size (cm)` → `CustomProperty_size_u0020_u0028cm_u0029`
-
-Each ERP.net instance can have different stored attributes, therefore each instance has its own EDM model (`$metadata`).
-
-## Reset (refreshing the EDM model)
-
-If a user creates a new stored attribute in the database, it may not be exposed in the Domain API in real time.
-Domain API caches repositories and their attributes until the next restart.
-
-To refresh the cached attributes, call the `/api/domain/reset` endpoint (authenticated).
-
-Example:
-<https://demodb.my.erp.net/api/domain/reset>
+`CustomPropertyValue` is the Domain API complex type for the saved value of a stored attribute. An entity exposes it as `CustomProperty_<Code>`. The items returned by `GetAllowedCustomPropertyValues` use the same type. See [Stored attributes](../common-tasks/stored-attributes.md) for requests that read, write, and filter these values.
 
 ## Composition of the CustomPropertyValue type
 
-| Name | Type | Description |
-|---|---|---|
-| `Value` | String | The short value (the actual value). |
-| `Description` | MultilanguageString | A long descriptive multi-language value. Can be null. |
-| `ValueId` | Guid | The Id of the allowed value entry. Can be null. |
+| Field | Type | Meaning |
+|-------|------|---------|
+| `Value` | String or null | The short stored value, such as a code or free text. Use it when filtering by an ordinary custom property. |
+| `ValueId` | GUID or null | The ID of the selected allowed value. For a reference property, it is the ID of the referenced object. |
+| `Description` | MultilanguageString or null | A localized description or label for the value. |
 
-## Example
+Use a string for a non-null `Value`, including for number and date properties. The standard short value for a date uses `yyyyMMdd`, for example `"20260518"`. Use `ValueId` to identify a selected item even if its short value is missing.
+
+### Example
+
+This product's color was selected from a list.
 
 ```json
-"CustomProperty_color": {
-  "Value": "apple",
-  "ValueId": "5263a2d3-88b0-41db-adae-31c76135719e",
-  "Description": {
-    "EN": "The Apple.",
-    "DE": "Der Apfel."
+{
+  "CustomProperty_color": {
+    "Value": "blue",
+    "ValueId": "5263a2d3-88b0-41db-adae-31c76135719e",
+    "Description": { "EN": "Blue", "DE": "Blau" }
   }
 }
 ```
 
-> [!note]
-> For ordinary stored attributes, filtering uses the short value (`Value`) and `eq`:
-> `General_Products_Products?$top=10&$select=CustomProperty_color&$filter=CustomProperty_color eq 'apple'`
->
-> Reference properties are also exposed as `CustomReference_<code>` navigation properties. Filter them directly by the referenced object's `@odata.id`; do not use `/Id`. See [User-defined references](../common-tasks/custom-property-references.md).
+## Write and filter values
+
+### Write a value
+
+For a free-text property, write `{ "Value": "blue" }`. For a property restricted to a list, write the selected value object returned by `GetAllowedCustomPropertyValues`, including its `ValueId`. An unset property is represented by `null` for the whole property.
+
+### Filtering
+
+For ordinary stored attributes, compare the property directly to the text in `Value` with `eq`.
+
+```text
+General_Products_Products?$top=10&$select=CustomProperty_color&$filter=CustomProperty_color eq 'blue'
+```
+
+Reference properties also have a `CustomReference_<Code>` navigation property. Expand it to read the related record. To match a specific record, use `CustomReference_<Code> eq 'EntitySet(Id)'` with the referenced object's `@odata.id`. See the [reference filter example](../common-tasks/custom-property-references.md#filtering).
+
+## Property definitions and metadata
+
+### Definition of a stored attribute (custom property)
+
+A property definition sets where the field appears and which values it accepts. Definitions are managed in [Systems.Bpm.CustomProperties](https://docs.erp.net/model/entities/Systems.Bpm.CustomProperties.html).
+
+| Setting | Meaning |
+|---------|---------|
+| `EntityName` | The entity on which the property is defined. |
+| `Code` | The property code used to build its API field name. |
+| `LimitToAllowedValues` | When enabled, the property value must come from its allowed-values list. |
+| `AllowedValuesEntityName` | The entity that supplies the allowed values, if the list comes from another entity. |
+
+For a list maintained on the property itself, add entries in [Systems.Bpm.CustomPropertyAllowedValues](https://docs.erp.net/model/entities/Systems.Bpm.CustomPropertyAllowedValues.html).
+
+If the property needs a navigation field for the selected record, set `PropertyType` to `Reference`. An entity can also supply allowed values for an ordinary property. See [User-defined references](../common-tasks/custom-property-references.md).
+
+### API property name (OData-compliant)
+
+The Domain API adds the prefix `CustomProperty_` to the property's escaped code. Letters, digits, and underscores are kept as written. Other characters are escaped with `_u` followed by the uppercase hexadecimal representation of their UTF-8 bytes. The API adds `00` before the hexadecimal value for a single-byte escape.
+
+| Configured code | API field name |
+|-----------------|----------------|
+| `color` | `CustomProperty_color` |
+| `color.name` | `CustomProperty_color_u002Ename` |
+| `size (cm)` | `CustomProperty_size_u0020_u0028cm_u0029` |
+
+Each instance has its own stored attributes. Use the exact field name returned by OData `$metadata` or the [current model](../common-tasks/discover-model.md).
+
+For new codes, prefer ASCII letters, digits, and underscores. If a character's escape contains more than four hex digits, the API can fail to resolve the generated name back to the property.
+
+### Reset (refreshing the EDM model)
+
+The Domain API caches its model. If a newly configured property is missing, send an authenticated request to refresh the cache, then fetch `$metadata` or the current model again.
+
+```http
+GET /api/domain/reset HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
+```

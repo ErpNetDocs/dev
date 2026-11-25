@@ -24,5 +24,5 @@ While both represent the same entities, they differ in the **business rules** an
 
 In short, the **front-end model reacts to user edits**, while the **back-end model enforces consistency and performs final validations** before persisting the data.
 
-For more details, see [Transactions in Domain API](https://docs.erp.net/dev/domain-api/transactions.html).
+For more details, see [Domain API Transactions](transactions.md).
 

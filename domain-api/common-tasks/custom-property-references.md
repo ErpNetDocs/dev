@@ -32,26 +32,31 @@ The two names are intentionally different. The custom property contains the stor
 Select the custom property and expand the reference when the referenced object data is needed:
 
 ```http
-GET /api/domain/odata/Crm_Sales_Customers?
-  $select=Id,CustomProperty_Project,CustomReference_Project&
-  $expand=CustomReference_Project($select=Id,Code,Name)
+GET /api/domain/odata/Crm_Sales_Customers(79f3f74e-098a-4d91-9714-c4f845c2dc62)?$select=Id,CustomProperty_Project&$expand=CustomReference_Project($select=Id,Code,Name) HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
 ```
 
 The `CustomProperty_Project` value contains `Value`, `ValueId`, and `Description`. The expanded `CustomReference_Project` contains the referenced entity according to the selected fields.
 
 ## Creating or updating a reference
 
-A reference can be assigned using its navigation property and the `@odata.id` of the referenced object:
+A reference can be assigned using its navigation property and the `@odata.id` of the referenced object. This request assigns a classic project to an existing customer. It assumes that the customer entity has a reference property named `Project`.
 
-```json
+```http
+PATCH /api/domain/odata/Crm_Sales_Customers(79f3f74e-098a-4d91-9714-c4f845c2dc62) HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
+Content-Type: application/json
+
 {
   "CustomReference_Project": {
-    "@odata.id": "Projects_Projects(5263a2d3-88b0-41db-adae-31c76135719e)"
+    "@odata.id": "Projects_Classic_Projects(5263a2d3-88b0-41db-adae-31c76135719e)"
   }
 }
 ```
 
-The exact entity-set name and identifier must be taken from the instance `$metadata`.
+Use the entity-set name from the instance's `$metadata` and the ID of the project record. To clear an optional reference, send `"CustomReference_Project": null` in the `PATCH` body.
 
 When the reference is changed, `ValueId` is stored as the identifier of the referenced object. `Value` and `Description` are populated from the referenced object. For repositories with a `Code` data member, `Value` is the code and `Description` is the name; otherwise the object's display text is used for `Value`.
 
@@ -60,14 +65,15 @@ When the reference is changed, `ValueId` is stored as the identifier of the refe
 
 ## Filtering
 
-Filter directly by the navigation property. The filter value is the `@odata.id` of the referenced object:
+Filter directly by the navigation property. Use the referenced object's `@odata.id` as the comparison value.
 
 ```http
-GET /api/domain/odata/Crm_Sales_Customers?
-  $filter=CustomReference_Project eq 'Projects_Projects(5263a2d3-88b0-41db-adae-31c76135719e)'
+GET /api/domain/odata/Crm_Sales_Customers?$filter=CustomReference_Project%20eq%20'Projects_Classic_Projects(5263a2d3-88b0-41db-adae-31c76135719e)' HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
 ```
 
-The reference filter is translated to a filter by `Value_Id` in `Systems.Bpm.PropertyValues`. This avoids filtering by the snapshot text in `Property_Value`.
+The filter matches by the referenced object's ID, so it still finds the reference if the object's name changes.
 
 ## Validation and restrictions
 

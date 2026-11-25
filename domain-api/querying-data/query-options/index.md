@@ -14,7 +14,7 @@ Query Option | Origin | Description
 [expandgroup](../grouping.md#expandgroup) | Extension | Expands reference-valued grouped keys in grouped results.
 $count | OData | The $count system query option allows clients to request a count of the matching resources included with the resources in the response. The $count query option has a Boolean value of true or false.
 $expand | OData | The $expand system query option specifies the related resources or media streams to be included in line with retrieved resources.
-[$filter](filter.md) | OData | The $filter system query option allows clients to filter a collection of resources that are addressed by a request URL.
+[$filter](filter.md) | OData | Filter a collection using ERP.net's supported operators, value syntax, and functions such as `equalnull`.
 $metadata | OData | Returns the data model (which is the structure of all resources).
 $orderby | OData | Specifies an expression for determining which values are used to order the collection of records identified by the resource path section of the URI.
 [$select](select.md) | OData | Limits the data to the specified attributes.

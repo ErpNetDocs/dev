@@ -27,7 +27,10 @@ Choose the authentication flow for the identity your API calls need. Use the tar
 - [Domain API](https://docs.erp.net/dev/domain-api/index.md): OData access to ERP.net business objects.
 - [OData request URLs](https://docs.erp.net/dev/domain-api/querying-data/url-components.md): Combine the discovered service root, resource path, and query string.
 - [Supported OData query options](https://docs.erp.net/dev/domain-api/querying-data/query-options/index.md): Use the options and ERP.net extensions supported by the Domain API.
-- [Supported filter operators](https://docs.erp.net/dev/domain-api/querying-data/query-options/filter.md): Build `$filter` expressions using ERP.net's supported operators and value syntax.
+- [Domain API filters](https://docs.erp.net/dev/domain-api/querying-data/query-options/filter.md): Combine conditions with `and`, use `in` for supported field values, and look up ERP.net functions such as `equalnull` and `like`. General `or` expressions are unsupported.
+- [Custom properties](https://docs.erp.net/dev/domain-api/common-tasks/stored-attributes.md): Discover instance-specific fields and read, set, clear, or filter their values.
+- [Calculated attributes](https://docs.erp.net/dev/domain-api/common-tasks/calculated-attributes.md): Discover calculated fields and request their values with `$select`.
+- [Domain API transactions](https://docs.erp.net/dev/domain-api/data-manipulation/transactions.md): Use `TransactionId` to group requests and explicitly commit or roll back.
 - [Paging results](https://docs.erp.net/dev/domain-api/querying-data/paging.md): Set `$top` and follow the returned `@odata.nextLink` for multi-page reads.
 - [Operations and instance metadata](https://docs.erp.net/dev/domain-api/operations/index.md): Confirm action and function signatures in `$metadata` and choose the correct HTTP method.
 - [Domain Model](https://docs.erp.net/model/entities/): Standard entities, fields, and relationships.

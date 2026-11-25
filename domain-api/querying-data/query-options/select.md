@@ -25,9 +25,9 @@ The attributes, which are returned by default are:
 The following attributes are not returned by default:
 
 * The 'Id' attribute
-* Custom (user-defined) attributes
+* [Stored attributes (custom properties)](../../common-tasks/stored-attributes.md)
 * Child lists (OData terminology: Collection navigation properties)
-* Calculated attributes
+* [Calculated attributes](../../common-tasks/calculated-attributes.md)
 
 Example:
 

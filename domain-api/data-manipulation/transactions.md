@@ -1,158 +1,162 @@
 # Domain API Transactions
 
-Тhe ErpNet Domain API introduces a server-side transaction that holds any change of an entity object made between calls of `BeginTransaction` and `EndTransaction`.
+Use a Domain API transaction to group create, update, and delete requests that must be saved together. Begin the transaction and send its ID with each request. A successful write stages the change. Commit to save the changes together or roll back to discard them.
 
-An api transaction is a data set that contains the data for the objects used in the transaction. When we create a domain object in a transaction, a data set containing the data for this object is created in the memory of the api process. If we create another object in the same transaction, the second object is also saved in the same data set. The data is not yet present in the database until we commit the transaction.
+For related writes that you can send together in a single request, you can also use a changeset in [OData `$batch`](batch.md).
 
-If we update the same field with different API requests in the same transaction, the value of the field remains the one submitted last.
+## Transaction lifecycle
 
-If we use a front-end transaction, each submission of a value for a given field will trigger front-end events that may update other fields.
+This example updates the short names of two existing products as one unit. Use an access token with permission to update those products. Replace the example host and IDs with values from your instance.
 
-When the transaction is committed, the entire dataset is submitted to the database. At this point, we don't guarantee the order in which records from the same table are inserted into database. That's why several objects that have reference to the same entity type must be created in different transactions (for example parent-child related documents).
+### BeginTransaction
 
-## BeginTransaction
+Send `POST BeginTransaction` to the Domain API service root. This is an unbound action. The response body is the transaction ID as plain text.
 
-**BeginTransaction** is unbound (not bound to any entity) action (actions are called with HTTP POST method) that initializes an object transaction on the server and  returns a *TransactionId* token as a plain text (not json - for example XXXXX). This object transaction is something like memory data-set that holds copies of database records. 
-
-If any subsequent request includes the *TransactionId* token in the HTTP header (like this: TransactionId:XXXXX) the requested operation will not be executed against the database but against the memory transaction. This means that any POST, PATCH and DELETE requests will be executed only in memory.
-
-### Parameters
-
-- **model:** allowed values are `common` or `frontend`. This parameter indicates the data model used for the transaction. Front-end data model uses front-end business rules. For example front-end logic is when Quantity of a SalesOrderLine is changed the corresponding QuantityBase is calculated by a dedicated front-end business rule. Common model defines minimal business logic applicable in all cases - front-end or back-end. The default is `common`.
-- **trackChanges:** `true` or `false`. This parameter enables the usage of GetChanges and WaitForChanges functions. This means that if parameter `trackChanges` is not `true` any call to `GetChanges` and `WaitForChanges` will return error.
-
-## GetChanges
-
-**GetChanges** is unbound function - functions are invoked through GET HTTP method. This function requires the HTTP header *TransactionId* to be passed. It also requires the front-end transaction to be initialized with  *trackChanges*: `true`. Front-end transactions support front-end business rules. These are rules that are usually triggered on attribute change. For example if we change the DocumentDate attribute of a SalesOrder (using regular PATCH request including the *TransactionId* in the request header), this change will trigger updates of several other attributes. If the front-end transaction is initialized with *trackChanges*: `true`, the changes will be collected in the server side (inside the front-end transaction). GetChanges returns all changes made after the last call of GetChanges or WaitForChanges. The changes are grouped by operation type (insert, update, delete), entity name, entity id. The call of GetChanges (or WaitForChanges) clears the collected changes in the transaction. If no change is made after the last call of GetChanges it will return empty result (empty JSON object).
-
-## WaitForChanges
-
-**WaitForChanges** is unbound function that returns the same result as GetChanges but if there is not any change the function blocks until a change occurs or until it times out. The wait timeout is 2 minutes. This function requires the HTTP header *TransactionId* to be passed. It also requires the front-end transaction to be initialized with *trackChanges*: `true`.
-
-The response format of GetChanges and WaitForChanges follows this JSON schema:
-
-```
-"insert" | "update" | "delete" : {
-    "<entity-name>" : {   // example: "General_Products_Products"
-        "<id>": { // example: 59098bcf-f331-478f-91c2-f5520590f534 (Guid)
-            "<attribute>": <value> // example: "ABCClass": "A"
-        }
-    }
-}
-```
-## EndTransaction
-
-**EndTransaction** is unbound action that disposes the memory transaction created with `BeginTransaction`. After `EndTransaction` the transaction id becomes invalid.
-
-### Parameters
-
-- **commit:** `true` or `false`. Specifies whether to commit the transaction (save the changes) or not. Default is `true`. 
-
-To commit the changes made in the memory transaction to the database you should provide the parameter commit = `true`.
-
-> [!Note]
-> The object transaction is called Front-End because any change of an entity object will trigger front-end business rules. For example if Quantiy of a SalesOrderLine is changed the corresponding QuantityBase will be automatically recalculated. This is front-end behavior - if front-end transaction is not used the QuantityBase will not be automatically recalculated and it's value must be explicitly set.
->
-> Through Front-End Transaction, GetChanges or WaitForChanges we can synchronize our UI passing only the user actions to the server - such as update of an attribute, creating new object or deleting existing object.
-
-## Concurrent open transactions
-
-`SessionConcurrentTransactions` limits the number of transactions a session can keep open between `BeginTransaction` and `EndTransaction` calls.
-
-| ERP.net version | Default open transactions per session |
-| --- | ---: |
-| Before **27.1.1.96** | 1 |
-| **27.1.1.96** and later | 10 |
-
-The limit is configurable in both version ranges. An explicit `RateLimits.SessionConcurrentTransactions` value in the Domain API website's settings JSON overrides the default and continues to apply after an upgrade. For example, this configuration allows up to 10 open transactions per session, including on versions before 27.1.1.96:
-
-```json
-{
-  "RateLimits": {
-    "SessionConcurrentTransactions": 10
-  }
-}
-```
-
-Use a positive integer and restart the website after changing its settings. See [Configuring rate limits](https://docs.erp.net/tech/advanced/web-sites/rate-limits.html#configuring-rate-limits).
-
-When the open-transaction limit is reached, another `BeginTransaction` call returns **429 (Too Many Requests)** with the message "Maximum allowed transactions for this session have been reached." Close an existing transaction with `EndTransaction` before retrying. Open transactions count toward the limit even between HTTP requests; `SessionConcurrentRequests` independently controls the number of simultaneous HTTP requests.
-
-## Transaction Lifespan and Management
-
-Each transaction has a defined lifespan.
-
-In a typical scenario:
-- The lifespan of a transaction starts with the `BeginTransaction` call
-- and ends with the `EndTransaction` call
-
-Additionally, each transaction has an absolute maximum lifespan, which is **25 minutes**.
-
-> [!Note]
-> Every transaction will be automatically cleared 25 minutes after its creation unless it has already been explicitly cleared with EndTransaction.
-
-If you reference the `TransactionId` of a cleared (or not existing) transaction, an error will be returned:
-```
-"Invalid TransactionId {id}".
-```
-
-> [!Note]
-> It is best practice to keep transactions short and always close them when your work with them is complete.
-
-## Examples
-
-### Simple usage of a front end transaction
-
-#### BeginTransaction
+| Request field | Value |
+|---------------|-------|
+| `model` | `"common"` is the default and uses the business rules shared by the models. Choose `"frontend"` when you need rules that run as fields change, such as recalculating dependent fields during an edit. |
+| `trackChanges` | Set to `true` to collect changes for `GetChanges`. Defaults to `false`. |
 
 ```http
 POST /api/domain/odata/BeginTransaction HTTP/1.1
-Host: https://example.com
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
 Content-Type: application/json
 
 {
-  "model": "frontend"
+  "model": "common"
 }
 ```
-Response (Transaction id): `843f05ff3f62400c990d2a3b119e256e`
 
-#### Update
+Example response body.
 
-Make subsequent updates of products
+```text
+843f05ff3f62400c990d2a3b119e256e
+```
+
+### Send requests in the transaction
+
+Use the returned text as the value of the `TransactionId` header. Send the header and authenticate each request in the same session. Send the requests in sequence.
+
+The API keeps the pending changes in memory on the server. Each request with the same transaction ID works with that transaction's records, including records created in earlier requests. If you update the same field twice, the last successful update supplies its value, subject to any business rules that run on the record.
 
 ```http
 PATCH /api/domain/odata/General_Products_Products(59098bcf-f331-478f-91c2-f5520590f534) HTTP/1.1
-Host: https://example.com
-Content-Type: application/json
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
 TransactionId: 843f05ff3f62400c990d2a3b119e256e
+Content-Type: application/json
 
 {
-  "ABCClass":"A",
-  "StandardLotSizeBase":{"Value":3.45,"Unit":"PCS"},
-  "MeasurementUnit@odata.bind":"https://example.com/api/domain/odata/General_MeasurementUnits(5c5e77ce-60bb-4338-abd0-3a2acb27ff93)"
+  "ShortName": { "EN": "Oak chair" }
 }
 ```
 
-#### CommitTransaction
+```http
+PATCH /api/domain/odata/General_Products_Products(5263a2d3-88b0-41db-adae-31c76135719e) HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
+TransactionId: 843f05ff3f62400c990d2a3b119e256e
+Content-Type: application/json
+
+{
+  "ShortName": { "EN": "Oak table" }
+}
+```
+
+A successful `PATCH` returns `204 No Content`. To read a staged value before committing, send a `GET` with the same `TransactionId`. An ordinary write sent without the header runs separately and can save immediately.
+
+The order of requests in a transaction does not guarantee the order in which records are inserted at commit. If a dependent record requires a previously saved record, commit that record first. For example, save a parent document before starting a separate transaction for a document that requires it as a saved parent. See [Working with documents](../common-tasks/working-with-documents.md).
+
+### EndTransaction
+
+Call the unbound action `POST EndTransaction` to save or discard the staged changes. Send the `TransactionId` header and an explicit `commit` value.
 
 ```http
 POST /api/domain/odata/EndTransaction HTTP/1.1
-Host: https://example.com
-Content-Type: application/json
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
 TransactionId: 843f05ff3f62400c990d2a3b119e256e
+Content-Type: application/json
 
 {
   "commit": true
 }
 ```
 
-#### Updating SalesOrder.DocumentDate and calling `GetChanges`
+Use `"commit": true` to save the changes or `"commit": false` to discard them. Omitting `commit` can discard staged changes, so always send it explicitly. A successful response returns the ID as plain text and closes the transaction.
 
-### BeginTransaction
+### Handle errors and retries
+
+Business rules can still reject the changes at commit time. In an application, make sure the error or cancellation path attempts to roll back any transaction that is still open. Check for success from `EndTransaction` before reporting that the changes were saved. If the commit response is lost, check the saved data before repeating the operation. See [Error handling](error-handling.md).
+
+## Front-end transactions
+
+Choose `"frontend"` to run rules that react to edits. For example, changing a sales order line's `Quantity` can recalculate `QuantityBase` as the edit is applied. With `"common"`, supply any dependent values your request needs during editing. A client can use [change tracking](#track-changes) to refresh its form with values changed by front-end rules, including values on related records. See [Data Validation and Business Rules](data-validation.md).
+
+### Update product attributes
+
+Start a front-end transaction with `POST BeginTransaction`.
 
 ```http
 POST /api/domain/odata/BeginTransaction HTTP/1.1
-Host: https://example.com
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
+Content-Type: application/json
+
+{
+  "model": "frontend"
+}
+```
+
+Use the returned ID on the product update. The example uses `82cc6c73327448e1a7be64da7b655e4c`. This request sets the ABC class, standard lot size, and measurement unit. Use a unit from the product's measurement category and express `StandardLotSizeBase` in the category's base unit.
+
+```http
+PATCH /api/domain/odata/General_Products_Products(59098bcf-f331-478f-91c2-f5520590f534) HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
+TransactionId: 82cc6c73327448e1a7be64da7b655e4c
+Content-Type: application/json
+
+{
+  "ABCClass": "A",
+  "StandardLotSizeBase": { "Value": 3.45, "Unit": "PCS" },
+  "MeasurementUnit@odata.bind": "General_Products_MeasurementUnits(5c5e77ce-60bb-4338-abd0-3a2acb27ff93)"
+}
+```
+
+Finish with [`EndTransaction`](#endtransaction) using that same ID.
+
+## Track changes
+
+To read tracked changes, start the transaction with `trackChanges: true` and send its `TransactionId` header on each call.
+
+### GetChanges
+
+`GET GetChanges` is an unbound function. Use it after an edit to find which records and fields changed.
+
+### WaitForChanges
+
+`GET WaitForChanges` is defined as an unbound function that waits up to two minutes for changes. It uses the same response format as `GetChanges`, with no operation entries on timeout.
+
+### When changes are cleared
+
+`GetChanges` reads and clears the queue. The first read covers changes since the transaction began. Later reads cover changes since the last time the queue was read. `WaitForChanges` uses the same queue when it successfully returns changes.
+
+### Change response format
+
+The response groups changes by operation (`insert`, `update`, or `delete`), then by entity set and record ID. Each record entry contains the current values of its changed fields. Multiple edits to the same field appear as one value. A delete entry has an empty object for the record. A response with no operation entries means there are no new changes.
+
+### Track changes to a sales order
+
+#### Start tracking before updating a sales order
+
+Start a front-end transaction with change tracking enabled.
+
+```http
+POST /api/domain/odata/BeginTransaction HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
 Content-Type: application/json
 
 {
@@ -160,38 +164,40 @@ Content-Type: application/json
   "trackChanges": true
 }
 ```
-Response (Transaction id): `fd5d3bbc38ae4dd9a8a5c0ff46c8e3af`
 
-### Updating DocumentDate
+The example uses the returned ID `fd5d3bbc38ae4dd9a8a5c0ff46c8e3af`.
 
-This update triggers many front-end business rules that update many other attributes in the sales order and it's lines.
+#### Update the order and fetch changes
+
+Use the same ID for both requests. A change to the document date can update related dates and sales order lines.
 
 ```http
-PATCH /api/domain/odata/Crm_Sales_SalesOrders(33cd6cb9-0f43-df11-a1e1-0018f3790817)
-Host: https://example.com
-Content-Type: application/json
+PATCH /api/domain/odata/Crm_Sales_SalesOrders(33cd6cb9-0f43-df11-a1e1-0018f3790817) HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
 TransactionId: fd5d3bbc38ae4dd9a8a5c0ff46c8e3af
+Content-Type: application/json
 
 {
   "DocumentDate": "2020-05-08T00:00:00Z"
 }
 ```
-Response: `nocontent`
-
-### Call GetChanges
-
-The result is a JSON object with all changes made after the last call to GetChanges (or `BeginTransaction` if `GetChanges` is not called yet).
 
 ```http
 GET /api/domain/odata/GetChanges HTTP/1.1
-Host: https://example.com
-Content-Type: application/json
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
 TransactionId: fd5d3bbc38ae4dd9a8a5c0ff46c8e3af
+Accept: application/json
 ```
-Response:
+
+#### Read the response
+
+This example response shows changes to the sales order and its lines. Returned fields depend on which rules run.
+
 ```json
 {
-  "@odata.context": "https://clients.inco.bg/api/domain/odata/$metadata#Erp.OpenObject",
+  "@odata.context": "https://demodb.my.erp.net/api/domain/odata/$metadata#Erp.OpenObject",
   "update": {
     "Crm_Sales_SalesOrders": {
       "33cd6cb9-0f43-df11-a1e1-0018f3790817": {
@@ -310,3 +316,36 @@ Response:
   }
 }
 ```
+
+#### Close the transaction
+
+Commit or roll back with [`EndTransaction`](#endtransaction) and the same transaction ID.
+
+## Limits and expiration
+
+### Concurrent open transactions
+
+`SessionConcurrentTransactions` limits the number of transactions a session can keep open between `BeginTransaction` and `EndTransaction` calls.
+
+| ERP.net version | Default open transactions per session |
+|-----------------|--------------------------------------:|
+| Before **27.1.1.96** | 1 |
+| **27.1.1.96** and later | 10 |
+
+An explicit positive integer in the Domain API site's settings overrides the default on both version ranges and stays in effect after an upgrade. Restart the website after changing the setting. See [Configuring rate limits](https://docs.erp.net/tech/advanced/web-sites/rate-limits.html#configuring-rate-limits).
+
+```json
+{
+  "RateLimits": {
+    "SessionConcurrentTransactions": 10
+  }
+}
+```
+
+An open transaction counts toward the limit between requests. When the limit is reached, `BeginTransaction` returns HTTP 429 with the message "Maximum allowed transactions for this session have been reached." Close an existing transaction before retrying. `SessionConcurrentRequests` separately limits simultaneous HTTP requests.
+
+### Transaction lifespan and management
+
+Treat 25 minutes from `BeginTransaction` as the deadline to finish a transaction. The service discards expired transactions during periodic cleanup, which can run later. End transactions explicitly so the session can reuse the available slot.
+
+If a request returns `Invalid TransactionId`, check the ID against the response from `BeginTransaction`. A closed transaction or one already removed by cleanup requires a new transaction.

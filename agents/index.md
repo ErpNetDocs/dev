@@ -29,10 +29,12 @@ Find the token URL in the `token_endpoint` field of the target instance's [Ident
 
 1. Find `ODataServiceRoot` for `DomainAPI` in the target instance's [site discovery response](../building-apps/concepts/application-server-endpoints.md).
 2. Send `Authorization: Bearer <access_token>` on metadata and data requests. Fetch `$metadata` relative to the service root to confirm the instance's entity sets, fields, and relationships. See the [Domain Model](https://docs.erp.net/model/entities/) for standard entities.
-3. Combine the service root, resource path, and [supported query options](../domain-api/querying-data/query-options/index.md). Use the names from the instance metadata. When composing a `$filter`, check the [operators and expressions supported by ERP.net](../domain-api/querying-data/query-options/filter.md). [OData request URLs](../domain-api/querying-data/url-components.md)
+3. Combine the service root, resource path, and [supported query options](../domain-api/querying-data/query-options/index.md). Use the names from the instance metadata. In one `$filter`, join conditions with `and` and use `in` for alternative values on a field that supports it. General `or` expressions are unsupported. See the [Domain API filter guide](../domain-api/querying-data/query-options/filter.md) for field support and functions such as `equalnull`. [OData request URLs](../domain-api/querying-data/url-components.md)
 4. For multi-page reads, set `$top` and follow the returned `@odata.nextLink` unchanged to fetch the next page. [Paging results](../domain-api/querying-data/paging.md)
 
 Use `POST` for actions and `GET` for functions. Check the instance metadata for the operation's signature and whether it is bound to an entity. [Domain API operations](../domain-api/operations/index.md)
+
+For instance-specific fields, check the current model and select the fields by name. [Custom properties](../domain-api/common-tasks/stored-attributes.md) explains how to set or filter stored values, and [Calculated attributes](../domain-api/common-tasks/calculated-attributes.md) shows how to read computed values. When several writes must succeed together, use a [Domain API transaction](../domain-api/data-manipulation/transactions.md) and send its ID with each request.
 
 For general setup, see [Building Apps](../building-apps/overview.md). For table data and reporting, see the [Table API](../table-api/index.md).
 

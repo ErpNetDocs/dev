@@ -14,6 +14,8 @@
   href: stored-attributes.md
 - name: User-defined references
   href: custom-property-references.md
+- name: Calculated attributes
+  href: calculated-attributes.md
 - name: Master/Detail attributes
   href: master-detail-attributes.md
 - name: Change the response language

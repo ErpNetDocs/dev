@@ -1,131 +1,152 @@
-
 # Stored attributes (custom properties)
 
-Stored attributes (also known as **custom properties** or **custom attributes**) are user-defined fields that extend the ERP.net data model on a per-instance basis.
+Stored attributes, also called custom properties, are extra fields you can add to a type of record in your ERP.net instance, such as products or customers.
 
-In the Domain API, stored attributes appear as additional properties in the OData EDM model (`$metadata`) of the instance.
+You define the field once for that record type. The definition gives the field a code and determines what values it accepts. Each record can then have its own saved value. For example, a **Color** field defined for products can hold `blue` on one product and `black` on another. Updating one product changes its saved color.
 
----
+## Identify a custom property
 
-## Where stored attributes are defined
+### Property code, API field name, and value
 
-Stored attribute definitions are maintained in the `Systems.Bpm.CustomProperties` repository:
+| Term | Example | Meaning |
+|------|---------|---------|
+| Property code | `color` | Identifies the field in its definition. Use it when looking up allowed values. |
+| API field name | `CustomProperty_color` | Identifies the field in a Domain API request or response. Use it in `$select`, `$filter`, and JSON bodies. |
+| Saved value | `blue` | The color saved on this particular product. In JSON it appears inside the field's `Value` member. |
 
-- Model reference: [Systems.Bpm.CustomProperties](https://docs.erp.net/model/entities/Systems.Bpm.CustomProperties.html)
+### Find the field name on your instance
 
-Key definition settings (high level):
+Custom properties vary by instance. To find the fields configured on products, request the current model for the product entity set.
 
-- `EntityName`: which entity type the property applies to (e.g. `Crm_Customers`, `General_Products_Products`, etc.)
-- `Code`: the property code (used in API property naming)
-- `PropertyType`: Text / Number / Date / Picture / Reference
-- `LimitToAllowedValues`: whether the value is free text or constrained
-- `AllowedValuesEntityName` / `AllowedValuesFilterXML`: allowed values coming from another entity
-- `AllowedValuesProperty` / `AllowedValuesParent`: inheritance / filtering of allowed values
+```http
+GET /api/domain/currentmodel/General_Products_Products HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
+```
 
----
-
-## How stored attributes appear in the Domain API
-
-### Property name
-
-In OData responses and requests, a stored attribute is represented as a property named:
-
-`CustomProperty_<Code>`
-
-Example:
-
-- Code = `color`
-- API property = `CustomProperty_color`
-
-> [!note]
-> **How `CustomProperty.Code` becomes an OData property name**
->
-> In Domain API, a stored attribute is exposed as:
->
-> `CustomProperty_<escapedCode>`
->
-> where `<escapedCode>` is produced by the same logic as `EscapePropertyCode(code)`:
->
-> - Characters that are **letters**, **digits**, or the underscore (`_`) are kept **as-is**.
-> - Any other character (space, dot, dash, parentheses, etc.) is replaced with:
->   - the prefix **`_u`**, followed by
->   - the **UTF-8 bytes** of the character written as **uppercase hex**
->   - **If the character encodes to a single UTF‑8 byte**, the hex is left‑padded with `00` so the escape becomes 4 hex digits (e.g. `.` → `_u002E`).
->
-> **Examples**
->
-> - `Code = color` → `CustomProperty_color`
-> - `Code = color.name` → `CustomProperty_color_u002Ename`  (dot `.` → `_u002E`)
-> - `Code = size (cm)` → `CustomProperty_size_u0020_u0028cm_u0029`  
->   (space → `_u0020`, `(` → `_u0028`, `)` → `_u0029`)
->
-> **Important limitation (as implemented)**
->
-> The provided `UnescapePropertyCode()` recognizes only patterns of the form `_uXXXX` (exactly **4** hex digits). Escapes that produce **more than 4 hex digits** (i.e., characters whose UTF‑8 encoding is 3+ bytes) will **not** be unescaped by that method.
-
-### Property type (CustomPropertyValue)
-
-The value is represented using the `CustomPropertyValue` complex type:
-
-- [Custom Property Value](../complex-types/custom-property-value.md)
-
-Typical JSON shape:
+Look in the `Attributes` list for entries where `IsCustomProperty` is `true`. The `Name` is the API field name. `LimitToAllowedValues` tells you whether the field requires a choice from a list. Here is part of the entry for the free-text Color field.
 
 ```json
 {
+  "Name": "CustomProperty_color",
+  "IsCustomProperty": true,
+  "LimitToAllowedValues": false
+}
+```
+
+The same field name appears in OData `$metadata`. Copy it from the model, especially if the property code contains spaces or punctuation. For example, the code `color.name` appears as `CustomProperty_color_u002Ename`.
+
+If a newly configured property is missing, refresh the model with an authenticated `GET /api/domain/reset`, then request the current model again. See [Discover the domain model](discover-model.md).
+
+## Read and filter values
+
+The examples use the Color field on product `CHAIR-01`. Replace the example host, product ID, and access token with your own values.
+
+### Read a value
+
+Use `$select` to ask the API to return the custom field. A default product response omits custom fields.
+
+```http
+GET /api/domain/odata/General_Products_Products(59098bcf-f331-478f-91c2-f5520590f534)?$select=PartNumber,CustomProperty_color HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
+```
+
+Find `CustomProperty_color` in the product response and read its `Value`. This product has `blue` saved as its color.
+
+```json
+{
+  "PartNumber": "CHAIR-01",
   "CustomProperty_color": {
-    "Value": "apple",
-    "ValueId": "5263a2d3-88b0-41db-adae-31c76135719e",
-    "Description": { "EN": "The Apple." }
+    "Value": "blue",
+    "ValueId": null,
+    "Description": null
   }
 }
 ```
 
----
+The API uses a JSON object so it can return more than the saved text. `ValueId` can identify the selected item when the field uses a list. `Description` can contain its display label in multiple languages. In this example, the field has just a text value, so both are `null`. See [Custom Property Value](../complex-types/custom-property-value.md).
 
-## Refreshing the EDM model (when new properties do not appear)
+### Filter by a property
 
-When a new stored attribute is created in an ERP.net instance, it may not be visible immediately in Domain API because repositories and attributes are cached.
-To refresh the cache, call the `/api/domain/reset` endpoint (authenticated).
-
-See: [Custom Property Value](../complex-types/custom-property-value.md)
-
----
-
-## Getting allowed values (GetAllowedCustomPropertyValues)
-
-When a stored attribute is configured to have allowed values, you can retrieve the allowed values for a specific entity instance via the bound function:
-
-`GetAllowedCustomPropertyValues` (Domain API request: **GET**)
-
-This method is declared on the base `EntityObject` type and is documented in the model API methods (for example):
-[General.Products.Products → API Methods](https://docs.erp.net/model/entities/General.Products.Products.html#getallowedcustompropertyvalues)
-
-The metnod returns the allowed values for the specified custom property for this entity object. If supported the result is ordered by property value. Some property value sources do not support ordering - in that case the result is not ordered.
-Return Type: Collection Of [CustomPropertyValue](../complex-types/custom-property-value.md)
-
-### Parameters (as documented in the model)
-
-- `customPropertyCode` (required): the stored attribute code
-- `search` (optional): search text by value/description, supports `%`
-- `exactMatch` (optional, default `false`)
-- `orderByDescription` (optional, default `false`)
-- `top` (optional, default `10`)
-- `skip` (optional, default `0`)
-
-### Example (typical OData function invocation)
+The filter compares the text saved in `Value`. Write the API field name followed by `eq` and the value in single quotes. For example, `CustomProperty_color eq 'black'` finds products with `black` saved as their color.
 
 ```http
-GET /api/domain/odata/Crm_Sales_Customers(79f3f74e-098a-4d91-9714-c4f845c2dc62)/GetAllowedCustomPropertyValues(customPropertyCode='color',search='app',top=10)
-Accept: application/json
+GET /api/domain/odata/General_Products_Products?$top=10&$select=PartNumber,CustomProperty_color&$filter=CustomProperty_color%20eq%20'black' HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
 ```
 
-The result is a collection of `CustomPropertyValue` items.
+Use `$select` to include the color in the response.
 
-> [!note]
-> The exact URL template depends on the EDM model; always treat `$metadata` as the source of truth for the function signature and invocation syntax.
+## Write or clear a value
 
-## See also
+Send a `PATCH` to the record you want to update. When creating a record, you can include the custom property in the `POST` body.
 
-- [Custom Property Value](../complex-types/custom-property-value.md)
-- [Operations (actions and functions)](../operations/index.md)
+### Set a free-text value
+
+If the field accepts free text, use the API field name in the request body and put the text you want to save in `Value`.
+
+```http
+PATCH /api/domain/odata/General_Products_Products(59098bcf-f331-478f-91c2-f5520590f534) HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
+Content-Type: application/json
+
+{
+  "CustomProperty_color": {
+    "Value": "black"
+  }
+}
+```
+
+### Set a value from a list
+
+When a field requires a choice from a list, the available choices can depend on the record you are editing. Call `GetAllowedCustomPropertyValues` on that record. Pass `color`, the property's configured code, as `customPropertyCode`.
+
+```http
+GET /api/domain/odata/General_Products_Products(59098bcf-f331-478f-91c2-f5520590f534)/GetAllowedCustomPropertyValues(customPropertyCode='color') HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
+```
+
+The response returns a list of value objects. Choose one and copy it, including its `ValueId`, into `CustomProperty_color` in the product's `PATCH` body. This example selects the Black option.
+
+```json
+{
+  "CustomProperty_color": {
+    "Value": "black",
+    "ValueId": "5263a2d3-88b0-41db-adae-31c76135719e",
+    "Description": { "EN": "Black" }
+  }
+}
+```
+
+The function returns up to 10 choices by default. Add `search='bl'` to search by value or label. Use `top` and `skip` to page through the results. See the [function reference](https://docs.erp.net/model/entities/General.Products.Products.html#getallowedcustompropertyvalues) for all parameters.
+
+### Clear an optional value
+
+To remove the color saved on a product, send the API field name with `null` in the `PATCH` body.
+
+```http
+PATCH /api/domain/odata/General_Products_Products(59098bcf-f331-478f-91c2-f5520590f534) HTTP/1.1
+Host: demodb.my.erp.net
+Authorization: Bearer <access_token>
+Content-Type: application/json
+
+{
+  "CustomProperty_color": null
+}
+```
+
+A read that selects the field now returns `"CustomProperty_color": null`. To keep a saved value when updating other fields, omit the custom field from the `PATCH` body.
+
+### Set a reference
+
+For a property that links to another record, assign the related record through its `CustomReference_<Code>` field. See [User-defined references](custom-property-references.md).
+
+## Manage property definitions
+
+Use `Systems_Bpm_CustomProperties` to manage field definitions. For a product field, set the definition's `EntityName` to `Gen_Products`. Read and write the saved values on product records through `General_Products_Products`.
+
+For an allowed-values list, maintain entries in `Systems_Bpm_CustomPropertyAllowedValues` or set `AllowedValuesEntityName` to source values from another entity. See the [Custom Properties model reference](https://docs.erp.net/model/entities/Systems.Bpm.CustomProperties.html).
