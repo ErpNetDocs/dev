@@ -55,7 +55,7 @@ All other attributes can keep their default values and are not relevant for this
 
 ## Implementation
 
-This section demonstrates the Authorization Code flow against the Instance ID for a confidential application.
+This section demonstrates Authorization Code with PKCE against Instance ID for a confidential application. See [Current support and migration](../flows/auth-code/overview.md#current-support-and-migration).
 
 ### 1. Start sign-in (authorize request)
 
@@ -74,12 +74,11 @@ Authorize request example:
 GET /id/connect/authorize?
   client_id=backend.example.com&
   redirect_uri=https%3A%2F%2Fbackend.example.com%2Fsignin-callback&
-  response_type=code%20id_token&
-  response_mode=form_post&
+  response_type=code&
   scope=openid%20profile%20offline_access%20read%20update&
   state=YzQ5ZDc4M2QxN2Q0NDU3YjlhM2Y5OWE1ZTY4OTc0ZGM&
   nonce=ZTRjOTM2M2Y0ODFhNGQ0NGE4NmU1N2ExYjY2NjE3ZmQ&
-  code_challenge=VZ9R6l3kPpJ6m2m9kR9cR9n8s3c7J4GmQ9FZp5mX1kQ&
+  code_challenge=E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM&
   code_challenge_method=S256
 Host: mycompany.my.erp.net
 ```
@@ -163,7 +162,7 @@ The application can now:
 
 - Confidential applications **must handle callbacks and token requests on the backend**.
 - The client secret must **never** be exposed to frontend code.
-- PKCE is recommended even for confidential clients to reduce authorization code interception risks.
+- Use PKCE with `S256` and generate a fresh verifier for each sign-in.
 - The `state` and `nonce` values must be generated per request and validated.
 - Redirect URIs must exactly match the configured value.
 - The Instance ID **does not allow embedding**. If authentication is initiated from within an iframe, the sign-in flow must be opened in a **popup window or top-level navigation**.

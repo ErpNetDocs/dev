@@ -2,7 +2,7 @@
 
 This guide walks through the exact HTTP steps an interactive app takes to sign in a user with the @@name Identity, exchange the authorization code for tokens, and call the APIs.
 
-It covers both **confidential** web apps (server-side) and **public** clients (SPAs) using **PKCE**.
+Use Authorization Code with PKCE for both **confidential** web apps and **public** clients such as SPAs. If the registration supports Hybrid, the target Identity site must run **ERP.net 27.1.2.8 or later** to use `response_type=code` with PKCE. See [Current support and migration](overview.md#current-support-and-migration).
 
 ## Prerequisites
 
@@ -21,75 +21,59 @@ Minimum required settings for a confidential web app:
 | Scope | read update offline_access | Request only what you need |
 
 > [!WARNING]
-> For a public SPA, set `ClientType = Public` and omit the secret. PKCE is required.
+> For a public SPA, set `ClientType = Public` and omit the client secret.
 
 ## 1) Send the user to authorize
 
-Your app redirects the user to the instance @@name Identity. Example query:
+Generate a fresh `state` and PKCE verifier for this sign-in. Store them, compute the challenge, and send the authorize request. The example shows a confidential web app. For a public SPA, use its registered client ID and redirect URI. See [Generating PKCE values](interactive-apps-redirects-pkce.md#generating-pkce-values).
 
 ```http
-GET /id/connect/authorize?
-    client_id=my.trusted.app/first&
-    redirect_uri=https://your-app.example.com/signin-callback&
-    response_type=code&
-    scope=read offline_access&
-    state=xyz123&
-    code_challenge=Oq8sW...&_pkce_&
-    code_challenge_method=S256 HTTP/1.1
-Host: testdb.my.erp.net
+GET /id/connect/authorize?client_id=my.trusted.app%2Ffirst&redirect_uri=https%3A%2F%2Fyour-app.example.com%2Fsignin-callback&response_type=code&scope=read%20offline_access&state=xyz123&code_challenge=E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM&code_challenge_method=S256 HTTP/1.1
+Host: demodb.my.erp.net
 ```
 
 - `response_type=code` requests an authorization code.
 - `scope` should include only what you need. `offline_access` is required if you want a refresh token.
-- For public clients (SPA or native), include `code_challenge` and `code_challenge_method=S256` (PKCE).
-- For confidential server apps, PKCE is recommended; client secret is used later at the token endpoint.
+- Send `code_challenge` and `code_challenge_method=S256` for both public and confidential apps. A confidential app sends its client secret at the token endpoint.
 
 If everything is valid, the browser is redirected to the @@name login page.
 
 ## 2) Handle the sign-in callback
 
-After the user signs in successfully, @@name Identity redirects back to your registered `redirect_uri` with a short-lived authorization code:
+After sign-in, @@name Identity redirects to the registered `redirect_uri`. In the default response mode, the query string contains the short-lived authorization code and the matching state.
 
 ```http
-GET /signin-callback?
-    code=K0dE...short...GZmNjV&
-    state=xyz123 HTTP/1.1
+GET /signin-callback?code=K0dE...short...GZmNjV&state=xyz123 HTTP/1.1
 Host: your-app.example.com
 ```
 
 - Validate `state` to prevent CSRF.
-- Extract the `code`
+- Extract the `code` from the query string.
 
 ## 3) Exchange the code for tokens
 
-Your server sends a POST to the token endpoint to trade the code for tokens.
+Send the code and its original `code_verifier` to the token endpoint on the same instance. Use the same `client_id` and `redirect_uri` as in the authorize request.
 
-### Confidential web app (client secret)
+### Confidential web app (PKCE and client secret)
 
 ```http
 POST /id/connect/token HTTP/1.1
 Host: demodb.my.erp.net
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=authorization_code&
-client_id=my.trusted.app/first&
-client_secret=<your_plain_client_secret>&
-code=K0dE...short...GZmNjV&
-redirect_uri=https://your-app.example.com/signin-callback
+grant_type=authorization_code&client_id=my.trusted.app%2Ffirst&client_secret=<url_encoded_client_secret>&code=K0dE...short...GZmNjV&redirect_uri=https%3A%2F%2Fyour-app.example.com%2Fsignin-callback&code_verifier=dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
 ```
 
 ### Public SPA (PKCE)
 
+This request assumes the SPA started sign-in with `my.trusted.app/spa` and `https://your-spa.example.com/index.html`.
+
 ```http
 POST /id/connect/token HTTP/1.1
 Host: demodb.my.erp.net
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=authorization_code&
-client_id=my.trusted.app/first&
-code=K0dE...short...GZmNjV&
-redirect_uri=https://your-spa.example.com/index.html&
-code_verifier=<original_random_string_used_to_build_code_challenge>
+grant_type=authorization_code&client_id=my.trusted.app%2Fspa&code=K0dE...short...GZmNjV&redirect_uri=https%3A%2F%2Fyour-spa.example.com%2Findex.html&code_verifier=<original_code_verifier>
 ```
 
 ### Typical JSON response
@@ -110,7 +94,7 @@ Use the access token in the Authorization header:
 
 ```http
 GET /api/domain/odata/Crm_Sales_Customers?$top=10 HTTP/1.1
-Host: testdb.my.erp.net
+Host: demodb.my.erp.net
 Authorization: Bearer <access_token>
 ```
 
@@ -147,11 +131,11 @@ sequenceDiagram
     participant API as ERP.net APIs
 
     User->>App: Clicks Sign In
-    App->>IDP: /connect/authorize (client_id, scopes, redirect_uri, [PKCE])
+    App->>IDP: /connect/authorize (client_id, scopes, redirect_uri, PKCE challenge)
     IDP->>User: Login + consent
     User->>IDP: Credentials
     IDP->>App: Redirect back with code
-    App->>IDP: /connect/token (code [+ secret or PKCE verifier])
+    App->>IDP: /connect/token (code and verifier plus client authentication if confidential)
     IDP-->>App: access_token (+ refresh_token)
     App->>API: Call with Bearer access_token
     API-->>App: Authorized response
@@ -160,12 +144,14 @@ sequenceDiagram
 ## Security best practices
 
 - Redirect URIs must match exactly what is registered in the **Trusted Application**.
-- Use **PKCE** for SPAs and all public clients.
+- Generate a fresh **PKCE** verifier for each sign-in and use `S256`.
 - Keep secrets on the server only; never ship them to browsers or mobile apps.
 - Request the smallest set of scopes that satisfy your feature needs.
 - Handle and store refresh tokens securely; rotate if compromised.
 
 ## Full samples
+
+Some samples show legacy Hybrid sign-in. For new sign-in implementations, follow the Authorization Code with PKCE requests above.
 
 [!list limit=1000 erp.type=sample erp.topic=security default-text="None"]
 

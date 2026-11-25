@@ -105,12 +105,11 @@ Authorize request example:
 GET /id/connect/authorize?
   client_id=portal.example.com&
   redirect_uri=https%3A%2F%2Fportal.example.com%2Fsignin-callback&
-  response_type=code%20id_token&
-  response_mode=form_post&
+  response_type=code&
   scope=openid%20profile&
   state=YzQ5ZDc4M2QxN2Q0NDU3YjlhM2Y5OWE1ZTY4OTc0ZGM&
   nonce=ZTRjOTM2M2Y0ODFhNGQ0NGE4NmU1N2ExYjY2NjE3ZmQ&
-  code_challenge=VZ9R6l3kPpJ6m2m9kR9cR9n8s3c7J4GmQ9FZp5mX1kQ&
+  code_challenge=E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM&
   code_challenge_method=S256
 Host: mycompany.my.erp.net
 ```

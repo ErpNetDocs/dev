@@ -26,9 +26,9 @@ For security, it must match **exactly** one of the URIs registered in the app’
 | App type | Example redirect URI | Notes |
 |---|---|---|
 | Server-side web app | `https://app.example.com/auth/callback` | Confidential client; handles code exchange on server |
-| SPA (browser) | `https://spa.example.com/index.html` | Public client; must use PKCE |
-| Native desktop | `http://127.0.0.1:53177/callback` | Loopback with random port; PKCE required. Can also use embedded browsers such as WebView or Chromium for login and redirect handling. |
-| Mobile app | `myapp://auth/callback` | Custom scheme; PKCE required |
+| SPA (browser) | `https://spa.example.com/index.html` | Public client using PKCE |
+| Native desktop | `http://127.0.0.1:53177/callback` | Loopback redirect with PKCE. Can also use embedded browsers such as WebView or Chromium. |
+| Mobile app | `myapp://auth/callback` | Custom scheme with PKCE |
 | Local dev | `https://localhost:5001/signin-callback` | Use HTTPS with a dev certificate if possible |
 
 > [!NOTE]  
@@ -36,16 +36,11 @@ For security, it must match **exactly** one of the URIs registered in the app’
 
 ## PKCE overview
 
-**PKCE (Proof Key for Code Exchange)** protects the authorization code from interception.  
+**PKCE (Proof Key for Code Exchange)** protects against redemption of an intercepted authorization code.
 
 It adds a one-time secret to the flow so only the app that started the login can finish the token exchange.
 
-PKCE is **required** for:
-
-- SPAs and other public clients that cannot keep a client secret.
-- Native apps (desktop and mobile).
-
-PKCE is **recommended** for confidential web apps too.
+Use Authorization Code with PKCE for all new and updated interactive clients, including confidential web apps. For the current compatibility rules and the planned requirement, see [Current support and migration](overview.md#current-support-and-migration).
 
 ### How PKCE works (at a glance)
 
@@ -53,7 +48,7 @@ PKCE is **recommended** for confidential web apps too.
 2. The app computes `code_challenge = BASE64URL(SHA256(code_verifier))`.  
 3. The app starts the authorize request with `code_challenge` and `code_challenge_method=S256`.  
 4. After sign-in, the app exchanges the returned `code` at the token endpoint and must present the original `code_verifier`.  
-5. @@name Identity verifies that `SHA256(code_verifier)` matches the original `code_challenge`.
+5. @@name Identity computes `BASE64URL(SHA256(code_verifier))` and compares it with the original `code_challenge`.
 
 If an attacker steals the `code` from the redirect, it is useless without the `code_verifier`.
 
@@ -62,18 +57,11 @@ If an attacker steals the `code` from the redirect, it is useless without the `c
 Minimal parameters for Authorization Code + PKCE:
 
 ```http
-GET /id/connect/authorize?
-  response_type=code&
-  client_id=my.trusted.app&
-  redirect_uri=https://spa.example.com/index.html&
-  scope=read offline_access&
-  state=kj82F3&
-  code_challenge=2C5h2Bf2yq9e8q8WRzU7Hc8l4o7l5s2fC3VfLbaN9yM&
-  code_challenge_method=S256 HTTP/1.1
-Host: testdb.my.erp.net
+GET /id/connect/authorize?response_type=code&client_id=my.trusted.app&redirect_uri=https%3A%2F%2Fspa.example.com%2Findex.html&scope=read%20offline_access&state=kj82F3&code_challenge=E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM&code_challenge_method=S256 HTTP/1.1
+Host: demodb.my.erp.net
 ```
 
-- `state` is required for CSRF protection. Generate and validate it per request.
+- Generate a fresh `state` for each sign-in and validate it in the callback.
 - Include `offline_access` only if you need a refresh token (interactive apps).
 
 ## Exchange the code with PKCE
@@ -82,28 +70,20 @@ Token request for a public client (no secret):
 
 ```http
 POST /id/connect/token HTTP/1.1
-Host: testdb.my.erp.net
+Host: demodb.my.erp.net
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=authorization_code&
-client_id=my.trusted.app&
-code=K0dE...short...GZmNjV&
-redirect_uri=https://spa.example.com/index.html&
-code_verifier=<the_exact_random_string_used_for_code_challenge>
+grant_type=authorization_code&client_id=my.trusted.app&code=K0dE...short...GZmNjV&redirect_uri=https%3A%2F%2Fspa.example.com%2Findex.html&code_verifier=dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
 ```
 
-For confidential server apps, you may use either PKCE or a `client_secret`:
+A confidential app sends both its `code_verifier` and its `client_secret`. This example assumes the app started sign-in with `my.trusted.app/server` and `https://app.example.com/auth/callback`.
 
 ```http
 POST /id/connect/token HTTP/1.1
-Host: testdb.my.erp.net
+Host: demodb.my.erp.net
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=authorization_code&
-client_id=my.trusted.app/server&
-client_secret=<your_client_secret>&
-code=K0dE...short...GZmNjV&
-redirect_uri=https://app.example.com/auth/callback
+grant_type=authorization_code&client_id=my.trusted.app%2Fserver&client_secret=<url_encoded_client_secret>&code=K0dE...short...GZmNjV&redirect_uri=https%3A%2F%2Fapp.example.com%2Fauth%2Fcallback&code_verifier=<original_code_verifier>
 ```
 
 ## Generating PKCE values
@@ -124,7 +104,7 @@ Guidelines:
 ## Security checklist
 
 - Register all **redirect URIs** in the Trusted Application and keep them in sync across environments.
-- Use **PKCE** for all public clients (SPA, native, mobile). It is recommended for confidential web apps.
+- Use **PKCE** for both public and confidential interactive clients.
 - Validate the `state` parameter on return to prevent CSRF.
 - Do not allow open redirects. Keep redirect URIs fixed and exact.
 - Never put access tokens in URLs. Tokens belong in the `Authorization` header only.

@@ -47,11 +47,15 @@ GET /id/connect/authorize?
     client_id=my.trusted.app&
     redirect_uri=https://localhost/signin-callback&
     response_type=code&
-    scope=openid profile offline_access read&
-    state=xyz
+    scope=openid%20profile%20offline_access%20read&
+    state=xyz&
+    code_challenge=<code_challenge>&
+    code_challenge_method=S256
 ```
 
 The `offline_access` scope signals that the app wants permission to act on behalf of the user even when they are not actively signed in.
+
+Send the corresponding PKCE verifier when exchanging the authorization code. See the [step-by-step guide](interactive-apps-step-by-step.md#3-exchange-the-code-for-tokens).
 
 ## Exchanging a Refresh Token
 

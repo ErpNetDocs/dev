@@ -4,7 +4,7 @@ Some applications combine **interactive user access** with **background automati
 
 These are known as **Hybrid Apps**, and they use *both* OAuth 2.0 flows:
 
-- **Authorization Code Flow** for user-facing (interactive) parts.  
+- [**Authorization Code with PKCE**](../auth-code/overview.md#current-support-and-migration) for user-facing parts.
 - **Client Credentials Flow** for backend or service components.
 
 This pattern is ideal for apps that need to securely connect user sessions with backend logic while maintaining proper isolation between the two.

@@ -4,6 +4,22 @@ Interactive applications connect to @@name using the **Authorization Code flow**
 
 This flow is used by web, desktop, and mobile apps that have a **user interface** and require access to data under the signed-in user's permissions.
 
+## Current support and migration
+
+Starting with **ERP.net 27.1.2.8**, the instance's Identity site accepts `response_type=code` with PKCE for registrations that support Hybrid. Public Trusted Applications already configured for Authorization Code could use PKCE on earlier builds.
+
+Use Authorization Code with PKCE for new integrations and migrate existing interactive clients to it. Send a PKCE challenge with `code_challenge_method=S256` and include the original `code_verifier` when exchanging the code. Confidential apps also authenticate with their client secret. See the [step-by-step guide](interactive-apps-step-by-step.md).
+
+| Sign-in request | Current behavior |
+|-----------------|------------------|
+| Authorization Code with PKCE | Supported for public and confidential interactive apps. A Hybrid-capable registration requires PKCE when it requests `response_type=code`. |
+| OpenID Connect Hybrid (`response_type=code id_token`) | Remains available for backward compatibility where the existing registration permits it. The sign-in callback includes both the authorization code and the ID token. |
+| Sign-in without PKCE | Remains available for backward compatibility where the existing registration permits it. |
+
+With `response_type=code`, the app receives the code in the callback. Read it from the query string when using the default response mode. For OpenID Connect sign-in with the `openid` scope, read the ID token from the token endpoint response after exchanging the code. See [OpenID Connect Core](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth).
+
+**Authorization Code with PKCE will become mandatory** once all interactive clients, including external integrations, have migrated. Apps that also run background jobs continue to use [Client Credentials](../client-credentials/overview.md) for that work.
+
 ## When to Use
 
 Use this flow when your application:
@@ -31,11 +47,11 @@ sequenceDiagram
     participant API as ERP.net APIs
 
     User->>App: Open app and click "Sign In"
-    App->>IDP: Redirect to /connect/authorize with client_id, scopes, redirect_uri
+    App->>IDP: Redirect to /connect/authorize with a PKCE challenge
     IDP->>User: Prompt for login and consent
     User->>IDP: Authenticate with credentials
     IDP->>App: Redirect back with authorization code
-    App->>IDP: POST /connect/token with code, client_id, [secret or PKCE]
+    App->>IDP: POST /connect/token with code and verifier plus client authentication if confidential
     IDP-->>App: Return access token (and optional refresh token)
     App->>API: Call ERP.net APIs with the access token
     API-->>App: Return protected data
@@ -64,7 +80,7 @@ During the sign-in process, @@name Identity checks the app's registration, valid
 ## Security Highlights
 
 - **Redirect URIs** must exactly match the ones registered in the Trusted Application.  
-- **PKCE (Proof Key for Code Exchange)** is mandatory for SPAs and public clients.  
+- Use **PKCE (Proof Key for Code Exchange)** for interactive public and confidential clients.
 - **Client secrets** must only be used by secure, confidential clients (for example, backend servers).  
 - Access tokens are **short-lived** and can be renewed via **refresh tokens** if permitted.  
 
@@ -72,18 +88,18 @@ During the sign-in process, @@name Identity checks the app's registration, valid
 
 | App Type | Example | Client Type | Notes |
 |-----------|----------|-------------|-------|
-| Web App (Server-side) | Internal portal, admin dashboard | Confidential | Uses client secret; refresh tokens allowed |
+| Web App (Server-side) | Internal portal, admin dashboard | Confidential | Uses PKCE and a client secret. Can receive refresh tokens. |
 | SPA (Browser-based) | Customer portal, analytics dashboard | Public | Uses PKCE; no client secret |
 | Mobile App | Field service or sales app | Public | Uses PKCE; must secure redirect handling |
 
 ## Typical Sequence Summary
 
 1. User opens the app and selects **Sign In**.  
-2. App redirects to @@name Identity for authentication.  
+2. App redirects to @@name Identity with a PKCE challenge.
 3. @@name Identity checks the Trusted Application configuration (redirects, scopes, client type).  
 4. The user signs in and grants consent.  
 5. @@name Identity redirects back to the app with an authorization code.  
-6. The app exchanges the code for an access token.  
+6. The app exchanges the code for an access token using the PKCE verifier.
 7. The app uses the token to call @@name APIs.  
 8. If allowed, the app silently renews the token using a refresh token.
 

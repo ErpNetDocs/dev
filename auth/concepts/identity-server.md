@@ -144,7 +144,7 @@ GET https://testdb.my.erp.net/id/.well-known/openid-configuration
 
 ### 2) Authorize endpoint
 
-Starts an interactive sign-in and authorization request. Used by apps that act on behalf of a user (Authorization Code flow).
+Starts an interactive sign-in and authorization request. Use Authorization Code with PKCE for apps that act on behalf of a user. See [Current support and migration](../flows/auth-code/overview.md#current-support-and-migration).
 
 ```http
 GET https://{instance-root}/id/connect/authorize
@@ -158,10 +158,12 @@ GET https://testdb.my.erp.net/id/connect/authorize?
   redirect_uri=https%3A%2F%2Fmyapp.com%2Fcallback&
   response_type=code&
   scope=openid%20profile%20offline_access&
-  state=xyz123
+  state=xyz123&
+  code_challenge=E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM&
+  code_challenge_method=S256
 ```
 
-After successful sign-in, the browser is redirected to redirect_uri with an code parameter that the app will exchange for tokens.
+After sign-in, the browser redirects to `redirect_uri` with the authorization code. The example below exchanges it using the corresponding PKCE verifier.
 
 ### 3) Token endpoint
 
@@ -178,10 +180,11 @@ POST /id/connect/token
 Content-Type: application/x-www-form-urlencoded
 
 client_id=MyApp&
-client_secret=secret&
+client_secret=<url_encoded_client_secret>&
 grant_type=authorization_code&
 code=abc123&
-redirect_uri=https%3A%2F%2Fmyapp.com%2Fcallback
+redirect_uri=https%3A%2F%2Fmyapp.com%2Fcallback&
+code_verifier=dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
 ```
 
 **Example response: exchange authorization code:**
@@ -189,6 +192,7 @@ redirect_uri=https%3A%2F%2Fmyapp.com%2Fcallback
 ```http
 {
   "access_token": "eyJhbGciOi...",
+  "id_token": "<id_token>",
   "token_type": "Bearer",
   "expires_in": 3600,
   "refresh_token": "df9834jf...",
