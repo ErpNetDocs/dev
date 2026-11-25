@@ -2,14 +2,14 @@
 
 Every app that connects to @@name must use one of the supported **OAuth 2.0 authentication flows**.  
 
-Choosing the right one depends on **how your app interacts with users**, **how it runs**, and **what type of access identity it needs** - a signed-in user or a configured System User.
+Choose the flow for the identity your API calls need.
 
 ## How to Choose
 
-Start by asking these three questions:
+Use these questions to identify the access pattern.
 
 1. Does your app have a **user interface** where people sign in?  
-2. Does your app **run unattended** (like a service, integration, or background job)?  
+2. Which identity should API calls use when your app runs unattended?
 3. Does your app need **both user access and system-level automation**?
 
 Your answers map directly to the correct flow.
@@ -17,7 +17,8 @@ Your answers map directly to the correct flow.
 | App Type | Recommended Flow | Who Authenticates | Interaction | Typical Scenario |
 |-----------|------------------|-------------------|--------------|------------------|
 | **Interactive App** | Authorization Code | User | Interactive | Web app, SPA, or mobile client where a user signs in |
-| **Service or Background App** | Client Credentials | Application (via its configured **System User**) | Non-interactive | Integration microservice, background sync, scheduled job |
+| **Service or Background App** | Client Credentials | Application | Non-interactive | Background tasks that run as the app's configured System User |
+| **Backend with a subject token** | [Token Exchange](token-exchange.md) | Confidential application | Non-interactive | API access for the subject supplied in the request |
 | **Hybrid App** | Authorization Code + Client Credentials | Both user and System User | Mixed | Web or mobile app with backend services performing elevated or automated operations |
 
 > [!NOTE]  
@@ -80,17 +81,17 @@ Use this pattern when:
 
 ## Technical Comparison
 
-| Category | Authorization Code Flow | Client Credentials Flow |
-|-----------|-------------------------|--------------------------|
-| **Who authenticates** | User | Application's configured **System User** |
-| **User involvement** | Required (interactive login) | None |
-| **Typical clients** | Web apps, SPAs, mobile or desktop clients | Integrations, background services, daemons |
-| **Token context** | Represents the signed-in user | Represents the System User assigned in Trusted Application |
-| **Refresh tokens** | Supported for confidential clients | Not supported |
-| **Session creation** | On first API use | On first API use |
-| **Security requirements** | Redirect URIs, PKCE, secure redirect handling | Secure secret storage, restricted System User |
-| **When to use** | App acts on behalf of a signed-in user | App acts as its configured System User |
-| **Example** | Web portal for employees or partners | Integration or synchronization service |
+| Category | Authorization Code Flow | Client Credentials Flow | Token Exchange |
+|-----------|-------------------------|--------------------------|----------------|
+| **Who authenticates** | User | Confidential application | Confidential application |
+| **User involvement** | Required (interactive login) | None | None |
+| **Typical clients** | Web apps, SPAs, mobile or desktop clients | Integrations, background services, daemons | Confidential backend integrations |
+| **Token context** | Represents the signed-in user | Represents the System User assigned in Trusted Application | Represents the subject identified by the request |
+| **Refresh tokens** | Supported for confidential clients | Not supported | Not supported |
+| **Session creation** | On first API use | On first API use | On first API use |
+| **Security requirements** | Redirect URIs, PKCE, secure redirect handling | Secure secret storage, restricted System User | Secure secret storage and authorized subject selection |
+| **When to use** | App acts on behalf of a signed-in user | App acts as its configured System User | App supplies a subject token for API access |
+| **Example** | Web portal for employees or partners | Integration or synchronization service | [Token request](token-exchange.md#request-an-access-token) |
 
 ## Token Behavior and Renewal
 
@@ -98,6 +99,7 @@ Use this pattern when:
 |------|----------------|----------------|----------------|
 | **Authorization Code** | Short-lived | Yes | Use refresh token for silent renewal |
 | **Client Credentials** | Short-lived | No | Request a new token when needed |
+| **Token Exchange** | Short-lived | No | Repeat the exchange when needed |
 | **Hybrid** | Independent per flow | Mixed | Each flow renews tokens separately |
 
 > [!NOTE]  
@@ -123,7 +125,7 @@ See [**Reference Tokens**](../tokens/reference-access-tokens.md) for details on 
 - Use **Confidential** clients for server apps; **Public** for SPAs and device apps.  
 - Store secrets securely.  
 - Rotate **secrets** periodically.  
-- Assign a **least-privilege System User** to all background apps.  
+- Assign a **least-privilege System User** to apps that use Client Credentials.
 - Restrict redirect URIs to exact HTTPS endpoints.  
 - Use **PKCE** for all public OAuth clients.  
 - Never expose or share access tokens.  
@@ -134,6 +136,7 @@ See [**Reference Tokens**](../tokens/reference-access-tokens.md) for details on 
 - **@@name Identity** validates the app and issues tokens according to its configuration.  
 - **Authorization Code Flow** -> user-driven, interactive access.  
 - **Client Credentials Flow** -> system-driven, using the app's **System User**.  
+- **Token Exchange** -> API access for the subject supplied in the request.
 - **Hybrid Flow** -> combines both, with strict separation between contexts.  
 
 Choose the flow that matches how your app operates - and let the @@name Identity handle authentication securely and consistently.

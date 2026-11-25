@@ -14,7 +14,7 @@ Each app has a different way of connecting:
 - Others run in the background or on a schedule with no user present.  
 - Some do both - a user-facing front end and an automated backend.
 
-To support these patterns securely, @@name provides **two OAuth 2.0 flows** that can be used separately or together.
+@@name supports OAuth 2.0 flows for interactive access and backend integrations.
 
 ## Supported Authentication Flows
 
@@ -22,6 +22,7 @@ To support these patterns securely, @@name provides **two OAuth 2.0 flows** that
 |------|-------------------|--------------|------------------|
 | **Authorization Code** | User | Interactive (via web browser) | Web apps, SPAs, mobile clients |
 | **Client Credentials** | Application (service identity) | Non-interactive | Integrations, background jobs, schedulers |
+| [**Token Exchange**](token-exchange.md) | Confidential application | Non-interactive | API access for a supplied subject |
 | **Hybrid (combined)** | Both | Mixed | Apps that include both an interactive front end and a service backend |
 
 > [!NOTE]  
@@ -58,7 +59,8 @@ flowchart LR
 When selecting a flow, focus on how your app interacts with @@name:
 
 - If your app **has a user interface** and acts on behalf of a signed-in user - use **Authorization Code**.  
-- If your app **runs without user interaction** - use **Client Credentials**.  
+- If your app runs as its configured **System User** - use **Client Credentials**.
+- If your confidential app supplies the subject at request time, use [**Token Exchange**](token-exchange.md).
 - If your app **has both a user-facing and a backend component** - use **Hybrid** (combine both flows).  
 
 For detailed decision guidance, see [Choosing the Right Flow](choosing-flow.md).
@@ -70,7 +72,7 @@ For detailed decision guidance, see [Choosing the Right Flow](choosing-flow.md).
 - **Sessions** start only when a token is first used, not when issued.  
 - **Refresh tokens** are only for interactive clients.  
 - **Client secrets** must never be exposed in browsers or SPAs.  
-- One app can safely use both flows - just keep user tokens and service tokens separate.
+- If your app uses multiple flows, keep the tokens for each identity separate.
 
 ---
 

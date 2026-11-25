@@ -98,8 +98,11 @@ sequenceDiagram
 ```
 
 > [!NOTE]
-> A single app can use both models when appropriate.
-> For example, a web app may sign in users via Authorization Code flow, and also perform background synchronization via Client Credentials.
+> An app can use Authorization Code for user sign-in and Client Credentials for background work.
+
+### Token Exchange
+
+A confidential application uses its client credentials and a subject token to obtain an API access token for the subject. [Token Exchange](../flows/token-exchange.md)
 
 ## Tokens at a Glance
 
@@ -157,7 +160,7 @@ sequenceDiagram
     participant IdentityServer as ERP.net Identity
     participant API as ERP.net APIs
 
-    App->>IdentityServer: Request authorization (Authorization Code or Client Credentials)
+    App->>IdentityServer: Request authorization using the selected OAuth 2.0 flow
     IdentityServer-->>App: Issue access token (and refresh token if applicable)
     App->>API: Call API with access token
     API-->>App: Return authorized data
@@ -178,6 +181,7 @@ This model keeps credentials out of applications, centralizes access control, an
 |------|-------------------|------------------|----------------|------------------------|------------------|
 | **Authorization Code** | User | Interactive (browser or web view) | Short-lived access token | Yes | Web apps, mobile apps, SPAs with backend |
 | **Client Credentials** | Application (service identity) | Non-interactive | Short-lived access token | No | Integrations, background jobs, automations |
+| [**Token Exchange**](../flows/token-exchange.md) | Confidential application | Non-interactive | Short-lived access token | No | API access for a supplied subject |
 | **Authorization Code + Refresh** | User | Interactive with silent renewal | Access token + long-lived refresh token | Yes | Long-running web or desktop sessions |
 | **Reference Token (API Key)** | User (PAT) or Service (SAT) | Non-interactive | Long-lived, manually defined | No | CI/CD pipelines, scripts, or integrations without user login |
 | **Basic Authentication** *(legacy)* | User | Interactive | Session-based | No | Legacy SDK or direct API integrations *(not recommended)* |

@@ -6,6 +6,11 @@
 - name: Client Credentials (Service Apps)
   href: client-credentials/toc.yml
   topicHref: client-credentials/overview.md
+- name: Token Exchange
+  href: token-exchange.md
+  items:
+  - name: Supported use cases
+    href: token-exchange-use-cases.md
 - name: Authorization Code + Client Credentials (Hybrid Apps)
   href: combined/toc.yml
   topicHref: combined/overview.md

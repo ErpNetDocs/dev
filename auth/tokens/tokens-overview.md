@@ -53,7 +53,7 @@ Tokens also allow seamless integration with external systems and automation tool
 
 When an external application connects to @@name, the flow generally involves:
 
-1. **Authentication** – The application authenticates via an OAuth 2.0 flow (Authorization Code, Client Credentials, or Hybrid).  
+1. **Authentication** – The application uses an [OAuth 2.0 flow](../flows/overview.md) appropriate to the identity it needs.
 2. **Token Issuance** – @@name Identity issues the token representing the app or user identity.  
 3. **Accessing APIs** – The app uses the token to authorize API requests.  
 4. **Token Expiration** – Tokens expire after a defined period.  

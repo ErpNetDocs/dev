@@ -71,6 +71,8 @@ sequenceDiagram
 
 ## Common Configurations
 
+For confidential applications that use a subject token, see the client setup in [Token Exchange](../flows/token-exchange.md).
+
 ### Interactive Web Application (Server-Side)
 
 Used by web applications that authenticate users through a browser and operate from a secure backend.

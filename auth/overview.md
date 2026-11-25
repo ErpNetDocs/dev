@@ -80,7 +80,9 @@ The app acts as a background service without user interaction.
 
 Used by automations, integrations, or scheduled tasks.
 
-Implements the [Client Credentials Flow](https://oauth.net/2/grant-types/client-credentials/) defined by [OAuth 2.0](https://oauth.net/2/).
+Use the [Client Credentials flow](flows/client-credentials/overview.md) for calls that run as the application's configured System User.
+
+Confidential server applications can also use [Token Exchange](flows/token-exchange.md) to obtain API access for the subject supplied in the request.
 
 Both types rely on the same **@@name Identity** and token-based authorization model.
 
@@ -88,8 +90,8 @@ Both types rely on the same **@@name Identity** and token-based authorization mo
 
 Once authentication and authorization complete successfully:
 
-- The app or user gains a **secure session** within the @@name instance
-- An **access token** is issued to represent that session
+- @@name Identity issues an **access token** for the authorized identity.
+- The API opens a session when the app first uses its token.
 - Access is limited to the **scopes and permissions** granted
 - All activity can be traced back to the app and its associated user or service identity
 

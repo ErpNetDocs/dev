@@ -129,7 +129,7 @@ GET https://testdb.my.erp.net/id/.well-known/openid-configuration
 
 - **issuer** - The base URL identifying @@name Identity. Used to validate tokens issued by this instance.
 - **authorization_endpoint** - The URL where interactive user logins begin (used in the Authorization Code flow).
-- **token_endpoint** - The URL used by apps to exchange authorization codes or client credentials for access tokens.
+- **token_endpoint** - The URL where apps send token requests.
 - **end_session_endpoint** - The logout URL used to terminate user sessions and trigger single sign-out.
 - **jwks_uri** - Location of the public signing keys used to validate tokens issued by this @@name Identity.
 - **grant_types_supported** - Lists which OAuth 2.0 grant types (flows) are available.
@@ -165,7 +165,7 @@ After successful sign-in, the browser is redirected to redirect_uri with an code
 
 ### 3) Token endpoint
 
-Exchanges an authorization code or client credentials for access tokens (and refresh tokens where applicable).
+Issues tokens for the OAuth 2.0 grant specified in the request.
 
 ```http
 POST https://{instance-root}/id/connect/token
@@ -253,6 +253,8 @@ GET https://testdb.my.erp.net/id/connect/endsession?
 
 - **Client Credentials** - Service or background apps acting as themselves. The app directly requests a token from @@name Identity using its client credentials.
 
+- [**Token Exchange**](../flows/token-exchange.md) - A confidential app exchanges a subject token for an API access token representing that subject.
+
 - **Reference tokens (API keys: PAT/SAT)** - Opaque, manually issued tokens that represent long-lived delegated access. They are looked up by the instance on each request.
 
 ## Quick reference
@@ -261,7 +263,7 @@ GET https://testdb.my.erp.net/id/connect/endsession?
 |--------------|----------------------------------------|------------------------------------------------------|
 | Discovery    | `/.well-known/openid-configuration`    | Fetch metadata and endpoint locations                |
 | Authorize    | `/connect/authorize`                   | Start user sign-in and obtain an authorization code  |
-| Token        | `/connect/token`                       | Exchange code or credentials for tokens              |
+| Token        | `/connect/token`                       | Request tokens using an OAuth 2.0 grant               |
 | End session  | `/connect/endsession`                  | Log out and propagate single sign-out                |
 
 All paths are relative to `https://{instance-root}/id`.
