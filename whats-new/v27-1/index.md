@@ -1,5 +1,11 @@
 # Version 27.1
 
+- [**API access as an Agent user**](../../auth/flows/token-exchange-use-cases.md#agent-impersonation)
+  AI integrations can now act as an active Agent user. The integration's backend uses Token Exchange to obtain an access token for the Agent, and API requests run with that user's permissions. See the [HTTP example](../../auth/samples/token-exchange-agent-example.md).
+
+- [**OAuth 2.0 Token Exchange**](../../auth/flows/token-exchange.md)
+  The ID site now supports the Token Exchange grant. Confidential Trusted Applications can exchange a subject token for an ERP.net API access token.
+
 - [**One license per user and device**](../../auth/sessions/license-slot.md)  
   A user working in several windows, tabs or applications on the same device now takes a single license slot. Tokens minted for a user carry the browser they were signed in from as the `erpnet_device_id` claim, and the application server counts licenses per user and device. Sessions without a device, such as Client Credentials service sessions, keep occupying a slot each.
 
